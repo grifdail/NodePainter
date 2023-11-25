@@ -5,6 +5,9 @@ import { PortConnection } from "../PortConnection";
 import "./Graph.css";
 import { IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote } from "@tabler/icons-react";
 import { PortType } from "../PortType";
+import { useSpring, animated } from "@react-spring/web";
+import { useGesture } from "@use-gesture/react";
+import { Tree } from "../Tree";
 
 const PortColor = {
   execute: {
@@ -66,10 +69,22 @@ function OutPortView({ y, id, type }: { y: number; id: string; type: PortType })
   );
 }
 
-export function GraphNode({ node }: { node: NodeData }) {
+export function GraphNode({ node, tree, viewportScale }: { node: NodeData; tree: Tree; viewportScale: number }) {
   var type = node.getType();
+  const [{ xy }, api] = useSpring(() => ({
+    xy: [node.positionX, node.positionY],
+  }));
+  const bind = useGesture({
+    onDrag: ({ movement: [mx, my] }) => {
+      api.start({ xy: [node.positionX + mx * viewportScale, node.positionY + my * viewportScale] });
+    },
+    onDragEnd: ({ movement: [mx, my] }) => {
+      tree.setNodePosition(node.id, node.positionX + mx * viewportScale, node.positionY + my * viewportScale);
+    },
+  });
+
   return (
-    <g transform={`translate(${node.positionX}, ${node.positionY})`}>
+    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} {...bind()}>
       <rect
         width="300"
         height={GetNodeHeight(node)}
@@ -92,6 +107,6 @@ export function GraphNode({ node }: { node: NodeData }) {
       {type.outputPorts.map((item, i) => {
         return <OutPortView y={50 + 32 * i} key={item.id} id={item.id} type={item.type}></OutPortView>;
       })}
-    </g>
+    </animated.g>
   );
 }

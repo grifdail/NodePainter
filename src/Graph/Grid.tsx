@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from "react";
-import { Tree } from "./Tree";
-import { GraphNode } from "./Graph/GraphNode";
+import { Tree } from "../Tree";
+import { GraphNode } from "./GraphNode";
 import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Vector2, useGesture } from "@use-gesture/react";
@@ -59,7 +59,7 @@ export function Grid({ tree, viewbox, setViewBox }: gridProps) {
       <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)"></animated.rect>
 
       {Object.keys(tree.nodes).map((treeId) => {
-        return <GraphNode node={tree.getNode(treeId)} key={treeId} />;
+        return <GraphNode node={tree.getNode(treeId)} key={treeId} tree={tree} viewportScale={viewbox.scale} />;
       })}
     </animated.svg>
   );

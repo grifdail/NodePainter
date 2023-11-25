@@ -14,4 +14,9 @@ export class Tree {
     newNodeData.positionY = posY;
     return newNodeData;
   }
+
+  setNodePosition(id: string, x: number, y: number) {
+    this.nodes[id].positionX = x;
+    this.nodes[id].positionY = y;
+  }
 }
