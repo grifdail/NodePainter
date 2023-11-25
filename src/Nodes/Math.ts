@@ -1,5 +1,5 @@
-﻿import { NodeDefinition } from "../NodeDefinition";
-import { AddNode, NodeLibrary } from "../NodeLibrary";
+﻿import { NodeDefinition } from "../Data/NodeDefinition";
+import { AddNode, NodeLibrary } from "../Data/NodeLibrary";
 
 AddNode(createOperation("AddNumber", (a, b) => a + b));
 AddNode(createOperation("SubtractNumber", (a, b) => a - b));

@@ -1,7 +1,7 @@
 ﻿import { NodeDefinition } from "./NodeDefinition";
 import { NodeLibrary } from "./NodeLibrary";
 import { PortConnection } from "./PortConnection";
-import { uid } from "./utils";
+import { uid } from "../utils";
 
 export class NodeData {
   id: string;

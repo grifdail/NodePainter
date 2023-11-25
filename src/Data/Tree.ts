@@ -19,4 +19,16 @@ export class Tree {
     this.nodes[id].positionX = x;
     this.nodes[id].positionY = y;
   }
+
+  AddJoin(sourceId: string, sourcePort: string, targetId: string, targetPort: string) {
+    var port = this.nodes[targetId].inputs[targetPort];
+    // eslint-disable-next-line eqeqeq
+    if (port != undefined) {
+      port.hasConnection = true;
+      port.connectedNode = sourceId;
+      port.connectedPort = sourcePort;
+    } else {
+      this.nodes[sourceId].output[sourcePort] = targetId;
+    }
+  }
 }

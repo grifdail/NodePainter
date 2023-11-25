@@ -1,5 +1,5 @@
 ﻿import React, { useEffect } from "react";
-import { Tree } from "../Tree";
+import { Tree } from "../Data/Tree";
 import { GraphNode } from "./GraphNode";
 import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
