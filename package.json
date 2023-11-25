@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@phosphor-icons/react": "github:phosphor-icons/react",
+    "@react-spring/web": "^9.7.3",
     "@tabler/icons-react": "^2.42.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,6 +13,8 @@
     "@types/node": "^16.18.64",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
+    "@uidotdev/usehooks": "^2.4.1",
+    "@use-gesture/react": "^10.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
