@@ -64,21 +64,21 @@ export const GraphNode = forwardRef(function GraphNode({ node, tree, viewportSca
         ...type.inputPorts.reduce(
           (old, port, i) => ({
             ...old,
-            [port.id]: xy.to((x, y) => [x, y + 50 + 32 * i]),
+            [port.id]: xy.to((x, y) => [x, y + 50 + 32 * i + 15]),
           }),
           start
         ),
         ...type.executeOutputPorts.reduce(
           (old, port, i) => ({
             ...old,
-            [port]: xy.to((x, y) => [x + 300, y + 50 + 32 * i]),
+            [port]: xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15]),
           }),
           start
         ),
         ...type.outputPorts.reduce(
           (old, port, i) => ({
             ...old,
-            [port.id]: xy.to((x, y) => [x + 300, y + 50 + 32 * (i + type.executeOutputPorts.length)]),
+            [port.id]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + type.executeOutputPorts.length)]),
           }),
           start
         ),

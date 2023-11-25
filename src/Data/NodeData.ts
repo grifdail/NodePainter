@@ -18,7 +18,7 @@ export class NodeData {
     this.id = uid();
     var def = this.getType();
     def.inputPorts.forEach((port) => {
-      var connection = new PortConnection();
+      var connection = new PortConnection(port.type);
       connection.ownValue = port.defaultValue;
       this.inputs[port.id] = connection;
     });
