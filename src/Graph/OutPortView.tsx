@@ -1,8 +1,8 @@
-﻿import React from "react";
+import React from "react";
 import { PortType } from "../Data/PortType";
-import { PortColor } from "./GraphNode";
+import { PortColor } from "./PortColor";
 
-export function OutPortView({ x, y, id, type, hideLabel }: { x: number; y: number; hideLabel?: boolean; id: string; type: PortType }) {
+export function OutPortView({ x, y, id, type, hideLabel, onClick }: { x: number; y: number; hideLabel?: boolean; id: string; type: PortType; onClick: () => void }) {
   var portDescription = PortColor[type];
   var Icon = portDescription.icon;
   return (
@@ -11,8 +11,8 @@ export function OutPortView({ x, y, id, type, hideLabel }: { x: number; y: numbe
       <text fill="black" x="-25" y="15" fontSize={15} alignmentBaseline="middle" textAnchor="end" visibility={hideLabel ? "hidden" : "visible"}>
         {id}
       </text>
-      <circle cx={0} cy={15} r={15} stroke={portDescription.color} fill="white" strokeWidth={2}></circle>
-      <Icon color={portDescription.color} x="-12" y="3" scale={10}></Icon>
+      <circle cx={0} cy={15} r={15} stroke={portDescription.color} fill="white" strokeWidth={2} onClick={onClick}></circle>
+      <Icon color={portDescription.color} x="-12" y="3" scale={10} onClick={onClick}></Icon>
     </g>
   );
 }

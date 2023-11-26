@@ -1,21 +1,31 @@
-﻿import React, { useEffect, useRef, useState } from "react";
-import { Tree } from "../Data/Tree";
+import { useEffect, useRef, useState } from "react";
 import { GraphNode } from "./GraphNode";
-import { useSpring, animated, useSprings, Interpolation } from "@react-spring/web";
+import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Vector2, useGesture } from "@use-gesture/react";
-import { debug } from "console";
-import { PortType } from "../Data/PortType";
+import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { Edge } from "./Edge";
-import { IconAlignRight } from "@tabler/icons-react";
-import { ThemeProvider } from "styled-components";
+import { getNodeTypeDefinition, useTree } from "../Data/stores";
 
 type gridProps = {
-  tree: Tree;
   viewbox: { x: number; y: number; scale: number };
   setViewBox: (x: number, y: number, s: number) => void;
 };
-export function Grid({ tree, viewbox, setViewBox }: gridProps) {
+
+type PortRefType = {
+  [key: string]: {
+    [key: string]: Interpolation<number[], number[]>;
+  };
+};
+
+type PortSelection = {
+  isCreating: boolean;
+  startNode: string;
+  startPort: string;
+  startNodeType: PortLocation;
+};
+
+export function Grid({ viewbox, setViewBox }: gridProps) {
   useEffect(() => {
     const preventDefault = (e: Event) => e.preventDefault();
     document.addEventListener("gesturestart", preventDefault);
@@ -26,49 +36,52 @@ export function Grid({ tree, viewbox, setViewBox }: gridProps) {
       document.removeEventListener("gesturechange", preventDefault);
     };
   }, []);
+  const tree = useTree();
 
   const [ref, elementSize] = useMeasure();
 
   const [{ xyz }, api] = useSpring(() => ({ xyz: [viewbox.x, viewbox.y, viewbox.scale] }));
 
-  type PortSelection = {
-    isCreating: boolean;
-    startNode: string;
-    startPort: string;
-    startNodeType: string;
-  };
   const [portCreationInfo, setPortCreationInfo] = useState<PortSelection>({
     isCreating: false,
     startNode: "",
     startPort: "",
-    startNodeType: "",
+    startNodeType: PortLocation.InputData,
   });
 
   function createDataNode(left: PortSelection, right: PortSelection) {
-    var leftType = tree
-      .getNode(left.startNode)
-      .getType()
-      .outputPorts.find((item) => item.id == left.startPort)?.type;
+    var leftType = getNodeTypeDefinition(tree.getNode(left.startNode)).outputPorts.find((item) => item.id === left.startPort)?.type;
 
     var rightType = tree.getNode(right.startNode).inputs[right.startPort].type;
-    if (leftType == rightType) {
-      tree.AddJoin(left.startNode, left.startPort, right.startNode, right.startPort);
+    if (leftType === rightType) {
+      tree.addEdge(left.startNode, left.startPort, right.startNode, right.startPort);
     }
   }
 
-  function createExecNode(left: PortSelection, right: PortSelection) {}
+  function createExecNode(left: PortSelection, right: PortSelection) {
+    // TODO: Validate joins
+    tree.addEdge(left.startNode, left.startPort, right.startNode, right.startPort);
+  }
 
-  const onClickPort = function (node: string, port: string, type: string) {
-    var right = { isCreating: false, startNode: node, startPort: port, startNodeType: type };
+  const onClickPort = function (node: string, port: string, type: PortLocation) {
+    var right = { isCreating: true, startNode: node, startPort: port, startNodeType: type };
+    if (type === PortLocation.InputData && tree.getNode(node).inputs[port].hasConnection) {
+      tree.removeDataConnection(node, port);
+      return;
+    }
     if (portCreationInfo.isCreating) {
       var left = portCreationInfo;
-      if (left.startNodeType == "inputData" && right.startNodeType == "outputData") {
-        createDataNode(left, right);
-      } else if (right.startNodeType == "inputData" && left.startNodeType == "outputData") {
+      if (left.startNode === right.startNode && left.startPort === right.startPort) {
+        setPortCreationInfo((state) => right);
+        return;
+      }
+      if (left.startNodeType === PortLocation.InputData && right.startNodeType === PortLocation.OutputData) {
         createDataNode(right, left);
-      } else if (left.startNodeType == "inputExecute" && right.startNodeType == "outputExecute") {
+      } else if (right.startNodeType === PortLocation.InputData && left.startNodeType === PortLocation.OutputData) {
+        createDataNode(left, right);
+      } else if (left.startNodeType === PortLocation.InputExec && right.startNodeType === PortLocation.OutputExec) {
         createExecNode(left, right);
-      } else if (right.startNodeType == "inputExecute" && left.startNodeType == "outputExecute") {
+      } else if (right.startNodeType === PortLocation.InputExec && left.startNodeType === PortLocation.OutputExec) {
         createExecNode(right, left);
       }
 
@@ -94,32 +107,30 @@ export function Grid({ tree, viewbox, setViewBox }: gridProps) {
       var [x, y, s] = computeNewScale(viewbox, scale, origin);
       setViewBox(x, y, s);
     },
+    onWheel: ({ event: { pageX, pageY }, movement: [_, distance] }) => {
+      api.start({ xyz: computeNewScale(viewbox, Math.exp(-distance / 1000), [pageX, pageY]) });
+    },
+    onWheelEnd: ({ event: { pageX, pageY }, movement: [_, distance] }) => {
+      var [x, y, s] = computeNewScale(viewbox, Math.exp(-distance / 1000), [pageX, pageY]);
+      setViewBox(x, y, s);
+    },
   });
 
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
 
   const edges = Object.keys(tree.nodes).flatMap((key) => {
     var node = tree.nodes[key];
-    var nodeType = node.getType();
     return [
       ...Object.entries(node.inputs)
         .filter(([key, port]) => port.hasConnection)
         .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]),
       ...Object.entries(node.output)
         .filter(([key, connection]) => connection != null)
-        .map(([key, port]) => [node.id, key, port, "mainExecute", "execute"]),
+        .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
     ];
   });
 
-  type PortRefType = {
-    [key: string]: {
-      [key: string]: Interpolation<number[], number[]>;
-    };
-  };
-
   var nodeRef = useRef<PortRefType>({});
-
-  console.log(nodeRef);
 
   function getNodePort(nodeId: string, portId: string) {
     return nodeRef.current?.[nodeId]?.[portId];
@@ -136,7 +147,7 @@ export function Grid({ tree, viewbox, setViewBox }: gridProps) {
       </defs>
       <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)"></animated.rect>
       {edges.map((edge) => {
-        return <Edge start={getNodePort(edge[0] as string, edge[1] as string)} end={getNodePort(edge[2] as string, edge[3] as string)} type={edge[4] as PortType} />;
+        return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string)} end={getNodePort(edge[2] as string, edge[3] as string)} type={edge[4] as PortType} />;
       })}
       {Object.keys(tree.nodes).map((treeId) => {
         return (
@@ -148,8 +159,8 @@ export function Grid({ tree, viewbox, setViewBox }: gridProps) {
             }
             node={tree.getNode(treeId)}
             key={treeId}
-            tree={tree}
             viewportScale={viewbox.scale}
+            onClickPort={onClickPort}
           />
         );
       })}

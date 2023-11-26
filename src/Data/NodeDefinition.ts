@@ -1,6 +1,5 @@
-﻿import { NodeData } from "./NodeData";
-import { Tree } from "./Tree";
 import { PortType, SettingType } from "./PortType";
+import { NodeData } from "./stores";
 
 export type PortDefinition = {
   id: string;
@@ -21,6 +20,15 @@ export type NodeDefinition = {
   outputPorts: Array<PortDefinition>;
   executeOutputPorts: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: (portId: string, data: NodeData, tree: Tree) => any;
-  execute: null | ((data: NodeData, tree: Tree) => any);
+  getData: (portId: string, data: NodeData, getPortValue: (nodeId: string, portId: string) => any) => any;
+  execute: null | ((data: NodeData, execute: (nodeId: string) => void) => any);
 };
+
+export function getInputValue(nodeData: NodeData, portId: string, getNodeOutput: (nodeId: string, portId: string) => any) {
+  const inputPorts = nodeData.inputs[portId];
+  if (inputPorts.hasConnection) {
+    return getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+  } else {
+    return inputPorts.ownValue;
+  }
+}

@@ -1,9 +1,9 @@
-﻿import React from "react";
+import React from "react";
 import { PortDefinition } from "../Data/NodeDefinition";
-import { PortConnection } from "../Data/PortConnection";
-import { PortColor } from "./GraphNode";
+import { PortColor } from "./PortColor";
+import { PortConnection } from "../Data/stores";
 
-export function PortView({ y, portDefinition, portData }: { y: number; portDefinition: PortDefinition; portData: PortConnection }) {
+export function PortView({ y, portDefinition, portData, onClick }: { y: number; portDefinition: PortDefinition; portData: PortConnection; onClick: () => void }) {
   var portDescription = PortColor[portDefinition.type];
   var Icon = portDescription.icon;
   return (
@@ -12,8 +12,8 @@ export function PortView({ y, portDefinition, portData }: { y: number; portDefin
       <text fill="black" x="25" y="15" fontSize={15} alignmentBaseline="middle">
         {portDefinition.id}
       </text>
-      <circle cx={0} cy={15} r={15} stroke={portDescription.color} fill="white" strokeWidth={2}></circle>
-      <Icon color={portDescription.color} x="-12" y="3" scale={10}></Icon>
+      <circle cx={0} cy={15} r={15} stroke={portDescription.color} fill="white" strokeWidth={2} onClick={onClick}></circle>
+      <Icon color={portDescription.color} x="-12" y="3" scale={10} onClick={onClick}></Icon>
     </g>
   );
 }

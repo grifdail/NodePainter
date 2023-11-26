@@ -1,5 +1,5 @@
-﻿import React from "react";
-import { PortColor } from "./GraphNode";
+import React from "react";
+import { PortColor } from "./PortColor";
 import { animated, Interpolation, to } from "@react-spring/web";
 import { PortType } from "../Data/PortType";
 

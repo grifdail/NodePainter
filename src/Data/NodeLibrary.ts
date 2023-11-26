@@ -1,4 +1,4 @@
-﻿import { NodeDefinition } from "./NodeDefinition";
+import { NodeDefinition } from "./NodeDefinition";
 
 export const NodeLibrary: { [key: string]: NodeDefinition } = {};
 

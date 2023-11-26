@@ -1,5 +1,5 @@
-﻿import { NodeDefinition } from "../Data/NodeDefinition";
-import { AddNode, NodeLibrary } from "../Data/NodeLibrary";
+import { NodeDefinition, getInputValue } from "../Data/NodeDefinition";
+import { AddNode } from "../Data/NodeLibrary";
 
 AddNode(createOperation("AddNumber", (a, b) => a + b));
 AddNode(createOperation("SubtractNumber", (a, b) => a - b));
@@ -53,10 +53,10 @@ AddNode({
   ],
   executeOutputPorts: [],
   settings: [],
-  getData: (portId, nodeData, tree) => {
+  getData: (portId, nodeData, getNodeOutput) => {
     if (portId === "result") {
-      var a = nodeData.inputs.y.getValue(tree);
-      var b = nodeData.inputs.x.getValue(tree);
+      var a = getInputValue(nodeData, "y", getNodeOutput);
+      var b = getInputValue(nodeData, "x", getNodeOutput);
       return Math.atan2(a, b);
     }
   },
@@ -91,11 +91,11 @@ AddNode({
   ],
   executeOutputPorts: [],
   settings: [],
-  getData: (portId, nodeData, tree) => {
+  getData: (portId, nodeData, getNodeOutput) => {
     if (portId === "result") {
-      var value = nodeData.inputs.value.getValue(tree);
-      var min = nodeData.inputs.min.getValue(tree);
-      var max = nodeData.inputs.max.getValue(tree);
+      var value = getInputValue(nodeData, "value", getNodeOutput);
+      var min = getInputValue(nodeData, "min", getNodeOutput);
+      var max = getInputValue(nodeData, "max", getNodeOutput);
       return Math.max(Math.min(value, max), min);
     }
   },
@@ -131,11 +131,11 @@ AddNode({
   ],
   executeOutputPorts: [],
   settings: [],
-  getData: (portId, nodeData, tree) => {
+  getData: (portId, nodeData, getNodeOutput) => {
     if (portId === "result") {
-      var t = nodeData.inputs.t.getValue(tree);
-      var min = nodeData.inputs.min.getValue(tree);
-      var max = nodeData.inputs.max.getValue(tree);
+      var t = getInputValue(nodeData, "t", getNodeOutput);
+      var min = getInputValue(nodeData, "min", getNodeOutput);
+      var max = getInputValue(nodeData, "max", getNodeOutput);
       return t * max + (1 - t) * min;
     }
   },
@@ -167,10 +167,10 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any): No
     ],
     executeOutputPorts: [],
     settings: [],
-    getData: (portId, nodeData, tree) => {
+    getData: (portId, nodeData, getNodeOutput) => {
       if (portId === "result") {
-        var a = nodeData.inputs.a.getValue(tree);
-        var b = nodeData.inputs.b.getValue(tree);
+        var a = getInputValue(nodeData, "a", getNodeOutput);
+        var b = getInputValue(nodeData, "b", getNodeOutput);
         return evalOperation(a, b);
       }
     },
@@ -198,9 +198,9 @@ function createFunc(id: string, evalOperation: (input: any) => any): NodeDefinit
     ],
     executeOutputPorts: [],
     settings: [],
-    getData: (portId, nodeData, tree) => {
+    getData: (portId, nodeData, getNodeOutput) => {
       if (portId === "result") {
-        var a = nodeData.inputs.input.getValue(tree);
+        var a = getInputValue(nodeData, "a", getNodeOutput);
         return evalOperation(a);
       }
     },
