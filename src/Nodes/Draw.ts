@@ -1,4 +1,4 @@
-﻿import { IconAssembly, IconBrush, IconBucketDroplet } from "@tabler/icons-react";
+import { IconBrush, IconBucketDroplet } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { getInputValue } from "../Data/NodeDefinition";
 import * as P5 from "p5";

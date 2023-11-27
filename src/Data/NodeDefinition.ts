@@ -1,7 +1,7 @@
 import { Icon } from "@tabler/icons-react";
 import { PortType, SettingType } from "./PortType";
 import { NodeData } from "./stores";
-import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
+import { P5CanvasInstance } from "@p5-wrapper/react";
 
 export type PortDefinition = {
   id: string;

@@ -1,4 +1,4 @@
-﻿import { IconCodePlus, IconPlayerPlayFilled, IconPlayerStopFilled } from "@tabler/icons-react";
+import { IconCodePlus, IconPlayerPlayFilled, IconPlayerStopFilled } from "@tabler/icons-react";
 import React from "react";
 import { TreeStore, getNodeTypeDefinition, useTree } from "../Data/stores";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";

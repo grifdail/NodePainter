@@ -1,7 +1,5 @@
-import { IconArrowsHorizontal, IconArrowsVertical, IconAssembly, IconBrush, IconBucketDroplet, IconClock } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsVertical, IconAssembly, IconClock } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
-import { getInputValue } from "../Data/NodeDefinition";
-import * as p5 from "p5";
 
 AddNode({
   id: "Start",

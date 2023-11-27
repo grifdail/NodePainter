@@ -3,7 +3,6 @@ import { produce } from "immer";
 import { ExecutionContext, PortDefinition, SettingDefinition } from "./NodeDefinition";
 import { NodeLibrary } from "./NodeLibrary";
 import { PortType } from "./PortType";
-import { debug } from "console";
 import { nanoid } from "nanoid";
 
 export type Viewbox = {

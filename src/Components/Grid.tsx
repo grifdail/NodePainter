@@ -6,7 +6,6 @@ import { Vector2, useGesture } from "@use-gesture/react";
 import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { Edge } from "./Edge";
 import { getNodeTypeDefinition, useTree } from "../Data/stores";
-import { debug } from "console";
 
 type gridProps = {
   viewbox: { x: number; y: number; scale: number };

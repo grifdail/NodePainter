@@ -1,4 +1,4 @@
-﻿import { Icon, IconArrowUpRightCircle, IconAssembly, IconBrush, IconBucketDroplet } from "@tabler/icons-react";
+import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { getInputValue } from "../Data/NodeDefinition";
 import * as p5 from "p5";
@@ -64,10 +64,10 @@ AddNode({
   getData: (portId, nodeData, context) => {
     var vec = getInputValue(nodeData, "x", context);
     if (portId === "x") {
-      var x = vec.x;
+      return vec.x;
     }
     if (portId === "y") {
-      var x = vec.y;
+      return vec.y;
     }
   },
   execute: null,

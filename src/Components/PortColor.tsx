@@ -1,4 +1,3 @@
-import { JSXElement } from "@babel/types";
 import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 import { useState } from "react";
 import * as p5 from "p5";
