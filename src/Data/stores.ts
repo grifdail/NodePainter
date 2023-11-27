@@ -107,7 +107,6 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     setNodeInputValue(node, portId, newValue) {
-      console.log(node, portId, newValue);
       set(
         produce((state) => {
           state.nodes[node].inputs[portId].ownValue = newValue;

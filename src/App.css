@@ -16,11 +16,17 @@
   pointer-events: none;
 }
 
-.add-button {
+.grid-ui menu {
+  display: flex;
+  flex-direction: column-reverse;
   position: absolute;
   bottom: 30px;
   right: 30px;
+  width: 50px;
+  gap: 10px;
+}
 
+.grid-ui menu .button {
   width: 50px;
   height: 50px;
   background: white;
@@ -52,4 +58,11 @@
 .add-modal .add-node body {
   flex: 300px 0 0;
   margin: 0;
+}
+
+.react-p5-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  border: 2px solid black;
 }

@@ -58,7 +58,7 @@ AddNode({
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = getInputValue(data, "color", context);
-    //Do the processing thing here
+    context.p5.background(color);
   },
 });
 
