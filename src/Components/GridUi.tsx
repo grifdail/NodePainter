@@ -15,7 +15,6 @@ const sketch: Sketch<MySketchProps> = (p5) => {
   p5.setup = () => p5.createCanvas(400, 400);
 
   p5.updateWithProps = (props) => {
-    console.log(tree);
     tree = props.tree;
   };
 
@@ -32,7 +31,7 @@ const sketch: Sketch<MySketchProps> = (p5) => {
         }
       },
       getNodeOutput(nodeId, portId) {
-        tree?.getPortValue(nodeId, portId, context);
+        return tree?.getPortValue(nodeId, portId, context);
       },
     };
 
@@ -48,6 +47,7 @@ export function SketchPreview() {
 
 export function GridUi({ visible, openAddModal }: { visible: boolean; openAddModal: () => void }) {
   const [showPreview, togglePreview] = useToggle(true);
+  console.log(showPreview);
 
   if (!visible) {
     return null;
@@ -59,7 +59,7 @@ export function GridUi({ visible, openAddModal }: { visible: boolean; openAddMod
         <button className="button" onClick={openAddModal}>
           <IconCodePlus></IconCodePlus>
         </button>
-        <button className="button" onClick={() => togglePreview}>
+        <button className="button" onClick={() => togglePreview()}>
           {showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}
         </button>
       </menu>

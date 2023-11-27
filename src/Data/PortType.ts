@@ -1,4 +1,4 @@
-export type PortType = "execute" | "number" | "vector2" | "color" | "string";
+export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool";
 export type SettingType = "number-field";
 
 export const MainExecuteId = "mainExecute";

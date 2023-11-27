@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
+import "./Nodes/Draw";
 import "./Nodes/Math";
 import "./Nodes/System";
+import "./Nodes/Vector";
 import { Grid } from "./Components/Grid";
 import { useToggle } from "@uidotdev/usehooks";
 import { AddModal } from "./Components/AddModal";

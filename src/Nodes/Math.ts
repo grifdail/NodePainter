@@ -12,6 +12,7 @@ AddNode(createOperation("Max", Math.max));
 AddNode(createOperation("Pow", Math.min));
 AddNode(createFunc("Cos", Math.cos));
 AddNode(createFunc("Sin", Math.sin));
+AddNode(createFunc("SinWave", (a) => Math.sin(a * Math.PI * 2) * 0.5 + 0.5));
 AddNode(createFunc("Sqrt", Math.sqrt));
 AddNode(createFunc("Abs", Math.abs));
 AddNode(createFunc("Acos", Math.acos));
@@ -143,11 +144,12 @@ AddNode({
   execute: null,
 });
 
-function createOperation(id: string, evalOperation: (a: any, b: any) => any): NodeDefinition {
+function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string): NodeDefinition {
   return {
     id: id,
     tags: ["math"],
     icon: IconMathSymbols,
+    description: description,
     inputPorts: [
       {
         id: "a",
@@ -180,11 +182,12 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any): No
   };
 }
 
-function createFunc(id: string, evalOperation: (input: any) => any): NodeDefinition {
+function createFunc(id: string, evalOperation: (input: any) => any, description?: string): NodeDefinition {
   return {
     id: id,
     tags: ["math"],
     icon: IconSquareRoot2,
+    description: description,
     inputPorts: [
       {
         id: "input",

@@ -1,4 +1,4 @@
-import { IconAssembly, IconBrush, IconBucketDroplet } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsVertical, IconAssembly, IconBrush, IconBucketDroplet, IconClock } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { getInputValue } from "../Data/NodeDefinition";
 import * as p5 from "p5";
@@ -41,50 +41,46 @@ AddNode({
 });
 
 AddNode({
-  id: "FillBackground",
-  description: "Execute two instruction",
-  icon: IconBucketDroplet,
+  id: "Time",
+  description: "The current time relative to the execution of the preview, in second",
+  icon: IconClock,
   tags: ["System"],
-  inputPorts: [
-    {
-      id: "color",
-      type: "color",
-      defaultValue: "#aaaaaa",
-    },
-  ],
-  outputPorts: [],
+  inputPorts: [],
+  outputPorts: [{ id: "time", type: "number", defaultValue: 0 }],
   executeOutputPorts: [],
   settings: [],
-  getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, context) => {
-    var color = getInputValue(data, "color", context);
-    context.p5.background(color);
+  getData: (portId, nodeData, context) => {
+    return context.p5.millis() / 1000.0;
   },
+  execute: null,
 });
 
 AddNode({
-  id: "DrawPoints",
-  description: "Execute two instruction",
-  icon: IconBrush,
+  id: "Width",
+  description: "The dimension of the canvas",
+  icon: IconArrowsHorizontal,
   tags: ["System"],
-  inputPorts: [
-    {
-      id: "color",
-      type: "color",
-      defaultValue: "#aaaaaa",
-    },
-    {
-      id: "position",
-      type: "vector2",
-      defaultValue: p5.prototype.createVector(0, 0, 0),
-    },
-  ],
-  outputPorts: [],
+  inputPorts: [],
+  outputPorts: [{ id: "width", type: "number", defaultValue: 0 }],
   executeOutputPorts: [],
   settings: [],
-  getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, context) => {
-    var color = getInputValue(data, "color", context);
-    //Do the processing thing here
+  getData: (portId, nodeData, context) => {
+    return context.p5.width;
   },
+  execute: null,
+});
+
+AddNode({
+  id: "Height",
+  description: "The dimension of the canvas",
+  icon: IconArrowsVertical,
+  tags: ["System"],
+  inputPorts: [],
+  outputPorts: [{ id: "height", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    return context.p5.height;
+  },
+  execute: null,
 });

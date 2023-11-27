@@ -4,6 +4,7 @@ import { ExecutionContext, PortDefinition, SettingDefinition } from "./NodeDefin
 import { NodeLibrary } from "./NodeLibrary";
 import { PortType } from "./PortType";
 import { debug } from "console";
+import { nanoid } from "nanoid";
 
 export type Viewbox = {
   x: number;
@@ -120,7 +121,7 @@ function createNodeData(nodeType: string, x: number, y: number, id: string | nul
   const def = NodeLibrary[nodeType];
   return {
     type: nodeType,
-    id: id || crypto.randomUUID(),
+    id: id || nanoid(),
     inputs: def.inputPorts.reduce((old: any, port: PortDefinition) => {
       const connection = createPortConnection(port);
       old[port.id] = connection;

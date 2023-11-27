@@ -1,5 +1,5 @@
 import { JSXElement } from "@babel/types";
-import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 import { useState } from "react";
 import * as p5 from "p5";
 
@@ -52,6 +52,14 @@ function VectorInput({ onChange, value }: { onChange: (value: any) => void; valu
   );
 }
 
+function BoolInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
+  return (
+    <div>
+      <input type="checkbox" value={value} onChange={(e) => onChange(!!e.target.value)} />
+    </div>
+  );
+}
+
 export const PortColor: { [key: string]: PortColorDefinition } = {
   execute: {
     color: "#2fb344",
@@ -78,5 +86,10 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
   string: {
     color: "#d6336c",
     icon: IconQuote,
+  },
+  boolean: {
+    color: "#17a2b8",
+    icon: IconToggleLeft,
+    input: BoolInput,
   },
 };
