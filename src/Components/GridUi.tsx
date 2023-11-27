@@ -1,6 +1,6 @@
 import { IconCodePlus, IconPlayerPlayFilled, IconPlayerStopFilled } from "@tabler/icons-react";
 import React from "react";
-import { TreeStore, getNodeTypeDefinition, useTree } from "../Data/stores";
+import { TreeStore, getNodeTypeDefinition, useTree } from "../Data/useTree";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext } from "../Data/NodeDefinition";
 import { useToggle } from "@uidotdev/usehooks";
@@ -47,7 +47,6 @@ export function SketchPreview() {
 
 export function GridUi({ visible, openAddModal }: { visible: boolean; openAddModal: () => void }) {
   const [showPreview, togglePreview] = useToggle(true);
-  console.log(showPreview);
 
   if (!visible) {
     return null;

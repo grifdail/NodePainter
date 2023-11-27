@@ -3,7 +3,7 @@ import { usePagination } from "react-use-pagination";
 import { NodeLibrary } from "../Data/NodeLibrary";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
-import { TreeStore, useTree } from "../Data/stores";
+import { TreeStore, useTree } from "../Data/useTree";
 
 export function AddNodeButton({ node, onClick }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void }) {
   const Icon = node.icon;

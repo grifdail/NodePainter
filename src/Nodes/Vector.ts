@@ -97,6 +97,7 @@ AddNode({
     if (portId === "vec") {
       var angle = getInputValue(nodeData, "angle", context);
       var length = getInputValue(nodeData, "length", context);
+      console.log(length);
       return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
     }
   },

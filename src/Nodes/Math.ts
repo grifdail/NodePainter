@@ -206,7 +206,7 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var a = getInputValue(nodeData, "a", context);
+        var a = getInputValue(nodeData, "input", context);
         return evalOperation(a);
       }
     },
