@@ -28,7 +28,7 @@ function NumberInput({ onChange, value }: { onChange: (value: any) => void; valu
 }
 
 function ColorInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
-  var [rawField, setRawField] = useState(value);
+  var [rawField, setRawField] = useState(value.toString("#rrggbbaa"));
 
   const onInputChange = (newValue: string) => {
     setRawField(newValue);
@@ -44,7 +44,6 @@ function VectorInput({ onChange, value }: { onChange: (value: any) => void; valu
     var newVector = property === "x" ? p5.prototype.createVector(newValue, value.y) : p5.prototype.createVector(value.x, newValue);
     onChange(newVector);
   };
-  console.log(value);
   return (
     <div>
       <NumberInput value={value.x} onChange={(e) => onInputChange(e, "x")}></NumberInput>

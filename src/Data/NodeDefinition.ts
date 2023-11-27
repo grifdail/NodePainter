@@ -1,6 +1,7 @@
 import { Icon } from "@tabler/icons-react";
 import { PortType, SettingType } from "./PortType";
 import { NodeData } from "./stores";
+import { ReactP5Wrapper, P5CanvasInstance } from "@p5-wrapper/react";
 
 export type PortDefinition = {
   id: string;
@@ -23,14 +24,20 @@ export type NodeDefinition = {
   outputPorts: Array<PortDefinition>;
   executeOutputPorts: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: (portId: string, data: NodeData, getNodeOutput: (nodeId: string, portId: string) => any) => any;
-  execute: null | ((node: NodeData, execute: (nodeId: string) => void, getNodeOutput: (nodeId: string, portId: string) => any) => void);
+  getData: (portId: string, data: NodeData, context: ExecutionContext) => any;
+  execute: null | ((node: NodeData, context: ExecutionContext) => void);
 };
 
-export function getInputValue(nodeData: NodeData, portId: string, getNodeOutput: (nodeId: string, portId: string) => any) {
+export type ExecutionContext = {
+  getNodeOutput: (nodeId: string, portId: string) => any;
+  p5: P5CanvasInstance;
+  execute: (nodeId: string) => void;
+};
+
+export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
   const inputPorts = nodeData.inputs[portId];
   if (inputPorts.hasConnection) {
-    return getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+    return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
   } else {
     return inputPorts.ownValue;
   }

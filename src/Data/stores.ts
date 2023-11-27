@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import { PortDefinition, SettingDefinition } from "./NodeDefinition";
+import { ExecutionContext, PortDefinition, SettingDefinition } from "./NodeDefinition";
 import { NodeLibrary } from "./NodeLibrary";
 import { PortType } from "./PortType";
 import { debug } from "console";
@@ -26,7 +26,7 @@ export type TreeStore = {
   setNodePosition: (id: string, x: number, y: number) => void;
   addNode: (nodeType: string, posX: number, posY: number) => void;
   addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
-  getPortValue: (nodeId: string, portId: string) => any;
+  getPortValue: (nodeId: string, portId: string, context: ExecutionContext) => any;
   removeDataConnection: (node: string, port: string) => void;
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
@@ -84,10 +84,10 @@ export const useTree = create<TreeStore>()((set, get) => {
         })
       );
     },
-    getPortValue(nodeId: string, portId: string) {
+    getPortValue(nodeId: string, portId: string, context: ExecutionContext) {
       var node = get().nodes[nodeId];
       var def = getNodeTypeDefinition(node);
-      return def.getData(portId, node, this.getPortValue);
+      return def.getData(portId, node, context);
     },
     removeDataConnection(nodeId, portId) {
       set(

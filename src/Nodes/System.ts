@@ -12,10 +12,10 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
-  getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, execute) => {
+  getData: (portId, nodeData, context) => {},
+  execute: (data, context) => {
     if (data.output.execute) {
-      execute(data.output.execute);
+      context.execute(data.output.execute);
     }
   },
 });
@@ -30,12 +30,12 @@ AddNode({
   executeOutputPorts: ["first", "second"],
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, execute) => {
+  execute: (data, context) => {
     if (data.output.first) {
-      execute(data.output.first);
+      context.execute(data.output.first);
     }
     if (data.output.second) {
-      execute(data.output.second);
+      context.execute(data.output.second);
     }
   },
 });
@@ -56,8 +56,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, execute, getNodeOutput) => {
-    var color = getInputValue(data, "color", getNodeOutput);
+  execute: (data, context) => {
+    var color = getInputValue(data, "color", context);
     //Do the processing thing here
   },
 });
@@ -78,18 +78,13 @@ AddNode({
       type: "vector2",
       defaultValue: p5.prototype.createVector(0, 0, 0),
     },
-    {
-      id: "y",
-      type: "number",
-      defaultValue: "0",
-    },
   ],
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
-  execute: (data, execute, getNodeOutput) => {
-    var color = getInputValue(data, "color", getNodeOutput);
+  execute: (data, context) => {
+    var color = getInputValue(data, "color", context);
     //Do the processing thing here
   },
 });
