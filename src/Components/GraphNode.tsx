@@ -73,6 +73,8 @@ export const GraphNode = forwardRef(function GraphNode(
     [xy, definition]
   );
 
+  var setNodeInputValue = useTree((state) => state.setNodeInputValue);
+
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} {...bind()}>
       <rect
@@ -90,7 +92,7 @@ export const GraphNode = forwardRef(function GraphNode(
       </text>
       {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec)}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
-        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData)}></PortView>;
+        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
       })}
       {definition.executeOutputPorts.map((id, i) => {
         return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, PortLocation.OutputExec)}></OutPortView>;

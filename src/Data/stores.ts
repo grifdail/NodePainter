@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { PortDefinition, SettingDefinition } from "./NodeDefinition";
 import { NodeLibrary } from "./NodeLibrary";
 import { PortType } from "./PortType";
+import { debug } from "console";
 
 export type Viewbox = {
   x: number;
@@ -28,6 +29,7 @@ export type TreeStore = {
   getPortValue: (nodeId: string, portId: string) => any;
   removeDataConnection: (node: string, port: string) => void;
   removeOutputConnection: (node: string, port: string) => void;
+  setNodeInputValue: (node: string, portId: string, newValue: any) => void;
 };
 
 export type NodeData = {
@@ -101,6 +103,14 @@ export const useTree = create<TreeStore>()((set, get) => {
       set(
         produce((state) => {
           state.nodes[nodeId].output[portId] = null;
+        })
+      );
+    },
+    setNodeInputValue(node, portId, newValue) {
+      console.log(node, portId, newValue);
+      set(
+        produce((state) => {
+          state.nodes[node].inputs[portId].ownValue = newValue;
         })
       );
     },

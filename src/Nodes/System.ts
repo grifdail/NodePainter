@@ -1,6 +1,7 @@
 import { IconAssembly, IconBrush, IconBucketDroplet } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { getInputValue } from "../Data/NodeDefinition";
+import * as p5 from "p5";
 
 AddNode({
   id: "Start",
@@ -73,9 +74,9 @@ AddNode({
       defaultValue: "#aaaaaa",
     },
     {
-      id: "x",
-      type: "number",
-      defaultValue: "0",
+      id: "position",
+      type: "vector2",
+      defaultValue: p5.prototype.createVector(0, 0, 0),
     },
     {
       id: "y",

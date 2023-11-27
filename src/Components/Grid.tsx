@@ -134,7 +134,6 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
         .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
     ];
   });
-  console.log(edges);
 
   var nodeRef = useRef<PortRefType>({});
 
