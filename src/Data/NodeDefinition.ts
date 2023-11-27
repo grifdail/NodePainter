@@ -1,3 +1,4 @@
+import { Icon } from "@tabler/icons-react";
 import { PortType, SettingType } from "./PortType";
 import { NodeData } from "./stores";
 
@@ -14,14 +15,16 @@ export type SettingDefinition = {
 };
 
 export type NodeDefinition = {
+  description?: string;
+  icon?: Icon;
   id: string;
   tags: Array<string>;
   inputPorts: Array<PortDefinition>;
   outputPorts: Array<PortDefinition>;
   executeOutputPorts: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: (portId: string, data: NodeData, getPortValue: (nodeId: string, portId: string) => any) => any;
-  execute: null | ((data: NodeData, execute: (nodeId: string) => void) => any);
+  getData: (portId: string, data: NodeData, getNodeOutput: (nodeId: string, portId: string) => any) => any;
+  execute: null | ((node: NodeData, execute: (nodeId: string) => void, getNodeOutput: (nodeId: string, portId: string) => any) => void);
 };
 
 export function getInputValue(nodeData: NodeData, portId: string, getNodeOutput: (nodeId: string, portId: string) => any) {

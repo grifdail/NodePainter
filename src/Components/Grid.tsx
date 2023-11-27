@@ -6,6 +6,7 @@ import { Vector2, useGesture } from "@use-gesture/react";
 import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { Edge } from "./Edge";
 import { getNodeTypeDefinition, useTree } from "../Data/stores";
+import { debug } from "console";
 
 type gridProps = {
   viewbox: { x: number; y: number; scale: number };
@@ -69,6 +70,10 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
       tree.removeDataConnection(node, port);
       return;
     }
+    if (type === PortLocation.OutputData && tree.getNode(node).output[port] !== null) {
+      tree.removeOutputConnection(node, port);
+      return;
+    }
     if (portCreationInfo.isCreating) {
       var left = portCreationInfo;
       if (left.startNode === right.startNode && left.startPort === right.startPort) {
@@ -80,9 +85,9 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
       } else if (right.startNodeType === PortLocation.InputData && left.startNodeType === PortLocation.OutputData) {
         createDataNode(left, right);
       } else if (left.startNodeType === PortLocation.InputExec && right.startNodeType === PortLocation.OutputExec) {
-        createExecNode(left, right);
-      } else if (right.startNodeType === PortLocation.InputExec && left.startNodeType === PortLocation.OutputExec) {
         createExecNode(right, left);
+      } else if (right.startNodeType === PortLocation.InputExec && left.startNodeType === PortLocation.OutputExec) {
+        createExecNode(left, right);
       }
 
       setPortCreationInfo((state) => ({ ...state, isCreating: false }));
@@ -129,6 +134,7 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
         .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
     ];
   });
+  console.log(edges);
 
   var nodeRef = useRef<PortRefType>({});
 

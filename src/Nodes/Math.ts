@@ -1,3 +1,4 @@
+import { IconCalculator, IconMathSymbols, IconSquareRoot2 } from "@tabler/icons-react";
 import { NodeDefinition, getInputValue } from "../Data/NodeDefinition";
 import { AddNode } from "../Data/NodeLibrary";
 
@@ -146,6 +147,7 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any): No
   return {
     id: id,
     tags: ["math"],
+    icon: IconMathSymbols,
     inputPorts: [
       {
         id: "a",
@@ -182,6 +184,7 @@ function createFunc(id: string, evalOperation: (input: any) => any): NodeDefinit
   return {
     id: id,
     tags: ["math"],
+    icon: IconSquareRoot2,
     inputPorts: [
       {
         id: "input",
@@ -211,6 +214,8 @@ function createFunc(id: string, evalOperation: (input: any) => any): NodeDefinit
 function createConstant(id: string, value: number): NodeDefinition {
   return {
     id: id,
+    icon: IconCalculator,
+    description: `Mathematical constant. Approximately ${value.toPrecision(4)}.`,
     tags: ["math", "constant"],
     inputPorts: [],
     outputPorts: [

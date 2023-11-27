@@ -26,7 +26,8 @@ export type TreeStore = {
   addNode: (nodeType: string, posX: number, posY: number) => void;
   addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
   getPortValue: (nodeId: string, portId: string) => any;
-  removeDataConnection: (node: string, port: string) => unknown;
+  removeDataConnection: (node: string, port: string) => void;
+  removeOutputConnection: (node: string, port: string) => void;
 };
 
 export type NodeData = {
@@ -93,6 +94,13 @@ export const useTree = create<TreeStore>()((set, get) => {
           port.hasConnection = false;
           port.connectedNode = null;
           port.connectedPort = null;
+        })
+      );
+    },
+    removeOutputConnection(nodeId, portId) {
+      set(
+        produce((state) => {
+          state.nodes[nodeId].output[portId] = null;
         })
       );
     },

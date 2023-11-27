@@ -6,3 +6,50 @@
 
 .grid {
 }
+
+.full-screen-layout {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.add-button {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 25px;
+  border: 2px black solid;
+
+  cursor: pointer;
+  pointer-events: auto;
+}
+.modal-background {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.window {
+  background: white;
+  pointer-events: auto;
+  overflow: auto;
+}
+.add-modal .add-node {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 25px;
+  border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+}
+
+.add-modal .add-node body {
+  flex: 300px 0 0;
+  margin: 0;
+}

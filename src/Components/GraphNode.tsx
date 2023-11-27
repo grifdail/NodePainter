@@ -88,7 +88,7 @@ export const GraphNode = forwardRef(function GraphNode(
       <text x="20" y="35" fill="black" fontSize="18" stroke="black">
         {node.type}
       </text>
-      {definition.execute ? <OutPortView x={0} y={25} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec)}></OutPortView> : null}
+      {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec)}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
         return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData)}></PortView>;
       })}
