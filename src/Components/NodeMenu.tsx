@@ -1,4 +1,4 @@
-﻿import { NodeData, useTree } from "../Data/stores";
+import { NodeData, useTree } from "../Data/stores";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { IconMenu } from "@tabler/icons-react";
 

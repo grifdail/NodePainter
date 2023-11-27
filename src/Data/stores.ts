@@ -41,7 +41,6 @@ export type NodeData = {
   inputs: { [key: string]: PortConnection };
   output: { [key: string]: string | null };
   settings: { [key: string]: any };
-  blackboard: { [key: string]: any };
   positionX: number;
   positionY: number;
 };
@@ -198,7 +197,6 @@ function createNodeData(nodeType: string, x: number, y: number, id: string | nul
     positionX: x,
     positionY: y,
     output: {},
-    blackboard: {},
   };
 }
 

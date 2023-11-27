@@ -11,6 +11,22 @@ type MySketchProps = SketchProps & {
 
 const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
+  var context: ExecutionContext = {
+    p5: p5 as P5CanvasInstance,
+    blackboard: {},
+    execute(nodeId) {
+      var node = tree?.nodes[nodeId];
+      if (node != null) {
+        var def = getNodeTypeDefinition(node);
+        if (def.execute) {
+          def.execute(node, context);
+        }
+      }
+    },
+    getNodeOutput(nodeId, portId) {
+      return tree?.getPortValue(nodeId, portId, context);
+    },
+  };
 
   p5.setup = () => p5.createCanvas(400, 400);
 
@@ -19,22 +35,6 @@ const sketch: Sketch<MySketchProps> = (p5) => {
   };
 
   p5.draw = () => {
-    var context: ExecutionContext = {
-      p5: p5 as P5CanvasInstance,
-      execute(nodeId) {
-        var node = tree?.nodes[nodeId];
-        if (node != null) {
-          var def = getNodeTypeDefinition(node);
-          if (def.execute) {
-            def.execute(node, context);
-          }
-        }
-      },
-      getNodeOutput(nodeId, portId) {
-        return tree?.getPortValue(nodeId, portId, context);
-      },
-    };
-
     context.execute("start");
   };
 };
