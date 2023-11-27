@@ -6,6 +6,9 @@ import { OutPortView } from "./OutPortView";
 import { PortView } from "./PortView";
 import { MainExecuteId, PortLocation } from "../Data/PortType";
 import { NodeData, getNodeTypeDefinition, useTree } from "../Data/stores";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import { NodeMenu } from "./NodeMenu";
 
 function GetNodeHeight(node: NodeData) {
   var typeDef = getNodeTypeDefinition(node);
@@ -32,6 +35,7 @@ export const GraphNode = forwardRef(function GraphNode(
   }));
 
   const setNodePosition = useTree((state) => state.setNodePosition);
+
   const bind = useGesture({
     onDrag: ({ movement: [mx, my] }) => {
       api.start({ xy: [node.positionX + mx * viewportScale, node.positionY + my * viewportScale] });
@@ -75,8 +79,10 @@ export const GraphNode = forwardRef(function GraphNode(
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
 
+  var Icon = definition.icon;
+
   return (
-    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} {...bind()}>
+    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} {...bind()} className="node">
       <rect
         width="300"
         height={GetNodeHeight(node)}
@@ -87,9 +93,11 @@ export const GraphNode = forwardRef(function GraphNode(
         stroke="black"
         rx="5"
       ></rect>
-      <text x="20" y="35" fill="black" fontSize="18" stroke="black">
+      {Icon && <Icon x="20" y="18" />}
+      <text x={!Icon ? 20 : 50} y="35" fill="black" fontSize="18" stroke="black">
         {node.type}
       </text>
+      {!definition.IsUnique && <NodeMenu node={node} />}
       {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec)}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
         return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;

@@ -16,6 +16,7 @@ export type SettingDefinition = {
 };
 
 export type NodeDefinition = {
+  IsUnique?: boolean;
   description?: string;
   icon?: Icon;
   id: string;

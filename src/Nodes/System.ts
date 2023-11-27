@@ -16,6 +16,7 @@ AddNode({
       context.execute(data.output.execute);
     }
   },
+  IsUnique: true,
 });
 
 AddNode({

@@ -30,6 +30,9 @@ export type TreeStore = {
   removeDataConnection: (node: string, port: string) => void;
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
+  resetNode: (node: string) => void;
+  deleteNode: (node: string) => void;
+  duplicateNode: (node: string) => void;
 };
 
 export type NodeData = {
@@ -45,7 +48,7 @@ export type NodeData = {
 
 export const useTree = create<TreeStore>()((set, get) => {
   return {
-    nodes: { start: createNodeData("Start", 200, 200, "start"), test: createNodeData("AddNumber", 200, 500, "test"), test2: createNodeData("AddNumber", 600, 500, "test2") },
+    nodes: { start: createNodeData("Start", 200, 200, "start") },
     getNode(id: string) {
       return get().nodes[id];
     },
@@ -110,6 +113,68 @@ export const useTree = create<TreeStore>()((set, get) => {
       set(
         produce((state) => {
           state.nodes[node].inputs[portId].ownValue = newValue;
+        })
+      );
+    },
+    duplicateNode(node) {
+      set(
+        produce((state) => {
+          var sourceNode = state.nodes[node];
+          var clone = createNodeData(sourceNode.type, sourceNode.positionX + 50, sourceNode.positionY + 50);
+          for (const key in sourceNode.inputs) {
+            clone.inputs[key] = {
+              ...sourceNode.inputs[key],
+            };
+          }
+          for (const key in sourceNode.output) {
+            clone.output[key] = sourceNode.output[key];
+          }
+          for (const key in sourceNode.settings) {
+            clone.settings[key] = sourceNode.settings[key];
+          }
+          state.nodes[clone.id] = clone;
+        })
+      );
+    },
+    deleteNode(node) {
+      set(
+        produce((state) => {
+          var nodes = state.nodes as { [key: string]: NodeData };
+
+          Object.values(nodes).forEach((item: NodeData) => {
+            Object.values(item.inputs).forEach((port) => {
+              if (port.hasConnection && port.connectedNode === node) {
+                port.hasConnection = false;
+                port.connectedNode = null;
+                port.connectedPort = null;
+              }
+            });
+            Object.entries(item.output).forEach(([key, target]) => {
+              if (target === node) {
+                item.output[target] = null;
+              }
+            });
+          });
+          delete state.nodes[node];
+        })
+      );
+    },
+    resetNode(node) {
+      set(
+        produce((state) => {
+          var sourceNode = state.nodes[node] as NodeData;
+          var def = getNodeTypeDefinition(sourceNode);
+          def.inputPorts.forEach((port) => {
+            sourceNode.inputs[port.id].hasConnection = false;
+            sourceNode.inputs[port.id].ownValue = port.defaultValue;
+          });
+
+          for (const key in sourceNode.output) {
+            sourceNode.output[key] = null;
+          }
+          for (const key in def.settings) {
+            sourceNode.settings[key] = def.settings[key].defaultValue;
+          }
         })
       );
     },
