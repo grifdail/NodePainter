@@ -30,6 +30,7 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
   }));
+  const [{ xyz }, api] = useSpring(() => ({ xyz: [viewbox.x, viewbox.y, viewbox.scale] }));
 
   useEffect(() => {
     var cb = (e: PointerEvent) => {
@@ -40,9 +41,7 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
     return () => {
       window.removeEventListener("pointermove", cb);
     };
-  }, []);
-
-  const [{ xyz }, api] = useSpring(() => ({ xyz: [viewbox.x, viewbox.y, viewbox.scale] }));
+  }, [mousePositionApi, xyz]);
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useGesture({
