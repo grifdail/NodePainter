@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import { ExecutionContext, PortDefinition, SettingDefinition } from "./NodeDefinition";
-import { NodeLibrary } from "./NodeLibrary";
-import { PortType } from "./PortType";
+
 import { nanoid } from "nanoid";
+import { ExecutionContext, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
+import { NodeLibrary } from "../Data/NodeLibrary";
+import { PortType } from "../Data/PortType";
 
 //import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -31,6 +32,14 @@ export type NodeData = {
   settings: { [key: string]: any };
   positionX: number;
   positionY: number;
+};
+
+export type PortConnection = {
+  hasConnection: boolean;
+  ownValue: any;
+  connectedNode: string | null;
+  connectedPort: string | null;
+  type: PortType;
 };
 
 export const useTree = create<TreeStore>()(
@@ -194,14 +203,6 @@ function createNodeData(nodeType: string, x: number, y: number, id: string | nul
     output: {},
   };
 }
-
-export type PortConnection = {
-  hasConnection: boolean;
-  ownValue: any;
-  connectedNode: string | null;
-  connectedPort: string | null;
-  type: PortType;
-};
 
 function createPortConnection(def: PortDefinition): PortConnection {
   return {

@@ -1,6 +1,6 @@
-import { NodeData, useTree } from "../Data/useTree";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { IconMenu } from "@tabler/icons-react";
+import { NodeData, useTree } from "../Hooks/useTree";
 
 export function NodeMenu({ node }: { node: NodeData }) {
   const duplicateNode = useTree((state) => state.duplicateNode);

@@ -1,6 +1,5 @@
 import { IconArrowsHorizontal, IconArrowsVertical, IconAssembly, IconClock } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
-import { getInputValue } from "../Data/NodeDefinition";
 
 AddNode({
   id: "Start",
@@ -53,7 +52,7 @@ AddNode({
     return context.blackboard[`${nodeData.id}-index`] || 0;
   },
   execute: (data, context) => {
-    var count = getInputValue(data, "count", context) as number;
+    var count = context.getInputValue(data, "count") as number;
     for (var i = 0; i < count; i++) {
       context.blackboard[`${data.id}-index`] = i;
       if (data.output.loop) {

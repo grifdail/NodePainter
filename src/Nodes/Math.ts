@@ -1,5 +1,5 @@
 import { IconCalculator, IconMathSymbols, IconSquareRoot2 } from "@tabler/icons-react";
-import { NodeDefinition, getInputValue } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Data/NodeDefinition";
 import { AddNode } from "../Data/NodeLibrary";
 
 AddNode(createOperation("AddNumber", (a, b) => a + b));
@@ -57,8 +57,8 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
-      var a = getInputValue(nodeData, "y", context);
-      var b = getInputValue(nodeData, "x", context);
+      var a = context.getInputValue(nodeData, "y");
+      var b = context.getInputValue(nodeData, "x");
       return Math.atan2(a, b);
     }
   },
@@ -95,9 +95,9 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
-      var value = getInputValue(nodeData, "value", context);
-      var min = getInputValue(nodeData, "min", context);
-      var max = getInputValue(nodeData, "max", context);
+      var value = context.getInputValue(nodeData, "value");
+      var min = context.getInputValue(nodeData, "min");
+      var max = context.getInputValue(nodeData, "max");
       return Math.max(Math.min(value, max), min);
     }
   },
@@ -135,9 +135,9 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
-      var t = getInputValue(nodeData, "t", context);
-      var min = getInputValue(nodeData, "min", context);
-      var max = getInputValue(nodeData, "max", context);
+      var t = context.getInputValue(nodeData, "t");
+      var min = context.getInputValue(nodeData, "min");
+      var max = context.getInputValue(nodeData, "max");
       return t * max + (1 - t) * min;
     }
   },
@@ -173,8 +173,8 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var a = getInputValue(nodeData, "a", context);
-        var b = getInputValue(nodeData, "b", context);
+        var a = context.getInputValue(nodeData, "a");
+        var b = context.getInputValue(nodeData, "b");
         return evalOperation(a, b);
       }
     },
@@ -206,7 +206,7 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var a = getInputValue(nodeData, "input", context);
+        var a = context.getInputValue(nodeData, "input");
         return evalOperation(a);
       }
     },

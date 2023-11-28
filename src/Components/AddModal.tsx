@@ -3,7 +3,8 @@ import { usePagination } from "react-use-pagination";
 import { NodeLibrary } from "../Data/NodeLibrary";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
-import { TreeStore, useTree } from "../Data/useTree";
+import { useViewbox } from "../Hooks/useViewbox";
+import { useTree } from "../Hooks/useTree";
 
 export function AddNodeButton({ node, onClick }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void }) {
   const Icon = node.icon;
@@ -35,10 +36,12 @@ export function AddModal({ visible, close }: { visible: boolean; close: () => vo
     setPage(0);
   };
 
-  const addNode = useTree((state: TreeStore) => state.addNode);
+  const addNode = useTree((state) => state.addNode);
+
+  var view = useViewbox();
 
   const onClickNode = (node: NodeDefinition) => {
-    addNode(node.id, 100, 100);
+    addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
     close();
   };
 

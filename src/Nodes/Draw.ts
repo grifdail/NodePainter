@@ -1,6 +1,5 @@
 import { IconBrush, IconBucketDroplet } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
-import { getInputValue } from "../Data/NodeDefinition";
 import * as P5 from "p5";
 
 AddNode({
@@ -20,7 +19,7 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
-    var color = getInputValue(data, "color", context);
+    var color = context.getInputValue(data, "color");
     context.p5.background(color);
   },
 });
@@ -52,9 +51,9 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
-    var color = getInputValue(data, "color", context);
-    var position = getInputValue(data, "position", context) as P5.Vector;
-    var radius = getInputValue(data, "radius", context) as number;
+    var color = context.getInputValue(data, "color");
+    var position = context.getInputValue(data, "position") as P5.Vector;
+    var radius = context.getInputValue(data, "radius") as number;
     context.p5.noStroke();
     context.p5.fill(color);
     context.p5.circle(position.x, position.y, radius);
@@ -93,10 +92,10 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
-    var color = getInputValue(data, "color", context);
-    var p1 = getInputValue(data, "start", context) as P5.Vector;
-    var p2 = getInputValue(data, "end", context) as P5.Vector;
-    var lineWidth = getInputValue(data, "lineWidth", context) as number;
+    var color = context.getInputValue(data, "color");
+    var p1 = context.getInputValue(data, "start") as P5.Vector;
+    var p2 = context.getInputValue(data, "end") as P5.Vector;
+    var lineWidth = context.getInputValue(data, "lineWidth") as number;
     context.p5.stroke(color);
     context.p5.strokeWeight(lineWidth);
     context.p5.line(p1.x, p1.y, p2.x, p2.y);

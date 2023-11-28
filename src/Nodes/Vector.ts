@@ -1,6 +1,5 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
-import { getInputValue } from "../Data/NodeDefinition";
 import * as p5 from "p5";
 
 const createVector = p5.prototype.createVector;
@@ -27,8 +26,8 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "vec") {
-      var x = getInputValue(nodeData, "x", context);
-      var y = getInputValue(nodeData, "y", context);
+      var x = context.getInputValue(nodeData, "x");
+      var y = context.getInputValue(nodeData, "y");
       return createVector(x, y);
     }
   },
@@ -62,7 +61,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = getInputValue(nodeData, "x", context);
+    var vec = context.getInputValue(nodeData, "x");
     if (portId === "x") {
       return vec.x;
     }
@@ -95,8 +94,8 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "vec") {
-      var angle = getInputValue(nodeData, "angle", context);
-      var length = getInputValue(nodeData, "length", context);
+      var angle = context.getInputValue(nodeData, "angle");
+      var length = context.getInputValue(nodeData, "length");
       console.log(length);
       return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
     }
@@ -126,7 +125,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = getInputValue(nodeData, "vec", context) as p5.Vector;
+    var vec = context.getInputValue(nodeData, "vec") as p5.Vector;
     return vec.mag();
   },
   execute: null,
@@ -153,7 +152,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = getInputValue(nodeData, "vec", context) as p5.Vector;
+    var vec = context.getInputValue(nodeData, "vec") as p5.Vector;
     return vec.magSq();
   },
   execute: null,
@@ -186,8 +185,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = getInputValue(nodeData, "a", context) as p5.Vector;
-    var b = getInputValue(nodeData, "b", context) as p5.Vector;
+    var a = context.getInputValue(nodeData, "a") as p5.Vector;
+    var b = context.getInputValue(nodeData, "b") as p5.Vector;
     return p5.Vector.add(a, b);
   },
   execute: null,
@@ -220,8 +219,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = getInputValue(nodeData, "a", context) as p5.Vector;
-    var b = getInputValue(nodeData, "b", context) as p5.Vector;
+    var a = context.getInputValue(nodeData, "a") as p5.Vector;
+    var b = context.getInputValue(nodeData, "b") as p5.Vector;
     return p5.Vector.sub(a, b);
   },
   execute: null,
@@ -254,8 +253,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = getInputValue(nodeData, "vec", context) as p5.Vector;
-    var b = getInputValue(nodeData, "scale", context) as number;
+    var a = context.getInputValue(nodeData, "vec") as p5.Vector;
+    var b = context.getInputValue(nodeData, "scale") as number;
     return createVector(a.x * b, a.y * b);
   },
   execute: null,
@@ -288,8 +287,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = getInputValue(nodeData, "a", context) as p5.Vector;
-    var b = getInputValue(nodeData, "b", context) as p5.Vector;
+    var a = context.getInputValue(nodeData, "a") as p5.Vector;
+    var b = context.getInputValue(nodeData, "b") as p5.Vector;
     return p5.Vector.dot(a, b);
   },
   execute: null,
@@ -327,9 +326,9 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = getInputValue(nodeData, "from", context) as p5.Vector;
-    var b = getInputValue(nodeData, "to", context) as p5.Vector;
-    var t = getInputValue(nodeData, "t", context) as number;
+    var a = context.getInputValue(nodeData, "from") as p5.Vector;
+    var b = context.getInputValue(nodeData, "to") as p5.Vector;
+    var t = context.getInputValue(nodeData, "t") as number;
     return p5.Vector.lerp(a, b, t);
   },
   execute: null,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import "./Nodes/Draw";
 import "./Nodes/Math";
@@ -10,12 +10,11 @@ import { AddModal } from "./Components/AddModal";
 import { GridUi } from "./Components/GridUi";
 
 function App() {
-  var [viewbox, setViewbox] = useState({ x: 0, y: 0, scale: 1 });
   var [addModelOpen, toggleAddModal] = useToggle(false);
 
   return (
     <div className="App">
-      <Grid viewbox={viewbox} setViewBox={(x, y, scale) => setViewbox({ x, y, scale })}></Grid>
+      <Grid></Grid>
       <GridUi visible={!addModelOpen} openAddModal={toggleAddModal}></GridUi>
       <AddModal visible={addModelOpen} close={toggleAddModal}></AddModal>
     </div>

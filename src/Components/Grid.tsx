@@ -2,18 +2,14 @@ import { useEffect, useRef } from "react";
 import { GraphNode } from "./GraphNode";
 import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
-import { Vector2, useGesture } from "@use-gesture/react";
 import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { Edge } from "./Edge";
-import { useTree } from "../Data/useTree";
-import { useEdgeCreation } from "./useEdgeCreation";
-import { useGesturePrevention } from "./useGesturePrevention";
-import { usePortSelection } from "../Data/usePortSelection";
 
-type gridProps = {
-  viewbox: { x: number; y: number; scale: number };
-  setViewBox: (x: number, y: number, s: number) => void;
-};
+import { useSVGMapDrag } from "../Hooks/useSVGMapDrag";
+import { useTree } from "../Hooks/useTree";
+import { useGesturePrevention } from "../Hooks/useGesturePrevention";
+import { usePortSelection } from "../Hooks/usePortSelection";
+import { useEdgeCreation } from "../Hooks/useEdgeCreation";
 
 type PortRefType = {
   [key: string]: {
@@ -21,16 +17,16 @@ type PortRefType = {
   };
 };
 
-export function Grid({ viewbox, setViewBox }: gridProps) {
+export function Grid() {
   useGesturePrevention();
   const tree = useTree();
-
+  const portSelection = usePortSelection();
+  const onClickPort = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
-
+  const [xyz, bind] = useSVGMapDrag();
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
   }));
-  const [{ xyz }, api] = useSpring(() => ({ xyz: [viewbox.x, viewbox.y, viewbox.scale] }));
 
   useEffect(() => {
     var cb = (e: PointerEvent) => {
@@ -42,31 +38,6 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
       window.removeEventListener("pointermove", cb);
     };
   }, [mousePositionApi, xyz]);
-
-  // Set the drag hook and define component movement based on gesture data
-  const bind = useGesture({
-    onDrag: ({ pinching, movement: [mx, my], cancel }) => {
-      if (pinching) return cancel();
-      api.start({ xyz: [viewbox.x - mx * viewbox.scale, viewbox.y - my * viewbox.scale, viewbox.scale] });
-    },
-    onDragEnd: ({ movement: [mx, my] }) => {
-      setViewBox(viewbox.x - mx * viewbox.scale, viewbox.y - my * viewbox.scale, viewbox.scale);
-    },
-    onPinch: ({ origin, movement: [scale] }) => {
-      api.start({ xyz: computeNewScale(viewbox, scale, origin) });
-    },
-    onPinchEnd: ({ origin, movement: [scale] }) => {
-      var [x, y, s] = computeNewScale(viewbox, scale, origin);
-      setViewBox(x, y, s);
-    },
-    onWheel: ({ event: { pageX, pageY }, movement: [_, distance] }) => {
-      api.start({ xyz: computeNewScale(viewbox, Math.exp(-distance / 1000), [pageX, pageY]) });
-    },
-    onWheelEnd: ({ event: { pageX, pageY }, movement: [_, distance] }) => {
-      var [x, y, s] = computeNewScale(viewbox, Math.exp(-distance / 1000), [pageX, pageY]);
-      setViewBox(x, y, s);
-    },
-  });
 
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
 
@@ -81,10 +52,6 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
         .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
     ];
   });
-
-  var portSelection = usePortSelection();
-
-  var onClickPort = useEdgeCreation();
 
   var nodeRef = useRef<PortRefType>({});
 
@@ -116,15 +83,10 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
             }
             node={tree.getNode(treeId)}
             key={treeId}
-            viewportScale={viewbox.scale}
             onClickPort={onClickPort}
           />
         );
       })}
     </animated.svg>
   );
-}
-function computeNewScale(viewbox: { x: number; y: number; scale: number }, scale: number, origin: Vector2): number[] {
-  var scaleDiff = viewbox.scale - viewbox.scale / scale;
-  return [viewbox.x + origin[0] * scaleDiff, viewbox.y + origin[1] * scaleDiff, viewbox.scale / scale];
 }

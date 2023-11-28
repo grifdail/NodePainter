@@ -1,7 +1,6 @@
 import { PortLocation, PortType } from "../Data/PortType";
-import { getNodeTypeDefinition, useTree } from "../Data/useTree";
-import { PortSelection, usePortSelection } from "../Data/usePortSelection";
-
+import { PortSelection, usePortSelection } from "./usePortSelection";
+import { getNodeTypeDefinition, useTree } from "./useTree";
 export function useEdgeCreation() {
   const tree = useTree();
   const portSelection = usePortSelection();

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { PortLocation, PortType } from "./PortType";
+import { PortLocation, PortType } from "../Data/PortType";
 
 export type PortSelection = {
   node: string;

@@ -5,10 +5,11 @@ import { useGesture } from "@use-gesture/react";
 import { OutPortView } from "./OutPortView";
 import { PortView } from "./PortView";
 import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
-import { NodeData, getNodeTypeDefinition, useTree } from "../Data/useTree";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
+import { useViewbox } from "../Hooks/useViewbox";
+import { NodeData, getNodeTypeDefinition, useTree } from "../Hooks/useTree";
 
 function GetNodeHeight(node: NodeData) {
   var typeDef = getNodeTypeDefinition(node);
@@ -20,11 +21,9 @@ function GetNodeHeight(node: NodeData) {
 export const GraphNode = forwardRef(function GraphNode(
   {
     node,
-    viewportScale,
     onClickPort,
   }: {
     node: NodeData;
-    viewportScale: number;
     onClickPort: (node: string, port: string, location: PortLocation, type: PortType) => void;
   },
   ref
@@ -34,14 +33,16 @@ export const GraphNode = forwardRef(function GraphNode(
     xy: [node.positionX, node.positionY],
   }));
 
+  const viewPortScale = useViewbox((state) => state.scale);
+
   const setNodePosition = useTree((state) => state.setNodePosition);
 
   const bind = useGesture({
     onDrag: ({ movement: [mx, my] }) => {
-      api.start({ xy: [node.positionX + mx * viewportScale, node.positionY + my * viewportScale] });
+      api.start({ xy: [node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale] });
     },
     onDragEnd: ({ movement: [mx, my] }) => {
-      setNodePosition(node.id, node.positionX + mx * viewportScale, node.positionY + my * viewportScale);
+      setNodePosition(node.id, node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale);
     },
   });
 

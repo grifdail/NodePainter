@@ -1,7 +1,7 @@
 import { Icon } from "@tabler/icons-react";
 import { PortType, SettingType } from "./PortType";
-import { NodeData } from "./useTree";
 import { P5CanvasInstance } from "@p5-wrapper/react";
+import { NodeData } from "../Hooks/useTree";
 
 export type PortDefinition = {
   id: string;
@@ -34,13 +34,5 @@ export type ExecutionContext = {
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   execute: (nodeId: string) => void;
+  getInputValue: (nodeData: NodeData, portId: string) => any;
 };
-
-export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
-  const inputPorts = nodeData.inputs[portId];
-  if (inputPorts.hasConnection) {
-    return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
-  } else {
-    return inputPorts.ownValue;
-  }
-}
