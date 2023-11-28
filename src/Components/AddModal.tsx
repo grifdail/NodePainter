@@ -21,7 +21,7 @@ export function AddNodeButton({ node, onClick }: { node: NodeDefinition; onClick
   );
 }
 
-export function AddModal({ visible, close }: { visible: boolean; close: () => void }) {
+export function AddModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
 
@@ -45,9 +45,6 @@ export function AddModal({ visible, close }: { visible: boolean; close: () => vo
     close();
   };
 
-  if (!visible) {
-    return null;
-  }
   return (
     <div className="full-screen-layout window add-modal">
       <div className="header">

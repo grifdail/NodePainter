@@ -83,7 +83,7 @@ export const GraphNode = forwardRef(function GraphNode(
   var Icon = definition.icon;
 
   return (
-    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} {...bind()} className="node">
+    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
       <rect
         width="300"
         height={GetNodeHeight(node)}
@@ -93,9 +93,10 @@ export const GraphNode = forwardRef(function GraphNode(
         }}
         stroke="black"
         rx="5"
+        {...bind()}
       ></rect>
-      {Icon && <Icon x="20" y="18" />}
-      <text x={!Icon ? 20 : 50} y="35" fill="black" fontSize="18" stroke="black">
+      {Icon && <Icon x="20" y="18" {...bind()} />}
+      <text x={!Icon ? 20 : 50} y="35" fill="black" fontSize="18" stroke="black" {...bind()}>
         {node.type}
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}

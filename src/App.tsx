@@ -15,8 +15,8 @@ function App() {
   return (
     <div className="App">
       <Grid></Grid>
-      <GridUi visible={!addModelOpen} openAddModal={toggleAddModal}></GridUi>
-      <AddModal visible={addModelOpen} close={toggleAddModal}></AddModal>
+      {!addModelOpen && <GridUi openAddModal={toggleAddModal} />}
+      {addModelOpen && <AddModal close={toggleAddModal} />}
     </div>
   );
 }
