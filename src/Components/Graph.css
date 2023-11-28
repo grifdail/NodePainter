@@ -20,6 +20,7 @@ foreignObject div input {
 }
 
 .node {
+  touch-action: none;
 }
 .node foreignObject.context-menu {
   justify-content: start;

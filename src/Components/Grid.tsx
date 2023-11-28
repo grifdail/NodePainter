@@ -1,11 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { GraphNode } from "./GraphNode";
 import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Vector2, useGesture } from "@use-gesture/react";
 import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { Edge } from "./Edge";
-import { getNodeTypeDefinition, useTree } from "../Data/useTree";
+import { useTree } from "../Data/useTree";
+import { useEdgeCreation } from "./useEdgeCreation";
+import { useGesturePrevention } from "./useGesturePrevention";
+import { usePortSelection } from "../Data/usePortSelection";
 
 type gridProps = {
   viewbox: { x: number; y: number; scale: number };
@@ -18,82 +21,28 @@ type PortRefType = {
   };
 };
 
-type PortSelection = {
-  isCreating: boolean;
-  startNode: string;
-  startPort: string;
-  startNodeType: PortLocation;
-};
-
 export function Grid({ viewbox, setViewBox }: gridProps) {
-  useEffect(() => {
-    const preventDefault = (e: Event) => e.preventDefault();
-    document.addEventListener("gesturestart", preventDefault);
-    document.addEventListener("gesturechange", preventDefault);
-
-    return () => {
-      document.removeEventListener("gesturestart", preventDefault);
-      document.removeEventListener("gesturechange", preventDefault);
-    };
-  }, []);
+  useGesturePrevention();
   const tree = useTree();
 
   const [ref, elementSize] = useMeasure();
 
+  const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
+    mousePosition: [0, 0],
+  }));
+
+  useEffect(() => {
+    var cb = (e: PointerEvent) => {
+      var now = xyz.get();
+      mousePositionApi.start({ mousePosition: [e.clientX * now[2] + now[0], e.clientY * now[2] + now[1]] });
+    };
+    window.addEventListener("pointermove", cb);
+    return () => {
+      window.removeEventListener("pointermove", cb);
+    };
+  }, []);
+
   const [{ xyz }, api] = useSpring(() => ({ xyz: [viewbox.x, viewbox.y, viewbox.scale] }));
-
-  const [portCreationInfo, setPortCreationInfo] = useState<PortSelection>({
-    isCreating: false,
-    startNode: "",
-    startPort: "",
-    startNodeType: PortLocation.InputData,
-  });
-
-  function createDataNode(left: PortSelection, right: PortSelection) {
-    var leftType = getNodeTypeDefinition(tree.getNode(left.startNode)).outputPorts.find((item) => item.id === left.startPort)?.type;
-
-    var rightType = tree.getNode(right.startNode).inputs[right.startPort].type;
-    if (leftType === rightType) {
-      tree.addEdge(left.startNode, left.startPort, right.startNode, right.startPort);
-    }
-  }
-
-  function createExecNode(left: PortSelection, right: PortSelection) {
-    // TODO: Validate joins
-    tree.addEdge(left.startNode, left.startPort, right.startNode, right.startPort);
-  }
-
-  const onClickPort = function (node: string, port: string, type: PortLocation) {
-    var right = { isCreating: true, startNode: node, startPort: port, startNodeType: type };
-    if (type === PortLocation.InputData && tree.getNode(node).inputs[port].hasConnection) {
-      tree.removeDataConnection(node, port);
-      return;
-    }
-    if (type === PortLocation.OutputData && tree.getNode(node).output[port] !== null) {
-      tree.removeOutputConnection(node, port);
-      return;
-    }
-    if (portCreationInfo.isCreating) {
-      var left = portCreationInfo;
-      if (left.startNode === right.startNode && left.startPort === right.startPort) {
-        setPortCreationInfo((state) => right);
-        return;
-      }
-      if (left.startNodeType === PortLocation.InputData && right.startNodeType === PortLocation.OutputData) {
-        createDataNode(right, left);
-      } else if (right.startNodeType === PortLocation.InputData && left.startNodeType === PortLocation.OutputData) {
-        createDataNode(left, right);
-      } else if (left.startNodeType === PortLocation.InputExec && right.startNodeType === PortLocation.OutputExec) {
-        createExecNode(right, left);
-      } else if (right.startNodeType === PortLocation.InputExec && left.startNodeType === PortLocation.OutputExec) {
-        createExecNode(left, right);
-      }
-
-      setPortCreationInfo((state) => ({ ...state, isCreating: false }));
-    } else {
-      setPortCreationInfo((state) => right);
-    }
-  };
 
   // Set the drag hook and define component movement based on gesture data
   const bind = useGesture({
@@ -134,6 +83,10 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
     ];
   });
 
+  var portSelection = usePortSelection();
+
+  var onClickPort = useEdgeCreation();
+
   var nodeRef = useRef<PortRefType>({});
 
   function getNodePort(nodeId: string, portId: string) {
@@ -153,6 +106,7 @@ export function Grid({ viewbox, setViewBox }: gridProps) {
       {edges.map((edge) => {
         return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string)} end={getNodePort(edge[2] as string, edge[3] as string)} type={edge[4] as PortType} />;
       })}
+      {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port)} end={mousePosition} type={portSelection.type} reverse={portSelection.location === PortLocation.InputData || portSelection.location === PortLocation.InputExec} />}
       {Object.keys(tree.nodes).map((treeId) => {
         return (
           <GraphNode

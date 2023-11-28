@@ -1,9 +1,12 @@
-import React from "react";
 import { PortColor } from "./PortColor";
-import { animated, Interpolation, to } from "@react-spring/web";
+import { animated, FrameValue, to } from "@react-spring/web";
 import { PortType } from "../Data/PortType";
 
-export function Edge({ start, end, type }: { start: Interpolation<number[], number[]>; end: Interpolation<number[], number[]>; type: PortType }) {
+export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
+  if (reverse) {
+    [start, end] = [end, start];
+  }
+
   return (
     <animated.path
       d={to([start, end], (pointa, pointB) => {

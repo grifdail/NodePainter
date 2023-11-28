@@ -4,6 +4,7 @@ import { TreeStore, getNodeTypeDefinition, useTree } from "../Data/useTree";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext } from "../Data/NodeDefinition";
 import { useToggle } from "@uidotdev/usehooks";
+import { usePortSelection } from "../Data/usePortSelection";
 
 type MySketchProps = SketchProps & {
   tree: TreeStore;
@@ -48,12 +49,21 @@ export function SketchPreview() {
 export function GridUi({ visible, openAddModal }: { visible: boolean; openAddModal: () => void }) {
   const [showPreview, togglePreview] = useToggle(true);
 
+  const portSelection = usePortSelection();
+  const nodes = useTree((state) => state.nodes);
+
   if (!visible) {
     return null;
   }
 
   return (
     <div className="full-screen-layout grid-ui">
+      {portSelection.hasSelection && (
+        <div className={`warning-track ${portSelection.type}`}>
+          <div>{`${nodes[portSelection.node].type} # ${portSelection.port}`}</div>
+          <button onClick={portSelection.reset}>cancel</button>
+        </div>
+      )}
       <menu>
         <button className="button" onClick={openAddModal}>
           <IconCodePlus></IconCodePlus>

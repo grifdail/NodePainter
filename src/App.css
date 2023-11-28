@@ -1,4 +1,11 @@
 :root {
+  --color-execute: #2fb344;
+  --color-number: #4299e1;
+  --color-vector2: #ae3ec9;
+  --color-color: #f76707;
+  --color-string: #d6336c;
+  --color-boolean: #17a2b8;
+
   --gradient-execute: repeating-linear-gradient(45deg, #2fb344, #2fb344 10px, #ffffff 10px, #ffffff 20px);
   --gradient-number: repeating-linear-gradient(45deg, #4299e1, #4299e1 10px, #ffffff 10px, #ffffff 20px);
   --gradient-vector2: repeating-linear-gradient(45deg, #ae3ec9, #ae3ec9 10px, #ffffff 10px, #ffffff 20px);
@@ -8,7 +15,6 @@
 }
 
 .App {
-  text-align: center;
   height: 100%;
   overflow: hidden;
 }
@@ -74,4 +80,45 @@
   bottom: 0;
   left: 5px;
   border: 2px solid black;
+}
+
+.warning-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 20px solid black;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+.warning-track {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 20px solid black;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+.warning-track button {
+  pointer-events: all;
+}
+
+.warning-track.number {
+  border-color: var(--color-number);
+}
+.warning-track.execute {
+  border-color: var(--color-execute);
+}
+.warning-track.vector2 {
+  border-color: var(--color-vector2);
+}
+.warning-track.string {
+  border-color: var(--color-string);
+}
+.warning-track.boolean {
+  border-color: var(--color-boolean);
+}
+.warning-track.color {
+  border-color: var(--color-color);
 }

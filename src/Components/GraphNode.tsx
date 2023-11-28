@@ -4,7 +4,7 @@ import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { OutPortView } from "./OutPortView";
 import { PortView } from "./PortView";
-import { MainExecuteId, PortLocation } from "../Data/PortType";
+import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
 import { NodeData, getNodeTypeDefinition, useTree } from "../Data/useTree";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
@@ -25,7 +25,7 @@ export const GraphNode = forwardRef(function GraphNode(
   }: {
     node: NodeData;
     viewportScale: number;
-    onClickPort: (node: string, port: string, type: PortLocation) => void;
+    onClickPort: (node: string, port: string, location: PortLocation, type: PortType) => void;
   },
   ref
 ) {
@@ -98,15 +98,15 @@ export const GraphNode = forwardRef(function GraphNode(
         {node.type}
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}
-      {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec)}></OutPortView> : null}
+      {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec, "execute")}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
-        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
+        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData, item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
       })}
       {definition.executeOutputPorts.map((id, i) => {
-        return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, PortLocation.OutputExec)}></OutPortView>;
+        return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, PortLocation.OutputExec, "execute")}></OutPortView>;
       })}
       {definition.outputPorts.map((item, i) => {
-        return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, PortLocation.OutputData)}></OutPortView>;
+        return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, PortLocation.OutputData, item.type)}></OutPortView>;
       })}
     </animated.g>
   );
