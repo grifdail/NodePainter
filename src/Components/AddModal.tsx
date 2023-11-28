@@ -115,15 +115,22 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
 
 export function AddModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
+  const [selectedCategory, setCategory] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
 
   const filteredList = Object.values(NodeLibrary).filter((item) => {
+    if (!!selectedCategory && !item.tags.includes(selectedCategory)) {
+      return false;
+    }
+
     return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
 
   const tags = Object.values(NodeLibrary)
     .flatMap((item) => item.tags)
     .filter((value, index, array) => array.indexOf(value) === index);
+
+  tags.splice(0, 0, "all");
 
   const addNode = useTree((state) => state.addNode);
 
@@ -138,7 +145,7 @@ export function AddModal({ close }: { close: () => void }) {
       <AddModalDiv>
         <menu>
           {tags.map((tag) => (
-            <CategoryButton key={tag} className="tag" onClick={() => setSearchTerm(tag)}>
+            <CategoryButton key={tag} selected={tag === selectedCategory || (!!selectedCategory && tag === "all")} onClick={() => setCategory(tag === "all" ? "" : tag)}>
               {tag}
             </CategoryButton>
           ))}
