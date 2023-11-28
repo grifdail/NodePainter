@@ -1,4 +1,4 @@
-import { IconMenu, IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus } from "@tabler/icons-react";
+import { IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus } from "@tabler/icons-react";
 import { useToggle } from "@uidotdev/usehooks";
 
 import { SketchPreview } from "./SketchPreview";

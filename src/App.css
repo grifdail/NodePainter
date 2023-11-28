@@ -16,6 +16,10 @@
   --gradient-boolean: repeating-linear-gradient(45deg, #17a2b8, #17a2b8 10px, #ffffff 10px, #ffffff 20px);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .App {
   height: 100%;
   overflow: hidden;

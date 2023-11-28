@@ -1,4 +1,4 @@
-﻿import styled from "styled-components";
+import styled from "styled-components";
 
 export var Toolbar = styled.menu<{ vertical?: boolean; reversed?: boolean }>`
   display: flex;

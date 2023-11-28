@@ -1,79 +1,157 @@
-import React, { useState } from "react";
-import { usePagination } from "react-use-pagination";
+import { useState } from "react";
 import { NodeLibrary } from "../Data/NodeLibrary";
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { useViewbox } from "../Hooks/useViewbox";
 import { useTree } from "../Hooks/useTree";
+import { NodePreview } from "./NodePreview";
+import { Modal } from "./Modal";
+import styled from "styled-components";
 
-export function AddNodeButton({ node, onClick }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void }) {
-  const Icon = node.icon;
-  return (
-    <div className="add-node">
-      {Icon != null ? <Icon></Icon> : null}
-      <div className="body">
-        <h5>{node.id}</h5>
-        <p>{node.description}</p>
-      </div>
+const AddModalDiv = styled.div`
+  display: flex;
+  padding: 0;
+  margin: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  width: 100%;
+  height: 100%;
+  align-content: stretch;
+  align-self: stretch;
+  flex-grow: 1;
 
-      <button onClick={() => onClick(node)}>Add</button>
-    </div>
-  );
-}
+  & > menu {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    & button {
+    }
+  }
+  & > section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 1;
+    max-height: 100%;
+    align-items: stretch;
+
+    & > Input {
+      display: block;
+      width: 100%;
+    }
+
+    & > menu {
+      overflow: auto;
+      width: 100%;
+      background: #eee;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      gap: 10px;
+      flex-direction: row;
+      align-self: stretch;
+      margin: 0;
+      max-height: 100%;
+      padding-bottom: 25px;
+      box-sizing: border-box;
+      flex-grow: 1;
+
+      & > button {
+        flex-basis: 200px;
+        max-width: 300px;
+        flex-grow: 1;
+        flex-shrink: 1;
+        background: white;
+        padding: 10px;
+        box-sizing: 10px;
+        //aspect-ratio: 2;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+
+        & div {
+          padding-bottom: 5px;
+          font-weight: bold;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+          width: 100%;
+        }
+
+        & svg {
+          height: 50px;
+          width: 50px;
+        }
+        & p {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+  }
+`;
+
+const CategoryButton = styled.button<{ selected?: boolean }>`
+  padding: 10px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  text-transform: capitalize;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+`;
 
 export function AddModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
 
   const filteredList = Object.values(NodeLibrary).filter((item) => {
-    return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm) || item.tags.some((tag) => tag.toLowerCase() === searchTerm);
+    return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
-  const tags = filteredList.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index);
-  const { currentPage, totalPages, setNextPage, setPreviousPage, nextEnabled, previousEnabled, startIndex, endIndex, setPage } = usePagination({ totalItems: filteredList.length, initialPage: 0, initialPageSize: 10 });
 
-  const onInputChange = (value: string) => {
-    setSearchTerm(value);
-    setPage(0);
-  };
+  const tags = Object.values(NodeLibrary)
+    .flatMap((item) => item.tags)
+    .filter((value, index, array) => array.indexOf(value) === index);
 
   const addNode = useTree((state) => state.addNode);
 
-  var view = useViewbox();
-
   const onClickNode = (node: NodeDefinition) => {
+    var view = useViewbox.getState();
     addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
     close();
   };
 
   return (
-    <div className="full-screen-layout window add-modal">
-      <div className="header">
-        <h3>Add a new node</h3>
-        <div className="tag-list">
+    <Modal title="Add a new node" icon={IconPlus} onClose={close}>
+      <AddModalDiv>
+        <menu>
           {tags.map((tag) => (
-            <button key={tag} className="tag" onClick={() => onInputChange(tag)}>
+            <CategoryButton key={tag} className="tag" onClick={() => setSearchTerm(tag)}>
               {tag}
-            </button>
+            </CategoryButton>
           ))}
-        </div>
-        <div>
-          <input onChange={(e) => onInputChange(e.target.value)} value={searchTermRaw}></input>
-        </div>
-      </div>
-      <div>
-        {filteredList.slice(startIndex, endIndex + 1).map((item) => (
-          <AddNodeButton node={item} key={item.id} onClick={onClickNode} />
-        ))}
-      </div>
-      <div className="pagination" hidden={totalPages === 0}>
-        <button onClick={setPreviousPage} disabled={!previousEnabled}>
-          <IconChevronLeft></IconChevronLeft>
-        </button>
-        {currentPage} / {totalPages}
-        <button onClick={setNextPage} disabled={!nextEnabled}>
-          <IconChevronRight></IconChevronRight>
-        </button>
-      </div>
-    </div>
+        </menu>
+        <section>
+          <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..."></input>
+          <menu>
+            {filteredList.map((item) => (
+              <NodePreview node={item} key={item.id} onClick={onClickNode} />
+            ))}
+          </menu>
+        </section>
+      </AddModalDiv>
+    </Modal>
   );
 }
