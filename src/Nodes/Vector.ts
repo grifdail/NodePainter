@@ -1,8 +1,9 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
-import * as p5 from "p5";
 
-const createVector = p5.prototype.createVector;
+export type Vector = { x: number; y: number };
+
+export const createVector = (x: number = 0, y: number = 0): Vector => ({ x, y });
 
 AddNode({
   id: "VectorCompose",
@@ -125,8 +126,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = context.getInputValue(nodeData, "vec") as p5.Vector;
-    return vec.mag();
+    var vec = context.getInputValue(nodeData, "vec") as Vector;
+    return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
   },
   execute: null,
 });
@@ -152,8 +153,8 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = context.getInputValue(nodeData, "vec") as p5.Vector;
-    return vec.magSq();
+    var vec = context.getInputValue(nodeData, "vec") as Vector;
+    return vec.x * vec.x + vec.y * vec.y;
   },
   execute: null,
 });
@@ -185,9 +186,9 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValue(nodeData, "a") as p5.Vector;
-    var b = context.getInputValue(nodeData, "b") as p5.Vector;
-    return p5.Vector.add(a, b);
+    var a = context.getInputValue(nodeData, "a") as Vector;
+    var b = context.getInputValue(nodeData, "b") as Vector;
+    return createVector(a.x + b.x, a.y + b.y);
   },
   execute: null,
 });
@@ -219,9 +220,9 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValue(nodeData, "a") as p5.Vector;
-    var b = context.getInputValue(nodeData, "b") as p5.Vector;
-    return p5.Vector.sub(a, b);
+    var a = context.getInputValue(nodeData, "a") as Vector;
+    var b = context.getInputValue(nodeData, "b") as Vector;
+    return createVector(a.x - b.x, a.y - b.y);
   },
   execute: null,
 });
@@ -253,7 +254,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValue(nodeData, "vec") as p5.Vector;
+    var a = context.getInputValue(nodeData, "vec") as Vector;
     var b = context.getInputValue(nodeData, "scale") as number;
     return createVector(a.x * b, a.y * b);
   },
@@ -287,9 +288,9 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValue(nodeData, "a") as p5.Vector;
-    var b = context.getInputValue(nodeData, "b") as p5.Vector;
-    return p5.Vector.dot(a, b);
+    var a = context.getInputValue(nodeData, "a") as Vector;
+    var b = context.getInputValue(nodeData, "b") as Vector;
+    return a.x * b.x + a.y * b.y;
   },
   execute: null,
 });
@@ -326,10 +327,14 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValue(nodeData, "from") as p5.Vector;
-    var b = context.getInputValue(nodeData, "to") as p5.Vector;
+    var a = context.getInputValue(nodeData, "from") as Vector;
+    var b = context.getInputValue(nodeData, "to") as Vector;
     var t = context.getInputValue(nodeData, "t") as number;
-    return p5.Vector.lerp(a, b, t);
+    return createVector(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
   },
   execute: null,
 });
+
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}

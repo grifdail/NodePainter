@@ -1,5 +1,7 @@
-import { IconArrowsHorizontal, IconArrowsVertical, IconAssembly, IconClock } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsMove, IconArrowsVertical, IconAssembly, IconClock, IconRotate } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
+import p5 from "p5";
+import { createVector } from "./Vector";
 
 AddNode({
   id: "Start",
@@ -63,10 +65,106 @@ AddNode({
 });
 
 AddNode({
+  id: "ForGrid",
+  description: "Execute an instruction multiple time for elements of a grid",
+  icon: IconAssembly,
+  tags: ["Control"],
+  inputPorts: [
+    { id: "width", type: "number", defaultValue: 10 },
+    { id: "height", type: "number", defaultValue: 10 },
+  ],
+  outputPorts: [
+    { id: "x", type: "number", defaultValue: 10 },
+    { id: "y", type: "number", defaultValue: 10 },
+  ],
+  executeOutputPorts: ["loop"],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    return context.blackboard[`${nodeData.id}-index`] || 0;
+  },
+  execute: (data, context) => {
+    var width = context.getInputValue(data, "width") as number;
+    var height = context.getInputValue(data, "height") as number;
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
+        context.blackboard[`${data.id}-x`] = x;
+        context.blackboard[`${data.id}-y`] = y;
+        if (data.output.loop) {
+          context.execute(data.output.loop);
+        }
+      }
+    }
+  },
+});
+
+AddNode({
+  id: "With rotation",
+  description: "Execute the next instruction as if the canvas was rotated",
+  icon: IconRotate,
+  tags: ["Transform"],
+  inputPorts: [{ id: "angle", type: "number", defaultValue: 0 }],
+  outputPorts: [],
+  executeOutputPorts: ["execute"],
+  settings: [],
+  getData: (portId, nodeData, context) => {},
+  execute: (data, context) => {
+    var angle = context.getInputValue(data, "angle") as number;
+    context.p5.push();
+    context.p5.rotate(angle);
+    if (data.output.execute) {
+      context.execute(data.output.execute);
+    }
+    context.p5.pop();
+  },
+});
+
+AddNode({
+  id: "With translation",
+  description: "Execute the next instruction as if the canvas was moved",
+  icon: IconArrowsMove,
+  tags: ["Transform"],
+  inputPorts: [{ id: "translation", type: "vector2", defaultValue: createVector() }],
+  outputPorts: [],
+  executeOutputPorts: ["execute"],
+  settings: [],
+  getData: (portId, nodeData, context) => {},
+  execute: (data, context) => {
+    var translation = context.getInputValue(data, "translation") as p5.Vector;
+    context.p5.push();
+    context.p5.translate(translation.x, translation.y);
+    if (data.output.execute) {
+      context.execute(data.output.execute);
+    }
+    context.p5.pop();
+  },
+});
+
+AddNode({
+  id: "With scale",
+  description: "Execute the next instruction as if the canvas was scaled",
+  icon: IconArrowsMove,
+  tags: ["Transform"],
+  inputPorts: [{ id: "scale", type: "vector2", defaultValue: createVector() }],
+  outputPorts: [],
+  executeOutputPorts: ["execute"],
+  settings: [],
+  getData: (portId, nodeData, context) => {},
+  execute: (data, context) => {
+    var scale = context.getInputValue(data, "scale") as p5.Vector;
+    context.p5.push();
+    context.p5.scale(scale.x, scale.y);
+    if (data.output.execute) {
+      context.execute(data.output.execute);
+    }
+    context.p5.pop();
+  },
+});
+
+AddNode({
   id: "Time",
   description: "The current time relative to the execution of the preview, in second",
   icon: IconClock,
-  tags: ["Source"],
+  tags: ["Input"],
   inputPorts: [],
   outputPorts: [{ id: "time", type: "number", defaultValue: 0 }],
   executeOutputPorts: [],
@@ -81,7 +179,7 @@ AddNode({
   id: "Width",
   description: "The dimension of the canvas",
   icon: IconArrowsHorizontal,
-  tags: ["Source"],
+  tags: ["Input"],
   inputPorts: [],
   outputPorts: [{ id: "width", type: "number", defaultValue: 0 }],
   executeOutputPorts: [],
@@ -96,7 +194,7 @@ AddNode({
   id: "Height",
   description: "The dimension of the canvas",
   icon: IconArrowsVertical,
-  tags: ["Source"],
+  tags: ["Input"],
   inputPorts: [],
   outputPorts: [{ id: "height", type: "number", defaultValue: 0 }],
   executeOutputPorts: [],
