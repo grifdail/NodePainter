@@ -1,7 +1,7 @@
 import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 import { useState } from "react";
 import * as p5 from "p5";
-import { fromHex, invertColor, toHex, validateHex } from "../Nodes/Color";
+import { fromHex, invertColor, toHex } from "../Nodes/Color";
 import Colorful from "@uiw/react-color-colorful";
 import { Menu } from "@szhsin/react-menu";
 import styled from "styled-components";

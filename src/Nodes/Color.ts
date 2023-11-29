@@ -1,4 +1,4 @@
-﻿import { IconArrowUpRightCircle, IconColorFilter, IconPalette } from "@tabler/icons-react";
+import { IconColorFilter, IconPalette } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 
 export type Color = { r: number; g: number; b: number; a: number };
@@ -93,7 +93,7 @@ export function fromHex(hex: string): Color {
         r: parseInt(result[1], 16) / 255,
         g: parseInt(result[2], 16) / 255,
         b: parseInt(result[3], 16) / 255,
-        a: result[4] != undefined ? parseInt(result[4], 16) / 255 : 0,
+        a: result[4] !== undefined ? parseInt(result[4], 16) / 255 : 0,
       }
     : createColor();
 }

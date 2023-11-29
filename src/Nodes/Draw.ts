@@ -2,7 +2,7 @@ import { IconBucketDroplet, IconCircle, IconLine, IconRectangle } from "@tabler/
 import { AddNode } from "../Data/NodeLibrary";
 import * as P5 from "p5";
 import { createVector } from "./Vector";
-import { createColor } from "./Color";
+import { createColor, toHex } from "./Color";
 
 AddNode({
   id: "FillBackground",
@@ -22,7 +22,7 @@ AddNode({
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
-    context.p5.background(color);
+    context.p5.background(toHex(color));
   },
 });
 
@@ -57,7 +57,7 @@ AddNode({
     var position = context.getInputValue(data, "position") as P5.Vector;
     var radius = context.getInputValue(data, "radius") as number;
     context.p5.noStroke();
-    context.p5.fill(color);
+    context.p5.fill(toHex(color));
     context.p5.circle(position.x, position.y, radius);
   },
 });
@@ -98,7 +98,7 @@ AddNode({
     var p1 = context.getInputValue(data, "start") as P5.Vector;
     var p2 = context.getInputValue(data, "end") as P5.Vector;
     var lineWidth = context.getInputValue(data, "lineWidth") as number;
-    context.p5.stroke(color);
+    context.p5.stroke(toHex(color));
     context.p5.strokeWeight(lineWidth);
     context.p5.line(p1.x, p1.y, p2.x, p2.y);
   },
@@ -140,7 +140,7 @@ AddNode({
     var p1 = context.getInputValue(data, "corner") as P5.Vector;
     var width = context.getInputValue(data, "width") as number;
     var height = context.getInputValue(data, "height") as number;
-    context.p5.fill(color);
+    context.p5.fill(toHex(color));
     context.p5.noStroke();
     context.p5.rect(p1.x, p1.y, width, height);
   },
@@ -182,7 +182,7 @@ AddNode({
     var p1 = context.getInputValue(data, "corner") as P5.Vector;
     var width = context.getInputValue(data, "width") as number;
     var height = context.getInputValue(data, "height") as number;
-    context.p5.fill(color);
+    context.p5.fill(toHex(color));
     context.p5.noStroke();
     context.p5.rect(p1.x, p1.y, width, height);
   },
