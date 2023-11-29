@@ -7,6 +7,7 @@ import { useTree } from "../Hooks/useTree";
 import { NodePreview } from "./NodePreview";
 import { Modal } from "./Modal";
 import styled from "styled-components";
+import { useNodeFav } from "../Hooks/useNodeFav";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -15,7 +16,6 @@ const AddModalDiv = styled.div`
   align-items: stretch;
   justify-content: stretch;
   width: 100%;
-  height: 100%;
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
@@ -57,15 +57,17 @@ const AddModalDiv = styled.div`
       padding: 10px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: start;
       gap: 10px;
       flex-direction: row;
-      align-self: stretch;
+      align-self: flex-start;
       margin: 0;
       max-height: 100%;
       padding-bottom: 25px;
       box-sizing: border-box;
       flex-grow: 1;
+      align-items: stretch;
+      align-content: start;
 
       & > button {
         flex-basis: 200px;
@@ -80,15 +82,27 @@ const AddModalDiv = styled.div`
         gap: 10px;
         flex-direction: column;
         align-items: center;
+        position: relative;
+        cursor: pointer;
 
-        & div {
+        & > div {
           padding-bottom: 5px;
           font-weight: bold;
           border-bottom: 1px solid rgba(0, 0, 0, 0.5);
           width: 100%;
         }
 
-        & svg {
+        & > div.fav {
+          position: absolute;
+          width: 10px;
+          border: 0;
+          height: 10px;
+          right: 20px;
+          top: 5px;
+          cursor: pointer;
+        }
+
+        & > svg {
           height: 50px;
           width: 50px;
         }
@@ -113,30 +127,43 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-export function AddModal({ close }: { close: () => void }) {
+export function NodeCreationModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
   const [selectedCategory, setCategory] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
+  const nodeFav = useNodeFav();
 
   const filteredList = Object.values(NodeLibrary).filter((item) => {
-    if (!!selectedCategory && !item.tags.includes(selectedCategory)) {
-      return false;
+    if (!!selectedCategory) {
+      if (selectedCategory === "fav") {
+        if (!nodeFav.fav.includes(item.id)) {
+          return false;
+        }
+      } else if (!item.tags.includes(selectedCategory)) {
+        return false;
+      }
     }
 
     return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
+  console.log(nodeFav.lastUsed);
+  filteredList.sort((a, b) => (nodeFav.lastUsed[b.id] || 0) - (nodeFav.lastUsed[a.id] || 0));
 
   const tags = Object.values(NodeLibrary)
     .flatMap((item) => item.tags)
     .filter((value, index, array) => array.indexOf(value) === index);
 
   tags.splice(0, 0, "all");
+  if (nodeFav.fav.length > 0) {
+    tags.splice(1, 0, "fav");
+  }
 
   const addNode = useTree((state) => state.addNode);
 
   const onClickNode = (node: NodeDefinition) => {
     var view = useViewbox.getState();
     addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
+    nodeFav.useNode(node.id);
     close();
   };
 
@@ -154,7 +181,7 @@ export function AddModal({ close }: { close: () => void }) {
           <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..."></input>
           <menu>
             {filteredList.map((item) => (
-              <NodePreview node={item} key={item.id} onClick={onClickNode} />
+              <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.fav.includes(item.id)} />
             ))}
           </menu>
         </section>

@@ -6,7 +6,7 @@ import "./Nodes/System";
 import "./Nodes/Vector";
 import { Grid } from "./Components/Grid";
 import { useToggle } from "@uidotdev/usehooks";
-import { AddModal } from "./Components/AddModal";
+import { NodeCreationModal } from "./Components/NodeCreationModal";
 import { GridUi } from "./Components/GridUi";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <Grid></Grid>
       {!addModelOpen && <GridUi openAddModal={toggleAddModal} />}
-      {addModelOpen && <AddModal close={toggleAddModal} />}
+      {addModelOpen && <NodeCreationModal close={toggleAddModal} />}
     </div>
   );
 }
