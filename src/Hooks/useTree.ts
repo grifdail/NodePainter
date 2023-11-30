@@ -8,10 +8,6 @@ import { PortType } from "../Data/PortType";
 
 import { persist } from "zustand/middleware";
 
-import Ajv from "ajv/dist/jtd";
-import { JSONSchemaType } from "ajv";
-const ajv = new Ajv();
-
 export type NodeCollection = { [key: string]: NodeData };
 
 export type TreeStore = {

@@ -1,4 +1,4 @@
-import { IconArrowsHorizontal, IconArrowsMove, IconArrowsVertical, IconAssembly, IconClock, IconRotate } from "@tabler/icons-react";
+import { IconArrowsMove, IconAssembly, IconRotate } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import p5 from "p5";
 import { createVector } from "./Vector";
@@ -82,8 +82,7 @@ AddNode({
   getData: (portId, nodeData, context) => {
     if (portId === "x") {
       return context.blackboard[`${nodeData.id}-x`] || 0;
-    } else
-      return context.blackboard[`${nodeData.id}-y`] || 0;
+    } else return context.blackboard[`${nodeData.id}-y`] || 0;
   },
   execute: (data, context) => {
     var width = context.getInputValue(data, "width") as number;
@@ -161,49 +160,4 @@ AddNode({
     }
     context.p5.pop();
   },
-});
-
-AddNode({
-  id: "Time",
-  description: "The current time relative to the execution of the preview, in second",
-  icon: IconClock,
-  tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "time", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    return context.p5.millis() / 1000.0;
-  },
-  execute: null,
-});
-
-AddNode({
-  id: "Width",
-  description: "The dimension of the canvas",
-  icon: IconArrowsHorizontal,
-  tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "width", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    return context.p5.width;
-  },
-  execute: null,
-});
-
-AddNode({
-  id: "Height",
-  description: "The dimension of the canvas",
-  icon: IconArrowsVertical,
-  tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "height", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    return context.p5.height;
-  },
-  execute: null,
 });

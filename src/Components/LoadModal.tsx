@@ -1,9 +1,8 @@
-﻿import { useTree } from "../Hooks/useTree";
+import { useTree } from "../Hooks/useTree";
 import { Modal } from "./Modal";
 import styled from "styled-components";
-import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconDeviceFloppy, IconFileUpload } from "@tabler/icons-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ButtonGroup } from "./StyledComponents/ButtonGroup";
 
@@ -56,7 +55,7 @@ export function LoadModal({ close }: { close: () => void }) {
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length >= 1) {
         var file = acceptedFiles[0];
