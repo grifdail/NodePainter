@@ -27,6 +27,7 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
           <button onClick={portSelection.reset}>cancel</button>
         </div>
       )}
+      {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
         <button onClick={openAddModal}>
           <IconPlus></IconPlus>
@@ -49,8 +50,6 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
           <MenuItem>Reset camera</MenuItem>
         </Menu>
       </BottomToolbar>
-
-      {showPreview && <SketchPreview></SketchPreview>}
     </div>
   );
 }

@@ -74,7 +74,6 @@ AddNode({
     var start = context.getInputValue(nodeData, "start") as Color;
     var end = context.getInputValue(nodeData, "end") as Color;
     var t = context.getInputValue(nodeData, "t") as number;
-    console.log(lerp(start.r, end.r, t));
     return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
   },
   execute: null,
