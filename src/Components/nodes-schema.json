@@ -1,0 +1,2207 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://nodepainter.grifdail.fr/node-saves.json",
+    "type": "object",
+    "additionalProperties": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object"
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "integer"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "execute": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "execute"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "-2NA9u5lptbiZc8eUBeLM": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "width": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "height": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "width",
+                    "height"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "loop": {
+                        "type": "string"
+                    },
+                    "x": {
+                        "type": "null"
+                    },
+                    "y": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "loop",
+                    "x",
+                    "y"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "G3u3Oz0BIuhL015AoCvem": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object"
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "second": {
+                        "type": "string"
+                    },
+                    "first": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "second",
+                    "first"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "fM1yO-KuCtp6PPHC-XLti": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "color": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "r": {
+                                        "type": "number"
+                                    },
+                                    "g": {
+                                        "type": "number"
+                                    },
+                                    "b": {
+                                        "type": "number"
+                                    },
+                                    "a": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "r",
+                                    "g",
+                                    "b",
+                                    "a"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "color"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object"
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "yIJ6VXmzMZH1hb42f-c5m": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "y": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "x",
+                    "y"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "vec": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "vec"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "1k09Ak4vP2tOcqyfR106G": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "s4rYTBEg4nFlsvTwcrzqP": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "gi70v27KCr_6qotCggfmZ": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "vec": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "scale": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "vec",
+                    "scale"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "integer"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "out": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "out"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "vFfekGBGqnTacHB3spEWb": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    },
+                                    "z": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y",
+                                    "z"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "out": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "out"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "bKYBcriwoAqM8f89LdvAd": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "pos": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "scale": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    },
+                                    "z": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y",
+                                    "z"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "time": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "pos",
+                    "scale",
+                    "time"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "IGz5T2xdAq-jUD2xWkRZg": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "color": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "r": {
+                                        "type": "integer"
+                                    },
+                                    "g": {
+                                        "type": "integer"
+                                    },
+                                    "b": {
+                                        "type": "integer"
+                                    },
+                                    "a": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "r",
+                                    "g",
+                                    "b",
+                                    "a"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "start": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    },
+                                    "z": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y",
+                                    "z"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "end": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "lineWidth": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "color",
+                    "start",
+                    "end",
+                    "lineWidth"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object"
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "h4HaG3Z2T8D-csPdgYn_9": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "translation": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "object",
+                                "properties": {
+                                    "x": {
+                                        "type": "integer"
+                                    },
+                                    "y": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "x",
+                                    "y"
+                                ]
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "translation"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "execute": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "execute"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "2UdRJ-gayYDv-1aCuGXM4": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object"
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "time": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "time"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "lcKl2TugvjLfup_1mfjZc": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "WE6B6vaK7R1Vm-90l3w_U": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "angle": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "length": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "angle",
+                    "length"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "vec": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "vec"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "Zn27N5hAGdMiSwUfJR-Ox": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "g_EKs1oaJ13CWi1ELZLQf": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object"
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "value"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "W3Tq91TBFxHL55NygMhVS": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "angle": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "length": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "angle",
+                    "length"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "vec": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "vec"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "Jl1OX5z4d0stG8dHU1tCd": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "number"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "xpvGT49HAeBSUHAttb-15": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "fdd4fayPgo4lStdP6dQVI": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "y": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "string"
+                            },
+                            "connectedPort": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "x",
+                    "y"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "vec": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "vec"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    },
+    "yeHushsUUrRzq6j9gFmJC": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string"
+            },
+            "id": {
+                "type": "string"
+            },
+            "inputs": {
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    },
+                    "b": {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "ownValue": {
+                                "type": "integer"
+                            },
+                            "hasConnection": {
+                                "type": "boolean"
+                            },
+                            "connectedNode": {
+                                "type": "null"
+                            },
+                            "connectedPort": {
+                                "type": "null"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "ownValue",
+                            "hasConnection",
+                            "connectedNode",
+                            "connectedPort"
+                        ]
+                    }
+                },
+                "required": [
+                    "a",
+                    "b"
+                ]
+            },
+            "settings": {
+                "type": "object"
+            },
+            "positionX": {
+                "type": "number"
+            },
+            "positionY": {
+                "type": "number"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "null"
+                    }
+                },
+                "required": [
+                    "result"
+                ]
+            }
+        },
+        "required": [
+            "type",
+            "id",
+            "inputs",
+            "settings",
+            "positionX",
+            "positionY",
+            "output"
+        ]
+    }
+},
+"required": [
+    "start",
+]
+}

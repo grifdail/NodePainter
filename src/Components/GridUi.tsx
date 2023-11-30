@@ -7,13 +7,15 @@ import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem } from "@szhsin/react-menu";
 import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
+import { useRouter } from "../Hooks/useRouter";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
 `;
 
-export function GridUi({ openAddModal }: { openAddModal: () => void }) {
+export function GridUi() {
   const [showPreview, togglePreview] = useToggle(false);
+  const openModal = useRouter((state) => state.open);
 
   const portSelection = usePortSelection();
   const nodes = useTree((state) => state.nodes);
@@ -29,7 +31,7 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
-        <button onClick={openAddModal}>
+        <button onClick={() => openModal("node-creation")}>
           <IconPlus></IconPlus>
         </button>
         <button onClick={() => togglePreview()}>{showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}</button>
@@ -41,11 +43,11 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
             </button>
           }
         >
-          <MenuItem>About</MenuItem>
+          <MenuItem onClick={() => openModal("about")}>About</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem onClick={reset}>New Graph</MenuItem>
-          <MenuItem>Save</MenuItem>
-          <MenuItem>Load</MenuItem>
+          <MenuItem onClick={() => openModal("save")}>Save</MenuItem>
+          <MenuItem onClick={() => openModal("load")}>Load</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem>Reset camera</MenuItem>
         </Menu>

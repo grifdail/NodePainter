@@ -8,8 +8,14 @@ import { PortType } from "../Data/PortType";
 
 import { persist } from "zustand/middleware";
 
+import Ajv from "ajv/dist/jtd";
+import { JSONSchemaType } from "ajv";
+const ajv = new Ajv();
+
+export type NodeCollection = { [key: string]: NodeData };
+
 export type TreeStore = {
-  nodes: { [key: string]: NodeData };
+  nodes: NodeCollection;
   getNode: (id: string) => NodeData;
   getInputPort: (id: string, portId: string) => PortConnection;
   setNodePosition: (id: string, x: number, y: number) => void;
@@ -23,6 +29,7 @@ export type TreeStore = {
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
+  load: (source: NodeCollection) => boolean;
 };
 
 export type NodeData = {
@@ -179,6 +186,40 @@ export const useTree = create<TreeStore>()(
         },
         reset() {
           set({ nodes: { start: createNodeData("Start", 200, 200, "start") } });
+        },
+        load(source) {
+          try {
+            var nodes: NodeCollection = {};
+            Object.entries(source).forEach(([sourceKey, sourceNode]) => {
+              var newNode = createNodeData(sourceNode.type, sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
+              var def = getNodeTypeDefinition(newNode);
+              if (!def) {
+                throw new Error("No node of that type");
+              }
+              for (const key in sourceNode.inputs) {
+                var inputDef = def.inputPorts.find((item) => item.id === key);
+                if (!inputDef) {
+                  throw new Error("invalid input port");
+                }
+
+                newNode.inputs[key] = {
+                  ...sourceNode.inputs[key],
+                };
+              }
+              for (const key in sourceNode.output) {
+                newNode.output[key] = sourceNode.output[key];
+              }
+              for (const key in sourceNode.settings) {
+                newNode.settings[key] = sourceNode.settings[key];
+              }
+              nodes[newNode.id] = newNode;
+            });
+            set({ nodes });
+            return true;
+          } catch (err) {
+            console.error("Error loading save", err);
+            return false;
+          }
         },
       };
     },
