@@ -1,7 +1,8 @@
-import { Icon, IconAngle, IconCalculator, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconWaveSine } from "@tabler/icons-react";
+import { Icon, IconAngle, IconCalculator, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { AddNode } from "../Data/NodeLibrary";
 import { IconMathXy } from "@tabler/icons-react";
+import { createVector } from "./Vector";
 
 AddNode(createOperation("AddNumber", (a, b) => a + b, "Add two number together.", IconMathXPlusY));
 AddNode(createOperation("SubtractNumber", (a, b) => a - b, "Subtract two number.", IconMathXMinusY));
@@ -147,6 +148,52 @@ AddNode({
       var max = context.getInputValue(nodeData, "max");
       return t * max + (1 - t) * min;
     }
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "Noise",
+  tags: ["math"],
+  icon: IconGridDots,
+  description: "return a semi random continous value between 0 and 1 for points in 2d. ",
+  inputPorts: [
+    { id: "pos", type: "vector2", defaultValue: createVector() },
+    { id: "scale", type: "vector2", defaultValue: createVector(1, 1) },
+    { id: "time", type: "number", defaultValue: 0 },
+  ],
+  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    if (portId === "result") {
+      var pos = context.getInputValue(nodeData, "pos");
+      var scale = context.getInputValue(nodeData, "scale");
+      var time = context.getInputValue(nodeData, "time");
+      return context.p5.noise(pos.x * scale.x, pos.y * scale.y, time);
+    }
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "LoopingNoise",
+  tags: ["math"],
+  icon: IconGridDots,
+  description: "return a semi random continous value between 0 and 1, looping around when in the interval [0,1] .",
+  inputPorts: [
+    { id: "pos", type: "number", defaultValue: 0 },
+    { id: "scale", type: "number", defaultValue: 1 },
+    { id: "seed", type: "vector2", defaultValue: createVector(0, 0) },
+  ],
+  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var pos = context.getInputValue(nodeData, "pos");
+    var scale = context.getInputValue(nodeData, "scale");
+    var seed = context.getInputValue(nodeData, "seed");
+    return context.p5.noise(seed.x + Math.cos(pos * Math.PI * 2) * scale, seed.y + Math.cos(pos * Math.PI * 2) * scale);
   },
   execute: null,
 });

@@ -1,5 +1,6 @@
 import { IconColorFilter, IconPalette } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
+import { P5CanvasInstance } from "@p5-wrapper/react";
 
 export type Color = { r: number; g: number; b: number; a: number };
 
@@ -85,6 +86,11 @@ function lerp(a: number, b: number, t: number) {
 export function toHex(c: Color, includeAlpha: boolean = false): string {
   return `#${componentToHex(c.r)}${componentToHex(c.g)}${componentToHex(c.b)}${includeAlpha ? componentToHex(c.a) : ""}`;
 }
+
+export function toP5Color(c: Color, p5: P5CanvasInstance) {
+  return p5.color(c.r * 255, c.g * 255, c.b * 255, c.a * 255);
+}
+
 export function fromHex(hex: string): Color {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
 
