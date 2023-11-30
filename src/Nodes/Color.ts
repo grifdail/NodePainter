@@ -58,7 +58,7 @@ AddNode({
 });
 
 AddNode({
-  id: "ColorDecompose",
+  id: "ColorMix",
   description: "Mix two color togerther using rgb mixing",
   icon: IconColorFilter,
   tags: ["Color"],
@@ -72,8 +72,9 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     var start = context.getInputValue(nodeData, "start") as Color;
-    var end = context.getInputValue(nodeData, "start") as Color;
+    var end = context.getInputValue(nodeData, "end") as Color;
     var t = context.getInputValue(nodeData, "t") as number;
+    console.log(lerp(start.r, end.r, t));
     return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
   },
   execute: null,
@@ -103,7 +104,7 @@ export function validateHex(hex: string) {
 }
 
 function componentToHex(c: number) {
-  var hex = (c * 255).toString(16);
+  var hex = Math.floor(c * 255).toString(16);
   return hex.length === 1 ? "0" + hex : hex;
 }
 

@@ -22,6 +22,7 @@ export type TreeStore = {
   resetNode: (node: string) => void;
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
+  reset: () => void;
 };
 
 export type NodeData = {
@@ -175,6 +176,9 @@ export const useTree = create<TreeStore>()(
               }
             })
           );
+        },
+        reset() {
+          set({ nodes: { start: createNodeData("Start", 200, 200, "start") } });
         },
       };
     },

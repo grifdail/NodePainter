@@ -17,6 +17,7 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
 
   const portSelection = usePortSelection();
   const nodes = useTree((state) => state.nodes);
+  const reset = useTree((state) => state.reset);
 
   return (
     <div className="full-screen-layout grid-ui">
@@ -41,7 +42,7 @@ export function GridUi({ openAddModal }: { openAddModal: () => void }) {
         >
           <MenuItem>About</MenuItem>
           <MenuDivider></MenuDivider>
-          <MenuItem>New Graph</MenuItem>
+          <MenuItem onClick={reset}>New Graph</MenuItem>
           <MenuItem>Save</MenuItem>
           <MenuItem>Load</MenuItem>
           <MenuDivider></MenuDivider>
