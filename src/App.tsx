@@ -3,6 +3,7 @@ import "./Nodes/Draw";
 import "./Nodes/Math";
 import "./Nodes/System";
 import "./Nodes/Vector";
+import "./Nodes/Inputs";
 import { Grid } from "./Components/Grid";
 import { Router } from "./Components/Router";
 
