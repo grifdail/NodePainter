@@ -80,7 +80,10 @@ AddNode({
   executeOutputPorts: ["loop"],
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context.blackboard[`${nodeData.id}-index`] || 0;
+    if (portId === "x") {
+      return context.blackboard[`${nodeData.id}-x`] || 0;
+    } else
+      return context.blackboard[`${nodeData.id}-y`] || 0;
   },
   execute: (data, context) => {
     var width = context.getInputValue(data, "width") as number;
