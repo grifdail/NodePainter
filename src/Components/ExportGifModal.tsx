@@ -1,7 +1,7 @@
 import { TreeStore, useTree } from "../Hooks/useTree";
 import { Modal } from "./Modal";
 import styled from "styled-components";
-import { IconDeviceFloppy } from "@tabler/icons-react";
+import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "./StyledComponents/ButtonGroup";
 import { NumberInput } from "./PortColor";
 import { useState } from "react";
@@ -20,16 +20,32 @@ const MainDiv = styled.div`
   flex: 1 0 100px;
   gap: 10px;
 
-  & textarea {
-    flex: 1 0 100px;
+  & fieldset {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    justify-content: space-between;
+  }
+  & hr {
+    flex-grow: 1;
+    border: none;
+  }
+  & progress {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px;
+    height: 50px;
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
   }
 `;
 
 type MySketchProps = SketchProps & {
   tree: TreeStore;
   onFinished: (blob: Blob) => void;
-  onEndRendering: () => void;
+  onProgress: (rendering: number, processing: number) => void;
   duration: number;
+  fixedFrameRate: number;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
@@ -42,11 +58,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   p5.setup = () => {
     p5.pixelDensity(1);
     p5.createCanvas(400, 400);
-  };
-
-  p5.updateWithProps = (props: MySketchProps) => {
-    tree = props.tree;
-    context = createExecutionContext(tree, p5 as P5CanvasInstance);
     gif = new GIF({
       workerScript: "/gif.worker.js",
       workers: 8,
@@ -56,19 +67,32 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       debug: true,
     });
     gif.on("finished", function (blob: Blob) {
-      props.onFinished(blob);
+      ownProps?.onFinished(blob);
     });
-    ownProps = props;
+    gif.on("progress", function (p: any) {
+      ownProps?.onProgress(1, p);
+    });
     ended = false;
   };
 
+  p5.updateWithProps = (props: MySketchProps) => {
+    tree = props.tree;
+    context = createExecutionContext(tree, p5 as P5CanvasInstance);
+
+    ownProps = props;
+  };
+
+  var time = 0;
   p5.draw = () => {
     context.execute("start");
     if (!ended && ownProps) {
-      gif.addFrame(p5.drawingContext, { delay: p5.deltaTime, copy: true });
-      if (p5.millis() > ownProps.duration * 1000) {
+      time += ownProps.fixedFrameRate > 0 ? 1000 / ownProps.fixedFrameRate : p5.deltaTime;
+      context.time = time;
+      gif.addFrame(p5.drawingContext, { delay: ownProps.fixedFrameRate > 0 ? 1000 / ownProps.fixedFrameRate : p5.deltaTime, copy: true });
+      var progress = time / (ownProps.duration * 1000);
+      ownProps.onProgress(progress, 0);
+      if (progress >= 1) {
         ended = true;
-        ownProps.onEndRendering();
         gif.render();
       }
     }
@@ -86,17 +110,31 @@ function download(blob: Blob, filename: string = "data.json") {
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
   const [duration, setDuration] = useState(1);
+  const [fixedFrameRate, setFixedFrameRate] = useState(32);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
+  const [progress, setProgress] = useState(0);
+
+  const onProgress = (rendering: number, processing: number) => {
+    setProgress((rendering * 0.5 + processing * 0.5) * 100);
+    if (rendering >= 1 && renderState === "rendering") {
+      setRenderState("processing");
+    }
+  };
 
   return (
-    <Modal onClose={close} title="Save" icon={IconDeviceFloppy}>
+    <Modal onClose={close} title="Export a gif" icon={IconGif}>
       <MainDiv>
-        <div>
-          <label>Duration</label>
+        <fieldset>
+          <label>Duration, in second {fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}</label>
           <NumberInput value={duration} onChange={setDuration} />
-        </div>
-
+        </fieldset>
+        <fieldset>
+          <label>FrameRate (keep at 0 for dynamic frame rate)</label>
+          <NumberInput value={fixedFrameRate} onChange={setFixedFrameRate} />
+        </fieldset>
+        <hr></hr>
+        <progress value={progress} max="100" />
         <ButtonGroup>
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
           {renderState === "rendering" && <button disabled> Rendering</button>}
@@ -110,11 +148,12 @@ export function ExportGifModal({ close }: { close: () => void }) {
             sketch={sketch}
             tree={tree}
             duration={duration}
+            fixedFrameRate={fixedFrameRate}
             onFinished={(blob: Blob) => {
               setRenderState("done");
               setBlob(blob);
             }}
-            onEndRendering={() => setRenderState("processing")}
+            onProgress={onProgress}
           />
         )}
       </div>

@@ -60,6 +60,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   };
 
   p5.draw = () => {
+    context.time = p5.millis();
     context.execute("start");
   };
 };
@@ -75,6 +76,7 @@ export function getInputValue(nodeData: NodeData, portId: string, context: Execu
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
   var context: ExecutionContext = {
     p5: p5 as P5CanvasInstance,
+    time: 0,
     blackboard: {},
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
@@ -85,6 +87,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
         }
       }
     },
+
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
     },

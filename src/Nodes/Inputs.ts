@@ -12,7 +12,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context.p5.millis() / 1000;
+    return context.time / 1000;
   },
   execute: null,
 });

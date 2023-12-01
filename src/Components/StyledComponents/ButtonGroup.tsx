@@ -14,8 +14,18 @@ export const ButtonGroup = styled.div<{ vertical?: boolean }>`
     border: 2px solid black;
     border-radius: 5px;
     transition: background 0.3s;
+    cursor: pointer;
     &:hover {
       background: rgba(0, 0, 0, 0.2);
+      &:disabled {
+        background: rgba(0, 0, 0, 0);
+      }
+    }
+    &:disabled {
+      cursor: default;
+      background: rgba(0, 0, 0, 0.1);
+      border: 2px solid #888888;
+      color: #888888;
     }
   }
 `;
