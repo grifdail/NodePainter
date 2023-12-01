@@ -3,6 +3,7 @@ import { NodeCreationModal } from "./NodeCreationModal";
 import { useRouter } from "../Hooks/useRouter";
 import { SaveModal } from "./SaveModal";
 import { LoadModal } from "./LoadModal";
+import { ExportGifModal } from "./ExportGifModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -13,6 +14,7 @@ export function Router() {
       {route === "node-creation" && <NodeCreationModal close={close} />}
       {route === "save" && <SaveModal close={close} />}
       {route === "load" && <LoadModal close={close} />}
+      {route === "export-gif" && <ExportGifModal close={close} />}
     </div>
   );
 }

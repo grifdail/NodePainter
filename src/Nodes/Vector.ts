@@ -97,7 +97,6 @@ AddNode({
     if (portId === "vec") {
       var angle = context.getInputValue(nodeData, "angle");
       var length = context.getInputValue(nodeData, "length");
-      console.log(length);
       return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
     }
   },
@@ -241,7 +240,7 @@ AddNode({
     {
       id: "scale",
       type: "number",
-      defaultValue: createVector(),
+      defaultValue: 1,
     },
   ],
   outputPorts: [

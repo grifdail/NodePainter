@@ -14,16 +14,16 @@ type PortColorDefinition = {
   input?: InputComponent;
 };
 
-function NumberInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
-  var [rawField, setRawField] = useState(value);
+export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
+  var [rawField, setRawField] = useState(value.toString());
 
   const onBlur = (newValue: string) => {
     var parsed = parseFloat(rawField);
     if (!Number.isNaN(parsed)) {
       onChange(parsed);
-      setRawField(parsed);
+      setRawField(parsed.toString());
     } else {
-      setRawField(value);
+      setRawField(value.toString());
     }
   };
 

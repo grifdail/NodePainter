@@ -48,6 +48,7 @@ export function GridUi() {
           <MenuItem onClick={reset}>New Graph</MenuItem>
           <MenuItem onClick={() => openModal("save")}>Save</MenuItem>
           <MenuItem onClick={() => openModal("load")}>Load</MenuItem>
+          <MenuItem onClick={() => openModal("export-gif")}>Export gif</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem>Reset camera</MenuItem>
         </Menu>

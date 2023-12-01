@@ -50,6 +50,29 @@ type MySketchProps = SketchProps & {
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
+  var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
+
+  p5.setup = () => p5.createCanvas(400, 400);
+
+  p5.updateWithProps = (props: MySketchProps) => {
+    tree = props.tree;
+    context = createExecutionContext(tree, p5 as P5CanvasInstance);
+  };
+
+  p5.draw = () => {
+    context.execute("start");
+  };
+};
+
+export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
+  const inputPorts = nodeData.inputs[portId];
+  if (inputPorts.hasConnection) {
+    return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+  } else {
+    return inputPorts.ownValue;
+  }
+}
+export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
   var context: ExecutionContext = {
     p5: p5 as P5CanvasInstance,
     blackboard: {},
@@ -74,23 +97,5 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       }
     },
   };
-
-  p5.setup = () => p5.createCanvas(400, 400);
-
-  p5.updateWithProps = (props: MySketchProps) => {
-    tree = props.tree;
-  };
-
-  p5.draw = () => {
-    context.execute("start");
-  };
-};
-
-export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
-  const inputPorts = nodeData.inputs[portId];
-  if (inputPorts.hasConnection) {
-    return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
-  } else {
-    return inputPorts.ownValue;
-  }
+  return context;
 }
