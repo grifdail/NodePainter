@@ -40,6 +40,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var ownProps: MySketchProps | null = null;
 
   p5.setup = () => {
+    p5.pixelDensity(1);
     p5.createCanvas(400, 400);
   };
 
