@@ -11,6 +11,7 @@ import { useViewbox } from "../Hooks/useViewbox";
 import { NodeData, getNodeTypeDefinition, useTree } from "../Hooks/useTree";
 import { SettingComponents } from "./SettingsComponents";
 import { SettingControl } from "./SettingControl";
+import { useRouter } from "../Hooks/useRouter";
 
 function GetNodeHeight(node: NodeData) {
   var typeDef = getNodeTypeDefinition(node);

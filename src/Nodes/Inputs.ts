@@ -12,6 +12,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
+    console.log(context.time / 1000);
     return context.time / 1000;
   },
   execute: null,

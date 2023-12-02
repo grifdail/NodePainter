@@ -37,7 +37,7 @@ AddNode(createConstant("E", Math.E));
 AddNode(createConstant("SQRT2", Math.SQRT2));
 AddNode({
   id: "Atan2",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconAngle,
   description: "Return the angle formed by the given coordinate and the horizontal axis.",
   inputPorts: [
@@ -72,7 +72,7 @@ AddNode({
 });
 AddNode({
   id: "Clamp",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number to be between two other number",
   inputPorts: [
@@ -114,7 +114,7 @@ AddNode({
 
 AddNode({
   id: "Lerp",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconMathFunction,
   description: "Interpolate between two number according to another one",
   inputPorts: [
@@ -155,7 +155,7 @@ AddNode({
 });
 AddNode({
   id: "PingPong",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconMathFunction,
   description: "Return a number alternating betwen min and max",
   inputPorts: [
@@ -200,7 +200,7 @@ AddNode({
 
 AddNode({
   id: "Remap",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconMathFunction,
   description: "Remap a number from one interval to the other",
   inputPorts: [
@@ -260,7 +260,7 @@ AddNode({
 
 AddNode({
   id: "Noise",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconGridDots,
   description: "return a semi random continous value between 0 and 1 for points in 2d. ",
   inputPorts: [
@@ -284,7 +284,7 @@ AddNode({
 
 AddNode({
   id: "LoopingNoise",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconGridDots,
   description: "return a semi random continous value between 0 and 1, looping around when in the interval [0,1] .",
   inputPorts: [
@@ -306,7 +306,7 @@ AddNode({
 
 AddNode({
   id: "Easing",
-  tags: ["math"],
+  tags: ["Math"],
   icon: IconEaseInOut,
   description: "Apply one of the standard easing function to a number .",
   inputPorts: [{ id: "input", type: "number", defaultValue: 0 }],
@@ -337,7 +337,7 @@ AddNode({
 function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon): NodeDefinition {
   return {
     id: id,
-    tags: ["math"],
+    tags: ["Math"],
     icon: icon || IconMathSymbols,
     description: description,
     inputPorts: [
@@ -375,7 +375,7 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
 function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon): NodeDefinition {
   return {
     id: id,
-    tags: ["math"],
+    tags: ["Math"],
     icon: icon || IconSquareRoot2,
     description: description,
     inputPorts: [
@@ -409,7 +409,7 @@ function createConstant(id: string, value: number): NodeDefinition {
     id: id,
     icon: IconCalculator,
     description: `Mathematical constant. Approximately ${value.toPrecision(4)}.`,
-    tags: ["math", "constant"],
+    tags: ["Math", "constant"],
     inputPorts: [],
     outputPorts: [
       {

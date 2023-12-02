@@ -84,13 +84,17 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   var time = 0;
   p5.draw = () => {
+    context.time = time;
     context.execute("start");
     if (!ended && ownProps) {
-      time += ownProps.fixedFrameRate > 0 ? 1000 / ownProps.fixedFrameRate : p5.deltaTime;
-      context.time = time;
-      gif.addFrame(p5.drawingContext, { delay: ownProps.fixedFrameRate > 0 ? 1000 / ownProps.fixedFrameRate : p5.deltaTime, copy: true });
+      var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
+      time += ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
+
+      var delay = ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
+      gif.addFrame(p5.drawingContext, { delay: delay, copy: true });
       var progress = time / (ownProps.duration * 1000);
       ownProps.onProgress(progress, 0);
+
       if (progress >= 1) {
         ended = true;
         gif.render();
@@ -142,7 +146,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "done" && <button onClick={() => download(blob as Blob, `nodepainter-gif-${Date.now()}.gif`)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
-      <div hidden>
+      <div>
         {renderState === "rendering" && (
           <ReactP5Wrapper
             sketch={sketch}
