@@ -1,4 +1,4 @@
-﻿import "./Color";
+import "./Color";
 import "./Draw";
 import "./Inputs";
 import "./Math";

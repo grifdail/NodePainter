@@ -1,4 +1,4 @@
-﻿import { IconArrowUpRightCircle, IconAssembly, IconLogicAnd, IconLogicNot, IconLogicOr, IconLogicXor } from "@tabler/icons-react";
+import { IconArrowUpRightCircle, IconAssembly, IconLogicAnd, IconLogicNot, IconLogicOr, IconLogicXor } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { createColor } from "./Color";
 
