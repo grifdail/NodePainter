@@ -246,10 +246,10 @@ AddNode({
   settings: [],
   getData: (portId, nodeData, context) => {
     var t = context.getInputValue(nodeData, "t");
-    var inmin = context.getInputValue(nodeData, "min");
-    var inmax = context.getInputValue(nodeData, "max");
-    var outmin = context.getInputValue(nodeData, "min");
-    var outmax = context.getInputValue(nodeData, "max");
+    var inmin = context.getInputValue(nodeData, "in-min");
+    var inmax = context.getInputValue(nodeData, "in-max");
+    var outmin = context.getInputValue(nodeData, "out-min");
+    var outmax = context.getInputValue(nodeData, "out-max");
     var clamp = context.getInputValue(nodeData, "clamp");
     var dt = (t - inmin) / (inmax - inmin);
     var r = dt * outmax + (1 - dt) * outmin;
