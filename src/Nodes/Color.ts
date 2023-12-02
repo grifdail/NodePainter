@@ -80,6 +80,43 @@ AddNode({
   execute: null,
 });
 
+AddNode({
+  id: "WithAlpha",
+  description: "Set the transparency of a color",
+  icon: IconColorFilter,
+  tags: ["Color"],
+  inputPorts: [
+    { id: "color", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+    { id: "alpha", type: "number", defaultValue: 0 },
+  ],
+  outputPorts: [{ id: "color", type: "color", defaultValue: 1 }],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var color = context.getInputValue(nodeData, "color") as Color;
+    var alpha = context.getInputValue(nodeData, "alpha") as number;
+    return createColor(color.r, color.g, color.b, alpha);
+  },
+  execute: null,
+});
+AddNode({
+  id: "PickFromPalette",
+  description: "Pick a color from a palette",
+  icon: IconColorFilter,
+  tags: ["Color"],
+  inputPorts: [{ id: "index", type: "number", defaultValue: 0 }],
+  outputPorts: [{ id: "color", type: "color", defaultValue: createColor() }],
+  executeOutputPorts: [],
+  settings: [{ id: "palette", type: "palette", defaultValue: [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)] }],
+  getData: (portId, nodeData, context) => {
+    var index = context.getInputValue(nodeData, "index");
+    var palette = nodeData.settings.palette as Array<any>;
+    var tindex = Math.floor(index % palette.length);
+    return palette[tindex];
+  },
+  execute: null,
+});
+
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }

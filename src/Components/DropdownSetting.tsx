@@ -1,13 +1,8 @@
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
-import { SettingDefinition } from "../../Data/NodeDefinition";
+import { SettingDefinition } from "../Data/NodeDefinition";
+import { SettingComponent } from "./SettingsComponents";
 
-type SettingComponent = ({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => any;
-
-export const SettingComponents: { [key: string]: SettingComponent } = {
-  dropdown: DropdownSetting,
-};
-
-function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
   return (
     <Menu portal menuButton={<MenuButton>{value}</MenuButton>}>
       <MenuRadioGroup value={value} onRadioChange={(e) => onChange(e.value)}>
@@ -19,4 +14,7 @@ function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => v
       </MenuRadioGroup>
     </Menu>
   );
-}
+};
+DropdownSetting.getSize = function (value, def): number {
+  return 32;
+};
