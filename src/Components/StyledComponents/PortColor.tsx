@@ -39,7 +39,7 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
     color: "#d6336c",
     icon: IconQuote,
   },
-  boolean: {
+  bool: {
     color: "#17a2b8",
     icon: IconToggleLeft,
     input: BoolInput,
