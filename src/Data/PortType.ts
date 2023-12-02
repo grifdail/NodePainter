@@ -1,5 +1,5 @@
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool";
-export type SettingType = "number-field";
+export type SettingType = "dropdown";
 
 export const MainExecuteId = "mainExecute";
 

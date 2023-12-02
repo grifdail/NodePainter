@@ -1,8 +1,9 @@
-import { Icon, IconAngle, IconCalculator, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconWaveSine } from "@tabler/icons-react";
+import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconWaveSawTool, IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { AddNode } from "../Data/NodeLibrary";
 import { IconMathXy } from "@tabler/icons-react";
 import { createVector } from "./Vector";
+import { easing } from "ts-easing";
 
 AddNode(createOperation("AddNumber", (a, b) => a + b, "Add two number together.", IconMathXPlusY));
 AddNode(createOperation("SubtractNumber", (a, b) => a - b, "Subtract two number.", IconMathXMinusY));
@@ -15,6 +16,7 @@ AddNode(createOperation("Min", Math.min, "Returne the smallest of two number.", 
 AddNode(createFunc("Cos", Math.cos, "Return the cosine of a number (in radian).", IconAngle));
 AddNode(createFunc("Sin", Math.sin, "Return the sine of a number (in radian).", IconAngle));
 AddNode(createFunc("SinWave", (a) => Math.sin(a * Math.PI * 2) * 0.5 + 0.5, "Return the cosine of the value in the interval [0,1] and with a frequency of 1.", IconWaveSine));
+AddNode(createFunc("SawtoothWaver", (a) => a % 1, "Return the number modulo 0", IconWaveSawTool));
 AddNode(createFunc("Sqrt", Math.sqrt, "Return the square root of a number.", IconMath));
 AddNode(createFunc("Abs", Math.abs, "Return the absolute root of a number.", IconMathFunction));
 AddNode(createFunc("Acos", Math.acos, "Return the inverse cosine (in radian) of a number.", IconAngle));
@@ -151,6 +153,110 @@ AddNode({
   },
   execute: null,
 });
+AddNode({
+  id: "PingPong",
+  tags: ["math"],
+  icon: IconMathFunction,
+  description: "Return a number alternating betwen min and max",
+  inputPorts: [
+    {
+      id: "t",
+      type: "number",
+      defaultValue: 0,
+    },
+    {
+      id: "min",
+      type: "number",
+      defaultValue: 0,
+    },
+    {
+      id: "max",
+      type: "number",
+      defaultValue: 1,
+    },
+  ],
+  outputPorts: [
+    {
+      id: "result",
+      type: "number",
+      defaultValue: 0,
+    },
+  ],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    if (portId === "result") {
+      var t = context.getInputValue(nodeData, "t");
+      var min = context.getInputValue(nodeData, "min");
+      var max = context.getInputValue(nodeData, "max");
+      var alignedT = t - min;
+      var range = max - min;
+      var tt = alignedT % (2 * range);
+      return tt >= range ? 2 * range - tt : tt;
+    }
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "Remap",
+  tags: ["math"],
+  icon: IconMathFunction,
+  description: "Remap a number from one interval to the other",
+  inputPorts: [
+    {
+      id: "t",
+      type: "number",
+      defaultValue: 0,
+    },
+    {
+      id: "in-min",
+      type: "number",
+      defaultValue: -1,
+    },
+    {
+      id: "in-max",
+      type: "number",
+      defaultValue: 1,
+    },
+    {
+      id: "out-min",
+      type: "number",
+      defaultValue: 0,
+    },
+    {
+      id: "out-max",
+      type: "number",
+      defaultValue: 1,
+    },
+    {
+      id: "clamp",
+      type: "bool",
+      defaultValue: true,
+    },
+  ],
+  outputPorts: [
+    {
+      id: "result",
+      type: "number",
+      defaultValue: 0,
+    },
+  ],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var t = context.getInputValue(nodeData, "t");
+    var inmin = context.getInputValue(nodeData, "min");
+    var inmax = context.getInputValue(nodeData, "max");
+    var outmin = context.getInputValue(nodeData, "min");
+    var outmax = context.getInputValue(nodeData, "max");
+    var clamp = context.getInputValue(nodeData, "clamp");
+    var dt = (t - inmin) / (inmax - inmin);
+    var r = dt * outmax + (1 - dt) * outmin;
+    return clamp ? Math.min(outmax, Math.max(outmin, r)) : r;
+  },
+  execute: null,
+});
 
 AddNode({
   id: "Noise",
@@ -194,6 +300,36 @@ AddNode({
     var scale = context.getInputValue(nodeData, "scale");
     var seed = context.getInputValue(nodeData, "seed");
     return context.p5.noise(seed.x + Math.cos(pos * Math.PI * 2) * scale, seed.y + Math.cos(pos * Math.PI * 2) * scale);
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "Easing",
+  tags: ["math"],
+  icon: IconEaseInOut,
+  description: "Apply one of the standard easing function to a number .",
+  inputPorts: [{ id: "input", type: "number", defaultValue: 0 }],
+  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [
+    {
+      id: "easing",
+      type: "dropdown",
+      defaultValue: "quadratic",
+      options: ["linear", "quadratic", "cubic", "elastic", "inQuad", "outQuad", "inOutQuad", "inCubic", "outCubic", "inOutCubic", "inQuart", "outQuart", "inOutQuart", "inQuint", "outQuint", "inOutQuint", "inSine", "outSine", "inOutSine", "inExpo", "outExpo", "inOutExpo", "inCirc", "outCirc", "inOutCirc"],
+    },
+  ],
+
+  getData: (portId, nodeData, context) => {
+    var input = context.getInputValue(nodeData, "input");
+    var funcName = nodeData.settings.easing as string;
+    var func = (easing as any)[funcName];
+    if (func !== undefined) {
+      return func(input) as number;
+    } else {
+      return input;
+    }
   },
   execute: null,
 });

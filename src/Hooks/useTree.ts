@@ -21,6 +21,7 @@ export type TreeStore = {
   removeDataConnection: (node: string, port: string) => void;
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
+  setNodeSetting: (node: string, settingId: string, newValue: any) => void;
   resetNode: (node: string) => void;
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
@@ -32,7 +33,7 @@ export type NodeData = {
   id: string;
   type: string;
   inputs: { [key: string]: PortConnection };
-  output: { [key: string]: string | null };
+  output: { [key: string]: any };
   settings: { [key: string]: any };
   positionX: number;
   positionY: number;
@@ -115,6 +116,13 @@ export const useTree = create<TreeStore>()(
           set(
             produce((state) => {
               state.nodes[node].inputs[portId].ownValue = newValue;
+            })
+          );
+        },
+        setNodeSetting(node, settingId, newValue) {
+          set(
+            produce((state) => {
+              state.nodes[node].settings[settingId] = newValue;
             })
           );
         },

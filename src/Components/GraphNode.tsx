@@ -9,6 +9,8 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
 import { useViewbox } from "../Hooks/useViewbox";
 import { NodeData, getNodeTypeDefinition, useTree } from "../Hooks/useTree";
+import { SettingDefinition } from "../Data/NodeDefinition";
+import { SettingComponents } from "./StyledComponents/SettingsComponents";
 
 function GetNodeHeight(node: NodeData) {
   var typeDef = getNodeTypeDefinition(node);
@@ -78,8 +80,24 @@ export const GraphNode = forwardRef(function GraphNode(
   );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
+  var setNodeSetting = useTree((state) => state.setNodeSetting);
 
   var Icon = definition.icon;
+
+  var typeDef = getNodeTypeDefinition(node);
+  var inputCount = typeDef.inputPorts.length;
+  var outputCount = typeDef.executeOutputPorts.length + typeDef.outputPorts.length;
+  const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
+
+  const SettingControl = ({ y, value, def, onChange }: { y: number; value: any; def: SettingDefinition; onChange: (params: any) => void }) => {
+    var DefinedComponent = SettingComponents[def.type];
+
+    return (
+      <foreignObject x="25" y={y} height="40" width="250">
+        <DefinedComponent value={value} def={def} onChange={onChange} />
+      </foreignObject>
+    );
+  };
 
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
@@ -109,6 +127,9 @@ export const GraphNode = forwardRef(function GraphNode(
       {definition.outputPorts.map((item, i) => {
         return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, PortLocation.OutputData, item.type)}></OutPortView>;
       })}
+      {definition.settings.map((item, i) => (
+        <SettingControl y={portHeight} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} />
+      ))}
     </animated.g>
   );
 });
