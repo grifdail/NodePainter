@@ -1,5 +1,4 @@
 import { forwardRef, useImperativeHandle } from "react";
-import "./Graph.css";
 import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { OutPortView } from "./OutPortView";

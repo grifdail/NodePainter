@@ -1,4 +1,4 @@
-import { PortColor } from "./PortColor";
+import { PortColor } from "./StyledComponents/PortColor";
 import { animated, FrameValue, to } from "@react-spring/web";
 import { PortType } from "../Data/PortType";
 

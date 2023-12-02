@@ -3,7 +3,7 @@ import { Modal } from "./Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "./StyledComponents/ButtonGroup";
-import { NumberInput } from "./PortColor";
+import { NumberInput } from "./NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext } from "../Data/NodeDefinition";

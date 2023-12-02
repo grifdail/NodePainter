@@ -1,6 +1,6 @@
 import React from "react";
 import { PortType } from "../Data/PortType";
-import { PortColor } from "./PortColor";
+import { PortColor } from "./StyledComponents/PortColor";
 
 export function OutPortView({ x, y, id, type, hideLabel, onClick }: { x: number; y: number; hideLabel?: boolean; id: string; type: PortType; onClick: () => void }) {
   var portDescription = PortColor[type];
