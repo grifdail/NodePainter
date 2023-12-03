@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NodeLibrary } from "../Data/NodeLibrary";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { useViewbox } from "../Hooks/useViewbox";
@@ -147,8 +146,9 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const [selectedCategory, setCategory] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = useNodeFav();
+  const nodeLibrary = useTree((state) => state.getNodeLibrary());
 
-  const filteredList = Object.values(NodeLibrary).filter((item) => {
+  const filteredList = Object.values(nodeLibrary).filter((item) => {
     if (!!selectedCategory) {
       if (selectedCategory === "fav") {
         if (!nodeFav.fav.includes(item.id)) {
@@ -169,7 +169,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     filteredList.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
   }
 
-  const tags = Object.values(NodeLibrary)
+  const tags = Object.values(nodeLibrary)
     .flatMap((item) => item.tags)
     .filter((value, index, array) => array.indexOf(value) === index);
 

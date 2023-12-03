@@ -8,13 +8,14 @@ import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
 import { useViewbox } from "../Hooks/useViewbox";
-import { NodeData, getNodeTypeDefinition, useTree } from "../Hooks/useTree";
+import { NodeData, useTree } from "../Hooks/useTree";
 import { SettingComponents } from "./SettingsComponents";
 import { SettingControl } from "./SettingControl";
+import { NodeDefinition } from "../Data/NodeDefinition";
+import { start } from "repl";
 
-function GetNodeHeight(node: NodeData) {
-  var typeDef = getNodeTypeDefinition(node);
-  var inputCount = typeDef.inputPorts.length;
+function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
+  var inputCount = Object.keys(node.inputs).length;
   var outputCount = typeDef.executeOutputPorts.length + typeDef.outputPorts.length;
   var sumSetting = typeDef.settings.reduce((prev, def) => SettingComponents[def.type].getSize(node.settings[def.id], def), 0);
   return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
@@ -30,14 +31,13 @@ export const GraphNode = forwardRef(function GraphNode(
   },
   ref
 ) {
-  var definition = getNodeTypeDefinition(node);
+  const viewPortScale = useViewbox((state) => state.scale);
+  const setNodePosition = useTree((state) => state.setNodePosition);
+  const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
+
   const [{ xy }, api] = useSpring(() => ({
     xy: [node.positionX, node.positionY],
   }));
-
-  const viewPortScale = useViewbox((state) => state.scale);
-
-  const setNodePosition = useTree((state) => state.setNodePosition);
 
   const bind = useGesture({
     onDrag: ({ movement: [mx, my] }) => {
@@ -48,6 +48,7 @@ export const GraphNode = forwardRef(function GraphNode(
     },
   });
 
+  const definition = getNodeTypeDefinition(node);
   useImperativeHandle(
     ref,
     () => {
@@ -85,15 +86,14 @@ export const GraphNode = forwardRef(function GraphNode(
 
   var Icon = definition.icon;
 
-  var typeDef = getNodeTypeDefinition(node);
-  var inputCount = typeDef.inputPorts.length;
-  var outputCount = typeDef.executeOutputPorts.length + typeDef.outputPorts.length;
+  var inputCount = definition.inputPorts.length;
+  var outputCount = definition.executeOutputPorts.length + definition.outputPorts.length;
   const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
       <rect
         width="300"
-        height={GetNodeHeight(node)}
+        height={GetNodeHeight(node, definition)}
         fill="white"
         style={{
           boxShadow: "1px 1px 1px",

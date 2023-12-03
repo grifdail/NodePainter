@@ -1,12 +1,13 @@
 import { PortLocation, PortType } from "../Data/PortType";
 import { PortSelection, usePortSelection } from "./usePortSelection";
-import { getNodeTypeDefinition, useTree } from "./useTree";
+import { useTree } from "./useTree";
+
 export function useEdgeCreation() {
   const tree = useTree();
   const portSelection = usePortSelection();
 
   function createDataNode(left: PortSelection, right: PortSelection) {
-    var leftType = getNodeTypeDefinition(tree.getNode(left.node)).outputPorts.find((item) => item.id === left.port)?.type;
+    var leftType = tree.getNodeTypeDefinition(tree.getNode(left.node)).outputPorts.find((item) => item.id === left.port)?.type;
 
     var rightType = tree.getNode(right.node).inputs[right.port].type;
     if (leftType === rightType) {

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { produce } from "immer";
 
 import { nanoid } from "nanoid";
-import { ExecutionContext, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
+import { ExecutionContext, NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
 import { NodeLibrary } from "../Data/NodeLibrary";
 import { PortType } from "../Data/PortType";
 
@@ -12,6 +12,9 @@ export type NodeCollection = { [key: string]: NodeData };
 
 export type TreeStore = {
   nodes: NodeCollection;
+  customNodes: { [key: string]: NodeDefinition };
+  getNodeLibrary: () => { [key: string]: NodeDefinition };
+  getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
   getNode: (id: string) => NodeData;
   getInputPort: (id: string, portId: string) => PortConnection;
   setNodePosition: (id: string, x: number, y: number) => void;
@@ -32,6 +35,7 @@ export type TreeStore = {
 export type NodeData = {
   id: string;
   type: string;
+  graph?: string;
   inputs: { [key: string]: PortConnection };
   output: { [key: string]: any };
   settings: { [key: string]: any };
@@ -51,21 +55,29 @@ export const useTree = create<TreeStore>()(
   persist(
     (set, get) => {
       return {
-        nodes: { start: createNodeData("Start", 200, 200, "start") } as NodeCollection,
+        nodes: { start: createNodeData(NodeLibrary["Start"], 200, 200, "start") } as NodeCollection,
+        customNodes: {} as { [key: string]: NodeDefinition },
         getNode(id: string) {
           return get().nodes[id];
         },
         getInputPort(id: string, portId: string) {
           return get().nodes[id].inputs[portId];
         },
+
         addNode(nodeType: string, posX: number, posY: number) {
-          var newNodeData = createNodeData(nodeType, posX, posY);
+          var newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
           set(
             produce((state) => {
               state.nodes[newNodeData.id] = newNodeData;
             })
           );
-          return newNodeData;
+        },
+        getNodeTypeDefinition(node: string | NodeData) {
+          var type = typeof node === "string" ? node : node.type;
+          return NodeLibrary[type] || get().customNodes[type];
+        },
+        getNodeLibrary() {
+          return { ...NodeLibrary, ...get().customNodes };
         },
         addEdge(sourceId: string, sourcePort: string, targetId: string, targetPort: string) {
           set(
@@ -92,7 +104,7 @@ export const useTree = create<TreeStore>()(
         },
         getPortValue(nodeId: string, portId: string, context: ExecutionContext) {
           var node = get().nodes[nodeId];
-          var def = getNodeTypeDefinition(node);
+          var def = get().getNodeTypeDefinition(node);
           return def.getData(portId, node, context);
         },
         removeDataConnection(nodeId, portId) {
@@ -172,7 +184,7 @@ export const useTree = create<TreeStore>()(
         resetNode(node) {
           set(
             produce((state) => {
-              var def = getNodeTypeDefinition(state.nodes[node]);
+              var def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
 
               def.inputPorts.forEach((port) => {
                 state.nodes[node].inputs[port.id].hasConnection = false;
@@ -189,14 +201,15 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: { start: createNodeData("Start", 200, 200, "start") } });
+          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") } });
         },
         load(source) {
           try {
             var nodes: NodeCollection = {};
+
             Object.entries(source).forEach(([sourceKey, sourceNode]) => {
-              var newNode = createNodeData(sourceNode.type, sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
-              var def = getNodeTypeDefinition(newNode);
+              var newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.id), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
+              var def = get().getNodeTypeDefinition(newNode);
               if (!def) {
                 throw new Error("No node of that type");
               }
@@ -234,10 +247,9 @@ export const useTree = create<TreeStore>()(
   )
 );
 
-function createNodeData(nodeType: string, x: number, y: number, id: string | null = null): NodeData {
-  const def = NodeLibrary[nodeType];
+function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null): NodeData {
   return {
-    type: nodeType,
+    type: def.id,
     id: id || nanoid(),
     inputs: def.inputPorts.reduce((old: any, port: PortDefinition) => {
       const connection = createPortConnection(port);
@@ -262,8 +274,4 @@ function createPortConnection(def: PortDefinition): PortConnection {
     connectedNode: null,
     connectedPort: null,
   };
-}
-
-export function getNodeTypeDefinition(nodeData: NodeData) {
-  return NodeLibrary[nodeData.type];
 }

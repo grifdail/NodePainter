@@ -1,6 +1,6 @@
 import React from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
-import { NodeData, TreeStore, getNodeTypeDefinition, useTree } from "../Hooks/useTree";
+import { NodeData, TreeStore, useTree } from "../Hooks/useTree";
 import { ExecutionContext } from "../Data/NodeDefinition";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -81,8 +81,8 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
       if (node != null) {
-        var def = getNodeTypeDefinition(node);
-        if (def.execute) {
+        var def = tree?.getNodeTypeDefinition(node);
+        if (def && def.execute) {
           def.execute(node, context);
         }
       }
