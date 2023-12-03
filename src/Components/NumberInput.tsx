@@ -38,7 +38,7 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
   const onBlur = (newValue: string) => {
     try {
       var parsed = limitedEvaluate(rawField);
-      if (!Number.isNaN(parsed)) {
+      if (rawField !== "" && !Number.isNaN(parsed)) {
         onChange(parsed);
         setRawField(parsed.toString());
       } else {
