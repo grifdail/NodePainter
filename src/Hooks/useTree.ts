@@ -30,6 +30,7 @@ export type TreeStore = {
   duplicateNode: (node: string) => void;
   reset: () => void;
   load: (source: NodeCollection) => boolean;
+  createFunction: (def: NodeDefinition) => void;
 };
 
 export type NodeData = {
@@ -239,8 +240,10 @@ export const useTree = create<TreeStore>()(
             return false;
           }
         },
+        createFunction(def) {},
       };
     },
+
     {
       name: "node-painter-current-tree", // name of the item in the storage (must be unique)
     }
