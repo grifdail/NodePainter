@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NodeLibrary } from "../Data/NodeLibrary";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { useViewbox } from "../Hooks/useViewbox";
 import { useTree } from "../Hooks/useTree";
@@ -8,6 +8,7 @@ import { NodePreview } from "./NodePreview";
 import { Modal } from "./Modal";
 import styled from "styled-components";
 import { useNodeFav } from "../Hooks/useNodeFav";
+import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -45,9 +46,23 @@ const AddModalDiv = styled.div`
     max-height: 100%;
     align-items: stretch;
 
-    & > Input {
-      display: block;
-      width: 100%;
+    & > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: stretch;
+      align-items: stretch;
+      height: 50px;
+      flex: 0 0 30px;
+      & > Input {
+        display: block;
+        flex: 1 0 100px;
+      }
+      & > button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        vertical-align: middle;
+      }
     }
 
     & > menu {
@@ -146,8 +161,13 @@ export function NodeCreationModal({ close }: { close: () => void }) {
 
     return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
-  console.log(nodeFav.lastUsed);
-  filteredList.sort((a, b) => (nodeFav.lastUsed[b.id] || 0) - (nodeFav.lastUsed[a.id] || 0));
+  if (nodeFav.sorting === "last") {
+    filteredList.sort((a, b) => (nodeFav.lastUsed[b.id] || 0) - (nodeFav.lastUsed[a.id] || 0));
+  } else if (nodeFav.sorting === "most") {
+    filteredList.sort((a, b) => (nodeFav.useCount[b.id] || 0) - (nodeFav.useCount[a.id] || 0));
+  } else {
+    filteredList.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
+  }
 
   const tags = Object.values(NodeLibrary)
     .flatMap((item) => item.tags)
@@ -166,6 +186,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     nodeFav.useNode(node.id);
     close();
   };
+  console.log(nodeFav.sorting);
 
   return (
     <Modal title="Add a new node" icon={IconPlus} onClose={close}>
@@ -178,7 +199,29 @@ export function NodeCreationModal({ close }: { close: () => void }) {
           ))}
         </menu>
         <section>
-          <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..."></input>
+          <div>
+            <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..."></input>
+            <Menu
+              menuButton={
+                <MenuButton>
+                  Sort By: <IconSortDescending />
+                </MenuButton>
+              }
+            >
+              <MenuRadioGroup value={nodeFav.sorting}>
+                <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
+                  Name
+                </MenuItem>
+                <MenuItem value="last" onClick={() => nodeFav.setSorting("last")}>
+                  Last used
+                </MenuItem>
+                <MenuItem value="most" onClick={() => nodeFav.setSorting("most")}>
+                  Most used
+                </MenuItem>
+              </MenuRadioGroup>
+            </Menu>
+          </div>
+
           <menu>
             {filteredList.map((item) => (
               <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.fav.includes(item.id)} />

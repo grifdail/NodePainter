@@ -6,6 +6,9 @@ import { persist } from "zustand/middleware";
 export type NodeFavStore = {
   fav: string[];
   lastUsed: { [key: string]: number };
+  useCount: { [key: string]: number };
+  sorting: "name" | "last" | "most";
+  setSorting: (sorting: "name" | "last" | "most") => void;
   useNode: (id: string) => void;
   toggleFav: (id: string) => void;
 };
@@ -16,10 +19,16 @@ export const useNodeFav = create<NodeFavStore>()(
       return {
         fav: [],
         lastUsed: {},
+        useCount: {},
+        sorting: "name",
+        setSorting(sorting: "name" | "last" | "most") {
+          set({ sorting });
+        },
         useNode(node) {
           set(
             produce((state) => {
               state.lastUsed[node] = Date.now();
+              state.useCount[node] = state.useCount[node] ? state.useCount[node] + 1 : 1;
             })
           );
         },

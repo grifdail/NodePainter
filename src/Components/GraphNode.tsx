@@ -89,7 +89,6 @@ export const GraphNode = forwardRef(function GraphNode(
   var inputCount = typeDef.inputPorts.length;
   var outputCount = typeDef.executeOutputPorts.length + typeDef.outputPorts.length;
   const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
-
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
       <rect

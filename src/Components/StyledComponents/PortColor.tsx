@@ -2,7 +2,7 @@ import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayF
 import { NumberInput } from "../NumberInput";
 import { ColorInput } from "../ColorInput";
 import { VectorInput } from "./VectorInput";
-import { BoolInput } from "./BoolInput";
+import { BoolInput } from "../BoolInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
 

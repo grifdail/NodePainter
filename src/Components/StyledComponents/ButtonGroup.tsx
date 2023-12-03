@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-export const ButtonGroup = styled.div<{ vertical?: boolean }>`
+export const ButtonGroup = styled.div<{ vertical?: boolean; compact?: boolean }>`
   display: flex;
   justify-content: stretch;
-  gap: 50px;
+  gap: ${(state) => (state.compact ? "10px" : "50px")};
   padding: 10px;
   flex-direction: ${(state) => (state.vertical ? "column" : "row")};
 
   & button {
-    flex: 1 0 200px;
+    flex: 1 1 100px;
     height: 50px;
     background: white;
     border: 2px solid black;
@@ -26,6 +26,10 @@ export const ButtonGroup = styled.div<{ vertical?: boolean }>`
       background: rgba(0, 0, 0, 0.1);
       border: 2px solid #888888;
       color: #888888;
+    }
+    &.icon {
+      flex: 0 2 50px;
+      width: 50px;
     }
   }
 `;

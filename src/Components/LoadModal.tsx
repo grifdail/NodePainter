@@ -49,7 +49,6 @@ export function LoadModal({ close }: { close: () => void }) {
 
   const onValidateFile = (file: string) => {
     const result = useTree.getState().load(JSON.parse(file));
-    console.log(result);
     if (result) {
       close();
     }

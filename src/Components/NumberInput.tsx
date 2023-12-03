@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
 
 const math = create(all);
@@ -30,6 +30,10 @@ math.import(
 
 export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
   var [rawField, setRawField] = useState(value.toString());
+
+  useEffect(() => {
+    setRawField(value.toString());
+  }, [value]);
 
   const onBlur = (newValue: string) => {
     try {

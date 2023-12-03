@@ -51,7 +51,7 @@ export const useTree = create<TreeStore>()(
   persist(
     (set, get) => {
       return {
-        nodes: { start: createNodeData("Start", 200, 200, "start") },
+        nodes: { start: createNodeData("Start", 200, 200, "start") } as NodeCollection,
         getNode(id: string) {
           return get().nodes[id];
         },
@@ -172,18 +172,18 @@ export const useTree = create<TreeStore>()(
         resetNode(node) {
           set(
             produce((state) => {
-              var sourceNode = state.nodes[node] as NodeData;
-              var def = getNodeTypeDefinition(sourceNode);
+              var def = getNodeTypeDefinition(state.nodes[node]);
+
               def.inputPorts.forEach((port) => {
-                sourceNode.inputs[port.id].hasConnection = false;
-                sourceNode.inputs[port.id].ownValue = port.defaultValue;
+                state.nodes[node].inputs[port.id].hasConnection = false;
+                state.nodes[node].inputs[port.id].ownValue = structuredClone(port.defaultValue);
               });
 
-              for (const key in sourceNode.output) {
-                sourceNode.output[key] = null;
+              for (const key in state.nodes[node].output) {
+                state.nodes[node].output[key] = null;
               }
               for (const key in def.settings) {
-                sourceNode.settings[key] = def.settings[key].defaultValue;
+                state.nodes[node].settings[def.settings[key].id] = structuredClone(def.settings[key].defaultValue);
               }
             })
           );
@@ -202,6 +202,7 @@ export const useTree = create<TreeStore>()(
               }
               for (const key in sourceNode.inputs) {
                 var inputDef = def.inputPorts.find((item) => item.id === key);
+
                 if (!inputDef) {
                   throw new Error("invalid input port");
                 }
@@ -214,7 +215,7 @@ export const useTree = create<TreeStore>()(
                 newNode.output[key] = sourceNode.output[key];
               }
               for (const key in sourceNode.settings) {
-                newNode.settings[key] = sourceNode.settings[key];
+                newNode.settings[key] = structuredClone(sourceNode.settings[key]);
               }
               nodes[newNode.id] = newNode;
             });
@@ -244,7 +245,7 @@ function createNodeData(nodeType: string, x: number, y: number, id: string | nul
       return old;
     }, {}),
     settings: def.settings.reduce((old: any, setting: SettingDefinition) => {
-      old[setting.id] = setting.defaultValue;
+      old[setting.id] = structuredClone(setting.defaultValue);
       return old;
     }, {}),
     positionX: x,
@@ -256,7 +257,7 @@ function createNodeData(nodeType: string, x: number, y: number, id: string | nul
 function createPortConnection(def: PortDefinition): PortConnection {
   return {
     type: def.type,
-    ownValue: def.defaultValue,
+    ownValue: structuredClone(def.defaultValue),
     hasConnection: false,
     connectedNode: null,
     connectedPort: null,
