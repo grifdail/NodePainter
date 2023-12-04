@@ -7,7 +7,7 @@ export const DropdownSetting: SettingComponent = function DropdownSetting({ onCh
     <Menu portal menuButton={<MenuButton>{value}</MenuButton>}>
       <MenuRadioGroup value={value} onRadioChange={(e) => onChange(e.value)}>
         {def.options.map((option: string) => (
-          <MenuItem type="radio" value={option}>
+          <MenuItem type="radio" value={option} key={option}>
             {option};
           </MenuItem>
         ))}

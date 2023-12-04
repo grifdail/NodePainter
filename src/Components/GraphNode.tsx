@@ -85,6 +85,7 @@ export const GraphNode = forwardRef(function GraphNode(
   var setNodeSetting = useTree((state) => state.setNodeSetting);
 
   var Icon = definition.icon;
+  console.log(Icon);
 
   var inputCount = definition.inputPorts.length;
   var outputCount = definition.executeOutputPorts.length + definition.outputPorts.length;

@@ -26,11 +26,16 @@ export type NodeDefinition = {
   outputPorts: Array<PortDefinition>;
   executeOutputPorts: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: (portId: string, data: NodeData, context: ExecutionContext) => any;
+  getData: null | ((portId: string, data: NodeData, context: ExecutionContext) => any);
   execute: null | ((node: NodeData, context: ExecutionContext) => void);
+  executeAs?: string;
+  canBeExecuted?: boolean;
 };
 
 export type ExecutionContext = {
+  findNodeOfType(type: string): string | null;
+  createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
+  functionStack: Array<{ [key: string]: any }>;
   time: number;
   blackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;

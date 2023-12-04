@@ -12,6 +12,7 @@ export type NodeCollection = { [key: string]: NodeData };
 
 export type TreeStore = {
   nodes: NodeCollection;
+  editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
   getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
@@ -67,6 +68,7 @@ export const useTree = create<TreeStore>()(
 
         addNode(nodeType: string, posX: number, posY: number) {
           var newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
+          console.log(newNodeData);
           set(
             produce((state) => {
               state.nodes[newNodeData.id] = newNodeData;
@@ -104,10 +106,17 @@ export const useTree = create<TreeStore>()(
           );
         },
         getPortValue(nodeId: string, portId: string, context: ExecutionContext) {
-          var node = get().nodes[nodeId];
-          var def = get().getNodeTypeDefinition(node);
-          return def.getData(portId, node, context);
+          const nodes = get().nodes;
+          const node = nodes[nodeId];
+          let def = get().getNodeTypeDefinition(node);
+          if (def.executeAs) {
+            def = get().getNodeTypeDefinition(def.executeAs);
+          }
+          if (def.getData) {
+            return def.getData(portId, node, context);
+          }
         },
+
         removeDataConnection(nodeId, portId) {
           set(
             produce((state) => {
@@ -240,7 +249,50 @@ export const useTree = create<TreeStore>()(
             return false;
           }
         },
-        createFunction(def) {},
+        createFunction(def) {
+          set(
+            produce((state) => {
+              var start = `${def.id}-start`;
+              var end = `${def.id}-end`;
+              state.customNodes[def.id] = def;
+              var startNodeDef: NodeDefinition = {
+                IsUnique: true,
+                description: "",
+                id: start,
+                tags: [],
+                inputPorts: [],
+                outputPorts: structuredClone(def.inputPorts),
+                executeOutputPorts: def.canBeExecuted ? ["execute"] : [],
+                settings: [],
+                getData: null,
+                execute: null,
+                executeAs: "CustomFunction-start",
+                canBeExecuted: false,
+              };
+              var endNodeDef: NodeDefinition = {
+                IsUnique: true,
+                description: "",
+                id: end,
+                tags: [],
+                inputPorts: structuredClone(def.outputPorts),
+                outputPorts: [],
+                executeOutputPorts: [],
+                settings: [],
+                getData: null,
+                execute: null,
+                executeAs: "CustomFunction-end",
+                canBeExecuted: false,
+              };
+              state.customNodes[start] = startNodeDef;
+              state.customNodes[end] = endNodeDef;
+              var newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+              var newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+              state.nodes[start] = newStartNode;
+              state.nodes[end] = newEndNode;
+              state.editedGraph = def.id;
+            })
+          );
+        },
       };
     },
 
@@ -250,7 +302,7 @@ export const useTree = create<TreeStore>()(
   )
 );
 
-function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null): NodeData {
+function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
   return {
     type: def.id,
     id: id || nanoid(),
@@ -266,6 +318,7 @@ function createNodeData(def: NodeDefinition, x: number, y: number, id: string | 
     positionX: x,
     positionY: y,
     output: {},
+    graph: graph,
   };
 }
 

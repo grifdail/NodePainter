@@ -161,3 +161,73 @@ AddNode({
     context.p5.pop();
   },
 });
+AddNode({
+  id: "CustomFunction",
+  description: "",
+  IsUnique: true,
+  icon: IconArrowsMove,
+  tags: [],
+  inputPorts: [],
+  outputPorts: [],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    const source = context.findNodeOfType(`${nodeData.type}-end`);
+    if (!source) {
+      return null;
+    }
+    context.functionStack.push(context.createFunctionContext(nodeData, context));
+
+    var result = context.getNodeOutput(source, portId);
+    context.functionStack.pop();
+    return result;
+  },
+  execute: (data, context) => {
+    const source = context.findNodeOfType(`${data.type}-start`);
+    if (!source) {
+      return null;
+    }
+    context.functionStack.push(context.createFunctionContext(data, context));
+    context.execute(source);
+    context.functionStack.pop();
+  },
+});
+
+AddNode({
+  id: "CustomFunction-start",
+  description: "",
+  IsUnique: true,
+  icon: IconArrowsMove,
+  tags: [],
+  inputPorts: [],
+  outputPorts: [],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var contextFn = context.functionStack[context.functionStack.length - 1];
+    return contextFn[portId];
+  },
+  execute: (data, context) => {
+    if (data.output.execute) {
+      context.execute(data.output.execute);
+    }
+  },
+});
+
+AddNode({
+  id: "CustomFunction-end",
+  description: "",
+  IsUnique: true,
+  icon: IconArrowsMove,
+  tags: [],
+  inputPorts: [],
+  outputPorts: [],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    return context.getInputValue(nodeData, portId);
+  },
+  execute: (data, context) => {
+    //TODO
+  },
+});

@@ -4,10 +4,12 @@ import { useRouter } from "../Hooks/useRouter";
 import { SaveModal } from "./SaveModal";
 import { LoadModal } from "./LoadModal";
 import { ExportGifModal } from "./ExportGifModal";
+import { EditNodeModal } from "./EditNodeModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
   const route = useRouter((state) => state.current);
+  console.log(route);
   return (
     <div>
       {route === "default" && <GridUi />}
@@ -15,6 +17,7 @@ export function Router() {
       {route === "save" && <SaveModal close={close} />}
       {route === "load" && <LoadModal close={close} />}
       {route === "export-gif" && <ExportGifModal close={close} />}
+      {route === "custom-function" && <EditNodeModal close={close} />}
     </div>
   );
 }

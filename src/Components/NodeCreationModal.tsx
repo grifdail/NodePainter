@@ -8,6 +8,7 @@ import { Modal } from "./Modal";
 import styled from "styled-components";
 import { useNodeFav } from "../Hooks/useNodeFav";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { useRouter } from "../Hooks/useRouter";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -186,12 +187,13 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     nodeFav.useNode(node.id);
     close();
   };
-  console.log(nodeFav.sorting);
+  var open = useRouter((state) => state.open);
 
   return (
     <Modal title="Add a new node" icon={IconPlus} onClose={close}>
       <AddModalDiv>
         <menu>
+          <button onClick={() => open("custom-function")}>aaaa</button>
           {tags.map((tag) => (
             <CategoryButton key={tag} selected={tag === selectedCategory || (!!selectedCategory && tag === "all")} onClick={() => setCategory(tag === "all" ? "" : tag)}>
               {tag}
