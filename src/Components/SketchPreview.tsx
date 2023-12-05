@@ -116,7 +116,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     findNodeOfType(type) {
       const nodes = tree?.nodes as NodeCollection;
       for (let key in nodes) {
-        if (nodes[key].type == type) {
+        if (nodes[key].type === type) {
           return key;
         }
       }

@@ -1,4 +1,3 @@
-import { useTree } from "../Hooks/useTree";
 import { Modal } from "./Modal";
 import styled from "styled-components";
 import { IconFunctionFilled, IconX } from "@tabler/icons-react";
@@ -7,8 +6,7 @@ import { NodeDefinition, PortDefinition } from "../Data/NodeDefinition";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PortColor } from "./StyledComponents/PortColor";
 import { TextInput } from "./TextInput";
-import { CUSTOM_FUNCTION } from "../Nodes/System";
-import { CustomFunctionCreationContextStore, PortPosition, useCustomNodeCreationContext } from "./useDefinitionSettings";
+import { CustomFunctionCreationContextStore, PortPosition, useCustomNodeCreationContext } from "./useCustomNodeCreationContext";
 
 const MainDiv = styled.div`
   display: flex;

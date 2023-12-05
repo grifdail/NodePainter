@@ -12,7 +12,6 @@ import { NodeData, useTree } from "../Hooks/useTree";
 import { SettingComponents } from "./SettingsComponents";
 import { SettingControl } from "./SettingControl";
 import { NodeDefinition } from "../Data/NodeDefinition";
-import { start } from "repl";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.inputs).length;

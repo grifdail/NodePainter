@@ -9,7 +9,7 @@ import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
 import { CUSTOM_FUNCTION } from "../Nodes/System";
-import { useCustomNodeCreationContext } from "./useDefinitionSettings";
+import { useCustomNodeCreationContext } from "./useCustomNodeCreationContext";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;

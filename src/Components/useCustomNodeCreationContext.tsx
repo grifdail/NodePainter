@@ -1,9 +1,10 @@
-﻿import { NodeDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Data/NodeDefinition";
 import { PortTypeDefaultValue } from "../Data/PortType";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "../Hooks/useTree";
 import { useRouter } from "../Hooks/useRouter";
+import { CUSTOM_FUNCTION } from "../Nodes/System";
 
 export type PortPosition = "input" | "output";
 export type CustomFunctionCreationContextStore = {
@@ -49,7 +50,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
           settings: [],
           getData: null,
           execute: null,
-          executeAs: "CustomFunction",
+          executeAs: CUSTOM_FUNCTION,
           canBeExecuted: false,
         },
       });
