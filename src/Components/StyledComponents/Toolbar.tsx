@@ -15,8 +15,12 @@ export var Toolbar = styled.menu<{ vertical?: boolean; reversed?: boolean }>`
     cursor: pointer;
     display: flex;
     padding: 10px;
-    aspect-ratio: 1;
+
     transition: background-color 0.3s ease-in-out;
+
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
 
   & > button:hover {

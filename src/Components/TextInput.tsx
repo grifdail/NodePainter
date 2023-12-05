@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export function TextInput({ onChange, value }: { onChange: (value: string) => void; value: string }) {
   var [rawField, setRawField] = useState(value);

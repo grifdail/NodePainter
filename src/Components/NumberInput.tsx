@@ -50,5 +50,5 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
     }
   };
 
-  return <input value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  return <input value={rawField} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
 }

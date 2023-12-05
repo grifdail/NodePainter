@@ -1,4 +1,4 @@
-import { IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus } from "@tabler/icons-react";
+import { IconFunctionFilled, IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus } from "@tabler/icons-react";
 import { useToggle } from "@uidotdev/usehooks";
 
 import { SketchPreview } from "./SketchPreview";
@@ -8,6 +8,8 @@ import { Menu, MenuDivider, MenuItem } from "@szhsin/react-menu";
 import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
+import { CUSTOM_FUNCTION } from "../Nodes/System";
+import { useCustomNodeCreationContext } from "./useDefinitionSettings";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -20,6 +22,25 @@ export function GridUi() {
   const portSelection = usePortSelection();
   const nodes = useTree((state) => state.nodes);
   const reset = useTree((state) => state.reset);
+  const graph = useTree((state) => state.editedGraph) || "main";
+  const setEditedGraph = useTree((state) => state.setEditedGraph);
+  const rawCustomNodes = useTree((state) => state.customNodes);
+  const customFunctionNodes = [
+    "main",
+    ...Object.values(rawCustomNodes)
+      .filter((item) => item.executeAs === CUSTOM_FUNCTION)
+      .map((node) => node.id),
+  ];
+  const setGraph = (graph: string) => {
+    setEditedGraph(graph === "main" ? undefined : graph);
+  };
+
+  const openEditModal = () => {
+    useCustomNodeCreationContext.getState().openEdit(useTree.getState().getNodeTypeDefinition(graph));
+  };
+  const openCreateModal = () => {
+    useCustomNodeCreationContext.getState().openCreate();
+  };
 
   return (
     <div className="full-screen-layout grid-ui">
@@ -31,6 +52,24 @@ export function GridUi() {
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
+        <Menu
+          portal
+          menuButton={
+            <button>
+              <IconFunctionFilled></IconFunctionFilled>
+              <span>{graph}</span>
+            </button>
+          }
+        >
+          <MenuItem onClick={openEditModal} disabled={graph === "main"}>
+            Edit
+          </MenuItem>
+          <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
+          <MenuDivider></MenuDivider>
+          {customFunctionNodes.map((node) => (
+            <MenuItem onClick={() => setGraph(node)}>{node}</MenuItem>
+          ))}
+        </Menu>
         <button onClick={() => openModal("node-creation")}>
           <IconPlus></IconPlus>
         </button>

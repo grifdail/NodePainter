@@ -150,6 +150,9 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const nodeLibrary = useTree((state) => state.getNodeLibrary());
 
   const filteredList = Object.values(nodeLibrary).filter((item) => {
+    if (item.hideInLibrary) {
+      return false;
+    }
     if (!!selectedCategory) {
       if (selectedCategory === "fav") {
         if (!nodeFav.fav.includes(item.id)) {

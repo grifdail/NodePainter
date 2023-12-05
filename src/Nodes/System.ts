@@ -9,6 +9,7 @@ AddNode({
   icon: IconAssembly,
   tags: ["Control"],
   inputPorts: [],
+  hideInLibrary: true,
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
@@ -161,12 +162,15 @@ AddNode({
     context.p5.pop();
   },
 });
+
+export const CUSTOM_FUNCTION = "CustomFunction";
 AddNode({
-  id: "CustomFunction",
+  id: CUSTOM_FUNCTION,
   description: "",
   IsUnique: true,
   icon: IconArrowsMove,
   tags: [],
+  hideInLibrary: true,
   inputPorts: [],
   outputPorts: [],
   executeOutputPorts: [],
@@ -199,6 +203,7 @@ AddNode({
   IsUnique: true,
   icon: IconArrowsMove,
   tags: [],
+  hideInLibrary: true,
   inputPorts: [],
   outputPorts: [],
   executeOutputPorts: [],
@@ -218,6 +223,7 @@ AddNode({
   id: "CustomFunction-end",
   description: "",
   IsUnique: true,
+  hideInLibrary: true,
   icon: IconArrowsMove,
   tags: [],
   inputPorts: [],

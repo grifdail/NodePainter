@@ -22,11 +22,11 @@ export function useEdgeCreation() {
 
   const onClickPort = function (node: string, port: string, location: PortLocation, type: PortType) {
     var right: PortSelection = { node, port, location, type };
-    if (location === PortLocation.InputData && tree.getNode(node).inputs[port].hasConnection) {
+    if (!portSelection.hasSelection && location === PortLocation.InputData && tree.getNode(node).inputs[port].hasConnection) {
       tree.removeDataConnection(node, port);
       return;
     }
-    if (location === PortLocation.OutputData && tree.getNode(node).output[port] !== null) {
+    if (!portSelection.hasSelection && location === PortLocation.OutputExec && tree.getNode(node).output[port] !== null) {
       tree.removeOutputConnection(node, port);
       return;
     }

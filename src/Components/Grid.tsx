@@ -41,8 +41,9 @@ export function Grid() {
 
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
 
-  const edges = Object.keys(tree.nodes).flatMap((key) => {
-    var node = tree.nodes[key];
+  const nodes = Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph);
+
+  const edges = nodes.flatMap((node) => {
     return [
       ...Object.entries(node.inputs)
         .filter(([key, port]) => port.hasConnection)
@@ -73,16 +74,16 @@ export function Grid() {
         return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string)} end={getNodePort(edge[2] as string, edge[3] as string)} type={edge[4] as PortType} />;
       })}
       {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port)} end={mousePosition} type={portSelection.type} reverse={portSelection.location === PortLocation.InputData || portSelection.location === PortLocation.InputExec} />}
-      {Object.keys(tree.nodes).map((treeId) => {
+      {nodes.map((node) => {
         return (
           <GraphNode
             ref={(item) =>
-              (nodeRef.current[treeId] = item as {
+              (nodeRef.current[node.id] = item as {
                 [key: string]: Interpolation<number[], number[]>;
               })
             }
-            node={tree.getNode(treeId)}
-            key={treeId}
+            node={node}
+            key={node.id}
             onClickPort={onClickPort}
           />
         );

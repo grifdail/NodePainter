@@ -32,6 +32,8 @@ export type TreeStore = {
   reset: () => void;
   load: (source: NodeCollection) => boolean;
   createFunction: (def: NodeDefinition) => void;
+  setEditedGraph: (graph: string | undefined) => void;
+  enforceValidGraph: () => void;
 };
 
 export type NodeData = {
@@ -211,7 +213,7 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") } });
+          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") }, customNodes: {} });
         },
         load(source) {
           try {
@@ -257,6 +259,7 @@ export const useTree = create<TreeStore>()(
               state.customNodes[def.id] = def;
               var startNodeDef: NodeDefinition = {
                 IsUnique: true,
+                hideInLibrary: true,
                 description: "",
                 id: start,
                 tags: [],
@@ -272,6 +275,7 @@ export const useTree = create<TreeStore>()(
               var endNodeDef: NodeDefinition = {
                 IsUnique: true,
                 description: "",
+                hideInLibrary: true,
                 id: end,
                 tags: [],
                 inputPorts: structuredClone(def.outputPorts),
@@ -290,6 +294,36 @@ export const useTree = create<TreeStore>()(
               state.nodes[start] = newStartNode;
               state.nodes[end] = newEndNode;
               state.editedGraph = def.id;
+            })
+          );
+          get().enforceValidGraph();
+        },
+        setEditedGraph(graph) {
+          set({ editedGraph: graph });
+        },
+        enforceValidGraph() {
+          set(
+            produce((state) => {
+              for (var node in state.nodes) {
+                for (var input in state.nodes[node].inputs) {
+                  let port = state.nodes[node].inputs[input] as PortConnection;
+                  if (port.hasConnection) {
+                    let targetNode = state.nodes[port.connectedNode as string];
+                    if (!targetNode) {
+                      port.hasConnection = false;
+                      port.connectedNode = null;
+                      port.connectedPort = null;
+                    }
+                    let def = state.getNodeTypeDefinition(targetNode);
+                    let defPort = def.outputPorts.find((defPort: PortDefinition) => defPort.id === port.connectedPort);
+                    if (!defPort || defPort.type !== port.type) {
+                      port.hasConnection = false;
+                      port.connectedNode = null;
+                      port.connectedPort = null;
+                    }
+                  }
+                }
+              }
             })
           );
         },

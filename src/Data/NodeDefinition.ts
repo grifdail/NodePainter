@@ -17,6 +17,7 @@ export type SettingDefinition = {
 };
 
 export type NodeDefinition = {
+  hideInLibrary?: boolean;
   IsUnique?: boolean;
   description?: string;
   icon?: Icon;
