@@ -45,10 +45,10 @@ export function Grid() {
 
   const edges = nodes.flatMap((node) => {
     return [
-      ...Object.entries(node.inputs)
+      ...Object.entries(node.dataInputs)
         .filter(([key, port]) => port.hasConnection)
         .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]),
-      ...Object.entries(node.output)
+      ...Object.entries(node.execOutputs)
         .filter(([key, connection]) => connection != null)
         .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
     ];

@@ -40,7 +40,7 @@ AddNode({
   tags: ["Math"],
   icon: IconAngle,
   description: "Return the angle formed by the given coordinate and the horizontal axis.",
-  inputPorts: [
+  dataInputs: [
     {
       id: "y",
       type: "number",
@@ -52,14 +52,14 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
@@ -75,7 +75,7 @@ AddNode({
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number to be between two other number",
-  inputPorts: [
+  dataInputs: [
     {
       id: "value",
       type: "number",
@@ -92,14 +92,14 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
@@ -117,7 +117,7 @@ AddNode({
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Interpolate between two number according to another one",
-  inputPorts: [
+  dataInputs: [
     {
       id: "t",
       type: "number",
@@ -134,14 +134,14 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
@@ -158,7 +158,7 @@ AddNode({
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Return a number alternating betwen min and max",
-  inputPorts: [
+  dataInputs: [
     {
       id: "t",
       type: "number",
@@ -175,14 +175,14 @@ AddNode({
       defaultValue: 1,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
@@ -203,7 +203,7 @@ AddNode({
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Remap a number from one interval to the other",
-  inputPorts: [
+  dataInputs: [
     {
       id: "t",
       type: "number",
@@ -235,14 +235,14 @@ AddNode({
       defaultValue: true,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var t = context.getInputValue(nodeData, "t");
@@ -263,13 +263,13 @@ AddNode({
   tags: ["Math"],
   icon: IconGridDots,
   description: "return a semi random continous value between 0 and 1 for points in 2d. ",
-  inputPorts: [
+  dataInputs: [
     { id: "pos", type: "vector2", defaultValue: createVector() },
     { id: "scale", type: "vector2", defaultValue: createVector(1, 1) },
     { id: "time", type: "number", defaultValue: 0 },
   ],
-  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
@@ -287,13 +287,13 @@ AddNode({
   tags: ["Math"],
   icon: IconGridDots,
   description: "return a semi random continous value between 0 and 1, looping around when in the interval [0,1] .",
-  inputPorts: [
+  dataInputs: [
     { id: "pos", type: "number", defaultValue: 0 },
     { id: "scale", type: "number", defaultValue: 1 },
     { id: "seed", type: "vector2", defaultValue: createVector(0, 0) },
   ],
-  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var pos = context.getInputValue(nodeData, "pos");
@@ -309,9 +309,9 @@ AddNode({
   tags: ["Math"],
   icon: IconEaseInOut,
   description: "Apply one of the standard easing function to a number .",
-  inputPorts: [{ id: "input", type: "number", defaultValue: 0 }],
-  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [{ id: "input", type: "number", defaultValue: 0 }],
+  dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [
     {
       id: "easing",
@@ -340,7 +340,7 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
     tags: ["Math"],
     icon: icon || IconMathSymbols,
     description: description,
-    inputPorts: [
+    dataInputs: [
       {
         id: "a",
         type: "number",
@@ -352,14 +352,14 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
         defaultValue: 0,
       },
     ],
-    outputPorts: [
+    dataOutputs: [
       {
         id: "result",
         type: "number",
         defaultValue: 0,
       },
     ],
-    executeOutputPorts: [],
+    executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
@@ -378,21 +378,21 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
     tags: ["Math"],
     icon: icon || IconSquareRoot2,
     description: description,
-    inputPorts: [
+    dataInputs: [
       {
         id: "input",
         type: "number",
         defaultValue: 0,
       },
     ],
-    outputPorts: [
+    dataOutputs: [
       {
         id: "result",
         type: "number",
         defaultValue: 0,
       },
     ],
-    executeOutputPorts: [],
+    executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
@@ -410,15 +410,15 @@ function createConstant(id: string, value: number): NodeDefinition {
     icon: IconCalculator,
     description: `Mathematical constant. Approximately ${value.toPrecision(4)}.`,
     tags: ["Math", "constant"],
-    inputPorts: [],
-    outputPorts: [
+    dataInputs: [],
+    dataOutputs: [
       {
         id: "value",
         type: "number",
         defaultValue: 0,
       },
     ],
-    executeOutputPorts: [],
+    executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "value") {

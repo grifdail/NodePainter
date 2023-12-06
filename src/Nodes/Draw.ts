@@ -9,15 +9,15 @@ AddNode({
   description: "Fill the entire canvas",
   icon: IconBucketDroplet,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
       defaultValue: createColor(1, 0, 0),
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -32,7 +32,7 @@ AddNode({
   description: "Draw a circle",
   icon: IconCircle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -49,8 +49,8 @@ AddNode({
       defaultValue: 10,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -68,7 +68,7 @@ AddNode({
   description: "Draw the contour of a circle.",
   icon: IconCircle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -90,8 +90,8 @@ AddNode({
       defaultValue: 10,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -112,7 +112,7 @@ AddNode({
   description: "Draw the contour of a circle.",
   icon: IconCircle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -144,8 +144,8 @@ AddNode({
       defaultValue: 1,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -178,7 +178,7 @@ AddNode({
   description: "Draw a regular poligon.",
   icon: IconTriangle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -205,8 +205,8 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -234,7 +234,7 @@ AddNode({
   description: "Draw a line between two point",
   icon: IconLine,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -256,8 +256,8 @@ AddNode({
       defaultValue: 10,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -277,7 +277,7 @@ AddNode({
   description: "Draw a rectangle starting at the top left corner with a width and height",
   icon: IconLine,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -299,8 +299,8 @@ AddNode({
       defaultValue: 10,
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -320,7 +320,7 @@ AddNode({
   description: "Draw a triangle defined by 3 points",
   icon: IconRectangle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -342,8 +342,8 @@ AddNode({
       defaultValue: createVector(0, 25),
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
@@ -363,7 +363,7 @@ AddNode({
   description: "Draw a quad defined by 4 points",
   icon: IconRectangle,
   tags: ["Draw"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "color",
       type: "color",
@@ -390,8 +390,8 @@ AddNode({
       defaultValue: createVector(25, 25),
     },
   ],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},

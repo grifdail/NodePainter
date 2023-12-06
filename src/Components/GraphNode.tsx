@@ -14,8 +14,8 @@ import { SettingControl } from "./SettingControl";
 import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
-  var inputCount = Object.keys(node.inputs).length;
-  var outputCount = typeDef.executeOutputPorts.length + typeDef.outputPorts.length;
+  var inputCount = Object.keys(node.dataInputs).length;
+  var outputCount = Object.keys(node.execOutputs).length + typeDef.dataOutputs.length;
   var sumSetting = typeDef.settings.reduce((prev, def) => SettingComponents[def.type].getSize(node.settings[def.id], def), 0);
   return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
 }
@@ -33,6 +33,10 @@ export const GraphNode = forwardRef(function GraphNode(
   const viewPortScale = useViewbox((state) => state.scale);
   const setNodePosition = useTree((state) => state.setNodePosition);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
+  const inputCount = Object.keys(node.dataInputs).length;
+  const executeOutputCount = Object.keys(node.execOutputs).length;
+  const dataOutputCount = Object.keys(node.dataOutputs).length;
+  const outputCount = executeOutputCount + dataOutputCount;
 
   const [{ xy }, api] = useSpring(() => ({
     xy: [node.positionX, node.positionY],
@@ -53,24 +57,24 @@ export const GraphNode = forwardRef(function GraphNode(
     () => {
       var start: { [key: string]: Interpolation<number[], number[]> } = {};
       return {
-        ...definition.inputPorts.reduce(
+        ...definition.dataInputs.reduce(
           (old, port, i) => ({
             ...old,
             [port.id]: xy.to((x, y) => [x, y + 50 + 32 * i + 15]),
           }),
           start
         ),
-        ...definition.executeOutputPorts.reduce(
-          (old, port, i) => ({
+        ...Object.entries(node.execOutputs).reduce(
+          (old, [port, value], i) => ({
             ...old,
             [port]: xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15]),
           }),
           start
         ),
-        ...definition.outputPorts.reduce(
+        ...definition.dataOutputs.reduce(
           (old, port, i) => ({
             ...old,
-            [port.id]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + definition.executeOutputPorts.length)]),
+            [port.id]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)]),
           }),
           start
         ),
@@ -85,8 +89,6 @@ export const GraphNode = forwardRef(function GraphNode(
 
   var Icon = definition.icon;
 
-  var inputCount = definition.inputPorts.length;
-  var outputCount = definition.executeOutputPorts.length + definition.outputPorts.length;
   const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
@@ -127,14 +129,14 @@ export const GraphNode = forwardRef(function GraphNode(
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}
       {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")}></OutPortView> : null}
-      {definition.inputPorts.map((item, i) => {
-        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
+      {definition.dataInputs.map((item, i) => {
+        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.dataInputs[item.id]} onClick={() => onClickPort(node.id, item.id, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
       })}
-      {definition.executeOutputPorts.map((id, i) => {
+      {Object.entries(node.execOutputs).map(([id], i) => {
         return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")}></OutPortView>;
       })}
-      {definition.outputPorts.map((item, i) => {
-        return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}></OutPortView>;
+      {definition.dataOutputs.map((item, i) => {
+        return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}></OutPortView>;
       })}
       {definition.settings.map((item, i) => (
         <SettingControl y={portHeight} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} />

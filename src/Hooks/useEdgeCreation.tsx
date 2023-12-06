@@ -8,9 +8,9 @@ export function useEdgeCreation() {
   const portSelection = usePortSelection();
 
   function createDataNode(left: PortSelection, right: PortSelection) {
-    var leftType = tree.getNodeTypeDefinition(tree.getNode(left.node)).outputPorts.find((item) => item.id === left.port)?.type;
+    var leftType = tree.getNodeTypeDefinition(tree.getNode(left.node)).dataOutputs.find((item) => item.id === left.port)?.type;
 
-    var rightType = tree.getNode(right.node).inputs[right.port].type;
+    var rightType = tree.getNode(right.node).dataInputs[right.port].type;
     if (leftType === rightType) {
       tree.addEdge(left.node, left.port, right.node, right.port);
     }
@@ -23,11 +23,11 @@ export function useEdgeCreation() {
 
   const onClickPort = function (node: string, port: string, location: PortRole, type: PortType) {
     var right: PortSelection = { node, port, location, type };
-    if (!portSelection.hasSelection && location === "inputData" && tree.getNode(node).inputs[port].hasConnection) {
+    if (!portSelection.hasSelection && location === "inputData" && tree.getNode(node).dataInputs[port].hasConnection) {
       tree.removeDataConnection(node, port);
       return;
     }
-    if (!portSelection.hasSelection && location === "outputExecute" && tree.getNode(node).output[port] !== null) {
+    if (!portSelection.hasSelection && location === "outputExecute" && tree.getNode(node).execOutputs[port] !== null) {
       tree.removeOutputConnection(node, port);
       return;
     }

@@ -11,7 +11,7 @@ AddNode({
   description: "Create a vector from a set of coordinate",
   icon: IconArrowUpRightCircle,
   tags: ["Logic", "Math"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "a",
       type: "number",
@@ -23,8 +23,8 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
+  executeOutputs: [],
   settings: [
     {
       id: "comparator",
@@ -53,20 +53,20 @@ AddNode({
   description: "Execute an instruction only if a condition is meet",
   icon: IconAssembly,
   tags: ["Control", "Logic"],
-  inputPorts: [{ id: "condition", type: "bool", defaultValue: false }],
-  outputPorts: [],
-  executeOutputPorts: ["then", "else"],
+  dataInputs: [{ id: "condition", type: "bool", defaultValue: false }],
+  dataOutputs: [],
+  executeOutputs: ["then", "else"],
   settings: [],
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var input = context.getInputValue(data, "condition");
     if (input) {
-      if (data.output["then"]) {
-        context.execute(data.output["then"]);
+      if (data.execOutputs["then"]) {
+        context.execute(data.execOutputs["then"]);
       }
     } else {
-      if (data.output["else"]) {
-        context.execute(data.output["else"]);
+      if (data.execOutputs["else"]) {
+        context.execute(data.execOutputs["else"]);
       }
     }
   },
@@ -77,13 +77,13 @@ AddNode({
   description: "Return one of the input depending on the condition",
   icon: IconAssembly,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "condition", type: "bool", defaultValue: false },
     { id: "true", type: "number", defaultValue: 1 },
     { id: "false", type: "number", defaultValue: 0 },
   ],
-  outputPorts: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "condition");
@@ -101,13 +101,13 @@ AddNode({
   description: "Return one of the input depending on the condition",
   icon: IconAssembly,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "condition", type: "bool", defaultValue: false },
     { id: "true", type: "vector2", defaultValue: createVector(1, 1) },
     { id: "false", type: "vector2", defaultValue: createVector(0, 0) },
   ],
-  outputPorts: [{ id: "result", type: "vector2", defaultValue: createVector() }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "vector2", defaultValue: createVector() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "condition");
@@ -125,13 +125,13 @@ AddNode({
   description: "Return one of the input depending on the condition",
   icon: IconAssembly,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "condition", type: "bool", defaultValue: false },
     { id: "true", type: "color", defaultValue: createColor(1, 1, 1, 1) },
     { id: "false", type: "color", defaultValue: createColor(0, 0, 0, 1) },
   ],
-  outputPorts: [{ id: "result", type: "color", defaultValue: createColor(0, 0, 0, 1) }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "color", defaultValue: createColor(0, 0, 0, 1) }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "condition");
@@ -149,12 +149,12 @@ AddNode({
   description: "Return true only if both input are true",
   icon: IconLogicAnd,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "a", type: "bool", defaultValue: false },
     { id: "b", type: "bool", defaultValue: false },
   ],
-  outputPorts: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, "a") && context.getInputValue(nodeData, "b");
@@ -167,12 +167,12 @@ AddNode({
   description: "Return true only if one of the input is true",
   icon: IconLogicOr,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "a", type: "bool", defaultValue: false },
     { id: "b", type: "bool", defaultValue: false },
   ],
-  outputPorts: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, "a") || context.getInputValue(nodeData, "b");
@@ -185,12 +185,12 @@ AddNode({
   description: "Return true only if exactly one input is true",
   icon: IconLogicXor,
   tags: ["Logic"],
-  inputPorts: [
+  dataInputs: [
     { id: "a", type: "bool", defaultValue: false },
     { id: "b", type: "bool", defaultValue: false },
   ],
-  outputPorts: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, "a") ^ context.getInputValue(nodeData, "b");
@@ -203,9 +203,9 @@ AddNode({
   description: "Return the oposite of the input",
   icon: IconLogicNot,
   tags: ["Logic"],
-  inputPorts: [{ id: "a", type: "bool", defaultValue: false }],
-  outputPorts: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputPorts: [],
+  dataInputs: [{ id: "a", type: "bool", defaultValue: false }],
+  dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return !context.getInputValue(nodeData, "a");

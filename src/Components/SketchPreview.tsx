@@ -70,7 +70,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 };
 
 export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
-  const inputPorts = nodeData.inputs[portId];
+  const inputPorts = nodeData.dataInputs[portId];
   if (inputPorts.hasConnection) {
     return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
   } else {
@@ -104,7 +104,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       return tree?.getPortValue(nodeId, portId, context);
     },
     getInputValue(nodeData: NodeData, portId: string) {
-      const inputPorts = nodeData.inputs[portId];
+      const inputPorts = nodeData.dataInputs[portId];
       if (inputPorts.hasConnection) {
         return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
       } else {
@@ -113,7 +113,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     },
     createFunctionContext(node: NodeData, context: ExecutionContext) {
       return Object.fromEntries(
-        Object.keys(node.inputs).map((key) => {
+        Object.keys(node.dataInputs).map((key) => {
           return [key, context.getInputValue(node, key)];
         })
       );

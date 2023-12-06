@@ -141,7 +141,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         </section>
         <section>
           <h3>Inputs</h3>
-          {def.inputPorts.map((port, i) => (
+          {def.dataInputs.map((port, i) => (
             <InputPortEdit key={i} port={port} context={context} index={i} type="inputData" />
           ))}
           <ButtonGroup>
@@ -150,7 +150,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         </section>
         <section>
           <h3>Outputs</h3>
-          {def.outputPorts.map((port, i) => (
+          {def.dataOutputs.map((port, i) => (
             <InputPortEdit key={i} port={port} index={i} type="outputData" context={context} />
           ))}
           <ButtonGroup>

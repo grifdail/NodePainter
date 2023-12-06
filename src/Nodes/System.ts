@@ -10,16 +10,16 @@ AddNode({
   description: "The start of the program",
   icon: IconAssembly,
   tags: ["Control"],
-  inputPorts: [],
+  dataInputs: [],
   hideInLibrary: true,
-  outputPorts: [],
-  executeOutputPorts: ["execute"],
+  dataOutputs: [],
+  executeOutputs: ["execute"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
   execute: (data, context) => {
-    if (data.output.execute) {
-      context.execute(data.output.execute);
+    if (data.execOutputs.execute) {
+      context.execute(data.execOutputs.execute);
     }
   },
   IsUnique: true,
@@ -30,18 +30,18 @@ AddNode({
   description: "Execute two instruction",
   icon: IconAssembly,
   tags: ["Control"],
-  inputPorts: [],
-  outputPorts: [],
-  executeOutputPorts: ["first", "second"],
+  dataInputs: [],
+  dataOutputs: [],
+  executeOutputs: ["first", "second"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
-    if (data.output.first) {
-      context.execute(data.output.first);
+    if (data.execOutputs.first) {
+      context.execute(data.execOutputs.first);
     }
-    if (data.output.second) {
-      context.execute(data.output.second);
+    if (data.execOutputs.second) {
+      context.execute(data.execOutputs.second);
     }
   },
 });
@@ -51,9 +51,9 @@ AddNode({
   description: "Execute an instruction multiple time",
   icon: IconAssembly,
   tags: ["Control"],
-  inputPorts: [{ id: "count", type: "number", defaultValue: 10 }],
-  outputPorts: [{ id: "index", type: "number", defaultValue: 10 }],
-  executeOutputPorts: ["loop"],
+  dataInputs: [{ id: "count", type: "number", defaultValue: 10 }],
+  dataOutputs: [{ id: "index", type: "number", defaultValue: 10 }],
+  executeOutputs: ["loop"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {
@@ -63,8 +63,8 @@ AddNode({
     var count = context.getInputValue(data, "count") as number;
     for (var i = 0; i < count; i++) {
       context.blackboard[`${data.id}-index`] = i;
-      if (data.output.loop) {
-        context.execute(data.output.loop);
+      if (data.execOutputs.loop) {
+        context.execute(data.execOutputs.loop);
       }
     }
   },
@@ -75,15 +75,15 @@ AddNode({
   description: "Execute an instruction multiple time for elements of a grid",
   icon: IconAssembly,
   tags: ["Control"],
-  inputPorts: [
+  dataInputs: [
     { id: "width", type: "number", defaultValue: 10 },
     { id: "height", type: "number", defaultValue: 10 },
   ],
-  outputPorts: [
+  dataOutputs: [
     { id: "x", type: "number", defaultValue: 10 },
     { id: "y", type: "number", defaultValue: 10 },
   ],
-  executeOutputPorts: ["loop"],
+  executeOutputs: ["loop"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {
@@ -98,8 +98,8 @@ AddNode({
       for (var y = 0; y < height; y++) {
         context.blackboard[`${data.id}-x`] = x;
         context.blackboard[`${data.id}-y`] = y;
-        if (data.output.loop) {
-          context.execute(data.output.loop);
+        if (data.execOutputs.loop) {
+          context.execute(data.execOutputs.loop);
         }
       }
     }
@@ -111,12 +111,12 @@ AddNode({
   description: "Execute the instruction in the order of their input",
   icon: IconAssembly,
   tags: ["Control"],
-  inputPorts: [
+  dataInputs: [
     { id: "a", type: "number", defaultValue: 10 },
     { id: "b", type: "number", defaultValue: 10 },
   ],
-  outputPorts: [],
-  executeOutputPorts: ["A", "B"],
+  dataOutputs: [],
+  executeOutputs: ["A", "B"],
   settings: [],
   getData: (portId, nodeData, context) => {},
   canBeExecuted: true,
@@ -124,18 +124,18 @@ AddNode({
     var a = context.getInputValue(data, "a") as number;
     var b = context.getInputValue(data, "b") as number;
     if (a >= b) {
-      if (data.output.A) {
-        context.execute(data.output.A);
+      if (data.execOutputs.A) {
+        context.execute(data.execOutputs.A);
       }
-      if (data.output.B) {
-        context.execute(data.output.B);
+      if (data.execOutputs.B) {
+        context.execute(data.execOutputs.B);
       }
     } else {
-      if (data.output.B) {
-        context.execute(data.output.B);
+      if (data.execOutputs.B) {
+        context.execute(data.execOutputs.B);
       }
-      if (data.output.A) {
-        context.execute(data.output.A);
+      if (data.execOutputs.A) {
+        context.execute(data.execOutputs.A);
       }
     }
   },
@@ -146,9 +146,9 @@ AddNode({
   description: "Execute the next instruction as if the canvas was rotated",
   icon: IconRotate,
   tags: ["Transform"],
-  inputPorts: [{ id: "angle", type: "number", defaultValue: 0 }],
-  outputPorts: [],
-  executeOutputPorts: ["execute"],
+  dataInputs: [{ id: "angle", type: "number", defaultValue: 0 }],
+  dataOutputs: [],
+  executeOutputs: ["execute"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
@@ -156,8 +156,8 @@ AddNode({
     var angle = context.getInputValue(data, "angle") as number;
     context.p5.push();
     context.p5.rotate(angle);
-    if (data.output.execute) {
-      context.execute(data.output.execute);
+    if (data.execOutputs.execute) {
+      context.execute(data.execOutputs.execute);
     }
     context.p5.pop();
   },
@@ -168,9 +168,9 @@ AddNode({
   description: "Execute the next instruction as if the canvas was moved",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  inputPorts: [{ id: "translation", type: "vector2", defaultValue: createVector() }],
-  outputPorts: [],
-  executeOutputPorts: ["execute"],
+  dataInputs: [{ id: "translation", type: "vector2", defaultValue: createVector() }],
+  dataOutputs: [],
+  executeOutputs: ["execute"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
@@ -178,8 +178,8 @@ AddNode({
     var translation = context.getInputValue(data, "translation") as p5.Vector;
     context.p5.push();
     context.p5.translate(translation.x, translation.y);
-    if (data.output.execute) {
-      context.execute(data.output.execute);
+    if (data.execOutputs.execute) {
+      context.execute(data.execOutputs.execute);
     }
     context.p5.pop();
   },
@@ -190,9 +190,9 @@ AddNode({
   description: "Execute the next instruction as if the canvas was scaled",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  inputPorts: [{ id: "scale", type: "vector2", defaultValue: createVector() }],
-  outputPorts: [],
-  executeOutputPorts: ["execute"],
+  dataInputs: [{ id: "scale", type: "vector2", defaultValue: createVector() }],
+  dataOutputs: [],
+  executeOutputs: ["execute"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
@@ -200,8 +200,8 @@ AddNode({
     var scale = context.getInputValue(data, "scale") as p5.Vector;
     context.p5.push();
     context.p5.scale(scale.x, scale.y);
-    if (data.output.execute) {
-      context.execute(data.output.execute);
+    if (data.execOutputs.execute) {
+      context.execute(data.execOutputs.execute);
     }
     context.p5.pop();
   },
@@ -212,9 +212,9 @@ AddNode({
   description: "Execute the draw instruction masked by the mask.",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  inputPorts: [{ id: "inverted", type: "bool", defaultValue: false }],
-  outputPorts: [],
-  executeOutputPorts: ["mask", "draw"],
+  dataInputs: [{ id: "inverted", type: "bool", defaultValue: false }],
+  dataOutputs: [],
+  executeOutputs: ["mask", "draw"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
@@ -222,12 +222,12 @@ AddNode({
     var inverted = context.getInputValue(data, "inverted");
     context.p5.push();
     (context.p5 as any).beginClip({ invert: inverted });
-    if (data.output.mask) {
-      context.execute(data.output.mask);
+    if (data.execOutputs.mask) {
+      context.execute(data.execOutputs.mask);
     }
     (context.p5 as any).endClip();
-    if (data.output.draw) {
-      context.execute(data.output.draw);
+    if (data.execOutputs.draw) {
+      context.execute(data.execOutputs.draw);
     }
     context.p5.pop();
   },
@@ -241,9 +241,9 @@ AddNode({
   icon: IconArrowsMove,
   tags: [],
   hideInLibrary: true,
-  inputPorts: [],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     const source = context.findNodeOfType(`${nodeData.type}-end`);
@@ -274,17 +274,17 @@ AddNode({
   icon: IconArrowsMove,
   tags: [],
   hideInLibrary: true,
-  inputPorts: [],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var contextFn = context.functionStack[context.functionStack.length - 1];
     return contextFn[portId];
   },
   execute: (data, context) => {
-    if (data.output.execute) {
-      context.execute(data.output.execute);
+    if (data.execOutputs.execute) {
+      context.execute(data.execOutputs.execute);
     }
   },
 });
@@ -296,9 +296,9 @@ AddNode({
   hideInLibrary: true,
   icon: IconArrowsMove,
   tags: [],
-  inputPorts: [],
-  outputPorts: [],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, portId);

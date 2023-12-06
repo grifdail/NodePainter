@@ -7,9 +7,9 @@ AddNode({
   description: "The current time relative to the execution of the preview, in second",
   icon: IconClock,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "time", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "time", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.time / 1000;
@@ -22,14 +22,14 @@ AddNode({
   description: "The current system time.",
   icon: IconClock,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [
+  dataInputs: [],
+  dataOutputs: [
     { id: "hour24", type: "number", defaultValue: 0 },
     { id: "hour12", type: "number", defaultValue: 0 },
     { id: "minute", type: "number", defaultValue: 0 },
     { id: "seconds", type: "number", defaultValue: 0 },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "hour24") {
@@ -53,14 +53,14 @@ AddNode({
   description: "The current date.",
   icon: IconCalendar,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [
+  dataInputs: [],
+  dataOutputs: [
     { id: "day", type: "number", defaultValue: 0 },
     { id: "month", type: "number", defaultValue: 0 },
     { id: "year", type: "number", defaultValue: 0 },
     { id: "dayOfTheWeek", type: "number", defaultValue: 0 },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "day") {
@@ -84,9 +84,9 @@ AddNode({
   description: "The current frame index relative to the execution of the preview",
   icon: IconFrame,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "frame", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "frame", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.p5.frameCount;
@@ -98,9 +98,9 @@ AddNode({
   description: "Repressent the progress of the animation as a value between 0 and 1.",
   icon: IconClock,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "progress", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "progress", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [{ id: "preview-duration", defaultValue: 1, type: "number" }],
   getData: (portId, nodeData, context) => {
     return (context.progress || context.p5.millis() / (nodeData.settings["preview-duration"] * 1000)) % 1;
@@ -113,9 +113,9 @@ AddNode({
   description: "The position of the cursor relative to the canvas",
   icon: IconMouse,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return createVector(context.p5.mouseX, context.p5.mouseY);
@@ -128,13 +128,13 @@ AddNode({
   description: "The rotation of the phisical device you're using",
   icon: IconPhone,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [
+  dataInputs: [],
+  dataOutputs: [
     { id: "x", type: "number", defaultValue: 0 },
     { id: "y", type: "number", defaultValue: 0 },
     { id: "z", type: "number", defaultValue: 0 },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "x") {
@@ -155,9 +155,9 @@ AddNode({
   description: "A random value, consistant across frames",
   icon: IconArrowsShuffle,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "value", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.p5.random();
@@ -170,9 +170,9 @@ AddNode({
   description: "The movement of the cursor since the last frame",
   icon: IconMouse,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return createVector(context.p5.pmouseX - context.p5.mouseX, context.p5.pmouseY - context.p5.mouseY);
@@ -184,9 +184,9 @@ AddNode({
   description: "The time since the last frame, in second",
   icon: IconClock,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "dt", type: "number", defaultValue: 0 }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "dt", type: "number", defaultValue: 0 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.p5.deltaTime / 1000;
@@ -198,9 +198,9 @@ AddNode({
   description: "The dimension of the canvas",
   icon: IconArrowsHorizontal,
   tags: ["Input"],
-  inputPorts: [],
-  outputPorts: [{ id: "dim", type: "vector2", defaultValue: createVector(0, 0) }],
-  executeOutputPorts: [],
+  dataInputs: [],
+  dataOutputs: [{ id: "dim", type: "vector2", defaultValue: createVector(0, 0) }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return createVector(context.p5.width, context.p5.height);

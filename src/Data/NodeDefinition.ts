@@ -29,9 +29,9 @@ export type NodeDefinition = {
   icon?: Icon;
   id: string;
   tags: Array<string>;
-  inputPorts: Array<PortDefinition>;
-  outputPorts: Array<PortDefinition>;
-  executeOutputPorts: Array<string>;
+  dataInputs: Array<PortDefinition>;
+  dataOutputs: Array<PortDefinition>;
+  executeOutputs: Array<string>;
   settings: Array<SettingDefinition>;
   getData: null | ((portId: string, data: NodeData, context: ExecutionContext) => any);
   execute: null | ((node: NodeData, context: ExecutionContext) => void);

@@ -41,8 +41,9 @@ export type NodeData = {
   id: string;
   type: string;
   graph?: string;
-  inputs: { [key: string]: PortConnection };
-  output: { [key: string]: any };
+  dataInputs: { [key: string]: PortConnection }; //Hold the potential connection to another node
+  execOutputs: { [key: string]: string | null }; //Hold the refference to another node
+  dataOutputs: { [key: string]: PortDefinition }; //Hold the definition
   settings: { [key: string]: any };
   positionX: number;
   positionY: number;
@@ -66,11 +67,11 @@ export const useTree = create<TreeStore>()(
           return get().nodes[id];
         },
         getInputPort(id: string, portId: string) {
-          return get().nodes[id].inputs[portId];
+          return get().nodes[id].dataInputs[portId];
         },
 
         addNode(nodeType: string, posX: number, posY: number) {
-          var newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
+          const newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
           newNodeData.graph = get().editedGraph;
           set(
             produce((state) => {
@@ -79,7 +80,7 @@ export const useTree = create<TreeStore>()(
           );
         },
         getNodeTypeDefinition(node: string | NodeData) {
-          var type = typeof node === "string" ? node : node.type;
+          const type = typeof node === "string" ? node : node.type;
           return NodeLibrary[type] || get().customNodes[type];
         },
         getNodeLibrary() {
@@ -88,14 +89,14 @@ export const useTree = create<TreeStore>()(
         addEdge(sourceId: string, sourcePort: string, targetId: string, targetPort: string) {
           set(
             produce((tree) => {
-              var port = tree.nodes[targetId].inputs[targetPort];
+              const port = tree.nodes[targetId].dataInputs[targetPort];
               // eslint-disable-next-line eqeqeq
               if (port != undefined) {
                 port.hasConnection = true;
                 port.connectedNode = sourceId;
                 port.connectedPort = sourcePort;
               } else {
-                tree.nodes[sourceId].output[sourcePort] = targetId;
+                tree.nodes[sourceId].execOutputs[sourcePort] = targetId;
               }
             })
           );
@@ -123,7 +124,7 @@ export const useTree = create<TreeStore>()(
         removeDataConnection(nodeId, portId) {
           set(
             produce((state) => {
-              var port = state.nodes[nodeId].inputs[portId];
+              const port = state.nodes[nodeId].dataInputs[portId];
               port.hasConnection = false;
               port.connectedNode = null;
               port.connectedPort = null;
@@ -133,14 +134,14 @@ export const useTree = create<TreeStore>()(
         removeOutputConnection(nodeId, portId) {
           set(
             produce((state) => {
-              state.nodes[nodeId].output[portId] = null;
+              state.nodes[nodeId].execOutputs[portId] = null;
             })
           );
         },
         setNodeInputValue(node, portId, newValue) {
           set(
             produce((state) => {
-              state.nodes[node].inputs[portId].ownValue = newValue;
+              state.nodes[node].dataInputs[portId].ownValue = newValue;
             })
           );
         },
@@ -154,19 +155,12 @@ export const useTree = create<TreeStore>()(
         duplicateNode(node) {
           set(
             produce((state) => {
-              var sourceNode = state.nodes[node];
-              var clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 50, sourceNode.positionY + 50);
-              for (const key in sourceNode.inputs) {
-                clone.inputs[key] = {
-                  ...sourceNode.inputs[key],
-                };
-              }
-              for (const key in sourceNode.output) {
-                clone.output[key] = sourceNode.output[key];
-              }
-              for (const key in sourceNode.settings) {
-                clone.settings[key] = sourceNode.settings[key];
-              }
+              const sourceNode = state.nodes[node] as NodeData;
+              const clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 200, sourceNode.positionY + 50);
+              clone.dataInputs = structuredClone(sourceNode.dataInputs);
+              clone.dataOutputs = structuredClone(sourceNode.dataOutputs);
+              clone.execOutputs = structuredClone(sourceNode.execOutputs);
+              clone.settings = structuredClone(sourceNode.settings);
               state.nodes[clone.id] = clone;
             })
           );
@@ -174,19 +168,19 @@ export const useTree = create<TreeStore>()(
         deleteNode(node) {
           set(
             produce((state) => {
-              var nodes = state.nodes as { [key: string]: NodeData };
+              const nodes = state.nodes as { [key: string]: NodeData };
 
               Object.values(nodes).forEach((item: NodeData) => {
-                Object.values(item.inputs).forEach((port) => {
+                Object.values(item.dataInputs).forEach((port) => {
                   if (port.hasConnection && port.connectedNode === node) {
                     port.hasConnection = false;
                     port.connectedNode = null;
                     port.connectedPort = null;
                   }
                 });
-                Object.entries(item.output).forEach(([key, target]) => {
+                Object.entries(item.execOutputs).forEach(([key, target]) => {
                   if (target === node) {
-                    item.output[target] = null;
+                    item.execOutputs[target] = null;
                   }
                 });
               });
@@ -197,19 +191,12 @@ export const useTree = create<TreeStore>()(
         resetNode(node) {
           set(
             produce((state) => {
-              var def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
+              const def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
 
-              def.inputPorts.forEach((port) => {
-                state.nodes[node].inputs[port.id].hasConnection = false;
-                state.nodes[node].inputs[port.id].ownValue = structuredClone(port.defaultValue);
-              });
-
-              for (const key in state.nodes[node].output) {
-                state.nodes[node].output[key] = null;
-              }
-              for (const key in def.settings) {
-                state.nodes[node].settings[def.settings[key].id] = structuredClone(def.settings[key].defaultValue);
-              }
+              state.nodes[node].inputData = createPortConnectionsForInputsDefinition(def);
+              state.nodes[node].outputData = createDataOutputData(def);
+              state.nodes[node].settings = createSettingObjectForSettingDefinition(def);
+              state.nodes[node].outputExecute = createExecOutputData(def);
             })
           );
         },
@@ -218,27 +205,27 @@ export const useTree = create<TreeStore>()(
         },
         load(source) {
           try {
-            var nodes: NodeCollection = {};
+            const nodes: NodeCollection = {};
 
             Object.entries(source).forEach(([sourceKey, sourceNode]) => {
-              var newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.type), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
-              var def = get().getNodeTypeDefinition(newNode);
+              const newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.type), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
+              const def = get().getNodeTypeDefinition(newNode);
               if (!def) {
                 throw new Error("No node of that type");
               }
-              for (const key in sourceNode.inputs) {
-                var inputDef = def.inputPorts.find((item) => item.id === key);
+              for (const key in sourceNode.dataInputs) {
+                const inputDef = def.dataInputs.find((item) => item.id === key);
 
                 if (!inputDef) {
                   throw new Error("invalid input port");
                 }
 
-                newNode.inputs[key] = {
-                  ...sourceNode.inputs[key],
+                newNode.dataInputs[key] = {
+                  ...sourceNode.dataInputs[key],
                 };
               }
-              for (const key in sourceNode.output) {
-                newNode.output[key] = sourceNode.output[key];
+              for (const key in sourceNode.execOutputs) {
+                newNode.execOutputs[key] = sourceNode.execOutputs[key];
               }
               for (const key in sourceNode.settings) {
                 newNode.settings[key] = structuredClone(sourceNode.settings[key]);
@@ -255,33 +242,33 @@ export const useTree = create<TreeStore>()(
         createFunction(def) {
           set(
             produce((state) => {
-              var start = `${def.id}-start`;
-              var end = `${def.id}-end`;
+              const start = `${def.id}-start`;
+              const end = `${def.id}-end`;
               state.customNodes[def.id] = def;
-              var startNodeDef: NodeDefinition = {
+              const startNodeDef: NodeDefinition = {
                 IsUnique: true,
                 hideInLibrary: true,
                 description: "",
                 id: start,
                 tags: [],
-                inputPorts: [],
-                outputPorts: structuredClone(def.inputPorts),
-                executeOutputPorts: def.canBeExecuted ? ["execute"] : [],
+                dataInputs: [],
+                dataOutputs: structuredClone(def.dataInputs),
+                executeOutputs: def.canBeExecuted ? ["execute"] : [],
                 settings: [],
                 getData: null,
                 execute: null,
                 executeAs: "CustomFunction-start",
                 canBeExecuted: false,
               };
-              var endNodeDef: NodeDefinition = {
+              const endNodeDef: NodeDefinition = {
                 IsUnique: true,
                 description: "",
                 hideInLibrary: true,
                 id: end,
                 tags: [],
-                inputPorts: structuredClone(def.outputPorts),
-                outputPorts: [],
-                executeOutputPorts: [],
+                dataInputs: structuredClone(def.dataOutputs),
+                dataOutputs: [],
+                executeOutputs: [],
                 settings: [],
                 getData: null,
                 execute: null,
@@ -290,8 +277,8 @@ export const useTree = create<TreeStore>()(
               };
               state.customNodes[start] = startNodeDef;
               state.customNodes[end] = endNodeDef;
-              var newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
-              var newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+              const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+              const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
               state.nodes[start] = newStartNode;
               state.nodes[end] = newEndNode;
               state.editedGraph = def.id;
@@ -305,9 +292,10 @@ export const useTree = create<TreeStore>()(
         enforceValidGraph() {
           set(
             produce((state) => {
-              for (var node in state.nodes) {
-                for (var input in state.nodes[node].inputs) {
-                  let port = state.nodes[node].inputs[input] as PortConnection;
+              for (let nodeId in state.nodes) {
+                const selfNode = state.nodes[nodeId] as NodeData;
+                for (let input in selfNode.dataInputs) {
+                  let port = selfNode.dataInputs[input] as PortConnection;
                   if (port.hasConnection) {
                     let targetNode = state.nodes[port.connectedNode as string];
                     if (!targetNode) {
@@ -315,8 +303,8 @@ export const useTree = create<TreeStore>()(
                       port.connectedNode = null;
                       port.connectedPort = null;
                     }
-                    let def = state.getNodeTypeDefinition(targetNode);
-                    let defPort = def.outputPorts.find((defPort: PortDefinition) => defPort.id === port.connectedPort);
+
+                    let defPort = targetNode.outputPorts.find((defPort: PortDefinition) => defPort.id === port.connectedPort);
                     if (!defPort || defPort.type !== port.type) {
                       port.hasConnection = false;
                       port.connectedNode = null;
@@ -341,20 +329,37 @@ function createNodeData(def: NodeDefinition, x: number, y: number, id: string | 
   return {
     type: def.id,
     id: id || nanoid(),
-    inputs: def.inputPorts.reduce((old: any, port: PortDefinition) => {
-      const connection = createPortConnection(port);
-      old[port.id] = connection;
-      return old;
-    }, {}),
-    settings: def.settings.reduce((old: any, setting: SettingDefinition) => {
-      old[setting.id] = structuredClone(setting.defaultValue);
-      return old;
-    }, {}),
+    dataInputs: createPortConnectionsForInputsDefinition(def),
+    settings: createSettingObjectForSettingDefinition(def),
+    dataOutputs: createDataOutputData(def),
+    execOutputs: createExecOutputData(def),
     positionX: x,
     positionY: y,
-    output: {},
     graph: graph,
   };
+}
+
+function createDataOutputData(def: NodeDefinition): { [key: string]: PortDefinition } {
+  return Object.fromEntries(def.dataOutputs.map((port) => [port.id, port]));
+}
+
+function createExecOutputData(def: NodeDefinition): { [key: string]: string | null } {
+  return Object.fromEntries(def.executeOutputs.map((port) => [port, null]));
+}
+
+function createSettingObjectForSettingDefinition(def: NodeDefinition): { [key: string]: any } {
+  return def.settings.reduce((old: any, setting: SettingDefinition) => {
+    old[setting.id] = structuredClone(setting.defaultValue);
+    return old;
+  }, {});
+}
+
+function createPortConnectionsForInputsDefinition(def: NodeDefinition): { [key: string]: PortConnection } {
+  return def.dataInputs.reduce((old: any, port: PortDefinition) => {
+    const connection = createPortConnection(port);
+    old[port.id] = connection;
+    return old;
+  }, {});
 }
 
 function createPortConnection(def: PortDefinition): PortConnection {
@@ -366,12 +371,13 @@ function createPortConnection(def: PortDefinition): PortConnection {
     connectedPort: null,
   };
 }
+
 function createDefaultNodeConnection(): NodeCollection {
-  var start = createNodeData(NodeLibrary.Start, 0, 0, START_NODE);
-  var nthen = createNodeData(NodeLibrary.Then, 400, 0);
-  var background = createNodeData(NodeLibrary.FillBackground, 800, 0);
-  start.output.execute = nthen.id;
-  nthen.output.first = background.id;
+  const start = createNodeData(NodeLibrary.Start, 0, 0, START_NODE);
+  const nthen = createNodeData(NodeLibrary.Then, 400, 0);
+  const background = createNodeData(NodeLibrary.FillBackground, 800, 0);
+  start.execOutputs.execute = nthen.id;
+  nthen.execOutputs.first = background.id;
   return {
     [start.id]: start,
     [nthen.id]: nthen,

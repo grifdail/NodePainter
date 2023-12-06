@@ -11,14 +11,14 @@ AddNode({
   description: "Create a color from a set of number",
   icon: IconPalette,
   tags: ["Color"],
-  inputPorts: [
+  dataInputs: [
     { id: "red", type: "number", defaultValue: 1 },
     { id: "green", type: "number", defaultValue: 1 },
     { id: "blue", type: "number", defaultValue: 1 },
     { id: "alpha", type: "number", defaultValue: 1 },
   ],
-  outputPorts: [{ id: "color", type: "color", defaultValue: createColor() }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return createColor(context.getInputValue(nodeData, "red") as number, context.getInputValue(nodeData, "green") as number, context.getInputValue(nodeData, "blue") as number, context.getInputValue(nodeData, "alpha") as number);
@@ -31,14 +31,14 @@ AddNode({
   description: "Decompose a color to set of number",
   icon: IconPalette,
   tags: ["Color"],
-  inputPorts: [{ id: "color", type: "color", defaultValue: createColor() }],
-  outputPorts: [
+  dataInputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+  dataOutputs: [
     { id: "red", type: "number", defaultValue: 1 },
     { id: "green", type: "number", defaultValue: 1 },
     { id: "blue", type: "number", defaultValue: 1 },
     { id: "alpha", type: "number", defaultValue: 1 },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var c = context.getInputValue(nodeData, "color") as Color;
@@ -63,13 +63,13 @@ AddNode({
   description: "Mix two color togerther using rgb mixing",
   icon: IconColorFilter,
   tags: ["Color"],
-  inputPorts: [
+  dataInputs: [
     { id: "start", type: "color", defaultValue: createColor(0, 0, 0, 1) },
     { id: "end", type: "color", defaultValue: createColor(1, 1, 1, 1) },
     { id: "t", type: "number", defaultValue: 0 },
   ],
-  outputPorts: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var start = context.getInputValue(nodeData, "start") as Color;
@@ -85,12 +85,12 @@ AddNode({
   description: "Set the transparency of a color",
   icon: IconColorFilter,
   tags: ["Color"],
-  inputPorts: [
+  dataInputs: [
     { id: "color", type: "color", defaultValue: createColor(1, 1, 1, 1) },
     { id: "alpha", type: "number", defaultValue: 0 },
   ],
-  outputPorts: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var color = context.getInputValue(nodeData, "color") as Color;
@@ -104,9 +104,9 @@ AddNode({
   description: "Pick a color from a palette",
   icon: IconColorFilter,
   tags: ["Color"],
-  inputPorts: [{ id: "index", type: "number", defaultValue: 0 }],
-  outputPorts: [{ id: "color", type: "color", defaultValue: createColor() }],
-  executeOutputPorts: [],
+  dataInputs: [{ id: "index", type: "number", defaultValue: 0 }],
+  dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+  executeOutputs: [],
   settings: [{ id: "palette", type: "palette", defaultValue: [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)] }],
   getData: (portId, nodeData, context) => {
     var index = context.getInputValue(nodeData, "index");

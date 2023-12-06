@@ -10,7 +10,7 @@ AddNode({
   description: "Create a vector from a set of coordinate",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "x",
       type: "number",
@@ -22,8 +22,8 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  outputPorts: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "vec") {
@@ -40,14 +40,14 @@ AddNode({
   description: "split a vector into its individual components",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "vec",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "x",
       type: "number",
@@ -59,7 +59,7 @@ AddNode({
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValue(nodeData, "vec");
@@ -78,7 +78,7 @@ AddNode({
   description: "Create a vector based on an Angle and a magnitude",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "angle",
       type: "number",
@@ -90,8 +90,8 @@ AddNode({
       defaultValue: 1,
     },
   ],
-  outputPorts: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
-  executeOutputPorts: [],
+  dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "vec") {
@@ -108,21 +108,21 @@ AddNode({
   description: "Return the length of a vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "vec",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "length",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValue(nodeData, "vec") as Vector;
@@ -135,21 +135,21 @@ AddNode({
   description: "Return the squared length of a vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "vec",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "length",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValue(nodeData, "vec") as Vector;
@@ -163,7 +163,7 @@ AddNode({
   description: "Add two Vector together",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "a",
       type: "vector2",
@@ -175,14 +175,14 @@ AddNode({
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "out",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a") as Vector;
@@ -197,7 +197,7 @@ AddNode({
   description: "Subtract two Vector together",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "a",
       type: "vector2",
@@ -209,14 +209,14 @@ AddNode({
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "out",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a") as Vector;
@@ -231,7 +231,7 @@ AddNode({
   description: "Scale a Vector by a scalar",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "vec",
       type: "vector2",
@@ -243,14 +243,14 @@ AddNode({
       defaultValue: 1,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "out",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "vec") as Vector;
@@ -265,7 +265,7 @@ AddNode({
   description: "Rotate a Vector by a scalar in radiant",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "vec",
       type: "vector2",
@@ -277,14 +277,14 @@ AddNode({
       defaultValue: 1,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "out",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "vec") as Vector;
@@ -301,7 +301,7 @@ AddNode({
   description: "Scale each component of two vector together",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "a",
       type: "vector2",
@@ -313,14 +313,14 @@ AddNode({
       defaultValue: createVector(1, 1),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "out",
       type: "vector2",
       defaultValue: createVector(1, 1),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a") as Vector;
@@ -335,7 +335,7 @@ AddNode({
   description: "Return the dot product of two vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "a",
       type: "vector2",
@@ -347,14 +347,14 @@ AddNode({
       defaultValue: createVector(),
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "dot",
       type: "number",
       defaultValue: 0,
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a") as Vector;
@@ -369,7 +369,7 @@ AddNode({
   description: "interpolate between 2 vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
-  inputPorts: [
+  dataInputs: [
     {
       id: "from",
       type: "vector2",
@@ -386,14 +386,14 @@ AddNode({
       defaultValue: 0.5,
     },
   ],
-  outputPorts: [
+  dataOutputs: [
     {
       id: "result",
       type: "vector2",
       defaultValue: createVector(),
     },
   ],
-  executeOutputPorts: [],
+  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "from") as Vector;
