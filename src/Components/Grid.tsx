@@ -61,7 +61,7 @@ export function Grid() {
   }
 
   return (
-    <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg">
+    <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }}>
       <defs>
         <pattern id="grid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
           <line x1="16" y1="0" x2="16" y2="32" stroke="rgba(0,0,0,0.1)" strokeWidth="1" />

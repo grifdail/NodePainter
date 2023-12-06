@@ -11,7 +11,7 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
 
   const bind = useGesture({
     onDrag: ({ pinching, movement: [mx, my], cancel, elapsedTime }) => {
-      if (pinching) return cancel();
+      //if (pinching) return cancel();
       api.start({ xyz: [viewBox.x - mx * viewBox.scale, viewBox.y - my * viewBox.scale, viewBox.scale] });
     },
     onDragEnd: ({ movement: [mx, my], elapsedTime }) => {
