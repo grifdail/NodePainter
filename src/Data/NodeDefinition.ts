@@ -37,7 +37,7 @@ export type NodeDefinition = {
   execute: null | ((node: NodeData, context: ExecutionContext) => void);
   executeAs?: string;
   canBeExecuted?: boolean;
-  tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => any;
+  tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
 };
 
 export type ExecutionContext = {

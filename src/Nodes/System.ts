@@ -27,22 +27,29 @@ AddNode({
 
 AddNode({
   id: "Then",
-  description: "Execute two instruction",
+  description: "Execute multiple instruction",
   icon: IconAssembly,
   tags: ["Control"],
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: ["first", "second"],
+  executeOutputs: ["0"],
   settings: [],
   canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
-    if (data.execOutputs.first) {
-      context.execute(data.execOutputs.first);
+    for (var i = 0; i <= 10; i++) {
+      if (data.execOutputs[i]) {
+        context.execute(data.execOutputs[i.toString()] as string);
+      }
     }
-    if (data.execOutputs.second) {
-      context.execute(data.execOutputs.second);
+  },
+  tryBindPort(selfPort, self, outputPorts, selfPosition) {
+    var outputCount = Object.entries(self.execOutputs).filter(([key, value]) => value !== null).length;
+    if (selfPort === outputCount.toString() && outputCount < 10) {
+      self.execOutputs[(outputCount + 1).toString()] = null;
     }
+
+    return true;
   },
 });
 

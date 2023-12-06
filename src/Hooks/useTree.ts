@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { produce } from "immer";
+import { current, produce } from "immer";
 
 import { nanoid } from "nanoid";
 import { ExecutionContext, NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
@@ -89,13 +89,30 @@ export const useTree = create<TreeStore>()(
         addEdge(sourceId: string, sourcePort: string, targetId: string, targetPort: string) {
           set(
             produce((tree) => {
-              const port = tree.nodes[targetId].dataInputs[targetPort];
+              let node = tree.nodes[targetId] as NodeData;
+              const port = node.dataInputs[targetPort];
               // eslint-disable-next-line eqeqeq
-              if (port != undefined) {
+
+              if (port !== undefined) {
+                const def = tree.getNodeTypeDefinition(node);
+                if (def.tryBindPort != null) {
+                  const canBind = def.tryBindPort(targetPort, node, tree.nodes[sourceId].dataOutputs[sourceId], "outputData");
+                  if (!canBind) {
+                    return;
+                  }
+                }
                 port.hasConnection = true;
                 port.connectedNode = sourceId;
                 port.connectedPort = sourcePort;
               } else {
+                node = tree.nodes[sourceId] as NodeData;
+                const def = tree.getNodeTypeDefinition(node);
+                if (def.tryBindPort != null) {
+                  const canBind = def.tryBindPort(sourcePort, node, null, "outputExec");
+                  if (!canBind) {
+                    return;
+                  }
+                }
                 tree.nodes[sourceId].execOutputs[sourcePort] = targetId;
               }
             })
@@ -157,10 +174,10 @@ export const useTree = create<TreeStore>()(
             produce((state) => {
               const sourceNode = state.nodes[node] as NodeData;
               const clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 200, sourceNode.positionY + 50);
-              clone.dataInputs = structuredClone(sourceNode.dataInputs);
-              clone.dataOutputs = structuredClone(sourceNode.dataOutputs);
-              clone.execOutputs = structuredClone(sourceNode.execOutputs);
-              clone.settings = structuredClone(sourceNode.settings);
+              clone.dataInputs = structuredClone(current(sourceNode.dataInputs));
+              clone.dataOutputs = structuredClone(current(sourceNode.dataOutputs));
+              clone.execOutputs = structuredClone(current(sourceNode.execOutputs));
+              clone.settings = structuredClone(current(sourceNode.settings));
               state.nodes[clone.id] = clone;
             })
           );
@@ -377,7 +394,8 @@ function createDefaultNodeConnection(): NodeCollection {
   const nthen = createNodeData(NodeLibrary.Then, 400, 0);
   const background = createNodeData(NodeLibrary.FillBackground, 800, 0);
   start.execOutputs.execute = nthen.id;
-  nthen.execOutputs.first = background.id;
+  nthen.execOutputs[0] = background.id;
+  nthen.execOutputs[1] = null;
   return {
     [start.id]: start,
     [nthen.id]: nthen,
