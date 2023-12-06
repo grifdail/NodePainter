@@ -19,6 +19,7 @@ const MainDiv = styled.div`
   flex-grow: 1;
   flex: 1 0 100px;
   gap: 10px;
+  overflow: auto;
 
   & fieldset {
     display: flex;

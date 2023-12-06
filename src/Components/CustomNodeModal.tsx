@@ -18,25 +18,63 @@ const MainDiv = styled.div`
   flex-grow: 1;
   flex: 1 0 100px;
   gap: 10px;
+  overflow: auto;
 
   & > section {
     display: flex;
     flex-direction: column;
+    & fieldset {
+      border: none;
+      display: flex;
+      flex-direction: row;
+
+      align-items: center;
+      & label {
+        flex: 1 1 0;
+      }
+    }
+    gap: 2px;
+
     & > div.port-field {
       display: flex;
       flex-direction: row;
       height: 50px;
       gap: 10px;
 
+      & button.remove {
+        border: none;
+        background: none;
+      }
+
       & > div {
         display: flex;
         flex: 1 1 100%;
         align-items: stretch;
-        justify-content: stretch;
 
-        & * {
+        & > * {
           display: block;
-          flex: 1 1 100%;
+          flex: 1 1 10px;
+        }
+        &.type button {
+          border: 2px solid black;
+          background: none;
+        }
+
+        &.default-value > * {
+          display: block flex;
+          flex: 1 1 10px;
+          flex-direction: column;
+          margin: 0;
+          padding: 0;
+          & input[type="checkbox"] {
+            justify-self: stretch;
+            align-items: stretch;
+            flex: 1 1 10px;
+          }
+        }
+        &.default-value > button {
+          justify-content: center;
+          align-items: center;
         }
       }
       & > button {
@@ -51,10 +89,10 @@ export function InputPortEdit({ port, context, index, type }: { port: PortDefini
   const PortValueEditor = portColor.input;
   return (
     <div className="port-field">
-      <div>
+      <div className="id">
         <input value={port.id} onChange={(e) => context.setPortId(type, index, e.target.value)}></input>
       </div>
-      <div>
+      <div className="type">
         <Menu menuButton={<MenuButton>{port.type}</MenuButton>}>
           <MenuRadioGroup value={port.type}>
             <MenuItem value="number" onClick={() => context.setPortType(type, index, "number")}>
@@ -75,9 +113,9 @@ export function InputPortEdit({ port, context, index, type }: { port: PortDefini
           </MenuRadioGroup>
         </Menu>
       </div>
-      <div>{PortValueEditor && <PortValueEditor onChange={(value) => context.setPortDefaultValue(type, index, value)} value={port.defaultValue}></PortValueEditor>}</div>
+      <div className="default-value">{PortValueEditor && <PortValueEditor onChange={(value) => context.setPortDefaultValue(type, index, value)} value={port.defaultValue}></PortValueEditor>}</div>
 
-      <button onClick={() => context.deletePort(type, index)}>
+      <button className="remove" onClick={() => context.deletePort(type, index)}>
         <IconX />
       </button>
     </div>

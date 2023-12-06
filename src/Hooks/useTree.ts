@@ -213,7 +213,7 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") }, customNodes: {} });
+          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") }, customNodes: {}, editedGraph: undefined });
         },
         load(source) {
           try {
