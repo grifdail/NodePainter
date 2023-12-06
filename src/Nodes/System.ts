@@ -13,6 +13,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
   execute: (data, context) => {
     if (data.output.execute) {
@@ -31,6 +32,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["first", "second"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     if (data.output.first) {
@@ -51,6 +53,7 @@ AddNode({
   outputPorts: [{ id: "index", type: "number", defaultValue: 10 }],
   executeOutputPorts: ["loop"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {
     return context.blackboard[`${nodeData.id}-index`] || 0;
   },
@@ -80,6 +83,7 @@ AddNode({
   ],
   executeOutputPorts: ["loop"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {
     if (portId === "x") {
       return context.blackboard[`${nodeData.id}-x`] || 0;
@@ -101,6 +105,41 @@ AddNode({
 });
 
 AddNode({
+  id: "ExecuteInOrder",
+  description: "Execute the instruction in the order of their input",
+  icon: IconAssembly,
+  tags: ["Control"],
+  inputPorts: [
+    { id: "a", type: "number", defaultValue: 10 },
+    { id: "b", type: "number", defaultValue: 10 },
+  ],
+  outputPorts: [],
+  executeOutputPorts: ["A", "B"],
+  settings: [],
+  getData: (portId, nodeData, context) => {},
+  canBeExecuted: true,
+  execute: (data, context) => {
+    var a = context.getInputValue(data, "a") as number;
+    var b = context.getInputValue(data, "b") as number;
+    if (a >= b) {
+      if (data.output.A) {
+        context.execute(data.output.A);
+      }
+      if (data.output.B) {
+        context.execute(data.output.B);
+      }
+    } else {
+      if (data.output.B) {
+        context.execute(data.output.B);
+      }
+      if (data.output.A) {
+        context.execute(data.output.A);
+      }
+    }
+  },
+});
+
+AddNode({
   id: "With rotation",
   description: "Execute the next instruction as if the canvas was rotated",
   icon: IconRotate,
@@ -109,6 +148,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
   execute: (data, context) => {
     var angle = context.getInputValue(data, "angle") as number;
@@ -130,6 +170,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
   execute: (data, context) => {
     var translation = context.getInputValue(data, "translation") as p5.Vector;
@@ -151,6 +192,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: ["execute"],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, context) => {},
   execute: (data, context) => {
     var scale = context.getInputValue(data, "scale") as p5.Vector;

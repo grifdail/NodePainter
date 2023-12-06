@@ -19,6 +19,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
@@ -51,6 +52,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
@@ -91,6 +93,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
@@ -144,6 +147,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     const color = context.getInputValue(data, "color");
@@ -204,6 +208,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     const color = context.getInputValue(data, "color");
@@ -254,6 +259,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
@@ -296,6 +302,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
@@ -338,6 +345,7 @@ AddNode({
   outputPorts: [],
   executeOutputPorts: [],
   settings: [],
+  canBeExecuted: true,
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");

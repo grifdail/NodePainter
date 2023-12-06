@@ -107,7 +107,7 @@ export const GraphNode = forwardRef(function GraphNode(
         {node.type}
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}
-      {definition.execute ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec, "execute")}></OutPortView> : null}
+      {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec, "execute")}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
         return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData, item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
       })}
