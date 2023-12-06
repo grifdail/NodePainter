@@ -261,6 +261,40 @@ AddNode({
 });
 
 AddNode({
+  id: "MultiplyComponentVector",
+  description: "Scale each component of two vector together",
+  icon: IconArrowUpRightCircle,
+  tags: ["Vector"],
+  inputPorts: [
+    {
+      id: "a",
+      type: "vector2",
+      defaultValue: createVector(1, 1),
+    },
+    {
+      id: "b",
+      type: "vector2",
+      defaultValue: createVector(1, 1),
+    },
+  ],
+  outputPorts: [
+    {
+      id: "out",
+      type: "vector2",
+      defaultValue: createVector(1, 1),
+    },
+  ],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var a = context.getInputValue(nodeData, "a") as Vector;
+    var b = context.getInputValue(nodeData, "b") as Vector;
+    return createVector(a.x * b.x, a.y * b.y);
+  },
+  execute: null,
+});
+
+AddNode({
   id: "DotProduct",
   description: "Return the dot product of two vector",
   icon: IconArrowUpRightCircle,
