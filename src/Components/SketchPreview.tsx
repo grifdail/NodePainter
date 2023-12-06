@@ -52,15 +52,18 @@ type MySketchProps = SketchProps & {
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
+  var seed = 0;
 
   p5.setup = () => p5.createCanvas(400, 400);
 
   p5.updateWithProps = (props: MySketchProps) => {
     tree = props.tree;
     context = createExecutionContext(tree, p5 as P5CanvasInstance);
+    seed = Date.now();
   };
 
   p5.draw = () => {
+    p5.randomSeed(seed);
     context.time = p5.millis();
     context.execute(START_NODE);
   };
@@ -80,6 +83,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     time: 0,
     blackboard: {},
     functionStack: [],
+    progress: undefined,
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
       if (node != null) {

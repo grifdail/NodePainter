@@ -316,8 +316,8 @@ AddNode({
 });
 
 AddNode({
-  id: "DrawRect",
-  description: "Draw a rectangle starting at the top left corner with a width and height",
+  id: "DrawTriangle",
+  description: "Draw a triangle defined by 3 points",
   icon: IconRectangle,
   tags: ["Draw"],
   inputPorts: [
@@ -327,19 +327,19 @@ AddNode({
       defaultValue: "#aaaaaa",
     },
     {
-      id: "corner",
+      id: "corner1",
+      type: "vector2",
+      defaultValue: createVector(25, 0),
+    },
+    {
+      id: "corner2",
       type: "vector2",
       defaultValue: createVector(0, 0),
     },
     {
-      id: "width",
-      type: "number",
-      defaultValue: 10,
-    },
-    {
-      id: "height",
-      type: "number",
-      defaultValue: 10,
+      id: "corner3",
+      type: "vector2",
+      defaultValue: createVector(0, 25),
     },
   ],
   outputPorts: [],
@@ -349,11 +349,60 @@ AddNode({
   getData: (portId, nodeData, getNodeOutput) => {},
   execute: (data, context) => {
     var color = context.getInputValue(data, "color");
-    var p1 = context.getInputValue(data, "corner") as P5.Vector;
-    var width = context.getInputValue(data, "width") as number;
-    var height = context.getInputValue(data, "height") as number;
+    var p1 = context.getInputValue(data, "corner1") as P5.Vector;
+    var p2 = context.getInputValue(data, "corner2") as P5.Vector;
+    var p3 = context.getInputValue(data, "corner3") as P5.Vector;
     context.p5.fill(toP5Color(color, context.p5));
     context.p5.noStroke();
-    context.p5.rect(p1.x, p1.y, width, height);
+    context.p5.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+  },
+});
+
+AddNode({
+  id: "DrawQuad",
+  description: "Draw a quad defined by 4 points",
+  icon: IconRectangle,
+  tags: ["Draw"],
+  inputPorts: [
+    {
+      id: "color",
+      type: "color",
+      defaultValue: "#aaaaaa",
+    },
+    {
+      id: "corner1",
+      type: "vector2",
+      defaultValue: createVector(25, 0),
+    },
+    {
+      id: "corner2",
+      type: "vector2",
+      defaultValue: createVector(0, 0),
+    },
+    {
+      id: "corner3",
+      type: "vector2",
+      defaultValue: createVector(0, 25),
+    },
+    {
+      id: "corner4",
+      type: "vector2",
+      defaultValue: createVector(25, 25),
+    },
+  ],
+  outputPorts: [],
+  executeOutputPorts: [],
+  settings: [],
+  canBeExecuted: true,
+  getData: (portId, nodeData, getNodeOutput) => {},
+  execute: (data, context) => {
+    var color = context.getInputValue(data, "color");
+    var p1 = context.getInputValue(data, "corner1") as P5.Vector;
+    var p2 = context.getInputValue(data, "corner2") as P5.Vector;
+    var p3 = context.getInputValue(data, "corner3") as P5.Vector;
+    var p4 = context.getInputValue(data, "corner4") as P5.Vector;
+    context.p5.fill(toP5Color(color, context.p5));
+    context.p5.noStroke();
+    context.p5.quad(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
   },
 });

@@ -38,6 +38,7 @@ export type ExecutionContext = {
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
   functionStack: Array<{ [key: string]: any }>;
   time: number;
+  progress?: number;
   blackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;

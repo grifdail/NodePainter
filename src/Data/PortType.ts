@@ -2,7 +2,7 @@ import { createColor } from "../Nodes/Color";
 import { createVector } from "../Nodes/Vector";
 
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool";
-export type SettingType = "dropdown" | "palette";
+export type SettingType = "dropdown" | "palette" | "number";
 
 export const MainExecuteId = "mainExecute";
 

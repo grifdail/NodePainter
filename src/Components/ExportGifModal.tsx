@@ -86,15 +86,20 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   var time = 0;
   p5.draw = () => {
+    if (!ownProps) {
+      return;
+    }
     context.time = time;
+    var progress = time / (ownProps.duration * 1000);
+    context.progress = progress;
     context.execute(START_NODE);
-    if (!ended && ownProps) {
+    if (!ended) {
       var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
       time += ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
 
       var delay = ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
       gif.addFrame(p5.drawingContext, { delay: delay, copy: true });
-      var progress = time / (ownProps.duration * 1000);
+
       ownProps.onProgress(progress, 0);
 
       if (progress >= 1) {

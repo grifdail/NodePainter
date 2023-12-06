@@ -207,6 +207,32 @@ AddNode({
   },
 });
 
+AddNode({
+  id: "With Mask",
+  description: "Execute the draw instruction masked by the mask.",
+  icon: IconArrowsMove,
+  tags: ["Transform"],
+  inputPorts: [{ id: "inverted", type: "bool", defaultValue: false }],
+  outputPorts: [],
+  executeOutputPorts: ["mask", "draw"],
+  settings: [],
+  canBeExecuted: true,
+  getData: (portId, nodeData, context) => {},
+  execute: (data, context) => {
+    var inverted = context.getInputValue(data, "inverted");
+    context.p5.push();
+    (context.p5 as any).beginClip({ invert: inverted });
+    if (data.output.mask) {
+      context.execute(data.output.mask);
+    }
+    (context.p5 as any).endClip();
+    if (data.output.draw) {
+      context.execute(data.output.draw);
+    }
+    context.p5.pop();
+  },
+});
+
 export const CUSTOM_FUNCTION = "CustomFunction";
 AddNode({
   id: CUSTOM_FUNCTION,

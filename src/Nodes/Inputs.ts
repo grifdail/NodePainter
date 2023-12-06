@@ -1,4 +1,4 @@
-import { IconArrowsHorizontal, IconCalendar, IconClock, IconFrame, IconMouse } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsShuffle, IconCalendar, IconClock, IconFrame, IconMouse, IconPhone } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import { createVector } from "./Vector";
 
@@ -94,6 +94,20 @@ AddNode({
   execute: null,
 });
 AddNode({
+  id: "Progress",
+  description: "Repressent the progress of the animation as a value between 0 and 1.",
+  icon: IconClock,
+  tags: ["Input"],
+  inputPorts: [],
+  outputPorts: [{ id: "progress", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [{ id: "preview-duration", defaultValue: 1, type: "number" }],
+  getData: (portId, nodeData, context) => {
+    return context.progress || context.p5.millis() / (nodeData.settings["preview-duration"] * 1000);
+  },
+  execute: null,
+});
+AddNode({
   id: "MousePosition",
   description: "The position of the cursor relative to the canvas",
   icon: IconMouse,
@@ -107,6 +121,49 @@ AddNode({
   },
   execute: null,
 });
+
+AddNode({
+  id: "DeviceRotation",
+  description: "The rotation of the phisical device you're using",
+  icon: IconPhone,
+  tags: ["Input"],
+  inputPorts: [],
+  outputPorts: [
+    { id: "x", type: "number", defaultValue: 0 },
+    { id: "y", type: "number", defaultValue: 0 },
+    { id: "z", type: "number", defaultValue: 0 },
+  ],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    if (portId === "x") {
+      return context.p5.rotationX;
+    }
+    if (portId === "y") {
+      return context.p5.rotationY;
+    }
+    if (portId === "z") {
+      return context.p5.rotationZ;
+    }
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "Random",
+  description: "A random value, consistant across frames",
+  icon: IconArrowsShuffle,
+  tags: ["Input"],
+  inputPorts: [],
+  outputPorts: [{ id: "value", type: "number", defaultValue: 0 }],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    return context.p5.random();
+  },
+  execute: null,
+});
+
 AddNode({
   id: "MouseMovement",
   description: "The movement of the cursor since the last frame",
