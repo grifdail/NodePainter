@@ -62,7 +62,7 @@ AddNode({
   executeOutputPorts: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var vec = context.getInputValue(nodeData, "x");
+    var vec = context.getInputValue(nodeData, "vec");
     if (portId === "x") {
       return vec.x;
     }
@@ -256,6 +256,42 @@ AddNode({
     var a = context.getInputValue(nodeData, "vec") as Vector;
     var b = context.getInputValue(nodeData, "scale") as number;
     return createVector(a.x * b, a.y * b);
+  },
+  execute: null,
+});
+
+AddNode({
+  id: "RotateVector",
+  description: "Rotate a Vector by a scalar in radiant",
+  icon: IconArrowUpRightCircle,
+  tags: ["Vector"],
+  inputPorts: [
+    {
+      id: "vec",
+      type: "vector2",
+      defaultValue: createVector(),
+    },
+    {
+      id: "angle",
+      type: "number",
+      defaultValue: 1,
+    },
+  ],
+  outputPorts: [
+    {
+      id: "out",
+      type: "vector2",
+      defaultValue: createVector(),
+    },
+  ],
+  executeOutputPorts: [],
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var a = context.getInputValue(nodeData, "vec") as Vector;
+    var b = context.getInputValue(nodeData, "angle") as number;
+    var cos = Math.cos(b);
+    var sin = Math.sin(b);
+    return createVector(a.x * cos + a.y * sin, a.x * sin + a.y * cos);
   },
   execute: null,
 });

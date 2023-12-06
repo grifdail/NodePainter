@@ -67,7 +67,9 @@ export function GridUi() {
           <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
           <MenuDivider></MenuDivider>
           {customFunctionNodes.map((node) => (
-            <MenuItem onClick={() => setGraph(node)}>{node}</MenuItem>
+            <MenuItem onClick={() => setGraph(node)} key={node}>
+              {node}
+            </MenuItem>
           ))}
         </Menu>
         <button onClick={() => openModal("node-creation")}>

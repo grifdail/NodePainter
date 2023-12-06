@@ -9,6 +9,7 @@ import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapp
 import { ExecutionContext } from "../Data/NodeDefinition";
 import { createExecutionContext } from "./SketchPreview";
 import * as GIF from "gif.js.optimized";
+import { START_NODE } from "../Nodes/System";
 
 const MainDiv = styled.div`
   display: flex;
@@ -86,7 +87,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var time = 0;
   p5.draw = () => {
     context.time = time;
-    context.execute("start");
+    context.execute(START_NODE);
     if (!ended && ownProps) {
       var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
       time += ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;

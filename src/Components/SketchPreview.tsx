@@ -4,6 +4,7 @@ import { NodeCollection, NodeData, TreeStore, useTree } from "../Hooks/useTree";
 import { ExecutionContext } from "../Data/NodeDefinition";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { START_NODE } from "../Nodes/System";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;
@@ -61,7 +62,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   p5.draw = () => {
     context.time = p5.millis();
-    context.execute("start");
+    context.execute(START_NODE);
   };
 };
 

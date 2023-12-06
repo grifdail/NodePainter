@@ -84,7 +84,6 @@ export const GraphNode = forwardRef(function GraphNode(
   var setNodeSetting = useTree((state) => state.setNodeSetting);
 
   var Icon = definition.icon;
-  console.log(Icon);
 
   var inputCount = definition.inputPorts.length;
   var outputCount = definition.executeOutputPorts.length + definition.outputPorts.length;
@@ -97,13 +96,33 @@ export const GraphNode = forwardRef(function GraphNode(
         fill="white"
         style={{
           boxShadow: "1px 1px 1px",
+          touchAction: "none",
         }}
         stroke="black"
         rx="5"
         {...bind()}
       ></rect>
-      {Icon && <Icon x="20" y="18" {...bind()} />}
-      <text x={!Icon ? 20 : 50} y="35" fill="black" fontSize="18" stroke="black" {...bind()}>
+      {Icon && (
+        <Icon
+          x="20"
+          y="18"
+          {...bind()}
+          style={{
+            touchAction: "none",
+          }}
+        />
+      )}
+      <text
+        x={!Icon ? 20 : 50}
+        y="35"
+        fill="black"
+        fontSize="18"
+        stroke="black"
+        {...bind()}
+        style={{
+          touchAction: "none",
+        }}
+      >
         {node.type}
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}

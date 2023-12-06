@@ -7,6 +7,7 @@ import { NodeLibrary } from "../Data/NodeLibrary";
 import { PortType } from "../Data/PortType";
 
 import { persist } from "zustand/middleware";
+import { START_NODE } from "../Nodes/System";
 
 export type NodeCollection = { [key: string]: NodeData };
 
@@ -59,7 +60,7 @@ export const useTree = create<TreeStore>()(
   persist(
     (set, get) => {
       return {
-        nodes: { start: createNodeData(NodeLibrary["Start"], 200, 200, "start") } as NodeCollection,
+        nodes: createDefaultNodeConnection(),
         customNodes: {} as { [key: string]: NodeDefinition },
         getNode(id: string) {
           return get().nodes[id];
@@ -70,7 +71,7 @@ export const useTree = create<TreeStore>()(
 
         addNode(nodeType: string, posX: number, posY: number) {
           var newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
-          console.log(newNodeData);
+          newNodeData.graph = get().editedGraph;
           set(
             produce((state) => {
               state.nodes[newNodeData.id] = newNodeData;
@@ -154,7 +155,7 @@ export const useTree = create<TreeStore>()(
           set(
             produce((state) => {
               var sourceNode = state.nodes[node];
-              var clone = createNodeData(sourceNode.type, sourceNode.positionX + 50, sourceNode.positionY + 50);
+              var clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 50, sourceNode.positionY + 50);
               for (const key in sourceNode.inputs) {
                 clone.inputs[key] = {
                   ...sourceNode.inputs[key],
@@ -213,14 +214,14 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: { start: createNodeData(get().getNodeTypeDefinition("Start"), 200, 200, "start") }, customNodes: {}, editedGraph: undefined });
+          set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined });
         },
         load(source) {
           try {
             var nodes: NodeCollection = {};
 
             Object.entries(source).forEach(([sourceKey, sourceNode]) => {
-              var newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.id), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
+              var newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.type), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
               var def = get().getNodeTypeDefinition(newNode);
               if (!def) {
                 throw new Error("No node of that type");
@@ -363,5 +364,17 @@ function createPortConnection(def: PortDefinition): PortConnection {
     hasConnection: false,
     connectedNode: null,
     connectedPort: null,
+  };
+}
+function createDefaultNodeConnection(): NodeCollection {
+  var start = createNodeData(NodeLibrary.Start, 0, 0, START_NODE);
+  var nthen = createNodeData(NodeLibrary.Then, 400, 0);
+  var background = createNodeData(NodeLibrary.FillBackground, 800, 0);
+  start.output.execute = nthen.id;
+  nthen.output.first = background.id;
+  return {
+    [start.id]: start,
+    [nthen.id]: nthen,
+    [background.id]: background,
   };
 }

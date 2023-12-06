@@ -9,7 +9,6 @@ import { CustomNodeModal } from "./CustomNodeModal";
 export function Router() {
   const close = useRouter((state) => state.close);
   const route = useRouter((state) => state.current);
-  console.log(route);
   return (
     <div>
       {route === "default" && <GridUi />}

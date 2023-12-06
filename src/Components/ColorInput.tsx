@@ -13,7 +13,7 @@ export function ColorInput({ onChange, value }: { onChange: (value: any) => void
     <Menu
       portal
       menuButton={
-        <ColorButton color={hex} opositeColor={invertColor(hex, true)}>
+        <ColorButton color={hex} oposite={invertColor(hex, true)}>
           {hex}
         </ColorButton>
       }

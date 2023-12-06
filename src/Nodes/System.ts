@@ -3,8 +3,10 @@ import { AddNode } from "../Data/NodeLibrary";
 import p5 from "p5";
 import { createVector } from "./Vector";
 
+export const START_NODE = "Start";
+
 AddNode({
-  id: "Start",
+  id: START_NODE,
   description: "The start of the program",
   icon: IconAssembly,
   tags: ["Control"],
