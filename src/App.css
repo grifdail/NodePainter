@@ -23,6 +23,8 @@
 .App {
   height: 100%;
   overflow: hidden;
+  user-select: none;
+  user-zoom: none;
 }
 
 .full-screen-layout {
