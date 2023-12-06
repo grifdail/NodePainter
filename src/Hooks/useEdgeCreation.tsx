@@ -8,7 +8,7 @@ export function useEdgeCreation() {
   const portSelection = usePortSelection();
 
   function createDataNode(left: PortSelection, right: PortSelection) {
-    var leftType = tree.getNodeTypeDefinition(tree.getNode(left.node)).dataOutputs.find((item) => item.id === left.port)?.type;
+    var leftType = tree.getNode(left.node).dataOutputs[left.port]?.type;
 
     var rightType = tree.getNode(right.node).dataInputs[right.port].type;
     if (leftType === rightType) {
