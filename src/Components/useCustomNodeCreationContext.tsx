@@ -1,19 +1,18 @@
-import { NodeDefinition } from "../Data/NodeDefinition";
-import { PortTypeDefaultValue } from "../Data/PortType";
+import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
+import { PortTypeDefaultValue } from "../Data/NodeDefinition";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "../Hooks/useTree";
 import { useRouter } from "../Hooks/useRouter";
 import { CUSTOM_FUNCTION } from "../Nodes/System";
 
-export type PortPosition = "input" | "output";
 export type CustomFunctionCreationContextStore = {
   model: NodeDefinition | null;
   mode: "edit" | "create";
-  setPortId(type: PortPosition, index: number, value: string): void;
-  setPortDefaultValue(type: PortPosition, index: number, value: any): void;
-  deletePort(type: PortPosition, index: number): void;
-  setPortType(type: PortPosition, index: number, arg2: string): void;
+  setPortId(type: PortRole, index: number, value: string): void;
+  setPortDefaultValue(type: PortRole, index: number, value: any): void;
+  deletePort(type: PortRole, index: number): void;
+  setPortType(type: PortRole, index: number, arg2: string): void;
   create: () => void;
   cancel: () => void;
   addOutput: () => void;
@@ -104,29 +103,29 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
     setPortType(type, index, value) {
       set(
         produce((state) => {
-          state.model[type === "input" ? "inputPorts" : "outputPorts"][index].type = value;
-          state.model[type === "input" ? "inputPorts" : "outputPorts"][index].defaultValue = PortTypeDefaultValue[value] as any;
+          state.model[type === "inputData" ? "inputPorts" : "outputPorts"][index].type = value;
+          state.model[type === "inputData" ? "inputPorts" : "outputPorts"][index].defaultValue = PortTypeDefaultValue[value] as any;
         })
       );
     },
     setPortDefaultValue(type, index, value) {
       set(
         produce((state) => {
-          state.model[type === "input" ? "inputPorts" : "outputPorts"][index].defaultValue = value;
+          state.model[type === "inputData" ? "inputPorts" : "outputPorts"][index].defaultValue = value;
         })
       );
     },
     setPortId(type, index, value) {
       set(
         produce((state) => {
-          state.model[type === "input" ? "inputPorts" : "outputPorts"][index].id = value;
+          state.model[type === "inputData" ? "inputPorts" : "outputPorts"][index].id = value;
         })
       );
     },
     deletePort(type, index) {
       set(
         produce((state) => {
-          state.model[type === "input" ? "inputPorts" : "outputPorts"].splice(index, 1);
+          state.model[type === "inputData" ? "inputPorts" : "outputPorts"].splice(index, 1);
         })
       );
     },

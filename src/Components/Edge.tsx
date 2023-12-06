@@ -1,6 +1,6 @@
 import { PortColor } from "./StyledComponents/PortColor";
 import { animated, FrameValue, to } from "@react-spring/web";
-import { PortType } from "../Data/PortType";
+import { PortType } from "../Data/NodeDefinition";
 
 export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
   if (reverse) {

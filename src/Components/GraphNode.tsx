@@ -3,7 +3,7 @@ import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { OutPortView } from "./OutPortView";
 import { PortView } from "./PortView";
-import { MainExecuteId, PortLocation, PortType } from "../Data/PortType";
+import { MainExecuteId, PortType } from "../Data/NodeDefinition";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
@@ -11,7 +11,7 @@ import { useViewbox } from "../Hooks/useViewbox";
 import { NodeData, useTree } from "../Hooks/useTree";
 import { SettingComponents } from "./SettingsComponents";
 import { SettingControl } from "./SettingControl";
-import { NodeDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.inputs).length;
@@ -26,7 +26,7 @@ export const GraphNode = forwardRef(function GraphNode(
     onClickPort,
   }: {
     node: NodeData;
-    onClickPort: (node: string, port: string, location: PortLocation, type: PortType) => void;
+    onClickPort: (node: string, port: string, location: PortRole, type: PortType) => void;
   },
   ref
 ) {
@@ -126,15 +126,15 @@ export const GraphNode = forwardRef(function GraphNode(
         {node.type}
       </text>
       {!definition.IsUnique && <NodeMenu node={node} />}
-      {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, PortLocation.InputExec, "execute")}></OutPortView> : null}
+      {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")}></OutPortView> : null}
       {definition.inputPorts.map((item, i) => {
-        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, PortLocation.InputData, item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
+        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.inputs[item.id]} onClick={() => onClickPort(node.id, item.id, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
       })}
       {definition.executeOutputPorts.map((id, i) => {
-        return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, PortLocation.OutputExec, "execute")}></OutPortView>;
+        return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")}></OutPortView>;
       })}
       {definition.outputPorts.map((item, i) => {
-        return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, PortLocation.OutputData, item.type)}></OutPortView>;
+        return <OutPortView x={300} y={50 + 32 * (i + definition.executeOutputPorts.length)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}></OutPortView>;
       })}
       {definition.settings.map((item, i) => (
         <SettingControl y={portHeight} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} />

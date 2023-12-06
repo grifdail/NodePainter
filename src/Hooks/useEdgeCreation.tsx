@@ -1,4 +1,5 @@
-import { PortLocation, PortType } from "../Data/PortType";
+import { PortRole } from "../Data/NodeDefinition";
+import { PortType } from "../Data/NodeDefinition";
 import { PortSelection, usePortSelection } from "./usePortSelection";
 import { useTree } from "./useTree";
 
@@ -20,13 +21,13 @@ export function useEdgeCreation() {
     tree.addEdge(left.node, left.port, right.node, right.port);
   }
 
-  const onClickPort = function (node: string, port: string, location: PortLocation, type: PortType) {
+  const onClickPort = function (node: string, port: string, location: PortRole, type: PortType) {
     var right: PortSelection = { node, port, location, type };
-    if (!portSelection.hasSelection && location === PortLocation.InputData && tree.getNode(node).inputs[port].hasConnection) {
+    if (!portSelection.hasSelection && location === "inputData" && tree.getNode(node).inputs[port].hasConnection) {
       tree.removeDataConnection(node, port);
       return;
     }
-    if (!portSelection.hasSelection && location === PortLocation.OutputExec && tree.getNode(node).output[port] !== null) {
+    if (!portSelection.hasSelection && location === "outputExecute" && tree.getNode(node).output[port] !== null) {
       tree.removeOutputConnection(node, port);
       return;
     }
@@ -36,13 +37,13 @@ export function useEdgeCreation() {
         portSelection.reset();
         return;
       }
-      if (left.location === PortLocation.InputData && right.location === PortLocation.OutputData) {
+      if (left.location === "inputData" && right.location === "outputData") {
         createDataNode(right, left);
-      } else if (right.location === PortLocation.InputData && left.location === PortLocation.OutputData) {
+      } else if (right.location === "inputData" && left.location === "outputData") {
         createDataNode(left, right);
-      } else if (left.location === PortLocation.InputExec && right.location === PortLocation.OutputExec) {
+      } else if (left.location === "inputExecute" && right.location === "outputExecute") {
         createExecNode(right, left);
-      } else if (right.location === PortLocation.InputExec && left.location === PortLocation.OutputExec) {
+      } else if (right.location === "inputExecute" && left.location === "outputExecute") {
         createExecNode(left, right);
       }
 

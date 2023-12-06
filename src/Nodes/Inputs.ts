@@ -107,6 +107,7 @@ AddNode({
   },
   execute: null,
 });
+
 AddNode({
   id: "MousePosition",
   description: "The position of the cursor relative to the canvas",

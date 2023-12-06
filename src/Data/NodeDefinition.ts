@@ -1,7 +1,13 @@
 import { Icon } from "@tabler/icons-react";
-import { PortType, SettingType } from "./PortType";
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeData } from "../Hooks/useTree";
+import { createColor } from "../Nodes/Color";
+import { createVector } from "../Nodes/Vector";
+
+export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
+
+export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool";
+export type SettingType = "dropdown" | "palette" | "number";
 
 export type PortDefinition = {
   id: string;
@@ -31,6 +37,7 @@ export type NodeDefinition = {
   execute: null | ((node: NodeData, context: ExecutionContext) => void);
   executeAs?: string;
   canBeExecuted?: boolean;
+  tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => any;
 };
 
 export type ExecutionContext = {
@@ -45,3 +52,12 @@ export type ExecutionContext = {
   execute: (nodeId: string) => void;
   getInputValue: (nodeData: NodeData, portId: string) => any;
 };
+
+export const MainExecuteId = "mainExecute";
+export const PortTypeDefaultValue = {
+  number: 0,
+  vector2: createVector(),
+  color: createColor(),
+  string: "",
+  bool: "",
+} as { [key: string]: any };

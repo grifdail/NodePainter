@@ -1,17 +1,18 @@
 import { create } from "zustand";
-import { PortLocation, PortType } from "../Data/PortType";
+import { PortType } from "../Data/NodeDefinition";
+import { PortRole } from "../Data/NodeDefinition";
 
 export type PortSelection = {
   node: string;
   port: string;
-  location: PortLocation;
+  location: PortRole;
   type: PortType;
 };
 
 export type PortSelectionStore = PortSelection & {
   hasSelection: boolean;
   reset: () => void;
-  select: (startNode: string, startPort: string, location: PortLocation, type: PortType) => void;
+  select: (startNode: string, startPort: string, location: PortRole, type: PortType) => void;
 };
 
 export const usePortSelection = create<PortSelectionStore>()((set) => ({
@@ -19,7 +20,7 @@ export const usePortSelection = create<PortSelectionStore>()((set) => ({
   node: "",
   port: "",
   type: "bool",
-  location: PortLocation.InputData,
+  location: "inputData",
   reset() {
     set((state) => ({ hasSelection: false }));
   },

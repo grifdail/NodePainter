@@ -2,11 +2,11 @@ import { Modal } from "./Modal";
 import styled from "styled-components";
 import { IconFunctionFilled, IconX } from "@tabler/icons-react";
 import { ButtonGroup } from "./StyledComponents/ButtonGroup";
-import { NodeDefinition, PortDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition, PortDefinition, PortRole } from "../Data/NodeDefinition";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PortColor } from "./StyledComponents/PortColor";
 import { TextInput } from "./TextInput";
-import { CustomFunctionCreationContextStore, PortPosition, useCustomNodeCreationContext } from "./useCustomNodeCreationContext";
+import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "./useCustomNodeCreationContext";
 
 const MainDiv = styled.div`
   display: flex;
@@ -84,7 +84,7 @@ const MainDiv = styled.div`
   }
 `;
 
-export function InputPortEdit({ port, context, index, type }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; type: PortPosition }) {
+export function InputPortEdit({ port, context, index, type }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; type: PortRole }) {
   const portColor = PortColor[port.type];
   const PortValueEditor = portColor.input;
   return (
@@ -142,7 +142,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Inputs</h3>
           {def.inputPorts.map((port, i) => (
-            <InputPortEdit key={i} port={port} context={context} index={i} type="input" />
+            <InputPortEdit key={i} port={port} context={context} index={i} type="inputData" />
           ))}
           <ButtonGroup>
             <button onClick={context.addInputs}>Add</button>
@@ -151,7 +151,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Outputs</h3>
           {def.outputPorts.map((port, i) => (
-            <InputPortEdit key={i} port={port} index={i} type="output" context={context} />
+            <InputPortEdit key={i} port={port} index={i} type="outputData" context={context} />
           ))}
           <ButtonGroup>
             <button onClick={context.addOutput}>Add</button>
