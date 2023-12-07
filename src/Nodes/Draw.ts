@@ -1,8 +1,9 @@
-import { IconBucketDroplet, IconCircle, IconLine, IconRectangle, IconTriangle } from "@tabler/icons-react";
+import { IconBucketDroplet, IconCircle, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorTriangle } from "@tabler/icons-react";
 import { AddNode } from "../Data/NodeLibrary";
 import * as P5 from "p5";
-import { createVector } from "./Vector";
+import { Vector, createVector } from "./Vector";
 import { createColor, toP5Color } from "./Color";
+import { createPortConnection } from "../Hooks/useTree";
 
 AddNode({
   id: "FillBackground",
@@ -275,7 +276,7 @@ AddNode({
 AddNode({
   id: "DrawRect",
   description: "Draw a rectangle starting at the top left corner with a width and height",
-  icon: IconLine,
+  icon: IconRectangle,
   tags: ["Draw"],
   dataInputs: [
     {
@@ -318,7 +319,7 @@ AddNode({
 AddNode({
   id: "DrawTriangle",
   description: "Draw a triangle defined by 3 points",
-  icon: IconRectangle,
+  icon: IconVectorTriangle,
   tags: ["Draw"],
   dataInputs: [
     {
@@ -361,7 +362,7 @@ AddNode({
 AddNode({
   id: "DrawQuad",
   description: "Draw a quad defined by 4 points",
-  icon: IconRectangle,
+  icon: IconPolygon,
   tags: ["Draw"],
   dataInputs: [
     {
@@ -404,5 +405,69 @@ AddNode({
     context.p5.fill(toP5Color(color, context.p5));
     context.p5.noStroke();
     context.p5.quad(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+  },
+});
+
+AddNode({
+  id: "DrawPoligon",
+  description: "Draw a poligon with up to 20 points",
+  icon: IconPolygon,
+  tags: ["Draw"],
+  dataInputs: [
+    {
+      id: "color",
+      type: "color",
+      defaultValue: "#aaaaaa",
+    },
+    {
+      id: "corner-1",
+      type: "vector2",
+      defaultValue: createVector(25, 0),
+    },
+    {
+      id: "corner-2",
+      type: "vector2",
+      defaultValue: createVector(0, 0),
+    },
+    {
+      id: "corner-3",
+      type: "vector2",
+      defaultValue: createVector(0, 25),
+    },
+  ],
+  dataOutputs: [],
+  executeOutputs: [],
+  settings: [],
+  canBeExecuted: true,
+  getData: (portId, nodeData, getNodeOutput) => {},
+  execute: (data, context) => {
+    const color = context.getInputValue(data, "color");
+    context.p5.fill(toP5Color(color, context.p5));
+    context.p5.noStroke();
+    context.p5.beginShape();
+    for (let i = 1; i < 20; i++) {
+      const key = `corner-${i}`;
+      if (data.dataInputs[key]) {
+        const p = context.getInputValue(data, key) as Vector;
+        context.p5.vertex(p.x, p.y);
+      }
+    }
+    context.p5.endShape();
+  },
+  contextMenu: {
+    "Add corner": (node) => {
+      const count = Object.keys(node.dataInputs).length;
+      const key = `corner-${count}`;
+      node.dataInputs[key] = createPortConnection({
+        id: key,
+        type: "vector2",
+        defaultValue: createVector(),
+      });
+    },
+    "Remove corner": (node) => {
+      const count = Object.keys(node.dataInputs).length - 1;
+      const key = `corner-${count}`;
+      delete node.dataInputs[key];
+    },
   },
 });
