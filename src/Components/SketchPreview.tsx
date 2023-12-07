@@ -63,6 +63,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   };
 
   p5.draw = () => {
+    context.frameBlackboard = {};
     p5.randomSeed(seed);
     context.time = p5.millis();
     context.execute(START_NODE);
@@ -82,6 +83,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     p5: p5 as P5CanvasInstance,
     time: 0,
     blackboard: {},
+    frameBlackboard: {},
     functionStack: [],
     progress: undefined,
     execute(nodeId) {

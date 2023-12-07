@@ -3,11 +3,11 @@ import { current, produce } from "immer";
 
 import { nanoid } from "nanoid";
 import { ExecutionContext, NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
-import { NodeLibrary } from "../Data/NodeLibrary";
 import { PortType } from "../Data/NodeDefinition";
 
 import { persist } from "zustand/middleware";
 import { START_NODE } from "../Nodes/System";
+import { NodeLibrary } from "../Nodes";
 
 export type NodeCollection = { [key: string]: NodeData };
 

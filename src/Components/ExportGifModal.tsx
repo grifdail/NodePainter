@@ -94,6 +94,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     var progress = time / (ownProps.duration * 1000);
     context.progress = progress;
     context.p5.randomSeed(seed);
+    context.frameBlackboard = {};
     context.execute(START_NODE);
     if (!ended) {
       var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);

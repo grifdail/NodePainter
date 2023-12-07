@@ -1,121 +1,120 @@
 import { IconColorFilter, IconPalette } from "@tabler/icons-react";
-import { AddNode } from "../Data/NodeLibrary";
 import { P5CanvasInstance } from "@p5-wrapper/react";
+import { NodeDefinition } from "../Data/NodeDefinition";
 
 export type Color = { r: number; g: number; b: number; a: number };
 
 export const createColor = (r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color => ({ r, g, b, a });
 
-AddNode({
-  id: "ColorCompose",
-  description: "Create a color from a set of number",
-  icon: IconPalette,
-  tags: ["Color"],
-  dataInputs: [
-    { id: "red", type: "number", defaultValue: 1 },
-    { id: "green", type: "number", defaultValue: 1 },
-    { id: "blue", type: "number", defaultValue: 1 },
-    { id: "alpha", type: "number", defaultValue: 1 },
-  ],
-  dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
-  executeOutputs: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    return createColor(context.getInputValue(nodeData, "red") as number, context.getInputValue(nodeData, "green") as number, context.getInputValue(nodeData, "blue") as number, context.getInputValue(nodeData, "alpha") as number);
+export const ColorNodes: Array<NodeDefinition> = [
+  {
+    id: "ColorCompose",
+    description: "Create a color from a set of number",
+    icon: IconPalette,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "red", type: "number", defaultValue: 1 },
+      { id: "green", type: "number", defaultValue: 1 },
+      { id: "blue", type: "number", defaultValue: 1 },
+      { id: "alpha", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      return createColor(context.getInputValue(nodeData, "red") as number, context.getInputValue(nodeData, "green") as number, context.getInputValue(nodeData, "blue") as number, context.getInputValue(nodeData, "alpha") as number);
+    },
+    execute: null,
   },
-  execute: null,
-});
-
-AddNode({
-  id: "ColorDecompose",
-  description: "Decompose a color to set of number",
-  icon: IconPalette,
-  tags: ["Color"],
-  dataInputs: [{ id: "color", type: "color", defaultValue: createColor() }],
-  dataOutputs: [
-    { id: "red", type: "number", defaultValue: 1 },
-    { id: "green", type: "number", defaultValue: 1 },
-    { id: "blue", type: "number", defaultValue: 1 },
-    { id: "alpha", type: "number", defaultValue: 1 },
-  ],
-  executeOutputs: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    var c = context.getInputValue(nodeData, "color") as Color;
-    if (portId === "red") {
-      return c.r;
-    }
-    if (portId === "green") {
-      return c.g;
-    }
-    if (portId === "blue") {
-      return c.b;
-    }
-    if (portId === "alpha") {
-      return c.a;
-    }
+  {
+    id: "ColorDecompose",
+    description: "Decompose a color to set of number",
+    icon: IconPalette,
+    tags: ["Color"],
+    dataInputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+    dataOutputs: [
+      { id: "red", type: "number", defaultValue: 1 },
+      { id: "green", type: "number", defaultValue: 1 },
+      { id: "blue", type: "number", defaultValue: 1 },
+      { id: "alpha", type: "number", defaultValue: 1 },
+    ],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var c = context.getInputValue(nodeData, "color") as Color;
+      if (portId === "red") {
+        return c.r;
+      }
+      if (portId === "green") {
+        return c.g;
+      }
+      if (portId === "blue") {
+        return c.b;
+      }
+      if (portId === "alpha") {
+        return c.a;
+      }
+    },
+    execute: null,
   },
-  execute: null,
-});
-
-AddNode({
-  id: "ColorMix",
-  description: "Mix two color togerther using rgb mixing",
-  icon: IconColorFilter,
-  tags: ["Color"],
-  dataInputs: [
-    { id: "start", type: "color", defaultValue: createColor(0, 0, 0, 1) },
-    { id: "end", type: "color", defaultValue: createColor(1, 1, 1, 1) },
-    { id: "t", type: "number", defaultValue: 0 },
-  ],
-  dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputs: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    var start = context.getInputValue(nodeData, "start") as Color;
-    var end = context.getInputValue(nodeData, "end") as Color;
-    var t = context.getInputValue(nodeData, "t") as number;
-    return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
+  {
+    id: "ColorMix",
+    description: "Mix two color togerther using rgb mixing",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "start", type: "color", defaultValue: createColor(0, 0, 0, 1) },
+      { id: "end", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+      { id: "t", type: "number", defaultValue: 0 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var start = context.getInputValue(nodeData, "start") as Color;
+      var end = context.getInputValue(nodeData, "end") as Color;
+      var t = context.getInputValue(nodeData, "t") as number;
+      return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
+    },
+    execute: null,
   },
-  execute: null,
-});
-
-AddNode({
-  id: "WithAlpha",
-  description: "Set the transparency of a color",
-  icon: IconColorFilter,
-  tags: ["Color"],
-  dataInputs: [
-    { id: "color", type: "color", defaultValue: createColor(1, 1, 1, 1) },
-    { id: "alpha", type: "number", defaultValue: 0 },
-  ],
-  dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputs: [],
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    var color = context.getInputValue(nodeData, "color") as Color;
-    var alpha = context.getInputValue(nodeData, "alpha") as number;
-    return createColor(color.r, color.g, color.b, alpha);
+  {
+    id: "WithAlpha",
+    description: "Set the transparency of a color",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "color", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+      { id: "alpha", type: "number", defaultValue: 0 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var color = context.getInputValue(nodeData, "color") as Color;
+      var alpha = context.getInputValue(nodeData, "alpha") as number;
+      return createColor(color.r, color.g, color.b, alpha);
+    },
+    execute: null,
   },
-  execute: null,
-});
-AddNode({
-  id: "PickFromPalette",
-  description: "Pick a color from a palette",
-  icon: IconColorFilter,
-  tags: ["Color"],
-  dataInputs: [{ id: "index", type: "number", defaultValue: 0 }],
-  dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
-  executeOutputs: [],
-  settings: [{ id: "palette", type: "palette", defaultValue: [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)] }],
-  getData: (portId, nodeData, context) => {
-    var index = context.getInputValue(nodeData, "index");
-    var palette = nodeData.settings.palette as Array<any>;
-    var tindex = Math.floor(index % palette.length);
-    return palette[tindex];
+  {
+    id: "PickFromPalette",
+    description: "Pick a color from a palette",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [{ id: "index", type: "number", defaultValue: 0 }],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+    executeOutputs: [],
+    settings: [{ id: "palette", type: "palette", defaultValue: [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)] }],
+    getData: (portId, nodeData, context) => {
+      var index = context.getInputValue(nodeData, "index");
+      var palette = nodeData.settings.palette as Array<any>;
+      var tindex = Math.floor(index % palette.length);
+      return palette[tindex];
+    },
+    execute: null,
   },
-  execute: null,
-});
+];
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;

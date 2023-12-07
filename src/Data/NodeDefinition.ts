@@ -48,6 +48,7 @@ export type ExecutionContext = {
   time: number;
   progress?: number;
   blackboard: { [key: string]: any };
+  frameBlackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   execute: (nodeId: string) => void;
