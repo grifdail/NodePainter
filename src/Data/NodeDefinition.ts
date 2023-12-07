@@ -38,6 +38,7 @@ export type NodeDefinition = {
   executeAs?: string;
   canBeExecuted?: boolean;
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
+  contextMenu?: { [key: string]: (node: NodeData) => void };
 };
 
 export type ExecutionContext = {

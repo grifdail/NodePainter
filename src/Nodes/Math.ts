@@ -4,15 +4,18 @@ import { AddNode } from "../Data/NodeLibrary";
 import { IconMathXy } from "@tabler/icons-react";
 import { createVector } from "./Vector";
 import { easing } from "ts-easing";
+import { createPortConnection } from "../Hooks/useTree";
 
-AddNode(createOperation("AddNumber", (a, b) => a + b, "Add two number together.", IconMathXPlusY));
-AddNode(createOperation("SubtractNumber", (a, b) => a - b, "Subtract two number.", IconMathXMinusY));
-AddNode(createOperation("MultiplyNumber", (a, b) => a * b, "Multiply two number together.", IconMathXy));
-AddNode(createOperation("DivideNumber", (a, b) => a / b, "Divide two number.", IconMathXDivideY));
+const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
+AddNode(createOperation("AddNumber", (a, b) => a + b, "Add two number together.", IconMathXPlusY, true));
+AddNode(createOperation("SubtractNumber", (a, b) => a - b, "Subtract two number.", IconMathXMinusY, true));
+AddNode(createOperation("MultiplyNumber", (a, b) => a * b, "Multiply two number together.", IconMathXy, true));
+AddNode(createOperation("DivideNumber", (a, b) => a / b, "Divide two number.", IconMathXDivideY, true));
 AddNode(createOperation("Modulo", (a, b) => a % b, "Give the remainder of the division of A by B.", IconPercentage));
 AddNode(createOperation("Pow", (a, b) => a % b, "Raise A to the power of B.", IconMathXPlusY));
-AddNode(createOperation("Max", Math.max, "Returne the biggest of two number.", IconMathMax));
-AddNode(createOperation("Min", Math.min, "Returne the smallest of two number.", IconMathMin));
+AddNode(createOperation("Max", Math.max, "Returne the biggest of two number.", IconMathMax, true));
+AddNode(createOperation("Min", Math.min, "Returne the smallest of two number.", IconMathMin, true));
 AddNode(createFunc("Cos", Math.cos, "Return the cosine of a number (in radian).", IconAngle));
 AddNode(createFunc("Sin", Math.sin, "Return the sine of a number (in radian).", IconAngle));
 AddNode(createFunc("SinWave", (a) => Math.sin(a * Math.PI * 2) * 0.5 + 0.5, "Return the cosine of the value in the interval [0,1] and with a frequency of 1.", IconWaveSine));
@@ -334,8 +337,8 @@ AddNode({
   execute: null,
 });
 
-function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon): NodeDefinition {
-  return {
+function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon, allowMoreInput?: boolean): NodeDefinition {
+  var result: NodeDefinition = {
     id: id,
     tags: ["Math"],
     icon: icon || IconMathSymbols,
@@ -362,14 +365,46 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      if (portId === "result") {
-        var a = context.getInputValue(nodeData, "a");
-        var b = context.getInputValue(nodeData, "b");
+      if (allowMoreInput) {
+        const key = Object.keys(nodeData.dataInputs);
+        let start = context.getInputValue(nodeData, key[0]);
+        for (let i = 1; i < key.length; i++) {
+          start = evalOperation(start, context.getInputValue(nodeData, key[i]));
+        }
+        return start;
+      } else {
+        const a = context.getInputValue(nodeData, "a");
+        const b = context.getInputValue(nodeData, "b");
         return evalOperation(a, b);
       }
     },
     execute: null,
   };
+  if (allowMoreInput) {
+    result.contextMenu = {
+      "Add more input": (node) => {
+        var count = Object.keys(node.dataInputs).length;
+        if (count >= ALPHABET.length) {
+          return;
+        }
+        var key = ALPHABET[count];
+        node.dataInputs[key] = createPortConnection({
+          id: key,
+          type: "number",
+          defaultValue: 0,
+        });
+      },
+      "Remove last input": (node) => {
+        var count = Object.keys(node.dataInputs).length;
+        if (count <= 2) {
+          return;
+        }
+        var key = ALPHABET[count - 1];
+        delete node.dataInputs[key];
+      },
+    };
+  }
+  return result;
 }
 
 function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon): NodeDefinition {

@@ -35,6 +35,7 @@ export type TreeStore = {
   createFunction: (def: NodeDefinition) => void;
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;
+  executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
 };
 
 export type NodeData = {
@@ -50,6 +51,7 @@ export type NodeData = {
 };
 
 export type PortConnection = {
+  id: string;
   hasConnection: boolean;
   ownValue: any;
   connectedNode: string | null;
@@ -166,6 +168,13 @@ export const useTree = create<TreeStore>()(
           set(
             produce((state) => {
               state.nodes[node].settings[settingId] = newValue;
+            })
+          );
+        },
+        executeCallback(nodeId, fn) {
+          set(
+            produce((state) => {
+              fn(state.nodes[nodeId]);
             })
           );
         },
@@ -352,8 +361,9 @@ function createPortConnectionsForInputsDefinition(def: NodeDefinition): { [key: 
   }, {});
 }
 
-function createPortConnection(def: PortDefinition): PortConnection {
+export function createPortConnection(def: PortDefinition): PortConnection {
   return {
+    id: def.id,
     type: def.type,
     ownValue: structuredClone(def.defaultValue),
     hasConnection: false,

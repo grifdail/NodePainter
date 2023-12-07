@@ -127,10 +127,10 @@ export const GraphNode = forwardRef(function GraphNode(
       >
         {node.type}
       </text>
-      {!definition.IsUnique && <NodeMenu node={node} />}
+      {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
       {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")}></OutPortView> : null}
-      {definition.dataInputs.map((item, i) => {
-        return <PortView y={50 + 32 * i} key={item.id} portDefinition={item} portData={node.dataInputs[item.id]} onClick={() => onClickPort(node.id, item.id, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, item.id, v)}></PortView>;
+      {Object.entries(node.dataInputs).map(([key, item], i) => {
+        return <PortView y={50 + 32 * i} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)}></PortView>;
       })}
       {Object.entries(node.execOutputs).map(([id], i) => {
         return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")}></OutPortView>;

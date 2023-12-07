@@ -1,5 +1,4 @@
 import React from "react";
-import { PortDefinition } from "../Data/NodeDefinition";
 import { PortColor } from "./StyledComponents/PortColor";
 import { PortConnection } from "../Hooks/useTree";
 import styled from "styled-components";
@@ -49,8 +48,8 @@ const PortForeignObject = styled.foreignObject`
   }
 `;
 
-export function PortView({ y, portDefinition, portData, onClick, onValueChange }: { y: number; portDefinition: PortDefinition; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
-  var portDescription = PortColor[portDefinition.type];
+export function PortView({ y, portData, onClick, onValueChange }: { y: number; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
+  var portDescription = PortColor[portData.type];
   var Icon = portDescription.icon;
   var PortSettings = portDescription.input;
   return (
@@ -58,7 +57,7 @@ export function PortView({ y, portDefinition, portData, onClick, onValueChange }
       <rect x="0" y="0" width="200" height="30" fill="rgba(0,0,0,0.1)"></rect>
       <PortForeignObject height={30} width={175} x={25} y={0}>
         <div>
-          <p>{portDefinition.id}</p>
+          <p>{portData.id}</p>
           {!portData.hasConnection && PortSettings && <PortSettings onChange={onValueChange} value={portData.ownValue} />}
         </div>
       </PortForeignObject>
