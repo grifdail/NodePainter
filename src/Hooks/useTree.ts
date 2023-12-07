@@ -222,34 +222,7 @@ export const useTree = create<TreeStore>()(
         },
         load(source) {
           try {
-            const nodes: NodeCollection = {};
-
-            Object.entries(source).forEach(([sourceKey, sourceNode]) => {
-              const newNode = createNodeData(get().getNodeTypeDefinition(sourceNode.type), sourceNode.positionX || 0, sourceNode.positionY, sourceKey);
-              const def = get().getNodeTypeDefinition(newNode);
-              if (!def) {
-                throw new Error("No node of that type");
-              }
-              for (const key in sourceNode.dataInputs) {
-                const inputDef = def.dataInputs.find((item) => item.id === key);
-
-                if (!inputDef) {
-                  throw new Error("invalid input port");
-                }
-
-                newNode.dataInputs[key] = {
-                  ...sourceNode.dataInputs[key],
-                };
-              }
-              for (const key in sourceNode.execOutputs) {
-                newNode.execOutputs[key] = sourceNode.execOutputs[key];
-              }
-              for (const key in sourceNode.settings) {
-                newNode.settings[key] = structuredClone(sourceNode.settings[key]);
-              }
-              nodes[newNode.id] = newNode;
-            });
-            set({ nodes });
+            set({ nodes: source });
             return true;
           } catch (err) {
             console.error("Error loading save", err);

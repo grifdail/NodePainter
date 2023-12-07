@@ -56,6 +56,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var ended = false;
   var gif: any = null;
   var ownProps: MySketchProps | null = null;
+  let seed = Date.now();
 
   p5.setup = () => {
     p5.pixelDensity(1);
@@ -92,6 +93,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.time = time;
     var progress = time / (ownProps.duration * 1000);
     context.progress = progress;
+    context.p5.randomSeed(seed);
     context.execute(START_NODE);
     if (!ended) {
       var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
