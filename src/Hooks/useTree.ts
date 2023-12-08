@@ -296,14 +296,14 @@ export const useTree = create<TreeStore>()(
                 for (let input in selfNode.dataInputs) {
                   let port = selfNode.dataInputs[input] as PortConnection;
                   if (port.hasConnection) {
-                    let targetNode = state.nodes[port.connectedNode as string];
+                    let targetNode = state.nodes[port.connectedNode as string] as NodeData;
                     if (!targetNode) {
                       port.hasConnection = false;
                       port.connectedNode = null;
                       port.connectedPort = null;
                     }
 
-                    let defPort = targetNode.outputPorts.find((defPort: PortDefinition) => defPort.id === port.connectedPort);
+                    let defPort = targetNode.dataOutputs[port.connectedPort as string];
                     if (!defPort || defPort.type !== port.type) {
                       port.hasConnection = false;
                       port.connectedNode = null;
