@@ -1,4 +1,3 @@
-import { boolean } from "mathjs";
 import styled from "styled-components";
 
 export const ModalBody = styled.div<{ big: boolean }>`
