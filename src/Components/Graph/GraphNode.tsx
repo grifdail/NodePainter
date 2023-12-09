@@ -1,17 +1,16 @@
 import { forwardRef, useImperativeHandle } from "react";
 import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
-import { OutPortView } from "./OutPortView";
 import { PortView } from "./PortView";
-import { MainExecuteId, PortType } from "../Data/NodeDefinition";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
-import { useViewbox } from "../Hooks/useViewbox";
-import { NodeData, useTree } from "../Hooks/useTree";
-import { SettingComponents } from "./SettingsComponents";
-import { SettingControl } from "./SettingControl";
-import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
+import { NodeData, useTree } from "../../Hooks/useTree";
+import { MainExecuteId, NodeDefinition, PortRole, PortType } from "../../Data/NodeDefinition";
+import { SettingComponents } from "../Settings/SettingsComponents";
+import { useViewbox } from "../../Hooks/useViewbox";
+import { OutPortView } from "../Settings/OutPortView";
+import { SettingControl } from "../SettingControl";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;

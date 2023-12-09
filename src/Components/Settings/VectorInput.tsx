@@ -1,5 +1,5 @@
 import * as p5 from "p5";
-import { NumberInput } from "../NumberInput";
+import { NumberInput } from "./NumberInput";
 
 export function VectorInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
   const onInputChange = (newValue: number, property: "x" | "y") => {

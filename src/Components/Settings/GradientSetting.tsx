@@ -1,13 +1,13 @@
-import { SettingDefinition } from "../Data/NodeDefinition";
+import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "./ColorInput";
-import { ButtonGroup } from "./StyledComponents/ButtonGroup";
-import { createColor } from "../Nodes/Color";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { createColor } from "../../Nodes/Color";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { ColorPalette, DefaultPalettes, PaletteCollection } from "../Data/Palettes";
+import { ColorPalette, DefaultPalettes, PaletteCollection } from "../../Data/Palettes";
 
 const ColorList = styled.ul`
   display: flex;
@@ -47,7 +47,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const PaletteSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const GradientSetting: SettingComponent = function GradientSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
   var list = value as Array<any>;
   function onChangeColor(i: number, v: any): void {
     onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
@@ -122,6 +122,6 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
     </div>
   );
 };
-PaletteSetting.getSize = function (value, def): number {
+GradientSetting.getSize = function (value, def): number {
   return 32 * value.length + 70;
 };

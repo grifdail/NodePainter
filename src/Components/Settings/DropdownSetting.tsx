@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
-import { SettingDefinition } from "../Data/NodeDefinition";
+import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 
 export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {

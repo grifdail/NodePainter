@@ -1,15 +1,15 @@
-import { TreeStore, useTree } from "../Hooks/useTree";
-import { Modal } from "./Modal";
+import { TreeStore, useTree } from "../../Hooks/useTree";
+import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
-import { ButtonGroup } from "./StyledComponents/ButtonGroup";
-import { NumberInput } from "./NumberInput";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { NumberInput } from "../Settings/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
-import { ExecutionContext } from "../Data/NodeDefinition";
-import { createExecutionContext } from "./SketchPreview";
+import { ExecutionContext } from "../../Data/NodeDefinition";
+import { createExecutionContext } from "../SketchPreview";
 import * as GIF from "gif.js.optimized";
-import { START_NODE } from "../Nodes/System";
+import { START_NODE } from "../../Nodes/System";
 
 const MainDiv = styled.div`
   display: flex;

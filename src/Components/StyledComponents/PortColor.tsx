@@ -1,8 +1,8 @@
 import { Icon, IconArrowUpRightCircle, IconNumbers, IconPalette, IconPlayerPlayFilled, IconQuote, IconToggleLeft } from "@tabler/icons-react";
-import { NumberInput } from "../NumberInput";
-import { ColorInput } from "../ColorInput";
-import { VectorInput } from "./VectorInput";
-import { BoolInput } from "../BoolInput";
+import { NumberInput } from "../Settings/NumberInput";
+import { ColorInput } from "../Settings/ColorInput";
+import { VectorInput } from "../Settings/VectorInput";
+import { BoolInput } from "../Settings/BoolInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
 

@@ -1,9 +1,9 @@
-import { useTree } from "../Hooks/useTree";
-import { Modal } from "./Modal";
+import { useTree } from "../../Hooks/useTree";
+import { Modal } from "../Modal";
 import styled from "styled-components";
 import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import { ButtonGroup } from "./StyledComponents/ButtonGroup";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 
 const MainDiv = styled.div`
   display: flex;

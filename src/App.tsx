@@ -1,5 +1,6 @@
 import "./App.css";
-import { Grid } from "./Components/Grid";
+import { Grid } from "./Components/Graph/Grid";
+
 import { Router } from "./Components/Router";
 
 function App() {

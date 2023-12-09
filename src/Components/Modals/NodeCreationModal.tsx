@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
-import { NodeDefinition } from "../Data/NodeDefinition";
-import { useViewbox } from "../Hooks/useViewbox";
-import { useTree } from "../Hooks/useTree";
-import { NodePreview } from "./NodePreview";
-import { Modal } from "./Modal";
+import { NodeDefinition } from "../../Data/NodeDefinition";
+import { useViewbox } from "../../Hooks/useViewbox";
+import { useTree } from "../../Hooks/useTree";
+import { NodePreview } from "../NodePreview";
+import { Modal } from "../Modal";
 import styled from "styled-components";
-import { useNodeFav } from "../Hooks/useNodeFav";
+import { useNodeFav } from "../../Hooks/useNodeFav";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
-import { useRouter } from "../Hooks/useRouter";
+import { useRouter } from "../../Hooks/useRouter";
 
 const AddModalDiv = styled.div`
   display: flex;

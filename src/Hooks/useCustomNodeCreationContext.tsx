@@ -2,8 +2,8 @@ import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
 import { PortTypeDefaultValue } from "../Data/NodeDefinition";
 import { create } from "zustand";
 import { produce } from "immer";
-import { useTree } from "../Hooks/useTree";
-import { useRouter } from "../Hooks/useRouter";
+import { useTree } from "./useTree";
+import { useRouter } from "./useRouter";
 import { CUSTOM_FUNCTION } from "../Nodes/System";
 
 export type CustomFunctionCreationContextStore = {

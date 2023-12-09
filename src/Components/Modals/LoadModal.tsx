@@ -1,10 +1,10 @@
-import { useTree } from "../Hooks/useTree";
-import { Modal } from "./Modal";
+import { useTree } from "../../Hooks/useTree";
+import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconDeviceFloppy, IconFileUpload } from "@tabler/icons-react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { ButtonGroup } from "./StyledComponents/ButtonGroup";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 
 const MainDiv = styled.div`
   display: flex;

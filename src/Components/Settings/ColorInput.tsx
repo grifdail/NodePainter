@@ -1,8 +1,8 @@
-import { fromHex, invertColor, toHex } from "../Nodes/Color";
+import { fromHex, invertColor, toHex } from "../../Nodes/Color";
 import Sketch from "@uiw/react-color-sketch";
 
 import { Menu } from "@szhsin/react-menu";
-import { ColorButton } from "./ColorButton";
+import { ColorButton } from "../StyledComponents/ColorButton";
 
 const defaultPalette = ["#000000FF", "#1D2B53FF", "#7E2553FF", "#008751FF", "#AB5236FF", "#5F574FFF", "#C2C3C7FF", "#FFF1E8FF", "#FF004DFF", "#FFA300FF", "#FFEC27FF", "#00E436FF", "#29ADFFFF", "#83769CFF", "#FF77A8FF", "#FFCCAAFF"];
 

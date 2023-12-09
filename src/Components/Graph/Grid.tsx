@@ -2,14 +2,13 @@ import { useEffect, useRef } from "react";
 import { GraphNode } from "./GraphNode";
 import { useSpring, animated, Interpolation } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
-import { MainExecuteId, PortType } from "../Data/NodeDefinition";
 import { Edge } from "./Edge";
-
-import { useSVGMapDrag } from "../Hooks/useSVGMapDrag";
-import { useTree } from "../Hooks/useTree";
-import { useGesturePrevention } from "../Hooks/useGesturePrevention";
-import { usePortSelection } from "../Hooks/usePortSelection";
-import { useEdgeCreation } from "../Hooks/useEdgeCreation";
+import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
+import { useTree } from "../../Hooks/useTree";
+import { usePortSelection } from "../../Hooks/usePortSelection";
+import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
+import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
+import { MainExecuteId, PortType } from "../../Data/NodeDefinition";
 
 type PortRefType = {
   [key: string]: {

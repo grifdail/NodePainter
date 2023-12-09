@@ -1,10 +1,10 @@
 import { GridUi } from "./GridUi";
-import { NodeCreationModal } from "./NodeCreationModal";
+import { NodeCreationModal } from "./Modals/NodeCreationModal";
 import { useRouter } from "../Hooks/useRouter";
-import { SaveModal } from "./SaveModal";
-import { LoadModal } from "./LoadModal";
-import { ExportGifModal } from "./ExportGifModal";
-import { CustomNodeModal } from "./CustomNodeModal";
+import { SaveModal } from "./Modals/SaveModal";
+import { LoadModal } from "./Modals/LoadModal";
+import { ExportGifModal } from "./Modals/ExportGifModal";
+import { CustomNodeModal } from "./Modals/CustomNodeModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);

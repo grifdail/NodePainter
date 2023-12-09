@@ -1,7 +1,7 @@
 import React from "react";
-import { PortColor } from "./StyledComponents/PortColor";
-import { PortConnection } from "../Hooks/useTree";
 import styled from "styled-components";
+import { PortColor } from "../StyledComponents/PortColor";
+import { PortConnection } from "../../Hooks/useTree";
 
 const PortForeignObject = styled.foreignObject`
   margin: 0;

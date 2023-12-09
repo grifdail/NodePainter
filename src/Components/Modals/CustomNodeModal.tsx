@@ -1,12 +1,12 @@
-import { Modal } from "./Modal";
+import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconFunctionFilled, IconX } from "@tabler/icons-react";
-import { ButtonGroup } from "./StyledComponents/ButtonGroup";
-import { NodeDefinition, PortDefinition, PortRole } from "../Data/NodeDefinition";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { NodeDefinition, PortDefinition, PortRole } from "../../Data/NodeDefinition";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
-import { PortColor } from "./StyledComponents/PortColor";
-import { TextInput } from "./TextInput";
-import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "./useCustomNodeCreationContext";
+import { PortColor } from "../StyledComponents/PortColor";
+import { TextInput } from "../Settings/TextInput";
+import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 
 const MainDiv = styled.div`
   display: flex;
