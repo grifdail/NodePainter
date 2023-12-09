@@ -1,6 +1,12 @@
-import { PortColor } from "../StyledComponents/PortColor";
 import { animated, FrameValue, to } from "@react-spring/web";
 import { PortType } from "../../Data/NodeDefinition";
+import styled from "styled-components";
+
+export const EdgePath = styled(animated.path)`
+  stroke: var(--color-property);
+  stroke-width: 10px;
+  fill: none;
+`;
 
 export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
   if (reverse) {
@@ -8,7 +14,8 @@ export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]
   }
 
   return (
-    <animated.path
+    <EdgePath
+      className={type}
       d={to([start, end], (pointa, pointB) => {
         if (pointa && pointB) {
           const [xs, ys] = pointa;
@@ -18,9 +25,6 @@ export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]
         }
         return "";
       })}
-      stroke={PortColor[type].color}
-      strokeWidth={10}
-      fill="none"
-    ></animated.path>
+    ></EdgePath>
   );
 }

@@ -3,8 +3,16 @@ import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 
 export type Color = { r: number; g: number; b: number; a: number };
+export type GradientStop = { pos: number; color: Color };
+export type Gradient = GradientStop[];
 
 export const createColor = (r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color => ({ r, g, b, a });
+export function createDefaultGradient(): any {
+  return [
+    { pos: 0, color: createColor(0, 0, 0) },
+    { pos: 1, color: createColor(1, 1, 1) },
+  ];
+}
 
 export const ColorNodes: Array<NodeDefinition> = [
   {
@@ -111,6 +119,20 @@ export const ColorNodes: Array<NodeDefinition> = [
       var palette = nodeData.settings.palette as Array<any>;
       var tindex = Math.floor(index % palette.length);
       return palette[tindex];
+    },
+    execute: null,
+  },
+  {
+    id: "Gradient",
+    description: "Create a manualy defined gradient",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [],
+    dataOutputs: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
+    executeOutputs: [],
+    settings: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
+    getData: (portId, nodeData, context) => {
+      return nodeData.settings.gradient;
     },
     execute: null,
   },

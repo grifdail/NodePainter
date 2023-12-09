@@ -1,7 +1,25 @@
 import { Menu, MenuButton, MenuDivider, MenuItem } from "@szhsin/react-menu";
-import { IconMenu } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import { NodeData, useTree } from "../../Hooks/useTree";
 import { NodeDefinition } from "../../Data/NodeDefinition";
+import styled from "styled-components";
+
+var StyledButton = styled(MenuButton)`
+  border: none;
+  background: none;
+  width: 100%;
+  height: 100%;
+  display: block flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1);
+  animation: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.2);
+  }
+`;
 
 export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition }) {
   const duplicateNode = useTree((state) => state.duplicateNode);
@@ -9,13 +27,13 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
   const resetNode = useTree((state) => state.resetNode);
   const executeCallback = useTree((state) => state.executeCallback);
   return (
-    <foreignObject x="240" y="10" height="45" width="45" className="context-menu">
+    <foreignObject x="260" y="10" height="30" width="30" className="context-menu">
       <Menu
         portal
         menuButton={
-          <MenuButton>
-            <IconMenu></IconMenu>
-          </MenuButton>
+          <StyledButton>
+            <IconMenu2></IconMenu2>
+          </StyledButton>
         }
       >
         <MenuItem key="delete" onClick={() => deleteNode(node.id)}>

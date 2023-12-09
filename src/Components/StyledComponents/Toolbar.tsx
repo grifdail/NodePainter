@@ -7,6 +7,8 @@ export var Toolbar = styled.menu<{ vertical?: boolean; reversed?: boolean }>`
   flex-direction: ${(props) => (props.vertical ? (props.reversed ? "column-reverse" : "column") : props.reversed ? "row-reverse" : "row")};
 
   --border-radius: 5px;
+  margin: 0;
+  padding: 0;
 
   & > button {
     border: 2px solid #333;

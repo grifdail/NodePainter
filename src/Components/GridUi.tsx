@@ -10,9 +10,13 @@ import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
 import { CUSTOM_FUNCTION } from "../Nodes/System";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
+import { WarningTrack } from "./StyledComponents/WarningTrack";
+import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
+  top: 20px;
+  left: 20px;
 `;
 
 export function GridUi() {
@@ -43,12 +47,11 @@ export function GridUi() {
   };
 
   return (
-    <div className="full-screen-layout grid-ui">
+    <FullScreenDiv>
       {portSelection.hasSelection && (
-        <div className={`warning-track ${portSelection.type}`}>
+        <WarningTrack className={portSelection.type}>
           <div>{`${nodes[portSelection.node].type} # ${portSelection.port}`}</div>
-          <button onClick={portSelection.reset}>cancel</button>
-        </div>
+        </WarningTrack>
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
@@ -94,6 +97,6 @@ export function GridUi() {
           <MenuItem>Reset camera</MenuItem>
         </Menu>
       </BottomToolbar>
-    </div>
+    </FullScreenDiv>
   );
 }

@@ -13,4 +13,5 @@ export const FullScreenDiv = styled.div<{ modal?: boolean }>`
   justify-content: center;
   align-items: center;
   background: ${(props) => (props.modal ? "rgba(0,0,0,0.2)" : "none")};
+  pointer-events: ${(props) => (props.modal ? "auto" : "none")};
 `;

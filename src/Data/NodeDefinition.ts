@@ -1,13 +1,13 @@
 import { Icon } from "@tabler/icons-react";
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeData } from "../Hooks/useTree";
-import { createColor } from "../Nodes/Color";
+import { createColor, createDefaultGradient } from "../Nodes/Color";
 import { createVector } from "../Nodes/Vector";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 
-export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool";
-export type SettingType = "dropdown" | "palette" | "number";
+export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient";
+export type SettingType = "dropdown" | "palette" | "number" | "gradient";
 
 export type PortDefinition = {
   id: string;
@@ -62,4 +62,6 @@ export const PortTypeDefaultValue = {
   color: createColor(),
   string: "",
   bool: "",
+  gradient: createDefaultGradient(),
+  iamge: null,
 } as { [key: string]: any };

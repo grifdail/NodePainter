@@ -1,19 +1,14 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css);
 
 :root {
-  --color-execute: #2fb344;
-  --color-number: #4299e1;
-  --color-vector2: #ae3ec9;
-  --color-color: #f76707;
-  --color-string: #d6336c;
-  --color-boolean: #17a2b8;
-
-  --gradient-execute: repeating-linear-gradient(45deg, #2fb344, #2fb344 10px, #ffffff 10px, #ffffff 20px);
-  --gradient-number: repeating-linear-gradient(45deg, #4299e1, #4299e1 10px, #ffffff 10px, #ffffff 20px);
-  --gradient-vector2: repeating-linear-gradient(45deg, #ae3ec9, #ae3ec9 10px, #ffffff 10px, #ffffff 20px);
-  --gradient-color: repeating-linear-gradient(45deg, #f76707, #f76707 10px, #ffffff 10px, #ffffff 20px);
-  --gradient-string: repeating-linear-gradient(45deg, #d6336c, #d6336c 10px, #ffffff 10px, #ffffff 20px);
-  --gradient-boolean: repeating-linear-gradient(45deg, #17a2b8, #17a2b8 10px, #ffffff 10px, #ffffff 20px);
+  --color-execute: #00e436;
+  --color-number: #29adff;
+  --color-vector2: #ff77a8;
+  --color-color: #ffa300;
+  --color-string: #ff004d;
+  --color-boolean: #1d2b53;
+  --color-gradient: #ffec27;
+  --color-image: #ab5236;
 }
 
 * {
@@ -27,77 +22,27 @@
   user-zoom: none;
 }
 
-.full-screen-layout {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
+.number {
+  --color-property: var(--color-number);
 }
-
-.modal-background {
-  background: rgba(0, 0, 0, 0.2);
+.execute {
+  --color-property: var(--color-execute);
 }
-
-.window {
-  background: white;
-  pointer-events: auto;
-  overflow: auto;
+.vector2 {
+  --color-property: var(--color-vector2);
 }
-.add-modal .add-node {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  gap: 25px;
-  border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+.string {
+  --color-property: var(--color-string);
 }
-
-.add-modal .add-node body {
-  flex: 300px 0 0;
-  margin: 0;
+.boolean {
+  --color-property: var(--color-boolean);
 }
-
-.warning-track {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 20px solid black;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
+.color {
+  --color-property: var(--color-color);
 }
-.warning-track {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 20px solid black;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
+.gradient {
+  --color-property: var(--color-gradient);
 }
-
-.warning-track button {
-  pointer-events: all;
-}
-
-.warning-track.number {
-  border-color: var(--color-number);
-}
-.warning-track.execute {
-  border-color: var(--color-execute);
-}
-.warning-track.vector2 {
-  border-color: var(--color-vector2);
-}
-.warning-track.string {
-  border-color: var(--color-string);
-}
-.warning-track.boolean {
-  border-color: var(--color-boolean);
-}
-.warning-track.color {
-  border-color: var(--color-color);
+.gradient {
+  --color-property: var(--color-image);
 }

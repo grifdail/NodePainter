@@ -9,7 +9,7 @@ import { NodeData, useTree } from "../../Hooks/useTree";
 import { MainExecuteId, NodeDefinition, PortRole, PortType } from "../../Data/NodeDefinition";
 import { SettingComponents } from "../Settings/SettingsComponents";
 import { useViewbox } from "../../Hooks/useViewbox";
-import { OutPortView } from "../Settings/OutPortView";
+import { OutPortView } from "./OutPortView";
 import { SettingControl } from "../SettingControl";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
