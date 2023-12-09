@@ -1,9 +1,11 @@
+import { boolean } from "mathjs";
 import styled from "styled-components";
 
-export const ModalBody = styled.div`
+export const ModalBody = styled.div<{ big: boolean }>`
   width: 80%;
   min-height: 500px;
   max-height: 80%;
+  ${(props) => (props.big ? "height: 80%;" : "")}
   overflow: hidden;
   margin: auto;
   background: white;

@@ -193,7 +193,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   var open = useRouter((state) => state.open);
 
   return (
-    <Modal title="Add a new node" icon={IconPlus} onClose={close}>
+    <Modal title="Add a new node" icon={IconPlus} onClose={close} big>
       <AddModalDiv>
         <menu>
           <button onClick={() => open("custom-function")}>aaaa</button>

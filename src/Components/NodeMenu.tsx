@@ -18,11 +18,17 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
           </MenuButton>
         }
       >
-        <MenuItem onClick={() => deleteNode(node.id)}>Delete</MenuItem>
-        <MenuItem onClick={() => duplicateNode(node.id)}>Duplicate</MenuItem>
-        <MenuItem onClick={() => resetNode(node.id)}>Reset</MenuItem>
+        <MenuItem key="delete" onClick={() => deleteNode(node.id)}>
+          Delete
+        </MenuItem>
+        <MenuItem key="duplicate" onClick={() => duplicateNode(node.id)}>
+          Duplicate
+        </MenuItem>
+        <MenuItem key="reset" onClick={() => resetNode(node.id)}>
+          Reset
+        </MenuItem>
         {def.contextMenu && [
-          <MenuDivider />,
+          <MenuDivider key="divider" />,
           ...Object.entries(def.contextMenu).map(([key, fn]) => {
             return (
               <MenuItem key={key} onClick={() => executeCallback(node.id, fn)}>

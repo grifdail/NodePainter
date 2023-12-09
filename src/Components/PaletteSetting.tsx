@@ -105,7 +105,7 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
         >
           <MenuItem onClick={savePalette}>Save Palette</MenuItem>
           <MenuDivider></MenuDivider>
-          <SubMenu label="defaultPalette">
+          <SubMenu label="defaultPalette" overflow="auto">
             {Object.entries(DefaultPalettes).map(([key, value]) => (
               <MenuItem key={key} onClick={() => loadPalette(value)}>
                 {key}

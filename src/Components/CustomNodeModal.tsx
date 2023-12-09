@@ -23,6 +23,19 @@ const MainDiv = styled.div`
   & > section {
     display: flex;
     flex-direction: column;
+    gap: 2px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    &.header {
+      flex-direction: row;
+      justify-content: stretch;
+      gap: 10px;
+
+      & fieldset {
+        flex: 1 1 100%;
+      }
+    }
+
     & fieldset {
       border: none;
       display: flex;
@@ -33,7 +46,6 @@ const MainDiv = styled.div`
         flex: 1 1 0;
       }
     }
-    gap: 2px;
 
     & > div.port-field {
       display: flex;
@@ -129,7 +141,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
   return (
     <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
       <MainDiv>
-        <section>
+        <section className="header">
           <fieldset>
             <label>Name</label>
             <TextInput value={def.id} onChange={context.setId}></TextInput>
