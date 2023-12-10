@@ -1,12 +1,15 @@
 import { IconColorFilter, IconPalette } from "@tabler/icons-react";
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { createPortConnection } from "../Data/createPortConnection";
 
 export type Color = { r: number; g: number; b: number; a: number };
 export type GradientStop = { pos: number; color: Color };
 export type Gradient = GradientStop[];
 
-export const createColor = (r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color => ({ r, g, b, a });
+export function createColor(r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color {
+  return { r, g, b, a };
+}
 export function createDefaultGradient(): any {
   return [
     { pos: 0, color: createColor(0, 0, 0) },
@@ -168,6 +171,65 @@ export const ColorNodes: Array<NodeDefinition> = [
       return prev.color;
     },
     execute: null,
+  },
+  {
+    id: "Create Gradient",
+    description: "Create a gradient from dynamics color",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "color-0", type: "color", defaultValue: createColor() },
+      { id: "pos-0", type: "number", defaultValue: 0 },
+      { id: "color-1", type: "color", defaultValue: createColor(0, 0, 0) },
+      { id: "pos-1", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var list: Gradient = [];
+      for (let i = 0; i < 10; i++) {
+        if (nodeData.dataInputs[`color-${i}`] && nodeData.dataInputs[`pos-${i}`]) {
+          list.push({
+            pos: context.getInputValue(nodeData, `pos-${i}`),
+            color: context.getInputValue(nodeData, `color-${i}`),
+          });
+        }
+      }
+      list.sort((a, b) => a.pos - b.pos);
+      return list;
+    },
+    execute: null,
+    contextMenu: {
+      "Add color": (node) => {
+        var count = Object.keys(node.dataInputs).length / 2;
+        if (count > 10) {
+          return;
+        }
+        var keyColor = `color-${count}`;
+        node.dataInputs[keyColor] = createPortConnection({
+          id: keyColor,
+          type: "color",
+          defaultValue: createColor(1, 1, 1),
+        });
+        var keyPos = `pos-${count}`;
+        node.dataInputs[keyPos] = createPortConnection({
+          id: keyPos,
+          type: "number",
+          defaultValue: 0.5,
+        });
+      },
+      "Remove last color": (node) => {
+        var count = Object.keys(node.dataInputs).length / 2;
+        if (count <= 2) {
+          return;
+        }
+        var keyColor = `color-${count - 1}`;
+        var keyPos = `pos-${count - 1}`;
+        delete node.dataInputs[keyColor];
+        delete node.dataInputs[keyPos];
+      },
+    },
   },
 ];
 

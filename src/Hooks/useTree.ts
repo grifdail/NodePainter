@@ -8,6 +8,7 @@ import { PortType } from "../Data/NodeDefinition";
 import { persist } from "zustand/middleware";
 import { START_NODE } from "../Nodes/System";
 import { NodeLibrary } from "../Nodes";
+import { createPortConnection } from "../Data/createPortConnection";
 
 export type NodeCollection = { [key: string]: NodeData };
 
@@ -359,17 +360,6 @@ function createPortConnectionsForInputsDefinition(def: NodeDefinition): { [key: 
     old[port.id] = connection;
     return old;
   }, {});
-}
-
-export function createPortConnection(def: PortDefinition): PortConnection {
-  return {
-    id: def.id,
-    type: def.type,
-    ownValue: structuredClone(def.defaultValue),
-    hasConnection: false,
-    connectedNode: null,
-    connectedPort: null,
-  };
 }
 
 function createDefaultNodeConnection(): NodeCollection {

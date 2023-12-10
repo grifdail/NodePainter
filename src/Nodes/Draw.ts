@@ -1,8 +1,8 @@
 import { IconBucketDroplet, IconCircle, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorTriangle } from "@tabler/icons-react";
 import * as P5 from "p5";
 import { Vector, createVector } from "./Vector";
-import { createColor, toP5Color } from "./Color";
-import { createPortConnection } from "../Hooks/useTree";
+import { Gradient, createColor, createDefaultGradient, toHex, toP5Color } from "./Color";
+import { createPortConnection } from "../Data/createPortConnection";
 import { NodeDefinition } from "../Data/NodeDefinition";
 
 export const DrawNodes: Array<NodeDefinition> = [
@@ -309,6 +309,64 @@ export const DrawNodes: Array<NodeDefinition> = [
       context.p5.fill(toP5Color(color, context.p5));
       context.p5.noStroke();
       context.p5.rect(p1.x, p1.y, width, height);
+    },
+  },
+  {
+    id: "DrawGradientRect",
+    description: "Draw a rectangle with a gradient",
+    icon: IconRectangle,
+    tags: ["Draw"],
+    dataInputs: [
+      {
+        id: "gradient",
+        type: "gradient",
+        defaultValue: createDefaultGradient(),
+      },
+      {
+        id: "direction",
+        type: "number",
+        defaultValue: 0,
+      },
+      {
+        id: "corner",
+        type: "vector2",
+        defaultValue: createVector(10, 10),
+      },
+      {
+        id: "width",
+        type: "number",
+        defaultValue: 10,
+      },
+      {
+        id: "height",
+        type: "number",
+        defaultValue: 10,
+      },
+    ],
+    dataOutputs: [],
+    executeOutputs: [],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, nodeData, getNodeOutput) => {},
+    execute: (data, context) => {
+      var gradient = context.getInputValue(data, "gradient") as Gradient;
+      var gradientDirection = context.getInputValue(data, "direction");
+      var p1 = context.getInputValue(data, "corner") as P5.Vector;
+      var width = context.getInputValue(data, "width") as number;
+      var height = context.getInputValue(data, "height") as number;
+      context.p5.noFill();
+      context.p5.noStroke();
+      const ctx = context.p5.drawingContext as CanvasRenderingContext2D;
+      var c = Math.cos(gradientDirection);
+      var s = Math.sin(gradientDirection);
+      var px = p1.x + width * 0.5;
+      var py = p1.y + height * 0.5;
+      var ctxGrad = ctx.createLinearGradient(px - c * width * 0.5, py - s * height * 0.5, px + c * width * 0.5, py + s * height * 0.5);
+      gradient.forEach((stop) => {
+        ctxGrad.addColorStop(stop.pos, toHex(stop.color));
+      });
+      ctx.fillStyle = ctxGrad;
+      ctx.fillRect(p1.x, p1.y, width, height);
     },
   },
   {

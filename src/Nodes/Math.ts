@@ -3,7 +3,7 @@ import { NodeDefinition } from "../Data/NodeDefinition";
 import { IconMathXy } from "@tabler/icons-react";
 import { createVector } from "./Vector";
 import { easing } from "ts-easing";
-import { createPortConnection } from "../Hooks/useTree";
+import { createPortConnection } from "../Data/createPortConnection";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
