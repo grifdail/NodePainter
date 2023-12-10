@@ -12,7 +12,7 @@ import { useViewbox } from "../../Hooks/useViewbox";
 import { OutPortView } from "./OutPortView";
 import { SettingControl } from "./SettingControl";
 
-function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
+export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
   var outputCount = Object.keys(node.execOutputs).length + Object.keys(node.dataOutputs).length;
   var sumSetting = typeDef.settings.reduce((prev, def) => SettingComponents[def.type].getSize(node.settings[def.id], def, node), 0);
@@ -36,10 +36,14 @@ export const GraphNode = forwardRef(function GraphNode(
   const executeOutputCount = Object.keys(node.execOutputs).length;
   const dataOutputCount = Object.keys(node.dataOutputs).length;
   const outputCount = executeOutputCount + dataOutputCount;
+  const definition = getNodeTypeDefinition(node);
 
-  const [{ xy }, api] = useSpring(() => ({
-    xy: [node.positionX, node.positionY],
-  }));
+  const [{ xy }, api] = useSpring(
+    () => ({
+      xy: [node.positionX, node.positionY],
+    }),
+    [node, node.positionX, node.positionY]
+  );
 
   const bind = useGesture({
     onDrag: ({ movement: [mx, my] }) => {
@@ -50,7 +54,6 @@ export const GraphNode = forwardRef(function GraphNode(
     },
   });
 
-  const definition = getNodeTypeDefinition(node);
   useImperativeHandle(
     ref,
     () => {

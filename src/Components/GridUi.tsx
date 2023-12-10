@@ -12,6 +12,7 @@ import { CUSTOM_FUNCTION } from "../Nodes/System";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
+import { resetCamera } from "../Data/resetCamera";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -29,6 +30,7 @@ export function GridUi() {
   const graph = useTree((state) => state.editedGraph) || "main";
   const setEditedGraph = useTree((state) => state.setEditedGraph);
   const rawCustomNodes = useTree((state) => state.customNodes);
+  const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const customFunctionNodes = [
     "main",
     ...Object.values(rawCustomNodes)
@@ -40,7 +42,7 @@ export function GridUi() {
   };
 
   const openEditModal = () => {
-    useCustomNodeCreationContext.getState().openEdit(useTree.getState().getNodeTypeDefinition(graph));
+    useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph));
   };
   const openCreateModal = () => {
     useCustomNodeCreationContext.getState().openCreate();
@@ -94,7 +96,7 @@ export function GridUi() {
           <MenuItem onClick={() => openModal("load")}>Load</MenuItem>
           <MenuItem onClick={() => openModal("export-gif")}>Export gif</MenuItem>
           <MenuDivider></MenuDivider>
-          <MenuItem>Reset camera</MenuItem>
+          <MenuItem onClick={resetCamera}>Reset camera</MenuItem>
         </Menu>
       </BottomToolbar>
     </FullScreenDiv>

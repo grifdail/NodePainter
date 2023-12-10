@@ -9,6 +9,7 @@ import { persist } from "zustand/middleware";
 import { START_NODE } from "../Nodes/System";
 import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
+import { resetCamera } from "../Data/resetCamera";
 
 export type NodeCollection = { [key: string]: NodeData };
 
@@ -207,7 +208,7 @@ export const useTree = create<TreeStore>()(
                 });
                 Object.entries(item.execOutputs).forEach(([key, target]) => {
                   if (target === node) {
-                    item.execOutputs[target] = null;
+                    item.execOutputs[key] = null;
                   }
                 });
               });
@@ -229,6 +230,7 @@ export const useTree = create<TreeStore>()(
         },
         reset() {
           set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined });
+          resetCamera();
         },
         load(source) {
           try {
