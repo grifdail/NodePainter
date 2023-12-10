@@ -6,7 +6,7 @@ import { useTree } from "../../Hooks/useTree";
 import { NodePreview } from "../NodePreview";
 import { Modal } from "../Modal";
 import styled from "styled-components";
-import { useNodeFav } from "../../Hooks/useNodeFav";
+import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { useRouter } from "../../Hooks/useRouter";
 
@@ -146,7 +146,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
   const [selectedCategory, setCategory] = useState("");
   const searchTerm = searchTermRaw.trim().toLowerCase();
-  const nodeFav = useNodeFav();
+  const nodeFav = usePlayerPref();
   const nodeLibrary = useTree((state) => state.getNodeLibrary());
 
   const filteredList = Object.values(nodeLibrary).filter((item) => {
@@ -155,7 +155,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     }
     if (!!selectedCategory) {
       if (selectedCategory === "fav") {
-        if (!nodeFav.fav.includes(item.id)) {
+        if (!nodeFav.favNodes.includes(item.id)) {
           return false;
         }
       } else if (!item.tags.includes(selectedCategory)) {
@@ -165,10 +165,10 @@ export function NodeCreationModal({ close }: { close: () => void }) {
 
     return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
-  if (nodeFav.sorting === "last") {
-    filteredList.sort((a, b) => (nodeFav.lastUsed[b.id] || 0) - (nodeFav.lastUsed[a.id] || 0));
-  } else if (nodeFav.sorting === "most") {
-    filteredList.sort((a, b) => (nodeFav.useCount[b.id] || 0) - (nodeFav.useCount[a.id] || 0));
+  if (nodeFav.nodeSorting === "last") {
+    filteredList.sort((a, b) => (nodeFav.nodesLastUsedDates[b.id] || 0) - (nodeFav.nodesLastUsedDates[a.id] || 0));
+  } else if (nodeFav.nodeSorting === "most") {
+    filteredList.sort((a, b) => (nodeFav.nodesUseCount[b.id] || 0) - (nodeFav.nodesUseCount[a.id] || 0));
   } else {
     filteredList.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
   }
@@ -178,7 +178,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     .filter((value, index, array) => array.indexOf(value) === index);
 
   tags.splice(0, 0, "all");
-  if (nodeFav.fav.length > 0) {
+  if (nodeFav.favNodes.length > 0) {
     tags.splice(1, 0, "fav");
   }
 
@@ -187,7 +187,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const onClickNode = (node: NodeDefinition) => {
     var view = useViewbox.getState();
     addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
-    nodeFav.useNode(node.id);
+    nodeFav.markNodeAsUsed(node.id);
     close();
   };
   var open = useRouter((state) => state.open);
@@ -213,7 +213,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
                 </MenuButton>
               }
             >
-              <MenuRadioGroup value={nodeFav.sorting}>
+              <MenuRadioGroup value={nodeFav.nodeSorting}>
                 <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
                   Name
                 </MenuItem>
@@ -229,7 +229,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
 
           <menu>
             {filteredList.map((item) => (
-              <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.fav.includes(item.id)} />
+              <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.favNodes.includes(item.id)} />
             ))}
           </menu>
         </section>

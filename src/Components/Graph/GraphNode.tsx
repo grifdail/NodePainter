@@ -10,7 +10,7 @@ import { MainExecuteId, NodeDefinition, PortRole, PortType } from "../../Data/No
 import { SettingComponents } from "../Settings/SettingsComponents";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { OutPortView } from "./OutPortView";
-import { SettingControl } from "../SettingControl";
+import { SettingControl } from "./SettingControl";
 
 function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;

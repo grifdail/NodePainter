@@ -18,7 +18,7 @@ export const MathNodes: Array<NodeDefinition> = [
   createOperation("Min", Math.min, "Returne the smallest of two number.", IconMathMin, true),
   createFunc("Cos", Math.cos, "Return the cosine of a number (in radian).", IconAngle),
   createFunc("Sin", Math.sin, "Return the sine of a number (in radian).", IconAngle),
-  createFunc("SinWave", (a) => Math.sin(a * Math.PI * 2) * 0.5 + 0.5, "Return the cosine of the value in the interval [0,1] and with a frequency of 1.", IconWaveSine),
+
   createFunc("SawtoothWaver", (a) => a % 1, "Return the number modulo 0", IconWaveSawTool),
   createFunc("Sqrt", Math.sqrt, "Return the square root of a number.", IconMath),
   createFunc("Abs", Math.abs, "Return the absolute root of a number.", IconMathFunction),
@@ -70,6 +70,58 @@ export const MathNodes: Array<NodeDefinition> = [
         var b = context.getInputValue(nodeData, "x");
         return Math.atan2(a, b);
       }
+    },
+    execute: null,
+  },
+  {
+    id: "SineWave",
+    tags: ["Math"],
+    icon: IconWaveSine,
+    description: "Return the value of the sine wave with a phase, frequency and amplitude. Easier than using Cos",
+    dataInputs: [
+      {
+        id: "time",
+        type: "number",
+        defaultValue: 0,
+      },
+      {
+        id: "phase",
+        type: "number",
+        defaultValue: 0,
+      },
+      {
+        id: "frequency",
+        type: "number",
+        defaultValue: 1,
+      },
+      {
+        id: "amplitude",
+        type: "number",
+        defaultValue: 1,
+      },
+      {
+        id: "positive",
+        type: "bool",
+        defaultValue: true,
+      },
+    ],
+    dataOutputs: [
+      {
+        id: "output",
+        type: "number",
+        defaultValue: 0,
+      },
+    ],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var time = context.getInputValue(nodeData, "time");
+      var phase = context.getInputValue(nodeData, "phase");
+      var frequency = context.getInputValue(nodeData, "frequency");
+      var amplitude = context.getInputValue(nodeData, "amplitude");
+      var positive = context.getInputValue(nodeData, "positive");
+      var t = Math.cos(time * 2 * Math.PI * frequency + phase);
+      return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
     },
     execute: null,
   },

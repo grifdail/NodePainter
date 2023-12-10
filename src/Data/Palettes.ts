@@ -1,4 +1,4 @@
-import { Color } from "../Nodes/Color";
+import { Color, Gradient } from "../Nodes/Color";
 
 function C(num: number) {
   num >>>= 0;
@@ -9,6 +9,7 @@ function C(num: number) {
 }
 export type ColorPalette = Array<Color>;
 export type PaletteCollection = { [key: string]: ColorPalette };
+export type GradientCollection = { [key: string]: Gradient };
 
 export const DefaultPalettes: PaletteCollection = {
   Rose: [C(0x277256), C(0xa8d889), C(0xf34481), C(0xfccbca), C(0xffeff3)],

@@ -6,7 +6,7 @@
   --color-vector2: #ff77a8;
   --color-color: #ffa300;
   --color-string: #ff004d;
-  --color-boolean: #1d2b53;
+  --color-bool: #1d2b53;
   --color-gradient: #ffec27;
   --color-image: #ab5236;
 }
@@ -34,8 +34,8 @@
 .string {
   --color-property: var(--color-string);
 }
-.boolean {
-  --color-property: var(--color-boolean);
+.bool {
+  --color-property: var(--color-bool);
 }
 .color {
   --color-property: var(--color-color);

@@ -2,11 +2,12 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconFunctionFilled, IconX } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NodeDefinition, PortDefinition, PortRole } from "../../Data/NodeDefinition";
+import { NodeDefinition, PortDefinition, PortRole, PortType } from "../../Data/NodeDefinition";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PortColor } from "../StyledComponents/PortColor";
 import { TextInput } from "../Settings/TextInput";
 import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
+import { capitalCase } from "change-case";
 
 const MainDiv = styled.div`
   display: flex;
@@ -96,38 +97,32 @@ const MainDiv = styled.div`
   }
 `;
 
-export function InputPortEdit({ port, context, index, type }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; type: PortRole }) {
+const AvailableTypes: Array<PortType> = ["number", "vector2", "color", "bool", "gradient"];
+
+export function InputPortEdit({ port, context, index, role }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; role: PortRole }) {
   const portColor = PortColor[port.type];
   const PortValueEditor = portColor.input;
   return (
     <div className="port-field">
       <div className="id">
-        <input value={port.id} onChange={(e) => context.setPortId(type, index, e.target.value)}></input>
+        <input value={port.id} onChange={(e) => context.setPortId(role, index, e.target.value)}></input>
       </div>
       <div className="type">
-        <Menu menuButton={<MenuButton>{port.type}</MenuButton>}>
+        <Menu menuButton={<MenuButton>{capitalCase(port.type)}</MenuButton>}>
           <MenuRadioGroup value={port.type}>
-            <MenuItem value="number" onClick={() => context.setPortType(type, index, "number")}>
-              number
-            </MenuItem>
-            <MenuItem value="vector2" onClick={() => context.setPortType(type, index, "vector2")}>
-              vector2{" "}
-            </MenuItem>
-            <MenuItem value="color" onClick={() => context.setPortType(type, index, "color")}>
-              color
-            </MenuItem>
-            <MenuItem value="string" onClick={() => context.setPortType(type, index, "string")}>
-              string
-            </MenuItem>
-            <MenuItem value="bool" onClick={() => context.setPortType(type, index, "bool")}>
-              bool
-            </MenuItem>
+            {AvailableTypes.map((type) => {
+              return (
+                <MenuItem key={type} value={type} onClick={() => context.setPortType(role, index, type)}>
+                  {capitalCase(type)}
+                </MenuItem>
+              );
+            })}
           </MenuRadioGroup>
         </Menu>
       </div>
-      <div className="default-value">{PortValueEditor && <PortValueEditor onChange={(value) => context.setPortDefaultValue(type, index, value)} value={port.defaultValue}></PortValueEditor>}</div>
+      <div className="default-value">{PortValueEditor && <PortValueEditor onChange={(value) => context.setPortDefaultValue(role, index, value)} value={port.defaultValue}></PortValueEditor>}</div>
 
-      <button className="remove" onClick={() => context.deletePort(type, index)}>
+      <button className="remove" onClick={() => context.deletePort(role, index)}>
         <IconX />
       </button>
     </div>
@@ -154,7 +149,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Inputs</h3>
           {def.dataInputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} context={context} index={i} type="inputData" />
+            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" />
           ))}
           <ButtonGroup>
             <button onClick={context.addInputs}>Add</button>
@@ -163,7 +158,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Outputs</h3>
           {def.dataOutputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} index={i} type="outputData" context={context} />
+            <InputPortEdit key={i} port={port} index={i} role="outputData" context={context} />
           ))}
           <ButtonGroup>
             <button onClick={context.addOutput}>Add</button>

@@ -82,7 +82,7 @@ export const ColorNodes: Array<NodeDefinition> = [
       var start = context.getInputValue(nodeData, "start") as Color;
       var end = context.getInputValue(nodeData, "end") as Color;
       var t = context.getInputValue(nodeData, "t") as number;
-      return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
+      return lerpColor(start, end, t);
     },
     execute: null,
   },
@@ -136,7 +136,52 @@ export const ColorNodes: Array<NodeDefinition> = [
     },
     execute: null,
   },
+  {
+    id: "Sample Gradient",
+    description: "Sample a gradient",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "gradient", type: "gradient", defaultValue: createDefaultGradient() },
+      { id: "pos", type: "number", defaultValue: 0.5 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      const gradient = (context.getInputValue(nodeData, "gradient") as Gradient) || createDefaultGradient();
+      const pos = context.getInputValue(nodeData, "pos") as number;
+      if (gradient.length === 0) {
+        return createColor();
+      }
+      let prev = gradient[0];
+      if (pos <= prev.pos) {
+        return prev.color;
+      }
+      for (var stop of gradient) {
+        if (pos < stop.pos) {
+          return lerpColor(prev.color, stop.color, clamp01(map(prev.pos, stop.pos, pos)));
+        } else {
+          prev = stop;
+        }
+      }
+      return prev.color;
+    },
+    execute: null,
+  },
 ];
+
+function lerpColor(start: Color, end: Color, t: number): any {
+  return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
+}
+
+function clamp01(a: number) {
+  return Math.min(1, Math.max(0, a));
+}
+
+function map(a: number, b: number, c: number) {
+  return (c - a) / (b - a);
+}
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
