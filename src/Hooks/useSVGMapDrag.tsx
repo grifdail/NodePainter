@@ -3,7 +3,6 @@ import { Vector2, useGesture } from "@use-gesture/react";
 import { useViewbox } from "./useViewbox";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import { useRouter } from "./useRouter";
-import { useEffect } from "react";
 
 export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes] {
   var viewBox = useViewbox();
