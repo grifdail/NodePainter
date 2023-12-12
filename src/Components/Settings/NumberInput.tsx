@@ -1,8 +1,27 @@
 import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
+import { useDrag, useHover, useMove } from "@use-gesture/react";
+import styled from "styled-components";
+import { IconHandGrab } from "@tabler/icons-react";
 
 const math = create(all);
 const limitedEvaluate = math.evaluate;
+
+const ua = navigator.userAgent.toLowerCase();
+const isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+
+const StyledFieldSet = styled.fieldset`
+  border: none;
+  flex: 1 1 50px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+
+  & svg {
+    touch-action: none;
+    cursor: grab;
+  }
+`;
 
 math.import(
   {
@@ -31,6 +50,17 @@ math.import(
 export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
   var [rawField, setRawField] = useState(value.toString());
 
+  const bind = useDrag(
+    ({ event, active, delta: [x], movement: [vx] }) => {
+      if (active && (event.target as HTMLInputElement) === document.activeElement) {
+        onChange(Math.round((value + (x * Math.abs(vx)) / 1000) * 10000) / 10000);
+      }
+    },
+    {
+      keyboardDisplacement: 0,
+    }
+  );
+
   useEffect(() => {
     setRawField(value.toString());
   }, [value]);
@@ -50,5 +80,5 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
     }
   };
 
-  return <input value={rawField} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  return <input {...bind()} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
 }
