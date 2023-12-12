@@ -2,13 +2,14 @@ import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "./ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { Gradient, GradientStop, createColor, toHex } from "../../Nodes/Color";
+import { Gradient, GradientStop, createColor } from "../../Nodes/Color";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { ColorPalette, DefaultPalettes } from "../../Data/Palettes";
+import { ColorPalette, DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
 import { NumberInput } from "./NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
+import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 
 const ColorList = styled.ul`
   display: flex;
@@ -48,21 +49,6 @@ const ColorList = styled.ul`
   }
 `;
 
-const GradientDiv = styled.div<{ gradient: string }>`
-  display: block;
-  width: calc(100% - 4px);
-  height: 32px;
-  border: 2px solid black;
-  background: linear-gradient(to right, ${(props) => props.gradient});
-  margin-top: 5px;
-  margin-bottom: 5px;
-`;
-
-export const GradientPreview = ({ gradient }: { gradient: Gradient }) => {
-  var str = gradient.map((stop) => `${toHex(stop.color)} ${Math.floor(stop.pos * 100)}%`).join(",");
-  return <GradientDiv gradient={str}></GradientDiv>;
-};
-
 export const GradientSetting: SettingComponent = function GradientSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
   const list = value as Gradient;
 
@@ -88,12 +74,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
   }
 
   function loadFromPalette(palette: ColorPalette) {
-    onChange(
-      palette.map((color, i) => ({
-        pos: i / (palette.length - 1),
-        color,
-      }))
-    );
+    onChange(createGradientFromPalette(palette));
   }
 
   function loadGradient(gradient: Gradient) {
@@ -140,23 +121,22 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
           <MenuDivider></MenuDivider>
           <SubMenu label="Create from a default palette" overflow="auto">
             {Object.entries(DefaultPalettes).map(([key, value]) => (
-              <MenuItem key={key} onClick={() => loadFromPalette(value)}>
-                {key}
-              </MenuItem>
+              <MenuItemWithPalettePreview id={key} key={key} value={value} onClick={() => loadFromPalette(value)} />
             ))}
           </SubMenu>
           <SubMenu label="Create from a saved palette" overflow="auto">
             {Object.entries(ownPalettes).map(([key, value]) => (
-              <MenuItem key={key} onClick={() => loadFromPalette(value)}>
-                {key}
-              </MenuItem>
+              <MenuItemWithPalettePreview id={key} key={key} value={value} onClick={() => loadFromPalette(value)} />
+            ))}
+          </SubMenu>
+          <SubMenu label="Create from default Gradient" overflow="auto">
+            {Object.entries(DefaultGradient).map(([key, value]) => (
+              <MenuItemWithGradientPreview id={key} key={key} value={value} onClick={() => loadGradient(value)} />
             ))}
           </SubMenu>
           <SubMenu label="Saved Gradient" overflow="auto">
             {Object.entries(ownGradients).map(([key, value]) => (
-              <MenuItem key={key} onClick={() => loadGradient(value)}>
-                {key}
-              </MenuItem>
+              <MenuItemWithGradientPreview id={key} key={key} value={value} onClick={() => loadGradient(value)} />
             ))}
           </SubMenu>
         </Menu>

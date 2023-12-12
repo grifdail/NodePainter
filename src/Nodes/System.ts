@@ -1,5 +1,5 @@
-import { IconArrowsMove, IconAssembly, IconRotate } from "@tabler/icons-react";
-import p5 from "p5";
+import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate } from "@tabler/icons-react";
+import p5, { BLEND_MODE } from "p5";
 import { createVector } from "./Vector";
 import { NodeDefinition } from "../Data/NodeDefinition";
 
@@ -236,7 +236,28 @@ export const SystemNodes: Array<NodeDefinition> = [
       context.p5.pop();
     },
   },
+  {
+    id: "With Blending",
+    description: "Execute the next instruction with a blend mode applied",
+    icon: IconColorFilter,
+    tags: ["Transform"],
+    dataInputs: [],
+    dataOutputs: [],
+    executeOutputs: ["execute"],
+    settings: [{ id: "mode", type: "dropdown", defaultValue: "Blend", options: ["Blend", "Add", "Darkest", "Lightest", "Difference", "Exclusion", "Multiply", "Screen", "Replace", "Remove", "Overlay", "Hard_light", "Soft_light", "Dodge", "Burn"] }],
+    canBeExecuted: true,
+    getData: (portId, nodeData, context) => {},
+    execute: (data, context) => {
+      var mode = data.settings.mode as string;
 
+      context.p5.blendMode((context.p5 as any)[mode.toUpperCase()] as BLEND_MODE);
+      if (data.execOutputs.execute) {
+        context.execute(data.execOutputs.execute);
+      }
+
+      context.p5.blendMode(context.p5.BLEND);
+    },
+  },
   {
     id: CUSTOM_FUNCTION,
     description: "",

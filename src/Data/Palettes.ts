@@ -11,7 +11,16 @@ export type ColorPalette = Array<Color>;
 export type PaletteCollection = { [key: string]: ColorPalette };
 export type GradientCollection = { [key: string]: Gradient };
 
+export function createGradientFromPalette(palette: ColorPalette): Gradient {
+  return palette.map((color, i) => ({
+    pos: i / (palette.length - 1),
+    color,
+  }));
+}
+
 export const DefaultPalettes: PaletteCollection = {
+  Pico8: [C(0x000000), C(0x1d2b53), C(0x7e2553), C(0x008751), C(0xab5236), C(0x5f574f), C(0xc2c3c7), C(0xfff1e8), C(0xff004d), C(0xffa300), C(0xffec27), C(0x00e436), C(0x29adff), C(0x83769c), C(0xff77a8), C(0xffccaa)],
+  Twilight5: [C(0x292831), C(0x333f58), C(0x4a7a96), C(0xee8695), C(0xfbbbad)],
   Rose: [C(0x277256), C(0xa8d889), C(0xf34481), C(0xfccbca), C(0xffeff3)],
   Watermelon: [C(0xc36864), C(0xff8482), C(0xb6c363), C(0xcee44a), C(0xf1ffa0)],
   Sable: [C(0xdaecf6), C(0xe7b961), C(0xbd7d33), C(0x9a5f3f), C(0x5a2c1d)],
@@ -87,5 +96,19 @@ export const DefaultPalettes: PaletteCollection = {
   Sweat: [C(0xb9d4f5), C(0x4e4689), C(0xd24b63), C(0xf4b698), C(0xeae69e), C(0xe4e2e2)],
   Signal: [C(0x0a1d3b), C(0x132f56), C(0xe5376a), C(0xf87b9b), C(0xf2f9ff)],
   Sugar: [C(0xf1e3d2), C(0xfe97be), C(0xe65b51), C(0x2a5f9e), C(0x6fb882)],
+  Blessing: [C(0x74569b), C(0x96fbc7), C(0xf7ffae), C(0xffb3cb), C(0xd8bfd8)],
   SummerSky: [C(0x3062b8), C(0x589fc0), C(0x3a7ec9), C(0x78c5db), C(0xe2ded9), C(0xdcdcdc)],
+  Curiosity: [C(0x020f75), C(0x15788c), C(0x00b9be), C(0xffeecc), C(0xffb0a3), C(0xff6973)],
+  PastelQT: [C(0xff6973), C(0xe2a97e), C(0xf0cf8e), C(0xf6edcd), C(0xa8c8a6), C(0x6d8d8a), C(0x655057)],
+  RetroCal: [C(0x6eb8a8), C(0x2a584f), C(0x74a33f), C(0xfcffc0), C(0xc6505a), C(0x2f142f), C(0x774448), C(0xee9c5d)],
+};
+
+export const DefaultGradient: GradientCollection = {
+  King: createGradientFromPalette([C(0x1a2a6c), C(0xb21f1f), C(0xfdbb2d)]),
+  Moonlit: createGradientFromPalette([C(0x0f2027), C(0x203a43), C(0x2c5364)]),
+  WeddingDay: createGradientFromPalette([C(0x40e0d0), C(0xff8c00), C(0xff0080)]),
+  Coral: createGradientFromPalette([C(0xff9966), C(0xff5e62)]),
+  Afterglow: createGradientFromPalette([C(0x4158d0), C(0xc850c0), C(0xffcc70)]),
+  Barbie: createGradientFromPalette([C(0xf4e784), C(0xf24389), C(0xa478f1)]),
+  Sunset: createGradientFromPalette([C(0xfcc5e4), C(0xfda34b), C(0xff7882), C(0xc8699e), C(0x7046aa), C(0x0c1db8), C(0x020f75)]),
 };

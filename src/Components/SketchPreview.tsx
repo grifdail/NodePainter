@@ -93,7 +93,8 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
         if (def) {
           if (def.executeAs) {
             def = tree?.getNodeTypeDefinition(def.executeAs);
-          } else if (def.execute) {
+          }
+          if (def?.execute) {
             def.execute(node, context);
           }
         } else {

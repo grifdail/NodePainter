@@ -8,7 +8,7 @@ export const DropdownSetting: SettingComponent = function DropdownSetting({ onCh
       <MenuRadioGroup value={value} onRadioChange={(e) => onChange(e.value)}>
         {def.options.map((option: string) => (
           <MenuItem type="radio" value={option} key={option}>
-            {option};
+            {option}
           </MenuItem>
         ))}
       </MenuRadioGroup>
