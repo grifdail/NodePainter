@@ -306,7 +306,9 @@ export const MathNodes: Array<NodeDefinition> = [
       var clamp = context.getInputValue(nodeData, "clamp");
       var dt = (t - inmin) / (inmax - inmin);
       var r = dt * outmax + (1 - dt) * outmin;
-      return clamp ? Math.min(outmax, Math.max(outmin, r)) : r;
+      var trueMin = Math.min(outmax, outmin);
+      var trueMax = Math.max(outmax, outmin);
+      return clamp ? Math.min(trueMax, Math.max(trueMin, r)) : r;
     },
     execute: null,
   },

@@ -255,6 +255,34 @@ export const VectorNodes: Array<NodeDefinition> = [
     execute: null,
   },
   {
+    id: "UnitVector",
+    description: "Scale a Vector by a scalar",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+      {
+        id: "vec",
+        type: "vector2",
+        defaultValue: createVector(),
+      },
+    ],
+    dataOutputs: [
+      {
+        id: "out",
+        type: "vector2",
+        defaultValue: createVector(),
+      },
+    ],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var a = context.getInputValue(nodeData, "vec") as Vector;
+      var length = Math.sqrt(a.x * a.x + a.y * a.y);
+      return createVector(a.x / length, a.y / length);
+    },
+    execute: null,
+  },
+  {
     id: "RotateVector",
     description: "Rotate a Vector by a scalar in radiant",
     icon: IconArrowUpRightCircle,
