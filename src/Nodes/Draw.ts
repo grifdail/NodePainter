@@ -1,4 +1,4 @@
-import { IconBucketDroplet, IconCircle, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorTriangle } from "@tabler/icons-react";
+import { IconBucketDroplet, IconCircle, IconCursorText, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorBezier2, IconVectorTriangle } from "@tabler/icons-react";
 import * as P5 from "p5";
 import { Vector, createVector } from "./Vector";
 import { Gradient, createColor, createDefaultGradient, toHex, toP5Color } from "./Color";
@@ -378,7 +378,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: "#aaaaaa",
+        defaultValue: createColor(),
       },
       {
         id: "corner1",
@@ -420,7 +420,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: "#aaaaaa",
+        defaultValue: createColor(),
       },
       {
         id: "corner1",
@@ -468,7 +468,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: "#aaaaaa",
+        defaultValue: createColor(),
       },
       {
         id: "corner-1",
@@ -520,6 +520,110 @@ export const DrawNodes: Array<NodeDefinition> = [
         const key = `corner-${count}`;
         delete node.dataInputs[key];
       },
+    },
+  },
+  {
+    id: "DrawText",
+    description: "Draw a line of text",
+    icon: IconCursorText,
+    tags: ["Draw"],
+    dataInputs: [
+      {
+        id: "color",
+        type: "color",
+        defaultValue: createColor(),
+      },
+      {
+        id: "text",
+        type: "string",
+        defaultValue: "Hello !",
+      },
+      {
+        id: "position",
+        type: "vector2",
+        defaultValue: createVector(200, 200),
+      },
+      {
+        id: "size",
+        type: "number",
+        defaultValue: 25,
+      },
+    ],
+    dataOutputs: [],
+    executeOutputs: [],
+    settings: [
+      { id: "HorizontalAlign", type: "dropdown", defaultValue: "LEFT", options: ["LEFT", "RIGHT", "CENTER"] },
+      { id: "VerticalAlign", type: "dropdown", defaultValue: "BASELINE", options: ["TOP", "CENTER", "BASELINE", "BOTTOM"] },
+      { id: "Font", type: "dropdown", defaultValue: "Josefin Sans", options: ["Agbalumo", "Amatic SC", "Concert One", "Josefin Sans", "Lobster", "Merriweather", "Monomaniac One", "Oleo Script", "Open Sans", "Orbitron", "Permanent Marker", "Pixelify Sans", "Titan One"] },
+    ],
+    canBeExecuted: true,
+    getData: (portId, nodeData, getNodeOutput) => {},
+    execute: (data, context) => {
+      var color = context.getInputValue(data, "color");
+      var text = context.getInputValue(data, "text") as string;
+      var pos = context.getInputValue(data, "position") as Vector;
+      var size = context.getInputValue(data, "size") as number;
+      context.p5.fill(toP5Color(color, context.p5));
+      context.p5.noStroke();
+      context.p5.textFont(data.settings.Font);
+      context.p5.textAlign((context.p5 as any)[data.settings.HorizontalAlign], (context.p5 as any)[data.settings.VerticalAlign]);
+      context.p5.textSize(size);
+      context.p5.text(text, pos.x, pos.y);
+    },
+  },
+  {
+    id: "DrawBezier",
+    description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
+    icon: IconVectorBezier2,
+    tags: ["Draw"],
+    dataInputs: [
+      {
+        id: "color",
+        type: "color",
+        defaultValue: "#aaaaaa",
+      },
+      {
+        id: "lineWidth",
+        type: "number",
+        defaultValue: 10,
+      },
+      {
+        id: "start",
+        type: "vector2",
+        defaultValue: createVector(100, 200),
+      },
+      {
+        id: "cp1",
+        type: "vector2",
+        defaultValue: createVector(200, 100),
+      },
+      {
+        id: "cp2",
+        type: "vector2",
+        defaultValue: createVector(200, 300),
+      },
+      {
+        id: "end",
+        type: "vector2",
+        defaultValue: createVector(300, 200),
+      },
+    ],
+    dataOutputs: [],
+    executeOutputs: [],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, nodeData, getNodeOutput) => {},
+    execute: (data, context) => {
+      var color = context.getInputValue(data, "color");
+      var size = context.getInputValue(data, "lineWidth") as number;
+      var start = context.getInputValue(data, "start") as Vector;
+      var p1 = context.getInputValue(data, "cp1") as Vector;
+      var p2 = context.getInputValue(data, "cp2") as Vector;
+      var end = context.getInputValue(data, "end") as Vector;
+      context.p5.noFill();
+      context.p5.stroke(toP5Color(color, context.p5));
+      context.p5.strokeWeight(size);
+      context.p5.bezier(start.x, start.y, p1.x, p1.y, p2.x, p2.y, end.x, end.y);
     },
   },
 ];

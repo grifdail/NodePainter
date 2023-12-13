@@ -3,6 +3,7 @@ import { NumberInput } from "../Settings/NumberInput";
 import { ColorInput } from "../Settings/ColorInput";
 import { VectorInput } from "../Settings/VectorInput";
 import { BoolInput } from "../Settings/BoolInput";
+import { TextInput } from "../Settings/TextInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
 
@@ -29,6 +30,7 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
   },
   string: {
     icon: IconQuote,
+    input: TextInput,
   },
   bool: {
     icon: IconToggleLeft,

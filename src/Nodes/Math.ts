@@ -1,7 +1,7 @@
-import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconWaveSawTool, IconWaveSine } from "@tabler/icons-react";
+import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconVectorBezier2, IconWaveSawTool, IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { IconMathXy } from "@tabler/icons-react";
-import { createVector } from "./Vector";
+import { Vector, createVector } from "./Vector";
 import { easing } from "ts-easing";
 import { createPortConnection } from "../Data/createPortConnection";
 
@@ -379,6 +379,60 @@ export const MathNodes: Array<NodeDefinition> = [
         return func(input) as number;
       } else {
         return input;
+      }
+    },
+    execute: null,
+  },
+  {
+    id: "EvaluateBezier",
+    description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
+    icon: IconVectorBezier2,
+    tags: ["Draw"],
+    dataInputs: [
+      {
+        id: "t",
+        type: "number",
+        defaultValue: 10,
+      },
+      {
+        id: "start",
+        type: "vector2",
+        defaultValue: createVector(100, 200),
+      },
+      {
+        id: "cp1",
+        type: "vector2",
+        defaultValue: createVector(200, 100),
+      },
+      {
+        id: "cp2",
+        type: "vector2",
+        defaultValue: createVector(200, 300),
+      },
+      {
+        id: "end",
+        type: "vector2",
+        defaultValue: createVector(300, 200),
+      },
+    ],
+    dataOutputs: [
+      { id: "point", type: "vector2", defaultValue: createVector() },
+      { id: "tangent", type: "vector2", defaultValue: createVector() },
+    ],
+    executeOutputs: [],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, data, context) => {
+      var t = context.getInputValue(data, "t") as number;
+      var start = context.getInputValue(data, "start") as Vector;
+      var p1 = context.getInputValue(data, "cp1") as Vector;
+      var p2 = context.getInputValue(data, "cp2") as Vector;
+      var end = context.getInputValue(data, "end") as Vector;
+      if (portId === "point") {
+        return createVector(context.p5.bezierPoint(start.x, p1.x, p2.x, end.x, t), context.p5.bezierPoint(start.y, p1.y, p2.y, end.y, t));
+      }
+      if (portId === "tangent") {
+        return createVector(context.p5.bezierTangent(start.x, p1.x, p2.x, end.x, t), context.p5.bezierTangent(start.y, p1.y, p2.y, end.y, t));
       }
     },
     execute: null,
