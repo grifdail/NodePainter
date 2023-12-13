@@ -385,9 +385,9 @@ export const MathNodes: Array<NodeDefinition> = [
   },
   {
     id: "EvaluateBezier",
-    description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
+    description: "Evaluate a position on a bezier curve",
     icon: IconVectorBezier2,
-    tags: ["Draw"],
+    tags: ["Math"],
     dataInputs: [
       {
         id: "t",
@@ -421,7 +421,7 @@ export const MathNodes: Array<NodeDefinition> = [
     ],
     executeOutputs: [],
     settings: [],
-    canBeExecuted: true,
+    canBeExecuted: false,
     getData: (portId, data, context) => {
       var t = context.getInputValue(data, "t") as number;
       var start = context.getInputValue(data, "start") as Vector;
