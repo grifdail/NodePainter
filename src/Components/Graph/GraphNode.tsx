@@ -10,12 +10,12 @@ import { MainExecuteId, NodeDefinition, PortRole, PortType } from "../../Data/No
 import { SettingComponents } from "../Settings/SettingsComponents";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { OutPortView } from "./OutPortView";
-import { SettingControl } from "./SettingControl";
+import { SettingControl, getSettingHeight } from "./SettingControl";
 
 export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
   var outputCount = Object.keys(node.execOutputs).length + Object.keys(node.dataOutputs).length;
-  var sumSetting = typeDef.settings.reduce((prev, def) => SettingComponents[def.type].getSize(node.settings[def.id], def, node), 0);
+  var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def, node), 0);
   return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
 }
 
@@ -92,6 +92,8 @@ export const GraphNode = forwardRef(function GraphNode(
   var Icon = definition.icon;
 
   const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
+  let settingOffset = portHeight;
+
   return (
     <animated.g transform={xy.to((x, y) => `translate(${x}, ${y})`)} className="node">
       <rect
@@ -140,9 +142,11 @@ export const GraphNode = forwardRef(function GraphNode(
       {Object.values(node.dataOutputs).map((item, i) => {
         return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}></OutPortView>;
       })}
-      {definition.settings.map((item, i) => (
-        <SettingControl y={portHeight} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} nodeData={node} />
-      ))}
+      {definition.settings.map((item, i) => {
+        var n = <SettingControl y={settingOffset} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} nodeData={node} />;
+        settingOffset += getSettingHeight(node.settings[item.id], item, node);
+        return n;
+      })}
     </animated.g>
   );
 });

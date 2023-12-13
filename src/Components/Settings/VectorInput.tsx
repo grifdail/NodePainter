@@ -9,7 +9,7 @@ export function VectorInput({ onChange, value }: { onChange: (value: any) => voi
   return (
     <div>
       <NumberInput value={value.x} onChange={(e) => onInputChange(e, "x")}></NumberInput>
-      <NumberInput value={value.y} onChange={(e) => onInputChange(e, "y")}></NumberInput>;
+      <NumberInput value={value.y} onChange={(e) => onInputChange(e, "y")}></NumberInput>
     </div>
   );
 }

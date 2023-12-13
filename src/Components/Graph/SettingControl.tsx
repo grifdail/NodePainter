@@ -6,11 +6,15 @@ export const SettingControl = ({ y, value, def, onChange, nodeData }: { y: numbe
   var DefinedComponent = SettingComponents[def.type];
   var height = DefinedComponent.getSize(value, def, nodeData);
   return (
-    <g>
-      <rect x="20" y={y} height={height} width="260" fill="rgba(0,0,0,0.1)"></rect>
-      <foreignObject x="25" y={y} height={height} width="250">
+    <g transform={`translate(0, ${y})`}>
+      <rect x="20" y={0} height={height} width="260" fill="rgba(0,0,0,0.1)"></rect>
+      <foreignObject x="25" height={height} width="250">
         <DefinedComponent value={value} def={def} onChange={onChange} nodeData={nodeData} />
       </foreignObject>
     </g>
   );
+};
+export const getSettingHeight = (value: any, def: SettingDefinition, nodeData: NodeData) => {
+  var DefinedComponent = SettingComponents[def.type];
+  return DefinedComponent.getSize(value, def, nodeData);
 };
