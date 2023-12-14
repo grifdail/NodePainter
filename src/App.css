@@ -43,6 +43,6 @@
 .gradient {
   --color-property: var(--color-gradient);
 }
-.gradient {
+.image {
   --color-property: var(--color-image);
 }

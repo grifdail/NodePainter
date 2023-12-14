@@ -7,7 +7,7 @@ import { createVector } from "../Nodes/Vector";
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient";
-export type SettingType = "dropdown" | "palette" | "number" | "gradient";
+export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload";
 
 export type PortDefinition = {
   id: string;
