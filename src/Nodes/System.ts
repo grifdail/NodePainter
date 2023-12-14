@@ -16,7 +16,10 @@ export const SystemNodes: Array<NodeDefinition> = [
     hideInLibrary: true,
     dataOutputs: [],
     executeOutputs: ["execute"],
-    settings: [],
+    settings: [
+      { id: "width", type: "number", defaultValue: 400 },
+      { id: "height", type: "number", defaultValue: 400 },
+    ],
     canBeExecuted: true,
     getData: (portId, nodeData, context) => {},
     execute: (data, context) => {

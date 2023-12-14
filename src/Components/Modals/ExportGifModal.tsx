@@ -58,31 +58,33 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var ownProps: MySketchProps | null = null;
   let seed = Date.now();
 
-  p5.setup = () => {
-    p5.pixelDensity(1);
-    p5.createCanvas(400, 400);
-    gif = new GIF({
-      workerScript: "/gif.worker.js",
-      workers: 8,
-      quality: 5,
-      width: 400,
-      height: 400,
-      debug: true,
-    });
-    gif.on("finished", function (blob: Blob) {
-      ownProps?.onFinished(blob);
-    });
-    gif.on("progress", function (p: any) {
-      ownProps?.onProgress(1, p);
-    });
-    ended = false;
-  };
+  p5.setup = () => {};
 
   p5.updateWithProps = (props: MySketchProps) => {
     tree = props.tree;
     context = createExecutionContext(tree, p5 as P5CanvasInstance);
-
     ownProps = props;
+    const start = tree.getNode(START_NODE);
+
+    if (gif == null) {
+      p5.pixelDensity(1);
+      p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+      gif = new GIF({
+        workerScript: "/gif.worker.js",
+        workers: 8,
+        quality: 5,
+        width: start.settings.width || 400,
+        height: start.settings.height || 400,
+        debug: true,
+      });
+      gif.on("finished", function (blob: Blob) {
+        ownProps?.onFinished(blob);
+      });
+      gif.on("progress", function (p: any) {
+        ownProps?.onProgress(1, p);
+      });
+      ended = false;
+    }
   };
 
   var time = 0;
@@ -129,6 +131,8 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
 
+  const start = tree.getNode(START_NODE);
+
   const onProgress = (rendering: number, processing: number) => {
     setProgress((rendering * 0.5 + processing * 0.5) * 100);
     if (rendering >= 1 && renderState === "rendering") {
@@ -159,6 +163,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
       <div>
         {renderState === "rendering" && (
           <ReactP5Wrapper
+            key={`${start.settings.width} / ${start.settings.height}`}
             sketch={sketch}
             tree={tree}
             duration={duration}

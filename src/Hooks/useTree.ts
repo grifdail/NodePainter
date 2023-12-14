@@ -189,6 +189,7 @@ export const useTree = create<TreeStore>()(
               clone.dataOutputs = structuredClone(current(sourceNode.dataOutputs));
               clone.execOutputs = structuredClone(current(sourceNode.execOutputs));
               clone.settings = structuredClone(current(sourceNode.settings));
+              clone.graph = sourceNode.graph;
               state.nodes[clone.id] = clone;
             })
           );

@@ -19,8 +19,17 @@ const Preview = styled.div<{ scale: number }>`
 
   & div {
     border: 2px solid black;
-    width: 404px;
-    height: 404px;
+    //width: 404px;
+    //height: 404px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    font-size: 0;
+    line-height: 0;
+    & canvas {
+      padding: 0;
+      margin: 0;
+    }
   }
 
   @media (max-width: 800px), (max-height: 800px) {
@@ -37,11 +46,12 @@ const Preview = styled.div<{ scale: number }>`
 export function SketchPreview() {
   var tree = useTree();
   var dim = useWindowSize();
+  var start = tree.getNode(START_NODE);
 
-  var smallestDim = Math.min(1, Math.min(dim.width || 400, dim.height || 400) / 450);
+  var smallestDim = Math.min(1, Math.min(dim.width || start.settings.width || 400, dim.height || start.settings.height || 400) / 450);
   return (
     <Preview scale={smallestDim}>
-      <ReactP5Wrapper sketch={sketch} tree={tree} />
+      <ReactP5Wrapper sketch={sketch} tree={tree} key={`${start.settings.width} / ${start.settings.height}`} />
     </Preview>
   );
 }
@@ -54,12 +64,17 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
   var seed = 0;
 
-  p5.setup = () => p5.createCanvas(400, 400);
+  p5.setup = () => {
+    console.log("setup");
+  };
 
   p5.updateWithProps = (props: MySketchProps) => {
+    console.log("props");
     tree = props.tree;
     context = createExecutionContext(tree, p5 as P5CanvasInstance);
     seed = Date.now();
+    var start = tree.getNode(START_NODE);
+    p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
   };
 
   p5.draw = () => {
