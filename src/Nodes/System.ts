@@ -1,10 +1,31 @@
 import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate } from "@tabler/icons-react";
 import p5, { BLEND_MODE } from "p5";
 import { createVector } from "./Vector";
-import { NodeDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition, PortTypeArray, PortTypeDefaultValue } from "../Data/NodeDefinition";
+import { NodeData } from "../Hooks/useTree";
+import { createPortConnection } from "../Data/createPortConnection";
 
 export const START_NODE = "Start";
 export const CUSTOM_FUNCTION = "CustomFunction";
+
+export const contextMenyCreateAllNode = Object.fromEntries(
+  PortTypeArray.map((type) => [
+    `Add a ${type} port`,
+    (node: NodeData) => {
+      var count = Object.entries(node.dataInputs).length;
+      node.dataInputs[`type-${count}-in`] = createPortConnection({
+        id: `type-${count}-in`,
+        type: type,
+        defaultValue: PortTypeDefaultValue[type],
+      });
+      node.dataOutputs[`type-${count}`] = {
+        id: `type-${count}`,
+        type: type,
+        defaultValue: PortTypeDefaultValue[type],
+      };
+    },
+  ])
+);
 
 export const SystemNodes: Array<NodeDefinition> = [
   {
@@ -149,6 +170,37 @@ export const SystemNodes: Array<NodeDefinition> = [
           context.execute(data.execOutputs.A);
         }
       }
+    },
+  },
+  {
+    id: "Precompute",
+    description: "Precompute the input before executing the rest of the instruction. The random wont change and may help performance",
+    icon: IconAssembly,
+    tags: ["Control"],
+    dataInputs: [],
+    dataOutputs: [],
+    executeOutputs: ["execute"],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, data, context) => {
+      const target = context.blackboard[`${data.id}-context`];
+      return target[`${portId}-in`];
+    },
+    execute: (data, context) => {
+      const target = Object.fromEntries(Object.entries(data.dataInputs).map(([key, value]) => [key, context.getInputValue(data, key)]));
+      context.blackboard[`${data.id}-context`] = target;
+      context.execute(data.execOutputs["execute"] as string);
+    },
+    contextMenu: {
+      ...contextMenyCreateAllNode,
+      "Remove last port": (node) => {
+        var entries = Object.entries(node.dataOutputs);
+        if (entries.length > 0) {
+          var [key] = entries[entries.length - 1];
+          delete node.dataOutputs[key];
+          delete node.dataInputs[`${key}-in`];
+        }
+      },
     },
   },
   {

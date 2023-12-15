@@ -9,6 +9,8 @@ export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExec
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient";
 export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload";
 
+export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient"];
+
 export type PortDefinition = {
   id: string;
   type: PortType;
