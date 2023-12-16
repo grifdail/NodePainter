@@ -1,9 +1,10 @@
-import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate } from "@tabler/icons-react";
+import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate, IconShadow } from "@tabler/icons-react";
 import p5, { BLEND_MODE } from "p5";
-import { createVector } from "./Vector";
+import { Vector, createVector } from "./Vector";
 import { NodeDefinition, PortTypeArray, PortTypeDefaultValue } from "../Data/NodeDefinition";
 import { NodeData } from "../Hooks/useTree";
 import { createPortConnection } from "../Data/createPortConnection";
+import { Color, createColor, toHex } from "./Color";
 
 export const START_NODE = "Start";
 export const CUSTOM_FUNCTION = "CustomFunction";
@@ -216,12 +217,48 @@ export const SystemNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var angle = context.getInputValue(data, "angle") as number;
-      context.p5.push();
-      context.p5.rotate(angle);
+      context.target.push();
+      context.target.rotate(angle);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
-      context.p5.pop();
+      context.target.pop();
+    },
+  },
+  {
+    id: "With Shadow",
+    description: "Execute the next instruction with a blurry shadow below it",
+    icon: IconShadow,
+    tags: ["Transform"],
+    dataInputs: [
+      { id: "blur", type: "number", defaultValue: 1 },
+      { id: "color", type: "color", defaultValue: createColor(0, 0, 0) },
+      { id: "offset", type: "vector2", defaultValue: createVector() },
+    ],
+    dataOutputs: [],
+    executeOutputs: ["execute"],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, nodeData, context) => {},
+    execute: (data, context) => {
+      var blur = context.getInputValue(data, "blur") as number;
+      var color = context.getInputValue(data, "color") as Color;
+      var offset = context.getInputValue(data, "offset") as Vector;
+      var ctx = context.target.drawingContext as CanvasRenderingContext2D;
+      context.target.push();
+
+      ctx.shadowBlur = blur;
+      ctx.shadowColor = toHex(color);
+      ctx.shadowOffsetX = offset.x;
+      ctx.shadowOffsetY = offset.y;
+      if (data.execOutputs.execute) {
+        context.execute(data.execOutputs.execute);
+      }
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      context.target.pop();
     },
   },
   {
@@ -237,12 +274,12 @@ export const SystemNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var translation = context.getInputValue(data, "translation") as p5.Vector;
-      context.p5.push();
-      context.p5.translate(translation.x, translation.y);
+      context.target.push();
+      context.target.translate(translation.x, translation.y);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
-      context.p5.pop();
+      context.target.pop();
     },
   },
   {
@@ -258,12 +295,12 @@ export const SystemNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var scale = context.getInputValue(data, "scale") as p5.Vector;
-      context.p5.push();
-      context.p5.scale(scale.x, scale.y);
+      context.target.push();
+      context.target.scale(scale.x, scale.y);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
-      context.p5.pop();
+      context.target.pop();
     },
   },
   {
@@ -279,7 +316,7 @@ export const SystemNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var inverted = context.getInputValue(data, "inverted");
-      context.p5.push();
+      context.target.push();
       (context.p5 as any).beginClip({ invert: inverted });
       if (data.execOutputs.mask) {
         context.execute(data.execOutputs.mask);
@@ -288,7 +325,7 @@ export const SystemNodes: Array<NodeDefinition> = [
       if (data.execOutputs.draw) {
         context.execute(data.execOutputs.draw);
       }
-      context.p5.pop();
+      context.target.pop();
     },
   },
   {
@@ -305,12 +342,57 @@ export const SystemNodes: Array<NodeDefinition> = [
     execute: (data, context) => {
       var mode = data.settings.mode as string;
 
-      context.p5.blendMode((context.p5 as any)[mode.toUpperCase()] as BLEND_MODE);
+      context.target.blendMode((context.p5 as any)[mode.toUpperCase()] as BLEND_MODE);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
 
-      context.p5.blendMode(context.p5.BLEND);
+      context.target.blendMode(context.p5.BLEND);
+    },
+  },
+  {
+    id: "With motion blur",
+    description: "Execute the next instruction multiple time to create a motion blur effect",
+    icon: IconColorFilter,
+    tags: ["Transform"],
+    dataInputs: [
+      { id: "imageCount", type: "number", defaultValue: 5 },
+      { id: "timeFrame", type: "number", defaultValue: 1 / 60 },
+      { id: "opacity", type: "number", defaultValue: 0.1 },
+    ],
+    dataOutputs: [],
+    executeOutputs: ["execute"],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, nodeData, context) => {},
+    execute: (node, context) => {
+      var graphic = context.blackboard[`${node.id}-canvas-cache`];
+      if (!graphic) {
+        graphic = context.p5.createGraphics(context.target.width, context.target.height);
+        context.blackboard[`${node.id}-canvas-cache`] = graphic;
+      }
+
+      var imageCount = Math.floor(context.getInputValue(node, "imageCount") as number);
+      var timeFrame = context.getInputValue(node, "timeFrame") as number;
+      var opacity = context.getInputValue(node, "opacity") as number;
+      var oldTarget = context.target;
+      var oldTime = context.time;
+      for (let i = 0; i < imageCount; i++) {
+        graphic.clear();
+        context.target = graphic;
+        context.time = oldTime - (i / imageCount) * timeFrame * 1000;
+        if (node.execOutputs.execute) {
+          context.execute(node.execOutputs.execute);
+        }
+        oldTarget.tint(255, opacity * 255);
+        oldTarget.image(graphic, 0, 0);
+      }
+      context.time = oldTime;
+      context.target = oldTarget;
+      oldTarget.tint(255, 255);
+      if (node.execOutputs.execute) {
+        context.execute(node.execOutputs.execute);
+      }
     },
   },
   {

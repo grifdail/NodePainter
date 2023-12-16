@@ -102,7 +102,7 @@ export const InputNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [{ id: "preview-duration", defaultValue: 1, type: "number" }],
     getData: (portId, nodeData, context) => {
-      return context.progress || (context.p5.millis() / (nodeData.settings["preview-duration"] * 1000)) % 1;
+      return (context.time / (nodeData.settings["preview-duration"] * 1000)) % 1;
     },
     execute: null,
   },

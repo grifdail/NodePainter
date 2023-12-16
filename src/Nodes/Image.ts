@@ -51,7 +51,7 @@ export const ImageNode: Array<NodeDefinition> = [
       var pos = context.getInputValue(node, "pos");
       var dim = context.getInputValue(node, "dim");
       if (image && image.isLoaded) {
-        context.p5.image(image.image as Image, pos.x, pos.y, dim.x, dim.y);
+        context.target.image(image.image as Image, pos.x, pos.y, dim.x, dim.y);
       }
     },
   },

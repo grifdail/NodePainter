@@ -6,8 +6,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { NumberInput } from "../Settings/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
-import { ExecutionContext } from "../../Data/NodeDefinition";
-import { createExecutionContext } from "../SketchPreview";
+import { ExecutionContext, createExecutionContext } from "../../Data/createExecutionContext";
 import * as GIF from "gif.js.optimized";
 import { START_NODE } from "../../Nodes/System";
 
@@ -94,7 +93,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     }
     context.time = time;
     var progress = time / (ownProps.duration * 1000);
-    context.progress = progress;
     context.p5.randomSeed(seed);
     context.frameBlackboard = {};
     context.execute(START_NODE);

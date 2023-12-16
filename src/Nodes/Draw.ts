@@ -15,7 +15,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: createColor(1, 0, 0),
+        defaultValue: createColor(1, 1, 1),
       },
     ],
     dataOutputs: [],
@@ -25,7 +25,22 @@ export const DrawNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
-      context.p5.background(toP5Color(color, context.p5));
+      context.target.background(toP5Color(color, context.p5));
+    },
+  },
+  {
+    id: "Clear",
+    description: "Clear the entire canvas",
+    icon: IconBucketDroplet,
+    tags: ["Draw"],
+    dataInputs: [],
+    dataOutputs: [],
+    executeOutputs: [],
+    settings: [],
+    canBeExecuted: true,
+    getData: (portId, nodeData, getNodeOutput) => {},
+    execute: (data, context) => {
+      context.target.clear(0, 0, 0, 0);
     },
   },
   {
@@ -37,7 +52,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: createColor(1, 0, 0),
+        defaultValue: createColor(1, 1, 1),
       },
       {
         id: "position",
@@ -59,9 +74,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var color = context.getInputValue(data, "color");
       var position = context.getInputValue(data, "position") as P5.Vector;
       var radius = context.getInputValue(data, "radius") as number;
-      context.p5.noStroke();
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.circle(position.x, position.y, radius);
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.circle(position.x, position.y, radius);
     },
   },
   {
@@ -73,7 +88,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: createColor(1, 0, 0),
+        defaultValue: createColor(1, 1, 1),
       },
       {
         id: "position",
@@ -101,10 +116,10 @@ export const DrawNodes: Array<NodeDefinition> = [
       var position = context.getInputValue(data, "position") as P5.Vector;
       var radius = context.getInputValue(data, "radius") as number;
       var lineWidth = context.getInputValue(data, "lineWidth") as number;
-      context.p5.stroke(toP5Color(color, context.p5));
-      context.p5.noFill();
-      context.p5.strokeWeight(lineWidth);
-      context.p5.circle(position.x, position.y, radius);
+      context.target.stroke(toP5Color(color, context.p5));
+      context.target.noFill();
+      context.target.strokeWeight(lineWidth);
+      context.target.circle(position.x, position.y, radius);
     },
   },
   {
@@ -156,20 +171,20 @@ export const DrawNodes: Array<NodeDefinition> = [
       const outerRadius = context.getInputValue(data, "outerRadius") as number;
       const startAngle = context.getInputValue(data, "startAngle") as number;
       const angle = context.getInputValue(data, "angle") as number;
-      context.p5.noStroke();
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.beginShape();
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.beginShape();
       const count = Math.ceil((angle * 180) / Math.PI);
       for (let i = 0; i <= count; i++) {
         const alpha = (i / count) * angle + startAngle;
 
-        context.p5.vertex(center.x + Math.cos(alpha) * outerRadius, center.y + Math.sin(alpha) * outerRadius);
+        context.target.vertex(center.x + Math.cos(alpha) * outerRadius, center.y + Math.sin(alpha) * outerRadius);
       }
       for (let i = 0; i <= count; i++) {
         const alpha = (1 - i / count) * angle + startAngle;
-        context.p5.vertex(center.x + Math.cos(alpha) * innerRadius, center.y + Math.sin(alpha) * innerRadius);
+        context.target.vertex(center.x + Math.cos(alpha) * innerRadius, center.y + Math.sin(alpha) * innerRadius);
       }
-      context.p5.endShape();
+      context.target.endShape();
     },
   },
   {
@@ -215,16 +230,16 @@ export const DrawNodes: Array<NodeDefinition> = [
       const radius = context.getInputValue(data, "radius") as number;
       const side = context.getInputValue(data, "side") as number;
       const offset = context.getInputValue(data, "offset") as number;
-      context.p5.noStroke();
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.beginShape();
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.beginShape();
       for (let i = 0; i < side; i++) {
         const alpha = (i / side + offset) * Math.PI * 2;
 
-        context.p5.vertex(center.x + Math.cos(alpha) * radius, center.y + Math.sin(alpha) * radius);
+        context.target.vertex(center.x + Math.cos(alpha) * radius, center.y + Math.sin(alpha) * radius);
       }
 
-      context.p5.endShape();
+      context.target.endShape();
     },
   },
   {
@@ -236,7 +251,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: createColor(1, 0, 0),
+        defaultValue: createColor(1, 1, 1),
       },
       {
         id: "start",
@@ -264,9 +279,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p1 = context.getInputValue(data, "start") as P5.Vector;
       var p2 = context.getInputValue(data, "end") as P5.Vector;
       var lineWidth = context.getInputValue(data, "lineWidth") as number;
-      context.p5.stroke(toP5Color(color, context.p5));
-      context.p5.strokeWeight(lineWidth);
-      context.p5.line(p1.x, p1.y, p2.x, p2.y);
+      context.target.stroke(toP5Color(color, context.p5));
+      context.target.strokeWeight(lineWidth);
+      context.target.line(p1.x, p1.y, p2.x, p2.y);
     },
   },
   {
@@ -278,7 +293,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "color",
         type: "color",
-        defaultValue: createColor(1, 0, 0),
+        defaultValue: createColor(1, 1, 1),
       },
       {
         id: "corner",
@@ -306,9 +321,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p1 = context.getInputValue(data, "corner") as P5.Vector;
       var width = context.getInputValue(data, "width") as number;
       var height = context.getInputValue(data, "height") as number;
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.noStroke();
-      context.p5.rect(p1.x, p1.y, width, height);
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.rect(p1.x, p1.y, width, height);
     },
   },
   {
@@ -354,9 +369,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p1 = context.getInputValue(data, "corner") as P5.Vector;
       var width = context.getInputValue(data, "width") as number;
       var height = context.getInputValue(data, "height") as number;
-      context.p5.noFill();
-      context.p5.noStroke();
-      const ctx = context.p5.drawingContext as CanvasRenderingContext2D;
+      context.target.noFill();
+      context.target.noStroke();
+      const ctx = context.target.drawingContext as CanvasRenderingContext2D;
       var c = Math.cos(gradientDirection);
       var s = Math.sin(gradientDirection);
       var px = p1.x + width * 0.5;
@@ -406,9 +421,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p1 = context.getInputValue(data, "corner1") as P5.Vector;
       var p2 = context.getInputValue(data, "corner2") as P5.Vector;
       var p3 = context.getInputValue(data, "corner3") as P5.Vector;
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.noStroke();
-      context.p5.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
     },
   },
   {
@@ -454,9 +469,9 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p2 = context.getInputValue(data, "corner2") as P5.Vector;
       var p3 = context.getInputValue(data, "corner3") as P5.Vector;
       var p4 = context.getInputValue(data, "corner4") as P5.Vector;
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.noStroke();
-      context.p5.quad(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.quad(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
     },
   },
   {
@@ -493,17 +508,17 @@ export const DrawNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       const color = context.getInputValue(data, "color");
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.noStroke();
-      context.p5.beginShape();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.beginShape();
       for (let i = 1; i < 20; i++) {
         const key = `corner-${i}`;
         if (data.dataInputs[key]) {
           const p = context.getInputValue(data, key) as Vector;
-          context.p5.vertex(p.x, p.y);
+          context.target.vertex(p.x, p.y);
         }
       }
-      context.p5.endShape();
+      context.target.endShape();
     },
     contextMenu: {
       "Add corner": (node) => {
@@ -563,12 +578,12 @@ export const DrawNodes: Array<NodeDefinition> = [
       var text = context.getInputValue(data, "text") as string;
       var pos = context.getInputValue(data, "position") as Vector;
       var size = context.getInputValue(data, "size") as number;
-      context.p5.fill(toP5Color(color, context.p5));
-      context.p5.noStroke();
-      context.p5.textFont(data.settings.Font);
-      context.p5.textAlign((context.p5 as any)[data.settings.HorizontalAlign], (context.p5 as any)[data.settings.VerticalAlign]);
-      context.p5.textSize(size);
-      context.p5.text(text, pos.x, pos.y);
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.textFont(data.settings.Font);
+      context.target.textAlign((context.p5 as any)[data.settings.HorizontalAlign], (context.p5 as any)[data.settings.VerticalAlign]);
+      context.target.textSize(size);
+      context.target.text(text, pos.x, pos.y);
     },
   },
   {
@@ -620,10 +635,10 @@ export const DrawNodes: Array<NodeDefinition> = [
       var p1 = context.getInputValue(data, "cp1") as Vector;
       var p2 = context.getInputValue(data, "cp2") as Vector;
       var end = context.getInputValue(data, "end") as Vector;
-      context.p5.noFill();
-      context.p5.stroke(toP5Color(color, context.p5));
-      context.p5.strokeWeight(size);
-      context.p5.bezier(start.x, start.y, p1.x, p1.y, p2.x, p2.y, end.x, end.y);
+      context.target.noFill();
+      context.target.stroke(toP5Color(color, context.p5));
+      context.target.strokeWeight(size);
+      context.target.bezier(start.x, start.y, p1.x, p1.y, p2.x, p2.y, end.x, end.y);
     },
   },
 ];

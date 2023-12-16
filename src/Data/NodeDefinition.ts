@@ -1,8 +1,8 @@
 import { Icon } from "@tabler/icons-react";
-import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeData } from "../Hooks/useTree";
 import { createColor, createDefaultGradient } from "../Nodes/Color";
 import { createVector } from "../Nodes/Vector";
+import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 
@@ -41,20 +41,6 @@ export type NodeDefinition = {
   canBeExecuted?: boolean;
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   contextMenu?: { [key: string]: (node: NodeData) => void };
-};
-
-export type ExecutionContext = {
-  findNodeOfType(type: string): string | null;
-  createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
-  functionStack: Array<{ [key: string]: any }>;
-  time: number;
-  progress?: number;
-  blackboard: { [key: string]: any };
-  frameBlackboard: { [key: string]: any };
-  getNodeOutput: (nodeId: string, portId: string) => any;
-  p5: P5CanvasInstance;
-  execute: (nodeId: string) => void;
-  getInputValue: (nodeData: NodeData, portId: string) => any;
 };
 
 export const MainExecuteId = "mainExecute";

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { current, produce } from "immer";
 
 import { nanoid } from "nanoid";
-import { ExecutionContext, NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
 import { PortType } from "../Data/NodeDefinition";
 
 import { persist } from "zustand/middleware";
@@ -10,6 +10,7 @@ import { START_NODE } from "../Nodes/System";
 import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
+import { ExecutionContext } from "../Data/createExecutionContext";
 
 export type NodeCollection = { [key: string]: NodeData };
 
