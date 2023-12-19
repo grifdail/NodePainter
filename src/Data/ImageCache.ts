@@ -1,9 +1,9 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
-import { Image } from "p5";
+import { Graphics, Image } from "p5";
 
 export class ImageData {
   isLoaded: boolean = false;
-  image: Image | null = null;
+  image: Image | Graphics | null = null;
   pixels: number[] | null = null;
 
   load(url: string, p5: P5CanvasInstance) {
@@ -13,5 +13,10 @@ export class ImageData {
         this.isLoaded = true;
       });
     }
+  }
+
+  set(img: Image | Graphics) {
+    this.image = img;
+    this.isLoaded = true;
   }
 }

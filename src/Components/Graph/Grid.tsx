@@ -55,8 +55,8 @@ export function Grid() {
 
   var nodeRef = useRef<PortRefType>({});
 
-  function getNodePort(nodeId: string, portId: string) {
-    return nodeRef.current?.[nodeId]?.[portId];
+  function getNodePort(nodeId: string, portId: string, type = "in") {
+    return nodeRef.current?.[nodeId]?.[`${portId}-${type}`];
   }
 
   return (
@@ -70,7 +70,7 @@ export function Grid() {
       </defs>
       <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)" style={{ touchAction: "none" }}></animated.rect>
       {edges.map((edge) => {
-        return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string)} end={getNodePort(edge[2] as string, edge[3] as string)} type={edge[4] as PortType} />;
+        return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string, "out")} end={getNodePort(edge[2] as string, edge[3] as string, "in")} type={edge[4] as PortType} />;
       })}
       {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port)} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"} />}
       {nodes.map((node) => {

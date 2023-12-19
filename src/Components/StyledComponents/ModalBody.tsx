@@ -1,6 +1,7 @@
+import { animated } from "@react-spring/web";
 import styled from "styled-components";
 
-export const ModalBody = styled.div<{ big: boolean }>`
+export const ModalBody = styled(animated.div)<{ big: boolean }>`
   width: 80%;
   min-height: 500px;
   max-height: 80%;

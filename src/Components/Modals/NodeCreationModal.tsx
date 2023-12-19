@@ -8,7 +8,6 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
-import { useRouter } from "../../Hooks/useRouter";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -32,6 +31,7 @@ const AddModalDiv = styled.div`
     overflow: auto;
     flex-shrink: 0;
     flex-grow: 0;
+    margin-right: 10px;
 
     & button {
     }
@@ -132,7 +132,7 @@ const AddModalDiv = styled.div`
 
 const CategoryButton = styled.button<{ selected?: boolean }>`
   padding: 10px;
-  background: none;
+  background: ${(props) => (props.selected ? "rgba(0,0,0,0.2)" : "none")};
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   text-transform: capitalize;
@@ -190,15 +190,13 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     nodeFav.markNodeAsUsed(node.id);
     close();
   };
-  var open = useRouter((state) => state.open);
 
   return (
     <Modal title="Add a new node" icon={IconPlus} onClose={close} big>
       <AddModalDiv>
         <menu>
-          <button onClick={() => open("custom-function")}>aaaa</button>
           {tags.map((tag) => (
-            <CategoryButton key={tag} selected={tag === selectedCategory || (!!selectedCategory && tag === "all")} onClick={() => setCategory(tag === "all" ? "" : tag)}>
+            <CategoryButton key={tag} selected={tag === selectedCategory || (!selectedCategory && tag === "all")} onClick={() => setCategory(tag === "all" ? "" : tag)}>
               {tag}
             </CategoryButton>
           ))}

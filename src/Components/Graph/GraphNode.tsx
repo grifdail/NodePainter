@@ -62,25 +62,25 @@ export const GraphNode = forwardRef(function GraphNode(
         ...Object.keys(node.dataInputs).reduce(
           (old, portId, i) => ({
             ...old,
-            [portId]: xy.to((x, y) => [x, y + 50 + 32 * i + 15]),
+            [`${portId}-in`]: xy.to((x, y) => [x, y + 50 + 32 * i + 15]),
           }),
           start
         ),
         ...Object.entries(node.execOutputs).reduce(
-          (old, [port, value], i) => ({
+          (old, [portId, value], i) => ({
             ...old,
-            [port]: xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15]),
+            [`${portId}-out`]: xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15]),
           }),
           start
         ),
         ...Object.keys(node.dataOutputs).reduce(
-          (old, port, i) => ({
+          (old, portId, i) => ({
             ...old,
-            [port]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)]),
+            [`${portId}-out`]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)]),
           }),
           start
         ),
-        [MainExecuteId]: xy.to((x, y) => [x, y + 25]),
+        [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
       };
     },
     [xy, node, executeOutputCount]

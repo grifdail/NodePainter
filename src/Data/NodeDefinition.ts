@@ -35,7 +35,7 @@ export type NodeDefinition = {
   dataOutputs: Array<PortDefinition>;
   executeOutputs: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: null | ((portId: string, data: NodeData, context: ExecutionContext) => any);
+  getData: null | ((portId: string, node: NodeData, context: ExecutionContext) => any);
   execute: null | ((node: NodeData, context: ExecutionContext) => void);
   executeAs?: string;
   canBeExecuted?: boolean;
