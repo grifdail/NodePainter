@@ -1,4 +1,4 @@
-﻿import { create } from "zustand";
+import { create } from "zustand";
 import { Vector } from "../Nodes/Vector";
 
 export type SelectionStore = {

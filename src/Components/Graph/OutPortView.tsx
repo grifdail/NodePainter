@@ -3,7 +3,6 @@ import { PortRole, PortType } from "../../Data/NodeDefinition";
 import { PortColor } from "../StyledComponents/PortColor";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { usePortSelection } from "../../Hooks/usePortSelection";
-import { animated, useSpring } from "@react-spring/web";
 
 export function OutPortView({ x, y, id, type, hideLabel, onClick, nodeId, location }: { x: number; y: number; nodeId: string; location: PortRole; hideLabel?: boolean; id: string; type: PortType; onClick: () => void }) {
   var portDescription = PortColor[type];
