@@ -1,5 +1,4 @@
-import { forwardRef, useImperativeHandle } from "react";
-import { useSpring, animated, Interpolation } from "@react-spring/web";
+import { animated, SpringValue } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { PortView } from "./PortView";
 import "@szhsin/react-menu/dist/index.css";
@@ -19,16 +18,7 @@ export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
 }
 
-export const GraphNode = forwardRef(function GraphNode(
-  {
-    node,
-    onClickPort,
-  }: {
-    node: NodeData;
-    onClickPort: (node: string, port: string, location: PortRole, type: PortType) => void;
-  },
-  ref
-) {
+export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }: { node: NodeData; xy: SpringValue<number[]>; setSpring: (x: number, y: number) => void; onClickPort: (node: string, port: string, location: PortRole, type: PortType) => void }) {
   const viewPortScale = useViewbox((state) => state.scale);
   const setNodePosition = useTree((state) => state.setNodePosition);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
@@ -38,53 +28,14 @@ export const GraphNode = forwardRef(function GraphNode(
   const outputCount = executeOutputCount + dataOutputCount;
   const definition = getNodeTypeDefinition(node);
 
-  const [{ xy }, api] = useSpring(
-    () => ({
-      xy: [node.positionX, node.positionY],
-    }),
-    [node, node.positionX, node.positionY]
-  );
-
   const bind = useGesture({
     onDrag: ({ movement: [mx, my] }) => {
-      api.start({ xy: [node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale] });
+      setSpring(node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale);
     },
     onDragEnd: ({ movement: [mx, my] }) => {
       setNodePosition(node.id, node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale);
     },
   });
-
-  useImperativeHandle(
-    ref,
-    () => {
-      var start: { [key: string]: Interpolation<number[], number[]> } = {};
-      return {
-        ...Object.keys(node.dataInputs).reduce(
-          (old, portId, i) => ({
-            ...old,
-            [`${portId}-in`]: xy.to((x, y) => [x, y + 50 + 32 * i + 15]),
-          }),
-          start
-        ),
-        ...Object.entries(node.execOutputs).reduce(
-          (old, [portId, value], i) => ({
-            ...old,
-            [`${portId}-out`]: xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15]),
-          }),
-          start
-        ),
-        ...Object.keys(node.dataOutputs).reduce(
-          (old, portId, i) => ({
-            ...old,
-            [`${portId}-out`]: xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)]),
-          }),
-          start
-        ),
-        [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
-      };
-    },
-    [xy, node, executeOutputCount]
-  );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
   var setNodeSetting = useTree((state) => state.setNodeSetting);
@@ -149,4 +100,4 @@ export const GraphNode = forwardRef(function GraphNode(
       })}
     </animated.g>
   );
-});
+};

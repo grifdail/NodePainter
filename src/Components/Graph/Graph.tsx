@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { GraphNode } from "./GraphNode";
-import { useSpring, animated, Interpolation } from "@react-spring/web";
+import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
@@ -10,13 +10,7 @@ import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
 import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
 import { MainExecuteId, PortType } from "../../Data/NodeDefinition";
 
-type PortRefType = {
-  [key: string]: {
-    [key: string]: Interpolation<number[], number[]>;
-  };
-};
-
-export function Grid() {
+export function Graph() {
   useGesturePrevention();
   const tree = useTree();
   const portSelection = usePortSelection();
@@ -53,10 +47,33 @@ export function Grid() {
     ];
   });
 
-  var nodeRef = useRef<PortRefType>({});
+  const [nodePositionSpring, nodePositionSpringApi] = useSprings(
+    nodes.length,
+    (index) => {
+      return {
+        to: { xy: [nodes[index].positionX, nodes[index].positionY] },
+      };
+    },
+    [nodes]
+  );
+  const ports = Object.fromEntries(
+    nodes.map((node, i) => {
+      const executeOutputCount = Object.values(node.execOutputs).length;
+      var xy = nodePositionSpring[i].xy;
+      return [
+        node.id,
+        {
+          ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port]) => [`${portId}-in`, xy.to((x, y) => [x, y + 50 + 32 * i + 15])])),
+          ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port]) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)])])),
+          ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port]) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15])])),
+          [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
+        },
+      ];
+    })
+  );
 
   function getNodePort(nodeId: string, portId: string, type = "in") {
-    return nodeRef.current?.[nodeId]?.[`${portId}-${type}`];
+    return (ports[nodeId] as any)?.[`${portId}-${type}`];
   }
 
   return (
@@ -73,19 +90,8 @@ export function Grid() {
         return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string, "out")} end={getNodePort(edge[2] as string, edge[3] as string, "in")} type={edge[4] as PortType} />;
       })}
       {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port)} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"} />}
-      {nodes.map((node) => {
-        return (
-          <GraphNode
-            ref={(item) =>
-              (nodeRef.current[node.id] = item as {
-                [key: string]: Interpolation<number[], number[]>;
-              })
-            }
-            node={node}
-            key={node.id}
-            onClickPort={onClickPort}
-          />
-        );
+      {nodes.map((node, i) => {
+        return <GraphNode node={node} key={node.id} onClickPort={onClickPort} xy={nodePositionSpring[i].xy} setSpring={(x, y) => nodePositionSpringApi.start((i2) => (i === i2 ? { xy: [x, y] } : {}))} />;
       })}
     </animated.svg>
   );
