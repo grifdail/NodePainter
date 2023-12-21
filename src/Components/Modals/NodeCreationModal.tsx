@@ -72,6 +72,7 @@ const AddModalDiv = styled.div`
       padding: 10px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
 
       gap: 10px;
       align-self: flex-start;
@@ -112,10 +113,12 @@ const AddModalDiv = styled.div`
         & > svg {
           height: 50px;
           width: 50px;
+          flex: 0 0 50px;
         }
         & p {
           margin: 0;
           padding: 0;
+          overflow: hidden;
         }
       }
     }
@@ -149,6 +152,8 @@ const AddModalDiv = styled.div`
         & > svg {
           height: 20px;
         }
+      }
+      & > p {
       }
     }
   }

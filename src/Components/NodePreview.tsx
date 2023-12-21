@@ -18,7 +18,7 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
       </div>
 
       {Icon != null ? <Icon></Icon> : null}
-      <p>{node.description}</p>
+      <p title={node.description}>{node.description}</p>
     </button>
   );
 }
