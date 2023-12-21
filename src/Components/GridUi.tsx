@@ -1,4 +1,4 @@
-import { IconFunctionFilled, IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus } from "@tabler/icons-react";
+import { IconFunctionFilled, IconMenu2, IconPlayerPlayFilled, IconPlayerStopFilled, IconPlus, IconSelectAll, IconSquareLetterX } from "@tabler/icons-react";
 import { useToggle } from "@uidotdev/usehooks";
 
 import { SketchPreview } from "./SketchPreview";
@@ -13,6 +13,7 @@ import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationCont
 import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 import { resetCamera } from "../Data/resetCamera";
+import { useSelection } from "../Hooks/useSelection";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -31,6 +32,7 @@ export function GridUi() {
   const setEditedGraph = useTree((state) => state.setEditedGraph);
   const rawCustomNodes = useTree((state) => state.customNodes);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
+  const selectionActive = useSelection((state) => state.isInSelectionMode);
   const customFunctionNodes = [
     "main",
     ...Object.values(rawCustomNodes)
@@ -46,6 +48,9 @@ export function GridUi() {
   };
   const openCreateModal = () => {
     useCustomNodeCreationContext.getState().openCreate();
+  };
+  const toggleSelection = () => {
+    useSelection.getState().toggleSetMode(null);
   };
 
   return (
@@ -64,8 +69,7 @@ export function GridUi() {
               <IconFunctionFilled></IconFunctionFilled>
               <span>{graph}</span>
             </button>
-          }
-        >
+          }>
           <MenuItem onClick={openEditModal} disabled={graph === "main"}>
             Edit
           </MenuItem>
@@ -81,14 +85,14 @@ export function GridUi() {
           <IconPlus></IconPlus>
         </button>
         <button onClick={() => togglePreview()}>{showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}</button>
+        <button onClick={() => toggleSelection()}>{selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}</button>
         <Menu
           portal
           menuButton={
             <button>
               <IconMenu2></IconMenu2>
             </button>
-          }
-        >
+          }>
           <MenuItem onClick={() => openModal("about")}>About</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem onClick={reset}>New Graph</MenuItem>

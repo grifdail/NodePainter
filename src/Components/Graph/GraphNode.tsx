@@ -11,6 +11,20 @@ import { useViewbox } from "../../Hooks/useViewbox";
 import { OutPortView } from "./OutPortView";
 import { SettingControl, getSettingHeight } from "./SettingControl";
 import { useState } from "react";
+import styled from "styled-components";
+
+const AnimatedG = animated(styled.g`
+  & > g > rect {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+    touch-action: none;
+    fill: white;
+    stroke: black;
+    stroke-width: 2px;
+  }
+  &.selected > g > rect {
+    stroke: red;
+  }
+`);
 
 export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
@@ -19,9 +33,19 @@ export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
 }
 
-export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }: { node: NodeData; xy: SpringValue<number[]>; setSpring: (x: number, y: number) => void; onClickPort: (node: string, port: string, location: PortRole, type: PortType) => void }) {
+export type PortNodeCallback = (node: string, port: string, location: PortRole, type: PortType) => void;
+
+export type GraphNodeProps = {
+  node: NodeData;
+  xy: SpringValue<number[]>;
+  isSelected: boolean;
+  onMove: (x: number, y: number, definitive: boolean) => void;
+  onTap: () => void;
+  onClickPort: PortNodeCallback;
+};
+
+export const GraphNode = function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
   const viewPortScale = useViewbox((state) => state.scale);
-  const setNodePosition = useTree((state) => state.setNodePosition);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const inputCount = Object.keys(node.dataInputs).length;
   const executeOutputCount = Object.keys(node.execOutputs).length;
@@ -30,18 +54,23 @@ export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }
   const definition = getNodeTypeDefinition(node);
   const [dragged, setDragged] = useState(false);
 
-  const bind = useGesture({
-    onDrag: ({ movement: [mx, my] }) => {
-      setSpring(node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale);
-      if (!dragged) {
-        setDragged(true);
-      }
+  const bind = useGesture(
+    {
+      onDrag: ({ movement: [mx, my], tap }) => {
+        if (!tap) {
+          onMove(mx * viewPortScale, my * viewPortScale, false);
+          if (!dragged) {
+            setDragged(true);
+          }
+        }
+      },
+      onDragEnd: ({ movement: [mx, my] }) => {
+        onMove(mx * viewPortScale, my * viewPortScale, true);
+        setDragged(false);
+      },
     },
-    onDragEnd: ({ movement: [mx, my] }) => {
-      setNodePosition(node.id, node.positionX + mx * viewPortScale, node.positionY + my * viewPortScale);
-      setDragged(false);
-    },
-  });
+    { drag: { filterTaps: true } }
+  );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
   var setNodeSetting = useTree((state) => state.setNodeSetting);
@@ -67,20 +96,9 @@ export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }
   });
 
   return (
-    <animated.g transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className="node">
+    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""}>
       <animated.g style={styles}>
-        <rect
-          width="300"
-          height={GetNodeHeight(node, definition)}
-          fill="white"
-          style={{
-            boxShadow: "1px 1px 1px",
-            touchAction: "none",
-          }}
-          stroke="black"
-          rx="5"
-          {...bind()}
-        ></rect>
+        <rect width="300" height={GetNodeHeight(node, definition)} style={{}} rx="5" {...bind()} onClick={onTap}></rect>
         {Icon && (
           <Icon
             x="20"
@@ -101,7 +119,7 @@ export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }
           style={{
             touchAction: "none",
           }}
-        >
+          onClick={onTap}>
           {node.type}
         </text>
         {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
@@ -121,6 +139,6 @@ export const GraphNode = function GraphNode({ node, onClickPort, xy, setSpring }
           return n;
         })}
       </animated.g>
-    </animated.g>
+    </AnimatedG>
   );
 };

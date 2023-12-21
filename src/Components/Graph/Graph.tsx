@@ -4,11 +4,12 @@ import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
-import { useTree } from "../../Hooks/useTree";
+import { NodeData, useTree } from "../../Hooks/useTree";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
 import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
 import { MainExecuteId, PortType } from "../../Data/NodeDefinition";
+import { useSelection } from "../../Hooks/useSelection";
 
 export function Graph() {
   useGesturePrevention();
@@ -17,6 +18,7 @@ export function Graph() {
   const onClickPort = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
   const [xyz, bind] = useSVGMapDrag();
+  const { nodes: selectedNode } = useSelection();
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
   }));
@@ -76,6 +78,34 @@ export function Graph() {
     return (ports[nodeId] as any)?.[`${portId}-${type}`];
   }
 
+  function onTapNode(node: NodeData): void {
+    var selection = useSelection.getState();
+    if (selection.isInSelectionMode) {
+      selection.toggleNode(node.id);
+    }
+  }
+
+  function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
+    let selectedNode = useSelection.getState().nodes;
+    if (selectedNode.length <= 0) {
+      selectedNode = [nodes[i].id];
+    }
+    if (isDefinitive) {
+      for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {
+        const node = tree.nodes[selectedNode[selectionIndex]];
+        tree.setNodePosition(selectedNode[selectionIndex], node.positionX + x, node.positionY + y);
+      }
+    } else {
+      nodePositionSpringApi.start((i2) => {
+        const node = nodes[i2];
+        if (selectedNode.includes(node.id)) {
+          return { xy: [node.positionX + x, node.positionY + y] };
+        }
+        return {};
+      });
+    }
+  }
+
   return (
     <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }}>
       <defs>
@@ -91,7 +121,16 @@ export function Graph() {
       })}
       {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "inputData" || portSelection.location === "inputExecute" ? "in" : "out")} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"} />}
       {nodes.map((node, i) => {
-        return <GraphNode node={node} key={node.id} onClickPort={onClickPort} xy={nodePositionSpring[i].xy} setSpring={(x, y) => nodePositionSpringApi.start((i2) => (i === i2 ? { xy: [x, y] } : {}))} />;
+        const nodeProps = {
+          node,
+          key: node.id,
+          onClickPort,
+          xy: nodePositionSpring[i].xy,
+          isSelected: selectedNode.some((id) => id === node.id),
+          onTap: () => onTapNode(node),
+          onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
+        };
+        return <GraphNode {...nodeProps} />;
       })}
     </animated.svg>
   );
