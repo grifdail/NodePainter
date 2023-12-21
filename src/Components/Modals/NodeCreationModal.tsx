@@ -70,25 +70,18 @@ const AddModalDiv = styled.div`
       width: 100%;
       background: #eee;
       padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: start;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
       gap: 10px;
-      flex-direction: row;
       align-self: flex-start;
       margin: 0;
       max-height: 100%;
       padding-bottom: 25px;
       box-sizing: border-box;
       flex-grow: 1;
-      align-items: stretch;
-      align-content: start;
 
       & > button {
-        flex-basis: 200px;
-        max-width: 300px;
-        flex-grow: 1;
-        flex-shrink: 1;
         background: white;
         padding: 10px;
         box-sizing: 10px;
@@ -104,7 +97,6 @@ const AddModalDiv = styled.div`
           padding-bottom: 5px;
           font-weight: bold;
           border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-          width: 100%;
         }
 
         & > div.fav {
@@ -128,6 +120,38 @@ const AddModalDiv = styled.div`
       }
     }
   }
+
+  @media (max-width: 840px), (max-height: 500px) {
+    & > menu {
+      width: 100px;
+    }
+    & > section > div {
+      height: 24px;
+      flex: 0 0 24px;
+      font-size: 18px;
+
+      & > input,
+      & > button {
+        font-size: 12px;
+      }
+    }
+
+    & > section > menu > button {
+      font-size: 12px;
+      gap: 3px;
+      padding: 5px;
+      & > svg {
+        height: 32px;
+        width: 32px;
+      }
+      & > div.fav {
+        right: 15px;
+        & > svg {
+          height: 20px;
+        }
+      }
+    }
+  }
 `;
 
 const CategoryButton = styled.button<{ selected?: boolean }>`
@@ -140,13 +164,19 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
   &:hover {
     background: rgba(0, 0, 0, 0.3);
   }
+
+  @media (max-width: 840px), (max-height: 500px) {
+    padding: 5px;
+    font-size: 12px;
+  }
 `;
 
 export function NodeCreationModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
-  const [selectedCategory, setCategory] = useState("");
+
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = usePlayerPref();
+  const [selectedCategory, setCategory] = useState(nodeFav.favNodes.length > 0 ? "fav" : "");
   const nodeLibrary = useTree((state) => state.getNodeLibrary());
 
   const filteredList = Object.values(nodeLibrary).filter((item) => {
@@ -209,8 +239,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
                 <MenuButton>
                   Sort By: <IconSortDescending />
                 </MenuButton>
-              }
-            >
+              }>
               <MenuRadioGroup value={nodeFav.nodeSorting}>
                 <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
                   Name

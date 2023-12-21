@@ -17,15 +17,6 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
   flex-direction: column;
   justify-content: stretch;
 
-  @media (max-width: 840px), (max-height: 500px) {
-    width: 100%;
-    border-radius: 0;
-    border: none;
-    height: 100%;
-    max-height: 100%;
-    min-height: 0;
-  }
-
   & > header {
     display: flex;
     align-items: center;
@@ -57,6 +48,7 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
       }
     }
   }
+
   & > section {
     display: flex;
     align-items: stretch;
@@ -64,5 +56,27 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
     overflow: hidden;
     flex-shrink: 1;
     flex-grow: 1;
+  }
+
+  @media (max-width: 840px), (max-height: 500px) {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+
+    & > header {
+      height: 32px;
+
+      & > h2 {
+        font-size: 15px;
+      }
+
+      & > button {
+        height: 24px;
+        padding: 2px;
+      }
+    }
   }
 `;
