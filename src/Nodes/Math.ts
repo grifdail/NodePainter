@@ -2,7 +2,7 @@ import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath,
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { IconMathXy } from "@tabler/icons-react";
 import { Vector, createVector } from "./Vector";
-import { easing } from "ts-easing";
+import * as Easing from "../libs/easing";
 import { createPortConnection } from "../Data/createPortConnection";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -368,15 +368,15 @@ export const MathNodes: Array<NodeDefinition> = [
       {
         id: "easing",
         type: "dropdown",
-        defaultValue: "quadratic",
-        options: ["linear", "quadratic", "cubic", "elastic", "inQuad", "outQuad", "inOutQuad", "inCubic", "outCubic", "inOutCubic", "inQuart", "outQuart", "inOutQuart", "inQuint", "outQuint", "inOutQuint", "inSine", "outSine", "inOutSine", "inExpo", "outExpo", "inOutExpo", "inCirc", "outCirc", "inOutCirc"],
+        defaultValue: "easeInOutQuad",
+        options: Object.keys(Easing),
       },
     ],
 
     getData: (portId, nodeData, context) => {
       var input = context.getInputValue(nodeData, "input");
       var funcName = nodeData.settings.easing as string;
-      var func = (easing as any)[funcName];
+      var func = (Easing as any)[funcName];
       if (func !== undefined) {
         return func(input) as number;
       } else {
