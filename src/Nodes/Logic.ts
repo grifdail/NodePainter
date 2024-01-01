@@ -57,6 +57,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     dataOutputs: [],
     executeOutputs: ["then", "else"],
     settings: [],
+    canBeExecuted: true,
     getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var input = context.getInputValue(data, "condition");
