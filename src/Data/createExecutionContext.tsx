@@ -1,8 +1,10 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
 import { Graphics } from "p5";
+import { getShaderCode } from "./getShaderCode";
 
 export type ExecutionContext = {
+  getShaderCode(shader: string): string;
   findNodeOfType(type: string): string | null;
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
   functionStack: Array<{ [key: string]: any }>;
@@ -67,6 +69,9 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
         }
       }
       return null;
+    },
+    getShaderCode(shader) {
+      return getShaderCode(shader, tree, context);
     },
   };
   return context;

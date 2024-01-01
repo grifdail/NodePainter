@@ -5,9 +5,8 @@ import { createVector } from "../Nodes/Vector";
 import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
-
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient";
-export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload";
+export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "shader";
 
 export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient"];
 
@@ -31,6 +30,7 @@ export type NodeDefinition = {
   icon?: Icon;
   id: string;
   tags: Array<string>;
+  isShader?: false;
   dataInputs: Array<PortDefinition>;
   dataOutputs: Array<PortDefinition>;
   executeOutputs: Array<string>;
@@ -41,6 +41,7 @@ export type NodeDefinition = {
   canBeExecuted?: boolean;
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   contextMenu?: { [key: string]: (node: NodeData) => void };
+  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
 };
 
 export const MainExecuteId = "mainExecute";
@@ -51,5 +52,5 @@ export const PortTypeDefaultValue = {
   string: "",
   bool: "",
   gradient: createDefaultGradient(),
-  iamge: null,
+  image: null,
 } as { [key: string]: any };

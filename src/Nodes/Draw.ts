@@ -541,7 +541,7 @@ export const DrawNodes: Array<NodeDefinition> = [
     id: "DrawText",
     description: "Draw a line of text",
     icon: IconCursorText,
-    tags: ["Draw"],
+    tags: ["Draw", "Text"],
     dataInputs: [
       {
         id: "color",
