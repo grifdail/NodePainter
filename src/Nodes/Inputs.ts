@@ -2,6 +2,7 @@ import { IconArrowsHorizontal, IconArrowsShuffle, IconCalendar, IconClock, IconF
 
 import { createVector } from "./Vector";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { convertToShaderValue } from "../Data/convertToShaderValue";
 
 export const InputNodes: Array<NodeDefinition> = [
   {
@@ -15,6 +16,9 @@ export const InputNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       return context.time / 1000;
+    },
+    getShaderCode(node, context) {
+      return `float ${context.getShaderVar(node, "time", true)} = time / 1000.0;`;
     },
     execute: null,
   },
@@ -103,6 +107,9 @@ export const InputNodes: Array<NodeDefinition> = [
     settings: [{ id: "preview-duration", defaultValue: 1, type: "number" }],
     getData: (portId, nodeData, context) => {
       return (context.time / (nodeData.settings["preview-duration"] * 1000)) % 1;
+    },
+    getShaderCode(node, context) {
+      return `float ${context.getShaderVar(node, "progress", true)} = mod(time / (${convertToShaderValue(node.settings["preview-duration"], "number")} * 1000.0), 1.0);`;
     },
     execute: null,
   },

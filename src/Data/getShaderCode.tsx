@@ -11,6 +11,7 @@ export function getShaderCode(shader: string, tree: TreeStore | null, context: E
     while (type?.executeAs != null) {
       type = tree?.getNodeTypeDefinition(type.executeAs);
     }
+    console.log(type);
     return type?.getShaderCode && type.getShaderCode(node, context);
   });
   return `precision highp float;
@@ -24,7 +25,7 @@ export function getShaderCode(shader: string, tree: TreeStore | null, context: E
   uniform vec2 texelSize;
   uniform vec2 canvasSize;
   // a custom variable from this sketch
-  uniform float darkness;
+  uniform float time;
 
   void main() {
     ${code.join("\n")}

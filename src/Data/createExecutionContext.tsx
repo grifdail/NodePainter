@@ -90,6 +90,6 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
   return context;
 }
 
-var cleanVar = function (str: string | `null`) {
-  return str.replaceAll("-", "_");
+var cleanVar = function (str: string | null) {
+  return str?.replaceAll("-", "_");
 };

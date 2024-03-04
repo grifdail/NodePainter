@@ -53,6 +53,7 @@ export const ShaderNodes: Array<NodeDefinition> = [
       needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
       needRedraw ||= when === "Everytime";
       if (needRedraw) {
+        shader.setUniform("time", context.time);
         img.image.filter(shader);
         context.blackboard[keyComputed] = true;
         context.frameBlackboard[keyComputed] = true;
