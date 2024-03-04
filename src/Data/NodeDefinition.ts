@@ -1,5 +1,5 @@
 import { Icon } from "@tabler/icons-react";
-import { NodeData } from "../Hooks/useTree";
+import { NodeData, TreeStore } from "../Hooks/useTree";
 import { createColor, createDefaultGradient } from "../Nodes/Color";
 import { createVector } from "../Nodes/Vector";
 import { ExecutionContext } from "./createExecutionContext";
@@ -42,6 +42,7 @@ export type NodeDefinition = {
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   contextMenu?: { [key: string]: (node: NodeData) => void };
   getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
+  onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
 };
 
 export const MainExecuteId = "mainExecute";

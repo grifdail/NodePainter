@@ -11,11 +11,17 @@ import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
+import { createVector } from "../Nodes/Vector";
+import { createColor } from "../Nodes/Color";
 
 export type NodeCollection = { [key: string]: NodeData };
+export type ShaderData = {
+  id: string;
+};
 
 export type TreeStore = {
   nodes: NodeCollection;
+  shaders: ShaderData[];
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
@@ -36,6 +42,7 @@ export type TreeStore = {
   reset: () => void;
   load: (source: NodeCollection) => boolean;
   createFunction: (def: NodeDefinition) => void;
+  createShader(def: NodeDefinition): unknown;
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
@@ -67,6 +74,7 @@ export const useTree = create<TreeStore>()(
     (set, get) => {
       return {
         nodes: createDefaultNodeConnection(),
+        shaders: [],
         customNodes: {} as { [key: string]: NodeDefinition },
         getNode(id: string) {
           return get().nodes[id];
@@ -167,10 +175,15 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
-        setNodeSetting(node, settingId, newValue) {
+        setNodeSetting(nodeId, settingId, newValue) {
           set(
             produce((state) => {
-              state.nodes[node].settings[settingId] = newValue;
+              const node = state.nodes[nodeId];
+              node.settings[settingId] = newValue;
+              const def = get().getNodeTypeDefinition(node);
+              if (def.onSettingChange !== undefined) {
+                def.onSettingChange(node, settingId, newValue, get());
+              }
             })
           );
         },
@@ -277,6 +290,67 @@ export const useTree = create<TreeStore>()(
                 getData: null,
                 execute: null,
                 executeAs: "CustomFunction-end",
+                canBeExecuted: false,
+              };
+              state.customNodes[start] = startNodeDef;
+              state.customNodes[end] = endNodeDef;
+              const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+              const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+              state.nodes[start] = newStartNode;
+              state.nodes[end] = newEndNode;
+              state.editedGraph = def.id;
+            })
+          );
+          get().enforceValidGraph();
+        },
+
+        createShader(def) {
+          set(
+            produce((state) => {
+              const start = `${def.id}-start`;
+              const end = `${def.id}-end`;
+              state.customNodes[def.id] = def;
+              const startNodeDef: NodeDefinition = {
+                IsUnique: true,
+                hideInLibrary: true,
+                description: "",
+                id: start,
+                tags: [],
+                dataInputs: [],
+                dataOutputs: [
+                  {
+                    id: "uv",
+                    type: "vector2",
+                    defaultValue: createVector(),
+                  },
+                  ...structuredClone(def.dataInputs),
+                ],
+                executeOutputs: [],
+                settings: [],
+                getData: null,
+                execute: null,
+                executeAs: "CustomShader-start",
+                canBeExecuted: false,
+              };
+              const endNodeDef: NodeDefinition = {
+                IsUnique: true,
+                description: "",
+                hideInLibrary: true,
+                id: end,
+                tags: [],
+                dataInputs: [
+                  {
+                    id: "color",
+                    type: "color",
+                    defaultValue: createColor(),
+                  },
+                ],
+                dataOutputs: [],
+                executeOutputs: [],
+                settings: [],
+                getData: null,
+                execute: null,
+                executeAs: "CustomShader-end",
                 canBeExecuted: false,
               };
               state.customNodes[start] = startNodeDef;

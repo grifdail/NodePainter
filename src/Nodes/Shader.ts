@@ -5,11 +5,12 @@ import { ImageData } from "../Data/ImageCache";
 export const ShaderNodes: Array<NodeDefinition> = [
   {
     id: "RenderShader",
+    hideInLibrary: true,
     icon: IconPhoto,
-    description: "Upload an image",
+    description: "Render a shader to an image an image",
     dataInputs: [],
     dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
-    tags: ["Image"],
+    tags: ["Shader"],
     executeOutputs: [],
     settings: [
       { id: "shader", type: "shader", defaultValue: null },
@@ -35,11 +36,13 @@ export const ShaderNodes: Array<NodeDefinition> = [
         img.set(context.p5.createGraphics(width, height, context.p5.WEBGL));
         context.blackboard[keyCache] = img;
       }
-      var shader = context.blackboard[keyShader];
+      let shader = context.blackboard[keyShader];
       if (!shader) {
         try {
-          const shaderCode: string = context.getShaderCode(node.settings.shader);
-          shader = (context.p5 as any).createFilterShader(shaderCode);
+          const shaderCode: string = context.getShaderCode(node.type);
+          console.log(shaderCode);
+          shader = (img.image as any).createFilterShader(shaderCode);
+          context.blackboard[keyShader] = shader;
         } catch (error) {
           console.error(error);
         }
@@ -50,19 +53,45 @@ export const ShaderNodes: Array<NodeDefinition> = [
       needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
       needRedraw ||= when === "Everytime";
       if (needRedraw) {
-        var oldTarget = context.target;
-        context.target = img.image;
-        if (node.execOutputs["image"]) {
-          context.execute(node.execOutputs["image"] as string);
-        }
-
-        context.target = oldTarget;
+        img.image.filter(shader);
         context.blackboard[keyComputed] = true;
         context.frameBlackboard[keyComputed] = true;
       }
       if (node.execOutputs["execute"]) {
         context.execute(node.execOutputs["execute"] as string);
       }
+    },
+  },
+  {
+    id: "CustomShader-end",
+    hideInLibrary: true,
+    icon: IconPhoto,
+    description: "Render a shader to an image an image",
+    dataInputs: [],
+    dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
+    tags: ["Shader"],
+    executeOutputs: [],
+    settings: [],
+    getData(portId, node, context) {},
+    execute(node, context) {},
+    getShaderCode(node, context) {
+      return `gl_FragColor  = vec4(${context.getShaderVar(node, "color")}.rgb, 1.0);`;
+    },
+  },
+  {
+    id: "CustomShader-start",
+    hideInLibrary: true,
+    icon: IconPhoto,
+    description: "Render a shader to an image an image",
+    dataInputs: [],
+    dataOutputs: [],
+    tags: ["Shader"],
+    executeOutputs: [],
+    settings: [],
+    getData(portId, node, context) {},
+    execute(node, context) {},
+    getShaderCode(node, context) {
+      return `vec4 ${context.getShaderVar(node, "uv", true)} = vec4(vTexCoord.xy, 0.0, 0.0);`;
     },
   },
 ];

@@ -1,12 +1,16 @@
+﻿import { cp } from "fs/promises";
 import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
 import { ExecutionContext } from "./createExecutionContext";
 
 export function getShaderCode(shader: string, tree: TreeStore | null, context: ExecutionContext) {
-  const flattenNode = buildDependencyList(`${shader}-output`, tree?.nodes as NodeCollection);
-  console.log(flattenNode);
+  const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
+
   const code = flattenNode.map((nodeId: string) => {
     const node = tree?.nodes[nodeId] as NodeData;
-    const type = tree?.getNodeTypeDefinition(node);
+    let type = tree?.getNodeTypeDefinition(node);
+    while (type?.executeAs != null) {
+      type = tree?.getNodeTypeDefinition(type.executeAs);
+    }
     return type?.getShaderCode && type.getShaderCode(node, context);
   });
   return `precision highp float;
@@ -30,11 +34,12 @@ function buildDependencyList(start: string, nodes: NodeCollection) {
   const distances: { [key: string]: number } = { [start]: 0 };
   const walk = (nodeId: string, distance: number) => {
     const node = nodes[nodeId];
-    if (distances[nodeId] === undefined || distances[nodeId] < distance) {
+    if (distances[nodeId] === undefined || distances[nodeId] < distance || start == nodeId) {
       distances[nodeId] = distance;
+      console.log(nodeId, node);
       Object.entries(node.dataInputs).forEach(([id, port]) => {
         if (port.hasConnection) {
-          walk(port.id, distance + 1);
+          walk(port.connectedNode as string, distance + 1);
         }
       });
     }

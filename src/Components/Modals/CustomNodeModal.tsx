@@ -9,7 +9,7 @@ import { TextInput } from "../Settings/TextInput";
 import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { capitalCase } from "change-case";
 
-const MainDiv = styled.div`
+export const CustomNodeMainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -135,7 +135,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
 
   return (
     <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
-      <MainDiv>
+      <CustomNodeMainDiv>
         <section className="header">
           <fieldset>
             <label>Name</label>
@@ -168,7 +168,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
           <button onClick={context.cancel}>Cancel</button>
           <button onClick={context.create}>Create</button>
         </ButtonGroup>
-      </MainDiv>
+      </CustomNodeMainDiv>
     </Modal>
   );
 }

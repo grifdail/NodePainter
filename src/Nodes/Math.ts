@@ -4,18 +4,61 @@ import { IconMathXy } from "@tabler/icons-react";
 import { Vector, createVector } from "./Vector";
 import * as Easing from "../libs/easing";
 import { createPortConnection } from "../Data/createPortConnection";
+import { convertToShaderValue } from "../Data/convertToShaderValue";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 export const MathNodes: Array<NodeDefinition> = [
-  createOperation("AddNumber", (a, b) => a + b, "Add two number together.", IconMathXPlusY, true),
-  createOperation("SubtractNumber", (a, b) => a - b, "Subtract two number.", IconMathXMinusY, true),
-  createOperation("MultiplyNumber", (a, b) => a * b, "Multiply two number together.", IconMathXy, true),
-  createOperation("DivideNumber", (a, b) => a / b, "Divide two number.", IconMathXDivideY, true),
-  createOperation("Modulo", (a, b) => a % b, "Give the remainder of the division of A by B.", IconPercentage),
-  createOperation("Pow", (a, b) => a % b, "Raise A to the power of B.", IconMathXPlusY),
-  createOperation("Max", Math.max, "Returne the biggest of two number.", IconMathMax, true),
-  createOperation("Min", Math.min, "Returne the smallest of two number.", IconMathMin, true),
+  createOperation(
+    "AddNumber",
+    (a, b) => a + b,
+    "Add two number together.",
+    IconMathXPlusY,
+    true,
+    (a, b) => `${a} + ${b}`
+  ),
+  createOperation(
+    "SubtractNumber",
+    (a, b) => a - b,
+    "Subtract two number.",
+    IconMathXMinusY,
+    true,
+    (a, b) => `${a} - ${b}`
+  ),
+  createOperation(
+    "MultiplyNumber",
+    (a, b) => a * b,
+    "Multiply two number together.",
+    IconMathXy,
+    true,
+    (a, b) => `${a} * ${b}`
+  ),
+  createOperation(
+    "DivideNumber",
+    (a, b) => a / b,
+    "Divide two number.",
+    IconMathXDivideY,
+    true,
+    (a, b) => `${a} / ${b}`
+  ),
+  createOperation(
+    "Modulo",
+    (a, b) => a % b,
+    "Give the remainder of the division of A by B.",
+    IconPercentage,
+    false,
+    (a, b) => `${a} % ${b}`
+  ),
+  createOperation(
+    "Pow",
+    (a, b) => a % b,
+    "Raise A to the power of B.",
+    IconMathXPlusY,
+    false,
+    (a, b) => `pow(${a}, ${b})`
+  ),
+  createOperation("Max", Math.max, "Returne the biggest of two number.", IconMathMax, true, (a, b) => `max(${a}, ${b})`),
+  createOperation("Min", Math.min, "Returne the smallest of two number.", IconMathMin, true, (a, b) => `min(${a}, ${b})`),
   createFunc("Cos", Math.cos, "Return the cosine of a number (in radian).", IconAngle),
   createFunc("Sin", Math.sin, "Return the sine of a number (in radian).", IconAngle),
 
@@ -441,7 +484,7 @@ export const MathNodes: Array<NodeDefinition> = [
   },
 ];
 
-function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon, allowMoreInput?: boolean): NodeDefinition {
+function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon, allowMoreInput?: boolean, shaderCode?: (a: string, b: string) => string): NodeDefinition {
   var result: NodeDefinition = {
     id: id,
     tags: ["Math"],
@@ -482,6 +525,21 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
         return evalOperation(a, b);
       }
     },
+    getShaderCode(node, context) {
+      if (shaderCode) {
+        if (allowMoreInput) {
+          const key = Object.keys(node.dataInputs);
+          let start = context.getShaderVar(node, key[0]);
+          for (let i = 1; i < key.length; i++) {
+            start = shaderCode(`(${start})`, context.getShaderVar(node, key[i]));
+          }
+          return `float ${context.getShaderVar(node, "result", true)} = ${start};`;
+        } else {
+          return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "a"), context.getShaderVar(node, "b"))};`;
+        }
+      }
+      return "";
+    },
     execute: null,
   };
   if (allowMoreInput) {
@@ -511,7 +569,7 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
   return result;
 }
 
-function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon): NodeDefinition {
+function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon, shaderCode?: (v: string) => string): NodeDefinition {
   return {
     id: id,
     tags: ["Math"],
@@ -539,6 +597,12 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
         return evalOperation(a);
       }
     },
+    getShaderCode(node, context) {
+      if (shaderCode) {
+        return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "input"))};`;
+      }
+      return "";
+    },
     execute: null,
   };
 }
@@ -563,6 +627,9 @@ function createConstant(id: string, value: number): NodeDefinition {
       if (portId === "value") {
         return value;
       }
+    },
+    getShaderCode(node, context) {
+      return `float ${context.getShaderVar(node, "value", true)} = ${convertToShaderValue(value, "number")};`;
     },
     execute: null,
   };

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type Routes = "default" | "node-creation" | "about" | "save" | "load" | "export-gif" | "custom-function";
+export type Routes = "default" | "node-creation" | "about" | "save" | "load" | "export-gif" | "custom-function" | "custom-shader";
 
 export type RouterStore = {
   current: Routes;

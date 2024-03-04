@@ -1,9 +1,11 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
-import { Graphics } from "p5";
+import { Color, Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
+import { convertToShaderValue } from "./convertToShaderValue";
 
 export type ExecutionContext = {
+  getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;
   getShaderCode(shader: string): string;
   findNodeOfType(type: string): string | null;
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
@@ -54,6 +56,17 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
         return inputPorts.ownValue;
       }
     },
+    getShaderVar(nodeData, portId, isOutput = false) {
+      const inputPorts = nodeData.dataInputs[portId];
+      if (!inputPorts || isOutput) {
+        return `${cleanVar(nodeData.id)}_${cleanVar(portId)}`;
+      }
+      if (inputPorts.hasConnection) {
+        return `${cleanVar(inputPorts.connectedNode)}_${cleanVar(inputPorts.connectedPort)}`;
+      } else {
+        return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
+      }
+    },
     createFunctionContext(node: NodeData, context: ExecutionContext) {
       return Object.fromEntries(
         Object.keys(node.dataInputs).map((key) => {
@@ -76,3 +89,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
   };
   return context;
 }
+
+var cleanVar = function (str: string | `null`) {
+  return str.replaceAll("-", "_");
+};

@@ -8,6 +8,7 @@ import { Color, createColor, toHex } from "./Color";
 
 export const START_NODE = "Start";
 export const CUSTOM_FUNCTION = "CustomFunction";
+export const CUSTOM_SHADER = "RenderShader";
 
 export const contextMenyCreateAllNode = Object.fromEntries(
   PortTypeArray.map((type) => [

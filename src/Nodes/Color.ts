@@ -35,6 +35,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return createColor(context.getInputValue(nodeData, "red") as number, context.getInputValue(nodeData, "green") as number, context.getInputValue(nodeData, "blue") as number, context.getInputValue(nodeData, "alpha") as number);
     },
+    getShaderCode(node, context) {
+      return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "red")}, ${context.getShaderVar(node, "green")}, ${context.getShaderVar(node, "blue")}, ${context.getShaderVar(node, "alpha")});`;
+    },
     execute: null,
   },
   {
@@ -66,6 +69,16 @@ export const ColorNodes: Array<NodeDefinition> = [
         return c.a;
       }
     },
+    getShaderCode(node, context) {
+      var ownVar = context.getShaderVar(node, "c", true);
+      return `
+      vec4 ${ownVar} = ${context.getShaderVar(node, "color")};
+      float ${context.getShaderVar(node, "red", true)} = ${ownVar}.r;
+      float ${context.getShaderVar(node, "green", true)} = ${ownVar}.g;
+      float ${context.getShaderVar(node, "blue", true)} = ${ownVar}.b;
+      float ${context.getShaderVar(node, "alpha", true)} = ${ownVar}.a;
+      `;
+    },
     execute: null,
   },
   {
@@ -87,6 +100,9 @@ export const ColorNodes: Array<NodeDefinition> = [
       var t = context.getInputValue(nodeData, "t") as number;
       return lerpColor(start, end, t);
     },
+    getShaderCode(node, context) {
+      return `vec4 ${context.getShaderVar(node, "color", true)} = mix(${context.getShaderVar(node, "start")}, ${context.getShaderVar(node, "end")}, ${context.getShaderVar(node, "t")})`;
+    },
     execute: null,
   },
   {
@@ -105,6 +121,9 @@ export const ColorNodes: Array<NodeDefinition> = [
       var color = context.getInputValue(nodeData, "color") as Color;
       var alpha = context.getInputValue(nodeData, "alpha") as number;
       return createColor(color.r, color.g, color.b, alpha);
+    },
+    getShaderCode(node, context) {
+      return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "color")}.rgb,  ${context.getShaderVar(node, "alpha")})`;
     },
     execute: null,
   },

@@ -70,6 +70,10 @@ export const VectorNodes: Array<NodeDefinition> = [
         return vec.y;
       }
     },
+    getShaderCode(node, context) {
+      return `float ${context.getShaderVar(node, "x", true)} = ${context.getShaderVar(node, "vec")}.x;
+float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "vec")}.y;`;
+    },
     execute: null,
   },
   {

@@ -8,7 +8,7 @@ import { Menu, MenuDivider, MenuItem } from "@szhsin/react-menu";
 import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
-import { CUSTOM_FUNCTION } from "../Nodes/System";
+import { CUSTOM_FUNCTION, CUSTOM_SHADER } from "../Nodes/System";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
@@ -39,6 +39,11 @@ export function GridUi() {
       .filter((item) => item.executeAs === CUSTOM_FUNCTION)
       .map((node) => node.id),
   ];
+  const customShaderNode = [
+    ...Object.values(rawCustomNodes)
+      .filter((item) => item.executeAs === CUSTOM_SHADER)
+      .map((node) => node.id),
+  ];
   const setGraph = (graph: string) => {
     setEditedGraph(graph === "main" ? undefined : graph);
   };
@@ -47,7 +52,10 @@ export function GridUi() {
     useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph));
   };
   const openCreateModal = () => {
-    useCustomNodeCreationContext.getState().openCreate();
+    useCustomNodeCreationContext.getState().openCreate("function");
+  };
+  const openCreateShaderModal = () => {
+    useCustomNodeCreationContext.getState().openCreate("shader");
   };
   const toggleSelection = () => {
     useSelection.getState().toggleSetMode(null);
@@ -74,8 +82,15 @@ export function GridUi() {
             Edit
           </MenuItem>
           <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
+          <MenuItem onClick={openCreateShaderModal}>Create New Shader</MenuItem>
           <MenuDivider></MenuDivider>
           {customFunctionNodes.map((node) => (
+            <MenuItem onClick={() => setGraph(node)} key={node}>
+              {node}
+            </MenuItem>
+          ))}
+          <MenuDivider></MenuDivider>
+          {customShaderNode.map((node) => (
             <MenuItem onClick={() => setGraph(node)} key={node}>
               {node}
             </MenuItem>
