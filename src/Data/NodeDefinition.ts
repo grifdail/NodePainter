@@ -38,6 +38,7 @@ export type NodeDefinition = {
   getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
   execute?: (node: NodeData, context: ExecutionContext) => void;
   getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
+  shaderRequirement?: string;
   executeAs?: string;
   canBeExecuted?: boolean;
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;

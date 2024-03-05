@@ -4,13 +4,27 @@ import { ExecutionContext } from "./createExecutionContext";
 export function getShaderCode(shader: string, tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
 
+  const requirement = Array.from(
+    new Set(
+      flattenNode
+        .map((nodeId: string) => {
+          const node = tree?.nodes[nodeId] as NodeData;
+          let type = tree?.getNodeTypeDefinition(node);
+          while (type?.executeAs != null) {
+            type = tree?.getNodeTypeDefinition(type.executeAs);
+          }
+          return type?.shaderRequirement;
+        })
+        .filter((item: string) => item != null)
+    )
+  );
+
   const code = flattenNode.map((nodeId: string) => {
     const node = tree?.nodes[nodeId] as NodeData;
     let type = tree?.getNodeTypeDefinition(node);
     while (type?.executeAs != null) {
       type = tree?.getNodeTypeDefinition(type.executeAs);
     }
-    console.log(type);
     return type?.getShaderCode && type.getShaderCode(node, context);
   });
   return `precision highp float;
@@ -25,6 +39,8 @@ export function getShaderCode(shader: string, tree: TreeStore | null, context: E
   uniform vec2 canvasSize;
   // a custom variable from this sketch
   uniform float time;
+
+  ${requirement.join("\n")}
 
   void main() {
     ${code.join("\n")}

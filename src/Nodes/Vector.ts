@@ -1,5 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { genShader } from "./genShader";
 
 export type Vector = { x: number; y: number };
 
@@ -32,6 +33,9 @@ export const VectorNodes: Array<NodeDefinition> = [
         var y = context.getInputValue(nodeData, "y");
         return createVector(x, y);
       }
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "vec", ["x", "y"], ([x, y]) => `vec2(${x}, ${y})`);
     },
   },
   {
@@ -101,6 +105,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
         return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
       }
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "vec", ["angle", "length"], ([angle, length]) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
+    },
   },
   {
     id: "Magnitude",
@@ -127,6 +134,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var vec = context.getInputValue(nodeData, "vec") as Vector;
       return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "length", ["vec"], ([vec]) => `length(${vec})`);
+    },
   },
   {
     id: "SquareMagnitude",
@@ -152,6 +162,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     getData: (portId, nodeData, context) => {
       var vec = context.getInputValue(nodeData, "vec") as Vector;
       return vec.x * vec.x + vec.y * vec.y;
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "length", ["vec"], ([vec]) => `${vec}.x * ${vec}.x + ${vec}.y * ${vec}.y`);
     },
   },
   {
@@ -185,6 +198,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x + b.x, a.y + b.y);
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} + ${b}`);
+    },
   },
   {
     id: "SubtractVector",
@@ -216,6 +232,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var a = context.getInputValue(nodeData, "a") as Vector;
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x - b.x, a.y - b.y);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} - ${b}`);
     },
   },
   {
@@ -249,6 +268,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "scale") as number;
       return createVector(a.x * b, a.y * b);
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["vec", "scale"], ([a, b]) => `${a} * ${b}`);
+    },
   },
   {
     id: "UnitVector",
@@ -275,6 +297,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var a = context.getInputValue(nodeData, "vec") as Vector;
       var length = Math.sqrt(a.x * a.x + a.y * a.y);
       return createVector(a.x / length, a.y / length);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["vec"], ([a]) => `normalize(${a})`);
     },
   },
   {
@@ -342,6 +367,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x * b.x, a.y * b.y);
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec2(${a}.x * ${b}.x, ${a}.y * ${b}.y)`);
+    },
   },
   {
     id: "DotProduct",
@@ -373,6 +401,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var a = context.getInputValue(nodeData, "a") as Vector;
       var b = context.getInputValue(nodeData, "b") as Vector;
       return a.x * b.x + a.y * b.y;
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "out", ["vec", "scale"], ([a, b]) => `dot(${a}, ${b})`);
     },
   },
   {
@@ -411,6 +442,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "to") as Vector;
       var t = context.getInputValue(nodeData, "t") as number;
       return createVector(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["from", "to", "t"], ([from, to, t]) => `mix(${from}, ${to}, ${t})`);
     },
   },
 ];

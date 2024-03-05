@@ -15,7 +15,7 @@ export function convertToShaderValue(value: any, type: PortType): string {
     case "string":
       return "";
     case "vector2":
-      return `vec3(${convertToShaderValue(value.x, "number")}, ${convertToShaderValue(value.y, "number")}, ${convertToShaderValue(value.y, "number")})`;
+      return `vec4(${convertToShaderValue(value.x, "number")}, ${convertToShaderValue(value.y, "number")}, 0.0, 0.0)`;
     case "number":
       var str: string = Number.isNaN(value) ? "0.0" : value.toString();
       if (str.indexOf(".") < 0) {
