@@ -1,14 +1,10 @@
-﻿import { Modal } from "../Modal";
-import styled from "styled-components";
-import { IconFunctionFilled, IconX } from "@tabler/icons-react";
+import { Modal } from "../Modal";
+import { IconFunctionFilled } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NodeDefinition, PortType } from "../../Data/NodeDefinition";
-import { PortColor } from "../StyledComponents/PortColor";
+import { NodeDefinition } from "../../Data/NodeDefinition";
 import { TextInput } from "../Settings/TextInput";
-import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
+import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { CustomNodeMainDiv, InputPortEdit } from "./CustomNodeModal";
-
-const AvailableTypes: Array<PortType> = ["number", "vector2", "color", "bool", "gradient"];
 
 export function CustomShaderModal({ close }: { close: () => void }) {
   var context = useCustomNodeCreationContext();

@@ -1,6 +1,6 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
-import { Color, Graphics } from "p5";
+import { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
 import { convertToShaderValue } from "./convertToShaderValue";
 

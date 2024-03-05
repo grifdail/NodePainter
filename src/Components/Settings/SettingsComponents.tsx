@@ -3,7 +3,7 @@ import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
 import { PaletteSetting } from "./PaletteSetting";
 import { GradientSetting } from "./GradientSetting";
-import { NodeData, TreeStore } from "../../Hooks/useTree";
+import { NodeData } from "../../Hooks/useTree";
 import { ImageUploadSetting } from "./ImageUploadSetting";
 import { ShaderDropdownSetting } from "./ShaderDropdown";
 

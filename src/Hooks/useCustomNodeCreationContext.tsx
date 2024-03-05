@@ -37,11 +37,11 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         model: node,
         type: type,
       });
-      useRouter.getState().open(type == "function" ? "custom-function" : "custom-shader");
+      useRouter.getState().open(type === "function" ? "custom-function" : "custom-shader");
     },
     openCreate(type: EDIT_TARGET_TYPE = "function") {
       var base: NodeDefinition =
-        type == "function"
+        type === "function"
           ? {
               id: "custom-node",
               hideInLibrary: false,
@@ -81,7 +81,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         type: type,
         model: base,
       });
-      useRouter.getState().open(type == "function" ? "custom-function" : "custom-shader");
+      useRouter.getState().open(type === "function" ? "custom-function" : "custom-shader");
     },
     setId: (id: string) => {
       set(
@@ -100,7 +100,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
       );
     },
     create() {
-      if (get().type == "function") {
+      if (get().type === "function") {
         useTree.getState().createFunction(get().model as NodeDefinition);
       } else {
         useTree.getState().createShader(get().model as NodeDefinition);

@@ -1,4 +1,4 @@
-﻿import { PortType } from "./NodeDefinition";
+import { PortType } from "./NodeDefinition";
 
 export function convertToShaderValue(value: any, type: PortType): string {
   switch (type) {

@@ -1,4 +1,4 @@
-﻿import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import styled from "styled-components";

@@ -1,4 +1,3 @@
-﻿import { cp } from "fs/promises";
 import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
 import { ExecutionContext } from "./createExecutionContext";
 
@@ -35,7 +34,7 @@ function buildDependencyList(start: string, nodes: NodeCollection) {
   const distances: { [key: string]: number } = { [start]: 0 };
   const walk = (nodeId: string, distance: number) => {
     const node = nodes[nodeId];
-    if (distances[nodeId] === undefined || distances[nodeId] < distance || start == nodeId) {
+    if (distances[nodeId] === undefined || distances[nodeId] < distance || start === nodeId) {
       distances[nodeId] = distance;
       console.log(nodeId, node);
       Object.entries(node.dataInputs).forEach(([id, port]) => {
