@@ -20,7 +20,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getShaderCode(node, context) {
       return `float ${context.getShaderVar(node, "time", true)} = time / 1000.0;`;
     },
-    execute: null,
   },
   {
     id: "Clock",
@@ -50,7 +49,6 @@ export const InputNodes: Array<NodeDefinition> = [
         return context.p5.second();
       }
     },
-    execute: null,
   },
   {
     id: "Calendar",
@@ -80,7 +78,6 @@ export const InputNodes: Array<NodeDefinition> = [
         return new Date().getDay();
       }
     },
-    execute: null,
   },
   {
     id: "Frame",
@@ -94,7 +91,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.p5.frameCount;
     },
-    execute: null,
   },
   {
     id: "Progress",
@@ -111,7 +107,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getShaderCode(node, context) {
       return `float ${context.getShaderVar(node, "progress", true)} = mod(time / (${convertToShaderValue(node.settings["preview-duration"], "number")} * 1000.0), 1.0);`;
     },
-    execute: null,
   },
   {
     id: "MousePosition",
@@ -125,7 +120,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return createVector(context.p5.mouseX, context.p5.mouseY);
     },
-    execute: null,
   },
   {
     id: "DeviceRotation",
@@ -151,7 +145,6 @@ export const InputNodes: Array<NodeDefinition> = [
         return context.p5.rotationZ;
       }
     },
-    execute: null,
   },
   {
     id: "Random",
@@ -165,7 +158,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.p5.random();
     },
-    execute: null,
   },
   {
     id: "MouseMovement",
@@ -179,7 +171,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return createVector(context.p5.pmouseX - context.p5.mouseX, context.p5.pmouseY - context.p5.mouseY);
     },
-    execute: null,
   },
   {
     id: "DeltaTime",
@@ -193,7 +184,6 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.p5.deltaTime / 1000;
     },
-    execute: null,
   },
   {
     id: "Dimension",
@@ -207,6 +197,5 @@ export const InputNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return createVector(context.p5.width, context.p5.height);
     },
-    execute: null,
   },
 ];

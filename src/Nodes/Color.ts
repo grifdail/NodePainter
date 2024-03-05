@@ -38,7 +38,6 @@ export const ColorNodes: Array<NodeDefinition> = [
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "red")}, ${context.getShaderVar(node, "green")}, ${context.getShaderVar(node, "blue")}, ${context.getShaderVar(node, "alpha")});`;
     },
-    execute: null,
   },
   {
     id: "ColorDecompose",
@@ -79,7 +78,6 @@ export const ColorNodes: Array<NodeDefinition> = [
       float ${context.getShaderVar(node, "alpha", true)} = ${ownVar}.a;
       `;
     },
-    execute: null,
   },
   {
     id: "ColorMix",
@@ -101,9 +99,8 @@ export const ColorNodes: Array<NodeDefinition> = [
       return lerpColor(start, end, t);
     },
     getShaderCode(node, context) {
-      return `vec4 ${context.getShaderVar(node, "color", true)} = mix(${context.getShaderVar(node, "start")}, ${context.getShaderVar(node, "end")}, ${context.getShaderVar(node, "t")})`;
+      return `vec4 ${context.getShaderVar(node, "color", true)} = mix(${context.getShaderVar(node, "start")}, ${context.getShaderVar(node, "end")}, ${context.getShaderVar(node, "t")});`;
     },
-    execute: null,
   },
   {
     id: "WithAlpha",
@@ -123,9 +120,8 @@ export const ColorNodes: Array<NodeDefinition> = [
       return createColor(color.r, color.g, color.b, alpha);
     },
     getShaderCode(node, context) {
-      return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "color")}.rgb,  ${context.getShaderVar(node, "alpha")})`;
+      return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "color")}.rgb,  ${context.getShaderVar(node, "alpha")});`;
     },
-    execute: null,
   },
   {
     id: "PickFromPalette",
@@ -142,7 +138,6 @@ export const ColorNodes: Array<NodeDefinition> = [
       var tindex = Math.floor(index % palette.length);
       return palette[tindex];
     },
-    execute: null,
   },
   {
     id: "Gradient",
@@ -156,7 +151,6 @@ export const ColorNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return nodeData.settings.gradient;
     },
-    execute: null,
   },
   {
     id: "Sample Gradient",
@@ -189,7 +183,6 @@ export const ColorNodes: Array<NodeDefinition> = [
       }
       return prev.color;
     },
-    execute: null,
   },
   {
     id: "Create Gradient",
@@ -218,7 +211,6 @@ export const ColorNodes: Array<NodeDefinition> = [
       list.sort((a, b) => a.pos - b.pos);
       return list;
     },
-    execute: null,
     contextMenu: {
       "Add color": (node) => {
         var count = Object.keys(node.dataInputs).length / 2;

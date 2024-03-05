@@ -44,7 +44,6 @@ export const SystemNodes: Array<NodeDefinition> = [
       { id: "height", type: "number", defaultValue: 400 },
     ],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
@@ -62,7 +61,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["0"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var count = Object.entries(data.execOutputs).length;
       for (var i = 0; i <= count; i++) {
@@ -152,7 +150,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     dataOutputs: [],
     executeOutputs: ["A", "B"],
     settings: [],
-    getData: (portId, nodeData, context) => {},
     canBeExecuted: true,
     execute: (data, context) => {
       var a = context.getInputValue(data, "a") as number;
@@ -215,7 +212,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var angle = context.getInputValue(data, "angle") as number;
       context.target.push();
@@ -240,7 +236,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var blur = context.getInputValue(data, "blur") as number;
       var color = context.getInputValue(data, "color") as Color;
@@ -272,7 +267,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var translation = context.getInputValue(data, "translation") as p5.Vector;
       context.target.push();
@@ -293,7 +287,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var scale = context.getInputValue(data, "scale") as p5.Vector;
       context.target.push();
@@ -314,7 +307,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["mask", "draw"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var inverted = context.getInputValue(data, "inverted");
       context.target.push();
@@ -339,7 +331,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [{ id: "mode", type: "dropdown", defaultValue: "Blend", options: ["Blend", "Add", "Darkest", "Lightest", "Difference", "Exclusion", "Multiply", "Screen", "Replace", "Remove", "Overlay", "Hard_light", "Soft_light", "Dodge", "Burn"] }],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (data, context) => {
       var mode = data.settings.mode as string;
 
@@ -365,7 +356,6 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, context) => {},
     execute: (node, context) => {
       var graphic = context.blackboard[`${node.id}-canvas-cache`];
       if (!graphic) {

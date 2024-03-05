@@ -182,9 +182,15 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = usePlayerPref();
   const [selectedCategory, setCategory] = useState(nodeFav.favNodes.length > 0 ? "fav" : "");
-  const nodeLibrary = useTree((state) => state.getNodeLibrary());
+  const isShader = useTree((state) => state.isEditingShader());
+  const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
+    if (item.hideInLibrary) {
+      return false;
+    }
+    return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
+  });
 
-  const filteredList = Object.values(nodeLibrary).filter((item) => {
+  const filteredList = nodeLibrary.filter((item) => {
     if (item.hideInLibrary) {
       return false;
     }
@@ -208,9 +214,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
     filteredList.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
   }
 
-  const tags = Object.values(nodeLibrary)
-    .flatMap((item) => item.tags)
-    .filter((value, index, array) => array.indexOf(value) === index);
+  const tags = nodeLibrary.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index);
 
   tags.splice(0, 0, "all");
   if (nodeFav.favNodes.length > 0) {
@@ -244,7 +248,8 @@ export function NodeCreationModal({ close }: { close: () => void }) {
                 <MenuButton>
                   Sort By: <IconSortDescending />
                 </MenuButton>
-              }>
+              }
+            >
               <MenuRadioGroup value={nodeFav.nodeSorting}>
                 <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
                   Name

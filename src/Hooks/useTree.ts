@@ -6,7 +6,7 @@ import { NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeD
 import { PortType } from "../Data/NodeDefinition";
 
 import { persist } from "zustand/middleware";
-import { START_NODE } from "../Nodes/System";
+import { CUSTOM_SHADER, START_NODE } from "../Nodes/System";
 import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
@@ -20,6 +20,7 @@ export type ShaderData = {
 };
 
 export type TreeStore = {
+  isEditingShader(): boolean;
   nodes: NodeCollection;
   shaders: ShaderData[];
   editedGraph?: string;
@@ -272,8 +273,6 @@ export const useTree = create<TreeStore>()(
                 dataOutputs: structuredClone(def.dataInputs),
                 executeOutputs: def.canBeExecuted ? ["execute"] : [],
                 settings: [],
-                getData: null,
-                execute: null,
                 executeAs: "CustomFunction-start",
                 canBeExecuted: false,
               };
@@ -287,8 +286,6 @@ export const useTree = create<TreeStore>()(
                 dataOutputs: [],
                 executeOutputs: [],
                 settings: [],
-                getData: null,
-                execute: null,
                 executeAs: "CustomFunction-end",
                 canBeExecuted: false,
               };
@@ -327,8 +324,6 @@ export const useTree = create<TreeStore>()(
                 ],
                 executeOutputs: [],
                 settings: [],
-                getData: null,
-                execute: null,
                 executeAs: "CustomShader-start",
                 canBeExecuted: false,
               };
@@ -348,8 +343,6 @@ export const useTree = create<TreeStore>()(
                 dataOutputs: [],
                 executeOutputs: [],
                 settings: [],
-                getData: null,
-                execute: null,
                 executeAs: "CustomShader-end",
                 canBeExecuted: false,
               };
@@ -393,6 +386,13 @@ export const useTree = create<TreeStore>()(
               }
             })
           );
+        },
+        isEditingShader() {
+          var tree = get();
+          if (tree.editedGraph === undefined || tree.editedGraph === "main") {
+            return false;
+          }
+          return tree.getNodeTypeDefinition(tree.editedGraph).executeAs === CUSTOM_SHADER;
         },
       };
     },

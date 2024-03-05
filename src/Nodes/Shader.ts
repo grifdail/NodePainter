@@ -73,8 +73,6 @@ export const ShaderNodes: Array<NodeDefinition> = [
     tags: ["Shader"],
     executeOutputs: [],
     settings: [],
-    getData(portId, node, context) {},
-    execute(node, context) {},
     getShaderCode(node, context) {
       return `gl_FragColor  = vec4(${context.getShaderVar(node, "color")}.rgb, 1.0);`;
     },
@@ -89,8 +87,6 @@ export const ShaderNodes: Array<NodeDefinition> = [
     tags: ["Shader"],
     executeOutputs: [],
     settings: [],
-    getData(portId, node, context) {},
-    execute(node, context) {},
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "uv", true)} = vec4(vTexCoord.xy, 0.0, 0.0);`;
     },

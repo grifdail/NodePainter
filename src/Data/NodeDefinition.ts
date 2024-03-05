@@ -35,13 +35,13 @@ export type NodeDefinition = {
   dataOutputs: Array<PortDefinition>;
   executeOutputs: Array<string>;
   settings: Array<SettingDefinition>;
-  getData: null | ((portId: string, node: NodeData, context: ExecutionContext) => any);
-  execute: null | ((node: NodeData, context: ExecutionContext) => void);
+  getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
+  execute?: (node: NodeData, context: ExecutionContext) => void;
+  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
   executeAs?: string;
   canBeExecuted?: boolean;
   tryBindPort?: (selfPort: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   contextMenu?: { [key: string]: (node: NodeData) => void };
-  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
 };
 

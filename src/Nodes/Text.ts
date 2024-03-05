@@ -19,7 +19,6 @@ export const TextNode: Array<NodeDefinition> = [
       const text = context.getInputValue(nodeData, "text") as string;
       return text.slice(context.getInputValue(nodeData, "start"), context.getInputValue(nodeData, "end"));
     },
-    execute: null,
   },
   {
     id: "TextLength",
@@ -34,7 +33,6 @@ export const TextNode: Array<NodeDefinition> = [
       const text = context.getInputValue(nodeData, "text") as string;
       return text.length;
     },
-    execute: null,
   },
   {
     id: "TextConcat",
@@ -51,7 +49,6 @@ export const TextNode: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.getInputValue(nodeData, "start") + context.getInputValue(nodeData, "end");
     },
-    execute: null,
   },
   {
     id: "TextLength",
@@ -66,7 +63,6 @@ export const TextNode: Array<NodeDefinition> = [
       const text = context.getInputValue(nodeData, "text") as string;
       return text.length;
     },
-    execute: null,
   },
   {
     id: "NumberToText",
@@ -80,6 +76,5 @@ export const TextNode: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.getInputValue(nodeData, "value").toString();
     },
-    execute: null,
   },
 ];

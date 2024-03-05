@@ -46,7 +46,6 @@ export const LogicNodes: Array<NodeDefinition> = [
         return false;
       }
     },
-    execute: null,
   },
   {
     id: "If",
@@ -93,7 +92,6 @@ export const LogicNodes: Array<NodeDefinition> = [
         return context.getInputValue(nodeData, "false");
       }
     },
-    execute: null,
   },
   {
     id: "SwitchVector",
@@ -116,7 +114,6 @@ export const LogicNodes: Array<NodeDefinition> = [
         return context.getInputValue(nodeData, "false");
       }
     },
-    execute: null,
   },
   {
     id: "SwitchColor",
@@ -139,7 +136,6 @@ export const LogicNodes: Array<NodeDefinition> = [
         return context.getInputValue(nodeData, "false");
       }
     },
-    execute: null,
   },
   {
     id: "And",
@@ -156,7 +152,6 @@ export const LogicNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.getInputValue(nodeData, "a") && context.getInputValue(nodeData, "b");
     },
-    execute: null,
   },
   {
     id: "Or",
@@ -173,7 +168,6 @@ export const LogicNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.getInputValue(nodeData, "a") || context.getInputValue(nodeData, "b");
     },
-    execute: null,
   },
   {
     id: "xOr",
@@ -190,7 +184,6 @@ export const LogicNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return context.getInputValue(nodeData, "a") ^ context.getInputValue(nodeData, "b");
     },
-    execute: null,
   },
   {
     id: "not",
@@ -204,7 +197,6 @@ export const LogicNodes: Array<NodeDefinition> = [
     getData: (portId, nodeData, context) => {
       return !context.getInputValue(nodeData, "a");
     },
-    execute: null,
   },
 ];
 

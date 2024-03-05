@@ -138,7 +138,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return Math.atan2(a, b);
       }
     },
-    execute: null,
   },
   {
     id: "SineWave",
@@ -190,7 +189,6 @@ export const MathNodes: Array<NodeDefinition> = [
       var t = Math.cos(time * 2 * Math.PI * frequency + phase);
       return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
     },
-    execute: null,
   },
   {
     id: "Clamp",
@@ -231,7 +229,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return Math.max(Math.min(value, max), min);
       }
     },
-    execute: null,
   },
   {
     id: "Lerp",
@@ -272,7 +269,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return t * max + (1 - t) * min;
       }
     },
-    execute: null,
   },
   {
     id: "PingPong",
@@ -316,7 +312,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return tt >= range ? 2 * range - tt : tt;
       }
     },
-    execute: null,
   },
   {
     id: "Remap",
@@ -377,7 +372,6 @@ export const MathNodes: Array<NodeDefinition> = [
       var trueMax = Math.max(outmax, outmin);
       return clamp ? Math.min(trueMax, Math.max(trueMin, r)) : r;
     },
-    execute: null,
   },
   {
     id: "Noise",
@@ -400,7 +394,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return context.p5.noise(pos.x * scale.x, pos.y * scale.y, time);
       }
     },
-    execute: null,
   },
   {
     id: "LoopingNoise",
@@ -421,7 +414,6 @@ export const MathNodes: Array<NodeDefinition> = [
       var seed = context.getInputValue(nodeData, "seed");
       return context.p5.noise(seed.x + Math.cos(pos * Math.PI * 2) * scale, seed.y + Math.cos(pos * Math.PI * 2) * scale);
     },
-    execute: null,
   },
   {
     id: "Easing",
@@ -450,7 +442,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return input;
       }
     },
-    execute: null,
   },
   {
     id: "EvaluateBezier",
@@ -504,7 +495,6 @@ export const MathNodes: Array<NodeDefinition> = [
         return createVector(context.p5.bezierTangent(start.x, p1.x, p2.x, end.x, t), context.p5.bezierTangent(start.y, p1.y, p2.y, end.y, t));
       }
     },
-    execute: null,
   },
 ];
 
@@ -549,22 +539,23 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
         return evalOperation(a, b);
       }
     },
-    getShaderCode(node, context) {
-      if (shaderCode) {
-        if (allowMoreInput) {
-          const key = Object.keys(node.dataInputs);
-          let start = context.getShaderVar(node, key[0]);
-          for (let i = 1; i < key.length; i++) {
-            start = shaderCode(`(${start})`, context.getShaderVar(node, key[i]));
+    getShaderCode: !shaderCode
+      ? undefined
+      : (node, context) => {
+          if (shaderCode) {
+            if (allowMoreInput) {
+              const key = Object.keys(node.dataInputs);
+              let start = context.getShaderVar(node, key[0]);
+              for (let i = 1; i < key.length; i++) {
+                start = shaderCode(`(${start})`, context.getShaderVar(node, key[i]));
+              }
+              return `float ${context.getShaderVar(node, "result", true)} = ${start};`;
+            } else {
+              return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "a"), context.getShaderVar(node, "b"))};`;
+            }
           }
-          return `float ${context.getShaderVar(node, "result", true)} = ${start};`;
-        } else {
-          return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "a"), context.getShaderVar(node, "b"))};`;
-        }
-      }
-      return "";
-    },
-    execute: null,
+          return "";
+        },
   };
   if (allowMoreInput) {
     result.contextMenu = {
@@ -621,13 +612,14 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
         return evalOperation(a);
       }
     },
-    getShaderCode(node, context) {
-      if (shaderCode) {
-        return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "input"))};`;
-      }
-      return "";
-    },
-    execute: null,
+    getShaderCode: !shaderCode
+      ? undefined
+      : (node, context) => {
+          if (shaderCode) {
+            return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "input"))};`;
+          }
+          return "";
+        },
   };
 }
 
@@ -655,6 +647,5 @@ function createConstant(id: string, value: number): NodeDefinition {
     getShaderCode(node, context) {
       return `float ${context.getShaderVar(node, "value", true)} = ${convertToShaderValue(value, "number")};`;
     },
-    execute: null,
   };
 }

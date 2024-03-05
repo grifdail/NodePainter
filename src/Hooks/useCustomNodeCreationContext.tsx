@@ -52,8 +52,6 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
               dataOutputs: [],
               executeOutputs: [],
               settings: [],
-              getData: null,
-              execute: null,
               executeAs: CUSTOM_FUNCTION,
               canBeExecuted: false,
             }
@@ -71,8 +69,6 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
                 { id: "height", type: "number", defaultValue: 400 },
                 { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
               ],
-              getData: null,
-              execute: null,
               executeAs: CUSTOM_SHADER,
               canBeExecuted: true,
             };

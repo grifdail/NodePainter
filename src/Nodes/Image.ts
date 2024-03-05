@@ -30,7 +30,6 @@ export const ImageNode: Array<NodeDefinition> = [
 
       return;
     },
-    execute: null,
   },
   {
     id: "DrawImage",
@@ -46,7 +45,6 @@ export const ImageNode: Array<NodeDefinition> = [
     tags: ["Image"],
     executeOutputs: [],
     settings: [],
-    getData(portId, data, context) {},
     execute(node, context) {
       var image = context.getInputValue(node, "image") as null | ImageData;
       var pos = context.getInputValue(node, "pos");
@@ -71,7 +69,6 @@ export const ImageNode: Array<NodeDefinition> = [
     tags: ["Image"],
     executeOutputs: [],
     settings: [],
-    getData(portId, data, context) {},
     execute(node, context) {
       var image = context.getInputValue(node, "image") as null | ImageData;
       var pos = context.getInputValue(node, "pos");
@@ -108,7 +105,6 @@ export const ImageNode: Array<NodeDefinition> = [
 
       return;
     },
-    execute: null,
   },
   {
     id: "PrecomputeImage",

@@ -33,7 +33,6 @@ export const VectorNodes: Array<NodeDefinition> = [
         return createVector(x, y);
       }
     },
-    execute: null,
   },
   {
     id: "VectorDecompose",
@@ -74,7 +73,6 @@ export const VectorNodes: Array<NodeDefinition> = [
       return `float ${context.getShaderVar(node, "x", true)} = ${context.getShaderVar(node, "vec")}.x;
 float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "vec")}.y;`;
     },
-    execute: null,
   },
   {
     id: "VectorFromAngle",
@@ -103,7 +101,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
         return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
       }
     },
-    execute: null,
   },
   {
     id: "Magnitude",
@@ -130,7 +127,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var vec = context.getInputValue(nodeData, "vec") as Vector;
       return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
     },
-    execute: null,
   },
   {
     id: "SquareMagnitude",
@@ -157,7 +153,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var vec = context.getInputValue(nodeData, "vec") as Vector;
       return vec.x * vec.x + vec.y * vec.y;
     },
-    execute: null,
   },
   {
     id: "AddVector",
@@ -190,7 +185,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x + b.x, a.y + b.y);
     },
-    execute: null,
   },
   {
     id: "SubtractVector",
@@ -223,7 +217,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x - b.x, a.y - b.y);
     },
-    execute: null,
   },
   {
     id: "ScaleVector",
@@ -256,7 +249,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "scale") as number;
       return createVector(a.x * b, a.y * b);
     },
-    execute: null,
   },
   {
     id: "UnitVector",
@@ -284,7 +276,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var length = Math.sqrt(a.x * a.x + a.y * a.y);
       return createVector(a.x / length, a.y / length);
     },
-    execute: null,
   },
   {
     id: "RotateVector",
@@ -319,7 +310,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var sin = Math.sin(b);
       return createVector(a.x * cos + a.y * sin, a.x * sin + a.y * cos);
     },
-    execute: null,
   },
   {
     id: "MultiplyComponentVector",
@@ -352,7 +342,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return createVector(a.x * b.x, a.y * b.y);
     },
-    execute: null,
   },
   {
     id: "DotProduct",
@@ -385,7 +374,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var b = context.getInputValue(nodeData, "b") as Vector;
       return a.x * b.x + a.y * b.y;
     },
-    execute: null,
   },
   {
     id: "LerpVector",
@@ -424,7 +412,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       var t = context.getInputValue(nodeData, "t") as number;
       return createVector(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
     },
-    execute: null,
   },
 ];
 

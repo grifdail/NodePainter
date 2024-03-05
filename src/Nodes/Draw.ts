@@ -22,7 +22,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       context.target.background(toP5Color(color, context.p5));
@@ -38,7 +37,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       context.target.clear(0, 0, 0, 0);
     },
@@ -69,7 +67,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var position = context.getInputValue(data, "position") as P5.Vector;
@@ -110,7 +107,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var position = context.getInputValue(data, "position") as P5.Vector;
@@ -163,7 +159,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       const color = context.getInputValue(data, "color");
       const center = context.getInputValue(data, "center") as P5.Vector;
@@ -223,7 +218,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       const color = context.getInputValue(data, "color");
       const center = context.getInputValue(data, "center") as P5.Vector;
@@ -273,7 +267,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var p1 = context.getInputValue(data, "start") as P5.Vector;
@@ -315,7 +308,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var p1 = context.getInputValue(data, "corner") as P5.Vector;
@@ -362,7 +354,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var gradient = context.getInputValue(data, "gradient") as Gradient;
       var gradientDirection = context.getInputValue(data, "direction");
@@ -415,7 +406,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var p1 = context.getInputValue(data, "corner1") as P5.Vector;
@@ -462,7 +452,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var p1 = context.getInputValue(data, "corner1") as P5.Vector;
@@ -505,7 +494,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       const color = context.getInputValue(data, "color");
       context.target.fill(toP5Color(color, context.p5));
@@ -572,7 +560,6 @@ export const DrawNodes: Array<NodeDefinition> = [
       { id: "Font", type: "dropdown", defaultValue: "Josefin Sans", options: ["Agbalumo", "Amatic SC", "Concert One", "Josefin Sans", "Lobster", "Merriweather", "Monomaniac One", "Oleo Script", "Open Sans", "Orbitron", "Permanent Marker", "Pixelify Sans", "Titan One"] },
     ],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var text = context.getInputValue(data, "text") as string;
@@ -627,7 +614,6 @@ export const DrawNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     canBeExecuted: true,
-    getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
       var color = context.getInputValue(data, "color");
       var size = context.getInputValue(data, "lineWidth") as number;
