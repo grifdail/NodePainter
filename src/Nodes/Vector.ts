@@ -35,7 +35,7 @@ export const VectorNodes: Array<NodeDefinition> = [
       }
     },
     getShaderCode(node, context) {
-      return genShader(node, context, "vec4", "vec", ["x", "y"], ([x, y]) => `vec2(${x}, ${y})`);
+      return genShader(node, context, "vec4", "vec", ["x", "y"], ([x, y]) => `vec4(${x}, ${y}, 0.0, 0.0)`);
     },
   },
   {
@@ -444,7 +444,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       return createVector(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
     },
     getShaderCode(node, context) {
-      return genShader(node, context, "vec4", "out", ["from", "to", "t"], ([from, to, t]) => `mix(${from}, ${to}, ${t})`);
+      return genShader(node, context, "vec4", "result", ["from", "to", "t"], ([from, to, t]) => `mix(${from}, ${to}, ${t})`);
     },
   },
 ];

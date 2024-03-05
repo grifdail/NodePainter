@@ -406,7 +406,7 @@ export const useTree = create<TreeStore>()(
 function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
   return {
     type: def.id,
-    id: id || nanoid(),
+    id: id || "node" + nanoid(),
     dataInputs: createPortConnectionsForInputsDefinition(def),
     settings: createSettingObjectForSettingDefinition(def),
     dataOutputs: createDataOutputData(def),

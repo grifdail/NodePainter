@@ -54,6 +54,7 @@ export const ShaderNodes: Array<NodeDefinition> = [
       needRedraw ||= when === "Everytime";
       if (needRedraw) {
         shader.setUniform("time", context.time);
+        img.image.clear(0, 0, 0, 0);
         img.image.filter(shader);
         context.blackboard[keyComputed] = true;
         context.frameBlackboard[keyComputed] = true;
@@ -74,7 +75,7 @@ export const ShaderNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getShaderCode(node, context) {
-      return `gl_FragColor  = vec4(${context.getShaderVar(node, "color")}.rgb, 1.0);`;
+      return `gl_FragColor  = ${context.getShaderVar(node, "color")};`;
     },
   },
   {

@@ -8,6 +8,7 @@ import { VectorNodes } from "./Vector";
 import { ImageNode } from "./Image";
 import { TextNode } from "./Text";
 import { ShaderNodes } from "./Shader";
+import { UVNodes } from "./UV";
 
-const NodeLibraryArray = [SystemNodes, DrawNodes, ColorNodes, DrawNodes, InputNodes, LogicNodes, MathNodes, VectorNodes, ImageNode, TextNode, ShaderNodes].flat();
+const NodeLibraryArray = [SystemNodes, DrawNodes, ColorNodes, DrawNodes, InputNodes, LogicNodes, MathNodes, VectorNodes, ImageNode, TextNode, ShaderNodes, UVNodes].flat();
 export const NodeLibrary = Object.fromEntries(NodeLibraryArray.map((node) => [node.id, node]));
