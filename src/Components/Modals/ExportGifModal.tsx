@@ -7,8 +7,11 @@ import { NumberInput } from "../Settings/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Data/createExecutionContext";
-import * as GIF from "gif.js.optimized";
 import { START_NODE } from "../../Nodes/System";
+import { CanvasExporter } from "./CanvasExporter";
+import { GifExporter } from "./GifExporter";
+import { WhammyExporter } from "./WhammyExporter";
+import { BoolInput } from "../Settings/BoolInput";
 
 const MainDiv = styled.div`
   display: flex;
@@ -47,42 +50,34 @@ type MySketchProps = SketchProps & {
   onProgress: (rendering: number, processing: number) => void;
   duration: number;
   fixedFrameRate: number;
+  isGif: boolean;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
   var ended = false;
-  var gif: any = null;
+  var renderer: CanvasExporter | null = null;
   var ownProps: MySketchProps | null = null;
   let seed = Date.now();
 
   p5.setup = () => {};
 
   p5.updateWithProps = (props: MySketchProps) => {
-    tree = props.tree;
-    context = createExecutionContext(tree, p5 as P5CanvasInstance);
-    ownProps = props;
-    const start = tree.getNode(START_NODE);
+    if (tree !== props.tree || ended) {
+      tree = props.tree;
+      context = createExecutionContext(tree, p5 as P5CanvasInstance);
+      ownProps = props;
+      const start = tree.getNode(START_NODE);
 
-    if (gif == null) {
-      p5.pixelDensity(1);
-      p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
-      gif = new GIF({
-        workerScript: "/gif.worker.js",
-        workers: 8,
-        quality: 5,
-        width: start.settings.width || 400,
-        height: start.settings.height || 400,
-        debug: true,
-      });
-      gif.on("finished", function (blob: Blob) {
-        ownProps?.onFinished(blob);
-      });
-      gif.on("progress", function (p: any) {
-        ownProps?.onProgress(1, p);
-      });
-      ended = false;
+      if (renderer == null) {
+        p5.pixelDensity(1);
+        p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+        const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
+        renderer = props.isGif ? GifExporter() : WhammyExporter();
+        renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress);
+        ended = false;
+      }
     }
   };
 
@@ -96,18 +91,18 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.p5.randomSeed(seed);
     context.frameBlackboard = {};
     context.execute(START_NODE);
-    if (!ended) {
-      var frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-      time += ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
+    if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
+    } else if (!ended) {
+      const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
+      time += frameRate;
 
-      var delay = ownProps.fixedFrameRate > 0 ? frameRate : p5.deltaTime;
-      gif.addFrame(p5.drawingContext, { delay: delay, copy: true });
+      renderer?.addFrame(p5.drawingContext);
 
       ownProps.onProgress(progress, 0);
 
       if (progress >= 1) {
         ended = true;
-        gif.render();
+        renderer?.render();
       }
     }
   };
@@ -128,6 +123,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
+  const [isGif, setIsGif] = useState(true);
 
   const start = tree.getNode(START_NODE);
 
@@ -146,8 +142,12 @@ export function ExportGifModal({ close }: { close: () => void }) {
           <NumberInput value={duration} onChange={setDuration} />
         </fieldset>
         <fieldset>
-          <label>FrameRate (keep at 0 for dynamic frame rate)</label>
+          <label>FrameRate</label>
           <NumberInput value={fixedFrameRate} onChange={setFixedFrameRate} />
+        </fieldset>
+        <fieldset>
+          <label>Output as a gif ?</label>
+          <BoolInput value={isGif} onChange={setIsGif} />
         </fieldset>
         <hr></hr>
         <progress value={progress} max="100" />
@@ -155,7 +155,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
           {renderState === "rendering" && <button disabled> Rendering</button>}
           {renderState === "processing" && <button disabled> Processing</button>}
-          {renderState === "done" && <button onClick={() => download(blob as Blob, `nodepainter-gif-${Date.now()}.gif`)}>Download</button>}
+          {renderState === "done" && <button onClick={() => download(blob as Blob, isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
       <div>
@@ -166,8 +166,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
             tree={tree}
             duration={duration}
             fixedFrameRate={fixedFrameRate}
+            isGif={isGif}
             onFinished={(blob: Blob) => {
               setRenderState("done");
+              setProgress(2);
               setBlob(blob);
             }}
             onProgress={onProgress}

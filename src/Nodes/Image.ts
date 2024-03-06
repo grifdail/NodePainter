@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
-import { ImageData } from "../Data/ImageCache";
+import { ImageData } from "../Data/ImageData";
 import { createVector } from "./Vector";
 import { Image } from "p5";
 import { createColor, toP5Color } from "./Color";

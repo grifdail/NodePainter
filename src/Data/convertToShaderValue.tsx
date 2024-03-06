@@ -3,7 +3,7 @@ import { PortType } from "./NodeDefinition";
 export function convertToShaderValue(value: any, type: PortType): string {
   switch (type) {
     case "bool":
-      return value.tostring();
+      return value.toString();
     case "color":
       return `vec4(${convertToShaderValue(value.r, "number")}, ${convertToShaderValue(value.g, "number")}, ${convertToShaderValue(value.b, "number")}, ${convertToShaderValue(value.a, "number")})`;
     case "execute":

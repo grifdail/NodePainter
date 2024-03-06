@@ -5,6 +5,7 @@ import { Vector, createVector } from "./Vector";
 import * as Easing from "../libs/easing";
 import { createPortConnection } from "../Data/createPortConnection";
 import { convertToShaderValue } from "../Data/convertToShaderValue";
+import { genShader } from "./genShader";
 
 const ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
@@ -76,7 +77,7 @@ export const MathNodes: Array<NodeDefinition> = [
   createFunc("Atan", Math.atan, "Return the inverse tangent (in radian) of a number.", IconAngle, (a) => `atan(${a})`),
   createFunc("Floor", Math.floor, "Round down a number to the largest interger smaller or equal to itself.", IconMathFunction, (a) => `floor(${a})`),
   createFunc("Ceil", Math.ceil, "Round up a number to the smallest interger larger or equal to itself.", IconMathFunction, (a) => `ceil(${a})`),
-  createFunc("Round", Math.round, "Round a number to the closest integer.", IconMathFunction),
+  createFunc("Round", Math.round, "Round a number to the closest integer.", IconMathFunction, (a) => `round(${a})`),
   createFunc("Exp", Math.exp, "Return e to the power of a number.", IconMathFunction, (a) => `exp(${a})`),
   createFunc("Log", Math.log, "Return the natural logarithm of a number (base e).", IconMathFunction, (a) => `log(${a})`),
   createFunc("Sign", Math.sign, "Return -1, 0 or 1 depending of the sign of a number.", IconMathFunction, (a) => `sign(${a})`),
@@ -138,6 +139,16 @@ export const MathNodes: Array<NodeDefinition> = [
         return Math.atan2(a, b);
       }
     },
+    shaderRequirement: `
+    float atan2(in float y, in float x)
+{
+    bool s = (abs(x) > abs(y));
+    return mix(PI/2.0 - atan(x,y), atan(y,x), s);
+}
+`,
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "result", ["x", "y"], ([x, y]) => `atan2(${y}, ${x})`);
+    },
   },
   {
     id: "SineWave",
@@ -186,8 +197,11 @@ export const MathNodes: Array<NodeDefinition> = [
       var frequency = context.getInputValue(nodeData, "frequency");
       var amplitude = context.getInputValue(nodeData, "amplitude");
       var positive = context.getInputValue(nodeData, "positive");
-      var t = Math.cos(time * 2 * Math.PI * frequency + phase);
+      var t = Math.cos((time + phase) * 2 * Math.PI * frequency);
       return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "output", ["time", "phase", "frequency", "amplitude", "positive"], ([time, phase, frequency, amplitude, positive]) => `(!${positive} ? cos((${time}+${phase}) * 6.2831855 * ${frequency}) : cos((${time}+${phase}) * 6.2831855 * ${frequency}) * 0.5 + 0.5 ) * ${amplitude}`);
     },
   },
   {
@@ -229,6 +243,9 @@ export const MathNodes: Array<NodeDefinition> = [
         return Math.max(Math.min(value, max), min);
       }
     },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "result", ["value", "min", "max"], ([value, min, max]) => `clamp(${value}, ${min}, ${max})`);
+    },
   },
   {
     id: "Lerp",
@@ -268,6 +285,9 @@ export const MathNodes: Array<NodeDefinition> = [
         var max = context.getInputValue(nodeData, "max");
         return t * max + (1 - t) * min;
       }
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "result", ["t", "min", "max"], ([t, min, max]) => `mix( ${min}, ${max}, ${t})`);
     },
   },
   {
@@ -371,6 +391,14 @@ export const MathNodes: Array<NodeDefinition> = [
       var trueMin = Math.min(outmax, outmin);
       var trueMax = Math.max(outmax, outmin);
       return clamp ? Math.min(trueMax, Math.max(trueMin, r)) : r;
+    },
+    shaderRequirement: `float map(float n, float inmin, float inmax, float outmin, float outmax, bool c) {
+      float dt = (n - inmin) / (inmax - inmin);
+      float r = dt * outmax + (1.0 - dt) * outmin;
+      return c ? clamp(r, min(outmin, outmax), max(outmax, outmin)) : r;
+}`,
+    getShaderCode(node, context) {
+      return genShader(node, context, "float", "result", ["t", "in-min", "in-max", "out-min", "out-max", "clamp"], ([t, a, b, c, d, e]) => `map(${t}, ${a}, ${b}, ${c}, ${d}, ${e})`);
     },
   },
   {
