@@ -1,6 +1,8 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { ImageData } from "../Data/ImageCache";
+import { genShader } from "./genShader";
+import { convertToUniform, getShaderType } from "../Data/convertToShaderValue";
 
 export const ShaderNodes: Array<NodeDefinition> = [
   {
@@ -39,7 +41,7 @@ export const ShaderNodes: Array<NodeDefinition> = [
       let shader = context.blackboard[keyShader];
       if (!shader) {
         try {
-          const shaderCode: string = context.getShaderCode(node.type);
+          const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
           console.log(shaderCode);
           shader = (img.image as any).createFilterShader(shaderCode);
           context.blackboard[keyShader] = shader;
@@ -54,6 +56,13 @@ export const ShaderNodes: Array<NodeDefinition> = [
       needRedraw ||= when === "Everytime";
       if (needRedraw) {
         shader.setUniform("time", context.time);
+        Object.values(node.dataInputs).forEach((port) => {
+          var data = context.getInputValue(node, port.id);
+          if (port.type === "image" && (!data || !data.isLoaded)) {
+            return;
+          }
+          shader.setUniform(`uniform_${port.id}`, convertToUniform(port.type, data));
+        });
         img.image.clear(0, 0, 0, 0);
         img.image.filter(shader);
         context.blackboard[keyComputed] = true;
@@ -89,7 +98,14 @@ export const ShaderNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getShaderCode(node, context) {
-      return `vec4 ${context.getShaderVar(node, "uv", true)} = vec4(vTexCoord.xy, 0.0, 0.0);`;
+      return [
+        genShader(node, context, "vec4", "uv", [], () => `vec4(vTexCoord.xy, 0.0, 0.0)`),
+        ...Object.values(node.dataOutputs)
+          .filter((port) => port.id !== "uv" && port.type !== "image")
+          .map((port) => {
+            return genShader(node, context, getShaderType(port.type), port.id, [], () => `uniform_${port.id}`);
+          }),
+      ].join("\n");
     },
   },
 ];

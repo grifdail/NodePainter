@@ -97,9 +97,10 @@ export const CustomNodeMainDiv = styled.div`
   }
 `;
 
-const AvailableTypes: Array<PortType> = ["number", "vector2", "color", "bool", "gradient"];
+const AvailableTypesInput: Array<PortType> = ["number", "vector2", "color", "bool", "gradient", "image", "string"];
+const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "color", "bool", "gradient", "string"];
 
-export function InputPortEdit({ port, context, index, role }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; role: PortRole }) {
+export function InputPortEdit({ port, context, index, role, availableTypes }: { port: PortDefinition; context: CustomFunctionCreationContextStore; index: number; role: PortRole; availableTypes: Array<PortType> }) {
   const portColor = PortColor[port.type];
   const PortValueEditor = portColor.input;
   return (
@@ -110,7 +111,7 @@ export function InputPortEdit({ port, context, index, role }: { port: PortDefini
       <div className="type">
         <Menu menuButton={<MenuButton>{capitalCase(port.type)}</MenuButton>}>
           <MenuRadioGroup value={port.type}>
-            {AvailableTypes.map((type) => {
+            {availableTypes.map((type) => {
               return (
                 <MenuItem key={type} value={type} onClick={() => context.setPortType(role, index, type)}>
                   {capitalCase(type)}
@@ -149,7 +150,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Inputs</h3>
           {def.dataInputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" />
+            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" availableTypes={AvailableTypesInput} />
           ))}
           <ButtonGroup>
             <button onClick={context.addInputs}>Add</button>
@@ -158,7 +159,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         <section>
           <h3>Outputs</h3>
           {def.dataOutputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} index={i} role="outputData" context={context} />
+            <InputPortEdit key={i} port={port} index={i} role="outputData" availableTypes={AvailableTypesOutput} context={context} />
           ))}
           <ButtonGroup>
             <button onClick={context.addOutput}>Add</button>

@@ -1,12 +1,12 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
-import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
+import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/useTree";
 import { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
 import { convertToShaderValue } from "./convertToShaderValue";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;
-  getShaderCode(shader: string): string;
+  getShaderCode(shader: string, uniforms: PortConnection[]): string;
   findNodeOfType(type: string): string | null;
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
   functionStack: Array<{ [key: string]: any }>;
@@ -59,10 +59,10 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getShaderVar(nodeData, portId, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
-        return `${cleanVar(nodeData.id)}_${cleanVar(portId)}`;
+        return `${cleanNameForShader(nodeData.id)}_${cleanNameForShader(portId)}`;
       }
       if (inputPorts.hasConnection) {
-        return `${cleanVar(inputPorts.connectedNode)}_${cleanVar(inputPorts.connectedPort)}`;
+        return `${cleanNameForShader(inputPorts.connectedNode)}_${cleanNameForShader(inputPorts.connectedPort)}`;
       } else {
         return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
       }
@@ -83,13 +83,13 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       }
       return null;
     },
-    getShaderCode(shader) {
-      return getShaderCode(shader, tree, context);
+    getShaderCode(shader, ports) {
+      return getShaderCode(shader, ports, tree, context);
     },
   };
   return context;
 }
 
-var cleanVar = function (str: string | null) {
+export const cleanNameForShader = function (str: string | null) {
   return str?.replaceAll("-", "_");
 };

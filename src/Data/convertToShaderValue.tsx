@@ -27,3 +27,49 @@ export function convertToShaderValue(value: any, type: PortType): string {
       return "";
   }
 }
+
+export function getShaderType(type: PortType): string {
+  switch (type) {
+    case "bool":
+      return "float";
+    case "color":
+      return `vec4`;
+    case "execute":
+      return "";
+    case "gradient":
+      return "";
+    case "image":
+      return "sampler2D";
+    case "string":
+      return "";
+    case "vector2":
+      return `vec4`;
+    case "number":
+      return "float";
+    default:
+      return "";
+  }
+}
+
+export function convertToUniform(type: PortType, value: any): any {
+  switch (type) {
+    case "bool":
+      return value;
+    case "color":
+      return [value.r, value.g, value.b, value.a];
+    case "execute":
+      return "";
+    case "gradient":
+      return "";
+    case "image":
+      return value.image;
+    case "string":
+      return "";
+    case "vector2":
+      return [value.x, value.y, 0, 0];
+    case "number":
+      return value;
+    default:
+      return "";
+  }
+}

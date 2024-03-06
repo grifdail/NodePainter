@@ -1,10 +1,12 @@
 import { Modal } from "../Modal";
 import { IconFunctionFilled } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition, PortType } from "../../Data/NodeDefinition";
 import { TextInput } from "../Settings/TextInput";
 import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { CustomNodeMainDiv, InputPortEdit } from "./CustomNodeModal";
+
+const AvailableTypesInput: Array<PortType> = ["number", "vector2", "color", "bool", "image"];
 
 export function CustomShaderModal({ close }: { close: () => void }) {
   var context = useCustomNodeCreationContext();
@@ -22,7 +24,7 @@ export function CustomShaderModal({ close }: { close: () => void }) {
         <section>
           <h3>Inputs</h3>
           {def.dataInputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" />
+            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" availableTypes={AvailableTypesInput} />
           ))}
           <ButtonGroup>
             <button onClick={context.addInputs}>Add</button>

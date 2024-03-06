@@ -103,4 +103,22 @@ float GradientNoise_float(vec4 UV, float Scale)
       return genShader(node, context, "vec4", "out", ["uv", "freq", "colorA", "colorB"], ([uv, freq, a, b]) => `Checkerboard(${uv}, ${a}, ${b}, ${freq})`);
     },
   },
+  {
+    id: "Sample Texture",
+    hideInLibrary: false,
+    icon: IconGizmo,
+    description: "Sample a pixel from a UV",
+    dataInputs: [
+      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "sampler", type: "image", defaultValue: null },
+    ],
+
+    dataOutputs: [{ id: "out", type: "color", defaultValue: createColor() }],
+    tags: ["UV"],
+    executeOutputs: [],
+    settings: [],
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["uv"], ([uv]) => `texture2D(uniform_${node.dataInputs["sampler"].connectedPort}, ${uv}.xy)`);
+    },
+  },
 ];

@@ -1,7 +1,8 @@
-import { NodeCollection, NodeData, TreeStore } from "../Hooks/useTree";
+import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/useTree";
+import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
 
-export function getShaderCode(shader: string, tree: TreeStore | null, context: ExecutionContext) {
+export function getShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
 
   const requirement = Array.from(
@@ -40,7 +41,9 @@ export function getShaderCode(shader: string, tree: TreeStore | null, context: E
   // a custom variable from this sketch
   uniform float time;
 
-  ${requirement.join("\n")}
+  ${ports.map((port) => `uniform ${getShaderType(port.type)} uniform_${port.id};`).join("\n")}
+
+  ${requirement.join("\n\n")}
 
   void main() {
     ${code.join("\n")}
