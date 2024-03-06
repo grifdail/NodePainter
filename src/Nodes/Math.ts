@@ -48,7 +48,7 @@ export const MathNodes: Array<NodeDefinition> = [
     "Give the remainder of the division of A by B.",
     IconPercentage,
     false,
-    (a, b) => `${a} % ${b}`
+    (a, b) => `mod(${a}, ${b})`
   ),
   createOperation(
     "Pow",

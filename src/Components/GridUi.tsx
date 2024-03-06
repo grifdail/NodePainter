@@ -49,7 +49,7 @@ export function GridUi() {
   };
 
   const openEditModal = () => {
-    useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph));
+    useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph), useTree.getState().isEditingShader() ? "shader" : "function");
   };
   const openCreateModal = () => {
     useCustomNodeCreationContext.getState().openCreate("function");
@@ -77,7 +77,8 @@ export function GridUi() {
               <IconFunctionFilled></IconFunctionFilled>
               <span>{graph}</span>
             </button>
-          }>
+          }
+        >
           <MenuItem onClick={openEditModal} disabled={graph === "main"}>
             Edit
           </MenuItem>
@@ -107,7 +108,8 @@ export function GridUi() {
             <button>
               <IconMenu2></IconMenu2>
             </button>
-          }>
+          }
+        >
           <MenuItem onClick={() => openModal("about")}>About</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem onClick={reset}>New Graph</MenuItem>

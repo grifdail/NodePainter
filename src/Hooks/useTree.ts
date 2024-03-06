@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { current, produce } from "immer";
+import { current, original, produce } from "immer";
 
 import { nanoid } from "nanoid";
 import { NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
@@ -295,6 +295,21 @@ export const useTree = create<TreeStore>()(
               const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
               state.nodes[start] = newStartNode;
               state.nodes[end] = newEndNode;
+              for (let nodeId in original(state.nodes)) {
+                let node = state.nodes[nodeId];
+                if (node.type === def.id) {
+                  def.dataInputs.forEach((port) => {
+                    if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
+                      node.dataInputs[port.id] = createPortConnection(port);
+                    }
+                  });
+                  def.dataOutputs.forEach((port) => {
+                    if (node.dataOutputs[port.id] === undefined || node.dataOutputs[port.id].type !== port.type) {
+                      node.dataOutputs[port.id] = createPortConnection(port);
+                    }
+                  });
+                }
+              }
               state.editedGraph = def.id;
             })
           );
@@ -352,6 +367,16 @@ export const useTree = create<TreeStore>()(
               const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
               state.nodes[start] = newStartNode;
               state.nodes[end] = newEndNode;
+              for (let nodeId in original(state.nodes)) {
+                let node = state.nodes[nodeId];
+                if (node.type === def.id) {
+                  def.dataInputs.forEach((port) => {
+                    if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
+                      node.dataInputs[port.id] = createPortConnection(port);
+                    }
+                  });
+                }
+              }
               state.editedGraph = def.id;
             })
           );

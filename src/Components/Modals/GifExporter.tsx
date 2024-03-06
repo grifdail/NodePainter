@@ -1,4 +1,4 @@
-﻿import * as GIF from "gif.js.optimized";
+import * as GIF from "gif.js.optimized";
 import { CanvasExporter } from "./CanvasExporter";
 
 export function GifExporter(): CanvasExporter {

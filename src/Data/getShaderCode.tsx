@@ -1,3 +1,4 @@
+import { typeOf } from "mathjs";
 import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/useTree";
 import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
@@ -8,13 +9,20 @@ export function getShaderCode(shader: string, ports: PortConnection[], tree: Tre
   const requirement = Array.from(
     new Set(
       flattenNode
-        .map((nodeId: string) => {
+        .flatMap((nodeId: string) => {
           const node = tree?.nodes[nodeId] as NodeData;
           let type = tree?.getNodeTypeDefinition(node);
           while (type?.executeAs != null) {
             type = tree?.getNodeTypeDefinition(type.executeAs);
           }
-          return type?.shaderRequirement;
+          var requirement = type?.shaderRequirement;
+          if (requirement === undefined || requirement === null) {
+            return [];
+          }
+          if (typeOf(requirement) === "string") {
+            return [requirement];
+          }
+          return requirement;
         })
         .filter((item: string) => item != null)
     )

@@ -1,4 +1,4 @@
-﻿import tsWhammy from "ts-whammy";
+import tsWhammy from "ts-whammy";
 import { CanvasExporter } from "./CanvasExporter";
 
 export function WhammyExporter(): CanvasExporter {

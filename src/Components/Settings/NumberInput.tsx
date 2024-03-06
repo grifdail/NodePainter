@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
-import { useDrag } from "@use-gesture/react";
+//import { useDrag } from "@use-gesture/react";
 
 const math = create(all);
 const limitedEvaluate = math.evaluate;
@@ -34,7 +34,7 @@ math.import(
 
 export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
   var [rawField, setRawField] = useState(value.toString());
-
+  /*
   const bind = useDrag(
     ({ event, active, delta: [x], movement: [vx] }) => {
       if (active && (event.target as HTMLInputElement) === document.activeElement) {
@@ -44,7 +44,7 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
     {
       keyboardDisplacement: 0,
     }
-  );
+  );*/
 
   useEffect(() => {
     setRawField(value.toString());
@@ -64,6 +64,6 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
       setRawField(value.toString());
     }
   };
-
-  return <input {...bind()} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  //{...bind() }
+  return <input value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
 }

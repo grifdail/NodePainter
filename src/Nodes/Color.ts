@@ -2,6 +2,7 @@ import { IconColorFilter, IconPalette } from "@tabler/icons-react";
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { createPortConnection } from "../Data/createPortConnection";
+import { genShader } from "./genShader";
 
 export type Color = { r: number; g: number; b: number; a: number };
 export type GradientStop = { pos: number; color: Color };
@@ -100,6 +101,150 @@ export const ColorNodes: Array<NodeDefinition> = [
     },
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "color", true)} = mix(${context.getShaderVar(node, "start")}, ${context.getShaderVar(node, "end")}, ${context.getShaderVar(node, "t")});`;
+    },
+  },
+  {
+    id: "ColorMultiply",
+    description: "Multiply color together",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "a", type: "color", defaultValue: createColor(0, 0, 0, 1) },
+      { id: "b", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var a = context.getInputValue(nodeData, "a") as Color;
+      var b = context.getInputValue(nodeData, "b") as Color;
+      return createColor(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["a", "b"], ([a, b]) => `${a}*${b}`);
+    },
+  },
+  {
+    id: "ColorAdd",
+    description: "Add color together",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "a", type: "color", defaultValue: createColor(0, 0, 0, 1) },
+      { id: "b", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var a = context.getInputValue(nodeData, "a") as Color;
+      var b = context.getInputValue(nodeData, "b") as Color;
+      return createColor(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.b);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["a", "b"], ([a, b]) => `${a}+${b}`);
+    },
+  },
+
+  {
+    id: "ColorScale",
+    description: "Boost a color",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "source", type: "color", defaultValue: createColor(0, 0, 0, 1) },
+      { id: "scale", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var source = context.getInputValue(nodeData, "source") as Color;
+      var scale = context.getInputValue(nodeData, "scale") as number;
+      return createColor(source.r * scale, source.g * scale, source.b * scale, source.a * scale);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["source", "scale"], ([a, b]) => `${a}*${b}`);
+    },
+  },
+  {
+    id: "ColorScale",
+    description: "Boost a color",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "source", type: "color", defaultValue: createColor(0, 0, 0, 1) },
+      { id: "scale", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var source = context.getInputValue(nodeData, "source") as Color;
+      var scale = context.getInputValue(nodeData, "scale") as number;
+      return createColor(source.r * scale, source.g * scale, source.b * scale, source.a * scale);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["source", "scale"], ([a, b]) => `${a}*${b}`);
+    },
+  },
+  {
+    id: "HSL",
+    description: "create a color from hue, saturation and lightness",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "hue", type: "number", defaultValue: 0 },
+      { id: "saturation", type: "number", defaultValue: 1 },
+      { id: "lightness", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var hue = context.getInputValue(nodeData, "hue") as number;
+      var saturation = context.getInputValue(nodeData, "saturation") as number;
+      var lightness = context.getInputValue(nodeData, "lightness") as number;
+      return hslToRgb(hue % 1, clamp01(saturation), clamp01(lightness));
+    },
+    shaderRequirement: `
+    vec3 hsl2rgb( in vec3 c )
+{
+    vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+    return c.z + c.y * (rgb-0.5)*(1.0-abs(2.0*c.z-1.0));
+}`,
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["hue", "saturation", "lightness"], ([a, b, c]) => `vec4(hsl2rgb(vec3(${a},${b},${c})),1.0)`);
+    },
+  },
+  {
+    id: "HSV",
+    description: "create a color from hue, saturation and value",
+    icon: IconColorFilter,
+    tags: ["Color"],
+    dataInputs: [
+      { id: "hue", type: "number", defaultValue: 0 },
+      { id: "saturation", type: "number", defaultValue: 1 },
+      { id: "value", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var hue = context.getInputValue(nodeData, "hue") as number;
+      var saturation = context.getInputValue(nodeData, "saturation") as number;
+      var value = context.getInputValue(nodeData, "value") as number;
+      return hsvToRgb(hue % 1, clamp01(saturation), clamp01(value));
+    },
+    shaderRequirement: `vec3 hsv2rgb(vec3 c)
+{
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}`,
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "color", ["hue", "saturation", "value"], ([a, b, c]) => `vec4(hsv2rgb(vec3(${a},${b},${c})),1.0)`);
     },
   },
   {
@@ -316,4 +461,77 @@ function padZero(str: string) {
   const len = 2;
   var zeros = new Array(len).join("0");
   return (zeros + str).slice(-len);
+}
+
+function hslToRgb(h: number, s: number, l: number) {
+  let r: number, g: number, b: number;
+
+  function hue2rgb(p: number, q: number, t: number) {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  }
+
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
+
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  return createColor(r, g, b);
+}
+
+function hsvToRgb(h: number, s: number, v: number) {
+  let r: number = 0,
+    g: number = 0,
+    b: number = 0;
+
+  const i = Math.floor(h * 6);
+  const f = h * 6 - i;
+  const p = v * (1 - s);
+  const q = v * (1 - f * s);
+  const t = v * (1 - (1 - f) * s);
+
+  switch (i % 6) {
+    case 0:
+      r = v;
+      g = t;
+      b = p;
+      break;
+    case 1:
+      r = q;
+      g = v;
+      b = p;
+      break;
+    case 2:
+      r = p;
+      g = v;
+      b = t;
+      break;
+    case 3:
+      r = p;
+      g = q;
+      b = v;
+      break;
+    case 4:
+      r = t;
+      g = p;
+      b = v;
+      break;
+    case 5:
+      r = v;
+      g = p;
+      b = q;
+      break;
+  }
+
+  return createColor(r, g, b);
 }

@@ -106,7 +106,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       }
     },
     getShaderCode(node, context) {
-      return genShader(node, context, "vec4", "vec", ["angle", "length"], ([angle, length]) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
+      return genShader(node, context, "vec4", "vec", ["angle", "length"], ([angle, length]) => `vec4(cos(${angle}) * ${length}, sin(${angle}) * ${length},0.0,0.0)`);
     },
   },
   {
@@ -368,7 +368,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       return createVector(a.x * b.x, a.y * b.y);
     },
     getShaderCode(node, context) {
-      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec2(${a}.x * ${b}.x, ${a}.y * ${b}.y)`);
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec4(${a}.x * ${b}.x, ${a}.y * ${b}.y, 0.0, 0.0)`);
     },
   },
   {
@@ -403,7 +403,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       return a.x * b.x + a.y * b.y;
     },
     getShaderCode(node, context) {
-      return genShader(node, context, "float", "out", ["vec", "scale"], ([a, b]) => `dot(${a}, ${b})`);
+      return genShader(node, context, "float", "dot", ["a", "b"], ([a, b]) => `dot(${a}, ${b})`);
     },
   },
   {
