@@ -1,4 +1,3 @@
-import * as p5 from "p5";
 import { NumberInput } from "./NumberInput";
 import { Vector2 } from "@use-gesture/react";
 import { createVector2 } from "../../Nodes/Vector";

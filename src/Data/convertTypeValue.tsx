@@ -1,4 +1,4 @@
-﻿import { clamp01, createColor } from "../Nodes/Color";
+import { clamp01, createColor } from "../Nodes/Color";
 import { createVector2 } from "../Nodes/Vector";
 import { PortType } from "./NodeDefinition";
 import { createGradientFromPalette } from "./Palettes";
