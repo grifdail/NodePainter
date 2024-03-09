@@ -72,7 +72,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       var radius = context.getInputValueNumber(data, "radius");
       context.target.noStroke();
       context.target.fill(toP5Color(color, context.p5));
-      context.target.circle(position[1], position[1], radius);
+      context.target.circle(position[0], position[1], radius);
     },
   },
   {
