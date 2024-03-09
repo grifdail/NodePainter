@@ -57,11 +57,16 @@ export const ShaderNodes: Array<NodeDefinition> = [
       if (needRedraw) {
         shader.setUniform("time", context.time);
         Object.values(node.dataInputs).forEach((port) => {
-          var data = context.getInputValue(node, port.id);
-          if (port.type === "image" && (!data || !data.isLoaded)) {
-            return;
+          if (port.type === "image") {
+            const data = context.getInputValueImage(node, port.id);
+            if (!data || !data.isLoaded) {
+              return;
+            }
+            shader.setUniform(`uniform_${port.id}`, convertToUniform(port.type, data));
+          } else {
+            const data = context.getInputValueImage(node, port.id);
+            shader.setUniform(`uniform_${port.id}`, convertToUniform(port.type, data));
           }
-          shader.setUniform(`uniform_${port.id}`, convertToUniform(port.type, data));
         });
         img.image.clear(0, 0, 0, 0);
         img.image.filter(shader);

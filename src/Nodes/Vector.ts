@@ -2,9 +2,9 @@ import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { genShader } from "./genShader";
 
-export type Vector = { x: number; y: number };
+export type Vector2 = [number, number];
 
-export const createVector = (x: number = 0, y: number = 0): Vector => ({ x, y });
+export const createVector2 = (x: number = 0, y: number = 0): Vector2 => [x, y];
 
 export const VectorNodes: Array<NodeDefinition> = [
   {
@@ -24,14 +24,14 @@ export const VectorNodes: Array<NodeDefinition> = [
         defaultValue: 0,
       },
     ],
-    dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
+    dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector2() }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "vec") {
-        var x = context.getInputValue(nodeData, "x");
-        var y = context.getInputValue(nodeData, "y");
-        return createVector(x, y);
+        var x = context._getInputValue<number>(nodeData, "x", "number");
+        var y = context._getInputValue<number>(nodeData, "y", "number");
+        return createVector2(x, y);
       }
     },
     getShaderCode(node, context) {
@@ -47,7 +47,7 @@ export const VectorNodes: Array<NodeDefinition> = [
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
@@ -65,12 +65,12 @@ export const VectorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var vec = context.getInputValue(nodeData, "vec");
+      var vec = context.getInputValueVector(nodeData, "vec");
       if (portId === "x") {
-        return vec.x;
+        return vec[0];
       }
       if (portId === "y") {
-        return vec.y;
+        return vec[1];
       }
     },
     getShaderCode(node, context) {
@@ -95,14 +95,14 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
         defaultValue: 1,
       },
     ],
-    dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector() }],
+    dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector2() }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "vec") {
-        var angle = context.getInputValue(nodeData, "angle");
-        var length = context.getInputValue(nodeData, "length");
-        return createVector(Math.cos(angle) * length, Math.sin(angle) * length);
+        var angle = context.getInputValueNumber(nodeData, "angle");
+        var length = context.getInputValueNumber(nodeData, "length");
+        return createVector2(Math.cos(angle) * length, Math.sin(angle) * length);
       }
     },
     getShaderCode(node, context) {
@@ -118,7 +118,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
@@ -131,8 +131,8 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var vec = context.getInputValue(nodeData, "vec") as Vector;
-      return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
+      var vec = context.getInputValueVector(nodeData, "vec");
+      return VectorMagnitude(vec);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "float", "length", ["vec"], ([vec]) => `length(${vec})`);
@@ -147,7 +147,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
@@ -160,8 +160,8 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var vec = context.getInputValue(nodeData, "vec") as Vector;
-      return vec.x * vec.x + vec.y * vec.y;
+      var vec = context.getInputValueVector(nodeData, "vec");
+      return VectorSquareMagnitude(vec);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "float", "length", ["vec"], ([vec]) => `${vec}.x * ${vec}.x + ${vec}.y * ${vec}.y`);
@@ -176,27 +176,27 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "a",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "b",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Vector;
-      var b = context.getInputValue(nodeData, "b") as Vector;
-      return createVector(a.x + b.x, a.y + b.y);
+      var a = context.getInputValueVector(nodeData, "a");
+      var b = context.getInputValueVector(nodeData, "b");
+      return VectorAddition(a, b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} + ${b}`);
@@ -211,27 +211,27 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "a",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "b",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Vector;
-      var b = context.getInputValue(nodeData, "b") as Vector;
-      return createVector(a.x - b.x, a.y - b.y);
+      var a = context.getInputValueVector(nodeData, "a");
+      var b = context.getInputValueVector(nodeData, "b");
+      return VectorSubstraction(a, b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} - ${b}`);
@@ -246,7 +246,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "scale",
@@ -258,15 +258,15 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "vec") as Vector;
-      var b = context.getInputValue(nodeData, "scale") as number;
-      return createVector(a.x * b, a.y * b);
+      var a = context.getInputValueVector(nodeData, "vec");
+      var b = context.getInputValueNumber(nodeData, "scale");
+      return a.map((value) => value * b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["vec", "scale"], ([a, b]) => `${a} * ${b}`);
@@ -281,22 +281,22 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "vec") as Vector;
-      var length = Math.sqrt(a.x * a.x + a.y * a.y);
-      return createVector(a.x / length, a.y / length);
+      var a = context.getInputValueVector(nodeData, "vec");
+      var length = VectorMagnitude(a);
+      return a.map((comp) => comp / length);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["vec"], ([a]) => `normalize(${a})`);
@@ -311,7 +311,7 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "vec",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "angle",
@@ -323,17 +323,17 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "vec") as Vector;
-      var b = context.getInputValue(nodeData, "angle") as number;
+      var a = context.getInputValueVector(nodeData, "vec");
+      var b = context.getInputValueNumber(nodeData, "angle");
       var cos = Math.cos(b);
       var sin = Math.sin(b);
-      return createVector(a.x * cos + a.y * sin, a.x * sin + a.y * cos);
+      return createVector2(a[0] * cos + a[1] * sin, a[0] * sin + a[1] * cos);
     },
   },
   {
@@ -345,27 +345,62 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "a",
         type: "vector2",
-        defaultValue: createVector(1, 1),
+        defaultValue: createVector2(1, 1),
       },
       {
         id: "b",
         type: "vector2",
-        defaultValue: createVector(1, 1),
+        defaultValue: createVector2(1, 1),
       },
     ],
     dataOutputs: [
       {
         id: "out",
         type: "vector2",
-        defaultValue: createVector(1, 1),
+        defaultValue: createVector2(1, 1),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Vector;
-      var b = context.getInputValue(nodeData, "b") as Vector;
-      return createVector(a.x * b.x, a.y * b.y);
+      var a = context.getInputValueVector(nodeData, "a");
+      var b = context.getInputValueVector(nodeData, "b");
+      return VectorMultiplication(a, b);
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec4(${a}.x * ${b}.x, ${a}.y * ${b}.y, 0.0, 0.0)`);
+    },
+  },
+  {
+    id: "DivideComponentVector",
+    description: "Scale each component of two vector together",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+      {
+        id: "a",
+        type: "vector2",
+        defaultValue: createVector2(1, 1),
+      },
+      {
+        id: "b",
+        type: "vector2",
+        defaultValue: createVector2(1, 1),
+      },
+    ],
+    dataOutputs: [
+      {
+        id: "out",
+        type: "vector2",
+        defaultValue: createVector2(1, 1),
+      },
+    ],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var a = context.getInputValueVector(nodeData, "a");
+      var b = context.getInputValueVector(nodeData, "b");
+      return VectorDivision(a, b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec4(${a}.x * ${b}.x, ${a}.y * ${b}.y, 0.0, 0.0)`);
@@ -380,12 +415,12 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "a",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "b",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     dataOutputs: [
@@ -398,9 +433,9 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Vector;
-      var b = context.getInputValue(nodeData, "b") as Vector;
-      return a.x * b.x + a.y * b.y;
+      var a = context.getInputValueVector(nodeData, "a");
+      var b = context.getInputValueVector(nodeData, "b");
+      return zipVector(a, b).reduce((sum, comp) => sum + comp.reduce((old, value) => old * value, 1), 0);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "float", "dot", ["a", "b"], ([a, b]) => `dot(${a}, ${b})`);
@@ -415,12 +450,12 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "from",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "to",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "t",
@@ -432,16 +467,16 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
       {
         id: "result",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
     ],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "from") as Vector;
-      var b = context.getInputValue(nodeData, "to") as Vector;
-      var t = context.getInputValue(nodeData, "t") as number;
-      return createVector(lerp(a.x, b.x, t), lerp(a.y, b.y, t));
+      var a = context.getInputValueVector(nodeData, "from");
+      var b = context.getInputValueVector(nodeData, "to");
+      var t = context.getInputValueNumber(nodeData, "t");
+      return VectorLerp(a, b, t);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "result", ["from", "to", "t"], ([from, to, t]) => `mix(${from}, ${to}, ${t})`);
@@ -449,6 +484,42 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
   },
 ];
 
+export function VectorDivision(a: number[], b: number[]): any {
+  return VectorComponentOperation(1, (old, value) => old / value, a, b);
+}
+
+export function VectorSubstraction(a: number[], b: number[]): number[] {
+  return VectorComponentOperation(0, (a, b) => a - b, a, b);
+}
+
+export function VectorAddition(a: number[], b: number[]): number[] {
+  return VectorComponentOperation(0, (old, value) => old + value, a, b);
+}
+
+export function VectorMultiplication(a: number[], b: number[]): number[] {
+  return VectorComponentOperation(1, (old, value) => old * value, a, b);
+}
+
+export function VectorLerp(a: number[], b: number[], t: number): number[] {
+  return zipVector(a, b).map(([a, b]) => lerp(a, b, t));
+}
+
+export function VectorMagnitude(vec: number[]): any {
+  return Math.sqrt(VectorSquareMagnitude(vec));
+}
+
+export function VectorSquareMagnitude(vec: number[]): number {
+  return vec.reduce((old, b) => old + b * b, 0);
+}
+
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
+export const zip = <T>(filler: T, ...arr: T[][]) =>
+  Array(Math.max(...arr.map((a) => a.length)))
+    .fill(null)
+    .map((_, i) => arr.map((array) => (i < array.length ? array[i] : filler)));
+
+export const zipVector = (...arr: number[][]) => zip(0, ...arr);
+
+export const VectorComponentOperation = (start: number, fn: (a: number, b: number) => number, ...vector: number[][]) => zipVector(...vector).map((params) => params.reduce(fn, start));

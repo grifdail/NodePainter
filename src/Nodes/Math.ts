@@ -1,7 +1,7 @@
 import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconVectorBezier2, IconWaveSawTool, IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { IconMathXy } from "@tabler/icons-react";
-import { Vector, createVector } from "./Vector";
+import { createVector2 } from "./Vector";
 import * as Easing from "../libs/easing";
 import { createPortConnection } from "../Data/createPortConnection";
 import { convertToShaderValue } from "../Data/convertToShaderValue";
@@ -134,8 +134,8 @@ export const MathNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var a = context.getInputValue(nodeData, "y");
-        var b = context.getInputValue(nodeData, "x");
+        var a = context.getInputValueNumber(nodeData, "y");
+        var b = context.getInputValueNumber(nodeData, "x");
         return Math.atan2(a, b);
       }
     },
@@ -192,11 +192,11 @@ export const MathNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var time = context.getInputValue(nodeData, "time");
-      var phase = context.getInputValue(nodeData, "phase");
-      var frequency = context.getInputValue(nodeData, "frequency");
-      var amplitude = context.getInputValue(nodeData, "amplitude");
-      var positive = context.getInputValue(nodeData, "positive");
+      var time = context.getInputValueNumber(nodeData, "time");
+      var phase = context.getInputValueNumber(nodeData, "phase");
+      var frequency = context.getInputValueNumber(nodeData, "frequency");
+      var amplitude = context.getInputValueNumber(nodeData, "amplitude");
+      var positive = context.getInputValueNumber(nodeData, "positive");
       var t = Math.cos((time + phase) * 2 * Math.PI * frequency);
       return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
     },
@@ -237,9 +237,9 @@ export const MathNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var value = context.getInputValue(nodeData, "value");
-        var min = context.getInputValue(nodeData, "min");
-        var max = context.getInputValue(nodeData, "max");
+        var value = context.getInputValueNumber(nodeData, "value");
+        var min = context.getInputValueNumber(nodeData, "min");
+        var max = context.getInputValueNumber(nodeData, "max");
         return Math.max(Math.min(value, max), min);
       }
     },
@@ -280,9 +280,9 @@ export const MathNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var t = context.getInputValue(nodeData, "t");
-        var min = context.getInputValue(nodeData, "min");
-        var max = context.getInputValue(nodeData, "max");
+        var t = context.getInputValueNumber(nodeData, "t");
+        var min = context.getInputValueNumber(nodeData, "min");
+        var max = context.getInputValueNumber(nodeData, "max");
         return t * max + (1 - t) * min;
       }
     },
@@ -323,9 +323,9 @@ export const MathNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var t = context.getInputValue(nodeData, "t");
-        var min = context.getInputValue(nodeData, "min");
-        var max = context.getInputValue(nodeData, "max");
+        var t = context.getInputValueNumber(nodeData, "t");
+        var min = context.getInputValueNumber(nodeData, "min");
+        var max = context.getInputValueNumber(nodeData, "max");
         var alignedT = t - min;
         var range = max - min;
         var tt = alignedT % (2 * range);
@@ -380,12 +380,12 @@ export const MathNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var t = context.getInputValue(nodeData, "t");
-      var inmin = context.getInputValue(nodeData, "in-min");
-      var inmax = context.getInputValue(nodeData, "in-max");
-      var outmin = context.getInputValue(nodeData, "out-min");
-      var outmax = context.getInputValue(nodeData, "out-max");
-      var clamp = context.getInputValue(nodeData, "clamp");
+      var t = context.getInputValueNumber(nodeData, "t");
+      var inmin = context.getInputValueNumber(nodeData, "in-min");
+      var inmax = context.getInputValueNumber(nodeData, "in-max");
+      var outmin = context.getInputValueNumber(nodeData, "out-min");
+      var outmax = context.getInputValueNumber(nodeData, "out-max");
+      var clamp = context.getInputValueBoolean(nodeData, "clamp");
       var dt = (t - inmin) / (inmax - inmin);
       var r = dt * outmax + (1 - dt) * outmin;
       var trueMin = Math.min(outmax, outmin);
@@ -407,8 +407,8 @@ export const MathNodes: Array<NodeDefinition> = [
     icon: IconGridDots,
     description: "return a semi random continous value between 0 and 1 for points in 2d. ",
     dataInputs: [
-      { id: "pos", type: "vector2", defaultValue: createVector() },
-      { id: "scale", type: "vector2", defaultValue: createVector(1, 1) },
+      { id: "pos", type: "vector2", defaultValue: createVector2() },
+      { id: "scale", type: "vector2", defaultValue: createVector2(1, 1) },
       { id: "time", type: "number", defaultValue: 0 },
     ],
     dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
@@ -416,10 +416,10 @@ export const MathNodes: Array<NodeDefinition> = [
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var pos = context.getInputValue(nodeData, "pos");
-        var scale = context.getInputValue(nodeData, "scale");
-        var time = context.getInputValue(nodeData, "time");
-        return context.p5.noise(pos.x * scale.x, pos.y * scale.y, time);
+        var pos = context.getInputValueVector(nodeData, "pos");
+        var scale = context.getInputValueVector(nodeData, "scale");
+        var time = context.getInputValueNumber(nodeData, "time");
+        return context.p5.noise(pos[0] * scale[0], pos[1] * scale[1], time);
       }
     },
   },
@@ -431,16 +431,16 @@ export const MathNodes: Array<NodeDefinition> = [
     dataInputs: [
       { id: "pos", type: "number", defaultValue: 0 },
       { id: "scale", type: "number", defaultValue: 1 },
-      { id: "seed", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "seed", type: "vector2", defaultValue: createVector2(0, 0) },
     ],
     dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var pos = context.getInputValue(nodeData, "pos");
-      var scale = context.getInputValue(nodeData, "scale");
-      var seed = context.getInputValue(nodeData, "seed");
-      return context.p5.noise(seed.x + Math.cos(pos * Math.PI * 2) * scale, seed.y + Math.cos(pos * Math.PI * 2) * scale);
+      var pos = context.getInputValueNumber(nodeData, "pos");
+      var scale = context.getInputValueNumber(nodeData, "scale");
+      var seed = context.getInputValueVector(nodeData, "seed");
+      return context.p5.noise(seed[0] + Math.cos(pos * Math.PI * 2) * scale, seed[0] + Math.cos(pos * Math.PI * 2) * scale);
     },
   },
   {
@@ -461,11 +461,11 @@ export const MathNodes: Array<NodeDefinition> = [
     ],
 
     getData: (portId, nodeData, context) => {
-      var input = context.getInputValue(nodeData, "input");
+      var input = context.getInputValueNumber(nodeData, "input");
       var funcName = nodeData.settings.easing as string;
       var func = (Easing as any)[funcName];
       if (func !== undefined) {
-        return func(input) as number;
+        return func(input);
       } else {
         return input;
       }
@@ -485,48 +485,48 @@ export const MathNodes: Array<NodeDefinition> = [
       {
         id: "start",
         type: "vector2",
-        defaultValue: createVector(100, 200),
+        defaultValue: createVector2(100, 200),
       },
       {
         id: "cp1",
         type: "vector2",
-        defaultValue: createVector(200, 100),
+        defaultValue: createVector2(200, 100),
       },
       {
         id: "cp2",
         type: "vector2",
-        defaultValue: createVector(200, 300),
+        defaultValue: createVector2(200, 300),
       },
       {
         id: "end",
         type: "vector2",
-        defaultValue: createVector(300, 200),
+        defaultValue: createVector2(300, 200),
       },
     ],
     dataOutputs: [
-      { id: "point", type: "vector2", defaultValue: createVector() },
-      { id: "tangent", type: "vector2", defaultValue: createVector() },
+      { id: "point", type: "vector2", defaultValue: createVector2() },
+      { id: "tangent", type: "vector2", defaultValue: createVector2() },
     ],
     executeOutputs: [],
     settings: [],
     canBeExecuted: false,
     getData: (portId, data, context) => {
-      var t = context.getInputValue(data, "t") as number;
-      var start = context.getInputValue(data, "start") as Vector;
-      var p1 = context.getInputValue(data, "cp1") as Vector;
-      var p2 = context.getInputValue(data, "cp2") as Vector;
-      var end = context.getInputValue(data, "end") as Vector;
+      var t = context.getInputValueNumber(data, "t");
+      var start = context.getInputValueVector(data, "start");
+      var p1 = context.getInputValueVector(data, "cp1");
+      var p2 = context.getInputValueVector(data, "cp2");
+      var end = context.getInputValueVector(data, "end");
       if (portId === "point") {
-        return createVector(context.p5.bezierPoint(start.x, p1.x, p2.x, end.x, t), context.p5.bezierPoint(start.y, p1.y, p2.y, end.y, t));
+        return createVector2(context.p5.bezierPoint(start[0], p1[0], p2[0], end[0], t), context.p5.bezierPoint(start[1], p1[1], p2[1], end[1], t));
       }
       if (portId === "tangent") {
-        return createVector(context.p5.bezierTangent(start.x, p1.x, p2.x, end.x, t), context.p5.bezierTangent(start.y, p1.y, p2.y, end.y, t));
+        return createVector2(context.p5.bezierTangent(start[0], p1[0], p2[0], end[0], t), context.p5.bezierTangent(start[1], p1[1], p2[1], end[1], t));
       }
     },
   },
 ];
 
-function createOperation(id: string, evalOperation: (a: any, b: any) => any, description?: string, icon?: Icon, allowMoreInput?: boolean, shaderCode?: (a: string, b: string) => string): NodeDefinition {
+function createOperation(id: string, evalOperation: (a: number, b: number) => number, description?: string, icon?: Icon, allowMoreInput?: boolean, shaderCode?: (a: string, b: string) => string): NodeDefinition {
   var result: NodeDefinition = {
     id: id,
     tags: ["Math"],
@@ -556,14 +556,14 @@ function createOperation(id: string, evalOperation: (a: any, b: any) => any, des
     getData: (portId, nodeData, context) => {
       if (allowMoreInput) {
         const key = Object.keys(nodeData.dataInputs);
-        let start = context.getInputValue(nodeData, key[0]);
+        let start = context.getInputValueNumber(nodeData, key[0]);
         for (let i = 1; i < key.length; i++) {
-          start = evalOperation(start, context.getInputValue(nodeData, key[i]));
+          start = evalOperation(start, context.getInputValueNumber(nodeData, key[i]));
         }
         return start;
       } else {
-        const a = context.getInputValue(nodeData, "a");
-        const b = context.getInputValue(nodeData, "b");
+        const a = context.getInputValueNumber(nodeData, "a");
+        const b = context.getInputValueNumber(nodeData, "b");
         return evalOperation(a, b);
       }
     },
@@ -636,7 +636,7 @@ function createFunc(id: string, evalOperation: (input: any) => any, description?
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {
-        var a = context.getInputValue(nodeData, "input");
+        var a = context.getInputValueNumber(nodeData, "input");
         return evalOperation(a);
       }
     },

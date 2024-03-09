@@ -11,7 +11,7 @@ import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
-import { createVector } from "../Nodes/Vector";
+import { createVector2 } from "../Nodes/Vector";
 import { createColor } from "../Nodes/Color";
 
 export type NodeCollection = { [key: string]: NodeData };
@@ -335,7 +335,7 @@ export const useTree = create<TreeStore>()(
                   {
                     id: "uv",
                     type: "vector2",
-                    defaultValue: createVector(),
+                    defaultValue: createVector2(),
                   },
                   ...structuredClone(def.dataInputs),
                 ],

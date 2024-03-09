@@ -1,11 +1,11 @@
-import { Color, Gradient } from "../Nodes/Color";
+import { Color, Gradient, createColor } from "../Nodes/Color";
 
 function C(num: number) {
   num >>>= 0;
   var b = num & 0xff,
     g = (num & 0xff00) >>> 8,
     r = (num & 0xff0000) >>> 16;
-  return { r: r / 255, g: g / 255, b: b / 255, a: 1 };
+  return createColor(r / 255, g / 255, b / 255, 1);
 }
 export type ColorPalette = Array<Color>;
 export type PaletteCollection = { [key: string]: ColorPalette };

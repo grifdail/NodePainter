@@ -3,13 +3,14 @@ import { P5CanvasInstance } from "@p5-wrapper/react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { createPortConnection } from "../Data/createPortConnection";
 import { genShader } from "./genShader";
+import { VectorAddition, VectorLerp, VectorMultiplication } from "./Vector";
 
-export type Color = { r: number; g: number; b: number; a: number };
+export type Color = [number, number, number, number];
 export type GradientStop = { pos: number; color: Color };
 export type Gradient = GradientStop[];
 
 export function createColor(r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color {
-  return { r, g, b, a };
+  return [r, g, b, a];
 }
 export function createDefaultGradient(): Gradient {
   return [
@@ -34,7 +35,7 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return createColor(context.getInputValue(nodeData, "red") as number, context.getInputValue(nodeData, "green") as number, context.getInputValue(nodeData, "blue") as number, context.getInputValue(nodeData, "alpha") as number);
+      return createColor(context.getInputValueNumber(nodeData, "red"), context.getInputValueNumber(nodeData, "green"), context.getInputValueNumber(nodeData, "blue"), context.getInputValueNumber(nodeData, "alpha"));
     },
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "red")}, ${context.getShaderVar(node, "green")}, ${context.getShaderVar(node, "blue")}, ${context.getShaderVar(node, "alpha")});`;
@@ -55,18 +56,18 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var c = context.getInputValue(nodeData, "color") as Color;
+      var c = context.getInputValueColor(nodeData, "color");
       if (portId === "red") {
-        return c.r;
+        return c[0];
       }
       if (portId === "green") {
-        return c.g;
+        return c[1];
       }
       if (portId === "blue") {
-        return c.b;
+        return c[2];
       }
       if (portId === "alpha") {
-        return c.a;
+        return c[3];
       }
     },
     getShaderCode(node, context) {
@@ -94,10 +95,10 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var start = context.getInputValue(nodeData, "start") as Color;
-      var end = context.getInputValue(nodeData, "end") as Color;
-      var t = context.getInputValue(nodeData, "t") as number;
-      return lerpColor(start, end, t);
+      var start = context.getInputValueColor(nodeData, "start");
+      var end = context.getInputValueColor(nodeData, "end");
+      var t = context.getInputValueNumber(nodeData, "t");
+      return VectorLerp(start, end, t);
     },
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "color", true)} = mix(${context.getShaderVar(node, "start")}, ${context.getShaderVar(node, "end")}, ${context.getShaderVar(node, "t")});`;
@@ -116,9 +117,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Color;
-      var b = context.getInputValue(nodeData, "b") as Color;
-      return createColor(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a);
+      var a = context.getInputValueColor(nodeData, "a");
+      var b = context.getInputValueColor(nodeData, "b");
+      return VectorMultiplication(a, b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "color", ["a", "b"], ([a, b]) => `${a}*${b}`);
@@ -137,9 +138,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a") as Color;
-      var b = context.getInputValue(nodeData, "b") as Color;
-      return createColor(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.b);
+      var a = context.getInputValueColor(nodeData, "a");
+      var b = context.getInputValueColor(nodeData, "b");
+      return VectorAddition(a, b);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "color", ["a", "b"], ([a, b]) => `${a}+${b}`);
@@ -159,30 +160,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var source = context.getInputValue(nodeData, "source") as Color;
-      var scale = context.getInputValue(nodeData, "scale") as number;
-      return createColor(source.r * scale, source.g * scale, source.b * scale, source.a * scale);
-    },
-    getShaderCode(node, context) {
-      return genShader(node, context, "vec4", "color", ["source", "scale"], ([a, b]) => `${a}*${b}`);
-    },
-  },
-  {
-    id: "ColorScale",
-    description: "Boost a color",
-    icon: IconColorFilter,
-    tags: ["Color"],
-    dataInputs: [
-      { id: "source", type: "color", defaultValue: createColor(0, 0, 0, 1) },
-      { id: "scale", type: "number", defaultValue: 1 },
-    ],
-    dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
-    executeOutputs: [],
-    settings: [],
-    getData: (portId, nodeData, context) => {
-      var source = context.getInputValue(nodeData, "source") as Color;
-      var scale = context.getInputValue(nodeData, "scale") as number;
-      return createColor(source.r * scale, source.g * scale, source.b * scale, source.a * scale);
+      var source = context.getInputValueColor(nodeData, "source");
+      var scale = context.getInputValueNumber(nodeData, "scale");
+      return source.map((a) => a * scale);
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "color", ["source", "scale"], ([a, b]) => `${a}*${b}`);
@@ -202,9 +182,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var hue = context.getInputValue(nodeData, "hue") as number;
-      var saturation = context.getInputValue(nodeData, "saturation") as number;
-      var lightness = context.getInputValue(nodeData, "lightness") as number;
+      var hue = context.getInputValueNumber(nodeData, "hue");
+      var saturation = context.getInputValueNumber(nodeData, "saturation");
+      var lightness = context.getInputValueNumber(nodeData, "lightness");
       return hslToRgb(hue % 1, clamp01(saturation), clamp01(lightness));
     },
     shaderRequirement: `
@@ -232,9 +212,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var hue = context.getInputValue(nodeData, "hue") as number;
-      var saturation = context.getInputValue(nodeData, "saturation") as number;
-      var value = context.getInputValue(nodeData, "value") as number;
+      var hue = context.getInputValueNumber(nodeData, "hue");
+      var saturation = context.getInputValueNumber(nodeData, "saturation");
+      var value = context.getInputValueNumber(nodeData, "value");
       return hsvToRgb(hue % 1, clamp01(saturation), clamp01(value));
     },
     shaderRequirement: `vec3 hsv2rgb(vec3 c)
@@ -260,9 +240,9 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var color = context.getInputValue(nodeData, "color") as Color;
-      var alpha = context.getInputValue(nodeData, "alpha") as number;
-      return createColor(color.r, color.g, color.b, alpha);
+      var color = context.getInputValueColor(nodeData, "color");
+      var alpha = context.getInputValueNumber(nodeData, "alpha");
+      return [color[0], color[1], color[2], alpha];
     },
     getShaderCode(node, context) {
       return `vec4 ${context.getShaderVar(node, "color", true)} = vec4(${context.getShaderVar(node, "color")}.rgb,  ${context.getShaderVar(node, "alpha")});`;
@@ -278,7 +258,7 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [{ id: "palette", type: "palette", defaultValue: [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)] }],
     getData: (portId, nodeData, context) => {
-      var index = context.getInputValue(nodeData, "index");
+      var index = context.getInputValueNumber(nodeData, "index");
       var palette = nodeData.settings.palette as Array<any>;
       var tindex = Math.floor(index % palette.length);
       return palette[tindex];
@@ -310,8 +290,8 @@ export const ColorNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      const gradient = (context.getInputValue(nodeData, "gradient") as Gradient) || createDefaultGradient();
-      const pos = context.getInputValue(nodeData, "pos") as number;
+      const gradient = context.getInputValueGradient(nodeData, "gradient") || createDefaultGradient();
+      const pos = context.getInputValueNumber(nodeData, "pos");
       if (gradient.length === 0) {
         return createColor();
       }
@@ -321,7 +301,7 @@ export const ColorNodes: Array<NodeDefinition> = [
       }
       for (var stop of gradient) {
         if (pos < stop.pos) {
-          return lerpColor(prev.color, stop.color, clamp01(map(prev.pos, stop.pos, pos)));
+          return VectorLerp(prev.color, stop.color, clamp01(map(prev.pos, stop.pos, pos)));
         } else {
           prev = stop;
         }
@@ -348,8 +328,8 @@ export const ColorNodes: Array<NodeDefinition> = [
       for (let i = 0; i < 10; i++) {
         if (nodeData.dataInputs[`color-${i}`] && nodeData.dataInputs[`pos-${i}`]) {
           list.push({
-            pos: context.getInputValue(nodeData, `pos-${i}`),
-            color: context.getInputValue(nodeData, `color-${i}`),
+            pos: context.getInputValueNumber(nodeData, `pos-${i}`),
+            color: context.getInputValueColor(nodeData, `color-${i}`),
           });
         }
       }
@@ -389,10 +369,6 @@ export const ColorNodes: Array<NodeDefinition> = [
   },
 ];
 
-function lerpColor(start: Color, end: Color, t: number): any {
-  return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
-}
-
 export function clamp01(a: number) {
   return Math.min(1, Math.max(0, a));
 }
@@ -401,28 +377,18 @@ function map(a: number, b: number, c: number) {
   return (c - a) / (b - a);
 }
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
 export function toHex(c: Color, includeAlpha: boolean = false): string {
-  return `#${componentToHex(c.r)}${componentToHex(c.g)}${componentToHex(c.b)}${includeAlpha ? componentToHex(c.a) : ""}`;
+  return `#${componentToHex(c[0])}${componentToHex(c[1])}${componentToHex(c[2])}${includeAlpha ? componentToHex(c[3]) : ""}`;
 }
 
 export function toP5Color(c: Color, p5: P5CanvasInstance) {
-  return p5.color(c.r * 255, c.g * 255, c.b * 255, c.a * 255);
+  return p5.color(c[0] * 255, c[1] * 255, c[2] * 255, c[3] * 255);
 }
 
 export function fromHex(hex: string): Color {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
 
-  return result
-    ? {
-        r: parseInt(result[1], 16) / 255,
-        g: parseInt(result[2], 16) / 255,
-        b: parseInt(result[3], 16) / 255,
-        a: result[4] !== undefined ? parseInt(result[4], 16) / 255 : 0,
-      }
-    : createColor();
+  return result ? createColor(parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255, result[4] !== undefined ? parseInt(result[4], 16) / 255 : 0) : createColor();
 }
 
 export function validateHex(hex: string) {

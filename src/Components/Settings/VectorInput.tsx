@@ -1,15 +1,17 @@
 import * as p5 from "p5";
 import { NumberInput } from "./NumberInput";
+import { Vector2 } from "@use-gesture/react";
+import { createVector2 } from "../../Nodes/Vector";
 
-export function VectorInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
+export function VectorInput({ onChange, value }: { onChange: (value: any) => void; value: Vector2 }) {
   const onInputChange = (newValue: number, property: "x" | "y") => {
-    var newVector = property === "x" ? p5.prototype.createVector(newValue, value.y) : p5.prototype.createVector(value.x, newValue);
+    var newVector = property === "x" ? createVector2(newValue, value[1]) : createVector2(value[0], newValue);
     onChange(newVector);
   };
   return (
     <div>
-      <NumberInput value={value.x} onChange={(e) => onInputChange(e, "x")}></NumberInput>
-      <NumberInput value={value.y} onChange={(e) => onInputChange(e, "y")}></NumberInput>
+      <NumberInput value={value[0]} onChange={(e) => onInputChange(e, "x")}></NumberInput>
+      <NumberInput value={value[1]} onChange={(e) => onInputChange(e, "y")}></NumberInput>
     </div>
   );
 }

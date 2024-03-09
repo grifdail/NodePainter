@@ -1,12 +1,13 @@
 import { Icon } from "@tabler/icons-react";
 import { NodeData, TreeStore } from "../Hooks/useTree";
 import { createColor, createDefaultGradient } from "../Nodes/Color";
-import { createVector } from "../Nodes/Vector";
+import { createVector2 } from "../Nodes/Vector";
 import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient" | "unknown";
 export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "shader";
+export type Accept = PortType | "vector";
 
 export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient", "unknown"];
 
@@ -49,7 +50,7 @@ export type NodeDefinition = {
 export const MainExecuteId = "mainExecute";
 export const PortTypeDefaultValue = {
   number: 0,
-  vector2: createVector(),
+  vector2: createVector2(),
   color: createColor(),
   string: "",
   bool: "",

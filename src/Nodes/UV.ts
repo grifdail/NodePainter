@@ -1,7 +1,7 @@
 import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { genShader } from "./genShader";
-import { createVector } from "./Vector";
+import { createVector2 } from "./Vector";
 import { createColor } from "./Color";
 
 export const UVNodes: Array<NodeDefinition> = [
@@ -11,13 +11,13 @@ export const UVNodes: Array<NodeDefinition> = [
     icon: IconGizmo,
     description: "Apply a twirl effect to an position",
     dataInputs: [
-      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
-      { id: "center", type: "vector2", defaultValue: createVector(0.5, 0.5) },
+      { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
+      { id: "center", type: "vector2", defaultValue: createVector2(0.5, 0.5) },
       { id: "strength", type: "number", defaultValue: 1 },
-      { id: "offset", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "offset", type: "vector2", defaultValue: createVector2(0, 0) },
     ],
 
-    dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector(0, 0) }],
+    dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2(0, 0) }],
     tags: ["UV"],
     executeOutputs: [],
     settings: [],
@@ -39,7 +39,7 @@ export const UVNodes: Array<NodeDefinition> = [
     icon: IconGizmo,
     description: "Generate a GradientNoise pattern",
     dataInputs: [
-      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
       { id: "scale", type: "number", defaultValue: 1 },
     ],
 
@@ -82,7 +82,7 @@ float GradientNoise_float(vec4 UV, float Scale)
     icon: IconGizmo,
     description: "Generate a Voronoi pattern",
     dataInputs: [
-      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
       { id: "angleOffset", type: "number", defaultValue: 5 },
       { id: "cellDensity", type: "number", defaultValue: 10 },
     ],
@@ -90,7 +90,7 @@ float GradientNoise_float(vec4 UV, float Scale)
     dataOutputs: [
       { id: "out", type: "number", defaultValue: 0 },
       { id: "cell", type: "number", defaultValue: 0 },
-      { id: "dir", type: "vector2", defaultValue: createVector() },
+      { id: "dir", type: "vector2", defaultValue: createVector2() },
     ],
     tags: ["UV"],
     executeOutputs: [],
@@ -142,8 +142,8 @@ void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out f
     icon: IconGizmo,
     description: "Generate a Checkerboard pattern",
     dataInputs: [
-      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
-      { id: "freq", type: "vector2", defaultValue: createVector(2, 2) },
+      { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
+      { id: "freq", type: "vector2", defaultValue: createVector2(2, 2) },
       { id: "colorA", type: "color", defaultValue: createColor(0.25, 0.25, 0.25, 1) },
       { id: "colorB", type: "color", defaultValue: createColor(0.75, 0.75, 0.75, 1) },
     ],
@@ -169,7 +169,7 @@ void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out f
     icon: IconGizmo,
     description: "Sample a pixel from a UV",
     dataInputs: [
-      { id: "uv", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
       { id: "sampler", type: "image", defaultValue: null },
     ],
 

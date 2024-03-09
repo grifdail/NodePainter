@@ -1,7 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { ImageData } from "../Data/ImageData";
-import { createVector } from "./Vector";
+import { createVector2 } from "./Vector";
 import { Image } from "p5";
 import { createColor, toP5Color } from "./Color";
 
@@ -38,19 +38,19 @@ export const ImageNode: Array<NodeDefinition> = [
     canBeExecuted: true,
     dataInputs: [
       { id: "image", type: "image", defaultValue: null },
-      { id: "pos", type: "vector2", defaultValue: createVector(0, 0) },
-      { id: "dim", type: "vector2", defaultValue: createVector(100, 100) },
+      { id: "pos", type: "vector2", defaultValue: createVector2(0, 0) },
+      { id: "dim", type: "vector2", defaultValue: createVector2(100, 100) },
     ],
     dataOutputs: [],
     tags: ["Image"],
     executeOutputs: [],
     settings: [],
     execute(node, context) {
-      var image = context.getInputValue(node, "image") as null | ImageData;
-      var pos = context.getInputValue(node, "pos");
-      var dim = context.getInputValue(node, "dim");
+      var image = context.getInputValueImage(node, "image");
+      var pos = context.getInputValueVector(node, "pos");
+      var dim = context.getInputValueVector(node, "dim");
       if (image && image.isLoaded) {
-        context.target.image(image.image as Image, pos.x, pos.y, dim.x, dim.y);
+        context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1]);
       }
     },
   },
@@ -61,8 +61,8 @@ export const ImageNode: Array<NodeDefinition> = [
     canBeExecuted: true,
     dataInputs: [
       { id: "image", type: "image", defaultValue: null },
-      { id: "pos", type: "vector2", defaultValue: createVector(0, 0) },
-      { id: "dim", type: "vector2", defaultValue: createVector(100, 100) },
+      { id: "pos", type: "vector2", defaultValue: createVector2(0, 0) },
+      { id: "dim", type: "vector2", defaultValue: createVector2(100, 100) },
       { id: "color", type: "color", defaultValue: createColor() },
     ],
     dataOutputs: [],
@@ -70,13 +70,13 @@ export const ImageNode: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     execute(node, context) {
-      var image = context.getInputValue(node, "image") as null | ImageData;
-      var pos = context.getInputValue(node, "pos");
-      var dim = context.getInputValue(node, "dim");
-      var color = context.getInputValue(node, "color");
+      var image = context.getInputValueImage(node, "image");
+      var pos = context.getInputValueVector(node, "pos");
+      var dim = context.getInputValueVector(node, "dim");
+      var color = context.getInputValueColor(node, "color");
       if (image && image.isLoaded) {
         context.target.tint(toP5Color(color, context.p5));
-        context.target.image(image.image as Image, pos.x, pos.y, dim.x, dim.y);
+        context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1]);
         context.target.tint(255, 255);
       }
     },

@@ -16,8 +16,8 @@ export const TextNode: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      const text = context.getInputValue(nodeData, "text") as string;
-      return text.slice(context.getInputValue(nodeData, "start"), context.getInputValue(nodeData, "end"));
+      const text = context.getInputValueString(nodeData, "text");
+      return text.slice(context.getInputValueNumber(nodeData, "start"), context.getInputValueNumber(nodeData, "end"));
     },
   },
   {
@@ -30,7 +30,7 @@ export const TextNode: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      const text = context.getInputValue(nodeData, "text") as string;
+      const text = context.getInputValueString(nodeData, "text");
       return text.length;
     },
   },
@@ -47,21 +47,7 @@ export const TextNode: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, "start") + context.getInputValue(nodeData, "end");
-    },
-  },
-  {
-    id: "TextLength",
-    description: "Return the lenght of the text",
-    icon: IconFileText,
-    tags: ["Text"],
-    dataInputs: [{ id: "text", type: "string", defaultValue: "hello" }],
-    dataOutputs: [{ id: "length", type: "number", defaultValue: 0 }],
-    executeOutputs: [],
-    settings: [],
-    getData: (portId, nodeData, context) => {
-      const text = context.getInputValue(nodeData, "text") as string;
-      return text.length;
+      return context.getInputValueString(nodeData, "start") + context.getInputValueString(nodeData, "end");
     },
   },
   {
@@ -74,7 +60,7 @@ export const TextNode: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, "value").toString();
+      return context.getInputValueNumber(nodeData, "value").toString();
     },
   },
 ];

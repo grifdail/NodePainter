@@ -1,10 +1,9 @@
 import { IconArrowUpRightCircle, IconAssembly, IconLogicAnd, IconLogicNot, IconLogicOr, IconLogicXor } from "@tabler/icons-react";
 import { createColor } from "./Color";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { createVector2 } from "./Vector";
 
 export type Vector = { x: number; y: number };
-
-export const createVector = (x: number = 0, y: number = 0): Vector => ({ x, y });
 
 export const LogicNodes: Array<NodeDefinition> = [
   {
@@ -36,8 +35,8 @@ export const LogicNodes: Array<NodeDefinition> = [
     ],
 
     getData: (portId, nodeData, context) => {
-      var a = context.getInputValue(nodeData, "a");
-      var b = context.getInputValue(nodeData, "b");
+      var a = context.getInputValueNumber(nodeData, "a");
+      var b = context.getInputValueNumber(nodeData, "b");
       var comparator = nodeData.settings.comparator as string;
       var func = Comparator[comparator];
       if (func !== undefined) {
@@ -59,7 +58,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     canBeExecuted: true,
     getData: (portId, nodeData, getNodeOutput) => {},
     execute: (data, context) => {
-      var input = context.getInputValue(data, "condition");
+      var input = context.getInputValueBoolean(data, "condition");
       if (input) {
         if (data.execOutputs["then"]) {
           context.execute(data.execOutputs["then"]);
@@ -85,11 +84,11 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var input = context.getInputValue(nodeData, "condition");
+      var input = context.getInputValueBoolean(nodeData, "condition");
       if (input) {
-        return context.getInputValue(nodeData, "true");
+        return context.getInputValueNumber(nodeData, "true");
       } else {
-        return context.getInputValue(nodeData, "false");
+        return context.getInputValueNumber(nodeData, "false");
       }
     },
   },
@@ -100,18 +99,18 @@ export const LogicNodes: Array<NodeDefinition> = [
     tags: ["Logic"],
     dataInputs: [
       { id: "condition", type: "bool", defaultValue: false },
-      { id: "true", type: "vector2", defaultValue: createVector(1, 1) },
-      { id: "false", type: "vector2", defaultValue: createVector(0, 0) },
+      { id: "true", type: "vector2", defaultValue: createVector2(1, 1) },
+      { id: "false", type: "vector2", defaultValue: createVector2(0, 0) },
     ],
-    dataOutputs: [{ id: "result", type: "vector2", defaultValue: createVector() }],
+    dataOutputs: [{ id: "result", type: "vector2", defaultValue: createVector2() }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var input = context.getInputValue(nodeData, "condition");
+      var input = context.getInputValueBoolean(nodeData, "condition");
       if (input) {
-        return context.getInputValue(nodeData, "true");
+        return context.getInputValueVector(nodeData, "true");
       } else {
-        return context.getInputValue(nodeData, "false");
+        return context.getInputValueVector(nodeData, "false");
       }
     },
   },
@@ -129,11 +128,11 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      var input = context.getInputValue(nodeData, "condition");
+      var input = context.getInputValueBoolean(nodeData, "condition");
       if (input) {
-        return context.getInputValue(nodeData, "true");
+        return context.getInputValueColor(nodeData, "true");
       } else {
-        return context.getInputValue(nodeData, "false");
+        return context.getInputValueColor(nodeData, "false");
       }
     },
   },
@@ -150,7 +149,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, "a") && context.getInputValue(nodeData, "b");
+      return context.getInputValueBoolean(nodeData, "a") && context.getInputValueBoolean(nodeData, "b");
     },
   },
   {
@@ -166,7 +165,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, "a") || context.getInputValue(nodeData, "b");
+      return context.getInputValueBoolean(nodeData, "a") || context.getInputValueBoolean(nodeData, "b");
     },
   },
   {
@@ -182,7 +181,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, "a") ^ context.getInputValue(nodeData, "b");
+      return context.getInputValueBoolean(nodeData, "a") !== context.getInputValueBoolean(nodeData, "b");
     },
   },
   {
@@ -195,7 +194,7 @@ export const LogicNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return !context.getInputValue(nodeData, "a");
+      return !context.getInputValueBoolean(nodeData, "a");
     },
   },
 ];

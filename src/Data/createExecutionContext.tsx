@@ -5,6 +5,9 @@ import { getShaderCode } from "./getShaderCode";
 import { convertToShaderValue } from "./convertToShaderValue";
 import { PortType } from "./NodeDefinition";
 import { convertTypeValue } from "./convertTypeValue";
+import { Vector2 } from "@use-gesture/react";
+import { Color, Gradient } from "../Nodes/Color";
+import { ImageData } from "./ImageData";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;
@@ -19,7 +22,14 @@ export type ExecutionContext = {
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   execute: (nodeId: string) => void;
-  getInputValue: (nodeData: NodeData, portId: string, outputType?: PortType) => any;
+  _getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
+  getInputValueVector: (nodeData: NodeData, portId: string) => Vector2;
+  getInputValueNumber: (nodeData: NodeData, portId: string) => number;
+  getInputValueColor: (nodeData: NodeData, portId: string) => Color;
+  getInputValueGradient: (nodeData: NodeData, portId: string) => Gradient;
+  getInputValueImage: (nodeData: NodeData, portId: string) => null | ImageData;
+  getInputValueString: (nodeData: NodeData, portId: string) => string;
+  getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -50,7 +60,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
     },
-    getInputValue(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
+    _getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
       const inputPorts = nodeData.dataInputs[portId];
       let item: [any, PortType] = [null, "unknown"];
       if (inputPorts.hasConnection) {
@@ -58,8 +68,15 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       } else {
         item = [inputPorts.ownValue, inputPorts.type];
       }
-      return convertTypeValue(item[0], item[1], outputType);
+      return convertTypeValue(item[0], item[1], outputType) as T;
     },
+    getInputValueVector: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "vector2") as Vector2,
+    getInputValueNumber: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "number") as number,
+    getInputValueColor: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "color") as Color,
+    getInputValueGradient: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "gradient") as Gradient,
+    getInputValueImage: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "image") as ImageData,
+    getInputValueString: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "string") as string,
+    getInputValueBoolean: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "bool") as boolean,
     getShaderVar(nodeData, portId, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
@@ -74,7 +91,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     createFunctionContext(node: NodeData, context: ExecutionContext) {
       return Object.fromEntries(
         Object.keys(node.dataInputs).map((key) => {
-          return [key, context.getInputValue(node, key)];
+          return [key, context._getInputValue(node, key, node.dataInputs[key].type)];
         })
       );
     },

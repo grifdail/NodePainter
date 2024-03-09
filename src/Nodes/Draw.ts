@@ -1,7 +1,6 @@
 import { IconBucketDroplet, IconCircle, IconCursorText, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorBezier2, IconVectorTriangle } from "@tabler/icons-react";
-import * as P5 from "p5";
-import { Vector, createVector } from "./Vector";
-import { Gradient, createColor, createDefaultGradient, toHex, toP5Color } from "./Color";
+import { createVector2 } from "./Vector";
+import { createColor, createDefaultGradient, toHex, toP5Color } from "./Color";
 import { createPortConnection } from "../Data/createPortConnection";
 import { NodeDefinition } from "../Data/NodeDefinition";
 
@@ -23,7 +22,7 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
+      var color = context.getInputValueColor(data, "color");
       context.target.background(toP5Color(color, context.p5));
     },
   },
@@ -55,7 +54,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "position",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "radius",
@@ -68,12 +67,12 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var position = context.getInputValue(data, "position") as P5.Vector;
-      var radius = context.getInputValue(data, "radius") as number;
+      var color = context.getInputValueColor(data, "color");
+      var position = context.getInputValueVector(data, "position");
+      var radius = context.getInputValueNumber(data, "radius");
       context.target.noStroke();
       context.target.fill(toP5Color(color, context.p5));
-      context.target.circle(position.x, position.y, radius);
+      context.target.circle(position[1], position[1], radius);
     },
   },
   {
@@ -90,7 +89,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "position",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "radius",
@@ -108,14 +107,14 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var position = context.getInputValue(data, "position") as P5.Vector;
-      var radius = context.getInputValue(data, "radius") as number;
-      var lineWidth = context.getInputValue(data, "lineWidth") as number;
+      var color = context.getInputValueColor(data, "color");
+      var position = context.getInputValueVector(data, "position");
+      var radius = context.getInputValueNumber(data, "radius");
+      var lineWidth = context.getInputValueNumber(data, "lineWidth");
       context.target.stroke(toP5Color(color, context.p5));
       context.target.noFill();
       context.target.strokeWeight(lineWidth);
-      context.target.circle(position.x, position.y, radius);
+      context.target.circle(position[0], position[1], radius);
     },
   },
   {
@@ -132,7 +131,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "center",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "innerRadius",
@@ -160,12 +159,12 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      const color = context.getInputValue(data, "color");
-      const center = context.getInputValue(data, "center") as P5.Vector;
-      const innerRadius = context.getInputValue(data, "innerRadius") as number;
-      const outerRadius = context.getInputValue(data, "outerRadius") as number;
-      const startAngle = context.getInputValue(data, "startAngle") as number;
-      const angle = context.getInputValue(data, "angle") as number;
+      const color = context.getInputValueColor(data, "color");
+      const center = context.getInputValueVector(data, "center");
+      const innerRadius = context.getInputValueNumber(data, "innerRadius");
+      const outerRadius = context.getInputValueNumber(data, "outerRadius");
+      const startAngle = context.getInputValueNumber(data, "startAngle");
+      const angle = context.getInputValueNumber(data, "angle");
       context.target.noStroke();
       context.target.fill(toP5Color(color, context.p5));
       context.target.beginShape();
@@ -173,11 +172,11 @@ export const DrawNodes: Array<NodeDefinition> = [
       for (let i = 0; i <= count; i++) {
         const alpha = (i / count) * angle + startAngle;
 
-        context.target.vertex(center.x + Math.cos(alpha) * outerRadius, center.y + Math.sin(alpha) * outerRadius);
+        context.target.vertex(center[0] + Math.cos(alpha) * outerRadius, center[1] + Math.sin(alpha) * outerRadius);
       }
       for (let i = 0; i <= count; i++) {
         const alpha = (1 - i / count) * angle + startAngle;
-        context.target.vertex(center.x + Math.cos(alpha) * innerRadius, center.y + Math.sin(alpha) * innerRadius);
+        context.target.vertex(center[0] + Math.cos(alpha) * innerRadius, center[1] + Math.sin(alpha) * innerRadius);
       }
       context.target.endShape();
     },
@@ -196,7 +195,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "center",
         type: "vector2",
-        defaultValue: createVector(),
+        defaultValue: createVector2(),
       },
       {
         id: "radius",
@@ -219,18 +218,18 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      const color = context.getInputValue(data, "color");
-      const center = context.getInputValue(data, "center") as P5.Vector;
-      const radius = context.getInputValue(data, "radius") as number;
-      const side = context.getInputValue(data, "side") as number;
-      const offset = context.getInputValue(data, "offset") as number;
+      const color = context.getInputValueColor(data, "color");
+      const center = context.getInputValueVector(data, "center");
+      const radius = context.getInputValueNumber(data, "radius");
+      const side = context.getInputValueNumber(data, "side");
+      const offset = context.getInputValueNumber(data, "offset");
       context.target.noStroke();
       context.target.fill(toP5Color(color, context.p5));
       context.target.beginShape();
       for (let i = 0; i < side; i++) {
         const alpha = (i / side + offset) * Math.PI * 2;
 
-        context.target.vertex(center.x + Math.cos(alpha) * radius, center.y + Math.sin(alpha) * radius);
+        context.target.vertex(center[0] + Math.cos(alpha) * radius, center[1] + Math.sin(alpha) * radius);
       }
 
       context.target.endShape();
@@ -250,12 +249,12 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "start",
         type: "vector2",
-        defaultValue: createVector(10, 10),
+        defaultValue: createVector2(10, 10),
       },
       {
         id: "end",
         type: "vector2",
-        defaultValue: createVector(90, 90),
+        defaultValue: createVector2(90, 90),
       },
       {
         id: "lineWidth",
@@ -268,13 +267,13 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var p1 = context.getInputValue(data, "start") as P5.Vector;
-      var p2 = context.getInputValue(data, "end") as P5.Vector;
-      var lineWidth = context.getInputValue(data, "lineWidth") as number;
+      var color = context.getInputValueColor(data, "color");
+      var p1 = context.getInputValueVector(data, "start");
+      var p2 = context.getInputValueVector(data, "end");
+      var lineWidth = context.getInputValueNumber(data, "lineWidth");
       context.target.stroke(toP5Color(color, context.p5));
       context.target.strokeWeight(lineWidth);
-      context.target.line(p1.x, p1.y, p2.x, p2.y);
+      context.target.line(p1[0], p1[1], p2[0], p2[1]);
     },
   },
   {
@@ -291,7 +290,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "corner",
         type: "vector2",
-        defaultValue: createVector(10, 10),
+        defaultValue: createVector2(10, 10),
       },
       {
         id: "width",
@@ -309,13 +308,13 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var p1 = context.getInputValue(data, "corner") as P5.Vector;
-      var width = context.getInputValue(data, "width") as number;
-      var height = context.getInputValue(data, "height") as number;
+      var color = context.getInputValueColor(data, "color");
+      var p1 = context.getInputValueVector(data, "corner");
+      var width = context.getInputValueNumber(data, "width");
+      var height = context.getInputValueNumber(data, "height");
       context.target.fill(toP5Color(color, context.p5));
       context.target.noStroke();
-      context.target.rect(p1.x, p1.y, width, height);
+      context.target.rect(p1[0], p1[1], width, height);
     },
   },
   {
@@ -337,7 +336,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "corner",
         type: "vector2",
-        defaultValue: createVector(10, 10),
+        defaultValue: createVector2(10, 10),
       },
       {
         id: "width",
@@ -355,24 +354,24 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var gradient = context.getInputValue(data, "gradient") as Gradient;
-      var gradientDirection = context.getInputValue(data, "direction");
-      var p1 = context.getInputValue(data, "corner") as P5.Vector;
-      var width = context.getInputValue(data, "width") as number;
-      var height = context.getInputValue(data, "height") as number;
+      var gradient = context.getInputValueGradient(data, "gradient");
+      var gradientDirection = context.getInputValueNumber(data, "direction");
+      var p1 = context.getInputValueVector(data, "corner");
+      var width = context.getInputValueNumber(data, "width");
+      var height = context.getInputValueNumber(data, "height");
       context.target.noFill();
       context.target.noStroke();
       const ctx = context.target.drawingContext as CanvasRenderingContext2D;
       var c = Math.cos(gradientDirection);
       var s = Math.sin(gradientDirection);
-      var px = p1.x + width * 0.5;
-      var py = p1.y + height * 0.5;
+      var px = p1[0] + width * 0.5;
+      var py = p1[1] + height * 0.5;
       var ctxGrad = ctx.createLinearGradient(px - c * width * 0.5, py - s * height * 0.5, px + c * width * 0.5, py + s * height * 0.5);
       gradient.forEach((stop) => {
         ctxGrad.addColorStop(stop.pos, toHex(stop.color));
       });
       ctx.fillStyle = ctxGrad;
-      ctx.fillRect(p1.x, p1.y, width, height);
+      ctx.fillRect(p1[0], p1[1], width, height);
     },
   },
   {
@@ -389,17 +388,17 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "corner1",
         type: "vector2",
-        defaultValue: createVector(25, 0),
+        defaultValue: createVector2(25, 0),
       },
       {
         id: "corner2",
         type: "vector2",
-        defaultValue: createVector(0, 0),
+        defaultValue: createVector2(0, 0),
       },
       {
         id: "corner3",
         type: "vector2",
-        defaultValue: createVector(0, 25),
+        defaultValue: createVector2(0, 25),
       },
     ],
     dataOutputs: [],
@@ -407,13 +406,13 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var p1 = context.getInputValue(data, "corner1") as P5.Vector;
-      var p2 = context.getInputValue(data, "corner2") as P5.Vector;
-      var p3 = context.getInputValue(data, "corner3") as P5.Vector;
+      var color = context.getInputValueColor(data, "color");
+      var p1 = context.getInputValueVector(data, "corner1");
+      var p2 = context.getInputValueVector(data, "corner2");
+      var p3 = context.getInputValueVector(data, "corner3");
       context.target.fill(toP5Color(color, context.p5));
       context.target.noStroke();
-      context.target.triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+      context.target.triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
     },
   },
   {
@@ -430,22 +429,22 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "corner1",
         type: "vector2",
-        defaultValue: createVector(25, 0),
+        defaultValue: createVector2(25, 0),
       },
       {
         id: "corner2",
         type: "vector2",
-        defaultValue: createVector(0, 0),
+        defaultValue: createVector2(0, 0),
       },
       {
         id: "corner3",
         type: "vector2",
-        defaultValue: createVector(0, 25),
+        defaultValue: createVector2(0, 25),
       },
       {
         id: "corner4",
         type: "vector2",
-        defaultValue: createVector(25, 25),
+        defaultValue: createVector2(25, 25),
       },
     ],
     dataOutputs: [],
@@ -453,14 +452,14 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var p1 = context.getInputValue(data, "corner1") as P5.Vector;
-      var p2 = context.getInputValue(data, "corner2") as P5.Vector;
-      var p3 = context.getInputValue(data, "corner3") as P5.Vector;
-      var p4 = context.getInputValue(data, "corner4") as P5.Vector;
+      var color = context.getInputValueColor(data, "color");
+      var p1 = context.getInputValueVector(data, "corner1");
+      var p2 = context.getInputValueVector(data, "corner2");
+      var p3 = context.getInputValueVector(data, "corner3");
+      var p4 = context.getInputValueVector(data, "corner4");
       context.target.fill(toP5Color(color, context.p5));
       context.target.noStroke();
-      context.target.quad(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y);
+      context.target.quad(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1], p4[0], p4[1]);
     },
   },
   {
@@ -477,17 +476,17 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "corner-1",
         type: "vector2",
-        defaultValue: createVector(25, 0),
+        defaultValue: createVector2(25, 0),
       },
       {
         id: "corner-2",
         type: "vector2",
-        defaultValue: createVector(0, 0),
+        defaultValue: createVector2(0, 0),
       },
       {
         id: "corner-3",
         type: "vector2",
-        defaultValue: createVector(0, 25),
+        defaultValue: createVector2(0, 25),
       },
     ],
     dataOutputs: [],
@@ -495,15 +494,15 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      const color = context.getInputValue(data, "color");
+      const color = context.getInputValueColor(data, "color");
       context.target.fill(toP5Color(color, context.p5));
       context.target.noStroke();
       context.target.beginShape();
       for (let i = 1; i < 20; i++) {
         const key = `corner-${i}`;
         if (data.dataInputs[key]) {
-          const p = context.getInputValue(data, key) as Vector;
-          context.target.vertex(p.x, p.y);
+          const p = context.getInputValueVector(data, key);
+          context.target.vertex(p[0], p[1]);
         }
       }
       context.target.endShape();
@@ -515,7 +514,7 @@ export const DrawNodes: Array<NodeDefinition> = [
         node.dataInputs[key] = createPortConnection({
           id: key,
           type: "vector2",
-          defaultValue: createVector(),
+          defaultValue: createVector2(),
         });
       },
       "Remove corner": (node) => {
@@ -544,7 +543,7 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "position",
         type: "vector2",
-        defaultValue: createVector(200, 200),
+        defaultValue: createVector2(200, 200),
       },
       {
         id: "size",
@@ -561,16 +560,16 @@ export const DrawNodes: Array<NodeDefinition> = [
     ],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var text = context.getInputValue(data, "text") as string;
-      var pos = context.getInputValue(data, "position") as Vector;
-      var size = context.getInputValue(data, "size") as number;
+      var color = context.getInputValueColor(data, "color");
+      var text = context.getInputValueString(data, "text");
+      var pos = context.getInputValueVector(data, "position");
+      var size = context.getInputValueNumber(data, "size");
       context.target.fill(toP5Color(color, context.p5));
       context.target.noStroke();
       context.target.textFont(data.settings.Font);
       context.target.textAlign((context.p5 as any)[data.settings.HorizontalAlign], (context.p5 as any)[data.settings.VerticalAlign]);
       context.target.textSize(size);
-      context.target.text(text, pos.x, pos.y);
+      context.target.text(text, pos[0], pos[1]);
     },
   },
   {
@@ -592,22 +591,22 @@ export const DrawNodes: Array<NodeDefinition> = [
       {
         id: "start",
         type: "vector2",
-        defaultValue: createVector(100, 200),
+        defaultValue: createVector2(100, 200),
       },
       {
         id: "cp1",
         type: "vector2",
-        defaultValue: createVector(200, 100),
+        defaultValue: createVector2(200, 100),
       },
       {
         id: "cp2",
         type: "vector2",
-        defaultValue: createVector(200, 300),
+        defaultValue: createVector2(200, 300),
       },
       {
         id: "end",
         type: "vector2",
-        defaultValue: createVector(300, 200),
+        defaultValue: createVector2(300, 200),
       },
     ],
     dataOutputs: [],
@@ -615,16 +614,16 @@ export const DrawNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var color = context.getInputValue(data, "color");
-      var size = context.getInputValue(data, "lineWidth") as number;
-      var start = context.getInputValue(data, "start") as Vector;
-      var p1 = context.getInputValue(data, "cp1") as Vector;
-      var p2 = context.getInputValue(data, "cp2") as Vector;
-      var end = context.getInputValue(data, "end") as Vector;
+      var color = context.getInputValueColor(data, "color");
+      var size = context.getInputValueNumber(data, "lineWidth");
+      var start = context.getInputValueVector(data, "start");
+      var p1 = context.getInputValueVector(data, "cp1");
+      var p2 = context.getInputValueVector(data, "cp2");
+      var end = context.getInputValueVector(data, "end");
       context.target.noFill();
       context.target.stroke(toP5Color(color, context.p5));
       context.target.strokeWeight(size);
-      context.target.bezier(start.x, start.y, p1.x, p1.y, p2.x, p2.y, end.x, end.y);
+      context.target.bezier(start[0], start[1], p1[0], p1[1], p2[0], p2[1], end[0], end[1]);
     },
   },
 ];

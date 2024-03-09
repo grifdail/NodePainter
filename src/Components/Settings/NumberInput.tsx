@@ -33,7 +33,7 @@ math.import(
 );
 
 export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
-  var [rawField, setRawField] = useState(value.toString());
+  var [rawField, setRawField] = useState((value != null ? value : 0).toString());
   /*
   const bind = useDrag(
     ({ event, active, delta: [x], movement: [vx] }) => {

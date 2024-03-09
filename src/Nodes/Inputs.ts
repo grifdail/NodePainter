@@ -1,6 +1,6 @@
 import { IconArrowsHorizontal, IconArrowsShuffle, IconCalendar, IconClock, IconFrame, IconMouse, IconPhone } from "@tabler/icons-react";
 
-import { createVector } from "./Vector";
+import { createVector2 } from "./Vector";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { convertToShaderValue } from "../Data/convertToShaderValue";
 
@@ -114,11 +114,11 @@ export const InputNodes: Array<NodeDefinition> = [
     icon: IconMouse,
     tags: ["Input"],
     dataInputs: [],
-    dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
+    dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector2() }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return createVector(context.p5.mouseX, context.p5.mouseY);
+      return createVector2(context.p5.mouseX, context.p5.mouseY);
     },
   },
   {
@@ -165,11 +165,11 @@ export const InputNodes: Array<NodeDefinition> = [
     icon: IconMouse,
     tags: ["Input"],
     dataInputs: [],
-    dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector() }],
+    dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector2() }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return createVector(context.p5.pmouseX - context.p5.mouseX, context.p5.pmouseY - context.p5.mouseY);
+      return createVector2(context.p5.pmouseX - context.p5.mouseX, context.p5.pmouseY - context.p5.mouseY);
     },
   },
   {
@@ -191,11 +191,11 @@ export const InputNodes: Array<NodeDefinition> = [
     icon: IconArrowsHorizontal,
     tags: ["Input"],
     dataInputs: [],
-    dataOutputs: [{ id: "dim", type: "vector2", defaultValue: createVector(0, 0) }],
+    dataOutputs: [{ id: "dim", type: "vector2", defaultValue: createVector2(0, 0) }],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return createVector(context.p5.width, context.p5.height);
+      return createVector2(context.p5.width, context.p5.height);
     },
   },
 ];

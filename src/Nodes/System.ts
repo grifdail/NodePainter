@@ -1,10 +1,10 @@
 import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate, IconShadow } from "@tabler/icons-react";
-import p5, { BLEND_MODE } from "p5";
-import { Vector, createVector } from "./Vector";
+import { BLEND_MODE } from "p5";
+import { Vector2, createVector2 } from "./Vector";
 import { NodeDefinition, PortTypeArray, PortTypeDefaultValue } from "../Data/NodeDefinition";
-import { NodeData } from "../Hooks/useTree";
+import { NodeData, PortConnection } from "../Hooks/useTree";
 import { createPortConnection } from "../Data/createPortConnection";
-import { Color, createColor, toHex } from "./Color";
+import { createColor, toHex } from "./Color";
 
 export const START_NODE = "Start";
 export const CUSTOM_FUNCTION = "CustomFunction";
@@ -94,7 +94,7 @@ export const SystemNodes: Array<NodeDefinition> = [
       return context.blackboard[`${nodeData.id}-index`] || 0;
     },
     execute: (data, context) => {
-      var count = context.getInputValue(data, "count") as number;
+      var count = context.getInputValueNumber(data, "count");
       for (var i = 0; i < count; i++) {
         context.blackboard[`${data.id}-index`] = i;
         if (data.execOutputs.loop) {
@@ -125,8 +125,8 @@ export const SystemNodes: Array<NodeDefinition> = [
       } else return context.blackboard[`${nodeData.id}-y`] || 0;
     },
     execute: (data, context) => {
-      var width = context.getInputValue(data, "width") as number;
-      var height = context.getInputValue(data, "height") as number;
+      var width = context.getInputValueNumber(data, "width");
+      var height = context.getInputValueNumber(data, "height");
       for (var x = 0; x < width; x++) {
         for (var y = 0; y < height; y++) {
           context.blackboard[`${data.id}-x`] = x;
@@ -152,8 +152,8 @@ export const SystemNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var a = context.getInputValue(data, "a") as number;
-      var b = context.getInputValue(data, "b") as number;
+      var a = context.getInputValueNumber(data, "a");
+      var b = context.getInputValueNumber(data, "b");
       if (a >= b) {
         if (data.execOutputs.A) {
           context.execute(data.execOutputs.A);
@@ -186,7 +186,8 @@ export const SystemNodes: Array<NodeDefinition> = [
       return target[`${portId}-in`];
     },
     execute: (data, context) => {
-      const target = Object.fromEntries(Object.entries(data.dataInputs).map(([key, value]) => [key, context.getInputValue(data, key)]));
+      var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context._getInputValue(data, key, value.type)];
+      const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
       context.blackboard[`${data.id}-context`] = target;
       context.execute(data.execOutputs["execute"] as string);
     },
@@ -213,7 +214,7 @@ export const SystemNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var angle = context.getInputValue(data, "angle") as number;
+      var angle = context.getInputValueNumber(data, "angle");
       context.target.push();
       context.target.rotate(angle);
       if (data.execOutputs.execute) {
@@ -230,23 +231,23 @@ export const SystemNodes: Array<NodeDefinition> = [
     dataInputs: [
       { id: "blur", type: "number", defaultValue: 1 },
       { id: "color", type: "color", defaultValue: createColor(0, 0, 0) },
-      { id: "offset", type: "vector2", defaultValue: createVector() },
+      { id: "offset", type: "vector2", defaultValue: createVector2() },
     ],
     dataOutputs: [],
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var blur = context.getInputValue(data, "blur") as number;
-      var color = context.getInputValue(data, "color") as Color;
-      var offset = context.getInputValue(data, "offset") as Vector;
+      var blur = context.getInputValueNumber(data, "blur");
+      var color = context.getInputValueColor(data, "color");
+      var offset = context.getInputValueVector(data, "offset") as Vector2;
       var ctx = context.target.drawingContext as CanvasRenderingContext2D;
       context.target.push();
 
       ctx.shadowBlur = blur;
       ctx.shadowColor = toHex(color);
-      ctx.shadowOffsetX = offset.x;
-      ctx.shadowOffsetY = offset.y;
+      ctx.shadowOffsetX = offset[0];
+      ctx.shadowOffsetY = offset[1];
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
@@ -262,15 +263,15 @@ export const SystemNodes: Array<NodeDefinition> = [
     description: "Execute the next instruction as if the canvas was moved",
     icon: IconArrowsMove,
     tags: ["Transform"],
-    dataInputs: [{ id: "translation", type: "vector2", defaultValue: createVector() }],
+    dataInputs: [{ id: "translation", type: "vector2", defaultValue: createVector2() }],
     dataOutputs: [],
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var translation = context.getInputValue(data, "translation") as p5.Vector;
+      var translation = context.getInputValueVector(data, "translation") as Vector2;
       context.target.push();
-      context.target.translate(translation.x, translation.y);
+      context.target.translate(translation[0], translation[1]);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
@@ -282,15 +283,15 @@ export const SystemNodes: Array<NodeDefinition> = [
     description: "Execute the next instruction as if the canvas was scaled",
     icon: IconArrowsMove,
     tags: ["Transform"],
-    dataInputs: [{ id: "scale", type: "vector2", defaultValue: createVector() }],
+    dataInputs: [{ id: "scale", type: "vector2", defaultValue: createVector2() }],
     dataOutputs: [],
     executeOutputs: ["execute"],
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var scale = context.getInputValue(data, "scale") as p5.Vector;
+      var scale = context.getInputValueVector(data, "scale") as Vector2;
       context.target.push();
-      context.target.scale(scale.x, scale.y);
+      context.target.scale(scale[0], scale[1]);
       if (data.execOutputs.execute) {
         context.execute(data.execOutputs.execute);
       }
@@ -308,7 +309,7 @@ export const SystemNodes: Array<NodeDefinition> = [
     settings: [],
     canBeExecuted: true,
     execute: (data, context) => {
-      var inverted = context.getInputValue(data, "inverted");
+      var inverted = context.getInputValueBoolean(data, "inverted");
       context.target.push();
       (context.p5 as any).beginClip({ invert: inverted });
       if (data.execOutputs.mask) {
@@ -363,9 +364,9 @@ export const SystemNodes: Array<NodeDefinition> = [
         context.blackboard[`${node.id}-canvas-cache`] = graphic;
       }
 
-      var imageCount = Math.floor(context.getInputValue(node, "imageCount") as number);
-      var timeFrame = context.getInputValue(node, "timeFrame") as number;
-      var opacity = context.getInputValue(node, "opacity") as number;
+      var imageCount = Math.floor(context.getInputValueNumber(node, "imageCount"));
+      var timeFrame = context.getInputValueNumber(node, "timeFrame");
+      var opacity = context.getInputValueNumber(node, "opacity");
       var oldTarget = context.target;
       var oldTime = context.time;
       for (let i = 0; i < imageCount; i++) {
@@ -451,7 +452,7 @@ export const SystemNodes: Array<NodeDefinition> = [
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return context.getInputValue(nodeData, portId);
+      return context._getInputValue(nodeData, portId, "unknown");
     },
     execute: (data, context) => {
       //TODO
