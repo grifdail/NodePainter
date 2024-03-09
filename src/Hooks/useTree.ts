@@ -32,7 +32,7 @@ export type TreeStore = {
   setNodePosition: (id: string, x: number, y: number) => void;
   addNode: (nodeType: string, posX: number, posY: number) => void;
   addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
-  getPortValue: (nodeId: string, portId: string, context: ExecutionContext) => any;
+  getPortValue: (nodeId: string, portId: string, context: ExecutionContext) => [any, PortType];
   removeDataConnection: (node: string, port: string) => void;
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
@@ -147,9 +147,11 @@ export const useTree = create<TreeStore>()(
           if (def.executeAs) {
             def = get().getNodeTypeDefinition(def.executeAs);
           }
+          var port = node.dataOutputs[portId];
           if (def.getData) {
-            return def.getData(portId, node, context);
+            return [def.getData(portId, node, context), port.type];
           }
+          return [undefined, "unknown"];
         },
 
         removeDataConnection(nodeId, portId) {

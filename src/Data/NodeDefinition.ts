@@ -5,10 +5,10 @@ import { createVector } from "../Nodes/Vector";
 import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
-export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient";
+export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient" | "unknown";
 export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "shader";
 
-export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient"];
+export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient", "unknown"];
 
 export type PortDefinition = {
   id: string;

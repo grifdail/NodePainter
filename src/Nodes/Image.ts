@@ -114,7 +114,7 @@ export const ImageNode: Array<NodeDefinition> = [
     dataInputs: [],
     dataOutputs: [
       {
-        id: "image",
+        id: "draw-image",
         type: "image",
         defaultValue: null,
       },
@@ -150,7 +150,7 @@ export const ImageNode: Array<NodeDefinition> = [
         var oldTarget = context.target;
         context.target = img.image;
         if (node.execOutputs["image"]) {
-          context.execute(node.execOutputs["image"] as string);
+          context.execute(node.execOutputs["draw-image"] as string);
         }
 
         context.target = oldTarget;

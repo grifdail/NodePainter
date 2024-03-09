@@ -3,6 +3,8 @@ import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/us
 import { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
 import { convertToShaderValue } from "./convertToShaderValue";
+import { PortType } from "./NodeDefinition";
+import { convertTypeValue } from "./convertTypeValue";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;
@@ -17,7 +19,7 @@ export type ExecutionContext = {
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   execute: (nodeId: string) => void;
-  getInputValue: (nodeData: NodeData, portId: string) => any;
+  getInputValue: (nodeData: NodeData, portId: string, outputType?: PortType) => any;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -48,13 +50,15 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
     },
-    getInputValue(nodeData: NodeData, portId: string) {
+    getInputValue(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
       const inputPorts = nodeData.dataInputs[portId];
+      let item: [any, PortType] = [null, "unknown"];
       if (inputPorts.hasConnection) {
-        return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+        item = context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
       } else {
-        return inputPorts.ownValue;
+        item = [inputPorts.ownValue, inputPorts.type];
       }
+      return convertTypeValue(item[0], item[1], outputType);
     },
     getShaderVar(nodeData, portId, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];

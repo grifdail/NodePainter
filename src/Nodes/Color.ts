@@ -11,7 +11,7 @@ export type Gradient = GradientStop[];
 export function createColor(r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color {
   return { r, g, b, a };
 }
-export function createDefaultGradient(): any {
+export function createDefaultGradient(): Gradient {
   return [
     { pos: 0, color: createColor(0, 0, 0) },
     { pos: 1, color: createColor(1, 1, 1) },
@@ -393,7 +393,7 @@ function lerpColor(start: Color, end: Color, t: number): any {
   return createColor(lerp(start.r, end.r, t), lerp(start.g, end.g, t), lerp(start.b, end.b, t), lerp(start.a, end.a, t));
 }
 
-function clamp01(a: number) {
+export function clamp01(a: number) {
   return Math.min(1, Math.max(0, a));
 }
 
