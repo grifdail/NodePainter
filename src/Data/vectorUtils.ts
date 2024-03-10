@@ -42,5 +42,5 @@ export const VectorComponentOperation = (start: number, fn: (a: number, b: numbe
 export function EnforceGoodType(nodeData: NodeData, arg1: number[]): any {
   return nodeData.selectedType === "number" ? arg1[0] : arg1;
 }
-export const VectorTypesFull: PortType[] = ["number", "vector2", "vector3", "vector4", "color"];
-export const VectorTypeslimited: PortType[] = ["vector2", "vector3", "vector4"];
+export const VectorTypesFull: PortType[] = ["number", "vector2", "vector3", "color"];
+export const VectorTypeslimited: PortType[] = ["vector2", "vector3"];

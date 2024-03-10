@@ -134,7 +134,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
-          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
         })}
         {definition.settings.map((item, i) => {
           var n = <SettingControl y={settingOffset} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} nodeData={node} />;

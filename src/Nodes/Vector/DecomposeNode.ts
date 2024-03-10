@@ -3,6 +3,9 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypeslimited } from "../../Data/vectorUtils";
+import { convertTypeValue } from "../../Data/convertTypeValue";
+import { createPortConnection } from "../../Data/createPortConnection";
+import { useTree } from "../../Hooks/useTree";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
@@ -18,12 +21,12 @@ export const DecomposeNode: NodeDefinition = {
   ],
   dataOutputs: [
     {
-      id: "x",
+      id: "0",
       type: "number",
       defaultValue: 0,
     },
     {
-      id: "y",
+      id: "1",
       type: "number",
       defaultValue: 0,
     },
@@ -32,14 +35,46 @@ export const DecomposeNode: NodeDefinition = {
   settings: [],
   defaultType: "vector2",
   availableTypes: [...VectorTypeslimited, "color"],
-  onChangeType: changeTypeGenerator(["vec"], []),
+  onChangeType(node, type) {
+    var count = { vector2: 2, vector3: 3, vector4: 4, color: 4 }[type as string] as number;
+    let deleted = false;
+    for (var i = 0; i < 4; i++) {
+      if (i >= count) {
+        if (node.dataOutputs[i.toString()] !== undefined) {
+          delete node.dataOutputs[i.toString()];
+          deleted = true;
+        }
+      } else {
+        let port = node.dataOutputs[i.toString()];
+        if (port === undefined) {
+          port = {
+            id: i.toString(),
+            type: "number",
+            defaultValue: 0,
+            label: "w",
+          };
+          node.dataOutputs[i.toString()] = port;
+        }
+        port.label = type === "color" ? "rgba"[i] : "xyzw"[i];
+      }
+    }
+
+    node.dataInputs["vec"].ownValue = convertTypeValue(node.dataInputs["vec"].ownValue, node.dataInputs["vec"].type, type);
+    node.dataInputs["vec"].type = type;
+  },
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
-    if (portId === "x") {
+    if (portId === "0") {
       return vec[0];
     }
-    if (portId === "y") {
+    if (portId === "1") {
       return vec[1];
+    }
+    if (portId === "2") {
+      return vec[2];
+    }
+    if (portId === "3") {
+      return vec[3];
     }
   },
   getShaderCode(node, context) {

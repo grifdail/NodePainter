@@ -13,6 +13,7 @@ import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
 import { createColor, createVector2 } from "../Data/vectorDataType";
+import { canConvert } from "../Data/convertTypeValue";
 
 export type NodeCollection = { [key: string]: NodeData };
 export type ShaderData = {
@@ -234,6 +235,7 @@ export const useTree = create<TreeStore>()(
                   def.onChangeType(sourceNode, type);
                 }
                 sourceNode.selectedType = type;
+                ensureValidGraph(state);
               }
             })
           );
@@ -425,31 +427,7 @@ export const useTree = create<TreeStore>()(
         enforceValidGraph() {
           set(
             produce((state) => {
-              for (let nodeId in state.nodes) {
-                const selfNode = state.nodes[nodeId] as NodeData;
-                for (let input in selfNode.dataInputs) {
-                  let port = selfNode.dataInputs[input] as PortConnection;
-                  if (port.hasConnection) {
-                    let targetNode = state.nodes[port.connectedNode as string] as NodeData;
-                    if (!targetNode) {
-                      var def = state.getNodeTypeDefinition(selfNode);
-                      if (def.unbindPort != null) {
-                        def.unbindPort(port.id, selfNode, "inputData");
-                      }
-                      port.hasConnection = false;
-                      port.connectedNode = null;
-                      port.connectedPort = null;
-                    }
-
-                    let defPort = targetNode.dataOutputs[port.connectedPort as string];
-                    if (!defPort || defPort.type !== port.type) {
-                      port.hasConnection = false;
-                      port.connectedNode = null;
-                      port.connectedPort = null;
-                    }
-                  }
-                }
-              }
+              ensureValidGraph(state);
             })
           );
         },
@@ -468,6 +446,34 @@ export const useTree = create<TreeStore>()(
     }
   )
 );
+
+function ensureValidGraph(state: any) {
+  for (let nodeId in state.nodes) {
+    const selfNode = state.nodes[nodeId] as NodeData;
+    for (let input in selfNode.dataInputs) {
+      let port = selfNode.dataInputs[input] as PortConnection;
+      if (port.hasConnection) {
+        let targetNode = state.nodes[port.connectedNode as string] as NodeData;
+        if (!targetNode) {
+          var def = state.getNodeTypeDefinition(selfNode);
+          if (def.unbindPort != null) {
+            def.unbindPort(port.id, selfNode, "inputData");
+          }
+          port.hasConnection = false;
+          port.connectedNode = null;
+          port.connectedPort = null;
+        }
+
+        let defPort = targetNode.dataOutputs[port.connectedPort as string];
+        if (!defPort || !canConvert(defPort.type, port.type)) {
+          port.hasConnection = false;
+          port.connectedNode = null;
+          port.connectedPort = null;
+        }
+      }
+    }
+  }
+}
 
 function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
   return {
