@@ -1,11 +1,8 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypeslimited } from "../../Data/vectorUtils";
 import { convertTypeValue } from "../../Data/convertTypeValue";
-import { createPortConnection } from "../../Data/createPortConnection";
-import { useTree } from "../../Hooks/useTree";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
