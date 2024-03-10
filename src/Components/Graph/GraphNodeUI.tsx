@@ -12,6 +12,7 @@ import { OutPortView } from "./OutPortView";
 import { SettingControl, getSettingHeight } from "./SettingControl";
 import { useState } from "react";
 import styled from "styled-components";
+import { TypeSelectorUI } from "./TypeSelectorUI";
 
 const AnimatedG = animated(styled.g`
   & > g > rect {
@@ -44,7 +45,7 @@ export type GraphNodeProps = {
   onClickPort: PortNodeCallback;
 };
 
-export const GraphNode = function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
+export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
   const viewPortScale = useViewbox((state) => state.scale);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const inputCount = Object.keys(node.dataInputs).length;
@@ -119,9 +120,11 @@ export const GraphNode = function GraphNode({ node, onClickPort, xy, onMove, isS
           style={{
             touchAction: "none",
           }}
-          onClick={onTap}>
+          onClick={onTap}
+        >
           {node.type}
         </text>
+        {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
         {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
         {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")} location="inputExecute" nodeId={node.id}></OutPortView> : null}
         {Object.entries(node.dataInputs).map(([key, item], i) => {

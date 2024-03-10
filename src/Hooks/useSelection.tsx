@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useTree } from "./useTree";
-import { GetNodeHeight } from "../Components/Graph/GraphNode";
+import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
 
 export type SelectionStore = {
   toggleNode(id: string): void;

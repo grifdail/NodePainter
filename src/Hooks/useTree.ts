@@ -47,6 +47,7 @@ export type TreeStore = {
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
+  changeNodeType: (id: string, type: PortType) => void;
 };
 
 export type NodeData = {
@@ -59,6 +60,7 @@ export type NodeData = {
   settings: { [key: string]: any };
   positionX: number;
   positionY: number;
+  selectedType: PortType;
 };
 
 export type PortConnection = {
@@ -220,14 +222,33 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
+        changeNodeType(nodeId, type) {
+          set(
+            produce((state) => {
+              const sourceNode = state.nodes[nodeId] as NodeData;
+              const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
+              if (def.availableTypes && def.availableTypes.includes(type)) {
+                if (def.onChangeType) {
+                  def.onChangeType(sourceNode, type);
+                }
+                sourceNode.selectedType = type;
+              }
+            })
+          );
+        },
         deleteNode(node) {
           set(
             produce((state) => {
               const nodes = state.nodes as { [key: string]: NodeData };
 
               Object.values(nodes).forEach((item: NodeData) => {
+                var def = state.getNodeTypeDefinition(item);
                 Object.values(item.dataInputs).forEach((port) => {
                   if (port.hasConnection && port.connectedNode === node) {
+                    if (def.unbindPort != null) {
+                      def.unbindPort(port.id, item, "inputData");
+                    }
+
                     port.hasConnection = false;
                     port.connectedNode = null;
                     port.connectedPort = null;
@@ -235,6 +256,9 @@ export const useTree = create<TreeStore>()(
                 });
                 Object.entries(item.execOutputs).forEach(([key, target]) => {
                   if (target === node) {
+                    if (def.unbindPort != null) {
+                      def.unbindPort(key, item, "outputExecute");
+                    }
                     item.execOutputs[key] = null;
                   }
                 });
@@ -406,6 +430,10 @@ export const useTree = create<TreeStore>()(
                   if (port.hasConnection) {
                     let targetNode = state.nodes[port.connectedNode as string] as NodeData;
                     if (!targetNode) {
+                      var def = state.getNodeTypeDefinition(selfNode);
+                      if (def.unbindPort != null) {
+                        def.unbindPort(port.id, selfNode, "inputData");
+                      }
                       port.hasConnection = false;
                       port.connectedNode = null;
                       port.connectedPort = null;
@@ -449,6 +477,7 @@ function createNodeData(def: NodeDefinition, x: number, y: number, id: string | 
     execOutputs: createExecOutputData(def),
     positionX: x,
     positionY: y,
+    selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",
     graph: graph,
   };
 }

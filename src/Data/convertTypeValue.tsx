@@ -1,6 +1,6 @@
 import { clamp01 } from "../Nodes/colorUtils";
 import { createColor, createVector2, createVector3, createVector4 } from "../Nodes/vectorDataType";
-import { PortType } from "./NodeDefinition";
+import { PortType, createDefaultValue } from "./NodeDefinition";
 import { createGradientFromPalette } from "./Palettes";
 
 const vector2bool = (a: number[]) => a.some((x: number) => x !== 0);
@@ -31,7 +31,7 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | ((value:
   },
   vector3: {
     number: (a) => a[0],
-    color: (a) => createColor(a[0], a[1], 0, 1),
+    color: (a) => createColor(a[0], a[1], a[2], 1),
     string: (a) => a.toString(),
     bool: vector2bool,
     unknown: (a) => a,
@@ -64,7 +64,7 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | ((value:
   },
   color: {
     number: (a) => (a[0] + a[1] + a[2] + a[3]) / 4,
-    vector: (a) => [a],
+    vector: (a) => a,
     bool: vector2bool,
     vector2: (a) => createVector2(...a),
     vector3: (a) => createVector3(...a),
@@ -109,7 +109,7 @@ export function convertTypeValue(value: any, from: PortType, to: PortType) {
   if (fn != null) {
     return fn(value);
   } else {
-    return value;
+    return createDefaultValue(to);
   }
 }
 

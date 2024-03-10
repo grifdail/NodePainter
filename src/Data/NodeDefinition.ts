@@ -46,6 +46,8 @@ export type NodeDefinition = {
   unbindPort?: (portId: string, self: NodeData, selfPosition: PortRole) => void;
   contextMenu?: { [key: string]: (node: NodeData) => void };
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
+  availableTypes?: PortType[];
+  onChangeType?: (node: NodeData, type: PortType) => void;
 };
 
 export const MainExecuteId = "mainExecute";

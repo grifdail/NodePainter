@@ -1,5 +1,5 @@
 import { useTree } from "../Hooks/useTree";
-import { GetNodeHeight } from "../Components/Graph/GraphNode";
+import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
 import { BoundingBox } from "./BoundingBox";
 import { useViewbox } from "../Hooks/useViewbox";
 

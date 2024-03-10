@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { GraphNode } from "./GraphNode";
+import { GraphNodeUI } from "./GraphNodeUI";
 import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
@@ -130,7 +130,7 @@ export function Graph() {
           onTap: () => onTapNode(node),
           onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
         };
-        return <GraphNode {...nodeProps} />;
+        return <GraphNodeUI {...nodeProps} />;
       })}
     </animated.svg>
   );

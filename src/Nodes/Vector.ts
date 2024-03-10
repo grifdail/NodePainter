@@ -1,11 +1,11 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition, createDefaultValue } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Data/NodeDefinition";
 import { genShader } from "./genShader";
-import { useTree } from "../Hooks/useTree";
-import { canConvert } from "../Data/convertTypeValue";
 import { createVector2, createVector3 } from "./vectorDataType";
 import { VectorMagnitude, VectorSquareMagnitude, VectorAddition, VectorSubstraction, VectorMultiplication, VectorDivision, zipVector, VectorLerp } from "./vectorUtils";
-import { original } from "immer";
+import { DynamicNodeType } from "./DynamicNodeType";
+import { convertTypeValue } from "../Data/convertTypeValue";
+import { NodeData } from "../Hooks/useTree";
 
 export const VectorNodes: Array<NodeDefinition> = [
   {
@@ -194,46 +194,21 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     ],
     executeOutputs: [],
     settings: [],
-    bindPort(portId, self, outputPorts, selfPosition) {
-      if (portId === "a") {
-        console.log(original(self));
-        console.log(self.dataInputs);
-        self.dataInputs["a"].type = outputPorts.type;
-        if (!canConvert(self.dataInputs["b"].type, outputPorts.type)) {
-          useTree.getState().removeDataConnection(self.id, "b");
-        }
-        self.dataInputs["b"].type = outputPorts.type;
-        self.dataInputs["a"].ownValue = createDefaultValue(outputPorts.type);
-        self.dataInputs["b"].ownValue = createDefaultValue(outputPorts.type);
-        self.dataOutputs["out"].type = outputPorts.type;
-      }
-      return true;
-    },
-    unbindPort(portId, self, selfPosition) {
-      if (portId === "a") {
-        if (self.dataInputs["b"].hasConnection) {
-          self.dataInputs["a"].connectedNode = self.dataInputs["b"].connectedNode;
-          self.dataInputs["a"].connectedPort = self.dataInputs["b"].connectedPort;
-          self.dataInputs["a"].hasConnection = self.dataInputs["b"].hasConnection;
-          self.dataInputs["b"].hasConnection = false;
-          self.dataInputs["a"].type = useTree.getState().getOutputPort(self.dataInputs["a"].connectedNode as string, self.dataInputs["a"].connectedPort as string).type;
-          self.dataInputs["a"].ownValue = createDefaultValue(self.dataInputs["a"].type);
-          self.dataInputs["b"].ownValue = createDefaultValue(self.dataInputs["a"].type);
-          self.dataOutputs["out"].type = self.dataInputs["a"].type;
-        } else {
-          self.dataInputs["a"].type = "vector";
-          self.dataInputs["b"].type = "vector";
-          self.dataOutputs["out"].type = "vector";
-          self.dataInputs["a"].ownValue = createDefaultValue("vector");
-          self.dataInputs["b"].ownValue = createDefaultValue("vector");
-        }
-      }
-      return true;
+    availableTypes: ["vector2", "vector3", "vector4", "color", "number"],
+    onChangeType(node, type) {
+      Object.keys(node.dataInputs).forEach((key) => {
+        node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);
+        node.dataInputs[key].type = type;
+      });
+      Object.keys(node.dataOutputs).forEach((key) => {
+        node.dataOutputs[key].type = type;
+      });
     },
     getData: (portId, nodeData, context) => {
       var a = context.getInputValueVector(nodeData, "a");
       var b = context.getInputValueVector(nodeData, "b");
-      return VectorAddition(a, b);
+      console.log(a, b, VectorAddition(a, b));
+      return EnforceGoodType(nodeData, VectorAddition(a, b));
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} + ${b}`);
@@ -549,3 +524,6 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     },
   },
 ];
+function EnforceGoodType(nodeData: NodeData, arg1: number[]): any {
+  return nodeData.selectedType === "number" ? arg1[0] : arg1;
+}
