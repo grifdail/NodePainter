@@ -19,7 +19,7 @@ export function PortView({ y, portData, onClick, onValueChange, nodeId, location
       <rect x="0" y="0" width="200" height="30" fill="rgba(0,0,0,0.1)"></rect>
       <PortForeignObject height={30} width={175} x={25} y={0}>
         <div>
-          <p>{portData.id}</p>
+          <p>{portData.label || portData.id}</p>
           {!portData.hasConnection && PortSettings && <PortSettings onChange={onValueChange} value={portData.ownValue} />}
         </div>
       </PortForeignObject>

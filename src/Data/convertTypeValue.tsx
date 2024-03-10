@@ -1,5 +1,5 @@
-import { clamp01 } from "../Nodes/colorUtils";
-import { createColor, createVector2, createVector3, createVector4 } from "../Nodes/vectorDataType";
+import { clamp01 } from "./colorUtils";
+import { createColor, createVector2, createVector3, createVector4 } from "./vectorDataType";
 import { PortType, createDefaultValue } from "./NodeDefinition";
 import { createGradientFromPalette } from "./Palettes";
 

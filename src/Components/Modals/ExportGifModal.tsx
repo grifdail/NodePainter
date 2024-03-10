@@ -7,7 +7,7 @@ import { NumberInput } from "../Settings/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Data/createExecutionContext";
-import { START_NODE } from "../../Nodes/System";
+import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./CanvasExporter";
 import { GifExporter } from "./GifExporter";
 import { WhammyExporter } from "./WhammyExporter";

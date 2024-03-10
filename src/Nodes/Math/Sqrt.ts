@@ -1,0 +1,5 @@
+import { IconMath } from "@tabler/icons-react";
+import { NodeDefinition } from "../../Data/NodeDefinition";
+import { createFunc } from "../createFunc";
+
+export const Sqrt: NodeDefinition = createFunc("Sqrt", Math.sqrt, "Return the square root of a number.", IconMath, (a) => `sqrt(${a})`);

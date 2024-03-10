@@ -9,7 +9,7 @@ import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../
 import { NumberInput } from "./NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
-import { ColorPalette, Gradient, GradientStop, createColor } from "../../Nodes/vectorDataType";
+import { ColorPalette, Gradient, GradientStop, createColor } from "../../Data/vectorDataType";
 
 const ColorList = styled.ul`
   display: flex;

@@ -6,12 +6,13 @@ import { NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeD
 import { PortType } from "../Data/NodeDefinition";
 
 import { persist } from "zustand/middleware";
-import { CUSTOM_SHADER, START_NODE } from "../Nodes/System";
+import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
+import { START_NODE } from "../Nodes/System/StartNode";
 import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
-import { createColor, createVector2 } from "../Nodes/vectorDataType";
+import { createColor, createVector2 } from "../Data/vectorDataType";
 
 export type NodeCollection = { [key: string]: NodeData };
 export type ShaderData = {
@@ -64,6 +65,7 @@ export type NodeData = {
 };
 
 export type PortConnection = {
+  label?: string;
   id: string;
   hasConnection: boolean;
   ownValue: any;
@@ -477,7 +479,7 @@ function createNodeData(def: NodeDefinition, x: number, y: number, id: string | 
     execOutputs: createExecOutputData(def),
     positionX: x,
     positionY: y,
-    selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",
+    selectedType: def.defaultType ? def.defaultType : def.availableTypes ? def.availableTypes[0] : "unknown",
     graph: graph,
   };
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MenuItem } from "@szhsin/react-menu";
-import { ColorPalette, Gradient } from "../../Nodes/vectorDataType";
-import { toHex } from "../../Nodes/colorUtils";
+import { ColorPalette, Gradient } from "../../Data/vectorDataType";
+import { toHex } from "../../Data/colorUtils";
 
 const GradientDiv = styled.div<{ gradient: string }>`
   display: block;

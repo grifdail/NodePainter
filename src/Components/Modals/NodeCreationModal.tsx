@@ -72,7 +72,7 @@ const AddModalDiv = styled.div`
       padding: 10px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
+      //grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
 
       gap: 10px;
       align-self: flex-start;

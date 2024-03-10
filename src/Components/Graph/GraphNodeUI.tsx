@@ -122,7 +122,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           }}
           onClick={onTap}
         >
-          {node.type}
+          {definition.label || definition.id}
         </text>
         {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
         {!definition.IsUnique && <NodeMenu node={node} def={definition} />}

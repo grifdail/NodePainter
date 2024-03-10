@@ -1,4 +1,4 @@
-﻿import { NodeData, useTree } from "../../Hooks/useTree";
+import { NodeData, useTree } from "../../Hooks/useTree";
 import { NodeDefinition, PortType } from "../../Data/NodeDefinition";
 import styled from "styled-components";
 import { PortColor } from "../StyledComponents/PortColor";
@@ -42,7 +42,7 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
   const types = def.availableTypes as PortType[];
   const onClick = (type: PortType) => useTree.getState().changeNodeType(node.id, type);
   return (
-    <foreignObject x="160" y="10" height="30" width="100">
+    <foreignObject x={260 - types.length * 20} y="10" height="30" width={types.length * 20}>
       <StyledDiv>
         {types.map((item) => (
           <TypeButton type={item} onClick={onClick} selectedtype={node.selectedType} />

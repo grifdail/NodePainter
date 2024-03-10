@@ -4,7 +4,7 @@ import { NodeData, TreeStore, useTree } from "../Hooks/useTree";
 import { ExecutionContext } from "../Data/createExecutionContext";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { START_NODE } from "../Nodes/System";
+import { START_NODE } from "../Nodes/System/StartNode";
 import { createExecutionContext } from "../Data/createExecutionContext";
 
 const Preview = styled.div<{ scale: number }>`

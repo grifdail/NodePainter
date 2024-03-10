@@ -12,7 +12,7 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
   const Icon = node.icon;
   return (
     <button onClick={() => onClick(node)}>
-      <div>{node.id}</div>
+      <div>{node.label || node.id}</div>
       <div className="fav" onClick={onClickFav}>
         {isFav ? <IconStarFilled /> : <IconStar color="#262626" />}
       </div>

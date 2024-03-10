@@ -3,7 +3,8 @@ import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
 import { useRouter } from "./useRouter";
-import { CUSTOM_FUNCTION, CUSTOM_SHADER } from "../Nodes/System";
+import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
+import { CUSTOM_FUNCTION } from "../Nodes/System/CustomFunction";
 
 export type EDIT_TARGET_TYPE = "function" | "shader";
 

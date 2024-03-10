@@ -7,7 +7,7 @@ import { PortType } from "./NodeDefinition";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "./ImageData";
-import { Color, Gradient, Vector, Vector3, Vector4 } from "../Nodes/vectorDataType";
+import { Color, Gradient, Vector, Vector3, Vector4 } from "./vectorDataType";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;

@@ -1,0 +1,5 @@
+import { IconAngle } from "@tabler/icons-react";
+import { NodeDefinition } from "../../Data/NodeDefinition";
+import { createFunc } from "../createFunc";
+
+export const Sin: NodeDefinition = createFunc("Sin", Math.sin, "Return the sine of a number (in radian).", IconAngle, (a) => `sin(${a})`);

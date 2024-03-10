@@ -21,7 +21,7 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
   number: {
     icon: IconNumbers,
     input: NumberInput,
-    tinyIcon: IconNumber1,
+    tinyIcon: IconNumbers,
   },
   vector: {
     icon: IconArrowUpRightCircle,
@@ -51,15 +51,19 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
   string: {
     icon: IconQuote,
     input: TextInput,
+    tinyIcon: IconQuote,
   },
   bool: {
     icon: IconToggleLeft,
     input: BoolInput,
+    tinyIcon: IconToggleLeft,
   },
   gradient: {
     icon: IconColorSwatch,
+    tinyIcon: IconColorSwatch,
   },
   image: {
     icon: IconPhoto,
+    tinyIcon: IconPhoto,
   },
 };

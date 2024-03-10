@@ -1,6 +1,6 @@
 import { Icon } from "@tabler/icons-react";
 import { NodeData, TreeStore } from "../Hooks/useTree";
-import { createColor, createDefaultGradient, createVector2, createVector3, createVector4 } from "../Nodes/vectorDataType";
+import { createColor, createDefaultGradient, createVector2, createVector3, createVector4 } from "./vectorDataType";
 import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
@@ -15,6 +15,7 @@ export type PortDefinition = {
   type: PortType;
   defaultValue: any;
   defaultType?: PortType;
+  label?: string;
 };
 
 export type SettingDefinition = {
@@ -30,6 +31,7 @@ export type NodeDefinition = {
   description?: string;
   icon?: Icon;
   id: string;
+  label?: string;
   tags: Array<string>;
   isShader?: false;
   dataInputs: Array<PortDefinition>;
@@ -47,6 +49,7 @@ export type NodeDefinition = {
   contextMenu?: { [key: string]: (node: NodeData) => void };
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];
+  defaultType?: PortType;
   onChangeType?: (node: NodeData, type: PortType) => void;
 };
 

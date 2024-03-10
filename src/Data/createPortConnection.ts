@@ -9,5 +9,6 @@ export function createPortConnection(def: PortDefinition): PortConnection {
     hasConnection: false,
     connectedNode: null,
     connectedPort: null,
+    label: def.label,
   };
 }
