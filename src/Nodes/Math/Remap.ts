@@ -1,6 +1,8 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
+import { EnforceGoodType, VectorLerp, VectorTypesFull } from "../../Data/vectorUtils";
+import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 
 export const Remap: NodeDefinition = {
   id: "Remap",
@@ -48,18 +50,20 @@ export const Remap: NodeDefinition = {
   ],
   executeOutputs: [],
   settings: [],
+  defaultType: "number",
+  availableTypes: VectorTypesFull,
+  onChangeType: changeTypeGenerator(["out-min", "out-max"], ["result"]),
   getData: (portId, nodeData, context) => {
-    var t = context.getInputValueNumber(nodeData, "t");
-    var inmin = context.getInputValueNumber(nodeData, "in-min");
-    var inmax = context.getInputValueNumber(nodeData, "in-max");
-    var outmin = context.getInputValueNumber(nodeData, "out-min");
-    var outmax = context.getInputValueNumber(nodeData, "out-max");
-    var clamp = context.getInputValueBoolean(nodeData, "clamp");
-    var dt = (t - inmin) / (inmax - inmin);
-    var r = dt * outmax + (1 - dt) * outmin;
-    var trueMin = Math.min(outmax, outmin);
-    var trueMax = Math.max(outmax, outmin);
-    return clamp ? Math.min(trueMax, Math.max(trueMin, r)) : r;
+    const t = context.getInputValueNumber(nodeData, "t");
+    const inmin = context.getInputValueNumber(nodeData, "in-min");
+    const inmax = context.getInputValueNumber(nodeData, "in-max");
+    const outmin = context.getInputValueVector(nodeData, "out-min");
+    const outmax = context.getInputValueVector(nodeData, "out-max");
+    const clamp = context.getInputValueBoolean(nodeData, "clamp");
+    const dt = (t - inmin) / (inmax - inmin);
+    const result = VectorLerp(outmin, outmax, clamp ? Math.max(Math.min(dt, 1), 0) : dt);
+
+    return EnforceGoodType(nodeData, result);
   },
   shaderRequirement: `float map(float n, float inmin, float inmax, float outmin, float outmax, bool c) {
       float dt = (n - inmin) / (inmax - inmin);

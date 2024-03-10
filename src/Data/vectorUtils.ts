@@ -6,7 +6,7 @@ export function VectorDivision(a: number[], b: number[]): any {
 }
 
 export function VectorSubstraction(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(0, (a, b) => a - b, a, b);
+  return zipVector(a, b).map((params) => params.slice(1).reduce((old, valye) => old - valye, params[0]));
 }
 
 export function VectorAddition(a: number[], b: number[]): number[] {

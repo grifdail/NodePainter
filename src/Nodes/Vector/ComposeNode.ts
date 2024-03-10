@@ -68,10 +68,10 @@ export const ComposeNode: NodeDefinition = {
   },
   getData: (portId, nodeData, context) => {
     if (nodeData.selectedType === "vector3") {
-      return createVector3(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"));
+      return createVector3(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"));
     }
     if (nodeData.selectedType === "vector4") {
-      return createVector4(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "3"));
+      return createVector4(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"), context.getInputValueNumber(nodeData, "3"));
     }
     if (nodeData.selectedType === "color") {
       return createColor(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"), context.getInputValueNumber(nodeData, "3"));

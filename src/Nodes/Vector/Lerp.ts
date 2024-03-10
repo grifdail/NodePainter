@@ -1,4 +1,4 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
@@ -10,8 +10,8 @@ import { VectorTypesFull } from "../../Data/vectorUtils";
 export const Lerp: NodeDefinition = {
   id: "Lerp",
   description: "interpolate between 2 vector",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
+  icon: IconMathFunction,
+  tags: ["Math", "Vector"],
   dataInputs: [
     {
       id: "from",

@@ -1,4 +1,3 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
@@ -6,12 +5,13 @@ import { VectorAddition } from "../../Data/vectorUtils";
 import { EnforceGoodType } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypesFull } from "../../Data/vectorUtils";
+import { IconMathXPlusY } from "@tabler/icons-react";
 
 export const Add: NodeDefinition = {
   id: "Add",
   description: "Add two value together",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
+  icon: IconMathXPlusY,
+  tags: ["Math", "Vector"],
   dataInputs: [
     {
       id: "a",

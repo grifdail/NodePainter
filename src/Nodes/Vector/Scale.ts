@@ -1,4 +1,4 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
@@ -9,8 +9,8 @@ import { VectorTypesFull } from "../../Data/vectorUtils";
 export const Scale: NodeDefinition = {
   id: "Scale",
   description: "Scale a value by a scalar",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
+  icon: IconMathXy,
+  tags: ["Math", "Vector"],
   dataInputs: [
     {
       id: "in",

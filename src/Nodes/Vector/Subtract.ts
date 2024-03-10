@@ -1,4 +1,4 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconMathXMinusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
@@ -10,8 +10,8 @@ import { VectorTypesFull } from "../../Data/vectorUtils";
 export const Subtract: NodeDefinition = {
   id: "Subtract",
   description: "Subtract two value together",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
+  icon: IconMathXMinusY,
+  tags: ["Math", "Vector"],
   dataInputs: [
     {
       id: "a",

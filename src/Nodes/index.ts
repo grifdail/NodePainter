@@ -124,6 +124,7 @@ import { Cos } from "./Math/Cos";
 import { Atan } from "./Math/Atan";
 import { PowNode } from "./Math/PowNode";
 import { Modulo } from "./Math/Modulo";
+import { FocalLength } from "./Vector/FocalLength";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -157,6 +158,7 @@ export const Nodes: Array<NodeDefinition> = [
   // Misc
   DotProduct,
   Lerp,
+  FocalLength,
 
   // Color
   HSL,
