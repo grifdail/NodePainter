@@ -2,14 +2,14 @@ import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "./ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { Gradient, GradientStop, createColor } from "../../Nodes/Color";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { ColorPalette, DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
+import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
 import { NumberInput } from "./NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
+import { ColorPalette, Gradient, GradientStop, createColor } from "../../Nodes/vectorDataType";
 
 const ColorList = styled.ul`
   display: flex;

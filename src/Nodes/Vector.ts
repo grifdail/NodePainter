@@ -1,10 +1,11 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition, createDefaultValue } from "../Data/NodeDefinition";
 import { genShader } from "./genShader";
-
-export type Vector2 = [number, number];
-
-export const createVector2 = (x: number = 0, y: number = 0): Vector2 => [x, y];
+import { useTree } from "../Hooks/useTree";
+import { canConvert } from "../Data/convertTypeValue";
+import { createVector2, createVector3 } from "./vectorDataType";
+import { VectorMagnitude, VectorSquareMagnitude, VectorAddition, VectorSubstraction, VectorMultiplication, VectorDivision, zipVector, VectorLerp } from "./vectorUtils";
+import { original } from "immer";
 
 export const VectorNodes: Array<NodeDefinition> = [
   {
@@ -175,12 +176,12 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     dataInputs: [
       {
         id: "a",
-        type: "vector2",
+        type: "vector",
         defaultValue: createVector2(),
       },
       {
         id: "b",
-        type: "vector2",
+        type: "vector",
         defaultValue: createVector2(),
       },
     ],
@@ -193,6 +194,42 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     ],
     executeOutputs: [],
     settings: [],
+    bindPort(portId, self, outputPorts, selfPosition) {
+      if (portId === "a") {
+        console.log(original(self));
+        console.log(self.dataInputs);
+        self.dataInputs["a"].type = outputPorts.type;
+        if (!canConvert(self.dataInputs["b"].type, outputPorts.type)) {
+          useTree.getState().removeDataConnection(self.id, "b");
+        }
+        self.dataInputs["b"].type = outputPorts.type;
+        self.dataInputs["a"].ownValue = createDefaultValue(outputPorts.type);
+        self.dataInputs["b"].ownValue = createDefaultValue(outputPorts.type);
+        self.dataOutputs["out"].type = outputPorts.type;
+      }
+      return true;
+    },
+    unbindPort(portId, self, selfPosition) {
+      if (portId === "a") {
+        if (self.dataInputs["b"].hasConnection) {
+          self.dataInputs["a"].connectedNode = self.dataInputs["b"].connectedNode;
+          self.dataInputs["a"].connectedPort = self.dataInputs["b"].connectedPort;
+          self.dataInputs["a"].hasConnection = self.dataInputs["b"].hasConnection;
+          self.dataInputs["b"].hasConnection = false;
+          self.dataInputs["a"].type = useTree.getState().getOutputPort(self.dataInputs["a"].connectedNode as string, self.dataInputs["a"].connectedPort as string).type;
+          self.dataInputs["a"].ownValue = createDefaultValue(self.dataInputs["a"].type);
+          self.dataInputs["b"].ownValue = createDefaultValue(self.dataInputs["a"].type);
+          self.dataOutputs["out"].type = self.dataInputs["a"].type;
+        } else {
+          self.dataInputs["a"].type = "vector";
+          self.dataInputs["b"].type = "vector";
+          self.dataOutputs["out"].type = "vector";
+          self.dataInputs["a"].ownValue = createDefaultValue("vector");
+          self.dataInputs["b"].ownValue = createDefaultValue("vector");
+        }
+      }
+      return true;
+    },
     getData: (portId, nodeData, context) => {
       var a = context.getInputValueVector(nodeData, "a");
       var b = context.getInputValueVector(nodeData, "b");
@@ -200,6 +237,35 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     },
     getShaderCode(node, context) {
       return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} + ${b}`);
+    },
+  },
+  {
+    id: "VvvVector3",
+    description: "test",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+      {
+        id: "a",
+        type: "vector3",
+        defaultValue: createVector3(),
+      },
+    ],
+    dataOutputs: [
+      {
+        id: "out",
+        type: "vector3",
+        defaultValue: createVector3(),
+      },
+    ],
+    executeOutputs: [],
+    settings: [],
+    getData: (portId, nodeData, context) => {
+      var a = context.getInputValueVector(nodeData, "a");
+      return a;
+    },
+    getShaderCode(node, context) {
+      return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} - ${b}`);
     },
   },
   {
@@ -483,43 +549,3 @@ float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "v
     },
   },
 ];
-
-export function VectorDivision(a: number[], b: number[]): any {
-  return VectorComponentOperation(1, (old, value) => old / value, a, b);
-}
-
-export function VectorSubstraction(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(0, (a, b) => a - b, a, b);
-}
-
-export function VectorAddition(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(0, (old, value) => old + value, a, b);
-}
-
-export function VectorMultiplication(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(1, (old, value) => old * value, a, b);
-}
-
-export function VectorLerp(a: number[], b: number[], t: number): number[] {
-  return zipVector(a, b).map(([a, b]) => lerp(a, b, t));
-}
-
-export function VectorMagnitude(vec: number[]): any {
-  return Math.sqrt(VectorSquareMagnitude(vec));
-}
-
-export function VectorSquareMagnitude(vec: number[]): number {
-  return vec.reduce((old, b) => old + b * b, 0);
-}
-
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t;
-}
-export const zip = <T>(filler: T, ...arr: T[][]) =>
-  Array(Math.max(...arr.map((a) => a.length)))
-    .fill(null)
-    .map((_, i) => arr.map((array) => (i < array.length ? array[i] : filler)));
-
-export const zipVector = (...arr: number[][]) => zip(0, ...arr);
-
-export const VectorComponentOperation = (start: number, fn: (a: number, b: number) => number, ...vector: number[][]) => zipVector(...vector).map((params) => params.reduce(fn, start));

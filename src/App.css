@@ -3,11 +3,13 @@
 :root {
   --color-execute: #00e436;
   --color-number: #29adff;
-  --color-vector2: #ff77a8;
-  --color-color: #ffa300;
-  --color-string: #ff004d;
+  --color-vector2: #7073c3;
+  --color-vector3: #0c070a;
+  --color-vector4: #ff004c;
+  --color-color: #f76707;
+  --color-string: #ae3ec9;
   --color-bool: #1d2b53;
-  --color-gradient: #ffec27;
+  --color-gradient: #f59f00;
   --color-image: #ab5236;
 }
 
@@ -28,8 +30,17 @@
 .execute {
   --color-property: var(--color-execute);
 }
+.vector {
+  --color-property: var(--color-vector2);
+}
 .vector2 {
   --color-property: var(--color-vector2);
+}
+.vector3 {
+  --color-property: var(--color-vector3);
+}
+.vector4 {
+  --color-property: var(--color-vector4);
 }
 .string {
   --color-property: var(--color-string);

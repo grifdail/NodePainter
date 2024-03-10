@@ -1,6 +1,6 @@
 import { IconArrowsHorizontal, IconArrowsShuffle, IconCalendar, IconClock, IconFrame, IconMouse, IconPhone } from "@tabler/icons-react";
 
-import { createVector2 } from "./Vector";
+import { createVector2 } from "./vectorDataType";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { convertToShaderValue } from "../Data/convertToShaderValue";
 

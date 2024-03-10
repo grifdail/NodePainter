@@ -1,7 +1,6 @@
 import { IconArrowUpRightCircle, IconAssembly, IconLogicAnd, IconLogicNot, IconLogicOr, IconLogicXor } from "@tabler/icons-react";
-import { createColor } from "./Color";
 import { NodeDefinition } from "../Data/NodeDefinition";
-import { createVector2 } from "./Vector";
+import { createColor, createVector2 } from "./vectorDataType";
 
 export type Vector = { x: number; y: number };
 

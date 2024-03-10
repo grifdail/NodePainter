@@ -1,8 +1,8 @@
 import { IconBucketDroplet, IconCircle, IconCursorText, IconLine, IconPolygon, IconRectangle, IconTriangle, IconVectorBezier2, IconVectorTriangle } from "@tabler/icons-react";
-import { createVector2 } from "./Vector";
-import { createColor, createDefaultGradient, toHex, toP5Color } from "./Color";
+import { createColor, createDefaultGradient, createVector2 } from "./vectorDataType";
 import { createPortConnection } from "../Data/createPortConnection";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { toHex, toP5Color } from "./colorUtils";
 
 export const DrawNodes: Array<NodeDefinition> = [
   {

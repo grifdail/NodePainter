@@ -1,8 +1,7 @@
 import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { genShader } from "./genShader";
-import { createVector2 } from "./Vector";
-import { createColor } from "./Color";
+import { createColor, createVector2 } from "./vectorDataType";
 
 export const UVNodes: Array<NodeDefinition> = [
   {

@@ -1,4 +1,4 @@
-import { Color, Gradient, createColor } from "../Nodes/Color";
+import { ColorPalette, Gradient, GradientCollection, PaletteCollection, createColor } from "../Nodes/vectorDataType";
 
 function C(num: number) {
   num >>>= 0;
@@ -7,9 +7,6 @@ function C(num: number) {
     r = (num & 0xff0000) >>> 16;
   return createColor(r / 255, g / 255, b / 255, 1);
 }
-export type ColorPalette = Array<Color>;
-export type PaletteCollection = { [key: string]: ColorPalette };
-export type GradientCollection = { [key: string]: Gradient };
 
 export function createGradientFromPalette(palette: ColorPalette): Gradient {
   return palette.map((color, i) => ({

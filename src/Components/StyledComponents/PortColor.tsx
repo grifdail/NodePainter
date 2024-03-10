@@ -20,7 +20,19 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
     icon: IconNumbers,
     input: NumberInput,
   },
+  vector: {
+    icon: IconArrowUpRightCircle,
+    input: VectorInput,
+  },
   vector2: {
+    icon: IconArrowUpRightCircle,
+    input: VectorInput,
+  },
+  vector3: {
+    icon: IconArrowUpRightCircle,
+    input: VectorInput,
+  },
+  vector4: {
     icon: IconArrowUpRightCircle,
     input: VectorInput,
   },

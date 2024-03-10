@@ -2,13 +2,13 @@ import { SettingDefinition } from "../../Data/NodeDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "./ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { createColor } from "../../Nodes/Color";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { ColorPalette, DefaultPalettes } from "../../Data/Palettes";
 import { MenuItemWithPalettePreview } from "./ColorPreview";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
+import { ColorPalette, createColor } from "../../Nodes/vectorDataType";
+import { DefaultPalettes } from "../../Data/Palettes";
 
 const ColorList = styled.ul`
   display: flex;

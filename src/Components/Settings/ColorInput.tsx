@@ -1,4 +1,4 @@
-import { fromHex, invertColor, toHex } from "../../Nodes/Color";
+import { fromHex, invertColor, toHex } from "../../Nodes/colorUtils";
 import Sketch from "@uiw/react-color-sketch";
 
 import { Menu } from "@szhsin/react-menu";

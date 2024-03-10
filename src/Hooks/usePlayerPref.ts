@@ -2,8 +2,7 @@ import { create } from "zustand";
 import { produce } from "immer";
 
 import { persist } from "zustand/middleware";
-import { ColorPalette, GradientCollection, PaletteCollection } from "../Data/Palettes";
-import { Gradient } from "../Nodes/Color";
+import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "../Nodes/vectorDataType";
 
 export type SortingType = "name" | "last" | "most";
 

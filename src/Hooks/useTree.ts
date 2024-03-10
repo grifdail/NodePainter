@@ -11,8 +11,7 @@ import { NodeLibrary } from "../Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
-import { createVector2 } from "../Nodes/Vector";
-import { createColor } from "../Nodes/Color";
+import { createColor, createVector2 } from "../Nodes/vectorDataType";
 
 export type NodeCollection = { [key: string]: NodeData };
 export type ShaderData = {
@@ -29,6 +28,7 @@ export type TreeStore = {
   getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
   getNode: (id: string) => NodeData;
   getInputPort: (id: string, portId: string) => PortConnection;
+  getOutputPort: (id: string, portId: string) => PortDefinition;
   setNodePosition: (id: string, x: number, y: number) => void;
   addNode: (nodeType: string, posX: number, posY: number) => void;
   addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
@@ -83,6 +83,9 @@ export const useTree = create<TreeStore>()(
         getInputPort(id: string, portId: string) {
           return get().nodes[id].dataInputs[portId];
         },
+        getOutputPort(id: string, portId: string) {
+          return get().nodes[id].dataOutputs[portId];
+        },
 
         addNode(nodeType: string, posX: number, posY: number) {
           const newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
@@ -108,9 +111,10 @@ export const useTree = create<TreeStore>()(
               // eslint-disable-next-line eqeqeq
 
               if (port !== undefined) {
+                // If were binding data port.
                 const def = tree.getNodeTypeDefinition(node);
-                if (def.tryBindPort != null) {
-                  const canBind = def.tryBindPort(targetPort, node, tree.nodes[sourceId].dataOutputs[sourceId], "outputData");
+                if (def.bindPort != null) {
+                  const canBind = def.bindPort(targetPort, node, tree.nodes[sourceId].dataOutputs[sourcePort], "outputData");
                   if (!canBind) {
                     return;
                   }
@@ -121,8 +125,8 @@ export const useTree = create<TreeStore>()(
               } else {
                 node = tree.nodes[sourceId] as NodeData;
                 const def = tree.getNodeTypeDefinition(node);
-                if (def.tryBindPort != null) {
-                  const canBind = def.tryBindPort(sourcePort, node, null, "outputExec");
+                if (def.bindPort != null) {
+                  const canBind = def.bindPort(sourcePort, node, null, "outputExec");
                   if (!canBind) {
                     return;
                   }
@@ -157,10 +161,15 @@ export const useTree = create<TreeStore>()(
         removeDataConnection(nodeId, portId) {
           set(
             produce((state) => {
-              const port = state.nodes[nodeId].dataInputs[portId];
+              const node = state.nodes[nodeId] as NodeData;
+              const port = node.dataInputs[portId];
+              const def = state.getNodeTypeDefinition(node) as NodeDefinition;
               port.hasConnection = false;
               port.connectedNode = null;
               port.connectedPort = null;
+              if (def.unbindPort != null) {
+                def.unbindPort(portId, node, "inputData");
+              }
             })
           );
         },

@@ -1,5 +1,4 @@
-import { NodeDefinition, PortRole } from "../Data/NodeDefinition";
-import { PortTypeDefaultValue } from "../Data/NodeDefinition";
+import { NodeDefinition, PortRole, PortType, createDefaultValue } from "../Data/NodeDefinition";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
@@ -15,7 +14,7 @@ export type CustomFunctionCreationContextStore = {
   setPortId(type: PortRole, index: number, value: string): void;
   setPortDefaultValue(type: PortRole, index: number, value: any): void;
   deletePort(type: PortRole, index: number): void;
-  setPortType(type: PortRole, index: number, arg2: string): void;
+  setPortType(type: PortRole, index: number, portType: PortType): void;
   create: () => void;
   cancel: () => void;
   addOutput: () => void;
@@ -135,7 +134,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
       set(
         produce((state) => {
           state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].type = value;
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].defaultValue = PortTypeDefaultValue[value] as any;
+          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].defaultValue = createDefaultValue(value);
         })
       );
     },

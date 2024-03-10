@@ -1,7 +1,7 @@
 import { Icon, IconAngle, IconCalculator, IconEaseInOut, IconGridDots, IconMath, IconMathFunction, IconMathMax, IconMathMin, IconMathSymbols, IconMathXDivideY, IconMathXMinusY, IconMathXPlusY, IconPercentage, IconSquareRoot2, IconVectorBezier2, IconWaveSawTool, IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { IconMathXy } from "@tabler/icons-react";
-import { createVector2 } from "./Vector";
+import { createVector2 } from "./vectorDataType";
 import * as Easing from "../libs/easing";
 import { createPortConnection } from "../Data/createPortConnection";
 import { convertToShaderValue } from "../Data/convertToShaderValue";

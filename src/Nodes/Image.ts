@@ -1,9 +1,9 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
 import { ImageData } from "../Data/ImageData";
-import { createVector2 } from "./Vector";
+import { createColor, createVector2 } from "./vectorDataType";
 import { Image } from "p5";
-import { createColor, toP5Color } from "./Color";
+import { toP5Color } from "./colorUtils";
 
 export const ImageNode: Array<NodeDefinition> = [
   {

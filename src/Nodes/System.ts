@@ -1,16 +1,16 @@
 import { IconArrowsMove, IconAssembly, IconColorFilter, IconRotate, IconShadow } from "@tabler/icons-react";
 import { BLEND_MODE } from "p5";
-import { Vector2, createVector2 } from "./Vector";
-import { NodeDefinition, PortTypeArray, PortTypeDefaultValue } from "../Data/NodeDefinition";
+import { Vector2, createColor, createVector2 } from "./vectorDataType";
+import { NodeDefinition, PortTypeArray, createDefaultValue } from "../Data/NodeDefinition";
 import { NodeData, PortConnection } from "../Hooks/useTree";
 import { createPortConnection } from "../Data/createPortConnection";
-import { createColor, toHex } from "./Color";
+import { toHex } from "./colorUtils";
 
 export const START_NODE = "Start";
 export const CUSTOM_FUNCTION = "CustomFunction";
 export const CUSTOM_SHADER = "RenderShader";
 
-export const contextMenyCreateAllNode = Object.fromEntries(
+export const contextMenuCreateAllNode = Object.fromEntries(
   PortTypeArray.map((type) => [
     `Add a ${type} port`,
     (node: NodeData) => {
@@ -18,12 +18,12 @@ export const contextMenyCreateAllNode = Object.fromEntries(
       node.dataInputs[`type-${count}-in`] = createPortConnection({
         id: `type-${count}-in`,
         type: type,
-        defaultValue: PortTypeDefaultValue[type],
+        defaultValue: createDefaultValue(type),
       });
       node.dataOutputs[`type-${count}`] = {
         id: `type-${count}`,
         type: type,
-        defaultValue: PortTypeDefaultValue[type],
+        defaultValue: createDefaultValue(type),
       };
     },
   ])
@@ -192,7 +192,7 @@ export const SystemNodes: Array<NodeDefinition> = [
       context.execute(data.execOutputs["execute"] as string);
     },
     contextMenu: {
-      ...contextMenyCreateAllNode,
+      ...contextMenuCreateAllNode,
       "Remove last port": (node) => {
         var entries = Object.entries(node.dataOutputs);
         if (entries.length > 0) {
