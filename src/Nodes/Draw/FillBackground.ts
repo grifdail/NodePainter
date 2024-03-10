@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const FillBackground: NodeDefinition = {
   id: "FillBackground",
+  label: "Fill Background",
   description: "Fill the entire canvas",
   icon: IconBucketDroplet,
   tags: ["Draw"],

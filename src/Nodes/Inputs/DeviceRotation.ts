@@ -3,6 +3,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const DeviceRotation: NodeDefinition = {
   id: "DeviceRotation",
+  label: "Device Rotation",
   description: "The rotation of the phisical device you're using",
   icon: IconPhone,
   tags: ["Input"],

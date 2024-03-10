@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawTriangle: NodeDefinition = {
   id: "DrawTriangle",
+  label: "Draw Triangle",
   description: "Draw a triangle defined by 3 points",
   icon: IconVectorTriangle,
   tags: ["Draw"],

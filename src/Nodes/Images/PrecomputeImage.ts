@@ -4,6 +4,7 @@ import { ImageData } from "../../Data/ImageData";
 
 export const PrecomputeImage: NodeDefinition = {
   id: "PrecomputeImage",
+  label: "Precompute image",
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",
   canBeExecuted: true,

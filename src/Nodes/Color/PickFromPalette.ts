@@ -4,6 +4,7 @@ import { createColor } from "../../Data/vectorDataType";
 
 export const PickFromPalette: NodeDefinition = {
   id: "PickFromPalette",
+  label: "Pick from palette",
   description: "Pick a color from a palette",
   icon: IconColorFilter,
   tags: ["Color"],

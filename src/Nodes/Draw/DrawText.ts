@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawText: NodeDefinition = {
   id: "DrawText",
+  label: "Draw Text",
   description: "Draw a line of text",
   icon: IconCursorText,
   tags: ["Draw", "Text"],

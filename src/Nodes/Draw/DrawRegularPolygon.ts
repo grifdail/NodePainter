@@ -4,8 +4,9 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawRegularPolygon: NodeDefinition = {
-  id: "DrawRegularPoligon",
-  description: "Draw a regular poligon.",
+  id: "DrawRegularPolygon",
+  label: "Draw Regular Polygon",
+  description: "Draw a regular polygon.",
   icon: IconTriangle,
   tags: ["Draw"],
   dataInputs: [

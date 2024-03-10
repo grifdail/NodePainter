@@ -5,6 +5,7 @@ import { Image } from "p5";
 
 export const DrawImage: NodeDefinition = {
   id: "DrawImage",
+  label: "Draw Image",
   icon: IconPhoto,
   description: "Draw an image",
   canBeExecuted: true,

@@ -3,7 +3,8 @@ import { Vector2, createVector2 } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithScale: NodeDefinition = {
-  id: "With scale",
+  id: "WithScale",
+  label: "Render with scale",
   description: "Execute the next instruction as if the canvas was scaled",
   icon: IconArrowsMove,
   tags: ["Transform"],

@@ -4,7 +4,8 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { toHex } from "../../Data/colorUtils";
 
 export const ExecuteWithShadow: NodeDefinition = {
-  id: "With Shadow",
+  id: "WithShadow",
+  label: "Render with shadow",
   description: "Execute the next instruction with a blurry shadow below it",
   icon: IconShadow,
   tags: ["Transform"],

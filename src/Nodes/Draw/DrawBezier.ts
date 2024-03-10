@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawBezier: NodeDefinition = {
   id: "DrawBezier",
+  label: "Draw Bezier curve",
   description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
   icon: IconVectorBezier2,
   tags: ["Draw"],

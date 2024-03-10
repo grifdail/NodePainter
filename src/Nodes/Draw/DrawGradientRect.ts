@@ -5,6 +5,7 @@ import { toHex } from "../../Data/colorUtils";
 
 export const DrawGradientRect: NodeDefinition = {
   id: "DrawGradientRect",
+  label: "Draw Gradient Rect",
   description: "Draw a rectangle with a gradient",
   icon: IconRectangle,
   tags: ["Draw"],

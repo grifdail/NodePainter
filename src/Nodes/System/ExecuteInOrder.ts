@@ -3,6 +3,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteInOrder: NodeDefinition = {
   id: "ExecuteInOrder",
+  label: "Execute in order",
   description: "Execute the instruction in the order of their input",
   icon: IconAssembly,
   tags: ["Control"],

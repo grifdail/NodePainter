@@ -4,6 +4,7 @@ import { ImageData } from "../../Data/ImageData";
 
 export const UploadImage: NodeDefinition = {
   id: "UploadImage",
+  label: "Upload Image",
   icon: IconPhoto,
   description: "Upload an image",
   dataInputs: [],

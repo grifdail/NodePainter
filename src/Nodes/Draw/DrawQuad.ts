@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawQuad: NodeDefinition = {
   id: "DrawQuad",
+  label: "Draw Quad",
   description: "Draw a quad defined by 4 points",
   icon: IconPolygon,
   tags: ["Draw"],

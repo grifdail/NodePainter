@@ -5,7 +5,8 @@ import { createColor, createDefaultGradient } from "../../Data/vectorDataType";
 import { clamp01, map } from "../../Data/colorUtils";
 
 export const SampleGradient: NodeDefinition = {
-  id: "Sample Gradient",
+  id: "SampleGradient",
+  label: "Sample Gradient",
   description: "Sample a gradient",
   icon: IconColorFilter,
   tags: ["Color"],

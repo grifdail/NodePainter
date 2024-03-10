@@ -4,6 +4,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const MousePosition: NodeDefinition = {
   id: "MousePosition",
+  label: "Mouse Position",
   description: "The position of the cursor relative to the canvas",
   icon: IconMouse,
   tags: ["Input"],

@@ -2,7 +2,8 @@ import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithMask: NodeDefinition = {
-  id: "With Mask",
+  id: "WithMask",
+  label: "Render With Mask",
   description: "Execute the draw instruction masked by the mask.",
   icon: IconArrowsMove,
   tags: ["Transform"],

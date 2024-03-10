@@ -6,6 +6,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawImageWithTint: NodeDefinition = {
   id: "DrawImageWithTint",
+  label: "Draw tinted image",
   icon: IconPhoto,
   description: "Draw an image",
   canBeExecuted: true,

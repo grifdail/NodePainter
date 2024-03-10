@@ -3,10 +3,11 @@ import { BLEND_MODE } from "p5";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithBlending: NodeDefinition = {
-  id: "With Blending",
+  id: "WithBlending",
+  label: "Render With Blending",
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,
-  tags: ["Transform"],
+  tags: ["Transform", "Rendering"],
   dataInputs: [],
   dataOutputs: [],
   executeOutputs: ["execute"],

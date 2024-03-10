@@ -2,7 +2,8 @@ import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithMotionBlur: NodeDefinition = {
-  id: "With motion blur",
+  id: "WithMotionBlur",
+  label: "Render with motion blur",
   description: "Execute the next instruction multiple time to create a motion blur effect",
   icon: IconColorFilter,
   tags: ["Transform"],

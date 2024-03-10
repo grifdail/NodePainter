@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawCircle: NodeDefinition = {
   id: "DrawCircle",
+  label: "Draw circle",
   description: "Draw a circle",
   icon: IconCircle,
   tags: ["Draw"],

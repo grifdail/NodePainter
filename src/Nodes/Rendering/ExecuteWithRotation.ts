@@ -2,7 +2,8 @@ import { IconRotate } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithRotation: NodeDefinition = {
-  id: "With rotation",
+  id: "WithRotation",
+  label: "Render with rotation",
   description: "Execute the next instruction as if the canvas was rotated",
   icon: IconRotate,
   tags: ["Transform"],

@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawLine: NodeDefinition = {
   id: "DrawLine",
+  label: "Draw Line",
   description: "Draw a line between two point",
   icon: IconLine,
   tags: ["Draw"],

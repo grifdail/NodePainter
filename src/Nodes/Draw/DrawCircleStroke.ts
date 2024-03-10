@@ -5,6 +5,7 @@ import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawCircleStroke: NodeDefinition = {
   id: "DrawCircleStroke",
+  label: "Draw Circle Stroke",
   description: "Draw the contour of a circle.",
   icon: IconCircle,
   tags: ["Draw"],

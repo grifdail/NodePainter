@@ -3,7 +3,8 @@ import { Vector2, createVector2 } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ExecuteWithTranslation: NodeDefinition = {
-  id: "With translation",
+  id: "WithTranslation",
+  label: "Render with translation",
   description: "Execute the next instruction as if the canvas was moved",
   icon: IconArrowsMove,
   tags: ["Transform"],

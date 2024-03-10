@@ -4,6 +4,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const MouseMouvement: NodeDefinition = {
   id: "MouseMovement",
+  label: "Mouse Movement",
   description: "The movement of the cursor since the last frame",
   icon: IconMouse,
   tags: ["Input"],

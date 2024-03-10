@@ -3,6 +3,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 
 export const ForGrid: NodeDefinition = {
   id: "ForGrid",
+  label: "For grid",
   description: "Execute an instruction multiple time for elements of a grid",
   icon: IconAssembly,
   tags: ["Control"],

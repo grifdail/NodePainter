@@ -3,7 +3,8 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createColor } from "../../Data/vectorDataType";
 
 export const SetAlpha: NodeDefinition = {
-  id: "WithAlpha",
+  id: "SetAlpha",
+  label: "Set Alpha",
   description: "Set the transparency of a color",
   icon: IconColorFilter,
   tags: ["Color"],

@@ -5,8 +5,9 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { toP5Color } from "../../Data/colorUtils";
 
 export const DrawPolygon: NodeDefinition = {
-  id: "DrawPoligon",
-  description: "Draw a poligon with up to 20 points",
+  id: "DrawPolygon",
+  label: "Draw Polygon",
+  description: "Draw a polygon with up to 20 points",
   icon: IconPolygon,
   tags: ["Draw"],
   dataInputs: [
