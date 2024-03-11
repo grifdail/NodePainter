@@ -34,12 +34,10 @@ export const DecomposeNode: NodeDefinition = {
   availableTypes: [...VectorTypeslimited, "color"],
   onChangeType(node, type) {
     var count = { vector2: 2, vector3: 3, vector4: 4, color: 4 }[type as string] as number;
-    let deleted = false;
     for (var i = 0; i < 4; i++) {
       if (i >= count) {
         if (node.dataOutputs[i.toString()] !== undefined) {
           delete node.dataOutputs[i.toString()];
-          deleted = true;
         }
       } else {
         let port = node.dataOutputs[i.toString()];
