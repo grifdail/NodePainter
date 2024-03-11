@@ -29,7 +29,7 @@ export const WorleyNoise: NodeDefinition = {
     return vec2(sin(UV.y*+offset)*0.5+0.5, cos(UV.x*offset)*0.5+0.5);
 }
 
-void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out float Cells, out vec4 dir)
+void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out float Cells, out vec2 dir)
 {
     vec2 g = floor(UV * CellDensity);
     vec2 f = fract(UV * CellDensity);
@@ -48,18 +48,18 @@ void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out f
                 res = vec3(d, offset.x, offset.y);
                 Out = res.x;
                 Cells = res.y;
-                dir = vec4(f-(lattice + offset),0.0,0.0);
+                dir = f-(lattice + offset);
             }
         }
     }
 }`,
   getShaderCode(node, context) {
-    const out = context.getShaderVar(node, "out", true);
-    const cell = context.getShaderVar(node, "cell", true);
-    const dir = context.getShaderVar(node, "dir", true);
+    const out = context.getShaderVar(node, "out", "number", true);
+    const cell = context.getShaderVar(node, "cell", "number", true);
+    const dir = context.getShaderVar(node, "dir", "vector2", true);
     return `float ${out} = 0.0;
       float ${cell} = 0.0;
       vec4 ${dir} = vec4(0.0,0.0,0.0,0.0);
-      Voronoi(${context.getShaderVar(node, "uv")}.xy, ${context.getShaderVar(node, "angleOffset")}, ${context.getShaderVar(node, "cellDensity")}, ${out}, ${cell}, ${dir});`;
+      Voronoi(${context.getShaderVar(node, "uv", "vector2")}, ${context.getShaderVar(node, "angleOffset", "number")}, ${context.getShaderVar(node, "cellDensity", "number")}, ${out}, ${cell}, ${dir});`;
   },
 };

@@ -29,6 +29,6 @@ export const HSV: NodeDefinition = {
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "color", ["hue", "saturation", "value"], ([a, b, c]) => `vec4(hsv2rgb(vec3(${a},${b},${c})),1.0)`);
+    return genShader(node, context, "color", ["hue", "saturation", "value"], ({ hue, saturation, value }) => `vec4(hsv2rgb(vec3(${hue},${saturation},${value})),1.0)`);
   },
 };

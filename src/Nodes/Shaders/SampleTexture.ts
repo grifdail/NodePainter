@@ -18,6 +18,6 @@ export const SampleTexture: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["uv"], ([uv]) => `texture2D(uniform_${node.dataInputs["sampler"].connectedPort}, ${uv}.xy)`);
+    return genShader(node, context, "out", ["uv"], ({ uv }) => `texture2D(uniform_${node.dataInputs["sampler"].connectedPort}, ${uv})`);
   },
 };

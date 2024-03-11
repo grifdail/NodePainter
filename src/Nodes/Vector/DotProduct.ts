@@ -41,6 +41,6 @@ export const DotProduct: NodeDefinition = {
     return zipVector(a, b).reduce((sum, comp) => sum + comp.reduce((old, value) => old * value, 1), 0);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "dot", ["a", "b"], ([a, b]) => `dot(${a}, ${b})`);
+    return genShader(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
   },
 };

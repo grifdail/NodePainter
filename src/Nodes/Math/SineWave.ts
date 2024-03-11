@@ -53,6 +53,6 @@ export const SineWave: NodeDefinition = {
     return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "output", ["time", "phase", "frequency", "amplitude", "positive"], ([time, phase, frequency, amplitude, positive]) => `(!${positive} ? cos((${time}+${phase}) * 6.2831855 * ${frequency}) : cos((${time}+${phase}) * 6.2831855 * ${frequency}) * 0.5 + 0.5 ) * ${amplitude}`);
+    return genShader(node, context, "output", ["time", "phase", "frequency", "amplitude", "positive"], ({ time, phase, frequency, amplitude, positive }) => `(!${positive} ? cos((${time}+${phase}) * 6.2831855 * ${frequency}) : cos((${time}+${phase}) * 6.2831855 * ${frequency}) * 0.5 + 0.5 ) * ${amplitude}`);
   },
 };

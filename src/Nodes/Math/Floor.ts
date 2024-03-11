@@ -11,7 +11,7 @@ export const Floor: NodeDefinition = {
   tags: ["Math", "Vector"],
   dataInputs: [
     {
-      id: "in",
+      id: "x",
       type: "number",
       defaultValue: 0,
     },
@@ -27,15 +27,15 @@ export const Floor: NodeDefinition = {
   settings: [],
   defaultType: "number",
   availableTypes: VectorTypesFull,
-  onChangeType: changeTypeGenerator(["in"], ["out"]),
+  onChangeType: changeTypeGenerator(["x"], ["out"]),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "in");
+    var a = context.getInputValueVector(nodeData, "x");
     return EnforceGoodType(
       nodeData,
       a.map((value) => Math.floor(value))
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["in"], ([a, b]) => `floor(${a})`);
+    return genShader(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
   },
 };

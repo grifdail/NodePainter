@@ -3,6 +3,7 @@ import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
 import { VectorTypeslimited } from "../../Data/vectorUtils";
 import { convertTypeValue } from "../../Data/convertTypeValue";
+import { genShader } from "../../Data/genShader";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
@@ -73,8 +74,8 @@ export const DecomposeNode: NodeDefinition = {
     }
   },
   getShaderCode(node, context) {
-    return `
-    float ${context.getShaderVar(node, "x", true)} = ${context.getShaderVar(node, "vec")}.x;
-    float ${context.getShaderVar(node, "y", true)} = ${context.getShaderVar(node, "vec")}.y;`;
+    return Object.keys(node.dataOutputs)
+      .map((id, i) => genShader(node, context, id, ["vec"], ({ vec }) => `${vec}.${"xyzw"[i]}`))
+      .join("\n");
   },
 };

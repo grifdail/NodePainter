@@ -1,7 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
-import { getShaderType } from "../../Data/convertToShaderValue";
 
 export const RenderShaderStart: NodeDefinition = {
   id: "CustomShader-start",
@@ -15,11 +14,11 @@ export const RenderShaderStart: NodeDefinition = {
   settings: [],
   getShaderCode(node, context) {
     return [
-      genShader(node, context, "vec4", "uv", [], () => `vec4(vTexCoord.xy, 0.0, 0.0)`),
+      genShader(node, context, "uv", [], (_) => `vec4(vTexCoord.xy, 0.0, 0.0)`),
       ...Object.values(node.dataOutputs)
         .filter((port) => port.id !== "uv" && port.type !== "image")
         .map((port) => {
-          return genShader(node, context, getShaderType(port.type), port.id, [], () => `uniform_${port.id}`);
+          return genShader(node, context, port.id, {}, () => `uniform_${port.id}`);
         }),
     ].join("\n");
   },

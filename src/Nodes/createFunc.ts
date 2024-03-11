@@ -1,5 +1,6 @@
 import { Icon, IconSquareRoot2 } from "@tabler/icons-react";
 import { NodeDefinition } from "../Data/NodeDefinition";
+import { genShader } from "../Data/genShader";
 
 export function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon, shaderCode?: (v: string) => string): NodeDefinition {
   return {
@@ -33,7 +34,7 @@ export function createFunc(id: string, evalOperation: (input: any) => any, descr
       ? undefined
       : (node, context) => {
           if (shaderCode) {
-            return `float ${context.getShaderVar(node, "result", true)} = ${shaderCode(context.getShaderVar(node, "input"))};`;
+            return genShader(node, context, "result", ["input"], ({ input }) => shaderCode(input));
           }
           return "";
         },

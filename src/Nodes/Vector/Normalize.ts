@@ -40,6 +40,6 @@ export const Normalize: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["vec"], ([a]) => `normalize(${a})`);
+    return genShader(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
   },
 };

@@ -8,9 +8,10 @@ import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "./ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "./vectorDataType";
+import { convertShaderType } from "./convertTypeValue";
 
 export type ExecutionContext = {
-  getShaderVar(nodeData: NodeData, portId: string, isOutput?: boolean): string;
+  getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
   getShaderCode(shader: string, uniforms: PortConnection[]): string;
   findNodeOfType(type: string): string | null;
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
@@ -83,13 +84,14 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueImage: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "image") as ImageData,
     getInputValueString: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "bool") as boolean,
-    getShaderVar(nodeData, portId, isOutput = false) {
+    getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
         return `${cleanNameForShader(nodeData.id)}_${cleanNameForShader(portId)}`;
       }
       if (inputPorts.hasConnection) {
-        return `${cleanNameForShader(inputPorts.connectedNode)}_${cleanNameForShader(inputPorts.connectedPort)}`;
+        var outPort = tree?.getOutputPort(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+        return convertShaderType(`${cleanNameForShader(inputPorts.connectedNode)}_${cleanNameForShader(inputPorts.connectedPort)}`, outPort?.type as PortType, inputPorts.type);
       } else {
         return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
       }
@@ -118,5 +120,5 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
 }
 
 export const cleanNameForShader = function (str: string | null) {
-  return str?.replaceAll("-", "_");
+  return str?.replaceAll("-", "_").replaceAll("__", "_");
 };

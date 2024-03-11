@@ -24,7 +24,7 @@ export function createConstant(id: string, value: number): NodeDefinition {
       }
     },
     getShaderCode(node, context) {
-      return `float ${context.getShaderVar(node, "value", true)} = ${convertToShaderValue(value, "number")};`;
+      return `float ${context.getShaderVar(node, "value", "number", true)} = ${convertToShaderValue(value, "number")};`;
     },
   };
 }

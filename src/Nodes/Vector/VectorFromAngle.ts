@@ -31,6 +31,6 @@ export const VectorFromAngle: NodeDefinition = {
     }
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "vec", ["angle", "length"], ([angle, length]) => `vec4(cos(${angle}) * ${length}, sin(${angle}) * ${length},0.0,0.0)`);
+    return genShader(node, context, "vec", ["angle", "length"], ({ angle, length }) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
   },
 };

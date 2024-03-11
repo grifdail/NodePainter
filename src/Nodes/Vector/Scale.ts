@@ -13,7 +13,7 @@ export const Scale: NodeDefinition = {
   tags: ["Math", "Vector"],
   dataInputs: [
     {
-      id: "in",
+      id: "vec",
       type: "vector2",
       defaultValue: createVector2(),
     },
@@ -34,9 +34,9 @@ export const Scale: NodeDefinition = {
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypesFull,
-  onChangeType: changeTypeGenerator(["in"], ["out"]),
+  onChangeType: changeTypeGenerator(["vec"], ["out"]),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "in");
+    var a = context.getInputValueVector(nodeData, "vec");
     var b = context.getInputValueNumber(nodeData, "scale");
     return EnforceGoodType(
       nodeData,
@@ -44,6 +44,6 @@ export const Scale: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["in", "scale"], ([a, b]) => `${a} * ${b}`);
+    return genShader(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);
   },
 };

@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
-import { createColor, createVector2, createVector3, createVector4 } from "../../Data/vectorDataType";
+import { createColor, createVector2, createVector3 } from "../../Data/vectorDataType";
 import { createPortConnection } from "../../Data/createPortConnection";
 import { original } from "immer";
 import { VectorTypeslimited } from "../../Data/vectorUtils";
@@ -70,16 +70,19 @@ export const ComposeNode: NodeDefinition = {
     if (nodeData.selectedType === "vector3") {
       return createVector3(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"));
     }
-    if (nodeData.selectedType === "vector4") {
-      return createVector4(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"), context.getInputValueNumber(nodeData, "3"));
-    }
-    if (nodeData.selectedType === "color") {
+    if (nodeData.selectedType === "vector4" || nodeData.selectedType === "color") {
       return createColor(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"), context.getInputValueNumber(nodeData, "3"));
     } else {
       return createVector2(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"));
     }
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "vec", ["x", "y"], ([x, y]) => `vec4(${x}, ${y}, 0.0, 0.0)`);
+    if (node.selectedType === "vector3") {
+      return genShader(node, context, "vec", ["0", "1", "2"], (args) => `vec3(${args[0]}, ${args[1]}, ${args[2]})`);
+    } else if (node.selectedType === "vector4" || node.selectedType === "color") {
+      return genShader(node, context, "vec", ["0", "1", "2", "3"], (args) => `vec4(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`);
+    } else {
+      return genShader(node, context, "vec", ["0", "1"], (args) => `vec2(${args[0]}, ${args[1]}})`);
+    }
   },
 };

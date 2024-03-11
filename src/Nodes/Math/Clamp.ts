@@ -1,6 +1,8 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
+import { VectorTypesFull } from "../../Data/vectorUtils";
+import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 
 export const Clamp: NodeDefinition = {
   id: "Clamp",
@@ -33,15 +35,18 @@ export const Clamp: NodeDefinition = {
   ],
   executeOutputs: [],
   settings: [],
+  availableTypes: VectorTypesFull,
+  defaultType: "number",
+  onChangeType: changeTypeGenerator(["value"], ["result"]),
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
-      var value = context.getInputValueNumber(nodeData, "value");
+      var value = context.getInputValueVector(nodeData, "value");
       var min = context.getInputValueNumber(nodeData, "min");
       var max = context.getInputValueNumber(nodeData, "max");
-      return Math.max(Math.min(value, max), min);
+      return value.map((v) => Math.max(Math.min(v, max), min));
     }
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "result", ["value", "min", "max"], ([value, min, max]) => `clamp(${value}, ${min}, ${max})`);
+    return genShader(node, context, "result", ["value", "min", "max"], ({ value, min, max }) => `clamp(${value}, ${min}, ${max})`);
   },
 };

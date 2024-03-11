@@ -12,6 +12,6 @@ export const RenderShaderEnd: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getShaderCode(node, context) {
-    return `gl_FragColor  = ${context.getShaderVar(node, "color")};`;
+    return `gl_FragColor  = ${context.getShaderVar(node, "color", "color")};`;
   },
 };

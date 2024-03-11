@@ -42,6 +42,6 @@ export const Add: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorAddition(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `${a} + ${b}`);
+    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} + ${b}`);
   },
 };

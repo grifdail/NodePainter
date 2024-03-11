@@ -43,6 +43,6 @@ export const Atan2: NodeDefinition = {
 }
 `,
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "result", ["x", "y"], ([x, y]) => `atan2(${y}, ${x})`);
+    return genShader(node, context, "result", ["x", "y"], ({ x, y }) => `atan2(${y}, ${x})`);
   },
 };

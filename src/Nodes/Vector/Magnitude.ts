@@ -35,6 +35,6 @@ export const Magnitude: NodeDefinition = {
     return VectorMagnitude(vec);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "length", ["vec"], ([vec]) => `length(${vec})`);
+    return genShader(node, context, "length", ["vec"], ({ vec }) => `length(${vec})`);
   },
 };

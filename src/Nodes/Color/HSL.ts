@@ -30,6 +30,6 @@ export const HSL: NodeDefinition = {
     return c.z + c.y * (rgb-0.5)*(1.0-abs(2.0*c.z-1.0));
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "color", ["hue", "saturation", "lightness"], ([a, b, c]) => `vec4(hsl2rgb(vec3(${a},${b},${c})),1.0)`);
+    return genShader(node, context, "color", ["hue", "saturation", "lightness"], ({hue, saturation, lightness}) => `vec4(hsl2rgb(vec3(${hue},${saturation},${lightness})),1.0)`);
   },
 };

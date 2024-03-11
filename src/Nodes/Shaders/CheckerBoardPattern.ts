@@ -19,14 +19,14 @@ export const CheckerBoardPattern: NodeDefinition = {
   tags: ["UV"],
   executeOutputs: [],
   settings: [],
-  shaderRequirement: `  vec4 Checkerboard(vec4 UV, vec4 ColorA, vec4 ColorB, vec4 Frequency)
+  shaderRequirement: `  float Checkerboard(vec4 UV, vec4 Frequency)
 {
     UV = (UV + 0.5) * Frequency;
     vec2 Pos = floor(UV.xy);
     float PatternMask = mod(Pos.x + mod(Pos.y, 2.0), 2.0);
-    return mix(ColorA, ColorB, PatternMask);
+    return PatternMask;
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["uv", "freq", "colorA", "colorB"], ([uv, freq, a, b]) => `Checkerboard(${uv}, ${a}, ${b}, ${freq})`);
+    return genShader(node, context, "out", ["uv", "freq", "colorA", "colorB"], ({ uv, freq, colorA, colorB }) => `mix(${colorA}, ${colorB}, Checkerboard(${uv},  ${freq}))`);
   },
 };

@@ -15,6 +15,6 @@ export const Progress: NodeDefinition = {
     return (context.time / (nodeData.settings["preview-duration"] * 1000)) % 1;
   },
   getShaderCode(node, context) {
-    return `float ${context.getShaderVar(node, "progress", true)} = mod(time / (${convertToShaderValue(node.settings["preview-duration"], "number")} * 1000.0), 1.0);`;
+    return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderValue(node.settings["preview-duration"], "number")} * 1000.0), 1.0);`;
   },
 };

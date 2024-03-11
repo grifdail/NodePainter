@@ -43,6 +43,6 @@ float GradientNoise_float(vec4 UV, float Scale)
     return gradientNoise(UV.xy * Scale) + 0.5;
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "out", ["uv", "scale"], ([uv, scale]) => `GradientNoise_float(${uv}, ${scale})`);
+    return genShader(node, context, "out", ["uv", "scale"], ({ uv, scale }) => `GradientNoise_float(${uv}, ${scale})`);
   },
 };

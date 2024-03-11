@@ -35,6 +35,6 @@ export const SquareMagnitude: NodeDefinition = {
     return VectorSquareMagnitude(vec);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "float", "length", ["vec"], ([vec]) => `${vec}.x * ${vec}.x + ${vec}.y * ${vec}.y`);
+    return genShader(node, context, "length", ["vec"], ({ vec }) => `dot(${vec},${vec})`);
   },
 };

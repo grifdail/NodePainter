@@ -42,6 +42,6 @@ export const Divide: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorDivision(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["a", "b"], ([a, b]) => `vec4(${a}.x * ${b}.x, ${a}.y * ${b}.y, 0.0, 0.0)`);
+    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} / ${b}`);
   },
 };

@@ -28,6 +28,6 @@ export const Twirl: NodeDefinition = {
     return vec4(x + Center.x + Offset.x, y + Center.y + Offset.y, 0.0, 0.0);
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["uv", "center", "strength", "offset"], ([uv, center, strength, offset]) => `Twirl(${uv}, ${center}, ${strength}, ${offset})`);
+    return genShader(node, context, "out", ["uv", "center", "strength", "offset"], ({ uv, center, strength, offset }) => `Twirl(${uv}, ${center}, ${strength}, ${offset})`);
   },
 };

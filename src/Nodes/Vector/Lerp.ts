@@ -48,6 +48,6 @@ export const Lerp: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorLerp(a, b, t));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "result", ["from", "to", "t"], ([from, to, t]) => `mix(${from}, ${to}, ${t})`);
+    return genShader(node, context, "result", ["from", "to", "t"], ({ from, to, t }) => `mix(${from}, ${to}, ${t})`);
   },
 };

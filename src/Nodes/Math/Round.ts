@@ -11,7 +11,7 @@ export const Round: NodeDefinition = {
   tags: ["Math", "Vector"],
   dataInputs: [
     {
-      id: "in",
+      id: "input",
       type: "number",
       defaultValue: 0,
     },
@@ -27,15 +27,15 @@ export const Round: NodeDefinition = {
   settings: [],
   defaultType: "number",
   availableTypes: VectorTypesFull,
-  onChangeType: changeTypeGenerator(["in"], ["out"]),
+  onChangeType: changeTypeGenerator(["input"], ["out"]),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "in");
+    var a = context.getInputValueVector(nodeData, "input");
     return EnforceGoodType(
       nodeData,
       a.map((value) => Math.round(value))
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec4", "out", ["in"], ([a, b]) => `round(${a})`);
+    return genShader(node, context, "out", ["input"], ({ input }) => `round(${input})`);
   },
 };

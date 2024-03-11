@@ -14,6 +14,6 @@ export const Time: NodeDefinition = {
     return context.time / 1000;
   },
   getShaderCode(node, context) {
-    return `float ${context.getShaderVar(node, "time", true)} = time / 1000.0;`;
+    return `float ${context.getShaderVar(node, "time", "number", true)} = time / 1000.0;`;
   },
 };
