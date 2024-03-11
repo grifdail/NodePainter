@@ -5,7 +5,7 @@ import { ExecutionContext } from "./createExecutionContext";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient" | "vector" | "vector3" | "vector4" | "unknown";
-export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "shader";
+export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload";
 export type Accept = PortType | "vector";
 
 export const PortTypeArray: PortType[] = ["number", "vector2", "color", "string", "bool", "image", "gradient", "vector3", "vector4"];

@@ -59,7 +59,7 @@ void Voronoi(vec2 UV, float AngleOffset, float CellDensity, out float Out, out f
     const dir = context.getShaderVar(node, "dir", "vector2", true);
     return `float ${out} = 0.0;
       float ${cell} = 0.0;
-      vec4 ${dir} = vec4(0.0,0.0,0.0,0.0);
+      vec2 ${dir} = vec2(0.0,0.0);
       Voronoi(${context.getShaderVar(node, "uv", "vector2")}, ${context.getShaderVar(node, "angleOffset", "number")}, ${context.getShaderVar(node, "cellDensity", "number")}, ${out}, ${cell}, ${dir});`;
   },
 };

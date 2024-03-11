@@ -19,7 +19,7 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     },
     color: {
       code: (a) => createColor(clamp01(a), clamp01(a), clamp01(a), clamp01(a)),
-      shader: (v) => `vec4(${v}, 0.0, 0.0, 1.0)`,
+      shader: (v) => `vec4(${v},${v},${v},1.0)`,
     },
     string: {
       code: (a) => a.toString(),
@@ -38,15 +38,15 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     },
     vector2: {
       code: (a) => createVector2(a),
-      shader: (v) => `vec2(${v},0.0)`,
+      shader: (v) => `vec2(${v})`,
     },
     vector3: {
       code: (a) => createVector3(a),
-      shader: (v) => `vec3(${v}, 0.0, 0.0)`,
+      shader: (v) => `vec3(${v})`,
     },
     vector4: {
       code: (a) => createVector4(a),
-      shader: (v) => `vec4(${v}, 0.0, 0.0, 0.0)`,
+      shader: (v) => `vec4(${v})`,
     },
   },
   vector2: {

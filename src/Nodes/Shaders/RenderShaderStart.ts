@@ -14,7 +14,7 @@ export const RenderShaderStart: NodeDefinition = {
   settings: [],
   getShaderCode(node, context) {
     return [
-      genShader(node, context, "uv", [], (_) => `vec4(vTexCoord.xy, 0.0, 0.0)`),
+      genShader(node, context, "uv", [], (_) => `vTexCoord.xy`),
       ...Object.values(node.dataOutputs)
         .filter((port) => port.id !== "uv" && port.type !== "image")
         .map((port) => {

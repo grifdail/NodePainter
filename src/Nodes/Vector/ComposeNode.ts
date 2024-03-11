@@ -78,11 +78,11 @@ export const ComposeNode: NodeDefinition = {
   },
   getShaderCode(node, context) {
     if (node.selectedType === "vector3") {
-      return genShader(node, context, "vec", ["0", "1", "2"], (args) => `vec3(${args[0]}, ${args[1]}, ${args[2]})`);
+      return genShader(node, context, "out", ["0", "1", "2"], (args) => `vec3(${args[0]}, ${args[1]}, ${args[2]})`);
     } else if (node.selectedType === "vector4" || node.selectedType === "color") {
-      return genShader(node, context, "vec", ["0", "1", "2", "3"], (args) => `vec4(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`);
+      return genShader(node, context, "out", ["0", "1", "2", "3"], (args) => `vec4(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`);
     } else {
-      return genShader(node, context, "vec", ["0", "1"], (args) => `vec2(${args[0]}, ${args[1]}})`);
+      return genShader(node, context, "out", ["0", "1"], (args) => `vec2(${args[0]}, ${args[1]})`);
     }
   },
 };

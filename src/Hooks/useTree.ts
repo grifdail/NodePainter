@@ -14,6 +14,7 @@ import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";
 import { createColor, createVector2 } from "../Data/vectorDataType";
 import { canConvert } from "../Data/convertTypeValue";
+import { Template } from "./templates";
 
 export type NodeCollection = { [key: string]: NodeData };
 export type ShaderData = {
@@ -23,7 +24,6 @@ export type ShaderData = {
 export type TreeStore = {
   isEditingShader(): boolean;
   nodes: NodeCollection;
-  shaders: ShaderData[];
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
@@ -43,6 +43,7 @@ export type TreeStore = {
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
+  loadTemplate: (temp: Template) => void;
   load: (source: NodeCollection) => boolean;
   createFunction: (def: NodeDefinition) => void;
   createShader(def: NodeDefinition): unknown;
@@ -287,6 +288,10 @@ export const useTree = create<TreeStore>()(
           set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined });
           resetCamera();
         },
+        loadTemplate(temp) {
+          set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph });
+          resetCamera();
+        },
         load(source) {
           try {
             set({ nodes: source });
@@ -526,3 +531,5 @@ function createDefaultNodeConnection(): NodeCollection {
     [background.id]: background,
   };
 }
+
+console.log(useTree);

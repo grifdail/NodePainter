@@ -13,7 +13,6 @@ export const RenderShader: NodeDefinition = {
   tags: ["Shader"],
   executeOutputs: [],
   settings: [
-    { id: "shader", type: "shader", defaultValue: null },
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
     { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },

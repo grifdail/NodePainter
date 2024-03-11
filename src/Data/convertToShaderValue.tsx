@@ -31,7 +31,7 @@ export function convertToShaderValue(value: any, type: PortType): string {
 export function getShaderType(type: PortType): string {
   switch (type) {
     case "bool":
-      return "float";
+      return "bool";
     case "color":
       return `vec4`;
     case "execute":
@@ -43,6 +43,10 @@ export function getShaderType(type: PortType): string {
     case "string":
       return "";
     case "vector2":
+      return `vec2`;
+    case "vector3":
+      return `vec3`;
+    case "vector4":
       return `vec4`;
     case "number":
       return "float";

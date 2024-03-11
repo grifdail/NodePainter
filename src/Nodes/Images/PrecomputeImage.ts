@@ -11,13 +11,13 @@ export const PrecomputeImage: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [
     {
-      id: "draw-image",
+      id: "image",
       type: "image",
       defaultValue: null,
     },
   ],
   tags: ["Image"],
-  executeOutputs: ["image", "execute"],
+  executeOutputs: ["draw", "execute"],
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
@@ -46,8 +46,8 @@ export const PrecomputeImage: NodeDefinition = {
     if (needRedraw) {
       var oldTarget = context.target;
       context.target = img.image;
-      if (node.execOutputs["image"]) {
-        context.execute(node.execOutputs["draw-image"] as string);
+      if (node.execOutputs["draw"]) {
+        context.execute(node.execOutputs["draw"] as string);
       }
 
       context.target = oldTarget;

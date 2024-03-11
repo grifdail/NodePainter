@@ -15,6 +15,7 @@ import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 import { resetCamera } from "../Data/resetCamera";
 import { useSelection } from "../Hooks/useSelection";
+import { Templates } from "../Hooks/templates";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -29,6 +30,7 @@ export function GridUi() {
   const portSelection = usePortSelection();
   const nodes = useTree((state) => state.nodes);
   const reset = useTree((state) => state.reset);
+  const loadTemplate = useTree((state) => state.loadTemplate);
   const graph = useTree((state) => state.editedGraph) || "main";
   const setEditedGraph = useTree((state) => state.setEditedGraph);
   const rawCustomNodes = useTree((state) => state.customNodes);
@@ -116,6 +118,11 @@ export function GridUi() {
           <MenuItem onClick={reset}>New Graph</MenuItem>
           <MenuItem onClick={() => openModal("save")}>Save</MenuItem>
           <MenuItem onClick={() => openModal("load")}>Load</MenuItem>
+          <MenuDivider></MenuDivider>
+          {Object.entries(Templates).map(([key, value]) => (
+            <MenuItem onClick={() => loadTemplate(value)}>New from template {key}</MenuItem>
+          ))}
+          <MenuDivider></MenuDivider>
           <MenuItem onClick={() => openModal("export-gif")}>Export gif</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem onClick={resetCamera}>Reset camera</MenuItem>
