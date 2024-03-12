@@ -1,14 +1,12 @@
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
-import { VectorAddition, VectorLenght } from "../../Data/vectorUtils";
-import { EnforceGoodType } from "../../Data/vectorUtils";
+import { VectorLenght } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypesFull } from "../../Data/vectorUtils";
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { fraction } from "mathjs";
-import { DotProduct, VectorDotProduct } from "./DotProduct";
-import { Vector } from "p5";
+import { VectorDotProduct } from "./DotProduct";
 
 const randomVect = [12.9898, 78.233, 56.128, 48.411];
 
