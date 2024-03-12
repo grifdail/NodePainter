@@ -125,6 +125,7 @@ import { Atan } from "./Math/Atan";
 import { PowNode } from "./Math/PowNode";
 import { Modulo } from "./Math/Modulo";
 import { FocalLength } from "./Vector/FocalLength";
+import { SeededRandom } from "./Vector/SeededRandom";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -197,6 +198,7 @@ export const Nodes: Array<NodeDefinition> = [
 
   // Random
   Random,
+  SeededRandom,
 
   //Input Misc
   Dimension,

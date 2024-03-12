@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
+import { Vector, createVector2 } from "../../Data/vectorDataType";
 import { zipVector } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypeslimited } from "../../Data/vectorUtils";
@@ -38,9 +38,12 @@ export const DotProduct: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");
-    return zipVector(a, b).reduce((sum, comp) => sum + comp.reduce((old, value) => old * value, 1), 0);
+    return VectorDotProduct(a, b);
   },
   getShaderCode(node, context) {
     return genShader(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
   },
 };
+export function VectorDotProduct(a: number[], b: number[]): number {
+  return zipVector(a, b).reduce((sum, comp) => sum + comp[0] * comp[1], 0);
+}

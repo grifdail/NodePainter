@@ -44,3 +44,4 @@ export function EnforceGoodType(nodeData: NodeData, arg1: number[]): any {
 }
 export const VectorTypesFull: PortType[] = ["number", "vector2", "vector3", "color"];
 export const VectorTypeslimited: PortType[] = ["vector2", "vector3"];
+export const VectorLenght: { [key: string]: number } = { number: 1, vector2: 2, vector3: 3, vector4: 4, color: 4 };

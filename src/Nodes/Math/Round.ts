@@ -36,6 +36,6 @@ export const Round: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["input"], ({ input }) => `round(${input})`);
+    return genShader(node, context, "out", ["input"], ({ input }) => `sign(${input})*floor(abs(${input})+0.5);`);
   },
 };

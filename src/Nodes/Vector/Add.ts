@@ -15,7 +15,7 @@ export const Add: NodeDefinition = {
   dataInputs: [
     {
       id: "a",
-      type: "vector",
+      type: "vector2",
       defaultValue: createVector2(),
     },
     {

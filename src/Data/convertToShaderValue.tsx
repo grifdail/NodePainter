@@ -5,7 +5,7 @@ export function convertToShaderValue(value: any, type: PortType): string {
     case "bool":
       return value.toString();
     case "color":
-      return `vec4(${convertToShaderValue(value.r, "number")}, ${convertToShaderValue(value.g, "number")}, ${convertToShaderValue(value.b, "number")}, ${convertToShaderValue(value.a, "number")})`;
+      return `vec4(${convertToShaderValue(value[0], "number")}, ${convertToShaderValue(value[1], "number")}, ${convertToShaderValue(value[2], "number")}, ${convertToShaderValue(value[3], "number")})`;
     case "execute":
       return "";
     case "gradient":
@@ -15,7 +15,11 @@ export function convertToShaderValue(value: any, type: PortType): string {
     case "string":
       return "";
     case "vector2":
-      return `vec4(${convertToShaderValue(value.x, "number")}, ${convertToShaderValue(value.y, "number")}, 0.0, 0.0)`;
+      return `vec2(${convertToShaderValue(value[0], "number")}, ${convertToShaderValue(value[1], "number")})`;
+    case "vector3":
+      return `vec3(${convertToShaderValue(value[0], "number")}, ${convertToShaderValue(value[1], "number")}, ${convertToShaderValue(value[2], "number")})`;
+    case "vector4":
+      return `vec4(${convertToShaderValue(value[0], "number")}, ${convertToShaderValue(value[1], "number")}, ${convertToShaderValue(value[2], "number")}, ${convertToShaderValue(value[3], "number")})`;
     case "number":
       var str: string = Number.isNaN(value) ? "0.0" : value.toString();
       if (str.indexOf(".") < 0) {
