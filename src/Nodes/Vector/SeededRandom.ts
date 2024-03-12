@@ -1,4 +1,4 @@
-﻿import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
 import { VectorAddition, VectorLenght } from "../../Data/vectorUtils";
