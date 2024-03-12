@@ -9,5 +9,6 @@ export function genShader(node: NodeData, context: ExecutionContext, output: str
     inputs = Object.fromEntries(inputs.map((key) => [key, node.dataInputs[key].type]));
   }
   const args = Object.fromEntries(Object.entries(inputs).map(([key, type]) => [key, context.getShaderVar(node, key, type)]));
+  console.log(args);
   return `  ${getShaderType(outputPort.type)} ${context.getShaderVar(node, output, outputPort.type, true)} = ${gen(args)};`;
 }

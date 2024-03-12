@@ -14,6 +14,16 @@ export function convertToShaderValue(value: any, type: PortType): string {
       return "";
     case "string":
       return "";
+    case "vector":
+      if (Array.isArray(value)) {
+        if (value.length === 1) {
+          return convertToShaderValue(value[0], "number");
+        } else {
+          return convertToShaderValue(value, `vector${value.length}` as PortType);
+        }
+      } else {
+        return convertToShaderValue(value, "number");
+      }
     case "vector2":
       return `vec2(${convertToShaderValue(value[0], "number")}, ${convertToShaderValue(value[1], "number")})`;
     case "vector3":
