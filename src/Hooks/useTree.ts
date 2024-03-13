@@ -8,7 +8,7 @@ import { PortType } from "../Data/NodeDefinition";
 import { persist } from "zustand/middleware";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { START_NODE } from "../Nodes/System/StartNode";
-import { NodeLibrary } from "../Nodes";
+import { NodeLibrary } from "../Nodes/Nodes";
 import { createPortConnection } from "../Data/createPortConnection";
 import { resetCamera } from "../Data/resetCamera";
 import { ExecutionContext } from "../Data/createExecutionContext";

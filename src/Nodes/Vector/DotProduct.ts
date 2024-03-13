@@ -4,7 +4,7 @@ import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
 import { zipVector } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypeslimited } from "../../Data/vectorUtils";
+import { VectorTypeslimited } from "../../Data/NodeDefinition";
 
 export const DotProduct: NodeDefinition = {
   id: "DotProduct",

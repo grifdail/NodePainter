@@ -5,7 +5,7 @@ import { createVector2 } from "../../Data/vectorDataType";
 import { VectorSubstraction } from "../../Data/vectorUtils";
 import { EnforceGoodType } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 
 export const Subtract: NodeDefinition = {
   id: "Subtract",

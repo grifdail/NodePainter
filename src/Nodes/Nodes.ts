@@ -54,7 +54,6 @@ import { UploadImage } from "./Images/UploadImage";
 import { SampleTexture } from "./Shaders/SampleTexture";
 import { CheckerBoardPattern } from "./Shaders/CheckerBoardPattern";
 import { Twirl } from "./Shaders/Twirl";
-import { GradientNoise } from "./Shaders/GradientNoise";
 import { WorleyNoise } from "./Shaders/WorleyNoise";
 
 import { TextConcat } from "./Text/TextConcat";
@@ -126,6 +125,10 @@ import { PowNode } from "./Math/PowNode";
 import { Modulo } from "./Math/Modulo";
 import { FocalLength } from "./Vector/FocalLength";
 import { SeededRandom } from "./Vector/SeededRandom";
+import { DrawImagePart } from "./Images/DrawImagePart";
+import { Step } from "./Math/Step";
+import { Select } from "./Logic/SelectNode";
+import { ImageDimension } from "./Images/ImageDimension";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -182,6 +185,7 @@ export const Nodes: Array<NodeDefinition> = [
   Compare,
   IfNode,
   SwitchNode,
+  Select,
 
   // Time
   Time,
@@ -206,8 +210,10 @@ export const Nodes: Array<NodeDefinition> = [
   //Image
   UploadImage,
   DrawImage,
+  DrawImagePart,
   DrawImageWithTint,
   PrecomputeImage,
+  ImageDimension,
 
   //Shader
   RenderShaderStart,
@@ -216,7 +222,6 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Shader specific
   Twirl,
-  GradientNoise,
   WorleyNoise,
   CheckerBoardPattern,
   SampleTexture,
@@ -288,6 +293,7 @@ export const Nodes: Array<NodeDefinition> = [
   LoopingNoise,
   EasingNode,
   EvaluateBezier,
+  Step,
 
   // Constant
   createConstant("PI", Math.PI),

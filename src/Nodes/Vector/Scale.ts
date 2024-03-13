@@ -4,7 +4,7 @@ import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
 import { EnforceGoodType } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 
 export const Scale: NodeDefinition = {
   id: "Scale",

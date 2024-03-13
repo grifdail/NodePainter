@@ -37,7 +37,7 @@ export const Precompute: NodeDefinition = {
     return target[`${portId}-in`];
   },
   execute: (data, context) => {
-    var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context._getInputValue(data, key, value.type)];
+    var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context.getInputValue(data, key, value.type)];
     const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
     context.blackboard[`${data.id}-context`] = target;
     context.execute(data.execOutputs["execute"] as string);

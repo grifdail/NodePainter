@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
-import { VectorTypeslimited } from "../../Data/vectorUtils";
+import { VectorTypeslimited } from "../../Data/NodeDefinition";
 import { convertTypeValue } from "../../Data/convertTypeValue";
 import { genShader } from "../../Data/genShader";
 

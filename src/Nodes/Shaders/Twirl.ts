@@ -19,13 +19,13 @@ export const Twirl: NodeDefinition = {
   tags: ["UV"],
   executeOutputs: [],
   settings: [],
-  shaderRequirement: `vec4 Twirl(vec4 UV, vec4 Center, float Strength, vec4 Offset )
+  shaderRequirement: `vec2 Twirl(vec2 UV, vec2 Center, float Strength, vec2 Offset )
 {
-    vec4 delta = UV - Center;
+    vec2 delta = UV - Center;
     float angle = Strength * length(delta);
     float x = cos(angle) * delta.x - sin(angle) * delta.y;
     float y = sin(angle) * delta.x + cos(angle) * delta.y;
-    return vec4(x + Center.x + Offset.x, y + Center.y + Offset.y, 0.0, 0.0);
+    return vec2(x + Center.x + Offset.x, y + Center.y + Offset.y);
 }`,
   getShaderCode(node, context) {
     return genShader(node, context, "out", ["uv", "center", "strength", "offset"], ({ uv, center, strength, offset }) => `Twirl(${uv}, ${center}, ${strength}, ${offset})`);

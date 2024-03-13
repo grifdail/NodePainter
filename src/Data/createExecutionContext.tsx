@@ -9,6 +9,7 @@ import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "./ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "./vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
+import { cleanNameForShader } from "./genShader";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
@@ -23,7 +24,7 @@ export type ExecutionContext = {
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   execute: (nodeId: string) => void;
-  _getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
+  getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
   getInputValueVector: (nodeData: NodeData, portId: string) => Vector;
   getInputValueVector2: (nodeData: NodeData, portId: string) => Vector2;
   getInputValueVector3: (nodeData: NodeData, portId: string) => Vector3;
@@ -64,7 +65,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
     },
-    _getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
+    getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
       const inputPorts = nodeData.dataInputs[portId];
       let item: [any, PortType] = [null, "unknown"];
       if (inputPorts.hasConnection) {
@@ -74,16 +75,16 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       }
       return convertTypeValue(item[0], item[1], outputType) as T;
     },
-    getInputValueVector: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "vector") as Vector,
-    getInputValueVector2: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "vector2") as Vector2,
-    getInputValueVector3: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "vector3") as Vector3,
-    getInputValueVector4: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "vector4") as Vector4,
-    getInputValueNumber: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "number") as number,
-    getInputValueColor: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "color") as Color,
-    getInputValueGradient: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "gradient") as Gradient,
-    getInputValueImage: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "image") as ImageData,
-    getInputValueString: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "string") as string,
-    getInputValueBoolean: (nodeData: NodeData, portId: string) => context._getInputValue(nodeData, portId, "bool") as boolean,
+    getInputValueVector: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector") as Vector,
+    getInputValueVector2: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector2") as Vector2,
+    getInputValueVector3: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector3") as Vector3,
+    getInputValueVector4: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector4") as Vector4,
+    getInputValueNumber: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "number") as number,
+    getInputValueColor: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "color") as Color,
+    getInputValueGradient: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "gradient") as Gradient,
+    getInputValueImage: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "image") as ImageData,
+    getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
+    getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
@@ -99,7 +100,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     createFunctionContext(node: NodeData, context: ExecutionContext) {
       return Object.fromEntries(
         Object.keys(node.dataInputs).map((key) => {
-          return [key, context._getInputValue(node, key, node.dataInputs[key].type)];
+          return [key, context.getInputValue(node, key, node.dataInputs[key].type)];
         })
       );
     },
@@ -118,7 +119,3 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
   };
   return context;
 }
-
-export const cleanNameForShader = function (str: string | null) {
-  return str?.replaceAll("-", "_").replaceAll("__", "_");
-};

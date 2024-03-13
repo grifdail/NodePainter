@@ -1,6 +1,7 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
-import { EnforceGoodType, VectorTypesFull } from "../../Data/vectorUtils";
+import { EnforceGoodType } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { genShader } from "../../Data/genShader";
 

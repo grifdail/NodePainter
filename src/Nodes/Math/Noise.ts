@@ -1,6 +1,7 @@
 import { IconGridDots } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
+import { genShader } from "../../Data/genShader";
 
 export const Noise: NodeDefinition = {
   id: "Noise",
@@ -15,6 +16,34 @@ export const Noise: NodeDefinition = {
   dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
   executeOutputs: [],
   settings: [],
+  shaderRequirement: `vec2 gradientNoise_dir(vec2 p)
+{
+    p = mod(p, 289.0);
+    float x = mod((34.0 * p.x + 1.0) * p.x, 289.0) + p.y;
+    x = mod((34.0 * x + 1.0) * x, 289.0);
+    x = fract(x / 41.0) * 2.0 - 1.0;
+    return normalize(vec2(x - floor(x + 0.5), abs(x) - 0.5));
+}
+
+float gradientNoise(vec2 p)
+{
+    vec2 ip = floor(p);
+    vec2 fp = fract(p);
+    float d00 = dot(gradientNoise_dir(ip), fp);
+    float d01 = dot(gradientNoise_dir(ip + vec2(0.0, 1.0)), fp - vec2(0.0, 1.0));
+    float d10 = dot(gradientNoise_dir(ip + vec2(1.0, 0.0)), fp - vec2(1.0, 0.0));
+    float d11 = dot(gradientNoise_dir(ip + vec2(1.0, 1.0)), fp - vec2(1.0, 1.0));
+    fp = fp * fp * fp * (fp * (fp * 6.0 - 15.0) + 10.0);
+    return mix(mix(d00, d01, fp.y), mix(d10, d11, fp.y), fp.x);
+}
+
+float GradientNoise_float(vec2 UV, vec2 Scale)
+{
+    return gradientNoise(UV * Scale) + 0.5;
+}`,
+  getShaderCode(node, context) {
+    return genShader(node, context, "result", ["pos", "scale"], ({ pos, scale }) => `GradientNoise_float(${pos}, ${scale})`);
+  },
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
       var pos = context.getInputValueVector(nodeData, "pos");

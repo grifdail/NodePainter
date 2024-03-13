@@ -1,7 +1,7 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
-import { VectorTypesFull } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 
 export const Clamp: NodeDefinition = {

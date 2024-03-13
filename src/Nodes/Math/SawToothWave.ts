@@ -7,5 +7,5 @@ export const SawToothWave: NodeDefinition = createFunc(
   (a) => a % 1,
   "Return the number modulo 0",
   IconWaveSawTool,
-  (a) => `mod(${a}, 1)`
+  (a) => `mod(${a}, 1.0)`
 );

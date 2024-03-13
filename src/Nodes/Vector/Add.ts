@@ -4,7 +4,7 @@ import { createVector2 } from "../../Data/vectorDataType";
 import { VectorAddition } from "../../Data/vectorUtils";
 import { EnforceGoodType } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 import { IconMathXPlusY } from "@tabler/icons-react";
 
 export const Add: NodeDefinition = {

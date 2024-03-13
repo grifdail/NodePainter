@@ -2,6 +2,7 @@ import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createColor } from "../../Data/vectorDataType";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
+import { AllTypes } from "../../Data/NodeDefinition";
 
 export const SwitchNode: NodeDefinition = {
   id: "Switch",
@@ -16,15 +17,15 @@ export const SwitchNode: NodeDefinition = {
   dataOutputs: [{ id: "result", type: "color", defaultValue: createColor(0, 0, 0, 1) }],
   executeOutputs: [],
   settings: [],
-  availableTypes: ["color", "gradient", "image", "number", "string", "vector2", "vector3", "vector4"],
+  availableTypes: AllTypes,
   defaultType: "color",
   onChangeType: changeTypeGenerator(["true", "false"], ["result"]),
   getData: (portId, nodeData, context) => {
     var input = context.getInputValueBoolean(nodeData, "condition");
     if (input) {
-      return context._getInputValue(nodeData, "true", nodeData.selectedType);
+      return context.getInputValue(nodeData, "true", nodeData.selectedType);
     } else {
-      return context._getInputValue(nodeData, "false", nodeData.selectedType);
+      return context.getInputValue(nodeData, "false", nodeData.selectedType);
     }
   },
 };

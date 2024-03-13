@@ -5,7 +5,7 @@ import { createVector2 } from "../../Data/vectorDataType";
 import { VectorMagnitude } from "../../Data/vectorUtils";
 import { EnforceGoodType } from "../../Data/vectorUtils";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypeslimited } from "../../Data/vectorUtils";
+import { VectorTypeslimited } from "../../Data/NodeDefinition";
 
 export const Normalize: NodeDefinition = {
   id: "Normalize",

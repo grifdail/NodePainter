@@ -2,6 +2,7 @@ import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createColor, createVector2 } from "../../Data/vectorDataType";
+import { cleanNameForShader } from "../../Data/genShader";
 
 export const SampleTexture: NodeDefinition = {
   id: "Sample Texture",
@@ -18,6 +19,6 @@ export const SampleTexture: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["uv"], ({ uv }) => `texture2D(uniform_${node.dataInputs["sampler"].connectedPort}, ${uv})`);
+    return genShader(node, context, "out", ["uv"], ({ uv }) => `texture2D(${cleanNameForShader(`uniform_${node.dataInputs["sampler"].connectedPort}`)}, ${uv})`);
   },
 };

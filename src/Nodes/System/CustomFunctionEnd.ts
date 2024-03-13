@@ -13,7 +13,7 @@ export const CustomFunctionEnd: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context._getInputValue(nodeData, portId, "unknown");
+    return context.getInputValue(nodeData, portId, "unknown");
   },
   execute: (data, context) => {},
 };

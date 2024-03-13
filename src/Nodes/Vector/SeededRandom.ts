@@ -1,9 +1,9 @@
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
-import { VectorLenght } from "../../Data/vectorUtils";
+import { VectorLenght } from "../../Data/NodeDefinition";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/vectorUtils";
+import { VectorTypesFull } from "../../Data/NodeDefinition";
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { fraction } from "mathjs";
 import { VectorDotProduct } from "./DotProduct";
@@ -12,7 +12,7 @@ const randomVect = [12.9898, 78.233, 56.128, 48.411];
 
 export const SeededRandom: NodeDefinition = {
   id: "SeededRandom",
-  description: "Add two value together",
+  description: "Generate a random value from a seed",
   icon: IconMathXPlusY,
   tags: ["Math", "Vector"],
   dataInputs: [
