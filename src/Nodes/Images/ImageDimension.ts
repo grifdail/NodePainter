@@ -1,4 +1,4 @@
-﻿import { IconPhoto } from "@tabler/icons-react";
+import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { createVector2 } from "../../Data/vectorDataType";
 
