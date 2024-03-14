@@ -70,7 +70,7 @@ export const Select: NodeDefinition = {
     "`Add a port": (node: NodeData) => {
       var count = Object.entries(node.dataInputs).filter((data) => data[0] !== "index").length;
       node.dataInputs[`value-${count}`] = createPortConnection({
-        id: `type-${count}`,
+        id: `value-${count}`,
         type: node.selectedType,
         defaultValue: createDefaultValue(node.selectedType),
       });
