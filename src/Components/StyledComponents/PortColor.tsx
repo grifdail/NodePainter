@@ -1,9 +1,11 @@
-import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuote, IconToggleLeft } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 import { NumberInput } from "../Settings/NumberInput";
 import { ColorInput } from "../Settings/ColorInput";
 import { VectorInput } from "../Settings/VectorInput";
 import { BoolInput } from "../Settings/BoolInput";
 import { TextInput } from "../Settings/TextInput";
+import { PortType } from "../../Data/NodeDefinition";
+import { MaterialInput } from "../Settings/MaterialInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
 
@@ -13,7 +15,7 @@ type PortColorDefinition = {
   tinyIcon?: Icon;
 };
 
-export const PortColor: { [key: string]: PortColorDefinition } = {
+export const PortColor: { [key in PortType]: PortColorDefinition } = {
   execute: {
     icon: IconPlayerPlayFilled,
   },
@@ -64,5 +66,15 @@ export const PortColor: { [key: string]: PortColorDefinition } = {
   image: {
     icon: IconPhoto,
     tinyIcon: IconPhoto,
+  },
+  material: {
+    icon: IconPaint,
+    input: MaterialInput,
+    tinyIcon: IconPaint,
+  },
+  unknown: {
+    icon: IconQuestionMark,
+    input: undefined,
+    tinyIcon: IconQuestionMark,
   },
 };

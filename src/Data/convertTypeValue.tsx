@@ -10,8 +10,22 @@ type ConverterType = {
   code: (v: any) => any;
 };
 
-const Converter: { [key1: string]: { [key2: string]: null | undefined | ConverterType } } = {
-  execute: {},
+const Converter: { [key1 in PortType]: { [key2 in PortType]: null | undefined | ConverterType } } = {
+  execute: {
+    string: undefined,
+    number: undefined,
+    execute: undefined,
+    unknown: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    image: undefined,
+    gradient: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
+  },
   number: {
     number: {
       code: (a) => a,
@@ -48,6 +62,10 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => createVector4(a),
       shader: (v) => `vec4(${v})`,
     },
+    execute: undefined,
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   vector2: {
     number: {
@@ -84,6 +102,10 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => createVector4(...a),
       shader: (v) => `vec4(${v}.xy, 0.0, 0.0)`,
     },
+    execute: undefined,
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   vector3: {
     number: {
@@ -120,6 +142,10 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => createVector4(...a),
       shader: (v) => `vec4(${v}.xyz, 0.0)`,
     },
+    execute: undefined,
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   vector4: {
     number: {
@@ -157,6 +183,10 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => a,
       shader: (v) => v,
     },
+    execute: undefined,
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   vector: {
     number: {
@@ -189,6 +219,10 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     vector4: {
       code: (a) => createVector4(...a),
     },
+    execute: undefined,
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   color: {
     number: {
@@ -227,6 +261,9 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     unknown: {
       code: (a) => a,
     },
+    execute: undefined,
+    image: undefined,
+    material: undefined,
   },
   string: {
     string: {
@@ -235,6 +272,17 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     unknown: {
       code: (a) => a,
     },
+    number: undefined,
+    execute: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    image: undefined,
+    gradient: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
   },
   bool: {
     execute: null,
@@ -272,6 +320,9 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => a,
       shader: (v) => v,
     },
+    image: undefined,
+    gradient: undefined,
+    material: undefined,
   },
   image: {
     image: {
@@ -282,6 +333,17 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
       code: (a) => a,
       shader: (v) => v,
     },
+    string: undefined,
+    number: undefined,
+    execute: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    gradient: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
   },
   gradient: {
     string: {
@@ -293,16 +355,56 @@ const Converter: { [key1: string]: { [key2: string]: null | undefined | Converte
     unknown: {
       code: (a) => a,
     },
+    number: undefined,
+    execute: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    image: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
   },
   unknown: {
     unknown: {
       code: (a) => a,
       shader: (v) => v,
     },
+    string: undefined,
+    number: undefined,
+    execute: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    image: undefined,
+    gradient: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
+  },
+  material: {
+    string: undefined,
+    number: undefined,
+    execute: undefined,
+    vector2: undefined,
+    color: undefined,
+    bool: undefined,
+    image: undefined,
+    gradient: undefined,
+    vector: undefined,
+    vector3: undefined,
+    vector4: undefined,
+    material: undefined,
+    unknown: undefined,
   },
 };
 
 export function convertTypeValue(value: any, from: PortType, to: PortType) {
+  if (from === to) {
+    return value;
+  }
   var fn = Converter[from][to];
   if (fn != null) {
     return fn.code(value);

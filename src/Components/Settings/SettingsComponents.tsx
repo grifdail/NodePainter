@@ -1,4 +1,4 @@
-import { SettingDefinition } from "../../Data/NodeDefinition";
+import { SettingDefinition, SettingType } from "../../Data/NodeDefinition";
 import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
 import { PaletteSetting } from "./PaletteSetting";
@@ -10,7 +10,7 @@ export type SettingComponent = (({ onChange, value, def }: { onChange: (value: a
   getSize: (value: any, def: SettingDefinition, nodeData: NodeData) => number;
 };
 
-export const SettingComponents: { [key: string]: SettingComponent } = {
+export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   dropdown: DropdownSetting,
   palette: PaletteSetting,
   number: NumberSetting,

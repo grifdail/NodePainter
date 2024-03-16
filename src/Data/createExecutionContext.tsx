@@ -10,6 +10,7 @@ import { ImageData } from "./ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "./vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { cleanNameForShader } from "./genShader";
+import { MaterialData } from "./MaterialData";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
@@ -35,6 +36,7 @@ export type ExecutionContext = {
   getInputValueImage: (nodeData: NodeData, portId: string) => null | ImageData;
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
+  getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData | null;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -85,6 +87,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueImage: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "image") as ImageData,
     getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
+    getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material") as MaterialData,
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {

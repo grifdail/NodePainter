@@ -129,6 +129,13 @@ import { DrawImagePart } from "./Images/DrawImagePart";
 import { Step } from "./Math/Step";
 import { Select } from "./Logic/SelectNode";
 import { ImageDimension } from "./Images/ImageDimension";
+import { Render3D } from "./3D/Render3D";
+import { DrawBox } from "./3D/DrawBox";
+import { DrawPlane } from "./3D/DrawPlane";
+import { DrawSphere } from "./3D/DrawSphere";
+import { DrawTorus } from "./3D/DrawTorus";
+import { DrawCone } from "./3D/DrawCone";
+import { DrawCilinder } from "./3D/DrawCilinder";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -300,6 +307,15 @@ export const Nodes: Array<NodeDefinition> = [
   createConstant("TAU", Math.PI * 2),
   createConstant("E", Math.E),
   createConstant("SQRT2", Math.SQRT2),
+
+  //3D
+  Render3D,
+  DrawBox,
+  DrawPlane,
+  DrawSphere,
+  DrawTorus,
+  DrawCone,
+  DrawCilinder,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

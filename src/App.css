@@ -11,6 +11,7 @@
   --color-bool: #1d2b53;
   --color-gradient: #f59f00;
   --color-image: #ab5236;
+  --color-material: #f7df07;
 }
 
 * {
@@ -56,4 +57,7 @@
 }
 .image {
   --color-property: var(--color-image);
+}
+.material {
+  --color-property: var(--color-material);
 }
