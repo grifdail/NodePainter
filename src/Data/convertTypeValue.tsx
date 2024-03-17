@@ -2,6 +2,7 @@ import { clamp01 } from "./colorUtils";
 import { createColor, createVector2, createVector3, createVector4 } from "./vectorDataType";
 import { PortType, createDefaultValue } from "./NodeDefinition";
 import { createGradientFromPalette } from "./Palettes";
+import { createDefaultMaterial } from "./MaterialData";
 
 const vector2bool = (a: number[]) => a.some((x: number) => x !== 0);
 type ConverterType = {
@@ -263,7 +264,9 @@ const Converter: { [key1 in PortType]: { [key2 in PortType]: null | undefined | 
     },
     execute: undefined,
     image: undefined,
-    material: undefined,
+    material: {
+      code: (a) => createDefaultMaterial(a),
+    },
   },
   string: {
     string: {

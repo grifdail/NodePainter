@@ -1,6 +1,7 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { Vector2, createVector2 } from "../../Data/vectorDataType";
+import { Vector3, createVector2 } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
+import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 
 export const ExecuteWithTranslation: NodeDefinition = {
   id: "WithTranslation",
@@ -13,10 +14,13 @@ export const ExecuteWithTranslation: NodeDefinition = {
   executeOutputs: ["execute"],
   settings: [],
   canBeExecuted: true,
+  defaultType: "vector2",
+  availableTypes: ["vector2", "vector3"],
+  onChangeType: changeTypeGenerator(["translation"], []),
   execute: (data, context) => {
-    var translation = context.getInputValueVector(data, "translation") as Vector2;
+    var translation = context.getInputValueVector(data, "translation") as Vector3;
     context.target.push();
-    context.target.translate(translation[0], translation[1]);
+    context.target.translate(...translation);
     if (data.execOutputs.execute) {
       context.execute(data.execOutputs.execute);
     }
