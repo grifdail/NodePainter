@@ -15,7 +15,7 @@ export const ShaderTemplate: Template = {
       dataInputs: {},
       settings: { width: 400, height: 400 },
       dataOutputs: {},
-      execOutputs: { execute: "RenderMainShader" },
+      execOutputs: { execute: "Render3D" },
       positionX: 0,
       positionY: 0,
       selectedType: "unknown",
@@ -44,9 +44,9 @@ export const ShaderTemplate: Template = {
       selectedType: "unknown",
       graph: "MainShader",
     },
-    RenderMainShader: {
+    Render3D: {
       type: "MainShader",
-      id: "RenderMainShader",
+      id: "Render3D",
       dataInputs: {},
       settings: { width: 400, height: 400, when: "Everytime" },
       dataOutputs: { image: { id: "image", type: "image", defaultValue: null } },
@@ -59,7 +59,7 @@ export const ShaderTemplate: Template = {
       type: "DrawImage",
       id: "DrawMainImage",
       dataInputs: {
-        image: { id: "image", type: "image", ownValue: null, hasConnection: true, connectedNode: "RenderMainShader", connectedPort: "image" },
+        image: { id: "image", type: "image", ownValue: null, hasConnection: true, connectedNode: "Render3D", connectedPort: "image" },
         pos: { id: "pos", type: "vector2", ownValue: [0, 0], hasConnection: false, connectedNode: null, connectedPort: null },
         dim: { id: "dim", type: "vector2", ownValue: [400, 400], hasConnection: false, connectedNode: null, connectedPort: null },
       },
@@ -119,6 +119,51 @@ export const ShaderTemplate: Template = {
   editedGraph: "MainShader",
 };
 
+export const ThreeDTemplate: Template = {
+  nodes: {
+    Start: {
+      type: "Start",
+      id: "Start",
+      dataInputs: {},
+      settings: { width: 400, height: 400 },
+      dataOutputs: {},
+      execOutputs: { execute: "Render3D" },
+      positionX: 0,
+      positionY: 0,
+      selectedType: "unknown",
+    },
+    Render3D: {
+      type: "Render3D",
+      id: "Render3D",
+      dataInputs: {},
+      settings: { width: 400, height: 400, when: "Everytime" },
+      dataOutputs: { image: { id: "image", type: "image", defaultValue: null } },
+      execOutputs: { draw: null, execute: "DrawMainImage" },
+      positionX: 400,
+      positionY: 1.0,
+      selectedType: "unknown",
+    },
+    DrawMainImage: {
+      type: "DrawImage",
+      id: "DrawMainImage",
+      dataInputs: {
+        image: { id: "image", type: "image", ownValue: null, hasConnection: true, connectedNode: "Render3D", connectedPort: "image" },
+        pos: { id: "pos", type: "vector2", ownValue: [0, 0], hasConnection: false, connectedNode: null, connectedPort: null },
+        dim: { id: "dim", type: "vector2", ownValue: [400, 400], hasConnection: false, connectedNode: null, connectedPort: null },
+      },
+      settings: {},
+      dataOutputs: {},
+      execOutputs: {},
+      positionX: 1000,
+      positionY: 0,
+      selectedType: "unknown",
+    },
+  },
+  customNodes: {},
+  editedGraph: undefined,
+};
+
 export const Templates = {
   Shader: ShaderTemplate,
+  "3d": ThreeDTemplate,
 };

@@ -4,7 +4,7 @@ import { genShader } from "../../Data/genShader";
 import { createColor, createVector2, createVector3 } from "../../Data/vectorDataType";
 import { createPortConnection } from "../../Data/createPortConnection";
 import { original } from "immer";
-import { VectorLenght } from "../../Data/NodeDefinition";
+import { VectorLength } from "../../Data/NodeDefinition";
 import { VectorTypeslimited } from "../../Data/NodeDefinition";
 
 export const ComposeNode: NodeDefinition = {
@@ -32,7 +32,7 @@ export const ComposeNode: NodeDefinition = {
   defaultType: "vector2",
   availableTypes: [...VectorTypeslimited, "color"],
   onChangeType(node, type) {
-    var count = VectorLenght[type as string];
+    var count = VectorLength[type as string];
     console.log(original(node.dataInputs));
     for (var i = 0; i < 4; i++) {
       if (i >= count) {

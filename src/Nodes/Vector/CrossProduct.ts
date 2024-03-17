@@ -1,4 +1,4 @@
-﻿import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { Vector3, createVector3 } from "../../Data/vectorDataType";

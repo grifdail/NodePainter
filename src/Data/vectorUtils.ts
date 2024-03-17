@@ -41,3 +41,7 @@ export const VectorComponentOperation = (start: number, fn: (a: number, b: numbe
 export function EnforceGoodType(nodeData: NodeData, arg1: number[]): any {
   return nodeData.selectedType === "number" ? arg1[0] : arg1;
 }
+
+export function VectorIsZero(normal: number[]) {
+  return normal.every((comp) => Math.abs(comp) < Number.EPSILON);
+}

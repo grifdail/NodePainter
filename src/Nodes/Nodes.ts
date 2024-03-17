@@ -13,7 +13,7 @@ import { Lerp } from "./Vector/Lerp";
 import { DotProduct } from "./Vector/DotProduct";
 import { Divide } from "./Vector/Divide";
 import { Multiply } from "./Vector/Multiply";
-import { Rotate2D } from "./Vector/Rotate2D";
+import { RotateVector } from "./Vector/Rotate2D";
 import { Normalize } from "./Vector/Normalize";
 import { Scale } from "./Vector/Scale";
 import { Subtract } from "./Vector/Subtract";
@@ -160,7 +160,7 @@ export const Nodes: Array<NodeDefinition> = [
 
   //2D specific
   VectorFromAngle,
-  Rotate2D,
+  RotateVector,
 
   // Magnitude
   Magnitude,

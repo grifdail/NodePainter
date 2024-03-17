@@ -1,7 +1,7 @@
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { genShader } from "../../Data/genShader";
 import { createVector2 } from "../../Data/vectorDataType";
-import { VectorLenght } from "../../Data/NodeDefinition";
+import { VectorLength } from "../../Data/NodeDefinition";
 import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 import { VectorTypesFull } from "../../Data/NodeDefinition";
 import { IconMathXPlusY } from "@tabler/icons-react";
@@ -35,7 +35,7 @@ export const SeededRandom: NodeDefinition = {
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["seed"], []),
   getData: (portId, nodeData, context) => {
-    return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, VectorLenght[nodeData.selectedType])) * 43758.5453123));
+    return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, VectorLength[nodeData.selectedType])) * 43758.5453123));
   },
   shaderRequirement: `
   float rand(float n){return fract(sin(n) * 43758.5453123);}
