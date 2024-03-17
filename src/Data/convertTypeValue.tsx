@@ -417,7 +417,7 @@ export function convertTypeValue(value: any, from: PortType, to: PortType) {
 }
 
 export function canConvert(from: PortType, to: PortType) {
-  return !!Converter[from][to];
+  return from === to || !!Converter[from][to];
 }
 export function convertShaderType(varName: string, from: PortType, to: PortType): string {
   var fn = Converter[from][to]?.shader;

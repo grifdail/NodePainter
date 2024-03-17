@@ -2,6 +2,7 @@ import { Icon } from "@tabler/icons-react";
 import { NodeData, TreeStore } from "../Hooks/useTree";
 import { createColor, createDefaultGradient, createVector2, createVector3, createVector4 } from "./vectorDataType";
 import { ExecutionContext } from "./createExecutionContext";
+import { createDefaultMaterial } from "./MaterialData";
 
 export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
 export type PortType = "execute" | "number" | "vector2" | "color" | "string" | "bool" | "image" | "gradient" | "vector" | "vector3" | "vector4" | "material" | "unknown";
@@ -54,7 +55,7 @@ export type NodeDefinition = {
 };
 
 export const MainExecuteId = "mainExecute";
-const PortTypeDefaultValue = {
+const PortTypeDefaultValue: { [key in PortType]: () => any } = {
   number: () => 0,
   vector: createVector2,
   vector2: createVector2,
@@ -62,10 +63,13 @@ const PortTypeDefaultValue = {
   vector4: createVector4,
   color: createColor,
   string: () => "",
-  bool: () => "",
+  bool: () => false,
   gradient: () => createDefaultGradient(),
   image: () => null,
-} as { [key: string]: any };
+  execute: () => null,
+  material: () => createDefaultMaterial(),
+  unknown: () => null,
+};
 
 export function createDefaultValue(type: PortType) {
   return PortTypeDefaultValue[type]();
