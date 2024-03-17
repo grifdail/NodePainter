@@ -141,6 +141,7 @@ import { Value } from "../Vector/Value";
 import { RandomOnSphere } from "../Inputs/RandomOnSphere";
 import { ExecuteWithLight } from "../3D/ExecuteWithLights";
 import { RegularMaterial } from "../3D/RegularMaterial";
+import { EmissiveMaterial } from "../3D/EmissiveMaterial";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -324,8 +325,10 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTorus,
   DrawCone,
   DrawCilinder,
+  //Materials
   ExecuteWithLight,
   RegularMaterial,
+  EmissiveMaterial,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

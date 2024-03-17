@@ -3,9 +3,9 @@ import { createColor } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { MaterialData, createDefaultMaterial } from "../../Data/MaterialData";
 
-export const RegularMaterial: NodeDefinition = {
-  id: "RegularMaterial",
-  description: "create a material that react to the light",
+export const EmissiveMaterial: NodeDefinition = {
+  id: "EmissiveMaterial",
+  description: "create a material that doesnt react to light",
   icon: IconBulb,
   tags: ["3D"],
   dataInputs: [
@@ -26,7 +26,7 @@ export const RegularMaterial: NodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var m: MaterialData = {
-      id: "regular",
+      id: "emisive",
       color: context.getInputValueColor(nodeData, "color"),
     };
     return m;
