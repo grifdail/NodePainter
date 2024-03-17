@@ -136,6 +136,7 @@ import { DrawSphere } from "./3D/DrawSphere";
 import { DrawTorus } from "./3D/DrawTorus";
 import { DrawCone } from "./3D/DrawCone";
 import { DrawCilinder } from "./3D/DrawCilinder";
+import { CrossProduct } from "./Vector/CrossProduct";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -170,6 +171,7 @@ export const Nodes: Array<NodeDefinition> = [
   DotProduct,
   Lerp,
   FocalLength,
+  CrossProduct,
 
   // Color
   HSL,
