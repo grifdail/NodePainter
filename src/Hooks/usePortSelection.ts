@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { PortType } from "../Data/NodeDefinition";
-import { PortRole } from "../Data/NodeDefinition";
+import { PortType } from "../Types/PortType";
+import { PortRole } from "../Types/PortRole";
 
 export type PortSelection = {
   node: string;

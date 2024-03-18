@@ -1,5 +1,5 @@
 import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const ExecuteInOrder: NodeDefinition = {
   id: "ExecuteInOrder",

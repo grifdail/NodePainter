@@ -1,5 +1,6 @@
 import React from "react";
-import { PortRole, PortType } from "../../Data/NodeDefinition";
+import { PortRole } from "../../Types/PortRole";
+import { PortType } from "../../Types/PortType";
 import { PortColor } from "../StyledComponents/PortColor";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { usePortSelection } from "../../Hooks/usePortSelection";

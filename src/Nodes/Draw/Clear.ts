@@ -1,5 +1,5 @@
 import { IconBucketDroplet } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Clear: NodeDefinition = {
   id: "Clear",

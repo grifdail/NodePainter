@@ -1,5 +1,5 @@
 import React, { MouseEvent } from "react";
-import { NodeDefinition } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 
 export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void; onFav: () => void; isFav: boolean }) {

@@ -1,6 +1,6 @@
 import { IconAngle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
 
 export const Atan2: NodeDefinition = {
   id: "Atan2",

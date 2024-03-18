@@ -1,8 +1,8 @@
 import { IconGizmo } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorAddition, VectorMultiplication } from "../../Data/vectorUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorAddition, VectorMultiplication } from "../../Utils/vectorUtils";
 
 export const CheckerBoardPattern: NodeDefinition = {
   id: "Checkerboard",

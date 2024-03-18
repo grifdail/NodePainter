@@ -1,11 +1,5 @@
 import { create } from "zustand";
-
-export type ViewboxStore = {
-  x: number;
-  y: number;
-  scale: number;
-  set: (x: number, y: number, s: number) => void;
-};
+import { ViewboxStore } from "../Types/ViewboxStore";
 
 export const useViewbox = create<ViewboxStore>()((set) => ({
   x: 0,

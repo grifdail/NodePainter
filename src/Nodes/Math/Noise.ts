@@ -1,7 +1,7 @@
 import { IconGridDots } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2 } from "../../Data/vectorDataType";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
+import { genShader } from "../../Utils/genShader";
 
 export const Noise: NodeDefinition = {
   id: "Noise",

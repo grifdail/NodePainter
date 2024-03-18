@@ -1,10 +1,10 @@
 import React from "react";
 import { PortColor } from "../StyledComponents/PortColor";
-import { PortConnection } from "../../Hooks/useTree";
+import { PortConnection } from "../../Types/PortConnection";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { PortForeignObject } from "../StyledComponents/PortForeignObject";
 import { usePortSelection } from "../../Hooks/usePortSelection";
-import { PortRole } from "../../Data/NodeDefinition";
+import { PortRole } from "../../Types/PortRole";
 
 export function PortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
   var portDescription = PortColor[portData.type];

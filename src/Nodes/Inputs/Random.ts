@@ -1,7 +1,9 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
-import { NodeDefinition, VectorLength, VectorTypesFull } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { EnforceGoodType } from "../../Data/vectorUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { VectorLength } from "../../Types/PortType";
+import { VectorTypesFull } from "../../Types/PortType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
 
 export const Random: NodeDefinition = {
   id: "Random",

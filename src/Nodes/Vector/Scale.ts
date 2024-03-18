@@ -1,10 +1,10 @@
 import { IconMathXy } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { Vector, createVector2 } from "../../Data/vectorDataType";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { Vector, createVector2 } from "../../Types/vectorDataType";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypesFull } from "../../Types/PortType";
 
 export const Scale: NodeDefinition = {
   id: "Scale",

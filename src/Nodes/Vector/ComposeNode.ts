@@ -1,11 +1,11 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createColor, createVector2, createVector3 } from "../../Data/vectorDataType";
-import { createPortConnection } from "../../Data/createPortConnection";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { createColor, createVector2, createVector3 } from "../../Types/vectorDataType";
+import { createPortConnection } from "../../Utils/createPortConnection";
 import { original } from "immer";
-import { VectorLength } from "../../Data/NodeDefinition";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
+import { VectorLength } from "../../Types/PortType";
+import { VectorTypeslimited } from "../../Types/PortType";
 
 export const ComposeNode: NodeDefinition = {
   id: "Compose",

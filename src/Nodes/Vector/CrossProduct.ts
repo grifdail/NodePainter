@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { Vector3, createVector3 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { Vector3, createVector3 } from "../../Types/vectorDataType";
 
 export const CrossProduct: NodeDefinition = {
   id: "CrossProduct",

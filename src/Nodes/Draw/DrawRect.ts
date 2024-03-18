@@ -1,7 +1,7 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { toP5Color } from "../../Data/colorUtils";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawRect: NodeDefinition = {
   id: "DrawRect",

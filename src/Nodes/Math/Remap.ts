@@ -1,9 +1,9 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { EnforceGoodType, VectorLerp } from "../../Data/vectorUtils";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
+import { VectorTypesFull } from "../../Types/PortType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const Remap: NodeDefinition = {
   id: "Remap",

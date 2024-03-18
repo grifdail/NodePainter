@@ -1,5 +1,8 @@
 import { typeOf } from "mathjs";
-import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/useTree";
+import { NodeCollection } from "../Types/NodeCollection";
+import { TreeStore } from "../Types/TreeStore";
+import { PortConnection } from "../Types/PortConnection";
+import { NodeData } from "../Types/NodeData";
 import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
 import { cleanNameForShader } from "./genShader";

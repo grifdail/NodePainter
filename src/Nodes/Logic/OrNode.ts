@@ -1,5 +1,5 @@
 import { IconLogicOr } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const OrNode: NodeDefinition = {
   id: "Or",

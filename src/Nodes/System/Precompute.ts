@@ -1,7 +1,10 @@
 import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition, PortTypeArray, createDefaultValue } from "../../Data/NodeDefinition";
-import { NodeData, PortConnection } from "../../Hooks/useTree";
-import { createPortConnection } from "../../Data/createPortConnection";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeArray } from "../../Types/PortType";
+import { PortConnection } from "../../Types/PortConnection";
+import { NodeData } from "../../Types/NodeData";
+import { createPortConnection } from "../../Utils/createPortConnection";
 
 export const contextMenuCreateAllNode = Object.fromEntries(
   PortTypeArray.map((type) => [

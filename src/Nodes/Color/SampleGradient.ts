@@ -1,8 +1,8 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { VectorLerp } from "../../Data/vectorUtils";
-import { createColor, createDefaultGradient } from "../../Data/vectorDataType";
-import { clamp01, map } from "../../Data/colorUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { VectorLerp } from "../../Utils/vectorUtils";
+import { createColor, createDefaultGradient } from "../../Types/vectorDataType";
+import { clamp01, map } from "../../Utils/colorUtils";
 
 export const SampleGradient: NodeDefinition = {
   id: "SampleGradient",

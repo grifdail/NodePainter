@@ -1,5 +1,5 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createFunc } from "../createFunc";
 
 export const Clamp01: NodeDefinition = createFunc(

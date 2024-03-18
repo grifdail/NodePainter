@@ -1,5 +1,5 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
-import { Color, createColor } from "./vectorDataType";
+import { Color, createColor } from "../Types/vectorDataType";
 
 export function clamp01(a: number) {
   return Math.min(1, Math.max(0, a));

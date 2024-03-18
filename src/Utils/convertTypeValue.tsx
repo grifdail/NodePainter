@@ -1,8 +1,9 @@
 import { clamp01 } from "./colorUtils";
-import { createColor, createVector2, createVector3, createVector4 } from "./vectorDataType";
-import { PortType, createDefaultValue } from "./NodeDefinition";
-import { createGradientFromPalette } from "./Palettes";
-import { createDefaultMaterial } from "./MaterialData";
+import { createColor, createVector2, createVector3, createVector4 } from "../Types/vectorDataType";
+import { createDefaultValue } from "./createDefaultValue";
+import { PortType } from "../Types/PortType";
+import { createGradientFromPalette } from "../Data/Palettes";
+import { createDefaultMaterial } from "../Types/MaterialData";
 
 const vector2bool = (a: number[]) => a.some((x: number) => x !== 0);
 type ConverterType = {

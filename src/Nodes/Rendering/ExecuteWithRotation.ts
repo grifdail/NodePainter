@@ -1,6 +1,6 @@
 import { IconRotate } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithRotation: NodeDefinition = {
   id: "WithRotation",

@@ -1,6 +1,7 @@
-import { AllTypes, NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { AllTypes } from "../../Types/PortType";
+import { genShader } from "../../Utils/genShader";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { IconEqual } from "@tabler/icons-react";
 
 export const Value: NodeDefinition = {

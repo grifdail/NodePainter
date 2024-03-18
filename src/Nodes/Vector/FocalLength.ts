@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2, createVector3 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2, createVector3 } from "../../Types/vectorDataType";
 
 export const FocalLength: NodeDefinition = {
   id: "FocalLength",

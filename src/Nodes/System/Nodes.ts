@@ -5,7 +5,7 @@ import { PickFromPalette } from "../Color/PickFromPalette";
 import { SetAlpha } from "../Color/SetAlpha";
 import { HSV } from "../Color/HSV";
 import { HSL } from "../Color/HSL";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 import { ComposeNode } from "../Vector/ComposeNode";
 import { DecomposeNode } from "../Vector/DecomposeNode";

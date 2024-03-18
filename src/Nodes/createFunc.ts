@@ -1,6 +1,6 @@
 import { Icon, IconSquareRoot2 } from "@tabler/icons-react";
-import { NodeDefinition } from "../Data/NodeDefinition";
-import { genShader } from "../Data/genShader";
+import { NodeDefinition } from "../Types/NodeDefinition";
+import { genShader } from "../Utils/genShader";
 
 export function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon, shaderCode?: (v: string) => string): NodeDefinition {
   return {

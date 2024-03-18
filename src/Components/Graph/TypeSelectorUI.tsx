@@ -1,5 +1,7 @@
-import { NodeData, useTree } from "../../Hooks/useTree";
-import { NodeDefinition, PortType } from "../../Data/NodeDefinition";
+import { useTree } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { PortType } from "../../Types/PortType";
 import styled from "styled-components";
 import { PortColor } from "../StyledComponents/PortColor";
 import { Icon } from "@tabler/icons-react";

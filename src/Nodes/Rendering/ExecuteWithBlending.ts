@@ -1,6 +1,6 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { BLEND_MODE } from "p5";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const ExecuteWithBlending: NodeDefinition = {
   id: "WithBlending",

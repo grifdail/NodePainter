@@ -1,6 +1,6 @@
 import { useTree } from "../Hooks/useTree";
 import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
-import { BoundingBox } from "./BoundingBox";
+import { BoundingBox } from "../Types/BoundingBox";
 import { useViewbox } from "../Hooks/useViewbox";
 
 export const resetCamera = () => {

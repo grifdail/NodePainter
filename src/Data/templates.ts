@@ -1,5 +1,5 @@
-import { NodeDefinition } from "../Data/NodeDefinition";
-import { NodeCollection } from "./useTree";
+import { NodeDefinition } from "../Types/NodeDefinition";
+import { NodeCollection } from "../Types/NodeCollection";
 
 export type Template = {
   nodes: NodeCollection;

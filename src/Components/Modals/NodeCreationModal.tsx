@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { useTree } from "../../Hooks/useTree";
 import { NodePreview } from "../NodePreview";

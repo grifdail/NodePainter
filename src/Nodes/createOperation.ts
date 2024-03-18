@@ -1,6 +1,6 @@
 import { Icon, IconMathSymbols } from "@tabler/icons-react";
-import { NodeDefinition } from "../Data/NodeDefinition";
-import { genShader } from "../Data/genShader";
+import { NodeDefinition } from "../Types/NodeDefinition";
+import { genShader } from "../Utils/genShader";
 
 export function createOperation(id: string, evalOperation: (a: number, b: number) => number, description?: string, icon?: Icon, shaderCode?: (a: string, b: string) => string): NodeDefinition {
   var result: NodeDefinition = {

@@ -1,5 +1,5 @@
-import { PortDefinition } from "./NodeDefinition";
-import { PortConnection } from "../Hooks/useTree";
+import { PortDefinition } from "../Types/PortDefinition";
+import { PortConnection } from "../Types/PortConnection";
 
 export function createPortConnection(def: PortDefinition): PortConnection {
   return {

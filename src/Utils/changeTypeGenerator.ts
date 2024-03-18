@@ -1,6 +1,6 @@
-import { PortType } from "./NodeDefinition";
+import { PortType } from "../Types/PortType";
 import { convertTypeValue } from "./convertTypeValue";
-import { NodeData } from "../Hooks/useTree";
+import { NodeData } from "../Types/NodeData";
 
 export function changeTypeGenerator(inputs: string[], outputs: string[]) {
   return (node: NodeData, type: PortType) => {

@@ -1,6 +1,6 @@
 import { IconBulb } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { MaterialData, createDefaultMaterial } from "../../Data/MaterialData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { MaterialData, createDefaultMaterial } from "../../Types/MaterialData";
 
 export const TextureMaterial: NodeDefinition = {
   id: "TextureMaterial",

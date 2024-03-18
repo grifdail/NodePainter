@@ -1,8 +1,8 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { ImageData } from "../../Data/ImageData";
-import { convertToUniform } from "../../Data/convertToShaderValue";
-import { cleanNameForShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { ImageData } from "../../Types/ImageData";
+import { convertToUniform } from "../../Utils/convertToShaderValue";
+import { cleanNameForShader } from "../../Utils/genShader";
 
 export const RenderShader: NodeDefinition = {
   id: "RenderShader",

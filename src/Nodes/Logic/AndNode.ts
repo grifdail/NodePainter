@@ -1,5 +1,5 @@
 import { IconLogicAnd } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const AndNode: NodeDefinition = {
   id: "And",

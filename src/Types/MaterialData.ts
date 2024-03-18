@@ -1,5 +1,5 @@
 import { ImageData } from "./ImageData";
-import { ExecutionContext } from "./createExecutionContext";
+import { ExecutionContext } from "../Utils/createExecutionContext";
 import { Color, createColor } from "./vectorDataType";
 
 export type MaterialType = "emisive" | "regular" | "texture";

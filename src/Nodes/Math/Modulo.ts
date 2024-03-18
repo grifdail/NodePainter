@@ -1,5 +1,5 @@
 import { IconPercentage } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createOperation } from "../createOperation";
 
 export const Modulo: NodeDefinition = createOperation(

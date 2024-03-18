@@ -1,10 +1,10 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorSquareMagnitude } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorSquareMagnitude } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypeslimited } from "../../Types/PortType";
 
 export const SquareMagnitude: NodeDefinition = {
   id: "SquareMagnitude",

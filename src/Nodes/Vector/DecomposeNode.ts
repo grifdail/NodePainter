@@ -1,9 +1,9 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
-import { convertTypeValue } from "../../Data/convertTypeValue";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorTypeslimited } from "../../Types/PortType";
+import { convertTypeValue } from "../../Utils/convertTypeValue";
+import { genShader } from "../../Utils/genShader";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",

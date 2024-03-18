@@ -1,4 +1,4 @@
-import { NodeData } from "../Hooks/useTree";
+import { NodeData } from "../Types/NodeData";
 
 export function VectorDivision(a: number[], b: number[]): any {
   return VectorComponentOperation(1, (old, value) => old / value, a, b);

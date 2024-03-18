@@ -1,8 +1,8 @@
 import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createColor } from "../../Data/vectorDataType";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { AllTypes } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor } from "../../Types/vectorDataType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { AllTypes } from "../../Types/PortType";
 
 export const SwitchNode: NodeDefinition = {
   id: "Switch",

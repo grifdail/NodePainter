@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { genShader } from "../../Utils/genShader";
 
 export const RenderShaderStart: NodeDefinition = {
   id: "CustomShader-start",

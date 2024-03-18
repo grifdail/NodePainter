@@ -1,6 +1,6 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createDefaultGradient } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createDefaultGradient } from "../../Types/vectorDataType";
 
 export const GradientNode: NodeDefinition = {
   id: "Gradient",

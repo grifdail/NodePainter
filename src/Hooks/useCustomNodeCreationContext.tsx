@@ -1,4 +1,7 @@
-import { NodeDefinition, PortRole, PortType, createDefaultValue } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Types/NodeDefinition";
+import { PortRole } from "../Types/PortRole";
+import { createDefaultValue } from "../Utils/createDefaultValue";
+import { PortType } from "../Types/PortType";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";

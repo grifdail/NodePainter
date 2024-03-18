@@ -1,7 +1,8 @@
 import { Modal } from "../Modal";
 import { IconFunctionFilled } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NodeDefinition, PortType } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { PortType } from "../../Types/PortType";
 import { TextInput } from "../Settings/TextInput";
 import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { CustomNodeMainDiv, InputPortEdit } from "./CustomNodeModal";

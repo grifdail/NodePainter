@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { ImageData } from "../../Data/ImageData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { ImageData } from "../../Types/ImageData";
 
 export const UploadImage: NodeDefinition = {
   id: "UploadImage",

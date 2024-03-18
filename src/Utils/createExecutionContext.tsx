@@ -1,16 +1,19 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
-import { NodeCollection, NodeData, PortConnection, TreeStore } from "../Hooks/useTree";
+import { NodeCollection } from "../Types/NodeCollection";
+import { TreeStore } from "../Types/TreeStore";
+import { PortConnection } from "../Types/PortConnection";
+import { NodeData } from "../Types/NodeData";
 import { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
 import { convertToShaderValue } from "./convertToShaderValue";
-import { PortType } from "./NodeDefinition";
+import { PortType } from "../Types/PortType";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
-import { ImageData } from "./ImageData";
-import { Color, Gradient, Vector, Vector3, Vector4 } from "./vectorDataType";
+import { ImageData } from "../Types/ImageData";
+import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { cleanNameForShader } from "./genShader";
-import { MaterialData } from "./MaterialData";
+import { MaterialData } from "../Types/MaterialData";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;

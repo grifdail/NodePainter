@@ -1,5 +1,8 @@
-import { PortDefinition, PortRole, createDefaultValue } from "./NodeDefinition";
-import { NodeData, useTree } from "../Hooks/useTree";
+import { PortRole } from "../Types/PortRole";
+import { createDefaultValue } from "./createDefaultValue";
+import { PortDefinition } from "../Types/PortDefinition";
+import { useTree } from "../Hooks/useTree";
+import { NodeData } from "../Types/NodeData";
 import { canConvert } from "./convertTypeValue";
 import { original } from "immer";
 

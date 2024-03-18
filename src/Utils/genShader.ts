@@ -1,5 +1,5 @@
-import { NodeData } from "../Hooks/useTree";
-import { PortType } from "./NodeDefinition";
+import { NodeData } from "../Types/NodeData";
+import { PortType } from "../Types/PortType";
 import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
 

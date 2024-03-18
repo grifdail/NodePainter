@@ -1,11 +1,13 @@
 import React from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
-import { NodeData, TreeStore, useTree } from "../Hooks/useTree";
-import { ExecutionContext } from "../Data/createExecutionContext";
+import { useTree } from "../Hooks/useTree";
+import { TreeStore } from "../Types/TreeStore";
+import { NodeData } from "../Types/NodeData";
+import { ExecutionContext } from "../Utils/createExecutionContext";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { START_NODE } from "../Nodes/System/StartNode";
-import { createExecutionContext } from "../Data/createExecutionContext";
+import { createExecutionContext } from "../Utils/createExecutionContext";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;

@@ -1,6 +1,6 @@
-import { MaterialData } from "../../Data/MaterialData";
+import { MaterialData } from "../../Types/MaterialData";
 import { ColorInput } from "./ColorInput";
-import { Color } from "../../Data/vectorDataType";
+import { Color } from "../../Types/vectorDataType";
 
 export function MaterialInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
   var mat = value as MaterialData;

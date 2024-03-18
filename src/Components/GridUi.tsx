@@ -13,9 +13,9 @@ import { CUSTOM_FUNCTION } from "../Nodes/System/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
-import { resetCamera } from "../Data/resetCamera";
+import { resetCamera } from "../Utils/resetCamera";
 import { useSelection } from "../Hooks/useSelection";
-import { Templates } from "../Hooks/templates";
+import { Templates } from "../Data/templates";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
