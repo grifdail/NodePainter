@@ -133,6 +133,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
       setRenderState("processing");
     }
   };
+  const filename = isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`;
 
   return (
     <Modal onClose={close} title="Export a gif" icon={IconGif}>
@@ -155,7 +156,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
           {renderState === "rendering" && <button disabled> Rendering</button>}
           {renderState === "processing" && <button disabled> Processing</button>}
-          {renderState === "done" && <button onClick={() => download(blob as Blob, isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`)}>Download</button>}
+          {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
       <div>
@@ -168,9 +169,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
             fixedFrameRate={fixedFrameRate}
             isGif={isGif}
             onFinished={(blob: Blob) => {
-              setRenderState("done");
-              setProgress(2);
+              setRenderState("waiting");
+              setProgress(100);
               setBlob(blob);
+              download(blob as Blob, filename);
             }}
             onProgress={onProgress}
           />
