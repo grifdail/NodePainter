@@ -1,4 +1,4 @@
-﻿import { IconBulb } from "@tabler/icons-react";
+import { IconBulb } from "@tabler/icons-react";
 import { createColor } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { MaterialData, createDefaultMaterial } from "../../Data/MaterialData";
