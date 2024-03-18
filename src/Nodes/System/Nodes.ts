@@ -142,6 +142,7 @@ import { RandomOnSphere } from "../Inputs/RandomOnSphere";
 import { ExecuteWithLight } from "../3D/ExecuteWithLights";
 import { RegularMaterial } from "../3D/RegularMaterial";
 import { EmissiveMaterial } from "../3D/EmissiveMaterial";
+import { TextureMaterial } from "../3D/TextureMaterial";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -329,6 +330,7 @@ export const Nodes: Array<NodeDefinition> = [
   ExecuteWithLight,
   RegularMaterial,
   EmissiveMaterial,
+  TextureMaterial,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
