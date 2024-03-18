@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
 import { VectorTypesFull } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Floor: NodeDefinition = {
   id: "Floor",
@@ -37,6 +37,6 @@ export const Floor: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
   },
 };

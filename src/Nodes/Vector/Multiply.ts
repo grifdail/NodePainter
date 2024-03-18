@@ -1,6 +1,6 @@
 import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { createVector2 } from "../../Types/vectorDataType";
 import { VectorMultiplication } from "../../Utils/vectorUtils";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
@@ -42,6 +42,6 @@ export const Multiply: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorMultiplication(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} * ${b}`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} * ${b}`);
   },
 };

@@ -1,6 +1,6 @@
 import { Icon, IconMathSymbols } from "@tabler/icons-react";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { genShader } from "../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../Utils/generateShaderCodeFromNodeData";
 
 export function createOperation(id: string, evalOperation: (a: number, b: number) => number, description?: string, icon?: Icon, shaderCode?: (a: string, b: string) => string): NodeDefinition {
   var result: NodeDefinition = {
@@ -38,7 +38,7 @@ export function createOperation(id: string, evalOperation: (a: number, b: number
       ? undefined
       : (node, context) => {
           if (shaderCode) {
-            return genShader(node, context, "result", ["a", "b"], ({ a, b }) => shaderCode(a, b));
+            return generateShaderCodeFromNodeData(node, context, "result", ["a", "b"], ({ a, b }) => shaderCode(a, b));
           }
           return "";
         },

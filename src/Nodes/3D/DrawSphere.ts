@@ -1,7 +1,8 @@
 import { IconRectangle } from "@tabler/icons-react";
 import { createVector2, createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createDefaultMaterial, executeMaterial } from "../../Types/MaterialData";
+import { executeMaterial } from "../../Types/MaterialData";
+import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawSphere: NodeDefinition = {
   id: "DrawSphere",

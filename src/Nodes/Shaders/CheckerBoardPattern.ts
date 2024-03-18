@@ -1,6 +1,6 @@
 import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { createVector2 } from "../../Types/vectorDataType";
 import { VectorAddition, VectorMultiplication } from "../../Utils/vectorUtils";
 
@@ -27,7 +27,7 @@ export const CheckerBoardPattern: NodeDefinition = {
 }`,
 
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["uv", "freq"], ({ uv, freq }) => `Checkerboard(${uv},  ${freq})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["uv", "freq"], ({ uv, freq }) => `Checkerboard(${uv},  ${freq})`);
   },
   getData(portId, node, context) {
     const uv = context.getInputValueVector2(node, "uv");

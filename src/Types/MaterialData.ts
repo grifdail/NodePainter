@@ -1,6 +1,6 @@
 import { ImageData } from "./ImageData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
-import { Color, createColor } from "./vectorDataType";
+import { Color } from "./vectorDataType";
 
 export type MaterialType = "emisive" | "regular" | "texture";
 
@@ -33,10 +33,4 @@ const MaterialFunctions: { [key in MaterialType]: (context: ExecutionContext, ma
 
 export function executeMaterial(context: ExecutionContext, mat: MaterialData) {
   return MaterialFunctions[mat.id](context, mat);
-}
-export function createDefaultMaterial(color?: Color): MaterialData {
-  return {
-    id: "emisive",
-    color: color || createColor(1, 1, 1),
-  };
 }

@@ -12,7 +12,7 @@ import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "../Types/ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
-import { cleanNameForShader } from "./genShader";
+import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData } from "../Types/MaterialData";
 
 export type ExecutionContext = {
@@ -94,11 +94,11 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
-        return `${cleanNameForShader(nodeData.id)}_${cleanNameForShader(portId)}`;
+        return `${sanitizeForShader(nodeData.id)}_${sanitizeForShader(portId)}`;
       }
       if (inputPorts.hasConnection) {
         var outPort = tree?.getOutputPort(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
-        return convertShaderType(`${cleanNameForShader(inputPorts.connectedNode)}_${cleanNameForShader(inputPorts.connectedPort)}`, outPort?.type as PortType, inputPorts.type);
+        return convertShaderType(`${sanitizeForShader(inputPorts.connectedNode)}_${sanitizeForShader(inputPorts.connectedPort)}`, outPort?.type as PortType, inputPorts.type);
       } else {
         return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
       }

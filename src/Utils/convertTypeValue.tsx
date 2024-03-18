@@ -3,7 +3,7 @@ import { createColor, createVector2, createVector3, createVector4 } from "../Typ
 import { createDefaultValue } from "./createDefaultValue";
 import { PortType } from "../Types/PortType";
 import { createGradientFromPalette } from "../Data/Palettes";
-import { createDefaultMaterial } from "../Types/MaterialData";
+import { createDefaultMaterial } from "./createDefaultMaterial";
 
 const vector2bool = (a: number[]) => a.some((x: number) => x !== 0);
 type ConverterType = {

@@ -5,6 +5,9 @@ export type Color = [number, number, number, number];
 export type GradientStop = { pos: number; color: Color };
 export type Gradient = GradientStop[];
 export type Vector = Vector2 | Vector3 | Vector4 | Color;
+export type ColorPalette = Array<Color>;
+export type PaletteCollection = { [key: string]: ColorPalette };
+export type GradientCollection = { [key: string]: Gradient };
 
 export const createVector2 = (x: number = 0, y: number = 0): Vector2 => [x, y];
 export const createVector3 = (x: number = 0, y: number = 0, z: number = 0): Vector3 => [x, y, z];
@@ -19,7 +22,3 @@ export function createDefaultGradient(): Gradient {
     { pos: 1, color: createColor(1, 1, 1) },
   ];
 }
-
-export type ColorPalette = Array<Color>;
-export type PaletteCollection = { [key: string]: ColorPalette };
-export type GradientCollection = { [key: string]: Gradient };

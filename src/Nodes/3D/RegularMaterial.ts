@@ -1,7 +1,8 @@
 import { IconBulb } from "@tabler/icons-react";
 import { createColor } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { MaterialData, createDefaultMaterial } from "../../Types/MaterialData";
+import { MaterialData } from "../../Types/MaterialData";
+import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const RegularMaterial: NodeDefinition = {
   id: "RegularMaterial",

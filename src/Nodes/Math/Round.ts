@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
 import { VectorTypesFull } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Round: NodeDefinition = {
   id: "Round",
@@ -37,6 +37,6 @@ export const Round: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["input"], ({ input }) => `sign(${input})*floor(abs(${input})+0.5);`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `sign(${input})*floor(abs(${input})+0.5);`);
   },
 };

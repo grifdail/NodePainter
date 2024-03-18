@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { Vector, createVector2 } from "../../Types/vectorDataType";
 import { VectorMagnitude } from "../../Utils/vectorUtils";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
@@ -37,7 +37,7 @@ export const Normalize: NodeDefinition = {
     return EnforceGoodType(nodeData, vec);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
   },
 };
 export function VectorNormalize(a: Vector): number[] {

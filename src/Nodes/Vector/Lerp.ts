@@ -1,6 +1,6 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { createVector2 } from "../../Types/vectorDataType";
 import { VectorLerp } from "../../Utils/vectorUtils";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
@@ -48,6 +48,6 @@ export const Lerp: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorLerp(a, b, t));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "result", ["from", "to", "t"], ({ from, to, t }) => `mix(${from}, ${to}, ${t})`);
+    return generateShaderCodeFromNodeData(node, context, "result", ["from", "to", "t"], ({ from, to, t }) => `mix(${from}, ${to}, ${t})`);
   },
 };

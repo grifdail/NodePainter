@@ -1,5 +1,5 @@
 import { PortType } from "../Types/PortType";
-import { createDefaultMaterial } from "../Types/MaterialData";
+import { createDefaultMaterial } from "./createDefaultMaterial";
 import { createVector2, createVector3, createVector4, createColor, createDefaultGradient } from "../Types/vectorDataType";
 
 export const PortTypeDefaultValue: {

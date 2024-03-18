@@ -1,5 +1,5 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { createVector2 } from "../../Types/vectorDataType";
 import { VectorLength } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
@@ -50,6 +50,6 @@ float rand(vec4 st) {
 }
 `,
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["seed"], ({ seed }) => `rand(${seed})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["seed"], ({ seed }) => `rand(${seed})`);
   },
 };

@@ -5,7 +5,7 @@ import { PortConnection } from "../Types/PortConnection";
 import { NodeData } from "../Types/NodeData";
 import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
-import { cleanNameForShader } from "./genShader";
+import { sanitizeForShader } from "./sanitizeForShader";
 
 export function getShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
@@ -53,7 +53,7 @@ export function getShaderCode(shader: string, ports: PortConnection[], tree: Tre
   // a custom variable from this sketch
   uniform float time;
 
-  ${ports.map((port) => `uniform ${getShaderType(port.type)} ${cleanNameForShader(`uniform_${port.id}`)};`).join("\n")}
+  ${ports.map((port) => `uniform ${getShaderType(port.type)} ${sanitizeForShader(`uniform_${port.id}`)};`).join("\n")}
 
   ${requirement.join("\n\n")}
 

@@ -1,33 +1,13 @@
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { PortRole } from "../Types/PortRole";
 import { createDefaultValue } from "../Utils/createDefaultValue";
-import { PortType } from "../Types/PortType";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
 import { useRouter } from "./useRouter";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { CUSTOM_FUNCTION } from "../Nodes/System/CustomFunction";
-
-export type EDIT_TARGET_TYPE = "function" | "shader";
-
-export type CustomFunctionCreationContextStore = {
-  model: NodeDefinition | null;
-  type: EDIT_TARGET_TYPE;
-  mode: "edit" | "create";
-  setPortId(type: PortRole, index: number, value: string): void;
-  setPortDefaultValue(type: PortRole, index: number, value: any): void;
-  deletePort(type: PortRole, index: number): void;
-  setPortType(type: PortRole, index: number, portType: PortType): void;
-  create: () => void;
-  cancel: () => void;
-  addOutput: () => void;
-  addInputs: () => void;
-  setId: (id: string) => void;
-  setCanBeExecuted: (value: boolean) => void;
-  openEdit: (node: NodeDefinition, type?: EDIT_TARGET_TYPE) => void;
-  openCreate: (type?: EDIT_TARGET_TYPE) => void;
-};
+import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreationContextStore";
+import { EDIT_TARGET_TYPE } from "../Types/CustomFunctionCreationContextStore";
 
 export const useCustomNodeCreationContext = create<CustomFunctionCreationContextStore>()((set, get) => {
   return {

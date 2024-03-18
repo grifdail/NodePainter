@@ -1,6 +1,6 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { AllTypes } from "../../Types/PortType";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { IconEqual } from "@tabler/icons-react";
 
@@ -32,6 +32,6 @@ export const Value: NodeDefinition = {
     return context.getInputValue(nodeData, "value", nodeData.selectedType);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["value"], ({ value }) => `${value}`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["value"], ({ value }) => `${value}`);
   },
 };

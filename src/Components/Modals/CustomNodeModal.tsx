@@ -9,7 +9,8 @@ import { PortType } from "../../Types/PortType";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PortColor } from "../StyledComponents/PortColor";
 import { TextInput } from "../Settings/TextInput";
-import { CustomFunctionCreationContextStore, useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
+import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
+import { CustomFunctionCreationContextStore } from "../../Types/CustomFunctionCreationContextStore";
 import { capitalCase } from "change-case";
 
 export const CustomNodeMainDiv = styled.div`

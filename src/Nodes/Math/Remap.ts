@@ -1,6 +1,6 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
 import { VectorTypesFull } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
@@ -88,6 +88,6 @@ vec4 map(float n, float inmin, float inmax, vec4 outmin, vec4 outmax, bool c) {
 }
 `,
   getShaderCode(node, context) {
-    return genShader(node, context, "result", ["t", "inmin", "inmax", "outmin", "outmax", "clamp"], ({ t, inmin, inmax, outmin, outmax, clamp }) => `map(${t}, ${inmin}, ${inmax}, ${outmin}, ${outmax}, ${clamp})`);
+    return generateShaderCodeFromNodeData(node, context, "result", ["t", "inmin", "inmax", "outmin", "outmax", "clamp"], ({ t, inmin, inmax, outmin, outmax, clamp }) => `map(${t}, ${inmin}, ${inmax}, ${outmin}, ${outmax}, ${clamp})`);
   },
 };

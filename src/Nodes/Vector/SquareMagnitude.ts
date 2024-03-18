@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { createVector2 } from "../../Types/vectorDataType";
 import { VectorSquareMagnitude } from "../../Utils/vectorUtils";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
@@ -35,6 +35,6 @@ export const SquareMagnitude: NodeDefinition = {
     return VectorSquareMagnitude(vec);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "length", ["vec"], ({ vec }) => `dot(${vec},${vec})`);
+    return generateShaderCodeFromNodeData(node, context, "length", ["vec"], ({ vec }) => `dot(${vec},${vec})`);
   },
 };

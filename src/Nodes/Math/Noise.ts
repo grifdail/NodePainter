@@ -1,7 +1,7 @@
 import { IconGridDots } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Noise: NodeDefinition = {
   id: "Noise",
@@ -42,7 +42,7 @@ float GradientNoise_float(vec2 UV, vec2 Scale)
     return gradientNoise(UV * Scale) + 0.5;
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "result", ["pos", "scale"], ({ pos, scale }) => `GradientNoise_float(${pos}, ${scale})`);
+    return generateShaderCodeFromNodeData(node, context, "result", ["pos", "scale"], ({ pos, scale }) => `GradientNoise_float(${pos}, ${scale})`);
   },
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

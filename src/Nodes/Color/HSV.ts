@@ -1,6 +1,6 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { genShader } from "../../Utils/genShader";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { clamp01, hsvToRgb } from "../../Utils/colorUtils";
 
 export const HSV: NodeDefinition = {
@@ -29,6 +29,6 @@ export const HSV: NodeDefinition = {
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "color", ["hue", "saturation", "value"], ({ hue, saturation, value }) => `vec4(hsv2rgb(vec3(${hue},${saturation},${value})),1.0)`);
+    return generateShaderCodeFromNodeData(node, context, "color", ["hue", "saturation", "value"], ({ hue, saturation, value }) => `vec4(hsv2rgb(vec3(${hue},${saturation},${value})),1.0)`);
   },
 };
