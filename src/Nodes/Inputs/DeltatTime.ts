@@ -11,6 +11,6 @@ export const DeltatTime: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context.p5.deltaTime / 1000;
+    return context.deltaTime / 1000;
   },
 };

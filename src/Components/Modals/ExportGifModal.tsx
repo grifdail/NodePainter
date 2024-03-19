@@ -87,14 +87,15 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     if (!ownProps) {
       return;
     }
+    const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
     context.time = time;
+    context.deltaTime = frameRate;
     var progress = time / (ownProps.duration * 1000);
     context.p5.randomSeed(seed);
     context.frameBlackboard = {};
     context.execute(START_NODE);
     if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
     } else if (!ended) {
-      const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
       time += frameRate;
 
       renderer?.addFrame(p5.drawingContext);

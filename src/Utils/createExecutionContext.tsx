@@ -17,6 +17,7 @@ import { MaterialData } from "../Types/MaterialData";
 import { NodeDefinition } from "../Types/NodeDefinition";
 
 export type ExecutionContext = {
+  deltaTime: number;
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
   getShaderCode(shader: string, uniforms: PortConnection[]): string;
   findNodeOfType(type: string): NodeData | null;
@@ -48,6 +49,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
   var context: ExecutionContext = {
     p5: p5 as P5CanvasInstance,
     time: 0,
+    deltaTime: 0,
     blackboard: {},
     target: p5 as Graphics,
     frameBlackboard: {},

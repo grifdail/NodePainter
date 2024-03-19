@@ -81,6 +81,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.frameBlackboard = {};
     p5.randomSeed(seed);
     context.time = p5.millis();
+    context.deltaTime = p5.deltaTime;
     context.execute(START_NODE);
   };
 };
