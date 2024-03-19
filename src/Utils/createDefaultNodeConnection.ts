@@ -1,5 +1,5 @@
 import { START_NODE } from "../Nodes/System/StartNode";
-import { NodeLibrary } from "../Nodes/System/Nodes";
+import { NodeLibrary } from "../Nodes/Nodes";
 import { NodeCollection } from "../Types/NodeCollection";
 import { createNodeData } from "./createNodeData";
 

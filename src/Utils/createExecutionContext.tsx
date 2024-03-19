@@ -14,11 +14,13 @@ import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataTy
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData } from "../Types/MaterialData";
+import { NodeDefinition } from "../Types/NodeDefinition";
 
 export type ExecutionContext = {
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
   getShaderCode(shader: string, uniforms: PortConnection[]): string;
-  findNodeOfType(type: string): string | null;
+  findNodeOfType(type: string): NodeData | null;
+  getNodeDefinition: (type: string) => NodeDefinition | undefined;
   createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
   functionStack: Array<{ [key: string]: any }>;
   time: number;
@@ -114,10 +116,13 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       const nodes = tree?.nodes as NodeCollection;
       for (let key in nodes) {
         if (nodes[key].type === type) {
-          return key;
+          return nodes[key];
         }
       }
       return null;
+    },
+    getNodeDefinition(type) {
+      return tree?.getNodeTypeDefinition(type);
     },
     getShaderCode(shader, ports) {
       return getShaderCode(shader, ports, tree, context);

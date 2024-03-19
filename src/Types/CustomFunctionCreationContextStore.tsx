@@ -4,7 +4,7 @@ import { PortType } from "./PortType";
 
 export type CustomFunctionCreationContextStore = {
   model: NodeDefinition | null;
-  type: EDIT_TARGET_TYPE;
+  type: CustomNodeEditingType;
   mode: "edit" | "create";
   setPortId(type: PortRole, index: number, value: string): void;
   setPortDefaultValue(type: PortRole, index: number, value: any): void;
@@ -12,11 +12,11 @@ export type CustomFunctionCreationContextStore = {
   setPortType(type: PortRole, index: number, portType: PortType): void;
   create: () => void;
   cancel: () => void;
-  addOutput: () => void;
-  addInputs: () => void;
+  addOutput: (prefix?: string) => void;
+  addInputs: (prefix?: string) => void;
   setId: (id: string) => void;
   setCanBeExecuted: (value: boolean) => void;
-  openEdit: (node: NodeDefinition, type?: EDIT_TARGET_TYPE) => void;
-  openCreate: (type?: EDIT_TARGET_TYPE) => void;
+  openEdit: (node: NodeDefinition, type?: CustomNodeEditingType) => void;
+  openCreate: (type?: CustomNodeEditingType) => void;
 };
-export type EDIT_TARGET_TYPE = "function" | "shader";
+export type CustomNodeEditingType = "function" | "shader" | "simulation";

@@ -5,7 +5,7 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { persist } from "zustand/middleware";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { NodeLibrary } from "../Nodes/System/Nodes";
+import { NodeLibrary } from "../Nodes/Nodes";
 import { createPortConnection } from "../Utils/createPortConnection";
 import { resetCamera } from "../Utils/resetCamera";
 import { ExecutionContext } from "../Utils/createExecutionContext";
@@ -19,6 +19,8 @@ import { createNodeData } from "../Utils/createNodeData";
 import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { NodeData } from "../Types/NodeData";
 import { TreeStore } from "../Types/TreeStore";
+import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 
 export const useTree = create<TreeStore>()(
   persist(
@@ -370,6 +372,63 @@ export const useTree = create<TreeStore>()(
           );
           get().enforceValidGraph();
         },
+        createSimulation(def) {
+          set(
+            produce((state) => {
+              const start = `${def.id}-start`;
+              const end = `${def.id}-end`;
+              const node: NodeDefinition = {
+                ...def,
+                dataInputs: [{ id: "progress", type: "number", defaultValue: 0 }, ...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+              };
+              state.customNodes[def.id] = node;
+              const startNodeDef: NodeDefinition = {
+                IsUnique: true,
+                hideInLibrary: true,
+                description: "",
+                id: start,
+                tags: [],
+                dataInputs: [],
+                dataOutputs: [...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+                executeOutputs: [],
+                settings: [],
+                executeAs: "CustomSimulation-start",
+                canBeExecuted: false,
+              };
+              const endNodeDef: NodeDefinition = {
+                IsUnique: true,
+                description: "",
+                hideInLibrary: true,
+                id: end,
+                tags: [],
+                dataInputs: [...structuredClone(def.dataOutputs)],
+                dataOutputs: [],
+                executeOutputs: [],
+                settings: [],
+                executeAs: "CustomSimulation-end",
+                canBeExecuted: false,
+              };
+              state.customNodes[start] = startNodeDef;
+              state.customNodes[end] = endNodeDef;
+              const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+              const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+              state.nodes[start] = newStartNode;
+              state.nodes[end] = newEndNode;
+              for (let nodeId in original(state.nodes)) {
+                let node = state.nodes[nodeId];
+                if (node.type === def.id) {
+                  def.dataInputs.forEach((port) => {
+                    if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
+                      node.dataInputs[port.id] = createPortConnection(port);
+                    }
+                  });
+                }
+              }
+              state.editedGraph = def.id;
+            })
+          );
+          get().enforceValidGraph();
+        },
         setEditedGraph(graph) {
           set({ editedGraph: graph });
         },
@@ -380,12 +439,22 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
-        isEditingShader() {
+        getCustomNodeEditingType() {
           var tree = get();
           if (tree.editedGraph === undefined || tree.editedGraph === "main") {
-            return false;
+            return "function";
           }
-          return tree.getNodeTypeDefinition(tree.editedGraph).executeAs === CUSTOM_SHADER;
+          var executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
+          switch (executeAs) {
+            case CUSTOM_SHADER:
+              return "shader";
+            case CUSTOM_SIMULATION:
+              return "simulation";
+            case CUSTOM_FUNCTION:
+              return "function";
+            default:
+              return "function";
+          }
         },
       };
     },

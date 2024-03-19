@@ -9,13 +9,14 @@ import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { CUSTOM_FUNCTION } from "../Nodes/System/CustomFunction";
+import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { WarningTrack } from "./StyledComponents/WarningTrack";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 import { resetCamera } from "../Utils/resetCamera";
 import { useSelection } from "../Hooks/useSelection";
 import { Templates } from "../Data/templates";
+import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -47,18 +48,26 @@ export function GridUi() {
       .filter((item) => item.executeAs === CUSTOM_SHADER)
       .map((node) => node.id),
   ];
+  const customSimulationNode = [
+    ...Object.values(rawCustomNodes)
+      .filter((item) => item.executeAs === CUSTOM_SIMULATION)
+      .map((node) => node.id),
+  ];
   const setGraph = (graph: string) => {
     setEditedGraph(graph === "main" ? undefined : graph);
   };
 
   const openEditModal = () => {
-    useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph), useTree.getState().isEditingShader() ? "shader" : "function");
+    useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph), useTree.getState().getCustomNodeEditingType());
   };
   const openCreateModal = () => {
     useCustomNodeCreationContext.getState().openCreate("function");
   };
   const openCreateShaderModal = () => {
     useCustomNodeCreationContext.getState().openCreate("shader");
+  };
+  const opencreateSimulation = () => {
+    useCustomNodeCreationContext.getState().openCreate("simulation");
   };
   const toggleSelection = () => {
     useSelection.getState().toggleSetMode(null);
@@ -87,6 +96,7 @@ export function GridUi() {
           </MenuItem>
           <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
           <MenuItem onClick={openCreateShaderModal}>Create New Shader</MenuItem>
+          <MenuItem onClick={opencreateSimulation}>Create New Simulation</MenuItem>
           <MenuDivider></MenuDivider>
           {customFunctionNodes.map((node) => (
             <MenuItem onClick={() => setGraph(node)} key={node}>
@@ -95,6 +105,12 @@ export function GridUi() {
           ))}
           <MenuDivider></MenuDivider>
           {customShaderNode.map((node) => (
+            <MenuItem onClick={() => setGraph(node)} key={node}>
+              {node}
+            </MenuItem>
+          ))}
+          <MenuDivider></MenuDivider>
+          {customSimulationNode.map((node) => (
             <MenuItem onClick={() => setGraph(node)} key={node}>
               {node}
             </MenuItem>

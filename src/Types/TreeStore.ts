@@ -6,9 +6,9 @@ import { Template } from "../Data/templates";
 import { NodeData } from "./NodeData";
 import { PortConnection } from "./PortConnection";
 import { NodeCollection } from "./NodeCollection";
+import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 
 export type TreeStore = {
-  isEditingShader(): boolean;
   nodes: NodeCollection;
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
@@ -32,9 +32,11 @@ export type TreeStore = {
   loadTemplate: (temp: Template) => void;
   load: (source: NodeCollection) => boolean;
   createFunction: (def: NodeDefinition) => void;
-  createShader(def: NodeDefinition): unknown;
+  createShader: (def: NodeDefinition) => void;
+  createSimulation: (def: NodeDefinition) => void;
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
   changeNodeType: (id: string, type: PortType) => void;
+  getCustomNodeEditingType: () => CustomNodeEditingType;
 };

@@ -182,7 +182,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = usePlayerPref();
   const [selectedCategory, setCategory] = useState(nodeFav.favNodes.length > 0 ? "fav" : "");
-  const isShader = useTree((state) => state.isEditingShader());
+  const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
   const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
     if (item.hideInLibrary) {
       return false;

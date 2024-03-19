@@ -8,10 +8,10 @@ import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationC
 import { CustomNodeMainDiv } from "../StyledComponents/CustomNodeMainDiv";
 import { InputPortEdit } from "./InputPortEdit";
 
-const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "material"];
-const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"];
+const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string"];
+const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string"];
 
-export function CustomNodeModal({ close }: { close: () => void }) {
+export function CustomSimulationModal({ close }: { close: () => void }) {
   var context = useCustomNodeCreationContext();
   var def = context.model as NodeDefinition;
 
@@ -23,27 +23,25 @@ export function CustomNodeModal({ close }: { close: () => void }) {
             <label>Name</label>
             <TextInput value={def.id} onChange={context.setId}></TextInput>
           </fieldset>
-          <fieldset>
-            <label>Can be executed</label>
-            <input type="checkbox" onChange={(e) => context.setCanBeExecuted(!def.canBeExecuted)}></input>
-          </fieldset>
         </section>
         <section>
-          <h3>Inputs</h3>
+          <h3>Params</h3>
+          <p>These params can be passed from outside the simulation</p>
           {def.dataInputs.map((port, i) => (
             <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" availableTypes={AvailableTypesInput} />
           ))}
           <ButtonGroup>
-            <button onClick={() => context.addInputs("input")}>Add</button>
+            <button onClick={() => context.addInputs("params")}>Add</button>
           </ButtonGroup>
         </section>
         <section>
-          <h3>Outputs</h3>
+          <h3>Simulations Variables</h3>
+          <p>These parameters are saved in between runs.</p>
           {def.dataOutputs.map((port, i) => (
             <InputPortEdit key={i} port={port} index={i} role="outputData" availableTypes={AvailableTypesOutput} context={context} />
           ))}
           <ButtonGroup>
-            <button onClick={() => context.addOutput("output")}>Add</button>
+            <button onClick={() => context.addOutput("state")}>Add</button>
           </ButtonGroup>
         </section>
         <ButtonGroup>
