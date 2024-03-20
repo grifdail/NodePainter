@@ -146,6 +146,7 @@ import { TextureMaterial } from "./3D/TextureMaterial";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
+import { WireframeMaterial } from "./3D/WireframeMaterial";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -337,6 +338,7 @@ export const Nodes: Array<NodeDefinition> = [
   RegularMaterial,
   EmissiveMaterial,
   TextureMaterial,
+  WireframeMaterial,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

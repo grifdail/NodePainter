@@ -24,7 +24,7 @@ export const DrawBox: NodeDefinition = {
     {
       id: "dimension",
       type: "vector3",
-      defaultValue: createVector3(10, 10, 10),
+      defaultValue: createVector3(1, 1, 1),
     },
     {
       id: "rotation",
@@ -46,13 +46,13 @@ export const DrawBox: NodeDefinition = {
     if (material) {
       executeMaterial(context, material);
     }
-    context.target.noStroke();
+
     context.target.translate(...position);
     context.target.rotateZ(rotation[2]);
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
-    context.target.box();
+    context.target.box(10, 10, 10);
     context.target.pop();
   },
 };
