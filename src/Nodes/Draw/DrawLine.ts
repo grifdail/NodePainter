@@ -36,7 +36,7 @@ export const DrawLine: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   canBeExecuted: true,
-  availableTypes: ["vector2"],
+  availableTypes: ["vector2", "vector3"],
   defaultType: "vector2",
   onChangeType: changeTypeGenerator(["start", "end"], []),
   execute: (data, context) => {
