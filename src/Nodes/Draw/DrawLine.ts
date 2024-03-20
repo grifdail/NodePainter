@@ -2,6 +2,7 @@ import { IconLine } from "@tabler/icons-react";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { toP5Color } from "../../Utils/colorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const DrawLine: NodeDefinition = {
   id: "DrawLine",
