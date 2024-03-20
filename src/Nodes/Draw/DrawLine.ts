@@ -2,6 +2,7 @@ import { IconLine } from "@tabler/icons-react";
 import { createColor, createVector2 } from "../../Data/vectorDataType";
 import { NodeDefinition } from "../../Data/NodeDefinition";
 import { toP5Color } from "../../Data/colorUtils";
+import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
 
 export const DrawLine: NodeDefinition = {
   id: "DrawLine",
@@ -35,13 +36,16 @@ export const DrawLine: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   canBeExecuted: true,
+  availableTypes: ["vector2"],
+  defaultType: "vector2",
+  onChangeType: changeTypeGenerator(["start", "end"], []),
   execute: (data, context) => {
     var color = context.getInputValueColor(data, "color");
-    var p1 = context.getInputValueVector(data, "start");
-    var p2 = context.getInputValueVector(data, "end");
+    var p1 = context.getInputValueVector(data, "start") as [number, number, number];
+    var p2 = context.getInputValueVector(data, "end") as [number, number, number];
     var lineWidth = context.getInputValueNumber(data, "lineWidth");
     context.target.stroke(toP5Color(color, context.p5));
     context.target.strokeWeight(lineWidth);
-    context.target.line(p1[0], p1[1], p2[0], p2[1]);
+    context.target.line(...p1, ...p2);
   },
 };
