@@ -1,6 +1,6 @@
 import { IconVectorBezier2 } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
 
 export const EvaluateBezier: NodeDefinition = {
   id: "EvaluateBezier",

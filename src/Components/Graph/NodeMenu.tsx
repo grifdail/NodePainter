@@ -1,7 +1,8 @@
 import { Menu, MenuButton, MenuDivider, MenuItem } from "@szhsin/react-menu";
 import { IconMenu2 } from "@tabler/icons-react";
-import { NodeData, useTree } from "../../Hooks/useTree";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { useTree } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import styled from "styled-components";
 
 var StyledButton = styled(MenuButton)`

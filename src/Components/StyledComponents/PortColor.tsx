@@ -4,7 +4,7 @@ import { ColorInput } from "../Settings/ColorInput";
 import { VectorInput } from "../Settings/VectorInput";
 import { BoolInput } from "../Settings/BoolInput";
 import { TextInput } from "../Settings/TextInput";
-import { PortType } from "../../Data/NodeDefinition";
+import { PortType } from "../../Types/PortType";
 import { MaterialInput } from "../Settings/MaterialInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;

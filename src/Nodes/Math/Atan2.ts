@@ -1,6 +1,6 @@
 import { IconAngle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Atan2: NodeDefinition = {
   id: "Atan2",
@@ -43,6 +43,6 @@ export const Atan2: NodeDefinition = {
 }
 `,
   getShaderCode(node, context) {
-    return genShader(node, context, "result", ["x", "y"], ({ x, y }) => `atan2(${y}, ${x})`);
+    return generateShaderCodeFromNodeData(node, context, "result", ["x", "y"], ({ x, y }) => `atan2(${y}, ${x})`);
   },
 };

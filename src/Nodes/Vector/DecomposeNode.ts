@@ -1,9 +1,9 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
-import { convertTypeValue } from "../../Data/convertTypeValue";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorTypeslimited } from "../../Types/PortType";
+import { convertTypeValue } from "../../Utils/convertTypeValue";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
@@ -75,7 +75,7 @@ export const DecomposeNode: NodeDefinition = {
   },
   getShaderCode(node, context) {
     return Object.keys(node.dataOutputs)
-      .map((id, i) => genShader(node, context, id, ["vec"], ({ vec }) => `${vec}.${"xyzw"[i]}`))
+      .map((id, i) => generateShaderCodeFromNodeData(node, context, id, ["vec"], ({ vec }) => `${vec}.${"xyzw"[i]}`))
       .join("\n");
   },
 };

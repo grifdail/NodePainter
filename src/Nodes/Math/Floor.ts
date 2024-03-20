@@ -1,9 +1,9 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { VectorTypesFull } from "../../Types/PortType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Floor: NodeDefinition = {
   id: "Floor",
@@ -37,6 +37,6 @@ export const Floor: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
   },
 };

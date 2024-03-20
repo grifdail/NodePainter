@@ -1,80 +1,26 @@
 import { create } from "zustand";
 import { current, original, produce } from "immer";
 
-import { nanoid } from "nanoid";
-import { NodeDefinition, PortDefinition, SettingDefinition } from "../Data/NodeDefinition";
-import { PortType } from "../Data/NodeDefinition";
+import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { persist } from "zustand/middleware";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { START_NODE } from "../Nodes/System/StartNode";
-import { NodeLibrary } from "../Nodes/System/Nodes";
-import { createPortConnection } from "../Data/createPortConnection";
-import { resetCamera } from "../Data/resetCamera";
-import { ExecutionContext } from "../Data/createExecutionContext";
-import { createColor, createVector2 } from "../Data/vectorDataType";
-import { canConvert } from "../Data/convertTypeValue";
-import { Template } from "./templates";
-
-export type NodeCollection = { [key: string]: NodeData };
-export type ShaderData = {
-  id: string;
-};
-
-export type TreeStore = {
-  isEditingShader(): boolean;
-  nodes: NodeCollection;
-  editedGraph?: string;
-  customNodes: { [key: string]: NodeDefinition };
-  getNodeLibrary: () => { [key: string]: NodeDefinition };
-  getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
-  getNode: (id: string) => NodeData;
-  getInputPort: (id: string, portId: string) => PortConnection;
-  getOutputPort: (id: string, portId: string) => PortDefinition;
-  setNodePosition: (id: string, x: number, y: number) => void;
-  addNode: (nodeType: string, posX: number, posY: number) => void;
-  addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
-  getPortValue: (nodeId: string, portId: string, context: ExecutionContext) => [any, PortType];
-  removeDataConnection: (node: string, port: string) => void;
-  removeOutputConnection: (node: string, port: string) => void;
-  setNodeInputValue: (node: string, portId: string, newValue: any) => void;
-  setNodeSetting: (node: string, settingId: string, newValue: any) => void;
-  resetNode: (node: string) => void;
-  deleteNode: (node: string) => void;
-  duplicateNode: (node: string) => void;
-  reset: () => void;
-  loadTemplate: (temp: Template) => void;
-  load: (source: NodeCollection) => boolean;
-  createFunction: (def: NodeDefinition) => void;
-  createShader(def: NodeDefinition): unknown;
-  setEditedGraph: (graph: string | undefined) => void;
-  enforceValidGraph: () => void;
-  executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
-  changeNodeType: (id: string, type: PortType) => void;
-};
-
-export type NodeData = {
-  id: string;
-  type: string;
-  graph?: string;
-  dataInputs: { [key: string]: PortConnection }; //Hold the potential connection to another node
-  execOutputs: { [key: string]: string | null }; //Hold the refference to another node
-  dataOutputs: { [key: string]: PortDefinition }; //Hold the definition
-  settings: { [key: string]: any };
-  positionX: number;
-  positionY: number;
-  selectedType: PortType;
-};
-
-export type PortConnection = {
-  label?: string;
-  id: string;
-  hasConnection: boolean;
-  ownValue: any;
-  connectedNode: string | null;
-  connectedPort: string | null;
-  type: PortType;
-};
+import { NodeLibrary } from "../Nodes/Nodes";
+import { createPortConnection } from "../Utils/createPortConnection";
+import { resetCamera } from "../Utils/resetCamera";
+import { ExecutionContext } from "../Utils/createExecutionContext";
+import { createColor, createVector2 } from "../Types/vectorDataType";
+import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
+import { createPortConnectionsForInputsDefinition } from "../Utils/createPortConnectionsForInputsDefinition";
+import { createSettingObjectForSettingDefinition } from "../Utils/createSettingObjectForSettingDefinition";
+import { createExecOutputData } from "../Utils/createExecOutputData";
+import { createDataOutputData } from "../Utils/createDataOutputData";
+import { createNodeData } from "../Utils/createNodeData";
+import { ensureValidGraph } from "../Utils/ensureValidGraph";
+import { NodeData } from "../Types/NodeData";
+import { TreeStore } from "../Types/TreeStore";
+import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 
 export const useTree = create<TreeStore>()(
   persist(
@@ -426,6 +372,63 @@ export const useTree = create<TreeStore>()(
           );
           get().enforceValidGraph();
         },
+        createSimulation(def) {
+          set(
+            produce((state) => {
+              const start = `${def.id}-start`;
+              const end = `${def.id}-end`;
+              const node: NodeDefinition = {
+                ...def,
+                dataInputs: [{ id: "progress", type: "number", defaultValue: 0 }, ...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+              };
+              state.customNodes[def.id] = node;
+              const startNodeDef: NodeDefinition = {
+                IsUnique: true,
+                hideInLibrary: true,
+                description: "",
+                id: start,
+                tags: [],
+                dataInputs: [],
+                dataOutputs: [...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+                executeOutputs: [],
+                settings: [],
+                executeAs: "CustomSimulation-start",
+                canBeExecuted: false,
+              };
+              const endNodeDef: NodeDefinition = {
+                IsUnique: true,
+                description: "",
+                hideInLibrary: true,
+                id: end,
+                tags: [],
+                dataInputs: [...structuredClone(def.dataOutputs)],
+                dataOutputs: [],
+                executeOutputs: [],
+                settings: [],
+                executeAs: "CustomSimulation-end",
+                canBeExecuted: false,
+              };
+              state.customNodes[start] = startNodeDef;
+              state.customNodes[end] = endNodeDef;
+              const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+              const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+              state.nodes[start] = newStartNode;
+              state.nodes[end] = newEndNode;
+              for (let nodeId in original(state.nodes)) {
+                let node = state.nodes[nodeId];
+                if (node.type === def.id) {
+                  def.dataInputs.forEach((port) => {
+                    if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
+                      node.dataInputs[port.id] = createPortConnection(port);
+                    }
+                  });
+                }
+              }
+              state.editedGraph = def.id;
+            })
+          );
+          get().enforceValidGraph();
+        },
         setEditedGraph(graph) {
           set({ editedGraph: graph });
         },
@@ -436,12 +439,22 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
-        isEditingShader() {
+        getCustomNodeEditingType() {
           var tree = get();
           if (tree.editedGraph === undefined || tree.editedGraph === "main") {
-            return false;
+            return "function";
           }
-          return tree.getNodeTypeDefinition(tree.editedGraph).executeAs === CUSTOM_SHADER;
+          var executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
+          switch (executeAs) {
+            case CUSTOM_SHADER:
+              return "shader";
+            case CUSTOM_SIMULATION:
+              return "simulation";
+            case CUSTOM_FUNCTION:
+              return "function";
+            default:
+              return "function";
+          }
         },
       };
     },
@@ -451,85 +464,3 @@ export const useTree = create<TreeStore>()(
     }
   )
 );
-
-function ensureValidGraph(state: any) {
-  for (let nodeId in state.nodes) {
-    const selfNode = state.nodes[nodeId] as NodeData;
-    for (let input in selfNode.dataInputs) {
-      let port = selfNode.dataInputs[input] as PortConnection;
-      if (port.hasConnection) {
-        let targetNode = state.nodes[port.connectedNode as string] as NodeData;
-        if (!targetNode) {
-          var def = state.getNodeTypeDefinition(selfNode);
-          if (def.unbindPort != null) {
-            def.unbindPort(port.id, selfNode, "inputData");
-          }
-          port.hasConnection = false;
-          port.connectedNode = null;
-          port.connectedPort = null;
-        }
-
-        let defPort = targetNode.dataOutputs[port.connectedPort as string];
-        if (!defPort || !canConvert(defPort.type, port.type)) {
-          port.hasConnection = false;
-          port.connectedNode = null;
-          port.connectedPort = null;
-        }
-      }
-    }
-  }
-}
-
-function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
-  return {
-    type: def.id,
-    id: id || "node" + nanoid().replaceAll("_", "y"),
-    dataInputs: createPortConnectionsForInputsDefinition(def),
-    settings: createSettingObjectForSettingDefinition(def),
-    dataOutputs: createDataOutputData(def),
-    execOutputs: createExecOutputData(def),
-    positionX: x,
-    positionY: y,
-    selectedType: def.defaultType ? def.defaultType : def.availableTypes ? def.availableTypes[0] : "unknown",
-    graph: graph,
-  };
-}
-
-function createDataOutputData(def: NodeDefinition): { [key: string]: PortDefinition } {
-  return Object.fromEntries(def.dataOutputs.map((port) => [port.id, port]));
-}
-
-function createExecOutputData(def: NodeDefinition): { [key: string]: string | null } {
-  return Object.fromEntries(def.executeOutputs.map((port) => [port, null]));
-}
-
-function createSettingObjectForSettingDefinition(def: NodeDefinition): { [key: string]: any } {
-  return def.settings.reduce((old: any, setting: SettingDefinition) => {
-    old[setting.id] = structuredClone(setting.defaultValue);
-    return old;
-  }, {});
-}
-
-function createPortConnectionsForInputsDefinition(def: NodeDefinition): { [key: string]: PortConnection } {
-  return def.dataInputs.reduce((old: any, port: PortDefinition) => {
-    const connection = createPortConnection(port);
-    old[port.id] = connection;
-    return old;
-  }, {});
-}
-
-function createDefaultNodeConnection(): NodeCollection {
-  const start = createNodeData(NodeLibrary.Start, 0, 0, START_NODE);
-  const nthen = createNodeData(NodeLibrary.Then, 400, 0);
-  const background = createNodeData(NodeLibrary.FillBackground, 800, 0);
-  start.execOutputs.execute = nthen.id;
-  nthen.execOutputs[0] = background.id;
-  nthen.execOutputs[1] = null;
-  return {
-    [start.id]: start,
-    [nthen.id]: nthen,
-    [background.id]: background,
-  };
-}
-
-console.log(useTree);

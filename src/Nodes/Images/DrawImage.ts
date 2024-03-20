@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createVector2 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
 import { Image } from "p5";
 
 export const DrawImage: NodeDefinition = {

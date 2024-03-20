@@ -1,6 +1,6 @@
 import { IconBulb } from "@tabler/icons-react";
-import { Vector3, createColor, createVector3 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { Vector3, createColor, createVector3 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const ExecuteWithLight: NodeDefinition = {
   id: "ExecuteWithLight",

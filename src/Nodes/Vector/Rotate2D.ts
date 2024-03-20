@@ -1,13 +1,13 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { Vector3, createVector2, createVector3 } from "../../Data/vectorDataType";
-import { createPortConnection } from "../../Data/createPortConnection";
-import { VectorComponentOperation, VectorIsZero } from "../../Data/vectorUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
+import { createPortConnection } from "../../Utils/createPortConnection";
+import { VectorComponentOperation, VectorIsZero } from "../../Utils/vectorUtils";
 import { VectorScale } from "./Scale";
 import { VectorNormalize } from "./Normalize";
 import { VectorCrossProduct } from "./CrossProduct";
 import { VectorDotProduct } from "./DotProduct";
-import { convertTypeValue } from "../../Data/convertTypeValue";
+import { convertTypeValue } from "../../Utils/convertTypeValue";
 
 export const RotateVector: NodeDefinition = {
   id: "RotateVector",

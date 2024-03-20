@@ -1,11 +1,11 @@
 import { IconMathXy } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorMultiplication } from "../../Data/vectorUtils";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorMultiplication } from "../../Utils/vectorUtils";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypesFull } from "../../Types/PortType";
 
 export const Multiply: NodeDefinition = {
   id: "Multiply",
@@ -42,6 +42,6 @@ export const Multiply: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorMultiplication(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} * ${b}`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} * ${b}`);
   },
 };

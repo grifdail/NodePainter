@@ -1,5 +1,5 @@
 import { animated, FrameValue, to } from "@react-spring/web";
-import { PortType } from "../../Data/NodeDefinition";
+import { PortType } from "../../Types/PortType";
 import styled from "styled-components";
 
 export const EdgePath = styled(animated.path)`

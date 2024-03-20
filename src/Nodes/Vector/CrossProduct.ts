@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { Vector3, createVector3 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { Vector3, createVector3 } from "../../Types/vectorDataType";
 
 export const CrossProduct: NodeDefinition = {
   id: "CrossProduct",
@@ -36,7 +36,7 @@ export const CrossProduct: NodeDefinition = {
     return VectorCrossProduct(a, b);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
+    return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
   },
 };
 export function VectorCrossProduct(a: Vector3, b: Vector3): Vector3 {

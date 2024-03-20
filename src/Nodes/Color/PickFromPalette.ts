@@ -1,6 +1,6 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createColor } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor } from "../../Types/vectorDataType";
 
 export const PickFromPalette: NodeDefinition = {
   id: "PickFromPalette",

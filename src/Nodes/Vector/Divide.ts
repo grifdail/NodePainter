@@ -1,11 +1,11 @@
 import { IconMathXDivideY } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorDivision } from "../../Data/vectorUtils";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorDivision } from "../../Utils/vectorUtils";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypesFull } from "../../Types/PortType";
 
 export const Divide: NodeDefinition = {
   id: "Divide",
@@ -42,6 +42,6 @@ export const Divide: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorDivision(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} / ${b}`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} / ${b}`);
   },
 };

@@ -1,5 +1,5 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const PingPong: NodeDefinition = {
   id: "PingPong",

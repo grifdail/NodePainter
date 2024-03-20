@@ -1,4 +1,4 @@
-import { SettingDefinition } from "../../Data/NodeDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "./ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
@@ -9,7 +9,7 @@ import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../
 import { NumberInput } from "./NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
-import { ColorPalette, Gradient, GradientStop, createColor } from "../../Data/vectorDataType";
+import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";
 
 const ColorList = styled.ul`
   display: flex;

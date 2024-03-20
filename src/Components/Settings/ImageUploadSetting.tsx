@@ -1,4 +1,4 @@
-import { SettingDefinition } from "../../Data/NodeDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";

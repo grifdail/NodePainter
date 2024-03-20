@@ -2,25 +2,9 @@ import { create } from "zustand";
 import { produce } from "immer";
 
 import { persist } from "zustand/middleware";
-import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "../Data/vectorDataType";
-
-export type SortingType = "name" | "last" | "most";
-
-export type PlayerPrefStore = {
-  favNodes: string[];
-  nodesLastUsedDates: { [key: string]: number };
-  nodesUseCount: { [key: string]: number };
-  nodeSorting: SortingType;
-  setSorting: (sorting: SortingType) => void;
-  markNodeAsUsed: (id: string) => void;
-  toggleFav: (id: string) => void;
-  palettes: PaletteCollection;
-  gradient: GradientCollection;
-  savePalette: (name: string, palette: ColorPalette) => void;
-  saveGradient: (name: string, gradient: Gradient) => void;
-  removeGradient: (name: string) => void;
-  removePalette: (name: string) => void;
-};
+import { ColorPalette, Gradient } from "../Types/vectorDataType";
+import { PlayerPrefStore } from "../Types/PlayerPrefStore";
+import { SortingType } from "../Types/PlayerPrefStore";
 
 export const usePlayerPref = create<PlayerPrefStore>()(
   persist(

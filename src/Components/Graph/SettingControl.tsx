@@ -1,5 +1,5 @@
-import { SettingDefinition } from "../../Data/NodeDefinition";
-import { NodeData } from "../../Hooks/useTree";
+import { SettingDefinition } from "../../Types/SettingDefinition";
+import { NodeData } from "../../Types/NodeData";
 import { SettingComponents } from "../Settings/SettingsComponents";
 
 export const SettingControl = ({ y, value, def, onChange, nodeData }: { y: number; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {

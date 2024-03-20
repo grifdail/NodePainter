@@ -1,9 +1,10 @@
-import { SettingDefinition, SettingType } from "../../Data/NodeDefinition";
+import { SettingType } from "../../Types/SettingType";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
 import { PaletteSetting } from "./PaletteSetting";
 import { GradientSetting } from "./GradientSetting";
-import { NodeData } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
 import { ImageUploadSetting } from "./ImageUploadSetting";
 
 export type SettingComponent = (({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition; nodeData: NodeData }) => any) & {

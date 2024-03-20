@@ -1,4 +1,5 @@
-import { TreeStore, useTree } from "../../Hooks/useTree";
+import { useTree } from "../../Hooks/useTree";
+import { TreeStore } from "../../Types/TreeStore";
 import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
@@ -6,7 +7,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { NumberInput } from "../Settings/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
-import { ExecutionContext, createExecutionContext } from "../../Data/createExecutionContext";
+import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
@@ -86,14 +87,15 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     if (!ownProps) {
       return;
     }
+    const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
     context.time = time;
+    context.deltaTime = frameRate;
     var progress = time / (ownProps.duration * 1000);
     context.p5.randomSeed(seed);
     context.frameBlackboard = {};
     context.execute(START_NODE);
     if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
     } else if (!ended) {
-      const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
       time += frameRate;
 
       renderer?.addFrame(p5.drawingContext);
@@ -133,6 +135,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
       setRenderState("processing");
     }
   };
+  const filename = isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`;
 
   return (
     <Modal onClose={close} title="Export a gif" icon={IconGif}>
@@ -155,7 +158,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
           {renderState === "rendering" && <button disabled> Rendering</button>}
           {renderState === "processing" && <button disabled> Processing</button>}
-          {renderState === "done" && <button onClick={() => download(blob as Blob, isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`)}>Download</button>}
+          {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
       <div>
@@ -168,9 +171,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
             fixedFrameRate={fixedFrameRate}
             isGif={isGif}
             onFinished={(blob: Blob) => {
-              setRenderState("done");
-              setProgress(2);
+              setRenderState("waiting");
+              setProgress(100);
               setBlob(blob);
+              download(blob as Blob, filename);
             }}
             onProgress={onProgress}
           />

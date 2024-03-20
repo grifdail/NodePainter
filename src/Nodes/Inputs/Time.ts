@@ -1,5 +1,5 @@
 import { IconClock } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Time: NodeDefinition = {
   id: "Time",

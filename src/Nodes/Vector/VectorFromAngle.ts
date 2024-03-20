@@ -1,12 +1,12 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { Vector3, createVector2, createVector3 } from "../../Data/vectorDataType";
-import { createPortConnection } from "../../Data/createPortConnection";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
+import { createPortConnection } from "../../Utils/createPortConnection";
 import { VectorNormalize } from "./Normalize";
 import { VectorDotProduct } from "./DotProduct";
 import { VectorCrossProduct } from "./CrossProduct";
-import { VectorAddition, VectorIsZero } from "../../Data/vectorUtils";
+import { VectorAddition, VectorIsZero } from "../../Utils/vectorUtils";
 import { VectorScale } from "./Scale";
 
 export const VectorFromAngle: NodeDefinition = {
@@ -72,6 +72,6 @@ export const VectorFromAngle: NodeDefinition = {
     }
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "vec", ["angle", "length"], ({ angle, length }) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
+    return generateShaderCodeFromNodeData(node, context, "vec", ["angle", "length"], ({ angle, length }) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
   },
 };

@@ -1,9 +1,9 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { VectorTypesFull } from "../../Types/PortType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Ceil: NodeDefinition = {
   id: "Ceil",
@@ -37,6 +37,6 @@ export const Ceil: NodeDefinition = {
     );
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
   },
 };

@@ -1,7 +1,7 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { Vector3, createVector2 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
+import { Vector3, createVector2 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithTranslation: NodeDefinition = {
   id: "WithTranslation",

@@ -4,11 +4,13 @@ import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
-import { NodeData, useTree } from "../../Hooks/useTree";
+import { useTree } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
 import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
-import { MainExecuteId, PortType } from "../../Data/NodeDefinition";
+import { MainExecuteId } from "../../Types/NodeDefinition";
+import { PortType } from "../../Types/PortType";
 import { useSelection } from "../../Hooks/useSelection";
 
 export function Graph() {

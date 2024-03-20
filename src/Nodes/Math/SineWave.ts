@@ -1,6 +1,6 @@
 import { IconWaveSine } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const SineWave: NodeDefinition = {
   id: "SineWave",
@@ -53,6 +53,6 @@ export const SineWave: NodeDefinition = {
     return positive ? (t * 0.5 + 0.5) * amplitude : t * amplitude;
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "output", ["time", "phase", "frequency", "amplitude", "positive"], ({ time, phase, frequency, amplitude, positive }) => `(!${positive} ? cos((${time}+${phase}) * 6.2831855 * ${frequency}) : cos((${time}+${phase}) * 6.2831855 * ${frequency}) * 0.5 + 0.5 ) * ${amplitude}`);
+    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude", "positive"], ({ time, phase, frequency, amplitude, positive }) => `(!${positive} ? cos((${time}+${phase}) * 6.2831855 * ${frequency}) : cos((${time}+${phase}) * 6.2831855 * ${frequency}) * 0.5 + 0.5 ) * ${amplitude}`);
   },
 };

@@ -1,7 +1,8 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createVector3 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createDefaultMaterial, executeMaterial } from "../../Data/MaterialData";
+import { createVector3 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { executeMaterial } from "../../Types/MaterialData";
+import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawPlane: NodeDefinition = {
   id: "DrawPlane",

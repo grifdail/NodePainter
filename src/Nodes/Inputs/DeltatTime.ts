@@ -1,5 +1,5 @@
 import { IconClock } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const DeltatTime: NodeDefinition = {
   id: "DeltaTime",
@@ -11,6 +11,6 @@ export const DeltatTime: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context.p5.deltaTime / 1000;
+    return context.deltaTime / 1000;
   },
 };

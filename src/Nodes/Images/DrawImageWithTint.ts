@@ -1,8 +1,8 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createColor, createVector2 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { Image } from "p5";
-import { toP5Color } from "../../Data/colorUtils";
+import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawImageWithTint: NodeDefinition = {
   id: "DrawImageWithTint",

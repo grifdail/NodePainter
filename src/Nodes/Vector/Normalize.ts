@@ -1,11 +1,11 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { Vector, createVector2 } from "../../Data/vectorDataType";
-import { VectorMagnitude } from "../../Data/vectorUtils";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { Vector, createVector2 } from "../../Types/vectorDataType";
+import { VectorMagnitude } from "../../Utils/vectorUtils";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypeslimited } from "../../Types/PortType";
 
 export const Normalize: NodeDefinition = {
   id: "Normalize",
@@ -37,7 +37,7 @@ export const Normalize: NodeDefinition = {
     return EnforceGoodType(nodeData, vec);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
   },
 };
 export function VectorNormalize(a: Vector): number[] {

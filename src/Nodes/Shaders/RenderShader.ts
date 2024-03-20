@@ -1,8 +1,8 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { ImageData } from "../../Data/ImageData";
-import { convertToUniform } from "../../Data/convertToShaderValue";
-import { cleanNameForShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { ImageData } from "../../Types/ImageData";
+import { convertToUniform } from "../../Utils/convertToShaderValue";
+import { sanitizeForShader } from "../../Utils/sanitizeForShader";
 
 export const RenderShader: NodeDefinition = {
   id: "RenderShader",
@@ -60,10 +60,10 @@ export const RenderShader: NodeDefinition = {
           if (!data || !data.isLoaded) {
             return;
           }
-          shader.setUniform(cleanNameForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
+          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
         } else {
           const data = context.getInputValueImage(node, port.id);
-          shader.setUniform(cleanNameForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
+          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
         }
       });
       img.image.clear(0, 0, 0, 0);

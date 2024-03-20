@@ -1,10 +1,10 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { zipVector } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypeslimited } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
+import { zipVector } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypeslimited } from "../../Types/PortType";
 
 export const DotProduct: NodeDefinition = {
   id: "DotProduct",
@@ -41,7 +41,7 @@ export const DotProduct: NodeDefinition = {
     return VectorDotProduct(a, b);
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
+    return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
   },
 };
 export function VectorDotProduct(a: number[], b: number[]): number {

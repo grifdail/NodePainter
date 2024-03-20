@@ -1,7 +1,7 @@
 import { IconShadow } from "@tabler/icons-react";
-import { Vector2, createColor, createVector2 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { toHex } from "../../Data/colorUtils";
+import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { toHex } from "../../Utils/colorUtils";
 
 export const ExecuteWithShadow: NodeDefinition = {
   id: "WithShadow",

@@ -1,7 +1,7 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { createColor } from "../../Data/vectorDataType";
-import { genShader } from "../../Data/genShader";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor } from "../../Types/vectorDataType";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const SetAlpha: NodeDefinition = {
   id: "SetAlpha",
@@ -22,6 +22,6 @@ export const SetAlpha: NodeDefinition = {
     return [color[0], color[1], color[2], alpha];
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["color", "alpha"], ({ color, alpha }) => `vec4(${color}.rgb, ${alpha})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["color", "alpha"], ({ color, alpha }) => `vec4(${color}.rgb, ${alpha})`);
   },
 };

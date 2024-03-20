@@ -1,4 +1,4 @@
-import { ColorPalette, Gradient, GradientCollection, PaletteCollection, createColor } from "./vectorDataType";
+import { ColorPalette, Gradient, GradientCollection, PaletteCollection, createColor } from "../Types/vectorDataType";
 
 function C(num: number) {
   num >>>= 0;

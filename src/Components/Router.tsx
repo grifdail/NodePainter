@@ -6,6 +6,7 @@ import { LoadModal } from "./Modals/LoadModal";
 import { ExportGifModal } from "./Modals/ExportGifModal";
 import { CustomNodeModal } from "./Modals/CustomNodeModal";
 import { CustomShaderModal } from "./Modals/CustomShaderModal";
+import { CustomSimulationModal } from "./Modals/CustomSimulationModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -19,6 +20,7 @@ export function Router() {
       {route === "export-gif" && <ExportGifModal close={close} />}
       {route === "custom-function" && <CustomNodeModal close={close} />}
       {route === "custom-shader" && <CustomShaderModal close={close} />}
+      {route === "custom-simulation" && <CustomSimulationModal close={close} />}
     </div>
   );
 }

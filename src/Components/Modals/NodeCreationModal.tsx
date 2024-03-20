@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { useTree } from "../../Hooks/useTree";
 import { NodePreview } from "../NodePreview";
@@ -182,7 +182,7 @@ export function NodeCreationModal({ close }: { close: () => void }) {
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = usePlayerPref();
   const [selectedCategory, setCategory] = useState(nodeFav.favNodes.length > 0 ? "fav" : "");
-  const isShader = useTree((state) => state.isEditingShader());
+  const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
   const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
     if (item.hideInLibrary) {
       return false;

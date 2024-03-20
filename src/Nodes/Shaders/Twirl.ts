@@ -1,7 +1,7 @@
 import { IconGizmo } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
 
 export const Twirl: NodeDefinition = {
   id: "Twirl",
@@ -28,6 +28,6 @@ export const Twirl: NodeDefinition = {
     return vec2(x + Center.x + Offset.x, y + Center.y + Offset.y);
 }`,
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["uv", "center", "strength", "offset"], ({ uv, center, strength, offset }) => `Twirl(${uv}, ${center}, ${strength}, ${offset})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["uv", "center", "strength", "offset"], ({ uv, center, strength, offset }) => `Twirl(${uv}, ${center}, ${strength}, ${offset})`);
   },
 };

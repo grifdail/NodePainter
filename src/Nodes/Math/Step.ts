@@ -1,8 +1,8 @@
 import { IconMathFunction } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
-import { clamp01 } from "../../Data/colorUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { VectorTypesFull } from "../../Types/PortType";
+import { clamp01 } from "../../Utils/colorUtils";
 
 export const Step: NodeDefinition = {
   id: "Step",
@@ -40,6 +40,6 @@ export const Step: NodeDefinition = {
     }
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "result", ["value", "step"], ({ value, step }) => `floor(clamp(${value},0.0, 1.0) * ${step}) / ${step}`);
+    return generateShaderCodeFromNodeData(node, context, "result", ["value", "step"], ({ value, step }) => `floor(clamp(${value},0.0, 1.0) * ${step}) / ${step}`);
   },
 };

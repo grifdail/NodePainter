@@ -1,6 +1,6 @@
 import { IconMouse } from "@tabler/icons-react";
-import { createVector2 } from "../../Data/vectorDataType";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const MousePosition: NodeDefinition = {
   id: "MousePosition",

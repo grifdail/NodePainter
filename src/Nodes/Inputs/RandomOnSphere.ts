@@ -1,7 +1,7 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { createVector3 } from "../../Data/vectorDataType";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { createVector3 } from "../../Types/vectorDataType";
 
 export const RandomOnSphere: NodeDefinition = {
   id: "RandomOnSphere",

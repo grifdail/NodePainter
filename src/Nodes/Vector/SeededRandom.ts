@@ -1,9 +1,9 @@
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorLength } from "../../Data/NodeDefinition";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorLength } from "../../Types/PortType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypesFull } from "../../Types/PortType";
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { fraction } from "mathjs";
 import { VectorDotProduct } from "./DotProduct";
@@ -50,6 +50,6 @@ float rand(vec4 st) {
 }
 `,
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["seed"], ({ seed }) => `rand(${seed})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["seed"], ({ seed }) => `rand(${seed})`);
   },
 };

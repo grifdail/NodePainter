@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { Comparator } from "../../Data/logicUtils";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Comparator } from "../../Utils/logicUtils";
 
 export const Compare: NodeDefinition = {
   id: "Compare",

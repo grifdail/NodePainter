@@ -1,8 +1,8 @@
 import { IconPolygon } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Data/vectorDataType";
-import { createPortConnection } from "../../Data/createPortConnection";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { toP5Color } from "../../Data/colorUtils";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
+import { createPortConnection } from "../../Utils/createPortConnection";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawPolygon: NodeDefinition = {
   id: "DrawPolygon",

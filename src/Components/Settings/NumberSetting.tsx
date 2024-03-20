@@ -1,7 +1,7 @@
 import { SettingComponent } from "./SettingsComponents";
 import { NumberInput } from "./NumberInput";
 import styled from "styled-components";
-import { SettingDefinition } from "../../Data/NodeDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 
 const FieldSet = styled.fieldset`
   background: none;

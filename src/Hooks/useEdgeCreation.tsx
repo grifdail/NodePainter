@@ -1,6 +1,6 @@
-import { PortRole } from "../Data/NodeDefinition";
-import { PortType } from "../Data/NodeDefinition";
-import { canConvert } from "../Data/convertTypeValue";
+import { PortRole } from "../Types/PortRole";
+import { PortType } from "../Types/PortType";
+import { canConvert } from "../Utils/convertTypeValue";
 import { PortSelection, usePortSelection } from "./usePortSelection";
 import { useTree } from "./useTree";
 

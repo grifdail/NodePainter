@@ -1,10 +1,10 @@
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { genShader } from "../../Data/genShader";
-import { createVector2 } from "../../Data/vectorDataType";
-import { VectorAddition } from "../../Data/vectorUtils";
-import { EnforceGoodType } from "../../Data/vectorUtils";
-import { changeTypeGenerator } from "../../Data/changeTypeGenerator";
-import { VectorTypesFull } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { createVector2 } from "../../Types/vectorDataType";
+import { VectorAddition } from "../../Utils/vectorUtils";
+import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { VectorTypesFull } from "../../Types/PortType";
 import { IconMathXPlusY } from "@tabler/icons-react";
 
 export const Add: NodeDefinition = {
@@ -42,6 +42,6 @@ export const Add: NodeDefinition = {
     return EnforceGoodType(nodeData, VectorAddition(a, b));
   },
   getShaderCode(node, context) {
-    return genShader(node, context, "out", ["a", "b"], ({ a, b }) => `${a} + ${b}`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} + ${b}`);
   },
 };

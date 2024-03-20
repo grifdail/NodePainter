@@ -1,6 +1,6 @@
 import { IconClock } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
-import { convertToShaderValue } from "../../Data/convertToShaderValue";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { convertToShaderValue } from "../../Utils/convertToShaderValue";
 
 export const Progress: NodeDefinition = {
   id: "Progress",

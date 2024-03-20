@@ -1,5 +1,5 @@
 import { IconEaseInOut } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Data/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import * as Easing from "../../libs/easing";
 
 export const EasingNode: NodeDefinition = {
