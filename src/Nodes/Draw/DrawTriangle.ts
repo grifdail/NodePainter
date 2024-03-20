@@ -1,5 +1,5 @@
 import { IconVectorTriangle } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Types/vectorDataType";
+import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -37,11 +37,11 @@ export const DrawTriangle: NodeDefinition = {
   canBeExecuted: true,
   execute: (data, context) => {
     var color = context.getInputValueColor(data, "color");
-    var p1 = context.getInputValueVector(data, "corner1");
-    var p2 = context.getInputValueVector(data, "corner2");
-    var p3 = context.getInputValueVector(data, "corner3");
+    var p1 = context.getInputValueVector(data, "corner1") as Vector2;
+    var p2 = context.getInputValueVector(data, "corner2") as Vector2;
+    var p3 = context.getInputValueVector(data, "corner3") as Vector2;
     context.target.fill(toP5Color(color, context.p5));
     context.target.noStroke();
-    context.target.triangle(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1]);
+    context.target.triangle(...p1, ...p2, ...p3);
   },
 };

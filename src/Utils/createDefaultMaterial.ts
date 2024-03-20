@@ -3,7 +3,7 @@ import { MaterialData } from "../Types/MaterialData";
 
 export function createDefaultMaterial(color?: Color): MaterialData {
   return {
-    id: "emisive",
+    id: "DefaultMaterial",
     color: color || createColor(1, 1, 1),
   };
 }

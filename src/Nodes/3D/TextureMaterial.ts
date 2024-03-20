@@ -1,9 +1,9 @@
 import { IconBulb } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
+import { MaterialNodeDefinition } from "../../Types/NodeDefinition";
 import { MaterialData } from "../../Types/MaterialData";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
-export const TextureMaterial: NodeDefinition = {
+export const TextureMaterial: MaterialNodeDefinition = {
   id: "TextureMaterial",
   description: "create a material that doesnt react to light",
   icon: IconBulb,
@@ -26,9 +26,16 @@ export const TextureMaterial: NodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var m: MaterialData = {
-      id: "texture",
+      id: "TextureMaterial",
       texture: context.getInputValueImage(nodeData, "texture"),
     };
     return m;
+  },
+  applyMaterial(context, mat) {
+    context.target.noStroke();
+    context.target.fill(255, 255, 255);
+    if (mat.texture?.image != null) {
+      context.target.texture(mat.texture?.image);
+    }
   },
 };

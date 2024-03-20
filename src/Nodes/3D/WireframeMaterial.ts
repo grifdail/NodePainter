@@ -1,10 +1,10 @@
 import { IconBulb } from "@tabler/icons-react";
-import { createColor } from "../../Types/vectorDataType";
-import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Color, createColor } from "../../Types/vectorDataType";
+import { MaterialNodeDefinition } from "../../Types/NodeDefinition";
 import { MaterialData } from "../../Types/MaterialData";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
-export const WireframeMaterial: NodeDefinition = {
+export const WireframeMaterial: MaterialNodeDefinition = {
   id: "WireframeMaterial",
   description: "create a material with an outline",
   icon: IconBulb,
@@ -37,11 +37,24 @@ export const WireframeMaterial: NodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var m: MaterialData = {
-      id: "wireframe",
+      id: "WireframeMaterial",
       color: context.getInputValueColor(nodeData, "color"),
       colorWireframe: context.getInputValueColor(nodeData, "colorWireframe"),
       wireframeWeight: context.getInputValueNumber(nodeData, "wireFrameWeight"),
     };
     return m;
+  },
+  applyMaterial(context, mat) {
+    var color = mat.color as Color;
+    var colorW = mat.colorWireframe as Color;
+    var wireframeWeight = mat.wireframeWeight as number;
+    if (color[3] > 0) {
+      context.target.fill(color[0] * 255, color[1] * 255, color[2] * 255, color[3] * 255);
+    } else {
+      context.target.noFill();
+    }
+    //
+    context.target.stroke(colorW[0] * 255, colorW[1] * 255, colorW[2] * 255, colorW[3] * 255);
+    context.target.strokeWeight(wireframeWeight);
   },
 };

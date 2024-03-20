@@ -6,6 +6,7 @@ import { PortType } from "./PortType";
 import { PortDefinition } from "./PortDefinition";
 import { SettingDefinition } from "./SettingDefinition";
 import { PortRole } from "./PortRole";
+import { MaterialData } from "./MaterialData";
 
 export type NodeDefinition = {
   hideInLibrary?: boolean;
@@ -35,5 +36,13 @@ export type NodeDefinition = {
   onChangeType?: (node: NodeData, type: PortType) => void;
   onCreate?: (node: NodeData) => void;
 };
+
+export type MaterialNodeDefinition = NodeDefinition & {
+  applyMaterial: (context: ExecutionContext, mat: MaterialData, isStrokeOnly?: boolean) => void;
+};
+
+export function isMaterialNode(node: NodeDefinition): node is MaterialNodeDefinition {
+  return (node as MaterialNodeDefinition).applyMaterial != null;
+}
 
 export const MainExecuteId = "mainExecute";

@@ -1,10 +1,10 @@
 import { IconBulb } from "@tabler/icons-react";
-import { createColor } from "../../Types/vectorDataType";
-import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Color, createColor } from "../../Types/vectorDataType";
+import { MaterialNodeDefinition } from "../../Types/NodeDefinition";
 import { MaterialData } from "../../Types/MaterialData";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
-export const RegularMaterial: NodeDefinition = {
+export const RegularMaterial: MaterialNodeDefinition = {
   id: "RegularMaterial",
   description: "create a material that react to the light",
   icon: IconBulb,
@@ -27,9 +27,16 @@ export const RegularMaterial: NodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var m: MaterialData = {
-      id: "regular",
+      id: "RegularMaterial",
       color: context.getInputValueColor(nodeData, "color"),
     };
     return m;
+  },
+  applyMaterial(context, mat) {
+    context.target.noStroke();
+    var color = mat.color as Color;
+    context.target.fill(color[0] * 255, color[1] * 255, color[2] * 255);
+    context.target.emissiveMaterial(0);
+    context.target.ambientMaterial(color[0] * 255, color[1] * 255, color[2] * 255);
   },
 };

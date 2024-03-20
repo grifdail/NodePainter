@@ -1,7 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
 import { createVector2, createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { executeMaterial } from "../../Types/MaterialData";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawSphere: NodeDefinition = {
@@ -49,15 +48,15 @@ export const DrawSphere: NodeDefinition = {
     var dimension = context.getInputValueVector3(data, "dimension");
     var details = context.getInputValueVector2(data, "details");
     context.target.push();
-    if (material) {
-      executeMaterial(context, material);
-    }
-    context.target.noStroke();
+
     context.target.translate(...position);
     context.target.rotateZ(rotation[2]);
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
+    if (material) {
+      context.applyMaterial(material);
+    }
     context.target.sphere(1, Math.floor(details[0]), Math.floor(details[1]));
     context.target.pop();
   },

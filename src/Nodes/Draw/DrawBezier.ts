@@ -1,7 +1,8 @@
 import { IconVectorBezier2 } from "@tabler/icons-react";
-import { createVector2 } from "../../Types/vectorDataType";
+import { Vector3, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { toP5Color } from "../../Utils/colorUtils";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const DrawBezier: NodeDefinition = {
   id: "DrawBezier",
@@ -45,16 +46,19 @@ export const DrawBezier: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   canBeExecuted: true,
+  availableTypes: ["vector2", "vector3"],
+  onChangeType: changeTypeGenerator(["start", "cp1", "cp2", "end"], []),
+  defaultType: "vector2",
   execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    var size = context.getInputValueNumber(data, "lineWidth");
-    var start = context.getInputValueVector(data, "start");
-    var p1 = context.getInputValueVector(data, "cp1");
-    var p2 = context.getInputValueVector(data, "cp2");
-    var end = context.getInputValueVector(data, "end");
+    const color = context.getInputValueColor(data, "color");
+    const size = context.getInputValueNumber(data, "lineWidth");
+    const start = context.getInputValueVector(data, "start") as Vector3;
+    const p1 = context.getInputValueVector(data, "cp1") as Vector3;
+    const p2 = context.getInputValueVector(data, "cp2") as Vector3;
+    const end = context.getInputValueVector(data, "end") as Vector3;
     context.target.noFill();
     context.target.stroke(toP5Color(color, context.p5));
     context.target.strokeWeight(size);
-    context.target.bezier(start[0], start[1], p1[0], p1[1], p2[0], p2[1], end[0], end[1]);
+    context.target.bezier(...start, ...p1, ...p2, ...end);
   },
 };

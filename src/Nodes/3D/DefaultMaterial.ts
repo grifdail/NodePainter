@@ -1,14 +1,16 @@
-import { IconBulb } from "@tabler/icons-react";
+﻿import { IconBulb } from "@tabler/icons-react";
 import { Color, createColor } from "../../Types/vectorDataType";
 import { MaterialNodeDefinition } from "../../Types/NodeDefinition";
 import { MaterialData } from "../../Types/MaterialData";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
+import { toP5Color } from "../../Utils/colorUtils";
 
-export const EmissiveMaterial: MaterialNodeDefinition = {
-  id: "EmissiveMaterial",
-  description: "create a material that doesnt react to light",
+export const DefaultMaterial: MaterialNodeDefinition = {
+  id: "DefaultMaterial",
+  description: "The default Material",
+  hideInLibrary: true,
   icon: IconBulb,
-  tags: ["3D"],
+  tags: ["Material"],
   dataInputs: [
     {
       id: "color",
@@ -27,16 +29,20 @@ export const EmissiveMaterial: MaterialNodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var m: MaterialData = {
-      id: "EmissiveMaterial",
+      id: "DefaultMaterial",
       color: context.getInputValueColor(nodeData, "color"),
     };
     return m;
   },
-  applyMaterial(context, mat) {
-    context.target.noStroke();
+  applyMaterial(context, mat, isStrokeOnly) {
     var color = mat.color as Color;
-    context.target.fill(0);
-    context.target.emissiveMaterial(color[0] * 255, color[1] * 255, color[2] * 255);
-    context.target.ambientMaterial(0);
+    if (isStrokeOnly) {
+      context.target.noFill();
+      context.target.stroke(toP5Color(color, context.p5));
+      context.target.strokeWeight(2);
+    } else {
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+    }
   },
 };
