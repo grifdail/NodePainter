@@ -19,9 +19,9 @@ export function CustomNodeModal({ close }: { close: () => void }) {
     <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
         <section className="header">
-          <fieldset>
+          <fieldset className={context.isNameValid() ? "" : "invalid"}>
             <label>Name</label>
-            <TextInput value={def.id} onChange={context.setId}></TextInput>
+            <TextInput disabled={context.mode === "edit"} value={def.id} onChange={context.setId}></TextInput>
           </fieldset>
           <fieldset>
             <label>Can be executed</label>
@@ -48,7 +48,9 @@ export function CustomNodeModal({ close }: { close: () => void }) {
         </section>
         <ButtonGroup>
           <button onClick={context.cancel}>Cancel</button>
-          <button onClick={context.create}>Create</button>
+          <button disabled={!context.isNameValid()} onClick={context.create}>
+            Create
+          </button>
         </ButtonGroup>
       </CustomNodeMainDiv>
     </Modal>

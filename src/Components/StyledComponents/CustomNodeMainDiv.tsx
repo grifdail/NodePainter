@@ -37,6 +37,9 @@ export const CustomNodeMainDiv = styled.div`
       & label {
         flex: 1 1 0;
       }
+      &.invalid {
+        border: 1px solid red;
+      }
     }
 
     & > div.port-field {

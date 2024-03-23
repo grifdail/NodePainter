@@ -183,5 +183,16 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         })
       );
     },
+    isNameValid() {
+      var id = get().model?.id;
+      if (!id) {
+        return false;
+      }
+      if (get().mode === "create") {
+        return useTree.getState().getNodeTypeDefinition(id) === undefined;
+      } else {
+        return true;
+      }
+    },
   };
 });

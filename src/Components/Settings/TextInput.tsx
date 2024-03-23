@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function TextInput({ onChange, value }: { onChange: (value: string) => void; value: string }) {
+export function TextInput({ onChange, value, disabled = false }: { onChange: (value: string) => void; value: string; disabled?: boolean }) {
   var [rawField, setRawField] = useState(value);
 
   useEffect(() => {
@@ -11,5 +11,5 @@ export function TextInput({ onChange, value }: { onChange: (value: string) => vo
     onChange(rawField);
   };
 
-  return <input value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  return <input disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
 }
