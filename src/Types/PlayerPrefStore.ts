@@ -15,4 +15,4 @@ export type PlayerPrefStore = {
   removeGradient: (name: string) => void;
   removePalette: (name: string) => void;
 };
-export type SortingType = "name" | "last" | "most";
+export type SortingType = "featured" | "name" | "last" | "most";

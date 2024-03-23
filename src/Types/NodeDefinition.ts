@@ -35,6 +35,7 @@ export type NodeDefinition = {
   defaultType?: PortType;
   onChangeType?: (node: NodeData, type: PortType) => void;
   onCreate?: (node: NodeData) => void;
+  featureLevel?: number;
 };
 
 export type MaterialNodeDefinition = NodeDefinition & {

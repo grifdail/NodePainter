@@ -10,6 +10,7 @@ export const Remap: NodeDefinition = {
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Remap a number from one interval to the other",
+  featureLevel: 99,
   dataInputs: [
     {
       id: "t",

@@ -6,6 +6,7 @@ export const SineWave: NodeDefinition = {
   id: "SineWave",
   tags: ["Math"],
   icon: IconWaveSine,
+  featureLevel: 5,
   description: "Return the value of the sine wave with a phase, frequency and amplitude. Easier than using Cos",
   dataInputs: [
     {

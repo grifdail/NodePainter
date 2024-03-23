@@ -11,6 +11,7 @@ export const Multiply: NodeDefinition = {
   id: "Multiply",
   description: "Scale each component of two vector together",
   icon: IconMathXy,
+  featureLevel: 100,
   tags: ["Math", "Vector"],
   dataInputs: [
     {

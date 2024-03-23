@@ -8,6 +8,7 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -176,12 +177,12 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
-export function NodeCreationModal({ close }: { close: () => void }) {
+export function NodeSelectionModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
 
   const searchTerm = searchTermRaw.trim().toLowerCase();
   const nodeFav = usePlayerPref();
-  const [selectedCategory, setCategory] = useState(nodeFav.favNodes.length > 0 ? "fav" : "");
+  const [selectedCategory, setCategory] = useState("");
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
   const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
     if (item.hideInLibrary) {
@@ -195,31 +196,18 @@ export function NodeCreationModal({ close }: { close: () => void }) {
       return false;
     }
     if (!!selectedCategory) {
-      if (selectedCategory === "fav") {
-        if (!nodeFav.favNodes.includes(item.id)) {
-          return false;
-        }
-      } else if (!item.tags.includes(selectedCategory)) {
+      if (!item.tags.includes(selectedCategory)) {
         return false;
       }
     }
 
     return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
   });
-  if (nodeFav.nodeSorting === "last") {
-    filteredList.sort((a, b) => (nodeFav.nodesLastUsedDates[b.id] || 0) - (nodeFav.nodesLastUsedDates[a.id] || 0));
-  } else if (nodeFav.nodeSorting === "most") {
-    filteredList.sort((a, b) => (nodeFav.nodesUseCount[b.id] || 0) - (nodeFav.nodesUseCount[a.id] || 0));
-  } else {
-    filteredList.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
-  }
+  sortNodeList(nodeFav, filteredList);
 
   const tags = nodeLibrary.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index);
 
   tags.splice(0, 0, "all");
-  if (nodeFav.favNodes.length > 0) {
-    tags.splice(1, 0, "fav");
-  }
 
   const addNode = useTree((state) => state.addNode);
 
@@ -248,9 +236,11 @@ export function NodeCreationModal({ close }: { close: () => void }) {
                 <MenuButton>
                   Sort By: <IconSortDescending />
                 </MenuButton>
-              }
-            >
+              }>
               <MenuRadioGroup value={nodeFav.nodeSorting}>
+                <MenuItem value="name" onClick={() => nodeFav.setSorting("featured")}>
+                  Featured
+                </MenuItem>
                 <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
                   Name
                 </MenuItem>
@@ -273,4 +263,45 @@ export function NodeCreationModal({ close }: { close: () => void }) {
       </AddModalDiv>
     </Modal>
   );
+}
+function sortNodeList(nodeFav: PlayerPrefStore, filteredList: NodeDefinition[]) {
+  const favSorting = compareFav(nodeFav);
+  const lastSorting = (a: NodeDefinition, b: NodeDefinition) => (nodeFav.nodesLastUsedDates[b.id] || 0) - (nodeFav.nodesLastUsedDates[a.id] || 0);
+  const mostSorting = (a: NodeDefinition, b: NodeDefinition) => (nodeFav.nodesUseCount[b.id] || 0) - (nodeFav.nodesUseCount[a.id] || 0);
+  const featuredSorting = (a: NodeDefinition, b: NodeDefinition) => (b.featureLevel || 0) - (a.featureLevel || 0);
+  const idSorting = (a: NodeDefinition, b: NodeDefinition) => a.id.toLowerCase().localeCompare(b.id.toLowerCase());
+  if (nodeFav.nodeSorting === "last") {
+    filteredList.sort(sortWithPriority(favSorting, lastSorting, featuredSorting));
+  } else if (nodeFav.nodeSorting === "most") {
+    filteredList.sort(sortWithPriority(favSorting, mostSorting, featuredSorting));
+  } else if (nodeFav.nodeSorting === "featured") {
+    filteredList.sort(sortWithPriority(favSorting, featuredSorting, idSorting));
+  } else {
+    filteredList.sort(sortWithPriority(favSorting, idSorting, featuredSorting));
+  }
+}
+
+function compareFav(nodeFav: PlayerPrefStore) {
+  return (a: NodeDefinition, b: NodeDefinition) => {
+    const aIsFav = nodeFav.favNodes.includes(a.id);
+    const bIsFav = nodeFav.favNodes.includes(b.id);
+    if (aIsFav === bIsFav) {
+      return 0;
+    } else {
+      return aIsFav ? -1 : 1;
+    }
+  };
+}
+
+function sortWithPriority<T>(...comparator: ((a: T, b: T) => number)[]) {
+  return (a: T, b: T) => {
+    for (let index = 0; index < comparator.length; index++) {
+      const element = comparator[index];
+      const result = element(a, b);
+      if (result !== 0) {
+        return result;
+      }
+    }
+    return 0;
+  };
 }

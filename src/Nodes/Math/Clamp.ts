@@ -9,6 +9,7 @@ export const Clamp: NodeDefinition = {
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number to be between two other number",
+  featureLevel: 5,
   dataInputs: [
     {
       id: "value",

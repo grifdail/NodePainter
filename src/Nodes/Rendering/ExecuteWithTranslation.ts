@@ -6,6 +6,8 @@ import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 export const ExecuteWithTranslation: NodeDefinition = {
   id: "WithTranslation",
   label: "Render with translation",
+
+  featureLevel: 4,
   description: "Execute the next instruction as if the canvas was moved",
   icon: IconArrowsMove,
   tags: ["Transform"],

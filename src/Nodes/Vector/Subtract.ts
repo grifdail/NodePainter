@@ -12,6 +12,7 @@ export const Subtract: NodeDefinition = {
   description: "Subtract two value together",
   icon: IconMathXMinusY,
   tags: ["Math", "Vector"],
+  featureLevel: 70,
   dataInputs: [
     {
       id: "a",

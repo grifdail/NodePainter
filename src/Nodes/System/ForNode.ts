@@ -4,6 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 export const ForNode: NodeDefinition = {
   id: "For",
   description: "Execute an instruction multiple time",
+  featureLevel: 100,
   icon: IconAssembly,
   tags: ["Control"],
   dataInputs: [{ id: "count", type: "number", defaultValue: 10 }],

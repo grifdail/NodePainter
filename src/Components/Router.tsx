@@ -1,5 +1,5 @@
 import { GridUi } from "./GridUi";
-import { NodeCreationModal } from "./Modals/NodeCreationModal";
+import { NodeSelectionModal } from "./Modals/NodeSelectionModal";
 import { useRouter } from "../Hooks/useRouter";
 import { SaveModal } from "./Modals/SaveModal";
 import { LoadModal } from "./Modals/LoadModal";
@@ -14,7 +14,7 @@ export function Router() {
   return (
     <div>
       {route === "default" && <GridUi />}
-      {route === "node-creation" && <NodeCreationModal close={close} />}
+      {route === "node-creation" && <NodeSelectionModal close={close} />}
       {route === "save" && <SaveModal close={close} />}
       {route === "load" && <LoadModal close={close} />}
       {route === "export-gif" && <ExportGifModal close={close} />}

@@ -7,6 +7,7 @@ export const DrawCircle: NodeDefinition = {
   id: "DrawCircle",
   label: "Draw circle",
   description: "Draw a circle",
+  featureLevel: 5,
   icon: IconCircle,
   tags: ["Draw"],
   dataInputs: [

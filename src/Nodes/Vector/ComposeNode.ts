@@ -11,6 +11,7 @@ export const ComposeNode: NodeDefinition = {
   id: "Compose",
   description: "Create a vector or color from a set of number",
   icon: IconArrowUpRightCircle,
+  featureLevel: 3,
   tags: ["Vector"],
   dataInputs: [
     {

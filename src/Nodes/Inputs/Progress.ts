@@ -6,6 +6,7 @@ export const Progress: NodeDefinition = {
   id: "Progress",
   description: "Repressent the progress of the animation as a value between 0 and 1.",
   icon: IconClock,
+  featureLevel: 100,
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "progress", type: "number", defaultValue: 0 }],

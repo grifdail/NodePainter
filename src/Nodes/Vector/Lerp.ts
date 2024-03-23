@@ -11,6 +11,7 @@ export const Lerp: NodeDefinition = {
   id: "Lerp",
   description: "interpolate between 2 vector",
   icon: IconMathFunction,
+  featureLevel: 50,
   tags: ["Math", "Vector"],
   dataInputs: [
     {

@@ -13,7 +13,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         favNodes: [],
         nodesLastUsedDates: {},
         nodesUseCount: {},
-        nodeSorting: "name",
+        nodeSorting: "featured",
         palettes: {},
         gradient: {},
         setSorting(sorting: SortingType) {
