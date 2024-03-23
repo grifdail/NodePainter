@@ -22,6 +22,14 @@
 			"problemMatcher": [],
 			"label": "npm: lint",
 			"detail": "eslint src --ext .js,.jsx,.ts,.tsx --fix"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"group": "clean",
+			"problemMatcher": [],
+			"label": "npm: install",
+			"detail": "install dependencies from package"
 		}
 	]
 }

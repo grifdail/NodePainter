@@ -147,6 +147,7 @@ import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
+import { Envelope } from "./Math/Envelope";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -318,6 +319,7 @@ export const Nodes: Array<NodeDefinition> = [
   EasingNode,
   EvaluateBezier,
   Step,
+  Envelope,
 
   // Constant
   createConstant("PI", Math.PI),
