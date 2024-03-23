@@ -43,6 +43,10 @@ const MainDiv = styled.div`
     border: none;
     background: rgba(0, 0, 0, 0.2);
   }
+
+  & .rendering {
+    text-align: center;
+  }
 `;
 
 type MySketchProps = SketchProps & {
@@ -153,6 +157,25 @@ export function ExportGifModal({ close }: { close: () => void }) {
           <BoolInput value={isGif} onChange={setIsGif} />
         </fieldset>
         <hr></hr>
+        <div className="rendering">
+          {renderState === "rendering" && (
+            <ReactP5Wrapper
+              key={`${start.settings.width} / ${start.settings.height}`}
+              sketch={sketch}
+              tree={tree}
+              duration={duration}
+              fixedFrameRate={fixedFrameRate}
+              isGif={isGif}
+              onFinished={(blob: Blob) => {
+                setRenderState("waiting");
+                setProgress(100);
+                setBlob(blob);
+                download(blob as Blob, filename);
+              }}
+              onProgress={onProgress}
+            />
+          )}
+        </div>
         <progress value={progress} max="100" />
         <ButtonGroup>
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
@@ -161,25 +184,6 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
-      <div>
-        {renderState === "rendering" && (
-          <ReactP5Wrapper
-            key={`${start.settings.width} / ${start.settings.height}`}
-            sketch={sketch}
-            tree={tree}
-            duration={duration}
-            fixedFrameRate={fixedFrameRate}
-            isGif={isGif}
-            onFinished={(blob: Blob) => {
-              setRenderState("waiting");
-              setProgress(100);
-              setBlob(blob);
-              download(blob as Blob, filename);
-            }}
-            onProgress={onProgress}
-          />
-        )}
-      </div>
     </Modal>
   );
 }

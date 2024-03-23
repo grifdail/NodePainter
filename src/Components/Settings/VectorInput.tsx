@@ -8,7 +8,7 @@ export function VectorInput({ onChange, value }: { onChange: (value: any) => voi
     onChange(newVector);
   };
   return (
-    <div>
+    <div className="vector-input">
       {value.map((comp, i) => (
         <NumberInput value={comp} onChange={(e) => onInputChange(e, i)}></NumberInput>
       ))}
