@@ -1,4 +1,4 @@
-﻿import { IconEaseInOut } from "@tabler/icons-react";
+import { IconEaseInOut } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { EnvelopeData } from "../../Types/EnvelopeData";
 import { createDefaultEnvelope } from "../../Types/EnvelopeData";
