@@ -38,5 +38,5 @@ export type TreeStore = {
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
   changeNodeType: (id: string, type: PortType) => void;
   getCustomNodeEditingType: () => CustomNodeEditingType;
-  turnIntoCustomFunction: (nodesId: string[], id: string) => boolean;
+  createFunctionFromNodes: (nodesId: string[], id: string) => boolean;
 };

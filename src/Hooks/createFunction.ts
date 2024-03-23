@@ -1,4 +1,4 @@
-﻿import { original } from "immer";
+import { original } from "immer";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { createPortConnection } from "../Utils/createPortConnection";
 import { createNodeData } from "../Utils/createNodeData";
@@ -57,9 +57,11 @@ export function createFunction(def: NodeDefinition, state: TreeStore) {
   }
   state.editedGraph = def.id;
 }
-export function getCustomFunctionEndId(def: NodeDefinition) {
-  return `${def.id}-end`;
+export function getCustomFunctionEndId(def: NodeDefinition | string) {
+  const id = typeof def === "string" ? def : def.id;
+  return `${id}-end`;
 }
-export function getCustomFunctionStartId(def: NodeDefinition) {
-  return `${def.id}-start`;
+export function getCustomFunctionStartId(def: NodeDefinition | string) {
+  const id = typeof def === "string" ? def : def.id;
+  return `${id}-start`;
 }

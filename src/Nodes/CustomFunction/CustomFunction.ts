@@ -1,5 +1,6 @@
 import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { getCustomFunctionEndId, getCustomFunctionStartId } from "../../Hooks/createFunction";
 export const CUSTOM_FUNCTION = "CustomFunction";
 
 export const CustomFunction: NodeDefinition = {
@@ -14,7 +15,7 @@ export const CustomFunction: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    const source = context.findNodeOfType(`${nodeData.type}-end`);
+    const source = context.findNodeOfType(getCustomFunctionEndId(nodeData.type));
     if (!source) {
       return null;
     }
@@ -25,7 +26,7 @@ export const CustomFunction: NodeDefinition = {
     return result;
   },
   execute: (data, context) => {
-    const source = context.findNodeOfType(`${data.type}-start`);
+    const source = context.findNodeOfType(getCustomFunctionStartId(data.type));
     if (!source) {
       return null;
     }

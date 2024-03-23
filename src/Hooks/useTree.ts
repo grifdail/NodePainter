@@ -401,12 +401,12 @@ export const useTree = create<TreeStore>()(
               return "function";
           }
         },
-        turnIntoCustomFunction(nodesId, id) {
+        createFunctionFromNodes(selectedNodesId, id) {
           set(
             produce((_state) => {
               const state = _state as TreeStore;
               const currentGraph = state.editedGraph;
-              const selectedNodes = nodesId.map((x) => state.nodes[x]);
+              const selectedNodes = selectedNodesId.map((x) => state.nodes[x]);
               const inputs = selectedNodes.flatMap((node) => {
                 return Object.values(node.dataInputs).flatMap((port) => (port.hasConnection && !selectedNodes.some((item) => item.id === port.connectedNode) ? [{ node, port: structuredClone(current(port)), portId: port.id }] : []));
               });
@@ -417,6 +417,7 @@ export const useTree = create<TreeStore>()(
                 }
                 return Object.values(node.dataInputs).flatMap((port) => (port.hasConnection && selectedNodes.some((item) => item.id === port.connectedNode) ? [{ node, port: structuredClone(current(port)), portId: port.id }] : []));
               });
+
               const nodeDef = createNewFunctionDefinition("function");
               nodeDef.id = id;
               nodeDef.dataInputs = preparePortForFunctions(inputs);
@@ -443,12 +444,33 @@ export const useTree = create<TreeStore>()(
                 newNode.dataInputs[portId].connectedPort = port.connectedPort;
               });
               var endNode = state.nodes[getCustomFunctionEndId(nodeDef)];
+              var startNode = state.nodes[getCustomFunctionStartId(nodeDef)];
               outputs.forEach(({ node, port, portId }) => {
                 node.dataInputs[port.id].connectedNode = newNode.id;
                 node.dataInputs[port.id].connectedPort = portId;
                 endNode.dataInputs[portId].hasConnection = true;
                 endNode.dataInputs[portId].connectedNode = port.connectedNode;
                 endNode.dataInputs[portId].connectedPort = port.connectedPort;
+              });
+              Object.keys(state.nodes).forEach((nodeId) => {
+                const node = state.nodes[nodeId];
+                if (nodeId === startNode.id) {
+                  return;
+                }
+                if (selectedNodesId.includes(nodeId)) {
+                  Object.entries(node.execOutputs).forEach(([portKey, target]) => {
+                    if (target != null && !selectedNodesId.includes(target)) {
+                      node.execOutputs[portKey] = null;
+                    }
+                  });
+                } else {
+                  Object.entries(node.execOutputs).forEach(([portKey, target]) => {
+                    if (target != null && selectedNodesId.includes(target)) {
+                      startNode.execOutputs["execute"] = target;
+                      node.execOutputs[portKey] = newNode.id;
+                    }
+                  });
+                }
               });
               console.log(current(state));
             })

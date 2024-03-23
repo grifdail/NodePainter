@@ -75,7 +75,11 @@ export function GridUi() {
     useSelection.getState().toggleSetMode(null);
   };
   const createFunctionFromSelection = () => {
-    useTree.getState().turnIntoCustomFunction(selectedNodes, "test");
+    var name = window.prompt("How should the function be named ?", "MyFunction");
+    if (name !== null && useTree.getState().getNodeTypeDefinition(name) === undefined) {
+      useTree.getState().createFunctionFromNodes(selectedNodes, name);
+      useSelection.getState().toggleSetMode(false);
+    }
   };
 
   return (
