@@ -20,7 +20,7 @@ export const CustomFunction: NodeDefinition = {
     }
     context.functionStack.push(context.createFunctionContext(nodeData, context));
 
-    var result = context.getNodeOutput(source.id, portId);
+    var result = context.getInputValue(source, portId, nodeData.dataOutputs[portId].type);
     context.functionStack.pop();
     return result;
   },
