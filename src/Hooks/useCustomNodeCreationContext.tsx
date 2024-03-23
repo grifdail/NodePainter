@@ -98,7 +98,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
       useRouter.getState().open(`custom-${type}`);
     },
     openCreate(type: CustomNodeType = "function") {
-      var base: NodeDefinition = structuredClone(BaseNodeForModel[type].baseNode);
+      var base: NodeDefinition = createNewFunctionDefinition(type);
       set({
         mode: "create",
         type: type,
@@ -196,3 +196,6 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
     },
   };
 });
+export function createNewFunctionDefinition(type: CustomNodeType): NodeDefinition {
+  return structuredClone(BaseNodeForModel[type].baseNode);
+}

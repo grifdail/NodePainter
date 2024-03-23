@@ -37,6 +37,8 @@ export function GridUi() {
   const rawCustomNodes = useTree((state) => state.customNodes);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const selectionActive = useSelection((state) => state.isInSelectionMode);
+  const selectedNodes = useSelection((state) => state.nodes);
+  const hasSelection = selectionActive && selectedNodes.length > 0;
   const customFunctionNodes = [
     "main",
     ...Object.values(rawCustomNodes)
@@ -72,6 +74,9 @@ export function GridUi() {
   const toggleSelection = () => {
     useSelection.getState().toggleSetMode(null);
   };
+  const createFunctionFromSelection = () => {
+    useTree.getState().turnIntoCustomFunction(selectedNodes, "test");
+  };
 
   return (
     <FullScreenDiv>
@@ -89,14 +94,14 @@ export function GridUi() {
               <IconFunctionFilled></IconFunctionFilled>
               <span>{graph}</span>
             </button>
-          }
-        >
+          }>
           <MenuItem onClick={openEditModal} disabled={graph === "main"}>
             Edit
           </MenuItem>
           <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
           <MenuItem onClick={openCreateShaderModal}>Create New Shader</MenuItem>
           <MenuItem onClick={opencreateSimulation}>Create New Simulation</MenuItem>
+          {hasSelection && <MenuItem onClick={createFunctionFromSelection}>Create New Function from selection</MenuItem>}
           <MenuDivider></MenuDivider>
           {customFunctionNodes.map((node) => (
             <MenuItem onClick={() => setGraph(node)} key={node}>
@@ -127,8 +132,7 @@ export function GridUi() {
             <button>
               <IconMenu2></IconMenu2>
             </button>
-          }
-        >
+          }>
           <MenuItem onClick={() => openModal("about")}>About</MenuItem>
           <MenuDivider></MenuDivider>
           <MenuItem onClick={reset}>New Graph</MenuItem>

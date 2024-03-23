@@ -48,7 +48,7 @@ export function LoadModal({ close }: { close: () => void }) {
   const [rawField, setRawField] = useState("");
 
   const onValidateFile = (file: string) => {
-    const result = useTree.getState().load(JSON.parse(file));
+    const result = useTree.getState().loadTemplate(JSON.parse(file));
     if (result) {
       close();
     }

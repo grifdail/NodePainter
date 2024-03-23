@@ -29,8 +29,7 @@ export type TreeStore = {
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
-  loadTemplate: (temp: Template) => void;
-  load: (source: NodeCollection) => boolean;
+  loadTemplate: (temp: Template) => boolean;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;
   createSimulation: (def: NodeDefinition) => void;
@@ -39,4 +38,5 @@ export type TreeStore = {
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
   changeNodeType: (id: string, type: PortType) => void;
   getCustomNodeEditingType: () => CustomNodeEditingType;
+  turnIntoCustomFunction: (nodesId: string[], id: string) => boolean;
 };

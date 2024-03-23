@@ -21,13 +21,16 @@ import { NodeData } from "../Types/NodeData";
 import { TreeStore } from "../Types/TreeStore";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
+import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
+import { PortConnection } from "../Types/PortConnection";
+import { PortDefinition } from "../Types/PortDefinition";
+import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 
 export const useTree = create<TreeStore>()(
   persist(
     (set, get) => {
       return {
         nodes: createDefaultNodeConnection(),
-        shaders: [],
         customNodes: {} as { [key: string]: NodeDefinition },
         getNode(id: string) {
           return get().nodes[id];
@@ -109,7 +112,6 @@ export const useTree = create<TreeStore>()(
           }
           return [undefined, "unknown"];
         },
-
         removeDataConnection(nodeId, portId) {
           set(
             produce((state) => {
@@ -237,70 +239,13 @@ export const useTree = create<TreeStore>()(
         loadTemplate(temp) {
           set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph });
           resetCamera();
+          return true;
         },
-        load(source) {
-          try {
-            set({ nodes: source });
-            return true;
-          } catch (err) {
-            console.error("Error loading save", err);
-            return false;
-          }
-        },
+
         createFunction(def) {
           set(
             produce((state) => {
-              const start = `${def.id}-start`;
-              const end = `${def.id}-end`;
-              state.customNodes[def.id] = def;
-              const startNodeDef: NodeDefinition = {
-                IsUnique: true,
-                hideInLibrary: true,
-                description: "",
-                id: start,
-                tags: [],
-                dataInputs: [],
-                dataOutputs: structuredClone(def.dataInputs),
-                executeOutputs: def.canBeExecuted ? ["execute"] : [],
-                settings: [],
-                executeAs: "CustomFunction-start",
-                canBeExecuted: false,
-              };
-              const endNodeDef: NodeDefinition = {
-                IsUnique: true,
-                description: "",
-                hideInLibrary: true,
-                id: end,
-                tags: [],
-                dataInputs: structuredClone(def.dataOutputs),
-                dataOutputs: [],
-                executeOutputs: [],
-                settings: [],
-                executeAs: "CustomFunction-end",
-                canBeExecuted: false,
-              };
-              state.customNodes[start] = startNodeDef;
-              state.customNodes[end] = endNodeDef;
-              const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
-              const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
-              state.nodes[start] = newStartNode;
-              state.nodes[end] = newEndNode;
-              for (let nodeId in original(state.nodes)) {
-                let node = state.nodes[nodeId];
-                if (node.type === def.id) {
-                  def.dataInputs.forEach((port) => {
-                    if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
-                      node.dataInputs[port.id] = createPortConnection(port);
-                    }
-                  });
-                  def.dataOutputs.forEach((port) => {
-                    if (node.dataOutputs[port.id] === undefined || node.dataOutputs[port.id].type !== port.type) {
-                      node.dataOutputs[port.id] = createPortConnection(port);
-                    }
-                  });
-                }
-              }
-              state.editedGraph = def.id;
+              createFunction(def, state);
             })
           );
           get().enforceValidGraph();
@@ -456,6 +401,60 @@ export const useTree = create<TreeStore>()(
               return "function";
           }
         },
+        turnIntoCustomFunction(nodesId, id) {
+          set(
+            produce((_state) => {
+              const state = _state as TreeStore;
+              const currentGraph = state.editedGraph;
+              const selectedNodes = nodesId.map((x) => state.nodes[x]);
+              const inputs = selectedNodes.flatMap((node) => {
+                return Object.values(node.dataInputs).flatMap((port) => (port.hasConnection && !selectedNodes.some((item) => item.id === port.connectedNode) ? [{ node, port: structuredClone(current(port)), portId: port.id }] : []));
+              });
+              const canBeExecuted = selectedNodes.some((node) => get().getNodeTypeDefinition(node).canBeExecuted);
+              const outputs = Object.values(state.nodes).flatMap((node) => {
+                if (selectedNodes.some((item) => item.id === node.id)) {
+                  return [];
+                }
+                return Object.values(node.dataInputs).flatMap((port) => (port.hasConnection && selectedNodes.some((item) => item.id === port.connectedNode) ? [{ node, port: structuredClone(current(port)), portId: port.id }] : []));
+              });
+              const nodeDef = createNewFunctionDefinition("function");
+              nodeDef.id = id;
+              nodeDef.dataInputs = preparePortForFunctions(inputs);
+              nodeDef.dataOutputs = preparePortForFunctions(outputs);
+              nodeDef.canBeExecuted = canBeExecuted;
+
+              createFunction(nodeDef, state);
+              const newNode = createNodeData(
+                nodeDef,
+                selectedNodes.reduce((o, n) => o + n.positionX / selectedNodes.length, 0),
+                selectedNodes.reduce((o, n) => o + n.positionY / selectedNodes.length, 0),
+                null,
+                currentGraph
+              );
+              state.nodes[newNode.id] = newNode;
+              selectedNodes.forEach((item) => {
+                item.graph = id;
+              });
+              inputs.forEach(({ node, port, portId }) => {
+                node.dataInputs[port.id].connectedNode = getCustomFunctionStartId(nodeDef);
+                node.dataInputs[port.id].connectedPort = portId;
+                newNode.dataInputs[portId].hasConnection = true;
+                newNode.dataInputs[portId].connectedNode = port.connectedNode;
+                newNode.dataInputs[portId].connectedPort = port.connectedPort;
+              });
+              var endNode = state.nodes[getCustomFunctionEndId(nodeDef)];
+              outputs.forEach(({ node, port, portId }) => {
+                node.dataInputs[port.id].connectedNode = newNode.id;
+                node.dataInputs[port.id].connectedPort = portId;
+                endNode.dataInputs[portId].hasConnection = true;
+                endNode.dataInputs[portId].connectedNode = port.connectedNode;
+                endNode.dataInputs[portId].connectedPort = port.connectedPort;
+              });
+              console.log(current(state));
+            })
+          );
+          return true;
+        },
       };
     },
 
@@ -464,3 +463,17 @@ export const useTree = create<TreeStore>()(
     }
   )
 );
+function preparePortForFunctions(inputs: { node: NodeData; port: PortConnection; portId: string }[]): PortDefinition[] {
+  var dic: { [key: string]: number } = {};
+
+  return inputs.map((element) => {
+    dic[element.portId] = dic[element.portId] !== undefined ? dic[element.portId] + 1 : 0;
+    element.portId = dic[element.portId] > 0 ? `${element.port.id}_${dic[element.portId]}` : element.port.id;
+    return {
+      id: element.portId,
+      defaultValue: element.port.ownValue,
+      type: element.port.type,
+      label: element.port.label,
+    };
+  });
+}
