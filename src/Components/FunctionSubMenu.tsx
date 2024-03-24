@@ -1,12 +1,13 @@
-import { IconFunctionFilled } from "@tabler/icons-react";
+import { IconFunction, IconFunctionFilled, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
-import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
+import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { useSelection } from "../Hooks/useSelection";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { usePlayerPref } from "../Hooks/usePlayerPref";
+import { ReactElement } from "react";
 
 export function FunctionSubMenu() {
   const rawCustomNodes = useTree((state) => state.customNodes);
@@ -72,31 +73,23 @@ export function FunctionSubMenu() {
       <MenuItem onClick={openEditModal} disabled={graph === "main"}>
         Edit
       </MenuItem>
-      <MenuItem onClick={openCreateModal}>Create New Function</MenuItem>
-      <MenuItem onClick={openCreateShaderModal}>Create New Shader</MenuItem>
-      <MenuItem onClick={opencreateSimulation}>Create New Simulation</MenuItem>
+      <MenuItem onClick={openCreateModal}>
+        <IconFunction /> Create New Function
+      </MenuItem>
+      <MenuItem onClick={openCreateShaderModal}>
+        <IconPhotoScan /> Create New Shader
+      </MenuItem>
+      <MenuItem onClick={opencreateSimulation}>
+        <IconRepeat /> Create New Simulation
+      </MenuItem>
       {hasSelection && <MenuItem onClick={createFunctionFromSelection}>Create New Function from selection</MenuItem>}
+      {customFunctionNodes.length > 0 && <GraphSelector list={customFunctionNodes} setGraph={setGraph} name="Functions"></GraphSelector>}
+      {customShaderNode.length > 0 && <GraphSelector list={customShaderNode} setGraph={setGraph} name="Shaders"></GraphSelector>}
+      {customSimulationNode.length > 0 && <GraphSelector list={customSimulationNode} setGraph={setGraph} name="Simulations"></GraphSelector>}
+
       <MenuDivider></MenuDivider>
-      {customFunctionNodes.map((node) => (
-        <MenuItem onClick={() => setGraph(node)} key={node}>
-          {node}
-        </MenuItem>
-      ))}
-      <MenuDivider></MenuDivider>
-      {customShaderNode.map((node) => (
-        <MenuItem onClick={() => setGraph(node)} key={node}>
-          {node}
-        </MenuItem>
-      ))}
-      <MenuDivider></MenuDivider>
-      {customSimulationNode.map((node) => (
-        <MenuItem onClick={() => setGraph(node)} key={node}>
-          {node}
-        </MenuItem>
-      ))}
-      <MenuDivider></MenuDivider>
-      {graph !== "main" && <MenuItem onClick={() => usePlayerPref.getState().saveFunction(useTree.getState().exportCustomeFunction(graph))}>Save</MenuItem>}
-      {savedFunctions.some(([key]) => key === graph) && <MenuItem onClick={() => usePlayerPref.getState().removeFunction(graph)}>Remove</MenuItem>}
+      {graph !== "main" && <MenuItem onClick={() => usePlayerPref.getState().saveFunction(useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
+      {savedFunctions.some(([key]) => key === graph) && <MenuItem onClick={() => usePlayerPref.getState().removeFunction(graph)}>Remove function from global data</MenuItem>}
       {savedFunctions.length > 0 && (
         <SubMenu label="load">
           {savedFunctions.map(([key, data]) => (
@@ -105,5 +98,22 @@ export function FunctionSubMenu() {
         </SubMenu>
       )}
     </Menu>
+  );
+}
+
+function GraphSelector({ list, setGraph, name, icon }: { list: string[]; icon?: ReactElement; setGraph: (p: string) => void; name: string }) {
+  return (
+    <>
+      <MenuDivider></MenuDivider>
+      <MenuHeader>
+        {icon}
+        {name}
+      </MenuHeader>
+      {list.map((node) => (
+        <MenuItem onClick={() => setGraph(node)} key={node}>
+          {node}
+        </MenuItem>
+      ))}
+    </>
   );
 }
