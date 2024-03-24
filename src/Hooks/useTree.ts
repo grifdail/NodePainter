@@ -29,7 +29,7 @@ import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from
 export const useTree = create<TreeStore>()(
   persist(
     (set, get) => {
-      return {
+      const a: TreeStore = {
         nodes: createDefaultNodeConnection(),
         customNodes: {} as { [key: string]: NodeDefinition },
         getNode(id: string) {
@@ -64,7 +64,6 @@ export const useTree = create<TreeStore>()(
               let node = tree.nodes[targetId] as NodeData;
               const port = node.dataInputs[targetPort];
               // eslint-disable-next-line eqeqeq
-
               if (port !== undefined) {
                 // If were binding data port.
                 const def = tree.getNodeTypeDefinition(node);
@@ -477,7 +476,28 @@ export const useTree = create<TreeStore>()(
           );
           return true;
         },
+        exportCustomeFunction(id) {
+          var state = get();
+
+          var obj = {
+            nodes: Object.fromEntries(
+              Object.values(state.nodes)
+                .filter((node) => node.graph === id)
+                .map((item) => [item.id, structuredClone(item)])
+            ),
+            definitions: [state.customNodes[id], state.customNodes[getCustomFunctionEndId(id)], state.customNodes[getCustomFunctionStartId(id)]],
+          };
+
+          return obj;
+        },
+        loadCustomeFunction(customFunctionData) {
+          set((state) => ({
+            nodes: { ...state.nodes, ...customFunctionData.nodes },
+            customNodes: { ...state.customNodes, ...Object.fromEntries(customFunctionData.definitions.map((item) => [item.id, item])) },
+          }));
+        },
       };
+      return a;
     },
 
     {

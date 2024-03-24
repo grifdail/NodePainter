@@ -7,6 +7,7 @@ import { NodeData } from "./NodeData";
 import { PortConnection } from "./PortConnection";
 import { NodeCollection } from "./NodeCollection";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
+import { ExportedCustomFunction } from "./ExportedCustomFunction";
 
 export type TreeStore = {
   nodes: NodeCollection;
@@ -39,4 +40,6 @@ export type TreeStore = {
   changeNodeType: (id: string, type: PortType) => void;
   getCustomNodeEditingType: () => CustomNodeEditingType;
   createFunctionFromNodes: (nodesId: string[], id: string) => boolean;
+  exportCustomeFunction: (id: string) => { definitions: NodeDefinition[]; nodes: NodeCollection };
+  loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
 };

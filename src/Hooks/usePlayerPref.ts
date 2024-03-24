@@ -16,6 +16,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         nodeSorting: "featured",
         palettes: {},
         gradient: {},
+        savedFunction: {},
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
         },
@@ -63,6 +64,16 @@ export const usePlayerPref = create<PlayerPrefStore>()(
           set(
             produce((state) => {
               delete state.palette[name];
+            })
+          );
+        },
+        saveFunction(data) {
+          set((state) => ({ savedFunction: { ...state.savedFunction, [data.definitions[0].id]: data } }));
+        },
+        removeFunction(name) {
+          set(
+            produce((state) => {
+              delete state.savedFunction[name];
             })
           );
         },
