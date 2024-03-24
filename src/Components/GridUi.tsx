@@ -12,6 +12,7 @@ import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 import { useSelection } from "../Hooks/useSelection";
 import { MainMenu } from "./MainMenu";
 import { FunctionSubMenu } from "./FunctionSubMenu";
+import { Routes } from "../Types/Routes";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -41,7 +42,7 @@ export function GridUi() {
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
-        <button onClick={() => openModal("node-creation")}>
+        <button onClick={() => openModal(Routes.NodeCreation)}>
           <IconPlus></IconPlus>
         </button>
         <button onClick={() => togglePreview()}>{showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}</button>

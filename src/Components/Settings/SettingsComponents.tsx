@@ -5,12 +5,11 @@ import { NumberSetting } from "./NumberSetting";
 import { StringSetting } from "./StringSetting";
 import { PaletteSetting } from "./PaletteSetting";
 import { GradientSetting } from "./GradientSetting";
-import { NodeData } from "../../Types/NodeData";
 import { ImageUploadSetting } from "./ImageUploadSetting";
 import { EnvelopeSetting } from "./EnvelopeSetting";
 
-export type SettingComponent = (({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition; nodeData: NodeData }) => any) & {
-  getSize: (value: any, def: SettingDefinition, nodeData: NodeData) => number;
+export type SettingComponent = (({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => any) & {
+  getSize: (value: any, def: SettingDefinition) => number;
 };
 
 export const SettingComponents: { [key in SettingType]: SettingComponent } = {

@@ -3,6 +3,7 @@ import { Vector2, useGesture } from "@use-gesture/react";
 import { useViewbox } from "./useViewbox";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import { useRouter } from "./useRouter";
+import { Routes } from "../Types/Routes";
 
 export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes] {
   var viewBox = useViewbox();
@@ -16,7 +17,7 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
     },
     onDragEnd: ({ movement: [mx, my], elapsedTime }) => {
       if (elapsedTime > 1000 && mx + my < 10) {
-        useRouter.getState().open("node-creation");
+        useRouter.getState().open(Routes.NodeCreation);
       }
       viewBox.set(viewBox.x - mx * viewBox.scale, viewBox.y - my * viewBox.scale, viewBox.scale);
     },

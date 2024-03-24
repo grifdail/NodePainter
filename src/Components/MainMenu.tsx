@@ -1,10 +1,11 @@
-import { IconDeviceFloppy, IconFile, IconFocusCentered, IconGif, IconMenu2 } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconFile, IconFocusCentered, IconGif, IconInfoCircle, IconMenu2, IconSettings } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
 import { resetCamera } from "../Utils/resetCamera";
 import { SketchTemplate, Templates } from "../Data/templates";
 import { Sketch, useAllSavedSketch } from "../Hooks/db";
+import { Routes } from "../Types/Routes";
 
 export function MainMenu() {
   const openModal = useRouter((state) => state.open);
@@ -32,7 +33,13 @@ export function MainMenu() {
           <IconMenu2></IconMenu2>
         </button>
       }>
-      <MenuItem onClick={() => openModal("about")}>About</MenuItem>
+      <MenuItem onClick={() => openModal(Routes.About)}>
+        <IconInfoCircle />
+        About
+      </MenuItem>
+      <MenuItem onClick={() => openModal(Routes.Settings)}>
+        <IconSettings /> Settings
+      </MenuItem>
       <MenuDivider></MenuDivider>
       <SubMenu
         label={
@@ -52,10 +59,10 @@ export function MainMenu() {
             <IconDeviceFloppy></IconDeviceFloppy> Save & Load
           </>
         }>
-        <MenuItem onClick={() => openModal("save")}>Save to JSON</MenuItem>
+        <MenuItem onClick={() => openModal(Routes.Save)}>Save to JSON</MenuItem>
         <MenuItem onClick={() => saveCurrentSketch()}>Save</MenuItem>
         <MenuDivider></MenuDivider>
-        <MenuItem onClick={() => openModal("load")}>Load from JSON</MenuItem>
+        <MenuItem onClick={() => openModal(Routes.Load)}>Load from JSON</MenuItem>
         <MenuDivider></MenuDivider>
         {sketches?.map((sketch) => (
           <MenuItem key={sketch.name} onClick={() => loadSketch(sketch)}>
@@ -65,7 +72,7 @@ export function MainMenu() {
       </SubMenu>
 
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={() => openModal("export-gif")}>
+      <MenuItem onClick={() => openModal(Routes.ExportGif)}>
         <IconGif></IconGif> Export gif
       </MenuItem>
       <MenuDivider></MenuDivider>

@@ -9,9 +9,9 @@ export type RouterStore = {
 
 export const useRouter = create<RouterStore>()((set) => {
   return {
-    current: "default",
+    current: Routes.Default,
     close() {
-      set({ current: "default" });
+      set({ current: Routes.Default });
     },
     open(screen) {
       set({ current: screen });

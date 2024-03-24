@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
 import { PlayerPrefStore } from "../Types/PlayerPrefStore";
 import { SortingType } from "../Types/PlayerPrefStore";
+import { DefaultPalettes } from "../Data/Palettes";
 
 export const usePlayerPref = create<PlayerPrefStore>()(
   persist(
@@ -17,6 +18,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         palettes: {},
         gradient: {},
         savedFunction: {},
+        colorPreset: DefaultPalettes.Pico8,
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
         },
@@ -76,6 +78,9 @@ export const usePlayerPref = create<PlayerPrefStore>()(
               delete state.savedFunction[name];
             })
           );
+        },
+        setColorPreset(palette) {
+          set((state) => ({ colorPreset: palette }));
         },
       } as PlayerPrefStore;
     },

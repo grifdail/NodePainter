@@ -9,6 +9,7 @@ import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreat
 import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunctionCreationContextStore";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { Routes } from "../Types/Routes";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -95,7 +96,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         model: model,
         type: type,
       });
-      useRouter.getState().open(`custom-${type}`);
+      useRouter.getState().open(`custom-${type}` as Routes);
     },
     openCreate(type: CustomNodeType = "function") {
       var base: NodeDefinition = createNewFunctionDefinition(type);
@@ -104,7 +105,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         type: type,
         model: base,
       });
-      useRouter.getState().open(`custom-${type}`);
+      useRouter.getState().open(`custom-${type}` as Routes);
     },
     setId: (id: string) => {
       set(

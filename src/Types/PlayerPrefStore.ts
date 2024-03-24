@@ -18,5 +18,7 @@ export type PlayerPrefStore = {
   removeGradient: (name: string) => void;
   removePalette: (name: string) => void;
   removeFunction: (name: string) => void;
+  colorPreset: ColorPalette;
+  setColorPreset: (palette: ColorPalette) => void;
 };
 export type SortingType = "featured" | "name" | "last" | "most";

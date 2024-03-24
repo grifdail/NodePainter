@@ -3,11 +3,11 @@ import Sketch from "@uiw/react-color-sketch";
 
 import { Menu } from "@szhsin/react-menu";
 import { ColorButton } from "../StyledComponents/ColorButton";
-
-const defaultPalette = ["#000000FF", "#1D2B53FF", "#7E2553FF", "#008751FF", "#AB5236FF", "#5F574FFF", "#C2C3C7FF", "#FFF1E8FF", "#FF004DFF", "#FFA300FF", "#FFEC27FF", "#00E436FF", "#29ADFFFF", "#83769CFF", "#FF77A8FF", "#FFCCAAFF"];
+import { usePlayerPref } from "../../Hooks/usePlayerPref";
 
 export function ColorInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
   var hex = toHex(value, true);
+  const palette = usePlayerPref((state) => state.colorPreset);
 
   return (
     <Menu
@@ -16,11 +16,10 @@ export function ColorInput({ onChange, value }: { onChange: (value: any) => void
         <ColorButton color={hex} oposite={invertColor(hex, true)}>
           {hex}
         </ColorButton>
-      }
-    >
+      }>
       <Sketch
         color={hex}
-        presetColors={defaultPalette}
+        presetColors={palette.map((item) => toHex(item))}
         onChange={(color) => {
           onChange(fromHex(color.hexa));
         }}

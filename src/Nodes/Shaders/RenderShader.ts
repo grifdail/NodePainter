@@ -62,7 +62,7 @@ export const RenderShader: NodeDefinition = {
           }
           shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
         } else {
-          const data = context.getInputValueImage(node, port.id);
+          const data = context.getInputValue(node, port.id, port.type);
           shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
         }
       });
