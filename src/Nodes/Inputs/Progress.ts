@@ -13,9 +13,11 @@ export const Progress: NodeDefinition = {
   executeOutputs: [],
   settings: [{ id: "preview-duration", defaultValue: 1, type: "number", globalKey: "progress" }],
   getData: (portId, nodeData, context) => {
-    return (context.time / (nodeData.settings["preview-duration"] * 1000)) % 1;
+    var value = context.getGlobalSetting<number>("progress") || 1;
+    return (context.time / (value * 1000)) % 1;
   },
   getShaderCode(node, context) {
-    return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderValue(node.settings["preview-duration"], "number")} * 1000.0), 1.0);`;
+    var value = context.getGlobalSetting<number>("progress") || 1;
+    return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderValue(value, "number")} * 1000.0), 1.0);`;
   },
 };

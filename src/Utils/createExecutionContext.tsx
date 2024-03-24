@@ -44,6 +44,7 @@ export type ExecutionContext = {
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
   getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData | null;
+  getGlobalSetting<T>(arg0: string): T;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -107,6 +108,9 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       } else {
         return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
       }
+    },
+    getGlobalSetting<T>(arg0: string) {
+      return tree?.globalSettings[arg0] as T;
     },
     createFunctionContext(node: NodeData, context: ExecutionContext) {
       return Object.fromEntries(
