@@ -20,5 +20,7 @@ export type PlayerPrefStore = {
   removeFunction: (name: string) => void;
   colorPreset: ColorPalette;
   setColorPreset: (palette: ColorPalette) => void;
+  setSeenIntro: () => void;
+  hasSeenIntroPopup: boolean;
 };
 export type SortingType = "featured" | "name" | "last" | "most";

@@ -8,6 +8,7 @@ import { CustomNodeModal } from "./Modals/CustomNodeModal";
 import { CustomShaderModal } from "./Modals/CustomShaderModal";
 import { CustomSimulationModal } from "./Modals/CustomSimulationModal";
 import { SettingsModal } from "./Modals/SettingsModal";
+import { AboutModal } from "./Modals/AboutModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -23,7 +24,7 @@ export function Router() {
       {route === "custom-shader" && <CustomShaderModal close={close} />}
       {route === "custom-simulation" && <CustomSimulationModal close={close} />}
       {route === "settings" && <SettingsModal close={close} />}
-      {route === "about" && <SettingsModal close={close} />}
+      {route === "about" && <AboutModal close={close} />}
     </div>
   );
 }

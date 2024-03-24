@@ -24,7 +24,7 @@ export function SettingsModal({ close }: { close: () => void }) {
   const setColorPreset = usePlayerPref((state) => state.setColorPreset);
 
   return (
-    <Modal onClose={close} title="Save" icon={IconSettings}>
+    <Modal onClose={close} title="Settings" icon={IconSettings}>
       <MainDiv>
         Color preset:
         <PaletteSetting value={colorPreset} onChange={setColorPreset} def={{ id: "colorPreset", defaultValue: [], type: "palette" }}></PaletteSetting>

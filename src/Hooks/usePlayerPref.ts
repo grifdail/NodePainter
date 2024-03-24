@@ -82,6 +82,10 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         setColorPreset(palette) {
           set((state) => ({ colorPreset: palette }));
         },
+        hasSeenIntroPopup: false,
+        setSeenIntro() {
+          set((state) => ({ hasSeenIntroPopup: true }));
+        },
       } as PlayerPrefStore;
     },
     {
