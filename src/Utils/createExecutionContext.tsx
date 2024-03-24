@@ -16,6 +16,10 @@ import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData } from "../Types/MaterialData";
 import { NodeDefinition, isMaterialNode } from "../Types/NodeDefinition";
 
+export type FunctionContext = {
+  [key: string]: { type: PortType; value: any };
+};
+
 export type ExecutionContext = {
   deltaTime: number;
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
@@ -23,8 +27,8 @@ export type ExecutionContext = {
   findNodeOfType(type: string): NodeData | null;
   getNodeDefinition: (type: string) => NodeDefinition | undefined;
   applyMaterial: (material: MaterialData, isStrokeOnly?: boolean) => void;
-  createFunctionContext(node: NodeData, context: ExecutionContext): { [key: string]: any };
-  functionStack: Array<{ [key: string]: any }>;
+  createFunctionContext(node: NodeData): FunctionContext;
+  functionStack: Array<FunctionContext>;
   time: number;
   target: Graphics;
   blackboard: { [key: string]: any };
@@ -112,10 +116,11 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getGlobalSetting<T>(arg0: string) {
       return tree?.globalSettings[arg0] as T;
     },
-    createFunctionContext(node: NodeData, context: ExecutionContext) {
+    createFunctionContext(node: NodeData) {
       return Object.fromEntries(
         Object.keys(node.dataInputs).map((key) => {
-          return [key, context.getInputValue(node, key, node.dataInputs[key].type)];
+          const type = node.dataInputs[key].type;
+          return [key, { type, value: context.getInputValue(node, key, type) }];
         })
       );
     },

@@ -14,7 +14,7 @@ export const CustomFunctionStart: NodeDefinition = {
   settings: [],
   getData: (portId, nodeData, context) => {
     var contextFn = context.functionStack[context.functionStack.length - 1];
-    return contextFn[portId];
+    return contextFn[portId].value;
   },
   execute: (data, context) => {
     if (data.execOutputs.execute) {
