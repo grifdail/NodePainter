@@ -68,8 +68,7 @@ export const ImageUploadSetting: SettingComponent = function PaletteSetting({ on
             <MenuButton className={"icon"}>
               <IconMenu2></IconMenu2>
             </MenuButton>
-          }
-        ></Menu>
+          }></Menu>
       </ButtonGroup>
     </Body>
   );

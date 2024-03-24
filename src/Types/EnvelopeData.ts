@@ -1,6 +1,6 @@
-import { createColor } from "./vectorDataType";
 import { clamp01, map } from "../Utils/colorUtils";
 import { VectorLerp } from "../Utils/vectorUtils";
+import { createColor } from "./vectorDataType";
 
 export enum EnvelopeEasingType {
   Linear = "linear",

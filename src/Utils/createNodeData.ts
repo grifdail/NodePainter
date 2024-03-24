@@ -1,10 +1,10 @@
 import { nanoid } from "nanoid";
+import { NodeData } from "../Types/NodeData";
 import { NodeDefinition } from "../Types/NodeDefinition";
+import { createDataOutputData } from "./createDataOutputData";
+import { createExecOutputData } from "./createExecOutputData";
 import { createPortConnectionsForInputsDefinition } from "./createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
-import { createExecOutputData } from "./createExecOutputData";
-import { createDataOutputData } from "./createDataOutputData";
-import { NodeData } from "../Types/NodeData";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
   return {

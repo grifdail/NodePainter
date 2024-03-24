@@ -115,8 +115,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
             <MenuButton className={"icon"}>
               <IconMenu2></IconMenu2>
             </MenuButton>
-          }
-        >
+          }>
           <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
           <MenuDivider></MenuDivider>
           <SubMenu label="Create from a default palette" overflow="auto">

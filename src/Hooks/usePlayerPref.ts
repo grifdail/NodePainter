@@ -1,11 +1,10 @@
-import { create } from "zustand";
 import { produce } from "immer";
+import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
-import { ColorPalette, Gradient } from "../Types/vectorDataType";
-import { PlayerPrefStore } from "../Types/PlayerPrefStore";
-import { SortingType } from "../Types/PlayerPrefStore";
 import { DefaultPalettes } from "../Data/Palettes";
+import { PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
+import { ColorPalette, Gradient } from "../Types/vectorDataType";
 
 export const usePlayerPref = create<PlayerPrefStore>()(
   persist(

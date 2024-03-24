@@ -1,13 +1,13 @@
-import { NodeDefinition } from "./NodeDefinition";
-import { PortDefinition } from "./PortDefinition";
-import { PortType } from "./PortType";
-import { ExecutionContext } from "../Utils/createExecutionContext";
 import { SketchTemplate } from "../Data/templates";
-import { NodeData } from "./NodeData";
-import { PortConnection } from "./PortConnection";
-import { NodeCollection } from "./NodeCollection";
+import { ExecutionContext } from "../Utils/createExecutionContext";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { ExportedCustomFunction } from "./ExportedCustomFunction";
+import { NodeCollection } from "./NodeCollection";
+import { NodeData } from "./NodeData";
+import { NodeDefinition } from "./NodeDefinition";
+import { PortConnection } from "./PortConnection";
+import { PortDefinition } from "./PortDefinition";
+import { PortType } from "./PortType";
 
 export type TreeStore = {
   nodes: NodeCollection;

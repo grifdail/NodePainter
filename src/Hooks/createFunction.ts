@@ -1,8 +1,8 @@
 import { original } from "immer";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { createPortConnection } from "../Utils/createPortConnection";
-import { createNodeData } from "../Utils/createNodeData";
 import { TreeStore } from "../Types/TreeStore";
+import { createNodeData } from "../Utils/createNodeData";
+import { createPortConnection } from "../Utils/createPortConnection";
 
 export function createFunction(def: NodeDefinition, state: TreeStore) {
   const start = getCustomFunctionStartId(def);

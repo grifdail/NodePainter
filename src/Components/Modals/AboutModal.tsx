@@ -1,8 +1,6 @@
-﻿import { Modal } from "../Modal";
+import { IconInfoCircle } from "@tabler/icons-react";
 import styled from "styled-components";
-import { IconInfoCircle, IconSettings } from "@tabler/icons-react";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { PaletteSetting } from "../Settings/PaletteSetting";
+import { Modal } from "../Modal";
 
 const MainDiv = styled.div`
   & img {

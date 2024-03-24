@@ -1,0 +1,9 @@
+{
+    "emeraldwalk.runonsave": {},
+    "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    }
+}

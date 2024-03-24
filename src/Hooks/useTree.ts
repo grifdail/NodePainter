@@ -1,31 +1,31 @@
-import { create } from "zustand";
 import { current, original, produce } from "immer";
+import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { persist } from "zustand/middleware";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { NodeLibrary } from "../Nodes/Nodes";
-import { createPortConnection } from "../Utils/createPortConnection";
-import { resetCamera } from "../Utils/resetCamera";
-import { ExecutionContext } from "../Utils/createExecutionContext";
-import { createColor, createVector2 } from "../Types/vectorDataType";
-import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
-import { createPortConnectionsForInputsDefinition } from "../Utils/createPortConnectionsForInputsDefinition";
-import { createSettingObjectForSettingDefinition } from "../Utils/createSettingObjectForSettingDefinition";
-import { createExecOutputData } from "../Utils/createExecOutputData";
-import { createDataOutputData } from "../Utils/createDataOutputData";
-import { createNodeData } from "../Utils/createNodeData";
-import { ensureValidGraph } from "../Utils/ensureValidGraph";
-import { NodeData } from "../Types/NodeData";
-import { TreeStore } from "../Types/TreeStore";
-import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
-import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
+import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { NodeLibrary } from "../Nodes/Nodes";
+import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
+import { START_NODE } from "../Nodes/System/StartNode";
+import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
+import { TreeStore } from "../Types/TreeStore";
+import { createColor, createVector2 } from "../Types/vectorDataType";
+import { createDataOutputData } from "../Utils/createDataOutputData";
+import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
+import { createExecOutputData } from "../Utils/createExecOutputData";
+import { ExecutionContext } from "../Utils/createExecutionContext";
+import { createNodeData } from "../Utils/createNodeData";
+import { createPortConnection } from "../Utils/createPortConnection";
+import { createPortConnectionsForInputsDefinition } from "../Utils/createPortConnectionsForInputsDefinition";
+import { createSettingObjectForSettingDefinition } from "../Utils/createSettingObjectForSettingDefinition";
+import { ensureValidGraph } from "../Utils/ensureValidGraph";
+import { resetCamera } from "../Utils/resetCamera";
 import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
-import { START_NODE } from "../Nodes/System/StartNode";
+import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 
 export const useTree = create<TreeStore>()(
   persist(

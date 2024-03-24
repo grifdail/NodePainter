@@ -1,10 +1,10 @@
-import { PortRole } from "../Types/PortRole";
-import { createDefaultValue } from "./createDefaultValue";
-import { PortDefinition } from "../Types/PortDefinition";
+import { original } from "immer";
 import { useTree } from "../Hooks/useTree";
 import { NodeData } from "../Types/NodeData";
+import { PortDefinition } from "../Types/PortDefinition";
+import { PortRole } from "../Types/PortRole";
 import { canConvert } from "./convertTypeValue";
-import { original } from "immer";
+import { createDefaultValue } from "./createDefaultValue";
 
 export const dynamicNodeType = {
   bindPort(portId: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) {
