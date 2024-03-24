@@ -124,12 +124,13 @@ function download(blob: Blob, filename: string = "data.json") {
 
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
   const [fixedFrameRate, setFixedFrameRate] = useState(32);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
   const [isGif, setIsGif] = useState(true);
+  const name = tree.getSketchName();
 
   const start = tree.getNode(START_NODE);
 
@@ -139,7 +140,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
       setRenderState("processing");
     }
   };
-  const filename = isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`;
+  const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
 
   return (
     <Modal onClose={close} title="Export a gif" icon={IconGif}>

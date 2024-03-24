@@ -3,7 +3,7 @@ import { NumberInput } from "./NumberInput";
 import styled from "styled-components";
 import { SettingDefinition } from "../../Types/SettingDefinition";
 
-const FieldSet = styled.fieldset`
+export const FieldSet = styled.fieldset`
   background: none;
   border: none;
 `;

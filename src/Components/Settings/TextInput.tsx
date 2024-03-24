@@ -4,7 +4,7 @@ export function TextInput({ onChange, value, disabled = false }: { onChange: (va
   var [rawField, setRawField] = useState(value);
 
   useEffect(() => {
-    setRawField(value.toString());
+    setRawField(value && value.toString());
   }, [value]);
 
   const onBlur = (newValue: string) => {

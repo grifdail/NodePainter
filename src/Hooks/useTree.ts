@@ -25,6 +25,7 @@ import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
 import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
+import { START_NODE } from "../Nodes/System/StartNode";
 
 export const useTree = create<TreeStore>()(
   persist(
@@ -32,6 +33,7 @@ export const useTree = create<TreeStore>()(
       const a: TreeStore = {
         nodes: createDefaultNodeConnection(),
         customNodes: {} as { [key: string]: NodeDefinition },
+        globalSettings: {},
         getNode(id: string) {
           return get().nodes[id];
         },
@@ -41,7 +43,9 @@ export const useTree = create<TreeStore>()(
         getOutputPort(id: string, portId: string) {
           return get().nodes[id].dataOutputs[portId];
         },
-
+        getSketchName() {
+          return get().nodes[START_NODE].settings["name"] as string;
+        },
         addNode(nodeType: string, posX: number, posY: number) {
           const newNodeData = createNodeData(get().getNodeTypeDefinition(nodeType), posX, posY);
           newNodeData.graph = get().editedGraph;
@@ -152,6 +156,9 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
+        setGlobalSetting(settingId, newValue) {
+          set((state) => ({ globalSettings: { ...state.globalSettings, [settingId]: newValue } }));
+        },
         executeCallback(nodeId, fn) {
           set(
             produce((state) => {
@@ -168,6 +175,7 @@ export const useTree = create<TreeStore>()(
               clone.dataOutputs = structuredClone(current(sourceNode.dataOutputs));
               clone.execOutputs = structuredClone(current(sourceNode.execOutputs));
               clone.settings = structuredClone(current(sourceNode.settings));
+              clone.selectedType = sourceNode.selectedType;
               clone.graph = sourceNode.graph;
               state.nodes[clone.id] = clone;
             })

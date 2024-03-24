@@ -13,6 +13,7 @@ export type TreeStore = {
   nodes: NodeCollection;
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
+  globalSettings: { [key: string]: any };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
   getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
   getNode: (id: string) => NodeData;
@@ -26,6 +27,7 @@ export type TreeStore = {
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
   setNodeSetting: (node: string, settingId: string, newValue: any) => void;
+  setGlobalSetting: (settingId: string, newValue: any) => void;
   resetNode: (node: string) => void;
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
@@ -42,4 +44,5 @@ export type TreeStore = {
   createFunctionFromNodes: (nodesId: string[], id: string) => boolean;
   exportCustomeFunction: (id: string) => { definitions: NodeDefinition[]; nodes: NodeCollection };
   loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
+  getSketchName: () => string;
 };

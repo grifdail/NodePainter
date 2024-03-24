@@ -2,6 +2,7 @@ import { SettingType } from "../../Types/SettingType";
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
+import { StringSetting } from "./StringSetting";
 import { PaletteSetting } from "./PaletteSetting";
 import { GradientSetting } from "./GradientSetting";
 import { NodeData } from "../../Types/NodeData";
@@ -16,6 +17,7 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   dropdown: DropdownSetting,
   palette: PaletteSetting,
   number: NumberSetting,
+  string: StringSetting,
   gradient: GradientSetting,
   "image-upload": ImageUploadSetting,
   envelope: EnvelopeSetting,

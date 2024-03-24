@@ -12,10 +12,11 @@ export const StartNode: NodeDefinition = {
   dataOutputs: [],
   executeOutputs: ["execute"],
   settings: [
+    { id: "name", type: "string", defaultValue: "sketch" },
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
   ],
-  canBeExecuted: true,
+  canBeExecuted: false,
   execute: (data, context) => {
     if (data.execOutputs.execute) {
       context.execute(data.execOutputs.execute);

@@ -11,7 +11,7 @@ export const Progress: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "progress", type: "number", defaultValue: 0 }],
   executeOutputs: [],
-  settings: [{ id: "preview-duration", defaultValue: 1, type: "number" }],
+  settings: [{ id: "preview-duration", defaultValue: 1, type: "number", globalKey: "progress" }],
   getData: (portId, nodeData, context) => {
     return (context.time / (nodeData.settings["preview-duration"] * 1000)) % 1;
   },

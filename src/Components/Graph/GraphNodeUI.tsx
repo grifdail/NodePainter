@@ -51,6 +51,7 @@ export type GraphNodeProps = {
 export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
   const viewPortScale = useViewbox((state) => state.scale);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
+  const globalSettings = useTree((state) => state.globalSettings);
   const inputCount = Object.keys(node.dataInputs).length;
   const executeOutputCount = Object.keys(node.execOutputs).length;
   const dataOutputCount = Object.keys(node.dataOutputs).length;
@@ -78,6 +79,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
   var setNodeSetting = useTree((state) => state.setNodeSetting);
+  var setGlobvalSetting = useTree((state) => state.setGlobalSetting);
 
   var Icon = definition.icon;
 
@@ -123,8 +125,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           style={{
             touchAction: "none",
           }}
-          onClick={onTap}
-        >
+          onClick={onTap}>
           {definition.label || definition.id}
         </text>
         {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
@@ -140,7 +141,11 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
         })}
         {definition.settings.map((item, i) => {
-          var n = <SettingControl y={settingOffset} value={node.settings[item.id]} onChange={(value) => setNodeSetting(node.id, item.id, value)} def={item} key={i} nodeData={node} />;
+          const isGlobal = item.globalKey !== undefined;
+
+          const value = isGlobal ? (globalSettings[item.globalKey as string] === undefined ? item.defaultValue : globalSettings[item.globalKey as string]) : node.settings[item.id];
+          const changeMethod = isGlobal ? (value: any) => setGlobvalSetting(item.globalKey as string, value) : (value: any) => setNodeSetting(node.id, item.id, value);
+          var n = <SettingControl y={settingOffset} value={value} onChange={changeMethod} def={item} key={i} nodeData={node} />;
           settingOffset += getSettingHeight(node.settings[item.id], item, node);
           return n;
         })}
