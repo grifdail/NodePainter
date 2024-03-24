@@ -3,7 +3,10 @@
     "editor.formatOnSave": true,
     "[typescript]": {
         "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
+            
+    "source.fixAll": "explicit",
+            "source.organizeImports": "explicit",
+            "typescript.removeUnusedImports":"explicit",
         }
     }
 }
