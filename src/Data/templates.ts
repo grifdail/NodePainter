@@ -5,6 +5,7 @@ export type Template = {
   nodes: NodeCollection;
   customNodes: { [key: string]: NodeDefinition };
   editedGraph?: string;
+  globalSettings?: { [key: string]: any };
 };
 
 export const ShaderTemplate: Template = {

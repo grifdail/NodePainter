@@ -240,11 +240,11 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined });
+          set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined, globalSettings: {} });
           resetCamera();
         },
         loadTemplate(temp) {
-          set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph });
+          set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {} });
           resetCamera();
           return true;
         },
