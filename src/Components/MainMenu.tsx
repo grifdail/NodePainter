@@ -1,14 +1,28 @@
-import { IconMenu2 } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconFile, IconFocusCentered, IconGif, IconMenu2 } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
-import { Menu, MenuDivider, MenuItem } from "@szhsin/react-menu";
+import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
 import { resetCamera } from "../Utils/resetCamera";
-import { Templates } from "../Data/templates";
+import { SketchTemplate, Templates } from "../Data/templates";
+import { Sketch, useAllSavedSketch } from "../Hooks/db";
 
 export function MainMenu() {
   const openModal = useRouter((state) => state.open);
   const reset = useTree((state) => state.reset);
   const loadTemplate = useTree((state) => state.loadTemplate);
+  const [sketches, saveSketch] = useAllSavedSketch();
+
+  function loadSketch(sketch: Sketch): void {
+    var template: SketchTemplate = JSON.parse(sketch.content);
+    useTree.getState().loadTemplate(template);
+  }
+
+  function saveCurrentSketch() {
+    var tree = useTree.getState();
+    const name = tree.getSketchName();
+    const content = tree.exportTemplate();
+    saveSketch(name, content);
+  }
 
   return (
     <Menu
@@ -20,17 +34,44 @@ export function MainMenu() {
       }>
       <MenuItem onClick={() => openModal("about")}>About</MenuItem>
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={reset}>New Graph</MenuItem>
-      <MenuItem onClick={() => openModal("save")}>Save</MenuItem>
-      <MenuItem onClick={() => openModal("load")}>Load</MenuItem>
+      <SubMenu
+        label={
+          <>
+            <IconFile></IconFile> New
+          </>
+        }>
+        <MenuItem onClick={reset}>Default</MenuItem>
+        {Object.entries(Templates).map(([key, value]) => (
+          <MenuItem onClick={() => loadTemplate(value)}>Template {key}</MenuItem>
+        ))}
+      </SubMenu>
+
+      <SubMenu
+        label={
+          <>
+            <IconDeviceFloppy></IconDeviceFloppy> Save & Load
+          </>
+        }>
+        <MenuItem onClick={() => openModal("save")}>Save to JSON</MenuItem>
+        <MenuItem onClick={() => saveCurrentSketch()}>Save</MenuItem>
+        <MenuDivider></MenuDivider>
+        <MenuItem onClick={() => openModal("load")}>Load from JSON</MenuItem>
+        <MenuDivider></MenuDivider>
+        {sketches?.map((sketch) => (
+          <MenuItem key={sketch.name} onClick={() => loadSketch(sketch)}>
+            {sketch.name}
+          </MenuItem>
+        ))}
+      </SubMenu>
+
       <MenuDivider></MenuDivider>
-      {Object.entries(Templates).map(([key, value]) => (
-        <MenuItem onClick={() => loadTemplate(value)}>New from template {key}</MenuItem>
-      ))}
+      <MenuItem onClick={() => openModal("export-gif")}>
+        <IconGif></IconGif> Export gif
+      </MenuItem>
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={() => openModal("export-gif")}>Export gif</MenuItem>
-      <MenuDivider></MenuDivider>
-      <MenuItem onClick={resetCamera}>Reset camera</MenuItem>
+      <MenuItem onClick={resetCamera}>
+        <IconFocusCentered></IconFocusCentered> Reset camera
+      </MenuItem>
     </Menu>
   );
 }

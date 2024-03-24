@@ -2,7 +2,7 @@ import { NodeDefinition } from "./NodeDefinition";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 import { ExecutionContext } from "../Utils/createExecutionContext";
-import { Template } from "../Data/templates";
+import { SketchTemplate } from "../Data/templates";
 import { NodeData } from "./NodeData";
 import { PortConnection } from "./PortConnection";
 import { NodeCollection } from "./NodeCollection";
@@ -32,7 +32,8 @@ export type TreeStore = {
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
-  loadTemplate: (temp: Template) => boolean;
+  loadTemplate: (temp: SketchTemplate) => boolean;
+  exportTemplate: () => SketchTemplate;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;
   createSimulation: (def: NodeDefinition) => void;

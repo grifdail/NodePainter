@@ -1,14 +1,14 @@
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { NodeCollection } from "../Types/NodeCollection";
 
-export type Template = {
+export type SketchTemplate = {
   nodes: NodeCollection;
   customNodes: { [key: string]: NodeDefinition };
   editedGraph?: string;
   globalSettings?: { [key: string]: any };
 };
 
-export const ShaderTemplate: Template = {
+export const ShaderTemplate: SketchTemplate = {
   nodes: {
     Start: {
       type: "Start",
@@ -120,7 +120,7 @@ export const ShaderTemplate: Template = {
   editedGraph: "MainShader",
 };
 
-export const ThreeDTemplate: Template = {
+export const ThreeDTemplate: SketchTemplate = {
   nodes: {
     Start: {
       type: "Start",

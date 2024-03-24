@@ -248,7 +248,10 @@ export const useTree = create<TreeStore>()(
           resetCamera();
           return true;
         },
-
+        exportTemplate() {
+          var t = get();
+          return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined });
+        },
         createFunction(def) {
           set(
             produce((state) => {

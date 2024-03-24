@@ -21,6 +21,8 @@
     "@uiw/react-color-sketch": "^2.0.3",
     "@use-gesture/react": "^10.3.0",
     "change-case": "^5.3.0",
+    "dexie": "^3.2.7",
+    "dexie-react-hooks": "^1.1.7",
     "gif.js.optimized": "^1.0.1",
     "immer": "^10.0.3",
     "mathjs": "^12.1.0",
