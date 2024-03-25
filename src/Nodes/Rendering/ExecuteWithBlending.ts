@@ -7,7 +7,7 @@ export const ExecuteWithBlending: NodeDefinition = {
   label: "Render With Blending",
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,
-  tags: ["Transform", "Rendering"],
+  tags: ["Transform"],
   dataInputs: [],
   dataOutputs: [],
   executeOutputs: ["execute"],
