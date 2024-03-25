@@ -1,4 +1,4 @@
-![NodePainter logo](./doc/logo.gif "the animated banner")
+![NodePainter logo](./doc/banner.gif "the animated banner")
 
 # NodePainter
 
