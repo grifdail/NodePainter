@@ -52,6 +52,7 @@ type MySketchProps = SketchProps & {
   duration: number;
   fixedFrameRate: number;
   isGif: boolean;
+  preloadDuration: number;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
@@ -90,15 +91,17 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
     context.time = time;
     context.deltaTime = frameRate;
-    var progress = time / (ownProps.duration * 1000);
+    var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
     context.p5.randomSeed(seed);
     context.frameBlackboard = {};
     context.execute(START_NODE);
     if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
     } else if (!ended) {
       time += frameRate;
-
-      renderer?.addFrame(p5.drawingContext);
+      console.log(time - ownProps.preloadDuration * 1000 >= 0);
+      if (time - ownProps.preloadDuration * 1000 >= 0) {
+        renderer?.addFrame(p5.drawingContext);
+      }
 
       ownProps.onProgress(progress, 0);
 
@@ -122,6 +125,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
   const [duration, setDuration] = useState(1);
   const [fixedFrameRate, setFixedFrameRate] = useState(32);
+  const [preloadDuration, setPreloadDuration] = useState(0);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
@@ -149,6 +153,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
           <NumberInput value={fixedFrameRate} onChange={setFixedFrameRate} />
         </fieldset>
         <fieldset>
+          <label>Preload</label>
+          <NumberInput value={preloadDuration} onChange={setPreloadDuration} />
+        </fieldset>
+        <fieldset>
           <label>Output as a gif ?</label>
           <BoolInput value={isGif} onChange={setIsGif} />
         </fieldset>
@@ -169,6 +177,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
             tree={tree}
             duration={duration}
             fixedFrameRate={fixedFrameRate}
+            preloadDuration={preloadDuration}
             isGif={isGif}
             onFinished={(blob: Blob) => {
               setRenderState("waiting");
