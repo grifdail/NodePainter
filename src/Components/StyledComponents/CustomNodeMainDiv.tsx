@@ -17,6 +17,7 @@ export const CustomNodeMainDiv = styled.div`
     flex-direction: column;
     gap: 2px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    max-width: 100%;
 
     &.header {
       flex-direction: row;
@@ -25,6 +26,10 @@ export const CustomNodeMainDiv = styled.div`
 
       & fieldset {
         flex: 1 1 100%;
+
+        & input {
+          width: 0;
+        }
       }
     }
 
@@ -32,22 +37,38 @@ export const CustomNodeMainDiv = styled.div`
       border: none;
       display: flex;
       flex-direction: row;
+      max-width: 100%;
 
       align-items: center;
       & label {
         flex: 1 1 0;
       }
+      &.invalid {
+        border: 1px solid red;
+      }
+      & input {
+        flex: 1 1 0;
+      }
     }
 
     & > div.port-field {
-      display: flex;
+      display: grid;
       flex-direction: row;
       height: 50px;
-      gap: 10px;
+      gap: 5px;
+      grid-template-columns: 1fr 1fr 1fr 30px;
+      align-content: stretch;
+
+      & input {
+        min-width: 25px;
+        width: 0;
+      }
 
       & button.remove {
         border: none;
         background: none;
+        margin-left: 0;
+        padding: 0;
       }
 
       & > div {
@@ -70,10 +91,21 @@ export const CustomNodeMainDiv = styled.div`
           flex-direction: column;
           margin: 0;
           padding: 0;
+          width: 0;
           & input[type="checkbox"] {
             justify-self: stretch;
             align-items: stretch;
             flex: 1 1 10px;
+          }
+
+          &.vector-input {
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: stretch;
+            align-content: stretch;
+            & > input {
+              flex: 1 1 0;
+            }
           }
         }
         &.default-value > button {

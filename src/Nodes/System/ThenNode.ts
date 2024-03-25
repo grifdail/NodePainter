@@ -5,6 +5,7 @@ export const ThenNode: NodeDefinition = {
   id: "Then",
   description: "Execute multiple instruction",
   icon: IconAssembly,
+  featureLevel: 50,
   tags: ["Control"],
   dataInputs: [],
   dataOutputs: [],

@@ -9,6 +9,7 @@ import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreat
 import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunctionCreationContextStore";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { Routes } from "../Types/Routes";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -95,16 +96,16 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         model: model,
         type: type,
       });
-      useRouter.getState().open(`custom-${type}`);
+      useRouter.getState().open(`custom-${type}` as Routes);
     },
     openCreate(type: CustomNodeType = "function") {
-      var base: NodeDefinition = structuredClone(BaseNodeForModel[type].baseNode);
+      var base: NodeDefinition = createNewFunctionDefinition(type);
       set({
         mode: "create",
         type: type,
         model: base,
       });
-      useRouter.getState().open(`custom-${type}`);
+      useRouter.getState().open(`custom-${type}` as Routes);
     },
     setId: (id: string) => {
       set(
@@ -183,5 +184,19 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         })
       );
     },
+    isNameValid() {
+      var id = get().model?.id;
+      if (!id) {
+        return false;
+      }
+      if (get().mode === "create") {
+        return useTree.getState().getNodeTypeDefinition(id) === undefined;
+      } else {
+        return true;
+      }
+    },
   };
 });
+export function createNewFunctionDefinition(type: CustomNodeType): NodeDefinition {
+  return structuredClone(BaseNodeForModel[type].baseNode);
+}

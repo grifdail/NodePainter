@@ -1,10 +1,10 @@
-import { create } from "zustand";
 import { produce } from "immer";
+import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
+import { DefaultPalettes } from "../Data/Palettes";
+import { PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
-import { PlayerPrefStore } from "../Types/PlayerPrefStore";
-import { SortingType } from "../Types/PlayerPrefStore";
 
 export const usePlayerPref = create<PlayerPrefStore>()(
   persist(
@@ -13,9 +13,11 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         favNodes: [],
         nodesLastUsedDates: {},
         nodesUseCount: {},
-        nodeSorting: "name",
+        nodeSorting: "featured",
         palettes: {},
         gradient: {},
+        savedFunction: {},
+        colorPreset: DefaultPalettes.Pico8,
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
         },
@@ -65,6 +67,23 @@ export const usePlayerPref = create<PlayerPrefStore>()(
               delete state.palette[name];
             })
           );
+        },
+        saveFunction(data) {
+          set((state) => ({ savedFunction: { ...state.savedFunction, [data.definitions[0].id]: data } }));
+        },
+        removeFunction(name) {
+          set(
+            produce((state) => {
+              delete state.savedFunction[name];
+            })
+          );
+        },
+        setColorPreset(palette) {
+          set((state) => ({ colorPreset: palette }));
+        },
+        hasSeenIntroPopup: false,
+        setSeenIntro() {
+          set((state) => ({ hasSeenIntroPopup: true }));
         },
       } as PlayerPrefStore;
     },

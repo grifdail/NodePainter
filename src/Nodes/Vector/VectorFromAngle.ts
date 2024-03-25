@@ -13,6 +13,7 @@ export const VectorFromAngle: NodeDefinition = {
   id: "VectorFromAngle",
   description: "Create a vector based on an Angle and a magnitude",
   icon: IconArrowUpRightCircle,
+  featureLevel: 4,
   tags: ["Vector"],
   dataInputs: [
     {

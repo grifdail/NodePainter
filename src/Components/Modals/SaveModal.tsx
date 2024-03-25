@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { SketchTemplate } from "../../Data/templates";
 
 const MainDiv = styled.div`
   display: flex;
@@ -30,9 +31,9 @@ function download(data: string, filename: string = "data.json") {
 }
 
 export function SaveModal({ close }: { close: () => void }) {
-  const nodes = useTree((state) => state.nodes);
   const [shortJson, toggleShotJson] = useToggle(false);
-  const json = JSON.stringify(nodes, null, shortJson ? undefined : 4);
+  var saveTemplate: SketchTemplate = useTree((state) => state.exportTemplate)();
+  const json = JSON.stringify(saveTemplate, null, shortJson ? undefined : 4);
   const [lastValue, clip] = useCopyToClipboard();
 
   return (

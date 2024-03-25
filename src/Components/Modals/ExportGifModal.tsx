@@ -43,6 +43,10 @@ const MainDiv = styled.div`
     border: none;
     background: rgba(0, 0, 0, 0.2);
   }
+
+  & .rendering {
+    text-align: center;
+  }
 `;
 
 type MySketchProps = SketchProps & {
@@ -123,13 +127,14 @@ function download(blob: Blob, filename: string = "data.json") {
 
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
   const [fixedFrameRate, setFixedFrameRate] = useState(32);
   const [preloadDuration, setPreloadDuration] = useState(0);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
   const [isGif, setIsGif] = useState(true);
+  const name = tree.getSketchName();
 
   const start = tree.getNode(START_NODE);
 
@@ -139,7 +144,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
       setRenderState("processing");
     }
   };
-  const filename = isGif ? `nodepainter-vid-${Date.now()}.gif` : `nodepainter-vid-${Date.now()}.webm`;
+  const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
 
   return (
     <Modal onClose={close} title="Export a gif" icon={IconGif}>
@@ -161,6 +166,26 @@ export function ExportGifModal({ close }: { close: () => void }) {
           <BoolInput value={isGif} onChange={setIsGif} />
         </fieldset>
         <hr></hr>
+        <div className="rendering">
+          {renderState === "rendering" && (
+            <ReactP5Wrapper
+              key={`${start.settings.width} / ${start.settings.height}`}
+              sketch={sketch}
+              tree={tree}
+              duration={duration}
+              fixedFrameRate={fixedFrameRate}
+              isGif={isGif}
+              preloadDuration={preloadDuration}
+              onFinished={(blob: Blob) => {
+                setRenderState("waiting");
+                setProgress(100);
+                setBlob(blob);
+                download(blob as Blob, filename);
+              }}
+              onProgress={onProgress}
+            />
+          )}
+        </div>
         <progress value={progress} max="100" />
         <ButtonGroup>
           {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
@@ -169,26 +194,6 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
         </ButtonGroup>
       </MainDiv>
-      <div>
-        {renderState === "rendering" && (
-          <ReactP5Wrapper
-            key={`${start.settings.width} / ${start.settings.height}`}
-            sketch={sketch}
-            tree={tree}
-            duration={duration}
-            fixedFrameRate={fixedFrameRate}
-            preloadDuration={preloadDuration}
-            isGif={isGif}
-            onFinished={(blob: Blob) => {
-              setRenderState("waiting");
-              setProgress(100);
-              setBlob(blob);
-              download(blob as Blob, filename);
-            }}
-            onProgress={onProgress}
-          />
-        )}
-      </div>
     </Modal>
   );
 }

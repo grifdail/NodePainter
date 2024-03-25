@@ -10,6 +10,7 @@ export const Scale: NodeDefinition = {
   id: "Scale",
   description: "Scale a value by a scalar",
   icon: IconMathXy,
+  featureLevel: 80,
   tags: ["Math", "Vector"],
   dataInputs: [
     {

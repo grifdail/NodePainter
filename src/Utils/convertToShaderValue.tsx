@@ -74,7 +74,7 @@ export function convertToUniform(type: PortType, value: any): any {
     case "bool":
       return value;
     case "color":
-      return [value.r, value.g, value.b, value.a];
+      return value;
     case "execute":
       return "";
     case "gradient":
@@ -84,9 +84,17 @@ export function convertToUniform(type: PortType, value: any): any {
     case "string":
       return "";
     case "vector2":
-      return [value.x, value.y, 0, 0];
+      return value;
     case "number":
       return value;
+    case "vector":
+      return value;
+    case "vector3":
+      return value;
+    case "vector4":
+      return value;
+    case "material":
+    case "unknown":
     default:
       return "";
   }

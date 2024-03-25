@@ -6,6 +6,7 @@ export const ExecuteWithRotation: NodeDefinition = {
   id: "WithRotation",
   label: "Render with rotation",
   description: "Execute the next instruction as if the canvas was rotated",
+  featureLevel: 4,
   icon: IconRotate,
   tags: ["Transform"],
   dataInputs: [{ id: "angle", type: "number", defaultValue: 0 }],

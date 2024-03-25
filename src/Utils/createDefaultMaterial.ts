@@ -1,5 +1,5 @@
-import { Color, createColor } from "../Types/vectorDataType";
 import { MaterialData } from "../Types/MaterialData";
+import { Color, createColor } from "../Types/vectorDataType";
 
 export function createDefaultMaterial(color?: Color): MaterialData {
   return {

@@ -1,17 +1,19 @@
+import { SketchTemplate } from "../Data/templates";
+import { ExecutionContext } from "../Utils/createExecutionContext";
+import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
+import { ExportedCustomFunction } from "./ExportedCustomFunction";
+import { NodeCollection } from "./NodeCollection";
+import { NodeData } from "./NodeData";
 import { NodeDefinition } from "./NodeDefinition";
+import { PortConnection } from "./PortConnection";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
-import { ExecutionContext } from "../Utils/createExecutionContext";
-import { Template } from "../Data/templates";
-import { NodeData } from "./NodeData";
-import { PortConnection } from "./PortConnection";
-import { NodeCollection } from "./NodeCollection";
-import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 
 export type TreeStore = {
   nodes: NodeCollection;
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
+  globalSettings: { [key: string]: any };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
   getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
   getNode: (id: string) => NodeData;
@@ -25,12 +27,13 @@ export type TreeStore = {
   removeOutputConnection: (node: string, port: string) => void;
   setNodeInputValue: (node: string, portId: string, newValue: any) => void;
   setNodeSetting: (node: string, settingId: string, newValue: any) => void;
+  setGlobalSetting: (settingId: string, newValue: any) => void;
   resetNode: (node: string) => void;
   deleteNode: (node: string) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
-  loadTemplate: (temp: Template) => void;
-  load: (source: NodeCollection) => boolean;
+  loadTemplate: (temp: SketchTemplate) => boolean;
+  exportTemplate: () => SketchTemplate;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;
   createSimulation: (def: NodeDefinition) => void;
@@ -39,4 +42,8 @@ export type TreeStore = {
   executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
   changeNodeType: (id: string, type: PortType) => void;
   getCustomNodeEditingType: () => CustomNodeEditingType;
+  createFunctionFromNodes: (nodesId: string[], id: string) => boolean;
+  exportCustomeFunction: (id: string) => { definitions: NodeDefinition[]; nodes: NodeCollection };
+  loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
+  getSketchName: () => string;
 };

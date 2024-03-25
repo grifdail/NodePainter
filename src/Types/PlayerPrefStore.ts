@@ -1,6 +1,9 @@
+import { ExportedCustomFunction } from "./ExportedCustomFunction";
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
 export type PlayerPrefStore = {
+  savedFunction: { [key: string]: ExportedCustomFunction };
+  saveFunction: (data: ExportedCustomFunction) => void;
   favNodes: string[];
   nodesLastUsedDates: { [key: string]: number };
   nodesUseCount: { [key: string]: number };
@@ -14,5 +17,10 @@ export type PlayerPrefStore = {
   saveGradient: (name: string, gradient: Gradient) => void;
   removeGradient: (name: string) => void;
   removePalette: (name: string) => void;
+  removeFunction: (name: string) => void;
+  colorPreset: ColorPalette;
+  setColorPreset: (palette: ColorPalette) => void;
+  setSeenIntro: () => void;
+  hasSeenIntroPopup: boolean;
 };
-export type SortingType = "name" | "last" | "most";
+export type SortingType = "featured" | "name" | "last" | "most";

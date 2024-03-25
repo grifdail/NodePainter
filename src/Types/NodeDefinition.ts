@@ -1,12 +1,12 @@
 import { Icon } from "@tabler/icons-react";
-import { TreeStore } from "./TreeStore";
-import { NodeData } from "./NodeData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
-import { PortType } from "./PortType";
-import { PortDefinition } from "./PortDefinition";
-import { SettingDefinition } from "./SettingDefinition";
-import { PortRole } from "./PortRole";
 import { MaterialData } from "./MaterialData";
+import { NodeData } from "./NodeData";
+import { PortDefinition } from "./PortDefinition";
+import { PortRole } from "./PortRole";
+import { PortType } from "./PortType";
+import { SettingDefinition } from "./SettingDefinition";
+import { TreeStore } from "./TreeStore";
 
 export type NodeDefinition = {
   hideInLibrary?: boolean;
@@ -35,6 +35,7 @@ export type NodeDefinition = {
   defaultType?: PortType;
   onChangeType?: (node: NodeData, type: PortType) => void;
   onCreate?: (node: NodeData) => void;
+  featureLevel?: number;
 };
 
 export type MaterialNodeDefinition = NodeDefinition & {

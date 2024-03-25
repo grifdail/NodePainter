@@ -100,8 +100,7 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
             <MenuButton className={"icon"}>
               <IconMenu2></IconMenu2>
             </MenuButton>
-          }
-        >
+          }>
           <MenuItem onClick={savePalette}>Save Palette</MenuItem>
           <MenuDivider></MenuDivider>
           <SubMenu label="Create from default palette" overflow="auto">
