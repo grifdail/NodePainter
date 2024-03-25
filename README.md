@@ -1,3 +1,5 @@
+![NodePainter logo](./doc/logo.gif "the animated banner")
+
 # NodePainter
 
 A tool to make visuals and animation programmatically through a graph based editor.

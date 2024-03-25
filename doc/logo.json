@@ -1,0 +1,1650 @@
+{
+    "nodes": {
+        "Start": {
+            "type": "Start",
+            "id": "Start",
+            "dataInputs": {},
+            "settings": {
+                "name": "logo",
+                "width": 800,
+                "height": 300
+            },
+            "dataOutputs": {},
+            "execOutputs": {
+                "execute": "nodeFcQ2PSfrcyhmt9SeFrTym"
+            },
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodeFcQ2PSfrcyhmt9SeFrTym": {
+            "type": "Then",
+            "id": "nodeFcQ2PSfrcyhmt9SeFrTym",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {
+                "0": "node5rGqpLUvbC2EunjoIX3yo",
+                "1": "nodeD9d4GaKq4DQ5H8KhHQ0Eo",
+                "2": "nodeWyzNrZp5qa420TZxSAX28",
+                "3": "nodey9S9R1uhCBJTAwuGaN0ge",
+                "4": "nodepu19EFxr-2pDETOODhE49"
+            },
+            "positionX": 400,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "node5rGqpLUvbC2EunjoIX3yo": {
+            "type": "FillBackground",
+            "id": "node5rGqpLUvbC2EunjoIX3yo",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 994,
+            "positionY": -31.999999999999996,
+            "selectedType": "unknown"
+        },
+        "nodezqq5RFQyNMKR4xuXytQcl": {
+            "type": "PickFromPalette",
+            "id": "nodezqq5RFQyNMKR4xuXytQcl",
+            "dataInputs": {
+                "index": {
+                    "id": "index",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "palette": [
+                    [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    [
+                        1,
+                        1,
+                        1,
+                        1
+                    ]
+                ]
+            },
+            "dataOutputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "defaultValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 296,
+            "positionY": -289.5,
+            "selectedType": "unknown"
+        },
+        "nodeSDVzI6v01n6nG-xhCoRNi": {
+            "type": "DrawText",
+            "id": "nodeSDVzI6v01n6nG-xhCoRNi",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0,
+                        0.8941176470588236,
+                        0.21176470588235294,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "DrawNodePainter-start",
+                    "connectedPort": "color-lowercase"
+                },
+                "text": {
+                    "id": "text",
+                    "type": "string",
+                    "ownValue": "  ode   ainter",
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector2",
+                    "ownValue": [
+                        400,
+                        150
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "size": {
+                    "id": "size",
+                    "type": "number",
+                    "ownValue": 80,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "HorizontalAlign": "CENTER",
+                "VerticalAlign": "CENTER",
+                "Font": "Josefin Sans"
+            },
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 1050.347034959096,
+            "positionY": -292.801853383417,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "nodeLn63JYsX6K5PPWYBkuN5R": {
+            "type": "DrawText",
+            "id": "nodeLn63JYsX6K5PPWYBkuN5R",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "DrawNodePainter-start",
+                    "connectedPort": "color-Uppercase"
+                },
+                "text": {
+                    "id": "text",
+                    "type": "string",
+                    "ownValue": "P",
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector2",
+                    "ownValue": [
+                        407,
+                        151
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "size": {
+                    "id": "size",
+                    "type": "number",
+                    "ownValue": 84,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "HorizontalAlign": "CENTER",
+                "VerticalAlign": "CENTER",
+                "Font": "Josefin Sans"
+            },
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 1051.347034959096,
+            "positionY": 60.19814661658299,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "nodeSZDuaRHJ6zZJqsJaHaUZK": {
+            "type": "Then",
+            "id": "nodeSZDuaRHJ6zZJqsJaHaUZK",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {
+                "0": "nodeSDVzI6v01n6nG-xhCoRNi",
+                "1": "nodeLn63JYsX6K5PPWYBkuN5R",
+                "2": "nodel-qkpLrgYibTKtxQmF33q"
+            },
+            "positionX": 516.3166634339207,
+            "positionY": 16.421419410906623,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "nodel-qkpLrgYibTKtxQmF33q": {
+            "type": "DrawText",
+            "id": "nodel-qkpLrgYibTKtxQmF33q",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "DrawNodePainter-start",
+                    "connectedPort": "color-Uppercase"
+                },
+                "text": {
+                    "id": "text",
+                    "type": "string",
+                    "ownValue": "N",
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector2",
+                    "ownValue": [
+                        185,
+                        151
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "size": {
+                    "id": "size",
+                    "type": "number",
+                    "ownValue": 84,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "HorizontalAlign": "CENTER",
+                "VerticalAlign": "CENTER",
+                "Font": "Josefin Sans"
+            },
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 1150.1076243908958,
+            "positionY": 392.31863739996766,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "DrawNodePainter-start": {
+            "type": "DrawNodePainter-start",
+            "id": "DrawNodePainter-start",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {
+                "color-Uppercase": {
+                    "id": "color-Uppercase",
+                    "defaultValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "type": "color"
+                },
+                "color-lowercase": {
+                    "id": "color-lowercase",
+                    "defaultValue": [
+                        0,
+                        0.8941176470588236,
+                        0.21176470588235294,
+                        1
+                    ],
+                    "type": "color"
+                }
+            },
+            "execOutputs": {
+                "execute": "nodeSZDuaRHJ6zZJqsJaHaUZK"
+            },
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "DrawNodePainter-end": {
+            "type": "DrawNodePainter-end",
+            "id": "DrawNodePainter-end",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 1126.4449349546412,
+            "positionY": 12.148729268184027,
+            "selectedType": "unknown",
+            "graph": "DrawNodePainter"
+        },
+        "node5qeNoqZjeZ0KXAyucLNth": {
+            "type": "DrawNodePainter",
+            "id": "node5qeNoqZjeZ0KXAyucLNth",
+            "dataInputs": {
+                "color-Uppercase": {
+                    "id": "color-Uppercase",
+                    "type": "color",
+                    "ownValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodevcDhygXcGxb7y2MpTryK6",
+                    "connectedPort": "out"
+                },
+                "color-lowercase": {
+                    "id": "color-lowercase",
+                    "type": "color",
+                    "ownValue": [
+                        0,
+                        0.8941176470588236,
+                        0.21176470588235294,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeYUr4S2zcwmZBjk4vrFFWB",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 2533.132463561417,
+            "positionY": 177.9577301296527,
+            "selectedType": "unknown"
+        },
+        "nodeIULGPXRHZPtYMR9yxd-iU": {
+            "type": "WithTranslation",
+            "id": "nodeIULGPXRHZPtYMR9yxd-iU",
+            "dataInputs": {
+                "translation": {
+                    "id": "translation",
+                    "type": "vector2",
+                    "ownValue": [
+                        30,
+                        -30
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {
+                "execute": "nodeyAby4q71zsZaar-09YvHQ"
+            },
+            "positionX": 1388.5599788534003,
+            "positionY": 185.4268322725777,
+            "selectedType": "vector2"
+        },
+        "node5Pm6LEusDPHhAMxCeQHAc": {
+            "type": "DrawImage",
+            "id": "node5Pm6LEusDPHhAMxCeQHAc",
+            "dataInputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodePZ7voZwgYyX6PQyBShjFR",
+                    "connectedPort": "image"
+                },
+                "pos": {
+                    "id": "pos",
+                    "type": "vector2",
+                    "ownValue": [
+                        30,
+                        90
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "dim": {
+                    "id": "dim",
+                    "type": "vector2",
+                    "ownValue": [
+                        100,
+                        100
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 2308.858894696127,
+            "positionY": 574.3457053304345,
+            "selectedType": "unknown"
+        },
+        "nodePZ7voZwgYyX6PQyBShjFR": {
+            "type": "UploadImage",
+            "id": "nodePZ7voZwgYyX6PQyBShjFR",
+            "dataInputs": {},
+            "settings": {
+                "image": "data:image/png;base64,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"
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1123.7368356293975,
+            "positionY": 554.1538032785082,
+            "selectedType": "unknown"
+        },
+        "nodevcDhygXcGxb7y2MpTryK6": {
+            "type": "Value",
+            "id": "nodevcDhygXcGxb7y2MpTryK6",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "color",
+                    "ownValue": [
+                        0.25882352941176473,
+                        0.6,
+                        0.8823529411764706,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "color",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 3.736835629397662,
+            "positionY": 333.15380327850824,
+            "selectedType": "color"
+        },
+        "nodeYUr4S2zcwmZBjk4vrFFWB": {
+            "type": "Value",
+            "id": "nodeYUr4S2zcwmZBjk4vrFFWB",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "color",
+                    "ownValue": [
+                        0.4549019607843137,
+                        0.7215686274509804,
+                        0.08627450980392157,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "color",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 7.736835629397689,
+            "positionY": 443.15380327850824,
+            "selectedType": "color"
+        },
+        "nodeyAby4q71zsZaar-09YvHQ": {
+            "type": "Then",
+            "id": "nodeyAby4q71zsZaar-09YvHQ",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {
+                "0": "node5qeNoqZjeZ0KXAyucLNth",
+                "1": "node5Pm6LEusDPHhAMxCeQHAc"
+            },
+            "positionX": 1811.5157277940493,
+            "positionY": 369.3899563897853,
+            "selectedType": "unknown"
+        },
+        "nodepjAYh-0QWrd7wfQG1dsuH": {
+            "type": "Clear",
+            "id": "nodepjAYh-0QWrd7wfQG1dsuH",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 895.7368356293975,
+            "positionY": 102.15380327850829,
+            "selectedType": "unknown"
+        },
+        "nodeWyzNrZp5qa420TZxSAX28": {
+            "type": "DrawLine",
+            "id": "nodeWyzNrZp5qa420TZxSAX28",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeYUr4S2zcwmZBjk4vrFFWB",
+                    "connectedPort": "out"
+                },
+                "start": {
+                    "id": "start",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "end": {
+                    "id": "end",
+                    "type": "vector2",
+                    "ownValue": [
+                        600,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "lineWidth": {
+                    "id": "lineWidth",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 816.7368356293975,
+            "positionY": 527.1538032785081,
+            "selectedType": "vector2"
+        },
+        "nodey9S9R1uhCBJTAwuGaN0ge": {
+            "type": "DrawBezier",
+            "id": "nodey9S9R1uhCBJTAwuGaN0ge",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": "#aaaaaa",
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "lineWidth": {
+                    "id": "lineWidth",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "start": {
+                    "id": "start",
+                    "type": "vector2",
+                    "ownValue": [
+                        600,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cp1": {
+                    "id": "cp1",
+                    "type": "vector2",
+                    "ownValue": [
+                        800,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cp2": {
+                    "id": "cp2",
+                    "type": "vector2",
+                    "ownValue": [
+                        700,
+                        100
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "end": {
+                    "id": "end",
+                    "type": "vector2",
+                    "ownValue": [
+                        800,
+                        100
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 812.4248675836484,
+            "positionY": 762.4376430612338,
+            "selectedType": "vector2"
+        },
+        "nodepu19EFxr-2pDETOODhE49": {
+            "type": "For",
+            "id": "nodepu19EFxr-2pDETOODhE49",
+            "dataInputs": {
+                "count": {
+                    "id": "count",
+                    "type": "number",
+                    "ownValue": 3,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "index": {
+                    "id": "index",
+                    "type": "number",
+                    "defaultValue": 10
+                }
+            },
+            "execOutputs": {
+                "loop": "nodefc-kJXttdHP5DKOw8NV3u"
+            },
+            "positionX": 799.3706933053589,
+            "positionY": 1096.6193628457522,
+            "selectedType": "unknown"
+        },
+        "nodefc-kJXttdHP5DKOw8NV3u": {
+            "type": "DrawCircle",
+            "id": "nodefc-kJXttdHP5DKOw8NV3u",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeBGK-e77z7wOvc1YjaDDDr",
+                    "connectedPort": "result"
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodenLaKuDhMDermrALzJVZcw",
+                    "connectedPort": "result"
+                },
+                "radius": {
+                    "id": "radius",
+                    "type": "number",
+                    "ownValue": 25,
+                    "hasConnection": true,
+                    "connectedNode": "nodePLmhjYmIj6iNl7bPSOkJt",
+                    "connectedPort": "result"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {},
+            "positionX": 1706.3706933053588,
+            "positionY": 1192.6193628457524,
+            "selectedType": "unknown"
+        },
+        "nodewTeRHv2vVwIFFmrxYMeGl": {
+            "type": "Lerp",
+            "id": "nodewTeRHv2vVwIFFmrxYMeGl",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1333.3706933053588,
+            "positionY": 984.6193628457524,
+            "selectedType": "vector2"
+        },
+        "nodenLaKuDhMDermrALzJVZcw": {
+            "type": "Switch",
+            "id": "nodenLaKuDhMDermrALzJVZcw",
+            "dataInputs": {
+                "condition": {
+                    "id": "condition",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": true,
+                    "connectedNode": "nodeOyDbdFkvjSph3gTeEoA4Y",
+                    "connectedPort": "result"
+                },
+                "true": {
+                    "id": "true",
+                    "type": "vector2",
+                    "ownValue": [
+                        1,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodebauoL5Kj3N0U3VmERDLxl",
+                    "connectedPort": "result"
+                },
+                "false": {
+                    "id": "false",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "node7qhgALCdEQwQcivUO186u",
+                    "connectedPort": "point"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1319.3706933053588,
+            "positionY": 1320.6193628457524,
+            "selectedType": "vector2"
+        },
+        "nodezlRyE23BMd3dLxTLWmjpp": {
+            "type": "Progress",
+            "id": "nodezlRyE23BMd3dLxTLWmjpp",
+            "dataInputs": {},
+            "settings": {
+                "preview-duration": 1
+            },
+            "dataOutputs": {
+                "progress": {
+                    "id": "progress",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": -594.629306694641,
+            "positionY": 1148.6193628457524,
+            "selectedType": "unknown"
+        },
+        "node2vxL8PkvHEPy8ZOR1idKR": {
+            "type": "Value",
+            "id": "node2vxL8PkvHEPy8ZOR1idKR",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": -10.629306694640889,
+            "positionY": 1438.6193628457524,
+            "selectedType": "number"
+        },
+        "nodebauoL5Kj3N0U3VmERDLxl": {
+            "type": "Lerp",
+            "id": "nodebauoL5Kj3N0U3VmERDLxl",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "vector2",
+                    "ownValue": [
+                        600,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeCITZvuyWEhxdyH5GFRfkL",
+                    "connectedPort": "result"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 878.3706933053588,
+            "positionY": 1285.6193628457524,
+            "selectedType": "vector2"
+        },
+        "nodeCITZvuyWEhxdyH5GFRfkL": {
+            "type": "Remap",
+            "id": "nodeCITZvuyWEhxdyH5GFRfkL",
+            "dataInputs": {
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeI8tYjClsvBd6aopX3LMJU",
+                    "connectedPort": "result"
+                },
+                "inmin": {
+                    "id": "inmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "inmax": {
+                    "id": "inmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "node2vxL8PkvHEPy8ZOR1idKR",
+                    "connectedPort": "out"
+                },
+                "outmin": {
+                    "id": "outmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmax": {
+                    "id": "outmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clamp": {
+                    "id": "clamp",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 536.3706933053589,
+            "positionY": 1431.6193628457524,
+            "selectedType": "number"
+        },
+        "nodeOyDbdFkvjSph3gTeEoA4Y": {
+            "type": "Compare",
+            "id": "nodeOyDbdFkvjSph3gTeEoA4Y",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeI8tYjClsvBd6aopX3LMJU",
+                    "connectedPort": "result"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "node2vxL8PkvHEPy8ZOR1idKR",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "comparator": "lower that"
+            },
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "bool",
+                    "defaultValue": false
+                }
+            },
+            "execOutputs": {},
+            "positionX": 497.37069330535894,
+            "positionY": 1230.6193628457524,
+            "selectedType": "unknown"
+        },
+        "nodeaE9VzQJvwG1wRfRVeOduP": {
+            "type": "Remap",
+            "id": "nodeaE9VzQJvwG1wRfRVeOduP",
+            "dataInputs": {
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeI8tYjClsvBd6aopX3LMJU",
+                    "connectedPort": "result"
+                },
+                "inmin": {
+                    "id": "inmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "node2vxL8PkvHEPy8ZOR1idKR",
+                    "connectedPort": "out"
+                },
+                "inmax": {
+                    "id": "inmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmin": {
+                    "id": "outmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmax": {
+                    "id": "outmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clamp": {
+                    "id": "clamp",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 560.3706933053589,
+            "positionY": 1715.6193628457524,
+            "selectedType": "number"
+        },
+        "node7qhgALCdEQwQcivUO186u": {
+            "type": "EvaluateBezier",
+            "id": "node7qhgALCdEQwQcivUO186u",
+            "dataInputs": {
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": true,
+                    "connectedNode": "nodeaE9VzQJvwG1wRfRVeOduP",
+                    "connectedPort": "result"
+                },
+                "start": {
+                    "id": "start",
+                    "type": "vector2",
+                    "ownValue": [
+                        600,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cp1": {
+                    "id": "cp1",
+                    "type": "vector2",
+                    "ownValue": [
+                        800,
+                        225
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cp2": {
+                    "id": "cp2",
+                    "type": "vector2",
+                    "ownValue": [
+                        700,
+                        100
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "end": {
+                    "id": "end",
+                    "type": "vector2",
+                    "ownValue": [
+                        800,
+                        100
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "point": {
+                    "id": "point",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                },
+                "tangent": {
+                    "id": "tangent",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1005.3706933053588,
+            "positionY": 1556.6193628457524,
+            "selectedType": "unknown"
+        },
+        "nodepVvSbUqFAdO3S76-ODJJ4": {
+            "type": "Add",
+            "id": "nodepVvSbUqFAdO3S76-ODJJ4",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeYqmRb1kRraEs5xvklAhEh",
+                    "connectedPort": "result"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodezlRyE23BMd3dLxTLWmjpp",
+                    "connectedPort": "progress"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": -151.62930669464106,
+            "positionY": 1050.6193628457524,
+            "selectedType": "number"
+        },
+        "nodeYqmRb1kRraEs5xvklAhEh": {
+            "type": "Remap",
+            "id": "nodeYqmRb1kRraEs5xvklAhEh",
+            "dataInputs": {
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodepu19EFxr-2pDETOODhE49",
+                    "connectedPort": "index"
+                },
+                "inmin": {
+                    "id": "inmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "inmax": {
+                    "id": "inmax",
+                    "type": "number",
+                    "ownValue": 3,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmin": {
+                    "id": "outmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmax": {
+                    "id": "outmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clamp": {
+                    "id": "clamp",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": -446.62930669464095,
+            "positionY": 850.6193628457524,
+            "selectedType": "number"
+        },
+        "nodeI8tYjClsvBd6aopX3LMJU": {
+            "type": "SawtoothWaver",
+            "id": "nodeI8tYjClsvBd6aopX3LMJU",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodepVvSbUqFAdO3S76-ODJJ4",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 260.37069330535894,
+            "positionY": 1096.6193628457524,
+            "selectedType": "unknown"
+        },
+        "nodeheA1AyGtmVH3XUpQB6vJW": {
+            "type": "Envelope",
+            "id": "nodeheA1AyGtmVH3XUpQB6vJW",
+            "dataInputs": {
+                "pos": {
+                    "id": "pos",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeI8tYjClsvBd6aopX3LMJU",
+                    "connectedPort": "result"
+                }
+            },
+            "settings": {
+                "envelope": [
+                    {
+                        "pos": 0,
+                        "height": 0,
+                        "lerp": "linear"
+                    },
+                    {
+                        "pos": 0.05,
+                        "height": 1,
+                        "lerp": "linear"
+                    },
+                    {
+                        "pos": 0.6,
+                        "height": 1,
+                        "lerp": "linear"
+                    },
+                    {
+                        "pos": 0.8,
+                        "height": 0,
+                        "lerp": "linear"
+                    }
+                ]
+            },
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": 971.3706933053588,
+            "positionY": 1887.6193628457524,
+            "selectedType": "unknown"
+        },
+        "nodePLmhjYmIj6iNl7bPSOkJt": {
+            "type": "Lerp",
+            "id": "nodePLmhjYmIj6iNl7bPSOkJt",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "number",
+                    "ownValue": 25,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeheA1AyGtmVH3XUpQB6vJW",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1488.3706933053586,
+            "positionY": 1565.6193628457524,
+            "selectedType": "number"
+        },
+        "nodeBGK-e77z7wOvc1YjaDDDr": {
+            "type": "Lerp",
+            "id": "nodeBGK-e77z7wOvc1YjaDDDr",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "color",
+                    "ownValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeYUr4S2zcwmZBjk4vrFFWB",
+                    "connectedPort": "out"
+                },
+                "to": {
+                    "id": "to",
+                    "type": "color",
+                    "ownValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodevcDhygXcGxb7y2MpTryK6",
+                    "connectedPort": "out"
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeheA1AyGtmVH3XUpQB6vJW",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "color",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "execOutputs": {},
+            "positionX": 1472.723894787841,
+            "positionY": 1833.322251935434,
+            "selectedType": "color"
+        },
+        "nodevTZncp1vrMDwBcMtxXj4x": {
+            "type": "SineWave",
+            "id": "nodevTZncp1vrMDwBcMtxXj4x",
+            "dataInputs": {
+                "time": {
+                    "id": "time",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodezlRyE23BMd3dLxTLWmjpp",
+                    "connectedPort": "progress"
+                },
+                "phase": {
+                    "id": "phase",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "frequency": {
+                    "id": "frequency",
+                    "type": "number",
+                    "ownValue": 3,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "amplitude": {
+                    "id": "amplitude",
+                    "type": "number",
+                    "ownValue": 0.1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "positive": {
+                    "id": "positive",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "output": {
+                    "id": "output",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "execOutputs": {},
+            "positionX": -99.84039290203657,
+            "positionY": 616.8942300880352,
+            "selectedType": "unknown"
+        },
+        "nodeD9d4GaKq4DQ5H8KhHQ0Eo": {
+            "type": "WithRotation",
+            "id": "nodeD9d4GaKq4DQ5H8KhHQ0Eo",
+            "dataInputs": {
+                "angle": {
+                    "id": "angle",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {},
+            "execOutputs": {
+                "execute": "nodeIULGPXRHZPtYMR9yxd-iU"
+            },
+            "positionX": 1033.621366670601,
+            "positionY": 234.59516678390202,
+            "selectedType": "number"
+        }
+    },
+    "customNodes": {
+        "DrawNodePainter": {
+            "id": "DrawNodePainter",
+            "hideInLibrary": false,
+            "IsUnique": false,
+            "description": "Custom Function",
+            "tags": [
+                "Custom"
+            ],
+            "dataInputs": [
+                {
+                    "id": "color-Uppercase",
+                    "defaultValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "type": "color"
+                },
+                {
+                    "id": "color-lowercase",
+                    "defaultValue": [
+                        0,
+                        0.8941176470588236,
+                        0.21176470588235294,
+                        1
+                    ],
+                    "type": "color"
+                }
+            ],
+            "dataOutputs": [],
+            "executeOutputs": [],
+            "settings": [],
+            "executeAs": "CustomFunction",
+            "canBeExecuted": true
+        },
+        "DrawNodePainter-start": {
+            "IsUnique": true,
+            "hideInLibrary": true,
+            "description": "",
+            "id": "DrawNodePainter-start",
+            "tags": [],
+            "dataInputs": [],
+            "dataOutputs": [
+                {
+                    "id": "color-Uppercase",
+                    "defaultValue": [
+                        0.1607843137254902,
+                        0.6784313725490196,
+                        1,
+                        1
+                    ],
+                    "type": "color"
+                },
+                {
+                    "id": "color-lowercase",
+                    "defaultValue": [
+                        0,
+                        0.8941176470588236,
+                        0.21176470588235294,
+                        1
+                    ],
+                    "type": "color"
+                }
+            ],
+            "executeOutputs": [
+                "execute"
+            ],
+            "settings": [],
+            "executeAs": "CustomFunction-start",
+            "canBeExecuted": false
+        },
+        "DrawNodePainter-end": {
+            "IsUnique": true,
+            "description": "",
+            "hideInLibrary": true,
+            "id": "DrawNodePainter-end",
+            "tags": [],
+            "dataInputs": [],
+            "dataOutputs": [],
+            "executeOutputs": [],
+            "settings": [],
+            "executeAs": "CustomFunction-end",
+            "canBeExecuted": false
+        }
+    },
+    "globalSettings": {
+        "progress": 10
+    }
+}
