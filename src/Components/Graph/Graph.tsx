@@ -12,6 +12,7 @@ import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
 import { MainExecuteId } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { useSelection } from "../../Hooks/useSelection";
+import { ContextMenu, useContextMenu } from "./ContextMenu";
 
 export function Graph() {
   useGesturePrevention();
@@ -21,6 +22,7 @@ export function Graph() {
   const [ref, elementSize] = useMeasure();
   const [xyz, bind] = useSVGMapDrag();
   const { nodes: selectedNode } = useSelection();
+  const contextMenuData = useContextMenu();
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
   }));
@@ -109,31 +111,34 @@ export function Graph() {
   }
 
   return (
-    <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }}>
-      <defs>
-        <pattern id="grid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-          <line x1="16" y1="0" x2="16" y2="32" stroke="rgba(0,0,0,0.1)" strokeWidth="1" />
-          <line x1="0" y1="16" x2="32" y2="16" stroke="rgba(0,0,0,0.1)" strokeWidth="1" />
-          <rect x="16" y="16" width="1" height="1" stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
-        </pattern>
-      </defs>
-      <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)" style={{ touchAction: "none" }}></animated.rect>
-      {edges.map((edge) => {
-        return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string, "out")} end={getNodePort(edge[2] as string, edge[3] as string, "in")} type={edge[4] as PortType} />;
-      })}
-      {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "inputData" || portSelection.location === "inputExecute" ? "in" : "out")} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"} />}
-      {nodes.map((node, i) => {
-        const nodeProps = {
-          node,
-          key: node.id,
-          onClickPort,
-          xy: nodePositionSpring[i].xy,
-          isSelected: selectedNode.some((id) => id === node.id),
-          onTap: () => onTapNode(node),
-          onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
-        };
-        return <GraphNodeUI {...nodeProps} />;
-      })}
-    </animated.svg>
+    <div>
+      <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }} onContextMenu={contextMenuData.onContextMenu}>
+        <defs>
+          <pattern id="grid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+            <line x1="16" y1="0" x2="16" y2="32" stroke="rgba(0,0,0,0.1)" strokeWidth="1" />
+            <line x1="0" y1="16" x2="32" y2="16" stroke="rgba(0,0,0,0.1)" strokeWidth="1" />
+            <rect x="16" y="16" width="1" height="1" stroke="rgba(0,0,0,0.2)" strokeWidth="1" />
+          </pattern>
+        </defs>
+        <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)" style={{ touchAction: "none" }}></animated.rect>
+        {edges.map((edge) => {
+          return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string, "out")} end={getNodePort(edge[2] as string, edge[3] as string, "in")} type={edge[4] as PortType} />;
+        })}
+        {portSelection.hasSelection && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "inputData" || portSelection.location === "inputExecute" ? "in" : "out")} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"} />}
+        {nodes.map((node, i) => {
+          const nodeProps = {
+            node,
+            key: node.id,
+            onClickPort,
+            xy: nodePositionSpring[i].xy,
+            isSelected: selectedNode.some((id) => id === node.id),
+            onTap: () => onTapNode(node),
+            onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
+          };
+          return <GraphNodeUI {...nodeProps} />;
+        })}
+      </animated.svg>
+      <ContextMenu {...contextMenuData}></ContextMenu>
+    </div>
   );
 }
