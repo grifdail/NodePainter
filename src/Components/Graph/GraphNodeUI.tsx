@@ -102,7 +102,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   });
 
   return (
-    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""}>
+    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""} onContextMenu={(e) => e.stopPropagation()}>
       <animated.g style={styles}>
         <rect width="300" height={GetNodeHeight(node, definition)} style={{}} rx="5" {...bind()} onClick={onTap}></rect>
         {Icon && (
@@ -125,7 +125,8 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           style={{
             touchAction: "none",
           }}
-          onClick={onTap}>
+          onClick={onTap}
+        >
           {definition.label || definition.id}
         </text>
         {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
