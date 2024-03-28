@@ -32,7 +32,8 @@ export function MainMenu() {
         <button>
           <IconMenu2></IconMenu2>
         </button>
-      }>
+      }
+    >
       <MenuItem onClick={() => openModal(Routes.About)}>
         <IconInfoCircle />
         About
@@ -46,10 +47,13 @@ export function MainMenu() {
           <>
             <IconFile></IconFile> New
           </>
-        }>
+        }
+      >
         <MenuItem onClick={reset}>Default</MenuItem>
         {Object.entries(Templates).map(([key, value]) => (
-          <MenuItem onClick={() => loadTemplate(value)}>Template {key}</MenuItem>
+          <MenuItem onClick={() => loadTemplate(value)} key={key}>
+            Template {key}
+          </MenuItem>
         ))}
       </SubMenu>
 
@@ -58,7 +62,8 @@ export function MainMenu() {
           <>
             <IconDeviceFloppy></IconDeviceFloppy> Save & Load
           </>
-        }>
+        }
+      >
         <MenuItem onClick={() => openModal(Routes.Save)}>Save to JSON</MenuItem>
         <MenuItem onClick={() => saveCurrentSketch()}>Save</MenuItem>
         <MenuDivider></MenuDivider>

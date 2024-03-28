@@ -71,7 +71,7 @@ export function ContextMenu(props: ContextMenuProps) {
         }
       >
         {Object.entries(categories).map(([category, content]) => (
-          <SubMenu label={category} overflow="auto">
+          <SubMenu label={category} overflow="auto" key={category}>
             {content.map((item) => (
               <NodeMenuItem onClick={onClick} node={item} key={item.id} />
             ))}
