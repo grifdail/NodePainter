@@ -111,7 +111,7 @@ export function Graph() {
   }
 
   return (
-    <div>
+    <div style={{ width: "100%", height: "100%", position: "absolute" }}>
       <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }} onContextMenu={contextMenuData.onContextMenu}>
         <defs>
           <pattern id="grid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
