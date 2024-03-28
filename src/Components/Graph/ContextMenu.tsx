@@ -1,9 +1,9 @@
-import { ControlledMenu, FocusableItem, MenuDivider, MenuItem, MenuState } from "@szhsin/react-menu";
+import { ControlledMenu, FocusableItem, MenuDivider, MenuItem, MenuState, SubMenu } from "@szhsin/react-menu";
 import { useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { resetCamera } from "../../Utils/resetCamera";
-import { IconViewportWide } from "@tabler/icons-react";
+import { IconPlus, IconViewportWide } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 
@@ -43,13 +43,41 @@ export function ContextMenu(props: ContextMenuProps) {
     usePlayerPref.getState().markNodeAsUsed(node.id);
     props.onClose();
   };
+  const categories = nodeLibrary.reduce((old, value) => {
+    value.tags.forEach((tag) => {
+      if (old[tag] === undefined) {
+        old[tag] = [value];
+      } else {
+        old[tag].push(value);
+      }
+    });
+    return old;
+  }, {} as { [key: string]: NodeDefinition[] });
   const nodesSelected = searchTerm === "" ? [] : ((nodeLibrary.filter((node) => node.id.toLowerCase().includes(searchTerm) || node.label?.toLowerCase().includes(searchTerm)) as any).toSorted(mostSorting).slice(0, 5) as NodeDefinition[]);
   return (
-    <ControlledMenu anchorPoint={props.anchorPoint} state={props.state} direction="right" onClose={props.onClose}>
+    <ControlledMenu anchorPoint={props.anchorPoint} state={props.state} direction="right" onClose={props.onClose} overflow="auto">
       <FocusableItem>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={props.filter} onChange={(e) => props.setFilter(e.target.value)} />}</FocusableItem>
       {nodesSelected.map((item) => (
-        <NodeMenuItem onClick={onClick} node={item} />
+        <NodeMenuItem onClick={onClick} node={item} key={item.id} />
       ))}
+      <MenuDivider></MenuDivider>
+      <SubMenu
+        overflow="auto"
+        label={
+          <>
+            <IconPlus />
+            Add Node
+          </>
+        }
+      >
+        {Object.entries(categories).map(([category, content]) => (
+          <SubMenu label={category} overflow="auto">
+            {content.map((item) => (
+              <NodeMenuItem onClick={onClick} node={item} key={item.id} />
+            ))}
+          </SubMenu>
+        ))}
+      </SubMenu>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => resetCamera()}>
         <IconViewportWide /> Reset Camera
