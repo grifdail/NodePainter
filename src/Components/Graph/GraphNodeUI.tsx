@@ -16,6 +16,8 @@ import { SettingControl, getSettingHeight } from "./SettingControl";
 import { useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
+import { useLongPress } from "@uidotdev/usehooks";
+import { useSelection } from "../../Hooks/useSelection";
 
 const AnimatedG = animated(styled.g`
   & > g > rect {
@@ -61,11 +63,15 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   const bind = useGesture(
     {
-      onDrag: ({ movement: [mx, my], tap }) => {
+      onDrag: ({ movement: [mx, my], tap, elapsedTime }) => {
         if (!tap) {
           onMove(mx * viewPortScale, my * viewPortScale, false);
           if (!dragged) {
             setDragged(true);
+          }
+        } else {
+          if (elapsedTime > 1000) {
+            useSelection.getState().toggleSetMode(true);
           }
         }
       },
@@ -74,7 +80,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         setDragged(false);
       },
     },
-    { drag: { filterTaps: true } }
+    { drag: { filterTaps: false } }
   );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
