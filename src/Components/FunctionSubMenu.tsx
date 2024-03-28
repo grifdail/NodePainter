@@ -65,11 +65,12 @@ export function FunctionSubMenu() {
     <Menu
       portal
       menuButton={
-        <button>
+        <button data-tooltip-id="tooltip" data-tooltip-content="Functions">
           <IconFunctionFilled></IconFunctionFilled>
           <span>{graph}</span>
         </button>
-      }>
+      }
+    >
       <MenuItem onClick={openEditModal} disabled={graph === "main"}>
         Edit
       </MenuItem>

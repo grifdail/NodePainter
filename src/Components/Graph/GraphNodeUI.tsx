@@ -16,7 +16,6 @@ import { SettingControl, getSettingHeight } from "./SettingControl";
 import { useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
-import { useLongPress } from "@uidotdev/usehooks";
 import { useSelection } from "../../Hooks/useSelection";
 
 const AnimatedG = animated(styled.g`
@@ -142,10 +141,10 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           return <PortView y={50 + 32 * i} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)} location="inputData" nodeId={node.id}></PortView>;
         })}
         {Object.entries(node.execOutputs).map(([id], i) => {
-          return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} label={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
-          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label || item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
         })}
         {definition.settings.map((item, i) => {
           const isGlobal = item.globalKey !== undefined;

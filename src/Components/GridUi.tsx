@@ -42,11 +42,15 @@ export function GridUi() {
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
-        <button onClick={() => openModal(Routes.NodeCreation)}>
+        <button onClick={() => openModal(Routes.NodeCreation)} data-tooltip-id="tooltip" data-tooltip-content="New node">
           <IconPlus></IconPlus>
         </button>
-        <button onClick={() => togglePreview()}>{showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}</button>
-        <button onClick={() => toggleSelection()}>{selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}</button>
+        <button onClick={() => togglePreview()} data-tooltip-id="tooltip" data-tooltip-content={showPreview ? "Preview" : "Stop Preview"}>
+          {showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}
+        </button>
+        <button onClick={() => toggleSelection()} data-tooltip-id="tooltip" data-tooltip-content={selectionActive ? "Cancel the selection" : "Start a selection"}>
+          {selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}
+        </button>
         <FunctionSubMenu></FunctionSubMenu>
         <MainMenu></MainMenu>
       </BottomToolbar>

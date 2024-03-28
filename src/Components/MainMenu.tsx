@@ -29,7 +29,7 @@ export function MainMenu() {
     <Menu
       portal
       menuButton={
-        <button>
+        <button data-tooltip-id="tooltip" data-tooltip-content="Menu">
           <IconMenu2></IconMenu2>
         </button>
       }
