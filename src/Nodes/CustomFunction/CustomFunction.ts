@@ -1,6 +1,6 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
 import { getCustomFunctionEndId, getCustomFunctionStartId } from "../../Hooks/createFunction";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 export const CUSTOM_FUNCTION = "CustomFunction";
 
 export const CustomFunction: NodeDefinition = {
@@ -19,7 +19,7 @@ export const CustomFunction: NodeDefinition = {
     if (!source) {
       return null;
     }
-    context.functionStack.push(context.createFunctionContext(nodeData, context));
+    context.functionStack.push(context.createFunctionContext(nodeData));
 
     var result = context.getInputValue(source, portId, nodeData.dataOutputs[portId].type);
     context.functionStack.pop();
@@ -30,7 +30,7 @@ export const CustomFunction: NodeDefinition = {
     if (!source) {
       return null;
     }
-    context.functionStack.push(context.createFunctionContext(data, context));
+    context.functionStack.push(context.createFunctionContext(data));
     context.execute(source.id);
     context.functionStack.pop();
   },

@@ -1,7 +1,7 @@
 import { IconArrowsMove } from "@tabler/icons-react";
+import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortDefinition } from "../../Types/PortDefinition";
-import { NodeData } from "../../Types/NodeData";
 import { ExecutionContext } from "../../Utils/createExecutionContext";
 export const CUSTOM_SIMULATION = "CustomSimulation";
 
@@ -57,7 +57,7 @@ export const CustomSimulation: NodeDefinition = {
 
     const params = Object.fromEntries(
       Object.entries(startNode.dataOutputs).map(([key, def]) => {
-        return [key, state[key] === undefined ? context.getInputValue(data, key, def.type) : state[key]];
+        return [key, { type: def.type, value: state[key] === undefined ? context.getInputValue(data, key, def.type) : state[key] }];
       })
     );
     context.functionStack.push(params);

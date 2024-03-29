@@ -8,6 +8,7 @@ import { useSelection } from "../Hooks/useSelection";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { usePlayerPref } from "../Hooks/usePlayerPref";
 import { ReactElement } from "react";
+import { resetCamera } from "../Utils/resetCamera";
 
 export function FunctionSubMenu() {
   const rawCustomNodes = useTree((state) => state.customNodes);
@@ -58,6 +59,7 @@ export function FunctionSubMenu() {
   const setEditedGraph = useTree((state) => state.setEditedGraph);
   const setGraph = (graph: string) => {
     setEditedGraph(graph === "main" ? undefined : graph);
+    resetCamera();
   };
   const savedFunctions = Object.entries(usePlayerPref((state) => state.savedFunction));
 
@@ -69,8 +71,7 @@ export function FunctionSubMenu() {
           <IconFunctionFilled></IconFunctionFilled>
           <span>{graph}</span>
         </button>
-      }
-    >
+      }>
       <MenuItem onClick={openEditModal} disabled={graph === "main"}>
         Edit
       </MenuItem>

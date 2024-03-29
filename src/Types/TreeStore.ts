@@ -1,6 +1,7 @@
 import { SketchTemplate } from "../Data/templates";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
+import { EDirection } from "./EDirection";
 import { ExportedCustomFunction } from "./ExportedCustomFunction";
 import { NodeCollection } from "./NodeCollection";
 import { NodeData } from "./NodeData";
@@ -46,4 +47,5 @@ export type TreeStore = {
   exportCustomeFunction: (id: string) => { definitions: NodeDefinition[]; nodes: NodeCollection };
   loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
   getSketchName: () => string;
+  freeSpace: (direction: EDirection, amount: number, offsetX: number, offsetY: number) => void;
 };
