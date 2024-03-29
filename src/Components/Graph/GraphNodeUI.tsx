@@ -16,6 +16,7 @@ import { SettingControl, getSettingHeight } from "./SettingControl";
 import { useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
+import { useSelection } from "../../Hooks/useSelection";
 
 const AnimatedG = animated(styled.g`
   & > g > rect {
@@ -61,11 +62,15 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   const bind = useGesture(
     {
-      onDrag: ({ movement: [mx, my], tap }) => {
+      onDrag: ({ movement: [mx, my], tap, elapsedTime }) => {
         if (!tap) {
           onMove(mx * viewPortScale, my * viewPortScale, false);
           if (!dragged) {
             setDragged(true);
+          }
+        } else {
+          if (elapsedTime > 1000) {
+            useSelection.getState().toggleSetMode(true);
           }
         }
       },
@@ -74,7 +79,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         setDragged(false);
       },
     },
-    { drag: { filterTaps: true } }
+    { drag: { filterTaps: false } }
   );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
@@ -102,7 +107,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   });
 
   return (
-    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""}>
+    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""} onContextMenu={(e) => e.stopPropagation()}>
       <animated.g style={styles}>
         <rect width="300" height={GetNodeHeight(node, definition)} style={{}} rx="5" {...bind()} onClick={onTap}></rect>
         {Icon && (
@@ -125,7 +130,8 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           style={{
             touchAction: "none",
           }}
-          onClick={onTap}>
+          onClick={onTap}
+        >
           {definition.label || definition.id}
         </text>
         {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
@@ -135,10 +141,10 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           return <PortView y={50 + 32 * i} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)} location="inputData" nodeId={node.id}></PortView>;
         })}
         {Object.entries(node.execOutputs).map(([id], i) => {
-          return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} label={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
-          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label || item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
         })}
         {definition.settings.map((item, i) => {
           const isGlobal = item.globalKey !== undefined;

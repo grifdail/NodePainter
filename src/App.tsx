@@ -6,6 +6,7 @@ import { Router } from "./Components/Router";
 import { useRouter } from "./Hooks/useRouter";
 import { usePlayerPref } from "./Hooks/usePlayerPref";
 import { Routes } from "./Types/Routes";
+import { Tooltip } from "react-tooltip";
 
 function App() {
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <Graph></Graph>
       <Router />
+      <Tooltip id="tooltip"></Tooltip>
     </div>
   );
 }

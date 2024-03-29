@@ -1,11 +1,10 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { original } from "immer";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { VectorLength, VectorTypeslimited } from "../../Types/PortType";
 import { createColor, createVector2, createVector3 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { original } from "immer";
-import { VectorLength } from "../../Types/PortType";
-import { VectorTypeslimited } from "../../Types/PortType";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const ComposeNode: NodeDefinition = {
   id: "Compose",
@@ -27,7 +26,7 @@ export const ComposeNode: NodeDefinition = {
       label: "y",
     },
   ],
-  dataOutputs: [{ id: "out", type: "vector4", defaultValue: createVector2() }],
+  dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2() }],
   executeOutputs: [],
   settings: [],
   defaultType: "vector2",

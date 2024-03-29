@@ -23,9 +23,10 @@ export function PortView({ y, portData, onClick, onValueChange, nodeId, location
           {!portData.hasConnection && PortSettings && <PortSettings onChange={onValueChange} value={portData.ownValue} />}
         </div>
       </PortForeignObject>
-
-      <circle cx={0} cy={15} r={15} onClick={onClick}></circle>
-      <Icon x="-12" y="3" scale={10} onClick={onClick}></Icon>
+      <g data-tooltip-id="tooltip" data-tooltip-content={portData.label || portData.id}>
+        <circle cx={0} cy={15} r={15} onClick={onClick}></circle>
+        <Icon x="-12" y="3" scale={10} onClick={onClick}></Icon>
+      </g>
     </StyledPortGroup>
   );
 }
