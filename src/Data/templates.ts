@@ -1,5 +1,5 @@
-import { NodeDefinition } from "../Types/NodeDefinition";
 import { NodeCollection } from "../Types/NodeCollection";
+import { NodeDefinition } from "../Types/NodeDefinition";
 
 export type SketchTemplate = {
   nodes: NodeCollection;
@@ -126,9 +126,14 @@ export const ThreeDTemplate: SketchTemplate = {
       type: "Start",
       id: "Start",
       dataInputs: {},
-      settings: { width: 400, height: 400 },
+      settings: {
+        width: 400,
+        height: 400,
+      },
       dataOutputs: {},
-      execOutputs: { execute: "Render3D" },
+      execOutputs: {
+        execute: "Render3D",
+      },
       positionX: 0,
       positionY: 0,
       selectedType: "unknown",
@@ -137,25 +142,93 @@ export const ThreeDTemplate: SketchTemplate = {
       type: "Render3D",
       id: "Render3D",
       dataInputs: {},
-      settings: { width: 400, height: 400, when: "Everytime" },
-      dataOutputs: { image: { id: "image", type: "image", defaultValue: null } },
-      execOutputs: { draw: null, execute: "DrawMainImage" },
+      settings: {
+        width: 400,
+        height: 400,
+        when: "Everytime",
+      },
+      dataOutputs: {
+        image: {
+          id: "image",
+          type: "image",
+          defaultValue: null,
+        },
+      },
+      execOutputs: {
+        draw: "ThenNode",
+        execute: "DrawMainImage",
+      },
       positionX: 400,
-      positionY: 1.0,
+      positionY: 1,
       selectedType: "unknown",
     },
     DrawMainImage: {
       type: "DrawImage",
       id: "DrawMainImage",
       dataInputs: {
-        image: { id: "image", type: "image", ownValue: null, hasConnection: true, connectedNode: "Render3D", connectedPort: "image" },
-        pos: { id: "pos", type: "vector2", ownValue: [0, 0], hasConnection: false, connectedNode: null, connectedPort: null },
-        dim: { id: "dim", type: "vector2", ownValue: [400, 400], hasConnection: false, connectedNode: null, connectedPort: null },
+        image: {
+          id: "image",
+          type: "image",
+          ownValue: null,
+          hasConnection: true,
+          connectedNode: "Render3D",
+          connectedPort: "image",
+        },
+        pos: {
+          id: "pos",
+          type: "vector2",
+          ownValue: [0, 0],
+          hasConnection: false,
+          connectedNode: null,
+          connectedPort: null,
+        },
+        dim: {
+          id: "dim",
+          type: "vector2",
+          ownValue: [400, 400],
+          hasConnection: false,
+          connectedNode: null,
+          connectedPort: null,
+        },
       },
       settings: {},
       dataOutputs: {},
       execOutputs: {},
-      positionX: 1000,
+      positionX: 900,
+      positionY: 200,
+      selectedType: "unknown",
+    },
+    ThenNode: {
+      type: "Then",
+      id: "ThenNode",
+      dataInputs: {},
+      settings: {},
+      dataOutputs: {},
+      execOutputs: {
+        "0": "FillBackground",
+        "1": null,
+      },
+      positionX: 900,
+      positionY: 0,
+      selectedType: "unknown",
+    },
+    FillBackground: {
+      type: "FillBackground",
+      id: "FillBackground",
+      dataInputs: {
+        color: {
+          id: "color",
+          type: "color",
+          ownValue: [1, 1, 1, 1],
+          hasConnection: false,
+          connectedNode: null,
+          connectedPort: null,
+        },
+      },
+      settings: {},
+      dataOutputs: {},
+      execOutputs: {},
+      positionX: 1300,
       positionY: 0,
       selectedType: "unknown",
     },
