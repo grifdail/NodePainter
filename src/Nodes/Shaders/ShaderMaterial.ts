@@ -43,6 +43,9 @@ export const ShaderMaterial: MaterialNodeDefinition = {
   applyMaterial(context, mat, isStrokeOnly) {
     if (mat.shader !== undefined && mat.uniforms !== undefined) {
       ApplyUniformFromData(mat.shader, context, mat.uniforms);
+
+      context.target.noFill();
+      context.target.noStroke();
       context.target.shader(mat.shader);
     }
   },

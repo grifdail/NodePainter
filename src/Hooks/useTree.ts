@@ -9,6 +9,8 @@ import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { START_NODE } from "../Nodes/System/StartNode";
+import { EDirection } from "../Types/EDirection";
+import { NodeCollection } from "../Types/NodeCollection";
 import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
@@ -380,6 +382,7 @@ export const useTree = create<TreeStore>()(
                 }
               }
               state.editedGraph = def.id;
+              resetCamera();
             })
           );
           get().enforceValidGraph();
@@ -482,7 +485,7 @@ export const useTree = create<TreeStore>()(
                   });
                 }
               });
-              console.log(current(state));
+              resetCamera();
             })
           );
           return true;
@@ -506,6 +509,31 @@ export const useTree = create<TreeStore>()(
             nodes: { ...state.nodes, ...customFunctionData.nodes },
             customNodes: { ...state.customNodes, ...Object.fromEntries(customFunctionData.definitions.map((item) => [item.id, item])) },
           }));
+          resetCamera();
+        },
+        freeSpace(direction, amount, offsetX, offsetY) {
+          set(
+            produce((state) => {
+              Object.entries(state.nodes as NodeCollection).forEach(([key, node]) => {
+                if (node.graph === state.editedGraph) {
+                  if (direction & EDirection.Horizontal) {
+                    if (node.positionX < offsetX) {
+                      state.nodes[key].positionX -= amount;
+                    } else {
+                      state.nodes[key].positionX += amount;
+                    }
+                  }
+                  if (direction & EDirection.Vertical) {
+                    if (node.positionY < offsetY) {
+                      state.nodes[key].positionY -= amount;
+                    } else {
+                      state.nodes[key].positionY += amount;
+                    }
+                  }
+                }
+              });
+            })
+          );
         },
       };
       return a;

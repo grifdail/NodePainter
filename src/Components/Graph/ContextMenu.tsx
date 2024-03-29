@@ -3,9 +3,10 @@ import { useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { resetCamera } from "../../Utils/resetCamera";
-import { IconPlus, IconViewportWide } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsVertical, IconFocusCentered, IconPlus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
+import { EDirection } from "../../Types/EDirection";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -37,9 +38,13 @@ export function ContextMenu(props: ContextMenuProps) {
     }
     return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
   });
-  const onClick = (node: NodeDefinition) => {
+
+  const getClickPositionWorld = (): [number, number] => {
     var view = useViewbox.getState();
-    useTree.getState().addNode(node.id, view.x + props.anchorPoint.x * view.scale, view.y + props.anchorPoint.y * view.scale);
+    return [view.x + props.anchorPoint.x * view.scale, view.y + props.anchorPoint.y * view.scale];
+  };
+  const onClick = (node: NodeDefinition) => {
+    useTree.getState().addNode(node.id, ...getClickPositionWorld());
     usePlayerPref.getState().markNodeAsUsed(node.id);
     props.onClose();
   };
@@ -68,8 +73,7 @@ export function ContextMenu(props: ContextMenuProps) {
             <IconPlus />
             Add Node
           </>
-        }
-      >
+        }>
         {Object.entries(categories).map(([category, content]) => (
           <SubMenu label={category} overflow="auto" key={category}>
             {content.map((item) => (
@@ -80,7 +84,13 @@ export function ContextMenu(props: ContextMenuProps) {
       </SubMenu>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => resetCamera()}>
-        <IconViewportWide /> Reset Camera
+        <IconFocusCentered /> Reset Camera
+      </MenuItem>
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Horizontal, 500, ...getClickPositionWorld())}>
+        <IconArrowsHorizontal /> Make room horizontaly
+      </MenuItem>
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...getClickPositionWorld())}>
+        <IconArrowsVertical /> Make room verticaly
       </MenuItem>
     </ControlledMenu>
   );
