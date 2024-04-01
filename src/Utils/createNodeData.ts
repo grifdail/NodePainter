@@ -7,7 +7,7 @@ import { createPortConnectionsForInputsDefinition } from "./createPortConnection
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
-  return {
+  var node = {
     type: def.id,
     id: id || "node" + nanoid().replaceAll("_", "y"),
     dataInputs: createPortConnectionsForInputsDefinition(def),
@@ -19,4 +19,11 @@ export function createNodeData(def: NodeDefinition, x: number, y: number, id: st
     selectedType: def.defaultType ? def.defaultType : def.availableTypes ? def.availableTypes[0] : "unknown",
     graph: graph,
   };
+  if (def.onChangeType && def.availableTypes !== undefined) {
+    def.onChangeType(node, def.defaultType || def.availableTypes[0]);
+  }
+  if (def.onCreate) {
+    def.onCreate(node);
+  }
+  return node;
 }

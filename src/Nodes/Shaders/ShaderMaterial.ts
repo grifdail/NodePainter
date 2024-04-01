@@ -41,7 +41,7 @@ export const ShaderMaterial: MaterialNodeDefinition = {
   id: "ShaderMaterial",
   hideInLibrary: true,
   icon: IconPhoto,
-  description: "Use a shader to render the material",
+  description: "[WIP] Use a shader to render the material",
   dataInputs: [],
   dataOutputs: [{ id: "material", type: "material", defaultValue: createDefaultMaterial() }],
   tags: ["Shader", "Material"],
@@ -53,7 +53,7 @@ export const ShaderMaterial: MaterialNodeDefinition = {
     let shader = context.blackboard[keyShader];
     if (!shader) {
       try {
-        const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
+        //const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
         shader = context.target.createShader(VERTEX_SHADER, FRAG_SHADER);
         context.blackboard[keyShader] = shader;
       } catch (error) {

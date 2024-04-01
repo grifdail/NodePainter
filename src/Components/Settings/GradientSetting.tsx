@@ -92,6 +92,10 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
     }
   }
 
+  function spaceEvenly() {
+    onChange(list.map((stop, i) => ({ pos: i / (list.length - 1), color: stop.color })));
+  }
+
   return (
     <div>
       <GradientPreview gradient={list} />
@@ -138,6 +142,8 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
               <MenuItemWithGradientPreview id={key} key={key} value={value} onClick={() => loadGradient(value)} />
             ))}
           </SubMenu>
+          <MenuDivider />
+          <MenuItem onClick={spaceEvenly}>Space Evenly</MenuItem>
         </Menu>
       </ButtonGroup>
     </div>

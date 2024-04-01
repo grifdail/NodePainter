@@ -23,9 +23,15 @@ export function VectorLerp(a: number[], b: number[], t: number): number[] {
 export function VectorMagnitude(vec: number[]): any {
   return Math.sqrt(VectorSquareMagnitude(vec));
 }
+export function VectorDistance(a: number[], b: number[]): any {
+  return Math.sqrt(VectorSquareDistance(a, b));
+}
 
 export function VectorSquareMagnitude(vec: number[]): number {
   return vec.reduce((old, b) => old + b * b, 0);
+}
+export function VectorSquareDistance(a: number[], b: number[]): number {
+  return VectorSquareMagnitude(VectorSubstraction(a, b));
 }
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;

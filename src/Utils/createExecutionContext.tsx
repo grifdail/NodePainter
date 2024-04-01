@@ -48,6 +48,7 @@ export type ExecutionContext = {
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
   getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData | null;
+  getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
 };
 
@@ -101,6 +102,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
     getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material") as MaterialData,
+    getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {

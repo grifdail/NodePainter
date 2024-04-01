@@ -34,3 +34,6 @@ export const PortTypeDefaultValue: {
 export function createDefaultValue(type: PortType) {
   return PortTypeDefaultValue[type]();
 }
+export function createDefaultVector(type: PortType) {
+  return type === "number" ? [0] : PortTypeDefaultValue[type]();
+}

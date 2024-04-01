@@ -3,7 +3,7 @@ import { GenerateGradient } from "./Color/GenerateGradient";
 import { GradientNode } from "./Color/GradientNode";
 import { HSL } from "./Color/HSL";
 import { HSV } from "./Color/HSV";
-import { PickFromPalette } from "./Color/PickFromPalette";
+import { Palette } from "./Color/PickFromPalette";
 import { SampleGradient } from "./Color/SampleGradient";
 import { SetAlpha } from "./Color/SetAlpha";
 
@@ -105,6 +105,11 @@ import { RegularMaterial } from "./3D/RegularMaterial";
 import { Render3D } from "./3D/Render3D";
 import { TextureMaterial } from "./3D/TextureMaterial";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
+import { Closest } from "./Array/Closest";
+import { Count } from "./Array/Count";
+import { SelectFromArray } from "./Array/SelectFromArray";
+import { StaticArray } from "./Array/StaticArray";
+import { Sum } from "./Array/Sum";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
@@ -151,6 +156,7 @@ import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
+import { Distance } from "./Vector/VectorDistance";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -171,6 +177,7 @@ export const Nodes: Array<NodeDefinition> = [
   Multiply,
   Divide,
   Scale,
+  Distance,
 
   //2D specific
   VectorFromAngle,
@@ -194,7 +201,7 @@ export const Nodes: Array<NodeDefinition> = [
   SetAlpha,
 
   // Color Gradients
-  PickFromPalette,
+  Palette,
   GradientNode,
   SampleGradient,
   GenerateGradient,
@@ -347,6 +354,13 @@ export const Nodes: Array<NodeDefinition> = [
   EmissiveMaterial,
   TextureMaterial,
   WireframeMaterial,
+
+  //Array
+  SelectFromArray,
+  StaticArray,
+  Count,
+  Sum,
+  Closest,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
