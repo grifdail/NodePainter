@@ -11,6 +11,7 @@ import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 
 export type TreeStore = {
+  key: number;
   nodes: NodeCollection;
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };

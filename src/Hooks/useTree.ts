@@ -36,6 +36,7 @@ export const useTree = create<TreeStore>()(
         nodes: createDefaultNodeConnection(),
         customNodes: {} as { [key: string]: NodeDefinition },
         globalSettings: {},
+        key: 0,
         getNode(id: string) {
           return get().nodes[id];
         },
@@ -201,6 +202,7 @@ export const useTree = create<TreeStore>()(
         deleteNode(node) {
           set(
             produce((state) => {
+              state.key++;
               const nodes = state.nodes as { [key: string]: NodeData };
 
               Object.values(nodes).forEach((item: NodeData) => {
@@ -242,11 +244,11 @@ export const useTree = create<TreeStore>()(
           );
         },
         reset() {
-          set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined, globalSettings: {} });
+          set({ nodes: createDefaultNodeConnection(), customNodes: {}, editedGraph: undefined, globalSettings: {}, key: Math.random() });
           resetCamera();
         },
         loadTemplate(temp) {
-          set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {} });
+          set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
           resetCamera();
           return true;
         },
@@ -388,7 +390,7 @@ export const useTree = create<TreeStore>()(
           get().enforceValidGraph();
         },
         setEditedGraph(graph) {
-          set({ editedGraph: graph });
+          set({ editedGraph: graph, key: Math.random() });
         },
         enforceValidGraph() {
           set(
@@ -418,6 +420,7 @@ export const useTree = create<TreeStore>()(
           set(
             produce((_state) => {
               const state = _state as TreeStore;
+              state.key++;
               const currentGraph = state.editedGraph;
               const selectedNodes = selectedNodesId.map((x) => state.nodes[x]);
               const inputs = selectedNodes.flatMap((node) => {

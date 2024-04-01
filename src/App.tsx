@@ -8,6 +8,11 @@ import { usePlayerPref } from "./Hooks/usePlayerPref";
 import { Routes } from "./Types/Routes";
 import { Tooltip } from "react-tooltip";
 
+function GraphCache() {
+  var key = 0; //;useTree((state) => state.key);
+  return <Graph key={key} />;
+}
+
 function App() {
   useEffect(() => {
     setTimeout(() => {
@@ -19,7 +24,7 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Graph></Graph>
+      <GraphCache />
       <Router />
       <Tooltip id="tooltip"></Tooltip>
     </div>

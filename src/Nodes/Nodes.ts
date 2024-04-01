@@ -108,8 +108,10 @@ import { WireframeMaterial } from "./3D/WireframeMaterial";
 import { Closest } from "./Array/Closest";
 import { Count } from "./Array/Count";
 import { SelectFromArray } from "./Array/SelectFromArray";
+import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
+import { GradientFromArray } from "./Color/GradientFromArray";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
@@ -205,6 +207,7 @@ export const Nodes: Array<NodeDefinition> = [
   GradientNode,
   SampleGradient,
   GenerateGradient,
+  GradientFromArray,
 
   // Logic Operator
   AndNode,
@@ -361,6 +364,7 @@ export const Nodes: Array<NodeDefinition> = [
   Count,
   Sum,
   Closest,
+  Slice,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
