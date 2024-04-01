@@ -3,10 +3,10 @@ import { IconFunctionFilled } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
-import { TextInput } from "../Settings/TextInput";
 import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { CustomNodeMainDiv } from "../StyledComponents/CustomNodeMainDiv";
 import { InputPortEdit } from "./InputPortEdit";
+import { CustomNodeModalHeader } from "./CustomNodeModalHeader";
 
 const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "material"];
 const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"];
@@ -18,16 +18,7 @@ export function CustomNodeModal({ close }: { close: () => void }) {
   return (
     <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
-        <section className="header">
-          <fieldset className={context.isNameValid() ? "" : "invalid"}>
-            <label>Name</label>
-            <TextInput disabled={context.mode === "edit"} value={def.id} onChange={context.setId}></TextInput>
-          </fieldset>
-          <fieldset>
-            <label>Can be executed</label>
-            <input type="checkbox" onChange={(e) => context.setCanBeExecuted(!def.canBeExecuted)}></input>
-          </fieldset>
-        </section>
+        <CustomNodeModalHeader context={context} def={def} hasExecuteOption={true}></CustomNodeModalHeader>
         <section>
           <h3>Inputs</h3>
           {def.dataInputs.map((port, i) => (

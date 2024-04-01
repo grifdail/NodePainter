@@ -6,10 +6,10 @@ import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { useSelection } from "../Hooks/useSelection";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
-import { usePlayerPref } from "../Hooks/usePlayerPref";
 import { ReactElement } from "react";
 import { resetCamera } from "../Utils/resetCamera";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
+import { useAllSavedFunction } from "../Hooks/db";
 
 export function FunctionSubMenu() {
   const rawCustomNodes = useTree((state) => state.customNodes);
@@ -65,7 +65,7 @@ export function FunctionSubMenu() {
     setEditedGraph(graph === "main" ? undefined : graph);
     resetCamera();
   };
-  const savedFunctions = Object.entries(usePlayerPref((state) => state.savedFunction));
+  const [savedFunction, saveFunction] = useAllSavedFunction();
 
   return (
     <Menu
@@ -97,12 +97,11 @@ export function FunctionSubMenu() {
       {customSimulationNode.length > 0 && <GraphSelector list={customSimulationNode} setGraph={setGraph} name="Simulations"></GraphSelector>}
 
       <MenuDivider></MenuDivider>
-      {graph !== "main" && <MenuItem onClick={() => usePlayerPref.getState().saveFunction(useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
-      {savedFunctions.some(([key]) => key === graph) && <MenuItem onClick={() => usePlayerPref.getState().removeFunction(graph)}>Remove function from global data</MenuItem>}
-      {savedFunctions.length > 0 && (
+      {graph !== "main" && <MenuItem onClick={() => saveFunction(graph, useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
+      {savedFunction && savedFunction.length > 0 && (
         <SubMenu label="load">
-          {savedFunctions.map(([key, data]) => (
-            <MenuItem onClick={() => useTree.getState().loadCustomeFunction(data)}>{key}</MenuItem>
+          {savedFunction.map((data) => (
+            <MenuItem onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))}>{data.name}</MenuItem>
           ))}
         </SubMenu>
       )}

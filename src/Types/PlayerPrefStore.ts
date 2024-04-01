@@ -1,9 +1,6 @@
-import { ExportedCustomFunction } from "./ExportedCustomFunction";
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
 export type PlayerPrefStore = {
-  savedFunction: { [key: string]: ExportedCustomFunction };
-  saveFunction: (data: ExportedCustomFunction) => void;
   favNodes: string[];
   nodesLastUsedDates: { [key: string]: number };
   nodesUseCount: { [key: string]: number };

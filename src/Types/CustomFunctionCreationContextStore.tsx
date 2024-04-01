@@ -19,5 +19,6 @@ export type CustomFunctionCreationContextStore = {
   openEdit: (node: NodeDefinition, type?: CustomNodeEditingType) => void;
   openCreate: (type?: CustomNodeEditingType, modal?: string) => void;
   isNameValid: () => boolean;
+  setDescription: (value: string) => void;
 };
 export type CustomNodeEditingType = "function" | "shader" | "simulation" | "shaderMaterial";

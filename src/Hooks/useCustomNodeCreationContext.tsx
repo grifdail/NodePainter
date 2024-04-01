@@ -197,10 +197,18 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         })
       );
     },
+
     deletePort(type, index) {
       set(
         produce((state) => {
           state.model[type === "inputData" ? "dataInputs" : "dataOutputs"].splice(index, 1);
+        })
+      );
+    },
+    setDescription(value) {
+      set(
+        produce((state) => {
+          state.model.description = value;
         })
       );
     },

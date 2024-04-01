@@ -16,7 +16,6 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         nodeSorting: "featured",
         palettes: {},
         gradient: {},
-        savedFunction: {},
         colorPreset: DefaultPalettes.Pico8,
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
@@ -67,9 +66,6 @@ export const usePlayerPref = create<PlayerPrefStore>()(
               delete state.palette[name];
             })
           );
-        },
-        saveFunction(data) {
-          set((state) => ({ savedFunction: { ...state.savedFunction, [data.definitions[0].id]: data } }));
         },
         removeFunction(name) {
           set(

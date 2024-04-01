@@ -3,10 +3,10 @@ import { IconFunctionFilled } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
-import { TextInput } from "../Settings/TextInput";
 import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
 import { CustomNodeMainDiv } from "../StyledComponents/CustomNodeMainDiv";
 import { InputPortEdit } from "./InputPortEdit";
+import { CustomNodeModalHeader } from "./CustomNodeModalHeader";
 
 const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string"];
 const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string"];
@@ -18,12 +18,7 @@ export function CustomSimulationModal({ close }: { close: () => void }) {
   return (
     <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
-        <section className="header">
-          <fieldset>
-            <label>Name</label>
-            <TextInput value={def.id} onChange={context.setId}></TextInput>
-          </fieldset>
-        </section>
+        <CustomNodeModalHeader context={context} def={def} hasExecuteOption={false} />
         <section>
           <h3>Params</h3>
           <p>These params can be passed from outside the simulation</p>
