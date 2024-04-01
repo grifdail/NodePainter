@@ -3,7 +3,7 @@ import { useTree } from "../Hooks/useTree";
 import { NodeData } from "../Types/NodeData";
 import { PortDefinition } from "../Types/PortDefinition";
 import { PortRole } from "../Types/PortRole";
-import { canConvert } from "./convertTypeValue";
+import { canConvertCode } from "./convertTypeValue";
 import { createDefaultValue } from "./createDefaultValue";
 
 export const dynamicNodeType = {
@@ -12,7 +12,7 @@ export const dynamicNodeType = {
       console.log(original(self));
       console.log(self.dataInputs);
       self.dataInputs["a"].type = outputPorts.type;
-      if (!canConvert(self.dataInputs["b"].type, outputPorts.type)) {
+      if (!canConvertCode(self.dataInputs["b"].type, outputPorts.type)) {
         useTree.getState().removeDataConnection(self.id, "b");
       }
       self.dataInputs["b"].type = outputPorts.type;

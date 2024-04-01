@@ -1,6 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector3 } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawBox: NodeDefinition = {
@@ -50,7 +50,8 @@ export const DrawBox: NodeDefinition = {
     if (material) {
       context.applyMaterial(material);
     }
-    context.target.box(10, 10, 10);
+    //context.target.box(10, 10, 10);
+    context.target.rect(100, 100, 100, 100);
     context.target.pop();
   },
 };

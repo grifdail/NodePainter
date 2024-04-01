@@ -6,6 +6,11 @@ export const EdgePath = styled(animated.path)`
   stroke: var(--color-property);
   stroke-width: 10px;
   fill: none;
+
+  &[class^="array-"],
+  &[class*=" array-"] {
+    stroke-dasharray: 4;
+  }
 `;
 
 export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
@@ -24,7 +29,6 @@ export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]
           return `M ${xs} ${ys} C ${xs + dx} ${ys} ${xe - dx} ${ye} ${xe} ${ye}`;
         }
         return "";
-      })}
-    ></EdgePath>
+      })}></EdgePath>
   );
 }

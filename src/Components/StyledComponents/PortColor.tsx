@@ -77,4 +77,48 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
     input: undefined,
     tinyIcon: IconQuestionMark,
   },
+  "array-string": {
+    icon: IconQuote,
+    tinyIcon: IconQuote,
+  },
+  "array-number": {
+    icon: IconNumbers,
+    tinyIcon: IconNumbers,
+  },
+  "array-material": {
+    icon: IconPaint,
+    tinyIcon: IconPaint,
+  },
+  "array-vector2": {
+    icon: IconArrowUpRightCircle,
+    tinyIcon: IconNumber2,
+  },
+  "array-color": {
+    icon: IconPalette,
+    tinyIcon: IconPalette,
+  },
+  "array-bool": {
+    icon: IconToggleLeft,
+    tinyIcon: IconToggleLeft,
+  },
+  "array-image": {
+    icon: IconPhoto,
+    tinyIcon: IconPhoto,
+  },
+  "array-gradient": {
+    icon: IconColorSwatch,
+    tinyIcon: IconColorSwatch,
+  },
+  "array-vector": {
+    icon: IconArrowUpRightCircle,
+    tinyIcon: IconArrowUpRightCircle,
+  },
+  "array-vector3": {
+    icon: IconArrowUpRightCircle,
+    tinyIcon: IconNumber3,
+  },
+  "array-vector4": {
+    icon: IconArrowUpRightCircle,
+    tinyIcon: IconNumber4,
+  },
 };

@@ -1,6 +1,6 @@
 import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
-import { canConvert } from "./convertTypeValue";
+import { canConvertCode } from "./convertTypeValue";
 
 export function ensureValidGraph(state: any) {
   for (let nodeId in state.nodes) {
@@ -20,7 +20,7 @@ export function ensureValidGraph(state: any) {
         }
 
         let defPort = targetNode.dataOutputs[port.connectedPort as string];
-        if (!defPort || !canConvert(defPort.type, port.type)) {
+        if (!defPort || !canConvertCode(defPort.type, port.type)) {
           port.hasConnection = false;
           port.connectedNode = null;
           port.connectedPort = null;

@@ -25,39 +25,51 @@
   user-zoom: none;
 }
 
-.number {
+.number,
+.array-number {
   --color-property: var(--color-number);
 }
-.execute {
+.execute,
+.array-execute {
   --color-property: var(--color-execute);
 }
-.vector {
+.vector,
+.array-vector {
   --color-property: var(--color-vector2);
 }
-.vector2 {
+.vector2,
+.array-vector2 {
   --color-property: var(--color-vector2);
 }
-.vector3 {
+.vector3,
+.array-vector3 {
   --color-property: var(--color-vector3);
 }
-.vector4 {
+.vector4,
+.array-vector4 {
   --color-property: var(--color-vector4);
 }
-.string {
+.string,
+.array-string {
   --color-property: var(--color-string);
 }
-.bool {
+.bool,
+.array-bool {
   --color-property: var(--color-bool);
 }
-.color {
+.color,
+.array-color {
   --color-property: var(--color-color);
 }
-.gradient {
+.gradient,
+.array-gradient {
   --color-property: var(--color-gradient);
 }
-.image {
+.image,
+.array-image {
   --color-property: var(--color-image);
 }
-.material {
+.material,
+.array-material {
   --color-property: var(--color-material);
 }

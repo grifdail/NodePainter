@@ -9,6 +9,7 @@ import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { usePlayerPref } from "../Hooks/usePlayerPref";
 import { ReactElement } from "react";
 import { resetCamera } from "../Utils/resetCamera";
+import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 
 export function FunctionSubMenu() {
   const rawCustomNodes = useTree((state) => state.customNodes);
@@ -28,7 +29,7 @@ export function FunctionSubMenu() {
   ];
   const customShaderNode = [
     ...Object.values(rawCustomNodes)
-      .filter((item) => item.executeAs === CUSTOM_SHADER)
+      .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === SHADER_MATERIAL)
       .map((node) => node.id),
   ];
   const customSimulationNode = [
@@ -44,6 +45,9 @@ export function FunctionSubMenu() {
   };
   const openCreateShaderModal = () => {
     useCustomNodeCreationContext.getState().openCreate("shader");
+  };
+  const openCreateShaderMaterialModal = () => {
+    useCustomNodeCreationContext.getState().openCreate("shaderMaterial", "shader");
   };
   const opencreateSimulation = () => {
     useCustomNodeCreationContext.getState().openCreate("simulation");
@@ -80,6 +84,9 @@ export function FunctionSubMenu() {
       </MenuItem>
       <MenuItem onClick={openCreateShaderModal}>
         <IconPhotoScan /> Create New Shader
+      </MenuItem>
+      <MenuItem onClick={openCreateShaderMaterialModal}>
+        <IconPhotoScan /> Create new Shader Material
       </MenuItem>
       <MenuItem onClick={opencreateSimulation}>
         <IconRepeat /> Create New Simulation

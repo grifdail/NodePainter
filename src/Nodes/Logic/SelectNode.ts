@@ -1,7 +1,7 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { AllTypes, PortTypeArray } from "../../Types/PortType";
+import { PortTypeArray } from "../../Types/PortType";
 import { createColor } from "../../Types/vectorDataType";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
@@ -53,7 +53,7 @@ export const Select: NodeDefinition = {
   settings: [],
   canBeExecuted: false,
   defaultType: "color",
-  availableTypes: AllTypes,
+  availableTypes: PortTypeArray,
   onChangeType(node, type) {
     Object.keys(node.dataInputs)
       .filter((data) => data !== "index")

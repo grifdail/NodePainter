@@ -1,8 +1,8 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { CommonTypes } from "../../Types/PortType";
 import { createColor } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { AllTypes } from "../../Types/PortType";
 
 export const SwitchNode: NodeDefinition = {
   id: "Switch",
@@ -17,7 +17,7 @@ export const SwitchNode: NodeDefinition = {
   dataOutputs: [{ id: "result", type: "color", defaultValue: createColor(0, 0, 0, 1) }],
   executeOutputs: [],
   settings: [],
-  availableTypes: AllTypes,
+  availableTypes: CommonTypes,
   defaultType: "color",
   onChangeType: changeTypeGenerator(["true", "false"], ["result"]),
   getData: (portId, nodeData, context) => {

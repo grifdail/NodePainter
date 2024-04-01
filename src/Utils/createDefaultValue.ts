@@ -1,6 +1,6 @@
 import { PortType } from "../Types/PortType";
+import { createColor, createDefaultGradient, createVector2, createVector3, createVector4 } from "../Types/vectorDataType";
 import { createDefaultMaterial } from "./createDefaultMaterial";
-import { createVector2, createVector3, createVector4, createColor, createDefaultGradient } from "../Types/vectorDataType";
 
 export const PortTypeDefaultValue: {
   [key in PortType]: () => any;
@@ -18,6 +18,17 @@ export const PortTypeDefaultValue: {
   execute: () => null,
   material: () => createDefaultMaterial(),
   unknown: () => null,
+  "array-string": () => [],
+  "array-number": () => [],
+  "array-vector2": () => [],
+  "array-color": () => [],
+  "array-bool": () => [],
+  "array-image": () => [],
+  "array-gradient": () => [],
+  "array-vector": () => [],
+  "array-vector3": () => [],
+  "array-vector4": () => [],
+  "array-material": () => [],
 };
 
 export function createDefaultValue(type: PortType) {

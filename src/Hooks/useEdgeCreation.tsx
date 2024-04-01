@@ -1,6 +1,6 @@
 import { PortRole } from "../Types/PortRole";
 import { PortType } from "../Types/PortType";
-import { canConvert } from "../Utils/convertTypeValue";
+import { canConvertCode } from "../Utils/convertTypeValue";
 import { PortSelection, usePortSelection } from "./usePortSelection";
 import { useTree } from "./useTree";
 
@@ -13,7 +13,7 @@ export function useEdgeCreation() {
 
     var rightType = tree.getNode(right.node).dataInputs[right.port].type;
 
-    if (canConvert(leftType, rightType)) {
+    if (canConvertCode(leftType, rightType)) {
       tree.addEdge(left.node, left.port, right.node, right.port);
     }
   }

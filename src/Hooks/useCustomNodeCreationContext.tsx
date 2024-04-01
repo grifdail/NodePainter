@@ -10,6 +10,8 @@ import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunction
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { Routes } from "../Types/Routes";
+import { createDefaultMaterial } from "../Utils/createDefaultMaterial";
+import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -58,6 +60,24 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       useTree.getState().createShader(node);
     },
   },
+  shaderMaterial: {
+    baseNode: {
+      id: "custom-shader-material",
+      hideInLibrary: false,
+      IsUnique: false,
+      description: "Custom Shader",
+      tags: ["Custom"],
+      dataInputs: [],
+      dataOutputs: [{ id: "mat", type: "material", defaultValue: createDefaultMaterial() }],
+      executeOutputs: [],
+      settings: [],
+      executeAs: SHADER_MATERIAL,
+      canBeExecuted: false,
+    },
+    create: function (node: NodeDefinition): void {
+      useTree.getState().createShader(node);
+    },
+  },
   simulation: {
     baseNode: {
       id: "custom-simulation",
@@ -98,14 +118,14 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
       });
       useRouter.getState().open(`custom-${type}` as Routes);
     },
-    openCreate(type: CustomNodeType = "function") {
+    openCreate(type: CustomNodeType = "function", modal?: string) {
       var base: NodeDefinition = createNewFunctionDefinition(type);
       set({
         mode: "create",
         type: type,
         model: base,
       });
-      useRouter.getState().open(`custom-${type}` as Routes);
+      useRouter.getState().open(`custom-${modal || type}` as Routes);
     },
     setId: (id: string) => {
       set(

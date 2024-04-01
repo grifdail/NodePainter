@@ -18,6 +18,11 @@ export const StyledPortGroup = styled.g`
     stroke-width: 2px;
   }
 
+  &[class^="array-"] circle,
+  &[class*=" array-"] circle {
+    stroke-dasharray: 4 1;
+  }
+
   & svg {
     stroke: var(--color-property);
   }
