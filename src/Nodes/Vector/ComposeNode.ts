@@ -1,5 +1,4 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
-import { original } from "immer";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { VectorLength, VectorTypeslimited } from "../../Types/PortType";
 import { createColor, createVector2, createVector3 } from "../../Types/vectorDataType";
@@ -33,7 +32,6 @@ export const ComposeNode: NodeDefinition = {
   availableTypes: [...VectorTypeslimited, "color"],
   onChangeType(node, type) {
     var count = VectorLength[type as string];
-    console.log(original(node.dataInputs));
     for (var i = 0; i < 4; i++) {
       if (i >= count) {
         if (node.dataInputs[i.toString()] !== undefined) {
