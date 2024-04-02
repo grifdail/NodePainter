@@ -1,6 +1,6 @@
+import { PortConnection } from "./PortConnection";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
-import { PortConnection } from "./PortConnection";
 
 export type NodeData = {
   id: string;
@@ -13,4 +13,5 @@ export type NodeData = {
   positionX: number;
   positionY: number;
   selectedType: PortType;
+  label?: string;
 };

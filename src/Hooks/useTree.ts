@@ -165,7 +165,7 @@ export const useTree = create<TreeStore>()(
         executeCallback(nodeId, fn) {
           set(
             produce((state) => {
-              fn(state.nodes[nodeId]);
+              fn(state.nodes[nodeId], state as TreeStore);
             })
           );
         },
@@ -537,6 +537,15 @@ export const useTree = create<TreeStore>()(
               });
             })
           );
+        },
+        createBlackboardNode(type, key, name, x, y) {
+          const newNodeData = createNodeData(get().getNodeTypeDefinition("Blackboard"), x, y);
+          newNodeData.graph = get().editedGraph;
+          newNodeData.label = name;
+          newNodeData.dataOutputs["value"].type = type;
+          newNodeData.settings.key = key;
+          console.log(newNodeData);
+          set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
         },
       };
       return a;

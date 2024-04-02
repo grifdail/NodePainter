@@ -12,6 +12,11 @@ export type SettingComponent = (({ onChange, value, def }: { onChange: (value: a
   getSize: (value: any, def: SettingDefinition) => number;
 };
 
+export const EmptySetting = ({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => {
+  return null;
+};
+EmptySetting.getSize = (value: any, def: SettingDefinition) => 0;
+
 export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   dropdown: DropdownSetting,
   palette: PaletteSetting,
@@ -20,4 +25,5 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   gradient: GradientSetting,
   "image-upload": ImageUploadSetting,
   envelope: EnvelopeSetting,
+  hidden: EmptySetting,
 };

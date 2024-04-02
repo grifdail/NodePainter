@@ -29,7 +29,7 @@ export type NodeDefinition = {
   canBeExecuted?: boolean;
   bindPort?: (portId: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   unbindPort?: (portId: string, self: NodeData, selfPosition: PortRole) => void;
-  contextMenu?: { [key: string]: (node: NodeData) => void };
+  contextMenu?: { [key: string]: (node: NodeData, tree: TreeStore) => void };
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];
   defaultType?: PortType;

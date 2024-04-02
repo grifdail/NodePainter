@@ -107,6 +107,7 @@ import { TextureMaterial } from "./3D/TextureMaterial";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
 import { Closest } from "./Array/Closest";
 import { Count } from "./Array/Count";
+import { GenerateArray } from "./Array/GenerateArray";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
@@ -154,6 +155,7 @@ import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
+import { Blackboard } from "./System/Blackboard";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { SeededRandom } from "./Vector/SeededRandom";
@@ -196,6 +198,7 @@ export const Nodes: Array<NodeDefinition> = [
   FocalLength,
   CrossProduct,
   Value,
+  Blackboard,
 
   // Color
   HSL,
@@ -365,6 +368,7 @@ export const Nodes: Array<NodeDefinition> = [
   Sum,
   Closest,
   Slice,
+  GenerateArray,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

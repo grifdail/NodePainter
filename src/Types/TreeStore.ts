@@ -41,7 +41,7 @@ export type TreeStore = {
   createSimulation: (def: NodeDefinition) => void;
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;
-  executeCallback: (nodeId: string, fn: (node: NodeData) => void) => void;
+  executeCallback: (nodeId: string, fn: (node: NodeData, tree: TreeStore) => void) => void;
   changeNodeType: (id: string, type: PortType) => void;
   getCustomNodeEditingType: () => CustomNodeEditingType;
   createFunctionFromNodes: (nodesId: string[], id: string) => boolean;
@@ -49,4 +49,5 @@ export type TreeStore = {
   loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
   getSketchName: () => string;
   freeSpace: (direction: EDirection, amount: number, offsetX: number, offsetY: number) => void;
+  createBlackboardNode: (type: PortType, key: string, name: string, x: number, y: number) => void;
 };
