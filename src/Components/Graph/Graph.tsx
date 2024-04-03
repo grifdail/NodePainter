@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
 import { useSpring, animated, useSprings } from "@react-spring/web";
 import { useMeasure } from "@uidotdev/usehooks";
@@ -40,18 +40,22 @@ export function Graph() {
 
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
 
-  const nodes = Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph);
+  const nodes = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
 
-  const edges = nodes.flatMap((node) => {
-    return [
-      ...Object.entries(node.dataInputs)
-        .filter(([key, port]) => port.hasConnection)
-        .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]),
-      ...Object.entries(node.execOutputs)
-        .filter(([key, connection]) => connection != null)
-        .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
-    ];
-  });
+  const edges = useMemo(
+    () =>
+      nodes.flatMap((node) => {
+        return [
+          ...Object.entries(node.dataInputs)
+            .filter(([key, port]) => port.hasConnection)
+            .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]),
+          ...Object.entries(node.execOutputs)
+            .filter(([key, connection]) => connection != null)
+            .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
+        ];
+      }),
+    [nodes]
+  );
 
   const [nodePositionSpring, nodePositionSpringApi] = useSprings(
     nodes.length,
@@ -62,53 +66,63 @@ export function Graph() {
     },
     [nodes]
   );
-  const ports = Object.fromEntries(
-    nodes.map((node, i) => {
-      const executeOutputCount = Object.values(node.execOutputs).length;
-      var xy = nodePositionSpring[i].xy;
-      return [
-        node.id,
-        {
-          ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + 50 + 32 * i + 15])])),
-          ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)])])),
-          ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15])])),
-          [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
-        },
-      ];
-    })
+  const ports = useMemo(
+    () =>
+      Object.fromEntries(
+        nodes.map((node, i) => {
+          const executeOutputCount = Object.values(node.execOutputs).length;
+          var xy = nodePositionSpring[i].xy;
+          return [
+            node.id,
+            {
+              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + 50 + 32 * i + 15])])),
+              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)])])),
+              ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15])])),
+              [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
+            },
+          ];
+        })
+      ),
+    [nodePositionSpring, nodes]
   );
 
-  function getNodePort(nodeId: string, portId: string, type = "in") {
-    return (ports[nodeId] as any)?.[`${portId}-${type}`];
-  }
+  const getNodePort = useCallback(
+    function getNodePort(nodeId: string, portId: string, type = "in") {
+      return (ports[nodeId] as any)?.[`${portId}-${type}`];
+    },
+    [ports]
+  );
 
-  function onTapNode(node: NodeData): void {
+  const onTapNode = useCallback(function onTapNode(node: NodeData): void {
     var selection = useSelection.getState();
     if (selection.isInSelectionMode) {
       selection.toggleNode(node.id);
     }
-  }
+  }, []);
 
-  function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
-    let selectedNode = useSelection.getState().nodes;
-    if (selectedNode.length <= 0) {
-      selectedNode = [nodes[i].id];
-    }
-    if (isDefinitive) {
-      for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {
-        const node = tree.nodes[selectedNode[selectionIndex]];
-        tree.setNodePosition(selectedNode[selectionIndex], node.positionX + x, node.positionY + y);
+  const onMoveNode = useCallback(
+    function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
+      let selectedNode = useSelection.getState().nodes;
+      if (selectedNode.length <= 0) {
+        selectedNode = [nodes[i].id];
       }
-    } else {
-      nodePositionSpringApi.start((i2) => {
-        const node = nodes[i2];
-        if (selectedNode.includes(node.id)) {
-          return { xy: [node.positionX + x, node.positionY + y] };
+      if (isDefinitive) {
+        for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {
+          const node = tree.nodes[selectedNode[selectionIndex]];
+          tree.setNodePosition(selectedNode[selectionIndex], node.positionX + x, node.positionY + y);
         }
-        return {};
-      });
-    }
-  }
+      } else {
+        nodePositionSpringApi.start((i2) => {
+          const node = nodes[i2];
+          if (selectedNode.includes(node.id)) {
+            return { xy: [node.positionX + x, node.positionY + y] };
+          }
+          return {};
+        });
+      }
+    },
+    [nodePositionSpringApi, nodes, tree]
+  );
 
   return (
     <div style={{ width: "100%", height: "100%", position: "absolute" }}>

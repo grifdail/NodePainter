@@ -6,6 +6,7 @@ import { resetCamera } from "../Utils/resetCamera";
 import { SketchTemplate, Templates } from "../Data/templates";
 import { Sketch, useAllSavedSketch } from "../Hooks/db";
 import { Routes } from "../Types/Routes";
+import { useCallback } from "react";
 
 export function MainMenu() {
   const openModal = useRouter((state) => state.open);
@@ -18,12 +19,15 @@ export function MainMenu() {
     useTree.getState().loadTemplate(template);
   }
 
-  function saveCurrentSketch() {
-    var tree = useTree.getState();
-    const name = tree.getSketchName();
-    const content = tree.exportTemplate();
-    saveSketch(name, content);
-  }
+  const saveCurrentSketch = useCallback(
+    function saveCurrentSketch() {
+      var tree = useTree.getState();
+      const name = tree.getSketchName();
+      const content = tree.exportTemplate();
+      saveSketch(name, content);
+    },
+    [saveSketch]
+  );
 
   return (
     <Menu
@@ -32,8 +36,7 @@ export function MainMenu() {
         <button data-tooltip-id="tooltip" data-tooltip-content="Menu">
           <IconMenu2></IconMenu2>
         </button>
-      }
-    >
+      }>
       <MenuItem onClick={() => openModal(Routes.About)}>
         <IconInfoCircle />
         About
@@ -47,8 +50,7 @@ export function MainMenu() {
           <>
             <IconFile></IconFile> New
           </>
-        }
-      >
+        }>
         <MenuItem onClick={reset}>Default</MenuItem>
         {Object.entries(Templates).map(([key, value]) => (
           <MenuItem onClick={() => loadTemplate(value)} key={key}>
@@ -62,8 +64,7 @@ export function MainMenu() {
           <>
             <IconDeviceFloppy></IconDeviceFloppy> Save & Load
           </>
-        }
-      >
+        }>
         <MenuItem onClick={() => openModal(Routes.Save)}>Save to JSON</MenuItem>
         <MenuItem onClick={() => saveCurrentSketch()}>Save</MenuItem>
         <MenuDivider></MenuDivider>

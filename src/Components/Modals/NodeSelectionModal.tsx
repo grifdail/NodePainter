@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
+import { useShallow } from "zustand/react/shallow";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -180,43 +181,54 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
 export function NodeSelectionModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
 
-  const searchTerm = searchTermRaw.trim().toLowerCase();
+  const searchTerm = useMemo(() => searchTermRaw.trim().toLowerCase(), [searchTermRaw]);
   const nodeFav = usePlayerPref();
   const [selectedCategory, setCategory] = useState("");
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
-  const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
-    if (item.hideInLibrary) {
-      return false;
-    }
-    return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
-  });
+  const treeShaderLib = useTree(useShallow((state) => state.getNodeLibrary()));
+  const nodeLibrary = useMemo(
+    () =>
+      Object.values(treeShaderLib).filter((item) => {
+        if (item.hideInLibrary) {
+          return false;
+        }
+        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
+      }),
+    [isShader, treeShaderLib]
+  );
 
-  const filteredList = nodeLibrary.filter((item) => {
-    if (item.hideInLibrary) {
-      return false;
-    }
-    if (!!selectedCategory) {
-      if (!item.tags.includes(selectedCategory)) {
-        return false;
-      }
-    }
+  const filteredList = useMemo(
+    () =>
+      nodeLibrary.filter((item) => {
+        if (item.hideInLibrary) {
+          return false;
+        }
+        if (!!selectedCategory) {
+          if (!item.tags.includes(selectedCategory)) {
+            return false;
+          }
+        }
 
-    return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
-  });
-  sortNodeList(nodeFav, filteredList);
+        return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
+      }),
+    [nodeLibrary, searchTerm, selectedCategory]
+  );
+  const finalList = useMemo(() => sortNodeList(nodeFav, filteredList), [filteredList, nodeFav]);
 
-  const tags = nodeLibrary.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index);
-
+  const tags = useMemo(() => nodeLibrary.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index), [nodeLibrary]);
   tags.splice(0, 0, "all");
 
   const addNode = useTree((state) => state.addNode);
 
-  const onClickNode = (node: NodeDefinition) => {
-    var view = useViewbox.getState();
-    addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
-    nodeFav.markNodeAsUsed(node.id);
-    close();
-  };
+  const onClickNode = useCallback(
+    (node: NodeDefinition) => {
+      var view = useViewbox.getState();
+      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
+      nodeFav.markNodeAsUsed(node.id);
+      close();
+    },
+    [addNode, close, nodeFav]
+  );
 
   return (
     <Modal title="Add a new node" icon={IconPlus} onClose={close} big>
@@ -255,7 +267,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
           </div>
 
           <menu>
-            {filteredList.map((item) => (
+            {finalList.map((item) => (
               <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.favNodes.includes(item.id)} />
             ))}
           </menu>
@@ -279,6 +291,7 @@ function sortNodeList(nodeFav: PlayerPrefStore, filteredList: NodeDefinition[]) 
   } else {
     filteredList.sort(sortWithPriority(favSorting, idSorting, featuredSorting));
   }
+  return filteredList;
 }
 
 function compareFav(nodeFav: PlayerPrefStore) {

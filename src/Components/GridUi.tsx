@@ -20,6 +20,10 @@ const BottomToolbar = styled(Toolbar)`
   left: 20px;
 `;
 
+const toggleSelection = () => {
+  useSelection.getState().toggleSetMode(null);
+};
+
 export function GridUi() {
   const [showPreview, togglePreview] = useToggle(false);
 
@@ -28,10 +32,6 @@ export function GridUi() {
   const selectionActive = useSelection((state) => state.isInSelectionMode);
 
   const openModal = useRouter((state) => state.open);
-
-  const toggleSelection = () => {
-    useSelection.getState().toggleSetMode(null);
-  };
 
   return (
     <FullScreenDiv>

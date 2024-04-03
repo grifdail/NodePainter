@@ -6,66 +6,83 @@ import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { useSelection } from "../Hooks/useSelection";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
-import { ReactElement } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 import { resetCamera } from "../Utils/resetCamera";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 import { useAllSavedFunction } from "../Hooks/db";
+import { useShallow } from "zustand/react/shallow";
+
+const openCreateModal = () => {
+  useCustomNodeCreationContext.getState().openCreate("function");
+};
+const openCreateShaderModal = () => {
+  useCustomNodeCreationContext.getState().openCreate("shader");
+};
+const openCreateShaderMaterialModal = () => {
+  useCustomNodeCreationContext.getState().openCreate("shaderMaterial", "shader");
+};
+const opencreateSimulation = () => {
+  useCustomNodeCreationContext.getState().openCreate("simulation");
+};
 
 export function FunctionSubMenu() {
-  const rawCustomNodes = useTree((state) => state.customNodes);
+  const rawCustomNodes = useTree(useShallow((state) => state.customNodes));
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
 
   const selectionActive = useSelection((state) => state.isInSelectionMode);
-  const selectedNodes = useSelection((state) => state.nodes);
+  const selectedNodes = useSelection(useShallow((state) => state.nodes));
   const hasSelection = selectionActive && selectedNodes.length > 0;
 
   const graph = useTree((state) => state.editedGraph) || "main";
+  const [savedFunction, saveFunction] = useAllSavedFunction();
 
-  const customFunctionNodes = [
-    "main",
-    ...Object.values(rawCustomNodes)
-      .filter((item) => item.executeAs === CUSTOM_FUNCTION)
-      .map((node) => node.id),
-  ];
-  const customShaderNode = [
-    ...Object.values(rawCustomNodes)
-      .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === SHADER_MATERIAL)
-      .map((node) => node.id),
-  ];
-  const customSimulationNode = [
-    ...Object.values(rawCustomNodes)
-      .filter((item) => item.executeAs === CUSTOM_SIMULATION)
-      .map((node) => node.id),
-  ];
-  const openEditModal = () => {
+  const customFunctionNodes = useMemo(
+    () => [
+      "main",
+      ...Object.values(rawCustomNodes)
+        .filter((item) => item.executeAs === CUSTOM_FUNCTION)
+        .map((node) => node.id),
+    ],
+    [rawCustomNodes]
+  );
+  const customShaderNode = useMemo(
+    () => [
+      ...Object.values(rawCustomNodes)
+        .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === SHADER_MATERIAL)
+        .map((node) => node.id),
+    ],
+    [rawCustomNodes]
+  );
+  const customSimulationNode = useMemo(
+    () => [
+      ...Object.values(rawCustomNodes)
+        .filter((item) => item.executeAs === CUSTOM_SIMULATION)
+        .map((node) => node.id),
+    ],
+    [rawCustomNodes]
+  );
+
+  const openEditModal = useCallback(() => {
     useCustomNodeCreationContext.getState().openEdit(getNodeTypeDefinition(graph), useTree.getState().getCustomNodeEditingType());
-  };
-  const openCreateModal = () => {
-    useCustomNodeCreationContext.getState().openCreate("function");
-  };
-  const openCreateShaderModal = () => {
-    useCustomNodeCreationContext.getState().openCreate("shader");
-  };
-  const openCreateShaderMaterialModal = () => {
-    useCustomNodeCreationContext.getState().openCreate("shaderMaterial", "shader");
-  };
-  const opencreateSimulation = () => {
-    useCustomNodeCreationContext.getState().openCreate("simulation");
-  };
-  const createFunctionFromSelection = () => {
+  }, [getNodeTypeDefinition, graph]);
+
+  const createFunctionFromSelection = useCallback(() => {
     var name = window.prompt("How should the function be named ?", "MyFunction");
     if (name !== null && useTree.getState().getNodeTypeDefinition(name) === undefined) {
       useTree.getState().createFunctionFromNodes(selectedNodes, name);
       useSelection.getState().toggleSetMode(false);
     }
-  };
+  }, [selectedNodes]);
 
   const setEditedGraph = useTree((state) => state.setEditedGraph);
-  const setGraph = (graph: string) => {
-    setEditedGraph(graph === "main" ? undefined : graph);
-    resetCamera();
-  };
-  const [savedFunction, saveFunction] = useAllSavedFunction();
+
+  const setGraph = useCallback(
+    (graph: string) => {
+      setEditedGraph(graph === "main" ? undefined : graph);
+      resetCamera();
+    },
+    [setEditedGraph]
+  );
 
   return (
     <Menu

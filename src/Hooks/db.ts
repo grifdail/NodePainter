@@ -1,5 +1,6 @@
 import Dexie, { Table } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
+import { useCallback } from "react";
 import { SketchTemplate } from "../Data/templates";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
 
@@ -31,24 +32,24 @@ export const db = new NodepainterDexie();
 
 export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketchData: SketchTemplate) => void] {
   const sketchs = useLiveQuery(() => db.sketchs.toArray());
-  const saveSketch = (name: string, sketchData: SketchTemplate) => {
+  const saveSketch = useCallback((name: string, sketchData: SketchTemplate) => {
     db.sketchs.put({
       name,
       content: JSON.stringify(sketchData),
     });
-  };
+  }, []);
   return [sketchs, saveSketch];
 }
 
 export function useAllSavedFunction(): [Sketch[] | undefined, (name: string, functionData: ExportedCustomFunction) => void] {
   const functions = useLiveQuery(() => db.functions.toArray());
-  const saveFunction = (name: string, functionData: ExportedCustomFunction) => {
+  const saveFunction = useCallback((name: string, functionData: ExportedCustomFunction) => {
     const def = functionData.definitions.find((def) => def.id === name);
     db.functions.put({
       name,
       content: JSON.stringify(functionData),
       description: def?.description as string,
     });
-  };
+  }, []);
   return [functions, saveFunction];
 }
