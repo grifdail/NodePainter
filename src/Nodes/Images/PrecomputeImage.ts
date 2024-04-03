@@ -1,13 +1,13 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
 import { ImageData } from "../../Types/ImageData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const PrecomputeImage: NodeDefinition = {
   id: "PrecomputeImage",
   label: "Precompute image",
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",
-  canBeExecuted: true,
+  canBeExecuted: false,
   dataInputs: [],
   dataOutputs: [
     {
@@ -17,17 +17,13 @@ export const PrecomputeImage: NodeDefinition = {
     },
   ],
   tags: ["Image"],
-  executeOutputs: ["draw", "execute"],
+  executeOutputs: ["draw"],
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
     { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
   ],
   getData(portId, node, context) {
-    var keyComputed = `${node.id}-image-cache`;
-    return context.blackboard[keyComputed];
-  },
-  execute(node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
     const when = node.settings.when;
@@ -54,8 +50,7 @@ export const PrecomputeImage: NodeDefinition = {
       context.blackboard[keyComputed] = true;
       context.frameBlackboard[keyComputed] = true;
     }
-    if (node.execOutputs["execute"]) {
-      context.execute(node.execOutputs["execute"] as string);
-    }
+
+    return img;
   },
 };
