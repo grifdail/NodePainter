@@ -1,5 +1,5 @@
 import { ControlledMenu, FocusableItem, MenuDivider, MenuItem, MenuState, SubMenu } from "@szhsin/react-menu";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { resetCamera } from "../../Utils/resetCamera";
@@ -7,6 +7,7 @@ import { IconArrowsHorizontal, IconArrowsVertical, IconFocusCentered, IconPlus }
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { EDirection } from "../../Types/EDirection";
+import { useShallow } from "zustand/react/shallow";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -27,41 +28,61 @@ export function NodeMenuItem({ node, onClick }: { node: NodeDefinition; onClick:
   );
 }
 
-export function ContextMenu(props: ContextMenuProps) {
+export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter, setFilter }: ContextMenuProps) {
   const nodesLastUsedDates = usePlayerPref((state) => state.nodesLastUsedDates);
-  const mostSorting = (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0);
+  const mostSorting = useMemo(() => (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0), [nodesLastUsedDates]);
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
-  const searchTerm = props.filter.toLowerCase();
-  const nodeLibrary = Object.values(useTree((state) => state.getNodeLibrary())).filter((item) => {
-    if (item.hideInLibrary) {
-      return false;
-    }
-    return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
-  });
+  const searchTerm = useMemo(() => filter.toLowerCase(), [filter]);
+  const treeNodeLibrary = useTree(useShallow((state) => state.getNodeLibrary()));
+  const nodeLibrary = useMemo(
+    () =>
+      Object.values(treeNodeLibrary).filter((item) => {
+        if (item.hideInLibrary) {
+          return false;
+        }
+        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
+      }),
+    [treeNodeLibrary, isShader]
+  );
 
-  const getClickPositionWorld = (): [number, number] => {
+  const getClickPositionWorld = useCallback((): [number, number] => {
     var view = useViewbox.getState();
-    return [view.x + props.anchorPoint.x * view.scale, view.y + props.anchorPoint.y * view.scale];
-  };
-  const onClick = (node: NodeDefinition) => {
-    useTree.getState().addNode(node.id, ...getClickPositionWorld());
-    usePlayerPref.getState().markNodeAsUsed(node.id);
-    props.onClose();
-  };
-  const categories = nodeLibrary.reduce((old, value) => {
-    value.tags.forEach((tag) => {
-      if (old[tag] === undefined) {
-        old[tag] = [value];
-      } else {
-        old[tag].push(value);
-      }
-    });
-    return old;
-  }, {} as { [key: string]: NodeDefinition[] });
-  const nodesSelected = searchTerm === "" ? [] : ((nodeLibrary.filter((node) => node.id.toLowerCase().includes(searchTerm) || node.label?.toLowerCase().includes(searchTerm)) as any).toSorted(mostSorting).slice(0, 5) as NodeDefinition[]);
+    return [view.x + anchorPoint.x * view.scale, view.y + anchorPoint.y * view.scale];
+  }, [anchorPoint.x, anchorPoint.y]);
+
+  const onClick = useCallback(
+    (node: NodeDefinition) => {
+      useTree.getState().addNode(node.id, ...getClickPositionWorld());
+      usePlayerPref.getState().markNodeAsUsed(node.id);
+      onClose();
+    },
+    [onClose, getClickPositionWorld]
+  );
+  const categories = useMemo(() => {
+    return nodeLibrary.reduce((old, value) => {
+      value.tags.forEach((tag) => {
+        if (old[tag] === undefined) {
+          old[tag] = [value];
+        } else {
+          old[tag].push(value);
+        }
+      });
+      return old;
+    }, {} as { [key: string]: NodeDefinition[] });
+  }, [nodeLibrary]);
+
+  const nodesSelected = useMemo(() => {
+    if (searchTerm === "") {
+      return [];
+    } else {
+      const filtered = nodeLibrary.filter((node) => node.id.toLowerCase().includes(searchTerm) || node.label?.toLowerCase().includes(searchTerm)) as any;
+      return filtered.toSorted(mostSorting).slice(0, 5) as NodeDefinition[];
+    }
+  }, [nodeLibrary, searchTerm, mostSorting]);
+
   return (
-    <ControlledMenu anchorPoint={props.anchorPoint} state={props.state} direction="right" onClose={props.onClose} overflow="auto">
-      <FocusableItem>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={props.filter} onChange={(e) => props.setFilter(e.target.value)} />}</FocusableItem>
+    <ControlledMenu anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
+      <FocusableItem>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={filter} onChange={(e) => setFilter(e.target.value)} />}</FocusableItem>
       {nodesSelected.map((item) => (
         <NodeMenuItem onClick={onClick} node={item} key={item.id} />
       ))}
