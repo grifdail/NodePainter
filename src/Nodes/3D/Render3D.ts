@@ -1,13 +1,13 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
 import { ImageData } from "../../Types/ImageData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Render3D: NodeDefinition = {
   id: "Render3D",
   label: "Render in 3D",
   icon: IconPhoto,
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
-  canBeExecuted: true,
+  canBeExecuted: false,
   dataInputs: [],
   dataOutputs: [
     {
@@ -17,17 +17,13 @@ export const Render3D: NodeDefinition = {
     },
   ],
   tags: ["3D"],
-  executeOutputs: ["draw", "execute"],
+  executeOutputs: ["draw"],
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
     { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
   ],
   getData(portId, node, context) {
-    var keyComputed = `${node.id}-image-cache`;
-    return context.blackboard[keyComputed];
-  },
-  execute(node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
     const when = node.settings.when;
@@ -54,8 +50,6 @@ export const Render3D: NodeDefinition = {
       context.blackboard[keyComputed] = true;
       context.frameBlackboard[keyComputed] = true;
     }
-    if (node.execOutputs["execute"]) {
-      context.execute(node.execOutputs["execute"] as string);
-    }
+    return img;
   },
 };
