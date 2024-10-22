@@ -132,7 +132,7 @@ export const ThreeDTemplate: SketchTemplate = {
       },
       dataOutputs: {},
       execOutputs: {
-        execute: "Render3D",
+        execute: "DrawMainImage",
       },
       positionX: 0,
       positionY: 0,
@@ -145,7 +145,7 @@ export const ThreeDTemplate: SketchTemplate = {
       settings: {
         width: 400,
         height: 400,
-        when: "Everytime",
+        when: "Per frame",
       },
       dataOutputs: {
         image: {
@@ -156,10 +156,9 @@ export const ThreeDTemplate: SketchTemplate = {
       },
       execOutputs: {
         draw: "ThenNode",
-        execute: "DrawMainImage",
       },
-      positionX: 400,
-      positionY: 1,
+      positionX: 0,
+      positionY: -400,
       selectedType: "unknown",
     },
     DrawMainImage: {
@@ -194,8 +193,8 @@ export const ThreeDTemplate: SketchTemplate = {
       settings: {},
       dataOutputs: {},
       execOutputs: {},
-      positionX: 900,
-      positionY: 200,
+      positionX: 400,
+      positionY: 0,
       selectedType: "unknown",
     },
     ThenNode: {
@@ -208,8 +207,8 @@ export const ThreeDTemplate: SketchTemplate = {
         "0": "FillBackground",
         "1": null,
       },
-      positionX: 900,
-      positionY: 0,
+      positionX: 400,
+      positionY: -400,
       selectedType: "unknown",
     },
     FillBackground: {
@@ -228,8 +227,8 @@ export const ThreeDTemplate: SketchTemplate = {
       settings: {},
       dataOutputs: {},
       execOutputs: {},
-      positionX: 1300,
-      positionY: 0,
+      positionX: 800,
+      positionY: -400,
       selectedType: "unknown",
     },
   },
