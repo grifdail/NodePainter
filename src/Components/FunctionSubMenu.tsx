@@ -118,7 +118,9 @@ export function FunctionSubMenu() {
       {savedFunction && savedFunction.length > 0 && (
         <SubMenu label="load">
           {savedFunction.map((data) => (
-            <MenuItem onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))}>{data.name}</MenuItem>
+            <MenuItem onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))} key={data.name}>
+              {data.name}
+            </MenuItem>
           ))}
         </SubMenu>
       )}

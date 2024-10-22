@@ -28,6 +28,7 @@ import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { resetCamera } from "../Utils/resetCamera";
 import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
+import { usePortSelection } from "./usePortSelection";
 
 export const useTree = create<TreeStore>()(
   persist(
@@ -204,6 +205,14 @@ export const useTree = create<TreeStore>()(
             produce((state) => {
               state.key++;
               const nodes = state.nodes as { [key: string]: NodeData };
+              var portSelection = usePortSelection.getState();
+
+              if (portSelection.hasSelection && portSelection.location === "outputExecute" && portSelection.node === node) {
+                portSelection.reset();
+              }
+              if (portSelection.hasSelection && portSelection.location === "inputData" && portSelection.node === node) {
+                portSelection.reset();
+              }
 
               Object.values(nodes).forEach((item: NodeData) => {
                 var def = state.getNodeTypeDefinition(item);
