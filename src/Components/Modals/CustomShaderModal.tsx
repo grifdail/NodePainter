@@ -15,11 +15,12 @@ export function CustomShaderModal({ close }: { close: () => void }) {
   var def = context.model as NodeDefinition;
 
   return (
-    <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
+    <Modal onClose={close} title={context.mode === "edit" ? `Edit Shader ${context.model?.id}` : "Create a shader"} icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
+        <p className="subtitle">Render an image by computing it's color pixel by pixels</p>
         <CustomNodeModalHeader context={context} def={def} hasExecuteOption={false}></CustomNodeModalHeader>
         <section>
-          <h3>Inputs</h3>
+          <h3>Inputs / Uniforms</h3>
           {def.dataInputs.map((port, i) => (
             <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" availableTypes={AvailableTypesInput} />
           ))}

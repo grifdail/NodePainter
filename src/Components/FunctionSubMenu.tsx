@@ -1,4 +1,4 @@
-import { IconFunction, IconFunctionFilled, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
+import { IconFunction, IconFunctionFilled, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
@@ -35,6 +35,7 @@ export function FunctionSubMenu() {
 
   const graph = useTree((state) => state.editedGraph) || "main";
   const [savedFunction, saveFunction] = useAllSavedFunction();
+  const editingType = useTree((state) => state.getCustomNodeEditingType());
 
   const customFunctionNodes = useMemo(
     () => [
@@ -94,7 +95,8 @@ export function FunctionSubMenu() {
         </button>
       }>
       <MenuItem onClick={openEditModal} disabled={graph === "main"}>
-        Edit
+        <IconPencil></IconPencil>
+        Edit the current {editingType} settings
       </MenuItem>
       <MenuItem onClick={openCreateModal}>
         <IconFunction /> Create New Function
@@ -116,7 +118,7 @@ export function FunctionSubMenu() {
       <MenuDivider></MenuDivider>
       {graph !== "main" && <MenuItem onClick={() => saveFunction(graph, useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
       {savedFunction && savedFunction.length > 0 && (
-        <SubMenu label="load">
+        <SubMenu label="Import from a saved function">
           {savedFunction.map((data) => (
             <MenuItem onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))} key={data.name}>
               {data.name}

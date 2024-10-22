@@ -16,6 +16,5 @@ export const resetCamera = () => {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   var scale = Math.max(boundingBox.width() / windowWidth, boundingBox.height() / windowHeight, 1);
-  console.log(scale, boundingBox.width() / scale, windowWidth);
   useViewbox.getState().set(boundingBox.left - Math.max(0, windowWidth - boundingBox.width() / scale) * 0.5 * scale, boundingBox.top - Math.max(0, windowHeight - boundingBox.height() / scale) * 0.5 * scale, scale);
 };

@@ -12,6 +12,13 @@ export const CustomNodeMainDiv = styled.div`
   gap: 10px;
   overflow: auto;
 
+  & p.subtitle {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   & > section {
     display: flex;
     flex-direction: column;

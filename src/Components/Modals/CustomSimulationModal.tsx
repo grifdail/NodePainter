@@ -16,8 +16,9 @@ export function CustomSimulationModal({ close }: { close: () => void }) {
   var def = context.model as NodeDefinition;
 
   return (
-    <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
+    <Modal onClose={close} title={context.mode === "edit" ? `Edit simulation node ${context.model?.id}` : "Create a simulation node"} icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
+        <p className="subtitle">Update some simulation variable based on their previous value and some input value.</p>
         <CustomNodeModalHeader context={context} def={def} hasExecuteOption={false} />
         <section>
           <h3>Params</h3>

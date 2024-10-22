@@ -16,8 +16,9 @@ export function CustomNodeModal({ close }: { close: () => void }) {
   var def = context.model as NodeDefinition;
 
   return (
-    <Modal onClose={close} title="Edit Node" icon={IconFunctionFilled}>
+    <Modal onClose={close} title={context.mode === "edit" ? `Edit node ${context.model?.id}` : "Create a custom node"} icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
+        <p className="subtitle">A custom function allow you to reuse code across your sketch.</p>
         <CustomNodeModalHeader context={context} def={def} hasExecuteOption={true}></CustomNodeModalHeader>
         <section>
           <h3>Inputs</h3>
