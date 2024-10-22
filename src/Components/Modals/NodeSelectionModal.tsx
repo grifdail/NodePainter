@@ -215,8 +215,14 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   );
   const finalList = useMemo(() => sortNodeList(nodeFav, filteredList), [filteredList, nodeFav]);
 
-  const tags = useMemo(() => nodeLibrary.flatMap((item) => item.tags).filter((value, index, array) => array.indexOf(value) === index), [nodeLibrary]);
-  tags.splice(0, 0, "all");
+  const tags = useMemo(
+    () =>
+      nodeLibrary
+        .flatMap((item) => item.tags) // Get the tags from all the node in the library
+        .filter((value, index, array) => array.indexOf(value) === index) // Remove duplicate
+        .concat(["all"]), // Add the "All" category
+    [nodeLibrary] // Everytime the librairy has change
+  );
 
   const addNode = useTree((state) => state.addNode);
 
