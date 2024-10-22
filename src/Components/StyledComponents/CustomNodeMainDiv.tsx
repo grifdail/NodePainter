@@ -26,9 +26,17 @@ export const CustomNodeMainDiv = styled.div`
 
       & fieldset {
         flex: 1 1 100%;
-
+        gap: 10px;
         & input {
           width: 0;
+        }
+      }
+      @media (max-width: 840px), (max-height: 500px) {
+        flex-direction: column;
+        gap: 1em;
+
+        & fieldset > * {
+          width: 50%;
         }
       }
     }

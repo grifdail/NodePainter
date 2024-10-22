@@ -207,10 +207,7 @@ export const useTree = create<TreeStore>()(
               const nodes = state.nodes as { [key: string]: NodeData };
               var portSelection = usePortSelection.getState();
 
-              if (portSelection.hasSelection && portSelection.location === "outputExecute" && portSelection.node === node) {
-                portSelection.reset();
-              }
-              if (portSelection.hasSelection && portSelection.location === "inputData" && portSelection.node === node) {
+              if (portSelection.hasSelection && portSelection.node === node) {
                 portSelection.reset();
               }
 
