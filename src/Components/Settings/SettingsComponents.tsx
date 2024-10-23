@@ -7,6 +7,7 @@ import { PaletteSetting } from "./PaletteSetting";
 import { GradientSetting } from "./GradientSetting";
 import { ImageUploadSetting } from "./ImageUploadSetting";
 import { EnvelopeSetting } from "./EnvelopeSetting";
+import { ImagePaintSetting } from "./ImagePaintSetting";
 
 export type SettingComponent = (({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => any) & {
   getSize: (value: any, def: SettingDefinition) => number;
@@ -24,6 +25,7 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   string: StringSetting,
   gradient: GradientSetting,
   "image-upload": ImageUploadSetting,
+  "image-paint": ImagePaintSetting,
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
 };

@@ -118,6 +118,7 @@ import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
+import { PaintImage } from "./Images/PaintImage";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
 import { Abs } from "./Math/Abs";
@@ -252,6 +253,7 @@ export const Nodes: Array<NodeDefinition> = [
   DrawImageWithTint,
   PrecomputeImage,
   ImageDimension,
+  PaintImage,
 
   //Shader
   RenderShaderStart,

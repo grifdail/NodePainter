@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-export const ButtonGroup = styled.div<{ vertical?: boolean; compact?: boolean }>`
+export const ButtonGroup = styled.div<{ vertical?: boolean; compact?: boolean; nested?: boolean }>`
   display: flex;
   justify-content: stretch;
   gap: ${(state) => (state.compact ? "10px" : "50px")};
-  padding: 10px;
+  padding: ${(state) => (state.nested ? "10px" : 0)};
   flex-direction: ${(state) => (state.vertical ? "column" : "row")};
+  align-items: center;
 
   & button {
     flex: 1 1 100px;

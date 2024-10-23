@@ -16,6 +16,11 @@ export function toP5Color(c: Color, p5: P5CanvasInstance) {
   return p5.color(c[0] * 255, c[1] * 255, c[2] * 255, c[3] * 255);
 }
 
+export function toRGB255Array(c: Color, floored: boolean = true) {
+  const floor = floored ? Math.floor : (a: any) => a;
+  return [floor(c[0] * 255), floor(c[1] * 255), floor(c[2] * 255), floor(c[3] * 255)];
+}
+
 export function fromHex(hex: string): Color {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
 
