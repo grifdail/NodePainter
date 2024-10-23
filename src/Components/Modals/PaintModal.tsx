@@ -1,4 +1,4 @@
-﻿import { IconBrush, IconCircleFilled, IconEraser, IconInfoCircle, IconMenu, IconMenu2, IconNumber10Small, IconNumber1Small, IconNumber25Small, IconNumber5Small, IconPencilPlus, IconPlus } from "@tabler/icons-react";
+﻿import { IconBrush, IconBucket, IconCircleFilled, IconEraser, IconInfoCircle, IconMenu, IconMenu2, IconNumber10Small, IconNumber1Small, IconNumber25Small, IconNumber5Small, IconPencilPlus, IconPlus } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
@@ -30,6 +30,9 @@ export function PaintModal() {
           </button>
           <button onClick={() => paintingState.setTool("eraser")}>
             <IconEraser />
+          </button>
+          <button onClick={() => paintingState.setTool("fill")}>
+            <IconBucket />
           </button>
           <ColorInput onChange={paintingState.setColor} value={paintingState.color}>
             <button>
