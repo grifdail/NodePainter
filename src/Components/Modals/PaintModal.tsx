@@ -1,10 +1,7 @@
-﻿import { IconBrush, IconBucket, IconCircleFilled, IconEraser, IconInfoCircle, IconMenu, IconMenu2, IconNumber10Small, IconNumber1Small, IconNumber25Small, IconNumber5Small, IconPencilPlus, IconPlus } from "@tabler/icons-react";
+import { IconBrush, IconBucket, IconCircleFilled, IconClearAll, IconEraser, IconNumber10Small, IconNumber1Small, IconNumber25Small, IconNumber5Small } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { Palette } from "../../Nodes/Color/PickFromPalette";
-import Sketch from "@uiw/react-color-sketch";
-import { Menu } from "@szhsin/react-menu";
 import { usePainting } from "../../Hooks/usePainting";
 import { ColorInput } from "../Settings/ColorInput";
 import { toHex } from "../../Utils/colorUtils";
@@ -25,6 +22,9 @@ export function PaintModal() {
     <Modal onClose={paintingState.close} title="Paint" icon={IconBrush}>
       <MainDiv>
         <ButtonGroup className="toolbar">
+          <button onClick={() => paintingState.clear()}>
+            <IconClearAll />
+          </button>
           <button onClick={() => paintingState.setTool("pen")}>
             <IconBrush />
           </button>
@@ -52,7 +52,7 @@ export function PaintModal() {
             <IconNumber25Small />
           </button>
         </ButtonGroup>
-        <PaintingSketch />
+        <PaintingSketch onSaveGraphics={paintingState.saveImage} />
         <PaletteColorSelector onChangePalette={paintingState.setColorPalette} onSelectColor={paintingState.setColor} currentPalette={paintingState.colorPalette} currentColor={paintingState.color} />
       </MainDiv>
     </Modal>

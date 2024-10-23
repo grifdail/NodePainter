@@ -1,6 +1,6 @@
-﻿import { create } from "zustand";
+import { Graphics } from "p5";
+import { create } from "zustand";
 import { DefaultPalettes } from "../Data/Palettes";
-import { ImageData } from "../Types/ImageData";
 import { Routes } from "../Types/Routes";
 import { Color, ColorPalette, createColor } from "../Types/vectorDataType";
 import { usePlayerPref } from "./usePlayerPref";
@@ -9,23 +9,26 @@ import { useRouter } from "./useRouter";
 export type PaintingTool = "pen" | "eraser" | "fill";
 
 export type PaintingStore = {
+  clearCount: number;
+  saveImage: (g: Graphics) => void;
   callback: ((newValue: any) => void) | null;
-  baseImage: ImageData | null;
+  baseImage: string | null;
   colorPalette: ColorPalette;
   color: Color;
   tool: PaintingTool;
   lineWidth: number;
   width: number;
   height: number;
-  open: (current: ImageData, callback: (newValue: any) => void) => void;
+  open: (current: string, callback: (newValue: any) => void) => void;
   close: () => void;
   setTool: (tool: PaintingTool) => void;
   setLineWidth: (size: number) => void;
   setColor: (color: Color) => void;
+  clear: () => void;
   setColorPalette: (colorPalette: ColorPalette) => void;
 };
 
-export const usePainting = create<PaintingStore>()((set) => {
+export const usePainting = create<PaintingStore>()((set, get) => {
   return {
     callback: null,
     baseImage: null,
@@ -35,6 +38,7 @@ export const usePainting = create<PaintingStore>()((set) => {
     color: createColor(0, 0, 0, 1),
     tool: "pen",
     lineWidth: 10,
+    clearCount: 0,
     open(current, callback) {
       set({ callback: callback, baseImage: current, colorPalette: usePlayerPref.getState().colorPreset });
 
@@ -55,6 +59,19 @@ export const usePainting = create<PaintingStore>()((set) => {
     },
     setColorPalette(colorPalette) {
       set({ colorPalette: colorPalette });
+    },
+    clear() {
+      set((state) => ({ clearCount: state.clearCount + 1 }));
+    },
+    saveImage(g) {
+      if (g == null) {
+        return;
+      }
+
+      var callback = get().callback;
+      if (callback != null) {
+        callback(g.drawingContext.canvas.toDataURL() as any);
+      }
     },
   };
 });

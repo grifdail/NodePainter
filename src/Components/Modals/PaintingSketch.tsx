@@ -1,9 +1,9 @@
-﻿import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
+import { ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { PaintingStore, usePainting } from "../../Hooks/usePainting";
 import { toHex, toRGB255Array } from "../../Utils/colorUtils";
-import { Graphics, Vector } from "p5";
+import { Graphics } from "p5";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
 
 const Preview = styled.div<{ scale: number }>`
@@ -38,43 +38,58 @@ const Preview = styled.div<{ scale: number }>`
   }
 `;
 
-export function PaintingSketch() {
+export function PaintingSketch({ onSaveGraphics }: { onSaveGraphics: (g: Graphics) => void }) {
   var dim = useWindowSize();
   var paintingState = usePainting();
 
   var smallestDim = Math.min(1, Math.min(dim.width || paintingState.width || 400, dim.height || paintingState.height || 400) / 450);
   return (
     <Preview scale={smallestDim}>
-      <ReactP5Wrapper sketch={sketch} painting={paintingState} key={`${paintingState.width} / ${paintingState.height}`} />
+      <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} key={`${paintingState.width} / ${paintingState.height}`} />
     </Preview>
   );
 }
 type MySketchProps = SketchProps & {
   painting: PaintingStore;
+  onSaveGraphics: (g: Graphics) => void;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let paintingState: PaintingStore | null = null;
-  var seed = 0;
+  var onSaveGraphics: (g: Graphics) => void = () => {};
+  var clearCount = 0;
 
   var graphic: Graphics | null = null;
 
   p5.setup = () => {
-    p5.createCanvas(paintingState?.width || 400, paintingState?.height || 400);
-    graphic = p5.createGraphics(paintingState?.width || 400, paintingState?.height || 400);
+    p5.createCanvas(paintingState?.width || 0, paintingState?.height || 0);
+    graphic = p5.createGraphics(paintingState?.width || 0, paintingState?.height || 0);
     graphic.pixelDensity(1);
 
     graphic.noSmooth();
   };
 
   p5.updateWithProps = (props: MySketchProps) => {
+    var firstInit = paintingState == null;
     paintingState = props.painting;
-    if (paintingState.width != p5.width || paintingState.height != p5.height) {
+    onSaveGraphics = props.onSaveGraphics;
+
+    if (paintingState.width !== p5.width || paintingState.height !== p5.height || firstInit || paintingState.clearCount !== clearCount) {
       p5.createCanvas(paintingState?.width || 400, paintingState?.height || 400);
       graphic = p5.createGraphics(paintingState?.width || 400, paintingState?.height || 400);
       graphic.pixelDensity(1);
       graphic.noSmooth();
+      clearCount = paintingState.clearCount;
     }
+    if (paintingState.baseImage != null && firstInit) {
+      var img = p5.loadImage(paintingState.baseImage, () => {
+        graphic?.image(img, 0, 0, graphic.width, graphic.height);
+      });
+    }
+  };
+
+  p5.mouseReleased = () => {
+    onSaveGraphics(graphic as Graphics);
   };
 
   p5.draw = () => {

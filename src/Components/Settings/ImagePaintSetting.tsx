@@ -1,11 +1,8 @@
-﻿import { SettingDefinition } from "../../Types/SettingDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { Menu, MenuButton } from "@szhsin/react-menu";
-import { IconBrush, IconMenu2 } from "@tabler/icons-react";
-import { useRouter } from "../../Hooks/useRouter";
-import { Routes } from "../../Types/Routes";
+import { IconBrush } from "@tabler/icons-react";
 import { usePainting } from "../../Hooks/usePainting";
 
 const Body = styled.div`

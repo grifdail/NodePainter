@@ -2,8 +2,7 @@ import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { Menu, MenuButton } from "@szhsin/react-menu";
-import { IconFileUpload, IconMenu2 } from "@tabler/icons-react";
+import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 
 const Body = styled.div`

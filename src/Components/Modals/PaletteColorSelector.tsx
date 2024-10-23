@@ -1,11 +1,10 @@
-﻿import { IconCircleFilled, IconPencilPlus } from "@tabler/icons-react";
+import { IconCircleFilled, IconPencilPlus } from "@tabler/icons-react";
 import { ColorPalette, Color } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 import { PaletteMenu } from "../Settings/PaletteSetting";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
 import { Key, useState } from "react";
-import { index } from "mathjs";
 import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
 
 function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick: (c: Color) => void; index: number; color: Color; key: Key; onDelete: (index: number) => void; onMove: (index: number, dir: number) => void }) {
@@ -53,10 +52,10 @@ export function PaletteColorSelector({ onChangePalette, onSelectColor, currentPa
   }
 
   function onMove(index: number, dir: number): void {
-    if (index == 0 && dir < 0) {
+    if (index === 0 && dir < 0) {
       return;
     }
-    if (index == currentPalette.length - 1 && dir > 0) {
+    if (index === currentPalette.length - 1 && dir > 0) {
       return;
     }
     var palette = Array.from(currentPalette);

@@ -1,4 +1,4 @@
-﻿import { IconBrush } from "@tabler/icons-react";
+import { IconBrush } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
