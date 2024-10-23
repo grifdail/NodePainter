@@ -55,7 +55,7 @@ export const usePainting = create<PaintingStore>()((set, get) => {
       set({ tool: tool });
     },
     setColor(color) {
-      set({ color: color });
+      set((state) => ({ color: color, tool: state.tool === "eraser" ? "pen" : state.tool }));
     },
     setColorPalette(colorPalette) {
       set({ colorPalette: colorPalette });

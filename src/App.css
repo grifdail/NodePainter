@@ -12,6 +12,8 @@
   --color-gradient: #f59f00;
   --color-image: #ab5236;
   --color-material: #f7df07;
+
+  --color-selected: rgba(0, 0, 0, 0.3);
 }
 
 * {

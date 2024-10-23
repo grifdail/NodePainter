@@ -32,19 +32,8 @@ math.import(
   { override: true }
 );
 
-export function NumberInput({ onChange, value }: { onChange: (value: number) => void; value: number }) {
+export function NumberInput({ onChange, value, className }: { onChange: (value: number) => void; value: number; className?: string }) {
   var [rawField, setRawField] = useState((value != null ? value : 0).toString());
-  /*
-  const bind = useDrag(
-    ({ event, active, delta: [x], movement: [vx] }) => {
-      if (active && (event.target as HTMLInputElement) === document.activeElement) {
-        onChange(Math.round((value + (x * Math.abs(vx)) / 1000) * 10000) / 10000);
-      }
-    },
-    {
-      keyboardDisplacement: 0,
-    }
-  );*/
 
   useEffect(() => {
     setRawField(value.toString());
@@ -65,5 +54,5 @@ export function NumberInput({ onChange, value }: { onChange: (value: number) => 
     }
   };
   //{...bind() }
-  return <input value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  return <input className={className} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
 }

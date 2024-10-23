@@ -45,19 +45,21 @@ export function PaintingSketch({ onSaveGraphics }: { onSaveGraphics: (g: Graphic
   var smallestDim = Math.min(1, Math.min(dim.width || paintingState.width || 400, dim.height || paintingState.height || 400) / 450);
   return (
     <Preview scale={smallestDim}>
-      <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} key={`${paintingState.width} / ${paintingState.height}`} />
+      <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} key={`${paintingState.width} / ${paintingState.height}`} scale={smallestDim} />
     </Preview>
   );
 }
 type MySketchProps = SketchProps & {
   painting: PaintingStore;
   onSaveGraphics: (g: Graphics) => void;
+  scale: number;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let paintingState: PaintingStore | null = null;
   var onSaveGraphics: (g: Graphics) => void = () => {};
   var clearCount = 0;
+  var scale = 0;
 
   var graphic: Graphics | null = null;
 
@@ -73,6 +75,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     var firstInit = paintingState == null;
     paintingState = props.painting;
     onSaveGraphics = props.onSaveGraphics;
+    scale = props.scale;
 
     if (paintingState.width !== p5.width || paintingState.height !== p5.height || firstInit || paintingState.clearCount !== clearCount) {
       p5.createCanvas(paintingState?.width || 400, paintingState?.height || 400);
@@ -102,22 +105,28 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       if (paintingState?.tool === "pen") {
         graphic.stroke(toHex(paintingState.color));
         graphic.strokeWeight(paintingState.lineWidth);
-        graphic.line(p5.mouseX, p5.mouseY, p5.pmouseX, p5.pmouseY);
+        graphic.line(p5.mouseX / scale, p5.mouseY / scale, p5.pmouseX / scale, p5.pmouseY / scale);
       }
       if (paintingState?.tool === "eraser") {
         graphic.erase();
         graphic.stroke(toHex(paintingState.color));
         graphic.strokeWeight(paintingState.lineWidth);
-        graphic.line(p5.mouseX, p5.mouseY, p5.pmouseX, p5.pmouseY);
+        graphic.line(p5.mouseX / scale, p5.mouseY / scale, p5.pmouseX / scale, p5.pmouseY / scale);
         graphic.noErase();
       }
       if (paintingState?.tool === "fill") {
-        floodFill({ x: Math.floor(p5.mouseX), y: Math.floor(p5.mouseY) }, toRGB255Array(paintingState.color), graphic, Math.pow(paintingState.lineWidth, 2));
+        floodFill({ x: Math.floor(p5.mouseX / scale), y: Math.floor(p5.mouseY / scale) }, toRGB255Array(paintingState.color), graphic, Math.pow(paintingState.lineWidth, 2));
       }
     }
     p5.stroke(toHex(paintingState.color));
-    p5.strokeWeight(paintingState.lineWidth);
-    p5.point(p5.mouseX, p5.mouseY);
+    p5.strokeWeight(paintingState?.tool === "fill" ? 3 : paintingState.lineWidth);
+    if (paintingState?.tool === "eraser") {
+      p5.erase();
+      p5.point(p5.mouseX / scale, p5.mouseY / scale);
+      p5.noErase();
+    } else {
+      p5.point(p5.mouseX / scale, p5.mouseY / scale);
+    }
   };
 
   function arrayEquals(a: number[], b: number[], sensibility: number = 10) {

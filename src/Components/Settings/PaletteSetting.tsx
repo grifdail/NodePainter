@@ -7,7 +7,7 @@ import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { MenuItemWithPalettePreview } from "./ColorPreview";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { ColorPalette, createColor, PaletteCollection } from "../../Types/vectorDataType";
+import { ColorPalette, createColor } from "../../Types/vectorDataType";
 import { DefaultPalettes } from "../../Data/Palettes";
 
 const ColorList = styled.ul`

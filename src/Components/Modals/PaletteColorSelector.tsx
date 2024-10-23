@@ -2,10 +2,10 @@ import { IconCircleFilled, IconPencilPlus } from "@tabler/icons-react";
 import { ColorPalette, Color } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 import { PaletteMenu } from "../Settings/PaletteSetting";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
 import { Key, useState } from "react";
 import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
+import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 
 function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick: (c: Color) => void; index: number; color: Color; key: Key; onDelete: (index: number) => void; onMove: (index: number, dir: number) => void }) {
   const [isOpen, setOpen] = useState(false);
@@ -67,19 +67,23 @@ export function PaletteColorSelector({ onChangePalette, onSelectColor, currentPa
   }
 
   return (
-    <ButtonGroup className="color">
-      <PaletteMenu onLoaded={onChangePalette} currentPalette={currentPalette} />
-      <ButtonGroup compact={true} nested>
+    <PaintingToolbar className="color">
+      <div className="section">
+        <PaletteMenu onLoaded={onChangePalette} currentPalette={currentPalette} />
+      </div>
+      <div className="section large">
         {currentPalette.map((color, index) => (
           <ColorButton onClick={onSelectColor} color={color} key={index} index={index} onDelete={onDelete} onMove={onMove}></ColorButton>
         ))}
-      </ButtonGroup>
-      <button onClick={addCurrentColor} disabled={isCurrentSelectorInPalette}>
-        <IconPencilPlus
-          style={{
-            color: toHex(currentColor),
-          }}></IconPencilPlus>
-      </button>
-    </ButtonGroup>
+      </div>
+      <div className="section">
+        <button onClick={addCurrentColor} disabled={isCurrentSelectorInPalette}>
+          <IconPencilPlus
+            style={{
+              color: toHex(currentColor),
+            }}></IconPencilPlus>
+        </button>
+      </div>
+    </PaintingToolbar>
   );
 }
