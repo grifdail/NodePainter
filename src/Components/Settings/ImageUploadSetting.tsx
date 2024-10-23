@@ -62,13 +62,6 @@ export const ImageUploadSetting: SettingComponent = function PaletteSetting({ on
 
       <ButtonGroup compact hidden={value !== null}>
         <button onClick={() => onChange(null)}>Reset</button>
-        <Menu
-          portal
-          menuButton={
-            <MenuButton className={"icon"}>
-              <IconMenu2></IconMenu2>
-            </MenuButton>
-          }></Menu>
       </ButtonGroup>
     </Body>
   );

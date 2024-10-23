@@ -7,7 +7,7 @@ import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { MenuItemWithPalettePreview } from "./ColorPreview";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { ColorPalette, createColor } from "../../Types/vectorDataType";
+import { ColorPalette, createColor, PaletteCollection } from "../../Types/vectorDataType";
 import { DefaultPalettes } from "../../Data/Palettes";
 
 const ColorList = styled.ul`
@@ -50,8 +50,6 @@ const ColorList = styled.ul`
 
 export const PaletteSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
   var list = value as Array<any>;
-  const savedPalettes = usePlayerPref((state) => state.palettes);
-  const setSavedPalette = usePlayerPref((state) => state.savePalette);
 
   function onChangeColor(i: number, v: any): void {
     onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
@@ -64,17 +62,6 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
   function removeColor(i: number): void {
     if (list.length > 1) {
       onChange([...list.slice(0, i), ...list.slice(i + 1, list.length)]);
-    }
-  }
-
-  function loadPalette(palette: ColorPalette) {
-    onChange([...palette]);
-  }
-
-  function savePalette() {
-    var name = window.prompt("What to name your palette ?", "palette");
-    if (name !== null || name !== "") {
-      setSavedPalette(name as string, list);
     }
   }
 
@@ -94,26 +81,7 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
 
       <ButtonGroup compact>
         <button onClick={addNewColor}>Add</button>
-        <Menu
-          portal
-          menuButton={
-            <MenuButton className={"icon"}>
-              <IconMenu2></IconMenu2>
-            </MenuButton>
-          }>
-          <MenuItem onClick={savePalette}>Save Palette</MenuItem>
-          <MenuDivider></MenuDivider>
-          <SubMenu label="Create from default palette" overflow="auto">
-            {Object.entries(DefaultPalettes).map(([key, value]) => (
-              <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => loadPalette(value)} />
-            ))}
-          </SubMenu>
-          <SubMenu label="Create from saved palette" overflow="auto">
-            {Object.entries(savedPalettes).map(([key, value]) => (
-              <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => loadPalette(value)} />
-            ))}
-          </SubMenu>
-        </Menu>
+        <PaletteMenu onLoaded={(value) => onChange(value)} currentPalette={list}></PaletteMenu>
       </ButtonGroup>
     </div>
   );
@@ -121,3 +89,38 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
 PaletteSetting.getSize = function (value, def): number {
   return 32 * value.length + 70;
 };
+
+export function PaletteMenu({ onLoaded, currentPalette }: { onLoaded: (arg: ColorPalette) => void; currentPalette: ColorPalette }) {
+  const savedPalettes = usePlayerPref((state) => state.palettes);
+  const setSavedPalette = usePlayerPref((state) => state.savePalette);
+
+  function savePalette() {
+    var name = window.prompt("What to name your palette ?", "palette");
+    if (name !== null || name !== "") {
+      setSavedPalette(name as string, currentPalette);
+    }
+  }
+
+  return (
+    <Menu
+      portal
+      menuButton={
+        <MenuButton className={"icon"}>
+          <IconMenu2></IconMenu2>
+        </MenuButton>
+      }>
+      <MenuItem onClick={savePalette}>Save Palette</MenuItem>
+      <MenuDivider></MenuDivider>
+      <SubMenu label="Create from default palette" overflow="auto">
+        {Object.entries(DefaultPalettes).map(([key, value]) => (
+          <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => onLoaded(value)} />
+        ))}
+      </SubMenu>
+      <SubMenu label="Create from saved palette" overflow="auto">
+        {Object.entries(savedPalettes).map(([key, value]) => (
+          <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => onLoaded(value)} />
+        ))}
+      </SubMenu>
+    </Menu>
+  );
+}

@@ -9,4 +9,5 @@ export enum Routes {
   CustomShader = "custom-shader",
   CustomSimulation = "custom-simulation",
   Settings = "settings",
+  Paint = "paint",
 }

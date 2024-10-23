@@ -1,17 +1,17 @@
-import { IconPhoto } from "@tabler/icons-react";
+﻿import { IconBrush } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
-export const UploadImage: NodeDefinition = {
-  id: "UploadImage",
-  label: "Upload Image",
-  icon: IconPhoto,
-  description: "Upload an image",
+export const PaintImage: NodeDefinition = {
+  id: "PaintImage",
+  label: "Paint Image",
+  icon: IconBrush,
+  description: "Paint an image directly",
   dataInputs: [],
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Image"],
   executeOutputs: [],
-  settings: [{ id: "image", type: "image-upload", defaultValue: null }],
+  settings: [{ id: "image", type: "image-paint", defaultValue: null }],
   getData(portId, data, context) {
     if (data.settings.image != null) {
       var key = `${data.id}-image-cache`;

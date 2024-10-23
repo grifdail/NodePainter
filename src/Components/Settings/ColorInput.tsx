@@ -4,8 +4,9 @@ import Sketch from "@uiw/react-color-sketch";
 import { Menu } from "@szhsin/react-menu";
 import { ColorButton } from "../StyledComponents/ColorButton";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
+import { ReactNode } from "react";
 
-export function ColorInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
+export function ColorInput({ onChange, value, children }: { onChange: (value: any) => void; value: any; children?: ReactNode }) {
   var hex = toHex(value, true);
   const palette = usePlayerPref((state) => state.colorPreset);
 
@@ -13,9 +14,13 @@ export function ColorInput({ onChange, value }: { onChange: (value: any) => void
     <Menu
       portal
       menuButton={
-        <ColorButton color={hex} oposite={invertColor(hex, true)}>
-          {hex}
-        </ColorButton>
+        children != null ? (
+          (children as any)
+        ) : (
+          <ColorButton color={hex} oposite={invertColor(hex, true)}>
+            {hex}
+          </ColorButton>
+        )
       }>
       <Sketch
         color={hex}

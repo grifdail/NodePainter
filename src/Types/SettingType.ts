@@ -1,1 +1,1 @@
-export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "envelope" | "string" | "hidden";
+export type SettingType = "dropdown" | "palette" | "number" | "gradient" | "image-upload" | "image-paint" | "envelope" | "string" | "hidden";

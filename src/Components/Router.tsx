@@ -9,6 +9,7 @@ import { CustomShaderModal } from "./Modals/CustomShaderModal";
 import { CustomSimulationModal } from "./Modals/CustomSimulationModal";
 import { SettingsModal } from "./Modals/SettingsModal";
 import { AboutModal } from "./Modals/AboutModal";
+import { PaintModal } from "./Modals/PaintModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -25,6 +26,7 @@ export function Router() {
       {route === "custom-simulation" && <CustomSimulationModal close={close} />}
       {route === "settings" && <SettingsModal close={close} />}
       {route === "about" && <AboutModal close={close} />}
+      {route === "paint" && <PaintModal />}
     </div>
   );
 }
