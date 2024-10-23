@@ -6,7 +6,7 @@ import { Color, ColorPalette, createColor } from "../Types/vectorDataType";
 import { usePlayerPref } from "./usePlayerPref";
 import { useRouter } from "./useRouter";
 
-export type PaintingTool = "pen" | "eraser" | "fill";
+export type PaintingTool = "pen" | "eraser" | "fill" | "line" | "circle";
 
 export type PaintingStore = {
   clearCount: number;
@@ -17,6 +17,7 @@ export type PaintingStore = {
   color: Color;
   tool: PaintingTool;
   lineWidth: number;
+  fillMode: "fill" | "stroke";
   width: number;
   height: number;
   open: (current: string, callback: (newValue: any) => void) => void;
@@ -26,6 +27,7 @@ export type PaintingStore = {
   setColor: (color: Color) => void;
   clear: () => void;
   setColorPalette: (colorPalette: ColorPalette) => void;
+  togleFillMode: () => void;
 };
 
 export const usePainting = create<PaintingStore>()((set, get) => {
@@ -39,6 +41,7 @@ export const usePainting = create<PaintingStore>()((set, get) => {
     tool: "pen",
     lineWidth: 10,
     clearCount: 0,
+    fillMode: "fill",
     open(current, callback) {
       set({ callback: callback, baseImage: current, colorPalette: usePlayerPref.getState().colorPreset });
 
@@ -72,6 +75,9 @@ export const usePainting = create<PaintingStore>()((set, get) => {
       if (callback != null) {
         callback(g.drawingContext.canvas.toDataURL() as any);
       }
+    },
+    togleFillMode() {
+      set((state) => ({ fillMode: state.fillMode === "fill" ? "stroke" : "fill" }));
     },
   };
 });
