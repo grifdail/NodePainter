@@ -18,7 +18,7 @@ export function Graph() {
   useGesturePrevention();
   const tree = useTree();
   const portSelection = usePortSelection();
-  const onClickPort = useEdgeCreation();
+  const { onClickPort, onClickNode: onClickNodeEdgeCreation } = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
   const [xyz, bind] = useSVGMapDrag();
   const { nodes: selectedNode } = useSelection();
@@ -70,6 +70,8 @@ export function Graph() {
     nodePositionSpringApi.set((index) => {
       return { xy: [nodes[index].positionX, nodes[index].positionY] };
     });
+    //Disabling the warning as we INTENTIONALY want to trigger the imperative api when a node is deleted
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tree.nodeDeletionCount]);
 
   const ports = useMemo(
@@ -103,6 +105,8 @@ export function Graph() {
     var selection = useSelection.getState();
     if (selection.isInSelectionMode) {
       selection.toggleNode(node.id);
+    } else {
+      onClickNodeEdgeCreation(node);
     }
   }, []);
 
