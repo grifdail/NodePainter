@@ -8,7 +8,8 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
   ${(props) => (props.big ? "height: 80%;" : "")}
   overflow: hidden;
   margin: auto;
-  background: white;
+  background: light-dark(var(--color-background-light), var(--color-background-dark));
+  color: light-dark(var(--color-text-light), var(--color-text-dark));
   padding: 10px;
   border: 2px solid #333;
   border-radius: 5px;
@@ -33,7 +34,7 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
 
     & button {
       justify-self: flex-end;
-      border: 1px solid rgba(0, 0, 0, 0.5);
+      border: 1px solid light-dark(var(--color-border-light), var(--color-border-dark));
       background: none;
       aspect-ratio: 1;
       display: flex;

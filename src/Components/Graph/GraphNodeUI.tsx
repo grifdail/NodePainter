@@ -19,11 +19,13 @@ import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
 
 const AnimatedG = animated(styled.g`
+  color: light-dark(var(--color-text-light), var(--color-text-dark));
+
   & > g > rect {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
     touch-action: none;
-    fill: white;
-    stroke: black;
+    fill: light-dark(var(--color-background-node-light), var(--color-background-node-dark));
+    stroke: light-dark(var(--color-border-light), var(--color-border-dark));
     stroke-width: 2px;
   }
   &.selected > g > rect {
@@ -123,15 +125,14 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         <text
           x={!Icon ? 20 : 50}
           y="35"
-          fill="black"
+          fill="currentColor"
           fontSize="18"
-          stroke="black"
+          //stroke="currentColor"
           {...bind()}
           style={{
             touchAction: "none",
           }}
-          onClick={onTap}
-        >
+          onClick={onTap}>
           {node.label || definition.label || definition.id}
         </text>
         {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}

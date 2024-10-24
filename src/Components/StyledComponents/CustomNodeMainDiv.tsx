@@ -96,7 +96,7 @@ export const CustomNodeMainDiv = styled.div`
           flex: 1 1 10px;
         }
         &.type button {
-          border: 2px solid black;
+          border: 2px solid light-dark(var(--color-border-light), var(--color-border-dark));
           background: none;
         }
 

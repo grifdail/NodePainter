@@ -11,11 +11,13 @@ export const ButtonGroup = styled.div<{ vertical?: boolean; compact?: boolean; n
   & button {
     flex: 1 1 100px;
     height: 50px;
-    background: white;
-    border: 2px solid black;
+    background: light-dark(var(--color-background-button-light), var(--color-background-button-dark));
+    border: 2px solid light-dark(var(--color-border-light), var(--color-border-dark));
     border-radius: 5px;
     transition: background 0.3s;
     cursor: pointer;
+    color: light-dark(var(--color-text-light), var(--color-text-dark));
+
     &:hover {
       background: rgba(0, 0, 0, 0.2);
       &:disabled {

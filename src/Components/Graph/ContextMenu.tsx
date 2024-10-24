@@ -8,6 +8,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { EDirection } from "../../Types/EDirection";
 import { useShallow } from "zustand/react/shallow";
+import { useColorScheme } from "@uiw/react-use-colorscheme";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -80,8 +81,10 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
     }
   }, [nodeLibrary, searchTerm, mostSorting]);
 
+  var theme = useColorScheme();
+
   return (
-    <ControlledMenu anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
+    <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
       <FocusableItem>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={filter} onChange={(e) => setFilter(e.target.value)} />}</FocusableItem>
       {nodesSelected.map((item) => (
         <NodeMenuItem onClick={onClick} node={item} key={item.id} />

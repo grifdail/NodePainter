@@ -14,10 +14,28 @@
   --color-material: #f7df07;
 
   --color-selected: rgba(0, 0, 0, 0.3);
+
+  --color-background-light: #ffffff;
+  --color-background-node-light: #ffffff;
+  --color-background-button-light: #ffffff;
+  --color-text-light: #000000;
+  --color-background-highghlight-light: #eeeeee;
+  --color-border-light: #222;
+
+  --color-background-dark: #0d1117;
+  --color-background-node-dark: #151b23;
+  --color-background-button-dark: #151b23;
+  --color-text-dark: #dee4ea;
+  --color-background-highghlight-dark: #282828;
+  --color-border-dark: #dee4ea;
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  color-scheme: light dark;
 }
 
 .App {
@@ -25,6 +43,33 @@
   overflow: hidden;
   user-select: none;
   user-zoom: none;
+  background: light-dark(var(--color-background-light), var(--color-background-dark));
+}
+
+body .szh-menu {
+  color: light-dark(#212529, #cad1d8);
+  background-color: light-dark(#fff, #22262c);
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), #333);
+  box-shadow: 0 2px 9px 3px rgba(0, 0, 0, 0.25);
+
+  .szh-menu__arrow {
+    background-color: light-dark(#fff, #22262c);
+    border-left-color: light-dark(rgba(0, 0, 0, 0.1), #333);
+    border-top-color: light-dark(rgba(0, 0, 0, 0.1), #333);
+  }
+}
+body .szh-menu__item--hover {
+  background-color: light-dark(#ebebeb, #31363c);
+}
+body .szh-menu__item--focusable {
+  background-color: inherit;
+}
+body .szh-menu__item--disabled {
+  color: light-dark(#aaa, #666);
+}
+
+body .szh-menu__divider {
+  background-color: light-dark(rgba(0, 0, 0, 0.12), #3a3a3a);
 }
 
 .number,

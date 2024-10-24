@@ -12,7 +12,8 @@ export var Toolbar = styled.menu<{ vertical?: boolean; reversed?: boolean }>`
 
   & > button {
     border: 2px solid #333;
-    background: white;
+    background: light-dark(var(--color-background-light), var(--color-background-dark));
+    color: light-dark(var(--color-text-light), var(--color-text-dark));
     pointer-events: all;
     cursor: pointer;
     display: flex;
@@ -26,7 +27,7 @@ export var Toolbar = styled.menu<{ vertical?: boolean; reversed?: boolean }>`
   }
 
   & > button:hover {
-    background-color: #eee;
+    background-color: light-dark(var(--color-background-highghlight-light), var(--color-background-highghlight-dark));
   }
 
   & > button:not(${(props) => (props.reversed ? ":last-child" : ":first-child")}) {
