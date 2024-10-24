@@ -66,6 +66,12 @@ export function Graph() {
     },
     [nodes]
   );
+  useEffect(() => {
+    nodePositionSpringApi.set((index) => {
+      return { xy: [nodes[index].positionX, nodes[index].positionY] };
+    });
+  }, [tree.nodeDeletionCount]);
+
   const ports = useMemo(
     () =>
       Object.fromEntries(

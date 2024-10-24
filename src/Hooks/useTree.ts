@@ -38,6 +38,7 @@ export const useTree = create<TreeStore>()(
         customNodes: {} as { [key: string]: NodeDefinition },
         globalSettings: {},
         key: 0,
+        nodeDeletionCount: 0,
         getNode(id: string) {
           return get().nodes[id];
         },
@@ -233,6 +234,7 @@ export const useTree = create<TreeStore>()(
                   }
                 });
               });
+              state.nodeDeletionCount++;
               delete state.nodes[node];
             })
           );

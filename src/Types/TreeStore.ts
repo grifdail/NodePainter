@@ -15,6 +15,7 @@ export type TreeStore = {
   nodes: NodeCollection;
   editedGraph?: string;
   customNodes: { [key: string]: NodeDefinition };
+  nodeDeletionCount: number;
   globalSettings: { [key: string]: any };
   getNodeLibrary: () => { [key: string]: NodeDefinition };
   getNodeTypeDefinition: (type: string | NodeData) => NodeDefinition;
