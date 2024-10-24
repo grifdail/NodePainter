@@ -10,7 +10,7 @@ export type PaintingToolDef = {
   onFrameMouseDown?: (graphic: Graphics, p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
   onMouseReleased?: (graphic: Graphics, p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
   onMousePressed?: (graphic: Graphics, p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
-  onPreview?: (p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
+  onPreview?: (p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null, hasPointer: boolean) => void;
 };
 
 export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
@@ -19,7 +19,10 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     onMousePressed(graphic, p5, paintingState, mouse, pmouse, startClick) {
       floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 225);
     },
-    onPreview(p5, paintingState, mouse, pmouse, startClick) {
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
+      if (!hasPointer) {
+        return;
+      }
       p5.stroke(toHex(paintingState.color));
       p5.strokeWeight(5);
       p5.point(mouse[0], mouse[1]);
@@ -34,7 +37,10 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     },
     onMouseReleased: undefined,
     onMousePressed: undefined,
-    onPreview(p5, paintingState, mouse, pmouse, startClick) {
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
+      if (!hasPointer) {
+        return;
+      }
       p5.stroke(toHex(paintingState.color));
       p5.strokeWeight(paintingState.lineWidth);
       p5.point(mouse[0], mouse[1]);
@@ -52,7 +58,10 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     },
     onMouseReleased: undefined,
     onMousePressed: undefined,
-    onPreview(p5, paintingState, mouse, pmouse, startClick) {
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
+      if (!hasPointer) {
+        return;
+      }
       p5.erase();
       p5.stroke(toHex(paintingState.color));
       p5.strokeWeight(paintingState.lineWidth);
@@ -73,12 +82,12 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
       graphic.line(mouse[0], mouse[1], startClick[0], startClick[1]);
     },
     onMousePressed: undefined,
-    onPreview(p5, paintingState, mouse, pmouse, startClick) {
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
       p5.stroke(toHex(paintingState.color));
       p5.strokeWeight(paintingState.lineWidth);
       if (startClick !== null) {
         p5.line(mouse[0], mouse[1], startClick[0], startClick[1]);
-      } else {
+      } else if (hasPointer) {
         p5.point(mouse[0], mouse[1]);
       }
     },
@@ -111,7 +120,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
       }
     },
     onMousePressed: undefined,
-    onPreview(p5, paintingState, mouse, pmouse, startClick) {
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
       if (paintingState.fillMode === "stroke") {
         p5.stroke(toHex(paintingState.color));
         p5.strokeWeight(paintingState.lineWidth);
@@ -132,7 +141,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
         } else {
           p5.ellipse(startClick[0] + (w / 2) * Math.sign(mouse[0] - startClick[0]), startClick[1] + (h / 2) * Math.sign(mouse[1] - startClick[1]), w, h);
         }
-      } else {
+      } else if (hasPointer) {
         p5.point(mouse[0], mouse[1]);
       }
     },

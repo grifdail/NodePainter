@@ -13,7 +13,7 @@ import { Tools } from "./Drawing/Tools";
 const MainDiv = styled.div`
   width: 100%;
   canvas {
-    background: repeating-conic-gradient(#808080 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+    background: repeating-conic-gradient(#eee 0% 25%, transparent 0% 50%) 50% / 20px 20px;
   }
 `;
 

@@ -63,6 +63,10 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   var graphic: Graphics | null = null;
 
+  let mouseJustPressed = false;
+
+  let mouseJustReleased = false;
+
   p5.setup = () => {
     p5.createCanvas(paintingState?.width || 0, paintingState?.height || 0);
     graphic = p5.createGraphics(paintingState?.width || 0, paintingState?.height || 0);
@@ -77,11 +81,15 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     scale = props.scale;
 
     if (paintingState.width !== p5.width || paintingState.height !== p5.height || firstInit || paintingState.clearCount !== clearCount) {
-      p5.createCanvas(paintingState?.width || 400, paintingState?.height || 400);
+      var canvas = p5.createCanvas(paintingState?.width || 400, paintingState?.height || 400);
       graphic = p5.createGraphics(paintingState?.width || 400, paintingState?.height || 400);
       graphic.pixelDensity(1);
       graphic.noSmooth();
       clearCount = paintingState.clearCount;
+      canvas.mousePressed(mousePressed);
+      canvas.mouseReleased(mouseReleased);
+      canvas.touchStarted(mousePressed);
+      canvas.touchEnded(mouseReleased);
     }
     if (paintingState.baseImage != null && firstInit) {
       var img = p5.loadImage(paintingState.baseImage, () => {
@@ -90,27 +98,12 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     }
   };
 
-  p5.mousePressed = () => {
-    if (graphic == null || paintingState == null) {
-      return;
-    }
-    startMousePosition = [p5.mouseX / scale, p5.mouseY / scale];
-    var tool = Tools[paintingState.tool];
-    if (tool.onMousePressed !== undefined) {
-      tool.onMousePressed(graphic, p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
-    }
+  const mousePressed = (e: any) => {
+    mouseJustPressed = true;
   };
 
-  p5.mouseReleased = () => {
-    if (graphic == null || paintingState == null) {
-      return;
-    }
-    var tool = Tools[paintingState.tool];
-    if (tool.onMouseReleased !== undefined) {
-      tool.onMouseReleased(graphic, p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
-    }
-    startMousePosition = null;
-    onSaveGraphics(graphic as Graphics);
+  const mouseReleased = () => {
+    mouseJustReleased = true;
   };
 
   p5.draw = () => {
@@ -120,14 +113,30 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     p5.clear(0, 0, 0, 0);
     p5.image(graphic, 0, 0);
     var tool = Tools[paintingState.tool];
+    if (mouseJustPressed) {
+      mouseJustPressed = false;
+      startMousePosition = [p5.mouseX / scale, p5.mouseY / scale];
+      if (tool.onMousePressed !== undefined) {
+        tool.onMousePressed(graphic, p5, paintingState, startMousePosition, [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
+      }
+    }
     if (p5.mouseIsPressed) {
       if (tool.onFrameMouseDown !== undefined) {
         tool.onFrameMouseDown(graphic, p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
       }
     }
+    if (mouseJustReleased) {
+      mouseJustReleased = false;
+      if (tool.onMouseReleased !== undefined) {
+        tool.onMouseReleased(graphic, p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
+      }
+      startMousePosition = null;
+      onSaveGraphics(graphic as Graphics);
+    }
 
     if (tool.onPreview !== undefined) {
-      tool.onPreview(p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
+      var hasPointer = matchMedia("(pointer:fine)").matches;
+      tool.onPreview(p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition, hasPointer);
     }
   };
 };
