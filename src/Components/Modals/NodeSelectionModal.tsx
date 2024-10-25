@@ -70,7 +70,7 @@ const AddModalDiv = styled.div`
     & > menu {
       overflow: auto;
       width: 100%;
-      background: light-dark(var(--color-background-light), var(--color-background-dark));
+      background: var(--color-background);
       padding: 10px;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -85,7 +85,7 @@ const AddModalDiv = styled.div`
       flex-grow: 1;
 
       & > button {
-        background: light-dark(var(--color-background-node-light), var(--color-background-node-dark));
+        background: var(--color-background-card);
         padding: 10px;
         box-sizing: 10px;
         //aspect-ratio: 2;

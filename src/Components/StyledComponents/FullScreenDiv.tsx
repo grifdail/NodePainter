@@ -12,6 +12,6 @@ export const FullScreenDiv = styled.div<{ modal?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => (props.modal ? "light-dark(rgba(0,0,0,0.2), rgba(0,0,0,0.5))" : "none")};
+  background: ${(props) => (props.modal ? "var(--color-screen)" : "none")};
   pointer-events: ${(props) => (props.modal ? "auto" : "none")};
 `;

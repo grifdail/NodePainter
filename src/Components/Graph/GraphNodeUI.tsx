@@ -19,14 +19,14 @@ import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
 
 const AnimatedG = animated(styled.g`
-  color: light-dark(var(--color-text-light), var(--color-text-dark));
+  color: var(--color-text);
 
   & > g > rect {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+    //box-shadow: 0px 0px 10px #ffffff;
     touch-action: none;
-    fill: light-dark(var(--color-background-node-light), var(--color-background-node-dark));
-    stroke: light-dark(var(--color-border-light), var(--color-border-dark));
-    stroke-width: 2px;
+    fill: var(--color-background-card);
+    stroke: var(--color-border);
+    stroke-width: 0.2px;
   }
   &.selected > g > rect {
     stroke: red;

@@ -14,7 +14,7 @@ const scaleLoop = keyframes`
 export const StyledPortGroup = styled.g`
   & circle {
     stroke: var(--color-property);
-    fill: light-dark(var(--color-background-light), var(--color-background-dark));
+    fill: var(--color-background);
     stroke-width: 2px;
   }
 

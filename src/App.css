@@ -15,19 +15,13 @@
 
   --color-selected: rgba(0, 0, 0, 0.3);
 
-  --color-background-light: #ffffff;
-  --color-background-node-light: #ffffff;
-  --color-background-button-light: #ffffff;
-  --color-text-light: #000000;
-  --color-background-highghlight-light: #eeeeee;
-  --color-border-light: #222;
-
-  --color-background-dark: #0d1117;
-  --color-background-node-dark: #151b23;
-  --color-background-button-dark: #151b23;
-  --color-text-dark: #dee4ea;
-  --color-background-highghlight-dark: #282828;
-  --color-border-dark: #dee4ea;
+  --color-background: light-dark(#ffffff, #0d1117);
+  --color-background-card: light-dark(#ffffff, #151b23);
+  --color-background-button: light-dark(#ffffff, #151b23);
+  --color-text: light-dark(#000000, #dee4ea);
+  --color-background-highghlight: light-dark(#eeeeee, #282828);
+  --color-border: light-dark(#222, #dee4ea);
+  --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
 }
 
 * {
@@ -43,7 +37,7 @@ body {
   overflow: hidden;
   user-select: none;
   user-zoom: none;
-  background: light-dark(var(--color-background-light), var(--color-background-dark));
+  background: var(--color-background);
 }
 
 body .szh-menu {
