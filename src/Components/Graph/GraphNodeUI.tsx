@@ -26,7 +26,8 @@ const AnimatedG = animated(styled.g`
     touch-action: none;
     fill: var(--color-background-card);
     stroke: var(--color-border);
-    stroke-width: 0.2px;
+    stroke-width: var(--border-size);
+    filter: drop-shadow(var(--card-shadow));
   }
   &.selected > g > rect {
     stroke: red;

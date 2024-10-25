@@ -16,12 +16,27 @@
   --color-selected: rgba(0, 0, 0, 0.3);
 
   --color-background: light-dark(#ffffff, #0d1117);
-  --color-background-card: light-dark(#ffffff, #151b23);
+  --color-background-card: light-dark(#fcfcfc, #22262c);
   --color-background-button: light-dark(#ffffff, #151b23);
-  --color-text: light-dark(#000000, #dee4ea);
+  --color-text: light-dark(#000000, #cad1d8);
   --color-background-highghlight: light-dark(#eeeeee, #282828);
   --color-border: light-dark(#222, #dee4ea);
   --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
+
+  --border-size: 0.2px;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+
+  @media (prefers-color-scheme: dark) {
+    --card-shadow: none;
+  }
 }
 
 * {

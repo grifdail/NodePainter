@@ -6,15 +6,18 @@ const MainDiv = styled.div`
   max-width: 100%;
 
   display: flex;
-  gap: 2em;
+  align-items: flex-start;
+  gap: var(--padding-large);
 
   @media (max-width: 840px), (max-height: 500px) {
     flex-direction: column;
+    align-items: center
     gap: 1em;
   }
 
   & img {
     max-width: 100%;
+    display: block;
   }
   & p {
     margin-right: 2em;

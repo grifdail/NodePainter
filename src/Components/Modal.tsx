@@ -19,7 +19,7 @@ export function Modal({ children, title, icon: Icon, onClose, big = false }: { c
         <header>
           {Icon && <Icon />}
           <h2>{title}</h2>
-          <button onClick={onClose}>
+          <button onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
             <IconX></IconX>
           </button>
         </header>

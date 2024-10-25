@@ -6,17 +6,18 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
   min-height: 500px;
   max-height: 80%;
   ${(props) => (props.big ? "height: 80%;" : "")}
-  overflow: hidden;
+  overflow: auto;
   margin: auto;
   background: var(--color-background);
   color: var(--color-text);
-  padding: 10px;
-  border: 2px solid #333;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 0 30px;
+  padding: var(--padding-large);
+  border: var(--border-size) solid #333;
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+  position: relative;
 
   & > header {
     display: flex;
@@ -33,19 +34,26 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
     }
 
     & button {
-      justify-self: flex-end;
-      border: 1px solid var(--color-border);
-      background: none;
+      background: transparent;
       aspect-ratio: 1;
-      display: flex;
-      padding: 5px;
-      align-items: center;
-      justify-content: center;
-      aspect-ratio: 1;
-      border-radius: Z 50%;
+      padding: 0px;
+      border: none;
+
+      border-radius: var(--border-radius-large);
+
+      position: absolute;
+      top: var(--padding-large);
+      right: var(--padding-large);
+
+      transition: color 0.3s;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+        color: rgba(0, 0, 0, 0.3);
+      }
+
+      & > svg {
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -72,11 +80,6 @@ export const ModalBody = styled(animated.div)<{ big: boolean }>`
 
       & > h2 {
         font-size: 15px;
-      }
-
-      & > button {
-        height: 24px;
-        padding: 2px;
       }
     }
   }
