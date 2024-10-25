@@ -102,14 +102,17 @@ export function Graph() {
     [ports]
   );
 
-  const onTapNode = useCallback(function onTapNode(node: NodeData): void {
-    var selection = useSelection.getState();
-    if (selection.isInSelectionMode) {
-      selection.toggleNode(node.id);
-    } else {
-      onClickNodeEdgeCreation(node);
-    }
-  }, []);
+  const onTapNode = useCallback(
+    function onTapNode(node: NodeData): void {
+      var selection = useSelection.getState();
+      if (selection.isInSelectionMode) {
+        selection.toggleNode(node.id);
+      } else {
+        onClickNodeEdgeCreation(node);
+      }
+    },
+    [onClickNodeEdgeCreation]
+  );
 
   const onMoveNode = useCallback(
     function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
