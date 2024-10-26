@@ -1,11 +1,34 @@
 import { animated } from "@react-spring/web";
 import styled from "styled-components";
 
-export const ModalBody = styled(animated.div)<{ big: boolean }>`
-  width: 80%;
-  min-height: 500px;
-  max-height: 80%;
-  ${(props) => (props.big ? "height: 80%;" : "")}
+export type ModalSize = "small" | "medium" | "large" | "tiny";
+
+const ModalSizeCSS: { [key in ModalSize]: string } = {
+  small: `
+    width: 50%;
+    min-height: 200px;
+    max-height: 50%;
+  `,
+  medium: `
+    width: 70%;
+    min-height: 200px;
+    max-height 65%;
+  `,
+  large: `
+    width: 80%;
+    min-height: 500px;
+    height: 80%;
+  `,
+  tiny: `
+    width:auto;
+    max-width: 50%;
+    min-height: 100px;
+    height: auto;`,
+};
+
+export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: boolean }>`
+  ${(props) => ModalSizeCSS[props.size || "medium"]}
+  ${(props) => (props.stretch ? "max-height: none; height: auto;" : "")}
   overflow: auto;
   margin: auto;
   background: var(--color-background);

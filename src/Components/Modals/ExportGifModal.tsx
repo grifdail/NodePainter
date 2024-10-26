@@ -46,6 +46,7 @@ const MainDiv = styled.div`
 
   & .rendering {
     text-align: center;
+    display: none;
   }
 `;
 
@@ -147,7 +148,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
 
   return (
-    <Modal onClose={close} title="Export a gif" icon={IconGif}>
+    <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
       <MainDiv>
         <fieldset>
           <label>Duration, in second {fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}</label>

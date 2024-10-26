@@ -1,10 +1,10 @@
 import React from "react";
 import { Icon, IconX } from "@tabler/icons-react";
 import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
-import { ModalBody } from "./StyledComponents/ModalBody";
+import { ModalBody, ModalSize } from "./StyledComponents/ModalBody";
 import { useSpring } from "@react-spring/web";
 
-export function Modal({ children, title, icon: Icon, onClose, big = false }: { children?: any; title?: string; big?: boolean; icon?: Icon; onClose?: () => void }) {
+export function Modal({ children, title, icon: Icon, onClose, stretch, size = "medium" }: { children?: any; title?: string; size?: ModalSize; stretch?: boolean; icon?: Icon; onClose?: () => void }) {
   const styles = useSpring({
     from: {
       scale: 0,
@@ -15,7 +15,7 @@ export function Modal({ children, title, icon: Icon, onClose, big = false }: { c
   });
   return (
     <FullScreenDiv modal>
-      <ModalBody big={big} style={styles}>
+      <ModalBody size={size} style={styles} stretch>
         <header>
           {Icon && <Icon />}
           <h2>{title}</h2>

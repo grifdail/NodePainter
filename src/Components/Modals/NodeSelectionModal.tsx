@@ -237,7 +237,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   );
 
   return (
-    <Modal title="Add a new node" icon={IconPlus} onClose={close} big>
+    <Modal title="Add a new node" icon={IconPlus} onClose={close} size="large">
       <AddModalDiv>
         <menu>
           {tags.map((tag) => (

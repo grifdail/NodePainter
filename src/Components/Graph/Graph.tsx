@@ -14,6 +14,7 @@ import { PortType } from "../../Types/PortType";
 import { useSelection } from "../../Hooks/useSelection";
 import { ContextMenu, useContextMenu } from "./ContextMenu";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
+import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 
 export function Graph() {
   useGesturePrevention();
@@ -27,6 +28,8 @@ export function Graph() {
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
   }));
+
+  useGraphHotkey();
 
   useEffect(() => {
     var cb = (e: PointerEvent) => {
