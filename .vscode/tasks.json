@@ -30,6 +30,13 @@
 			"problemMatcher": [],
 			"label": "npm: install",
 			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "storybook",
+			"problemMatcher": [],
+			"label": "npm: storybook",
+			"detail": "storybook dev -p 6006"
 		}
 	]
 }

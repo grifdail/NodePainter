@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "./App.css";
 import { Graph } from "./Components/Graph/Graph";
 
 import { Router } from "./Components/Router";
@@ -23,7 +22,7 @@ function App() {
     }, 1000);
   }, []);
   return (
-    <div className="App">
+    <div className="app">
       <GraphCache />
       <Router />
       <Tooltip id="tooltip"></Tooltip>

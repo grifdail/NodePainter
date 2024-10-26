@@ -1,7 +1,7 @@
 import { animated } from "@react-spring/web";
 import styled from "styled-components";
 
-export type ModalSize = "small" | "medium" | "large" | "tiny";
+export type ModalSize = "small" | "medium" | "large" | "tiny" | "fullscreen";
 
 const ModalSizeCSS: { [key in ModalSize]: string } = {
   small: `
@@ -21,9 +21,13 @@ const ModalSizeCSS: { [key in ModalSize]: string } = {
   `,
   tiny: `
     width:auto;
-    max-width: 50%;
+    max-width: 33%;
     min-height: 100px;
     height: auto;`,
+
+  fullscreen: `
+    width:100%;
+    height: 100%;`,
 };
 
 export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: boolean }>`
@@ -88,6 +92,7 @@ export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: bool
     overflow: hidden;
     flex-shrink: 1;
     flex-grow: 1;
+    flex-direction: column;
   }
 
   @media (max-width: 840px), (max-height: 500px) {
