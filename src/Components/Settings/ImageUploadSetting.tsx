@@ -59,7 +59,7 @@ export const ImageUploadSetting: SettingComponent = function PaletteSetting({ on
       )}
       {value !== null && <img src={value} alt="loaded"></img>}
 
-      <ButtonGroup compact hidden={value !== null}>
+      <ButtonGroup hidden={value !== null}>
         <button onClick={() => onChange(null)}>Reset</button>
       </ButtonGroup>
     </Body>

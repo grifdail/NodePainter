@@ -40,7 +40,7 @@ export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onC
       )}
       {value !== null && <img src={value} alt="loaded"></img>}
 
-      <ButtonGroup compact hidden={value !== null}>
+      <ButtonGroup hidden={value !== null}>
         <button onClick={() => usePainting.getState().open(value, onChange)}>Edit</button>
       </ButtonGroup>
     </Body>

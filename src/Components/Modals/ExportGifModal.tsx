@@ -13,6 +13,7 @@ import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
 import { BoolInput } from "../Settings/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
+import { Button } from "../Generics/Button";
 
 const MainDiv = styled.div`
   display: flex;
@@ -21,7 +22,6 @@ const MainDiv = styled.div`
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
-  flex: 1 0 100px;
   gap: 10px;
   overflow: auto;
 
@@ -189,10 +189,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
         </div>
         <progress value={progress} max="100" />
         <ButtonGroup>
-          {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
-          {renderState === "rendering" && <button disabled> Rendering</button>}
-          {renderState === "processing" && <button disabled> Processing</button>}
-          {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
+          {renderState === "waiting" && <Button onClick={() => setRenderState("rendering")}> Render</Button>}
+          {renderState === "rendering" && <Button disabled> Rendering</Button>}
+          {renderState === "processing" && <Button disabled> Processing</Button>}
+          {renderState === "done" && <Button onClick={() => download(blob as Blob, filename)}>Download</Button>}
         </ButtonGroup>
       </MainDiv>
     </Modal>

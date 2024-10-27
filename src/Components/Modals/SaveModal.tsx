@@ -5,6 +5,7 @@ import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { SketchTemplate } from "../../Data/templates";
+import { Button } from "../Generics/Button";
 
 const MainDiv = styled.div`
   display: flex;
@@ -37,7 +38,7 @@ export function SaveModal({ close }: { close: () => void }) {
   const [lastValue, clip] = useCopyToClipboard();
 
   return (
-    <Modal onClose={close} title="Save" icon={IconDeviceFloppy}>
+    <Modal onClose={close} title="Save" icon={IconDeviceFloppy} size="small">
       <MainDiv>
         <div className="short">
           <label htmlFor="short">Use short json</label>
@@ -46,8 +47,8 @@ export function SaveModal({ close }: { close: () => void }) {
         <textarea value={json}></textarea>
 
         <ButtonGroup>
-          <button onClick={() => clip(json)}> {lastValue === json ? "Succesfully copied !" : "Copy to clipboard"}</button>
-          <button onClick={() => download(json, "node_painter_save.json")}> download as file</button>
+          <Button onClick={() => clip(json)}> {lastValue === json ? "Succesfully copied !" : "Copy to clipboard"}</Button>
+          <Button onClick={() => download(json, "node_painter_save.json")}> download as file</Button>
         </ButtonGroup>
       </MainDiv>
     </Modal>

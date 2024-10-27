@@ -8,11 +8,11 @@ import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
 import { WarningTrack } from "./StyledComponents/WarningTrack";
-import { FullScreenDiv } from "./StyledComponents/FullScreenDiv";
 import { useSelection } from "../Hooks/useSelection";
 import { MainMenu } from "./MainMenu";
 import { FunctionSubMenu } from "./FunctionSubMenu";
 import { Routes } from "../Types/Routes";
+import { FullScreenDiv } from "./Modal";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;

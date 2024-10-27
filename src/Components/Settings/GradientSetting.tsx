@@ -111,7 +111,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
         ))}
       </ColorList>
 
-      <ButtonGroup compact>
+      <ButtonGroup>
         <button onClick={addNewColor}>Add</button>
         <Menu
           portal

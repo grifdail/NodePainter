@@ -95,7 +95,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
         ))}
       </ColorList>
 
-      <ButtonGroup compact>
+      <ButtonGroup>
         <button onClick={addNewStop}>Add</button>
       </ButtonGroup>
     </div>

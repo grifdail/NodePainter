@@ -79,7 +79,7 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
         ))}
       </ColorList>
 
-      <ButtonGroup compact>
+      <ButtonGroup>
         <button onClick={addNewColor}>Add</button>
         <PaletteMenu onLoaded={(value) => onChange(value)} currentPalette={list}></PaletteMenu>
       </ButtonGroup>
