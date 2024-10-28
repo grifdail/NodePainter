@@ -35,6 +35,8 @@
   --padding-medium: 12px;
   --padding-small: 8px;
 
+  --size-text: 14px;
+
   @media (prefers-color-scheme: dark) {
     --card-shadow: none;
   }

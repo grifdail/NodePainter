@@ -7,11 +7,27 @@ export const FieldsetStyled = styled.fieldset`
   margin: 0;
   padding: 0;
   color: var(--color-text);
+
+  min-width: 100px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: stretch;
+  gap: var(--padding-small);
+
+  & > input {
+    width: 50px;
+  }
 `;
 
 export const FieldsetLabel = styled.label`
-  display: block;
+  display: inline;
   padding-bottom: var(--padding-small);
+  flex: 0 0 content;
+  align-self: center;
+  margin: none;
+  padding: 0;
 `;
 
 type FieldsetProps = {

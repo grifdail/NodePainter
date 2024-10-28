@@ -28,7 +28,7 @@ const MainDiv = styled.div`
 
   & form {
     display: grid;
-    gap: var(--padding-medium);
+    gap: var(--padding-large);
     grid-template-columns: 1fr 1fr;
   }
 

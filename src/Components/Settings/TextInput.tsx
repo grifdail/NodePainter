@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Input } from "../StyledComponents/Input";
 
 export function TextInput({ onChange, value, disabled = false }: { onChange: (value: string) => void; value: string; disabled?: boolean }) {
   var [rawField, setRawField] = useState(value);
@@ -11,5 +12,5 @@ export function TextInput({ onChange, value, disabled = false }: { onChange: (va
     onChange(rawField);
   };
 
-  return <input disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  return <Input disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
 }

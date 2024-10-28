@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
+import { Input } from "../StyledComponents/Input";
+import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
 //import { useDrag } from "@use-gesture/react";
 
 const math = create(all);
@@ -34,26 +36,23 @@ math.import(
 );
 
 export function NumberInput({ onChange, value, className }: InputProps<number> & { className?: string }) {
-  var [rawField, setRawField] = useState((value != null ? value : 0).toString());
-
-  useEffect(() => {
-    setRawField(value.toString());
-  }, [value]);
-
-  const onBlur = (newValue: string) => {
-    try {
-      var parsed = limitedEvaluate(rawField);
-      if (rawField !== "" && !Number.isNaN(parsed)) {
-        onChange(parsed);
-        setRawField(parsed.toString());
-      } else {
-        setRawField(value.toString());
+  var { rawField, setRawField, onBlur } = useSubmitOnBlur(
+    value || 0,
+    (a) => a.toString(),
+    onChange,
+    (newValue: string): undefined | number => {
+      try {
+        const parsed = limitedEvaluate(rawField);
+        if (rawField !== "" && !Number.isNaN(parsed)) {
+          return parsed;
+        }
+        return undefined;
+      } catch (err) {
+        console.warn(err);
+        return undefined;
       }
-    } catch (err) {
-      console.warn(err);
-      setRawField(value.toString());
     }
-  };
-  //{...bind() }
-  return <input className={className} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)}></input>;
+  );
+
+  return <Input className={className} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
 }
