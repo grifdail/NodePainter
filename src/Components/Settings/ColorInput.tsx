@@ -5,8 +5,10 @@ import { Menu } from "@szhsin/react-menu";
 import { ColorButton } from "../StyledComponents/ColorButton";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { ReactNode } from "react";
+import { InputProps } from "./InputProps";
+import { Color } from "../../Types/vectorDataType";
 
-export function ColorInput({ onChange, value, children, disabled }: { onChange: (value: any) => void; value: any; children?: ReactNode; disabled?: boolean }) {
+export function ColorInput({ onChange, value, children, disabled }: InputProps<Color> & { children?: ReactNode; disabled?: boolean }) {
   var hex = toHex(value, true);
   const palette = usePlayerPref((state) => state.colorPreset);
 

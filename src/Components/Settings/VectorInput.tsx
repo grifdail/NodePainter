@@ -10,7 +10,7 @@ export function VectorInput({ onChange, value }: { onChange: (value: any) => voi
   return (
     <div className="vector-input">
       {value.map((comp, i) => (
-        <NumberInput key={i} value={comp} onChange={(e) => onInputChange(e, i)}></NumberInput>
+        <NumberInput key={i} value={comp} onChange={(e: number) => onInputChange(e as number, i)}></NumberInput>
       ))}
     </div>
   );

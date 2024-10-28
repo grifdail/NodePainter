@@ -1,4 +1,4 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { IconBrush, IconMenu2 } from "@tabler/icons-react";
 import { Button, InvisibleButton } from "../Components/Generics/Button";

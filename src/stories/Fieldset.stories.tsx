@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { IconBrush } from "@tabler/icons-react";
-import { Modal } from "../Components/Modal";
-import { Button } from "../Components/Generics/Button";
+import { InvisibleButton } from "../Components/Generics/Button";
+import { Fieldset } from "../Components/StyledComponents/Fieldset";
+import { NumberInput } from "../Components/Settings/NumberInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Button",
-  component: Button,
+  title: "Fieldset",
+  component: Fieldset,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -21,33 +22,19 @@ const meta = {
   argTypes: {},
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {
-    onClick: fn(),
+    onChange: fn(),
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Fieldset>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary: Story = {
-  args: {},
-  render: ({ ...args }) => <Button {...args}>Click me</Button>,
-};
-
-export const IconOnly: Story = {
-  args: {},
-  render: ({ ...args }) => (
-    <Button {...args}>
-      <IconBrush />
-    </Button>
-  ),
-};
-
-export const IconAndText: Story = {
-  args: {},
-  render: ({ ...args }) => (
-    <Button {...args}>
-      <IconBrush /> Click Me !
-    </Button>
-  ),
+export const Default: Story = {
+  args: {
+    label: "Hello",
+    input: NumberInput,
+    onChange: fn(),
+    value: 10,
+  },
 };

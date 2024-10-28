@@ -7,7 +7,7 @@ export function MaterialInput({ onChange, value }: { onChange: (value: any) => v
   if (!mat || mat.color === undefined) {
     return null;
   }
-  const onInputChange = (newValue: number) => {
+  const onInputChange = (newValue: Color) => {
     var newMat = { ...mat, color: newValue };
     onChange(newMat);
   };

@@ -14,6 +14,7 @@ import { WhammyExporter } from "./Exporters/WhammyExporter";
 import { BoolInput } from "../Settings/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
+import { Fieldset } from "../StyledComponents/Fieldset";
 
 const MainDiv = styled.div`
   display: flex;
@@ -22,19 +23,15 @@ const MainDiv = styled.div`
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
-  gap: 10px;
+  gap: var(--padding-medium);
   overflow: auto;
 
-  & fieldset {
-    display: flex;
-    flex-direction: row;
-    border: none;
-    justify-content: space-between;
+  & form {
+    display: grid;
+    gap: var(--padding-medium);
+    grid-template-columns: 1fr 1fr;
   }
-  & hr {
-    flex-grow: 1;
-    border: none;
-  }
+
   & progress {
     display: block;
     width: calc(100% - 20px);
@@ -148,24 +145,15 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
 
   return (
-    <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
+    <Modal onClose={close} title="Export a gif" icon={IconGif} size="small" stretch>
       <MainDiv>
-        <fieldset>
-          <label>Duration, in second {fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}</label>
-          <NumberInput value={duration} onChange={setDuration} />
-        </fieldset>
-        <fieldset>
-          <label>FrameRate</label>
-          <NumberInput value={fixedFrameRate} onChange={setFixedFrameRate} />
-        </fieldset>
-        <fieldset>
-          <label>Preload</label>
-          <NumberInput value={preloadDuration} onChange={setPreloadDuration} />
-        </fieldset>
-        <fieldset>
-          <label>Output as a gif ?</label>
-          <BoolInput value={isGif} onChange={setIsGif} />
-        </fieldset>
+        <form>
+          <Fieldset label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`} input={NumberInput} value={duration} onChange={setDuration}></Fieldset>
+          <Fieldset label="FrameRate" input={NumberInput} value={fixedFrameRate} onChange={setFixedFrameRate} />
+          <Fieldset label="Preload" input={NumberInput} value={preloadDuration} onChange={setPreloadDuration} />
+          <Fieldset label="Output as a gif ?" input={BoolInput} value={isGif} onChange={setIsGif} />
+        </form>
+
         <hr></hr>
         <div className="rendering">
           {renderState === "rendering" && (

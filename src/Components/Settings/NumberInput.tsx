@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
+import { InputProps } from "./InputProps";
 //import { useDrag } from "@use-gesture/react";
 
 const math = create(all);
@@ -32,7 +33,7 @@ math.import(
   { override: true }
 );
 
-export function NumberInput({ onChange, value, className }: { onChange: (value: number) => void; value: number; className?: string }) {
+export function NumberInput({ onChange, value, className }: InputProps<number> & { className?: string }) {
   var [rawField, setRawField] = useState((value != null ? value : 0).toString());
 
   useEffect(() => {

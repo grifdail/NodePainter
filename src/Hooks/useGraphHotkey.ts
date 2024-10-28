@@ -1,4 +1,4 @@
-﻿import { useHotkeys } from "react-hotkeys-hook";
+import { useHotkeys } from "react-hotkeys-hook";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
 import { useRouter } from "./useRouter";
