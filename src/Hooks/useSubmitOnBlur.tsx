@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export const useSubmitOnBlur = function <T>(value: T, toString: (value: T) => string, onChange: (value: T) => void, validate: (value: string) => undefined | T) {
   const stringified = toString(value);

@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { IconBrush } from "@tabler/icons-react";
-import { InvisibleButton } from "../Components/Generics/Button";
 import { Fieldset } from "../Components/StyledComponents/Fieldset";
 import { NumberInput } from "../Components/Settings/NumberInput";
 import { TextInput } from "../Components/Settings/TextInput";
@@ -25,6 +23,7 @@ const meta = {
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {
     onChange: fn(),
+    disabled: false,
   },
   render: ({ ...args }) => (
     <div style={{ width: `300px` }}>

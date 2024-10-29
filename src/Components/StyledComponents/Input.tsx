@@ -1,4 +1,4 @@
-﻿import styled from "styled-components";
+import styled from "styled-components";
 
 export const Input = styled.input`
   background: transparent;
@@ -14,8 +14,9 @@ export const Input = styled.input`
 
   font-size: var(--size-text);
 
-  &:focus {
+  &:focus,
+  &:hover {
     outline: none;
-    background: light-dark(rgba(0, 0, 0, 0.1), rgba(1, 1, 1, 0.3));
+    background: var(--color-selected);
   }
 `;

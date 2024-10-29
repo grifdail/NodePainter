@@ -1,12 +1,12 @@
-import { Modal } from "../Modal";
+import { Modal } from "../../Modal";
 import { IconFunctionFilled } from "@tabler/icons-react";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortType } from "../../Types/PortType";
-import { useCustomNodeCreationContext } from "../../Hooks/useCustomNodeCreationContext";
+import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { PortType } from "../../../Types/PortType";
+import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
 import { InputPortEdit } from "./InputPortEdit";
-import { CustomNodeMainDiv } from "../StyledComponents/CustomNodeMainDiv";
 import { CustomNodeModalHeader } from "./CustomNodeModalHeader";
+import { CustomNodeMainDiv } from "./CustomNodeMainDiv";
 
 const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "image"];
 
@@ -18,11 +18,11 @@ export function CustomShaderModal({ close }: { close: () => void }) {
     <Modal onClose={close} title={context.mode === "edit" ? `Edit Shader ${context.model?.id}` : "Create a shader"} icon={IconFunctionFilled}>
       <CustomNodeMainDiv>
         <p className="subtitle">Render an image by computing it's color pixel by pixels</p>
-        <CustomNodeModalHeader context={context} def={def} hasExecuteOption={false}></CustomNodeModalHeader>
+        <CustomNodeModalHeader def={def} hasExecuteOption={false} isNameValid={context.isNameValid} setCanBeExecuted={context.setCanBeExecuted} setDescription={context.setDescription} setId={context.setId} mode={context.mode}></CustomNodeModalHeader>
         <section>
           <h3>Inputs / Uniforms</h3>
           {def.dataInputs.map((port, i) => (
-            <InputPortEdit key={i} port={port} context={context} index={i} role="inputData" availableTypes={AvailableTypesInput} />
+            <InputPortEdit key={i} port={port} index={i} role="inputData" availableTypes={AvailableTypesInput} {...context} />
           ))}
           <ButtonGroup>
             <button onClick={() => context.addInputs("input")}>Add</button>

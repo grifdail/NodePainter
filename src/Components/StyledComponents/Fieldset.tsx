@@ -2,7 +2,7 @@ import { useId } from "react";
 import styled from "styled-components";
 import { InputProps } from "../Settings/InputProps";
 
-export const FieldsetStyled = styled.fieldset`
+const FieldsetStyled = styled.fieldset`
   border: none;
   margin: 0;
   padding: 0;
@@ -21,7 +21,7 @@ export const FieldsetStyled = styled.fieldset`
   }
 `;
 
-export const FieldsetLabel = styled.label`
+const FieldsetLabel = styled.label`
   display: inline;
   padding-bottom: var(--padding-small);
   flex: 0 0 content;
@@ -34,14 +34,15 @@ type FieldsetProps = {
   label: string;
   input: React.FC<InputProps<any>>;
   tooltip?: string;
+  valid?: boolean;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled }: FieldsetProps) => {
   var id = useId();
   return (
     <FieldsetStyled data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
       <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
-      <Input name={id} onChange={onChange} value={value} />
+      <Input name={id} onChange={onChange} value={value} disabled={disabled} />
     </FieldsetStyled>
   );
 };

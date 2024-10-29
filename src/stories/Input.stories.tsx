@@ -1,6 +1,5 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { Input } from "../Components/StyledComponents/Input";
 import { NumberInput } from "../Components/Settings/NumberInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

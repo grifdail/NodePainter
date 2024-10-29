@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
 import { Input } from "../StyledComponents/Input";
 import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
-//import { useDrag } from "@use-gesture/react";
 
 const math = create(all);
 const limitedEvaluate = math.evaluate;

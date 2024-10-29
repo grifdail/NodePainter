@@ -21,17 +21,40 @@ export const ColorButton = styled.button<{ color: string }>`
   width: 18px;
   height: 18px;
   cursor: pointer;
+  border: none;
 `;
 
-export const ColorInputDiv = styled.div`
+export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
   display: flex;
   justify-content: end;
   align-items: center;
+  flex-grow: 1;
 
   border-bottom: 2px solid var(--color-border);
+  padding-right: var(--padding-small);
+
+  transition: background-color 0.3s;
 
   & > input {
     border: none;
+    transition: color 0.3s;
+
+    &:focus,
+    &:hover {
+      background: none;
+    }
+  }
+
+  &:focus-within,
+  &:hover {
+    background: var(--color-selected);
+  }
+  &:has(button:hover) {
+    background: ${(props) => props.color};
+
+    & input {
+      color: ${(props) => props.opposite};
+    }
   }
 `;
 
@@ -54,6 +77,7 @@ function ColorPicker({ disabled, value, onChange }: { disabled?: boolean; value:
 
 export function ColorInput({ onChange, value, disabled }: InputProps<Color> & { children?: ReactNode; disabled?: boolean }) {
   var toHexFull = (a: Color) => toHex(a, true);
+  var hex = toHexFull(value);
 
   var { rawField, setRawField, onBlur } = useSubmitOnBlur(value || 0, toHexFull, onChange, (newValue: string): undefined | Color => {
     if (validateHex(newValue)) {
@@ -64,7 +88,7 @@ export function ColorInput({ onChange, value, disabled }: InputProps<Color> & { 
   });
 
   return (
-    <ColorInputDiv>
+    <ColorInputDiv color={hex} opposite={invertColor(hex, true)}>
       <Input value={rawField} onBlur={(e) => onBlur(e.target.value)} onChange={(e) => setRawField(e.target.value)} disabled={disabled} />
       <ColorPicker onChange={onChange} value={value} disabled={disabled} toHexFull={toHexFull}></ColorPicker>
     </ColorInputDiv>

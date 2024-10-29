@@ -26,23 +26,26 @@ const ModalSizeCSS: { [key in ModalSize]: string } = {
   small: `
     width: 50%;
     min-height: 200px;
-    max-height: 50%;
+    max-height: 80%;
   `,
   medium: `
     width: 70%;
     min-height: 200px;
-    max-height 65%;
+    max-height 80%;
+    
   `,
   large: `
     width: 80%;
     min-height: 500px;
     height: 80%;
+    max-height: 90%;
   `,
   tiny: `
     width:auto;
     max-width: 33%;
     min-height: 100px;
-    height: auto;`,
+    height: auto;
+    max-height: 50%;`,
 
   fullscreen: `
     width:100%;
@@ -99,7 +102,6 @@ export const ModalContent = styled.section`
   display: flex;
   align-items: stretch;
   justify-content: stretch;
-  overflow: hidden;
   flex-shrink: 1;
   flex-grow: 1;
   flex-direction: column;
@@ -114,7 +116,9 @@ export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: bool
   border-radius: var(--border-radius-large);
   box-shadow: var(--card-shadow);
   ${(props) => ModalSizeCSS[props.size || "medium"]}
-  ${(props) => (props.stretch ? "max-height: none; height: auto;" : "")}
+  ${(props) => (props.stretch ? " height: auto;" : "")}
+
+  
 
   display: flex;
   flex-direction: column;
