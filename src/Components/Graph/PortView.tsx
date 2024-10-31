@@ -17,6 +17,11 @@ const ImprovedFieldSet = styled(Fieldset)`
   border-radius: 0 24px 24px 0;
   margin-right: 15px;
   height: calc(100% - 2px);
+
+  & label {
+    width: 80px;
+    flex: 0 0 80px;
+  }
 `;
 
 export function PortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
