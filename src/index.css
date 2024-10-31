@@ -22,6 +22,7 @@
   --color-text: light-dark(#000000, #cad1d8);
   --color-background-highghlight: light-dark(#eeeeee, #282828);
   --color-border: light-dark(#222, #dee4ea);
+  --color-border-input: light-dark(#22222288, #dee4ea7e);
   --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
   --color-selected: light-dark(rgba(0, 0, 0, 0.1), rgba(1, 1, 1, 0.3));
 

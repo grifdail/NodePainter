@@ -17,6 +17,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
+import { NODE_FOOTER_HEIGHT, NODE_HEADER_HEIGHT, PORT_HEIGHT } from "./NodeVisualConst";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
@@ -38,7 +39,7 @@ export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
   var outputCount = Object.keys(node.execOutputs).length + Object.keys(node.dataOutputs).length;
   var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def), 0);
-  return 50 + 32 * Math.max(inputCount, outputCount) + 15 + sumSetting + typeDef.settings.length * 2;
+  return NODE_HEADER_HEIGHT + PORT_HEIGHT * (inputCount + outputCount) + NODE_FOOTER_HEIGHT + sumSetting + typeDef.settings.length * 2;
 }
 
 export type PortNodeCallback = (node: string, port: string, location: PortRole, type: PortType) => void;
@@ -91,7 +92,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   var Icon = definition.icon;
 
-  const portHeight = 50 + 32 * Math.max(inputCount, outputCount);
+  const portHeight = NODE_HEADER_HEIGHT + PORT_HEIGHT * (inputCount + outputCount);
   let settingOffset = portHeight;
 
   const styles = useSpring({
@@ -140,13 +141,13 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
         {definition.canBeExecuted ? <OutPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")} location="inputExecute" nodeId={node.id}></OutPortView> : null}
         {Object.entries(node.dataInputs).map(([key, item], i) => {
-          return <PortView y={50 + 32 * i} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)} location="inputData" nodeId={node.id}></PortView>;
+          return <PortView y={NODE_HEADER_HEIGHT + PORT_HEIGHT * (i + outputCount)} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)} location="inputData" nodeId={node.id}></PortView>;
         })}
         {Object.entries(node.execOutputs).map(([id], i) => {
-          return <OutPortView x={300} y={50 + 32 * i} key={id} id={id} label={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={NODE_HEADER_HEIGHT + PORT_HEIGHT * i} key={id} id={id} label={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutPortView>;
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
-          return <OutPortView x={300} y={50 + 32 * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label || item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
+          return <OutPortView x={300} y={NODE_HEADER_HEIGHT + PORT_HEIGHT * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label || item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutPortView>;
         })}
         {definition.settings.map((item, i) => {
           const isGlobal = item.globalKey !== undefined;

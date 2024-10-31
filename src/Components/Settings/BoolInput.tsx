@@ -9,7 +9,7 @@ const BoolDiv = styled.div`
   cursor: pointer;
   height: 37px;
 
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border-input);
   padding: var(--padding-small);
 
   transition: background-color 0.3s;

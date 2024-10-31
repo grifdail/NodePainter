@@ -1,5 +1,17 @@
+import styled from "styled-components";
 import { NumberInput } from "./NumberInput";
 import { Vector2 } from "@use-gesture/react";
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 10px;
+  gap: 1px;
+
+  & > input {
+    flex: 1 1 10px;
+  }
+`;
 
 export function VectorInput({ onChange, value }: { onChange: (value: any) => void; value: Vector2 }) {
   const onInputChange = (newValue: number, property: number) => {
@@ -8,10 +20,10 @@ export function VectorInput({ onChange, value }: { onChange: (value: any) => voi
     onChange(newVector);
   };
   return (
-    <div className="vector-input">
+    <StyledDiv>
       {value.map((comp, i) => (
         <NumberInput key={i} value={comp} onChange={(e: number) => onInputChange(e as number, i)}></NumberInput>
       ))}
-    </div>
+    </StyledDiv>
   );
 }

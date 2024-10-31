@@ -15,6 +15,7 @@ import { useSelection } from "../../Hooks/useSelection";
 import { ContextMenu, useContextMenu } from "./ContextMenu";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
+import { NODE_HEADER_HEIGHT, PORT_HEIGHT } from "./NodeVisualConst";
 
 export function Graph() {
   useGesturePrevention();
@@ -83,13 +84,14 @@ export function Graph() {
       Object.fromEntries(
         nodes.map((node, i) => {
           const executeOutputCount = Object.values(node.execOutputs).length;
+          const outputCount = Object.values(node.dataOutputs).length + executeOutputCount;
           var xy = nodePositionSpring[i].xy;
           return [
             node.id,
             {
-              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + 50 + 32 * i + 15])])),
-              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 15 + 32 * (i + executeOutputCount)])])),
-              ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + 50 + 32 * i + 15])])),
+              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT + PORT_HEIGHT * 0.5 + PORT_HEIGHT * (i + outputCount)])])),
+              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT * 0.5 + PORT_HEIGHT * (i + executeOutputCount)])])),
+              ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT * 0.5 + PORT_HEIGHT * i])])),
               [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
             },
           ];

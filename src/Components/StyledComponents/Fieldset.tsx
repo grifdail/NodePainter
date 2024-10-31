@@ -37,12 +37,13 @@ type FieldsetProps = {
   valid?: boolean;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough }: FieldsetProps) => {
   var id = useId();
+  console.log(Input);
   return (
     <FieldsetStyled data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
       <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
-      <Input name={id} onChange={onChange} value={value} disabled={disabled} />
+      {Input && <Input name={id} onChange={onChange} value={value} disabled={disabled} {...passtrough} />}
     </FieldsetStyled>
   );
 };

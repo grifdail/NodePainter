@@ -5,6 +5,8 @@ import { NumberInput } from "../Components/Settings/NumberInput";
 import { TextInput } from "../Components/Settings/TextInput";
 import { BoolInput } from "../Components/Settings/BoolInput";
 import { ColorInput } from "../Components/Settings/ColorInput";
+import { DropdownInput } from "../Components/Settings/DropdownInput";
+import { VectorInput } from "../Components/Settings/VectorInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -45,6 +47,33 @@ export const Number: Story = {
   },
 };
 
+export const Vector2: Story = {
+  args: {
+    label: "Vector2",
+    input: VectorInput,
+    onChange: fn(),
+    value: [0, 2],
+  },
+};
+
+export const Vector3: Story = {
+  args: {
+    label: "Vector2",
+    input: VectorInput,
+    onChange: fn(),
+    value: [0, 2, 3],
+  },
+};
+
+export const Vector4: Story = {
+  args: {
+    label: "Vector2",
+    input: VectorInput,
+    onChange: fn(),
+    value: [0, 2, 4, 5],
+  },
+};
+
 export const Text: Story = {
   args: {
     label: "Hello",
@@ -69,5 +98,17 @@ export const Color: Story = {
     input: ColorInput,
     onChange: fn(),
     value: [0, 0.5, 0.1, 1],
+  },
+};
+
+export const Dropdown: Story = {
+  args: {
+    label: "Hello",
+    input: DropdownInput,
+    onChange: fn(),
+    value: "Oh no",
+    passtrough: {
+      options: ["test", "Oh no", "pancake"],
+    },
   },
 };

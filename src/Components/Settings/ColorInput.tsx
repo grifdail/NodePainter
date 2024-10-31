@@ -30,7 +30,7 @@ export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
   align-items: center;
   flex-grow: 1;
 
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border-input);
   padding-right: var(--padding-small);
 
   transition: background-color 0.3s;
@@ -38,6 +38,7 @@ export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
   & > input {
     border: none;
     transition: color 0.3s;
+    width: 10px;
 
     &:focus,
     &:hover {

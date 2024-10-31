@@ -1,11 +1,12 @@
-﻿import { IconInfoCircle } from "@tabler/icons-react";
+import { IconInfoCircle, IconPlus } from "@tabler/icons-react";
 import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { PortRole } from "../../../Types/PortRole";
 import { PortType } from "../../../Types/PortType";
-import { Button } from "../../Generics/Button";
+import { Button, InvisibleButton } from "../../Generics/Button";
 import { InputPortEdit } from "./InputPortEdit";
 import styled from "styled-components";
+import { useCallback, useState } from "react";
 
 const SectionStyled = styled.section``;
 
@@ -17,6 +18,9 @@ const HeaderStyled = styled.header`
 
   & span {
     flex-grow: 1;
+  }
+  & h3 {
+    margin: 0;
   }
 `;
 
@@ -30,16 +34,31 @@ type PortDivProps = {
 } & Pick<CustomFunctionCreationContextStore, "setPortDefaultValue" | "setPortType" | "setPortId" | "deletePort">;
 
 export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, ...context }: PortDivProps) => {
+  var [selected, setSelected] = useState<number | null>(0);
+
+  var toggle = useCallback(
+    (id: number) => {
+      if (selected === id) {
+        setSelected(null);
+      } else {
+        setSelected(id);
+      }
+    },
+    [selected]
+  );
+
   return (
     <SectionStyled>
       <HeaderStyled>
         <h3>{label}</h3>
         {tooltip && <IconInfoCircle data-tooltip-id="tooltip" data-tooltip-content={tooltip}></IconInfoCircle>}
         <span></span>
-        <Button onClick={addPort}>Add</Button>
+        <InvisibleButton onClick={addPort}>
+          <IconPlus></IconPlus>
+        </InvisibleButton>
       </HeaderStyled>
       {ports.map((port, i) => (
-        <InputPortEdit key={i} port={port} index={i} role="inputData" availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />
+        <InputPortEdit open={selected === i} onOpen={() => toggle(i)} key={i} port={port} index={i} role="inputData" availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />
       ))}
     </SectionStyled>
   );
