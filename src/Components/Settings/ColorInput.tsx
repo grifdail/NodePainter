@@ -8,7 +8,7 @@ import { InputProps } from "./InputProps";
 import { Color } from "../../Types/vectorDataType";
 
 import styled from "styled-components";
-import { Input } from "../StyledComponents/Input";
+import { Input, InputBackgroundColor } from "../StyledComponents/Input";
 import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
 
 export const ColorButton = styled.button<{ color: string }>`
@@ -30,15 +30,18 @@ export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
   align-items: center;
   flex-grow: 1;
 
-  border-bottom: 2px solid var(--color-border-input);
   padding-right: var(--padding-small);
 
   transition: background-color 0.3s;
+
+  background: ${InputBackgroundColor};
+  border-radius: 24px;
 
   & > input {
     border: none;
     transition: color 0.3s;
     width: 10px;
+    background: none;
 
     &:focus,
     &:hover {

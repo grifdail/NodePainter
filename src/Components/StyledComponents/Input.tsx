@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
+export const InputBackgroundColor = "color-mix(in srgb, var(--color-property, var(--color-input)), transparent 90%)";
+
 export const Input = styled.input`
-  background: transparent;
+  background: ${InputBackgroundColor};
   border: none;
-  border-bottom: 2px solid var(--color-border-input);
+
+  border-radius: 25px;
 
   transition: background-color 0.3s;
   text-align: right;
@@ -15,6 +18,9 @@ export const Input = styled.input`
   font-size: var(--size-text);
   width: 50px;
   position: relative;
+
+  padding: var(--padding-tiny);
+  padding-right: 10px;
 
   &:focus,
   &:hover {

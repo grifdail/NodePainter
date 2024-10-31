@@ -42,8 +42,4 @@ export const StyledPortGroup = styled.g`
     //transform: scale(1.2);
     animation: ${scaleLoop} 0.5s ease-in-out infinite alternate;
   }
-
-  & fieldset {
-    height: 100%;
-  }
 `;

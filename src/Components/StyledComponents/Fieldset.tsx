@@ -11,13 +11,14 @@ const FieldsetStyled = styled.fieldset`
   min-width: 100px;
 
   display: flex;
-  align-items: center;
+  align-items: stretch;
   align-content: center;
   justify-content: stretch;
   gap: var(--padding-small);
 
   & > input {
     width: 50px;
+    height: 100%;
   }
 `;
 
@@ -35,13 +36,13 @@ type FieldsetProps = {
   input: React.FC<InputProps<any>>;
   tooltip?: string;
   valid?: boolean;
+  className?: string;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className }: FieldsetProps) => {
   var id = useId();
-  console.log(Input);
   return (
-    <FieldsetStyled data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
+    <FieldsetStyled data-tooltip-id="tooltip" data-tooltip-content={tooltip} className={className}>
       <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
       {Input && <Input name={id} onChange={onChange} value={value} disabled={disabled} {...passtrough} />}
     </FieldsetStyled>

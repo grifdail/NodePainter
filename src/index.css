@@ -25,6 +25,7 @@
   --color-border-input: light-dark(#22222288, #dee4ea7e);
   --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
   --color-selected: light-dark(rgba(0, 0, 0, 0.1), rgba(1, 1, 1, 0.3));
+  --color-input: light-dark(#888, #888);
 
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -36,6 +37,7 @@
   --padding-large: 14px;
   --padding-medium: 12px;
   --padding-small: 8px;
+  --padding-tiny: 4px;
 
   --size-text: 14px;
 

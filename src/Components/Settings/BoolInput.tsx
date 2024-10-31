@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { InputProps } from "./InputProps";
+import { InputBackgroundColor } from "../StyledComponents/Input";
 
 const BoolDiv = styled.div`
   flex: 1 1 100px;
   display: flex;
   justify-content: end;
-  align-items: end;
+  align-items: center;
   cursor: pointer;
   height: 37px;
 
-  border-bottom: 2px solid var(--color-border-input);
+  background: ${InputBackgroundColor};
+  border-radius: 24px;
   padding: var(--padding-small);
 
   transition: background-color 0.3s;

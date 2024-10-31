@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { InputProps } from "./InputProps";
 import { IconTriangleFilled, IconTriangleInverted } from "@tabler/icons-react";
 import { ReactNode } from "react";
+import { InputBackgroundColor } from "../StyledComponents/Input";
 
 const StyledDiv = styled.div``;
 
@@ -14,7 +15,8 @@ const StyledButton = styled.button`
   border: none;
   background: transparent;
   border: none;
-  border-bottom: 2px solid var(--color-border-input);
+  background: ${InputBackgroundColor};
+  border-radius: 24px;
 
   transition: background-color 0.3s;
   padding: var(--padding-small);
