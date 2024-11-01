@@ -10,6 +10,7 @@ import { NumberInput } from "../Inputs/NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";
+import { Button } from "../Generics/Button";
 
 const ColorList = styled.ul`
   display: flex;
@@ -61,7 +62,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
     onChange(newList);
   }
 
-  function addNewColor(event: any): void {
+  function addNewColor(): void {
     var newList = [...list, { pos: 1, color: createColor() }];
     newList.sort((a: GradientStop, b: GradientStop) => a.pos - b.pos);
     onChange(newList);
@@ -112,14 +113,8 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
       </ColorList>
 
       <ButtonGroup>
-        <button onClick={addNewColor}>Add</button>
-        <Menu
-          portal
-          menuButton={
-            <MenuButton className={"icon"}>
-              <IconMenu2></IconMenu2>
-            </MenuButton>
-          }>
+        <Button onClick={addNewColor} label="Add" />
+        <Menu portal menuButton={<Button icon={IconMenu2} />}>
           <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
           <MenuDivider></MenuDivider>
           <SubMenu label="Create from a default palette" overflow="auto">

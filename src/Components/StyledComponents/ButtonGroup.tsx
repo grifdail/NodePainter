@@ -6,6 +6,8 @@ export const ButtonGroup = styled.div<{ vertical?: boolean; nested?: boolean; al
   flex-direction: ${(state) => (state.vertical ? "column" : "row")};
   align-items: stretch;
   justify-content: ${(state) => state.align || "end"};
+  padding-top: var(--padding-small);
+  padding-bottom: var(--padding-small);
 
   ${(props) =>
     props.align === "stretch"

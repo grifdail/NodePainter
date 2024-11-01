@@ -103,7 +103,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
   );
 };
 EnvelopeSetting.getSize = function (value, def): number {
-  return 32 * value.length + 32 + 100 + 10;
+  return 32 * value.length + 50 + 100 + 10;
 };
 
 var StyledPreview = styled.svg`

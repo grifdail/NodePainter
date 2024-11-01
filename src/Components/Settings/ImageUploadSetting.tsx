@@ -4,6 +4,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
+import { Button } from "../Generics/Button";
 
 const Body = styled.div`
   width: 100%;
@@ -60,7 +61,7 @@ export const ImageUploadSetting: SettingComponent = function PaletteSetting({ on
       {value !== null && <img src={value} alt="loaded"></img>}
 
       <ButtonGroup hidden={value !== null}>
-        <button onClick={() => onChange(null)}>Reset</button>
+        <Button label="Reset" onClick={() => onChange(null)}></Button>
       </ButtonGroup>
     </Body>
   );
