@@ -1,15 +1,16 @@
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
-import { ColorInput } from "./ColorInput";
+import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
-import { NumberInput } from "./NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";
+import { Button } from "../Generics/Button";
 
 const ColorList = styled.ul`
   display: flex;
@@ -61,7 +62,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
     onChange(newList);
   }
 
-  function addNewColor(event: any): void {
+  function addNewColor(): void {
     var newList = [...list, { pos: 1, color: createColor() }];
     newList.sort((a: GradientStop, b: GradientStop) => a.pos - b.pos);
     onChange(newList);
@@ -111,15 +112,9 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
         ))}
       </ColorList>
 
-      <ButtonGroup compact>
-        <button onClick={addNewColor}>Add</button>
-        <Menu
-          portal
-          menuButton={
-            <MenuButton className={"icon"}>
-              <IconMenu2></IconMenu2>
-            </MenuButton>
-          }>
+      <ButtonGroup>
+        <Button onClick={addNewColor} label="Add" />
+        <Menu portal menuButton={<Button icon={IconMenu2} />}>
           <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
           <MenuDivider></MenuDivider>
           <SubMenu label="Create from a default palette" overflow="auto">

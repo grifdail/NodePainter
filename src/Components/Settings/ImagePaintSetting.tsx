@@ -4,6 +4,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
 import { usePainting } from "../../Hooks/usePainting";
+import { Button } from "../Generics/Button";
 
 const Body = styled.div`
   width: 100%;
@@ -40,8 +41,8 @@ export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onC
       )}
       {value !== null && <img src={value} alt="loaded"></img>}
 
-      <ButtonGroup compact hidden={value !== null}>
-        <button onClick={() => usePainting.getState().open(value, onChange)}>Edit</button>
+      <ButtonGroup hidden={value !== null}>
+        <Button onClick={() => usePainting.getState().open(value, onChange)} label="Paint" icon={IconBrush} />
       </ButtonGroup>
     </Body>
   );

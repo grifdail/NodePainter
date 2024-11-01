@@ -1,14 +1,12 @@
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
-import { ColorInput } from "./ColorInput";
+import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
-import { IconMenu2, IconX } from "@tabler/icons-react";
-import { MenuItemWithPalettePreview } from "./ColorPreview";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { ColorPalette, createColor } from "../../Types/vectorDataType";
-import { DefaultPalettes } from "../../Data/Palettes";
+import { IconX } from "@tabler/icons-react";
+import { createColor } from "../../Types/vectorDataType";
+import { PaletteMenu } from "./PaletteMenu";
+import { Button } from "../Generics/Button";
 
 const ColorList = styled.ul`
   display: flex;
@@ -55,7 +53,7 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
     onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
   }
 
-  function addNewColor(event: any): void {
+  function addNewColor(): void {
     onChange([...list, createColor()]);
   }
 
@@ -79,8 +77,8 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
         ))}
       </ColorList>
 
-      <ButtonGroup compact>
-        <button onClick={addNewColor}>Add</button>
+      <ButtonGroup>
+        <Button label="Add" onClick={addNewColor} />
         <PaletteMenu onLoaded={(value) => onChange(value)} currentPalette={list}></PaletteMenu>
       </ButtonGroup>
     </div>
@@ -89,38 +87,3 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
 PaletteSetting.getSize = function (value, def): number {
   return 32 * value.length + 70;
 };
-
-export function PaletteMenu({ onLoaded, currentPalette }: { onLoaded: (arg: ColorPalette) => void; currentPalette: ColorPalette }) {
-  const savedPalettes = usePlayerPref((state) => state.palettes);
-  const setSavedPalette = usePlayerPref((state) => state.savePalette);
-
-  function savePalette() {
-    var name = window.prompt("What to name your palette ?", "palette");
-    if (name !== null || name !== "") {
-      setSavedPalette(name as string, currentPalette);
-    }
-  }
-
-  return (
-    <Menu
-      portal
-      menuButton={
-        <MenuButton className={"icon"}>
-          <IconMenu2></IconMenu2>
-        </MenuButton>
-      }>
-      <MenuItem onClick={savePalette}>Save Palette</MenuItem>
-      <MenuDivider></MenuDivider>
-      <SubMenu label="Create from default palette" overflow="auto">
-        {Object.entries(DefaultPalettes).map(([key, value]) => (
-          <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => onLoaded(value)} />
-        ))}
-      </SubMenu>
-      <SubMenu label="Create from saved palette" overflow="auto">
-        {Object.entries(savedPalettes).map(([key, value]) => (
-          <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => onLoaded(value)} />
-        ))}
-      </SubMenu>
-    </Menu>
-  );
-}

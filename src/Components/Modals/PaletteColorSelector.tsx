@@ -1,11 +1,11 @@
 import { IconCircleFilled, IconPencilPlus } from "@tabler/icons-react";
 import { ColorPalette, Color } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
-import { PaletteMenu } from "../Settings/PaletteSetting";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
 import { Key, useState } from "react";
 import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
 import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
+import { PaletteMenu } from "../Settings/PaletteMenu";
 
 function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick: (c: Color) => void; index: number; color: Color; key: Key; onDelete: (index: number) => void; onMove: (index: number, dir: number) => void }) {
   const [isOpen, setOpen] = useState(false);

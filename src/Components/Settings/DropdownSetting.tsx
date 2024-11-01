@@ -2,6 +2,8 @@ import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import styled from "styled-components";
+import { Fieldset } from "../StyledComponents/Fieldset";
+import { DropdownInput } from "../Inputs/DropdownInput";
 
 const StyledDiv = styled.div`
   display: flex;
@@ -15,20 +17,7 @@ const StyledDiv = styled.div`
 `;
 
 export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
-  return (
-    <StyledDiv>
-      <label>{def.id}</label>
-      <Menu portal overflow="auto" menuButton={<MenuButton>{value}</MenuButton>}>
-        <MenuRadioGroup value={value} onRadioChange={(e) => onChange(e.value)}>
-          {def.options.map((option: string) => (
-            <MenuItem type="radio" value={option} key={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </MenuRadioGroup>
-      </Menu>
-    </StyledDiv>
-  );
+  return <Fieldset input={DropdownInput} passtrough={{ options: def.options }} value={value} onChange={value} label={def.id} />;
 };
 DropdownSetting.getSize = function (value, def): number {
   return 32;

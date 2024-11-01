@@ -4,15 +4,17 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NumberInput } from "../Settings/NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
-import { BoolInput } from "../Settings/BoolInput";
+import { BoolInput } from "../Inputs/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
+import { Button } from "../Generics/Button";
+import { Fieldset } from "../StyledComponents/Fieldset";
 
 const MainDiv = styled.div`
   display: flex;
@@ -21,20 +23,15 @@ const MainDiv = styled.div`
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
-  flex: 1 0 100px;
-  gap: 10px;
+  gap: var(--padding-medium);
   overflow: auto;
 
-  & fieldset {
-    display: flex;
-    flex-direction: row;
-    border: none;
-    justify-content: space-between;
+  & form {
+    display: grid;
+    gap: var(--padding-large);
+    grid-template-columns: 1fr 1fr;
   }
-  & hr {
-    flex-grow: 1;
-    border: none;
-  }
+
   & progress {
     display: block;
     width: calc(100% - 20px);
@@ -148,24 +145,15 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
 
   return (
-    <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
+    <Modal onClose={close} title="Export a gif" icon={IconGif} size="small" stretch>
       <MainDiv>
-        <fieldset>
-          <label>Duration, in second {fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}</label>
-          <NumberInput value={duration} onChange={setDuration} />
-        </fieldset>
-        <fieldset>
-          <label>FrameRate</label>
-          <NumberInput value={fixedFrameRate} onChange={setFixedFrameRate} />
-        </fieldset>
-        <fieldset>
-          <label>Preload</label>
-          <NumberInput value={preloadDuration} onChange={setPreloadDuration} />
-        </fieldset>
-        <fieldset>
-          <label>Output as a gif ?</label>
-          <BoolInput value={isGif} onChange={setIsGif} />
-        </fieldset>
+        <form>
+          <Fieldset label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`} input={NumberInput} value={duration} onChange={setDuration}></Fieldset>
+          <Fieldset label="FrameRate" input={NumberInput} value={fixedFrameRate} onChange={setFixedFrameRate} />
+          <Fieldset label="Preload" input={NumberInput} value={preloadDuration} onChange={setPreloadDuration} />
+          <Fieldset label="Output as a gif ?" input={BoolInput} value={isGif} onChange={setIsGif} />
+        </form>
+
         <hr></hr>
         <div className="rendering">
           {renderState === "rendering" && (
@@ -189,10 +177,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
         </div>
         <progress value={progress} max="100" />
         <ButtonGroup>
-          {renderState === "waiting" && <button onClick={() => setRenderState("rendering")}> Render</button>}
-          {renderState === "rendering" && <button disabled> Rendering</button>}
-          {renderState === "processing" && <button disabled> Processing</button>}
-          {renderState === "done" && <button onClick={() => download(blob as Blob, filename)}>Download</button>}
+          {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
+          {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
+          {renderState === "processing" && <Button label="Processing" disabled></Button>}
+          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filename)}></Button>}
         </ButtonGroup>
       </MainDiv>
     </Modal>

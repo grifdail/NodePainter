@@ -1,0 +1,8 @@
+﻿.app {
+  overflow: visible;
+  background: none;
+}
+
+body.sb-show-main {
+  background-color: var(--color-background) !important;
+}
