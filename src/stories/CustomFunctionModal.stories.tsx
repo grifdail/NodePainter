@@ -6,6 +6,7 @@ import { DrawCircle } from "../Nodes/Draw/DrawCircle";
 import { Remap } from "../Nodes/Math/Remap";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { CustomFunctionModalNoLogic } from "../Components/Modals/CustomNodes/CustomFunctionModalNoLogic";
+import { CustomFunctionModalSettings } from "../Components/Modals/CustomNodes/CustomFunctionModal";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -43,6 +44,8 @@ const meta = {
     close: fn(),
     availableTypesOutput: ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"],
     availableTypesInput: ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"],
+    settings: CustomFunctionModalSettings,
+    hasExecuteOption: true,
   },
 } satisfies Meta<typeof CustomFunctionModalNoLogic>;
 

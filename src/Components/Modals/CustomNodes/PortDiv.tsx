@@ -34,7 +34,7 @@ type PortDivProps = {
 } & Pick<CustomFunctionCreationContextStore, "setPortDefaultValue" | "setPortType" | "setPortId" | "deletePort">;
 
 export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, ...context }: PortDivProps) => {
-  var [selected, setSelected] = useState<number | null>(0);
+  var [selected, setSelected] = useState<number | null>(null);
 
   var toggle = useCallback(
     (id: number) => {
@@ -56,7 +56,7 @@ export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, 
         <InvisibleButton icon={IconPlus} onClick={addPort}></InvisibleButton>
       </HeaderStyled>
       {ports.map((port, i) => (
-        <InputPortEdit open={selected === i} onOpen={() => toggle(i)} key={i} port={port} index={i} role="inputData" availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />
+        <InputPortEdit open={selected === i} onOpen={() => toggle(i)} key={i} port={port} index={i} role={role} availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />
       ))}
     </SectionStyled>
   );

@@ -1,4 +1,4 @@
-import { IconFunctionFilled } from "@tabler/icons-react";
+import { Icon, IconFunctionFilled } from "@tabler/icons-react";
 import { Button, InvisibleButton } from "../../Generics/Button";
 import { Modal } from "../../Modal";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
@@ -19,19 +19,32 @@ export const PortRootDiv = styled.section`
 type CustomNodeModalNoLogicProps = {
   close: () => void;
   nodeDefinition: NodeDefinition;
-  availableTypesOutput: Array<PortType>;
-  availableTypesInput: Array<PortType>;
+  availableTypesOutput?: Array<PortType>;
+  availableTypesInput?: Array<PortType>;
+  hasExecuteOption?: boolean;
+  settings: {
+    creationTitle: string;
+    editionTitlePrefix: string;
+    subtitle: string;
+    icon: Icon;
+    inputTitle: string;
+    inputTooltip: string;
+    inputPrefix: string;
+    outputTitle: string;
+    outputTooltip: string;
+    outputPrefix: string;
+  };
 } & CustomFunctionCreationContextStore;
 
-export const CustomFunctionModalNoLogic = ({ close, nodeDefinition, mode, addInputs, addOutput, cancel, isNameValid, create, availableTypesOutput, availableTypesInput, ...context }: CustomNodeModalNoLogicProps) => {
+export const CustomFunctionModalNoLogic = ({ settings, hasExecuteOption, close, nodeDefinition, mode, addInputs, addOutput, cancel, isNameValid, create, availableTypesOutput, availableTypesInput, ...context }: CustomNodeModalNoLogicProps) => {
   return (
-    <Modal onClose={close} title={mode === "edit" ? `Edit node ${nodeDefinition?.id}` : "Create a custom node"} icon={IconFunctionFilled} size="small" stretch>
+    <Modal onClose={close} title={mode === "edit" ? `${settings.editionTitlePrefix} ${nodeDefinition?.id}` : settings.creationTitle} icon={settings.icon} size="small" stretch>
       <CustomNodeMainDiv>
-        <p className="subtitle">A custom function allow you to reuse code across your sketch.</p>
-        <CustomNodeModalHeader def={nodeDefinition} hasExecuteOption={true} isNameValid={isNameValid} setCanBeExecuted={context.setCanBeExecuted} setDescription={context.setDescription} setId={context.setId} mode={mode}></CustomNodeModalHeader>
+        <p className="subtitle">{settings.subtitle}</p>
+        <CustomNodeModalHeader def={nodeDefinition} hasExecuteOption={!!hasExecuteOption} isNameValid={isNameValid} setCanBeExecuted={context.setCanBeExecuted} setDescription={context.setDescription} setId={context.setId} mode={mode}></CustomNodeModalHeader>
         <PortRootDiv>
-          <PortDiv label="Inputs" ports={nodeDefinition.dataInputs} tooltip="Test" addPort={() => addInputs("input")} role="inputData" availableTypes={availableTypesInput} {...context} />
-          <PortDiv label="Output" ports={nodeDefinition.dataOutputs} tooltip="Test" addPort={() => addOutput("output")} role="outputData" availableTypes={availableTypesOutput} {...context} />
+          {availableTypesInput && <PortDiv label={settings.inputTitle} ports={nodeDefinition.dataInputs} tooltip={settings.inputTooltip} addPort={() => addInputs(settings.inputPrefix)} role="inputData" availableTypes={availableTypesInput} {...context} />}
+          {availableTypesOutput && <PortDiv label={settings.outputTitle} ports={nodeDefinition.dataOutputs} tooltip={settings.outputTooltip} addPort={() => addOutput(settings.outputPrefix)} role="outputData" availableTypes={availableTypesOutput} {...context} />}
         </PortRootDiv>
         <ButtonGroup>
           <InvisibleButton label="Cancel" onClick={cancel}></InvisibleButton>

@@ -10,6 +10,7 @@ const StyledDiv = styled.div`
 
   & > input {
     flex: 1 1 10px;
+    width: 10px;
   }
 `;
 
