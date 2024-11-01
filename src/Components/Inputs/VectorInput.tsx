@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { NumberInput } from "./NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { Vector2 } from "@use-gesture/react";
 
 const StyledDiv = styled.div`

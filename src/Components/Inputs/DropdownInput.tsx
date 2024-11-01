@@ -1,11 +1,9 @@
-import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import styled from "styled-components";
 import { InputProps } from "./InputProps";
-import { IconTriangleFilled, IconTriangleInverted } from "@tabler/icons-react";
+import { IconTriangleInverted } from "@tabler/icons-react";
 import { ReactNode } from "react";
 import { InputBackgroundColor } from "../StyledComponents/Input";
-
-const StyledDiv = styled.div``;
 
 const StyledButton = styled.button`
   flex: 1 1 content;

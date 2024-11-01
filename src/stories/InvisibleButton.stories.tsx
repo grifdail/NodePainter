@@ -30,34 +30,15 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {},
-  render: ({ ...args }) => <InvisibleButton {...args}>Click me</InvisibleButton>,
+  render: ({ ...args }) => <InvisibleButton label="Click Me" {...args}></InvisibleButton>,
 };
 
 export const IconOnly: Story = {
   args: {},
-  render: ({ ...args }) => (
-    <InvisibleButton {...args}>
-      <IconBrush />
-    </InvisibleButton>
-  ),
+  render: ({ ...args }) => <InvisibleButton icon={IconBrush} {...args}></InvisibleButton>,
 };
 
 export const IconAndText: Story = {
   args: {},
-  render: ({ ...args }) => (
-    <InvisibleButton {...args}>
-      <IconBrush /> Click Me !
-    </InvisibleButton>
-  ),
-};
-
-export const Selected: Story = {
-  args: {},
-
-  render: ({ ...args }) => (
-    <InvisibleButton {...args}>
-      <IconBrush />
-      Click Me !
-    </InvisibleButton>
-  ),
+  render: ({ ...args }) => <InvisibleButton label="Click Me !" icon={IconBrush} {...args}></InvisibleButton>,
 };

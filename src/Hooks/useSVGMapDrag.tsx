@@ -2,8 +2,6 @@ import { useSpring, SpringValue } from "@react-spring/web";
 import { Vector2, useGesture } from "@use-gesture/react";
 import { useViewbox } from "./useViewbox";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
-import { useRouter } from "./useRouter";
-import { Routes } from "../Types/Routes";
 
 export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes] {
   var viewBox = useViewbox();

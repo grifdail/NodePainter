@@ -1,8 +1,8 @@
 import { NodeDefinition } from "../../../Types/NodeDefinition";
-import { TextInput } from "../../Settings/TextInput";
+import { TextInput } from "../../Inputs/TextInput";
 import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { Fieldset } from "../../StyledComponents/Fieldset";
-import { BoolInput } from "../../Settings/BoolInput";
+import { BoolInput } from "../../Inputs/BoolInput";
 
 type Props = { def: NodeDefinition; hasExecuteOption: boolean } & Pick<CustomFunctionCreationContextStore, "setId" | "mode" | "setDescription" | "setCanBeExecuted" | "isNameValid">;
 

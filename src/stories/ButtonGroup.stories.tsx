@@ -40,9 +40,9 @@ export const Primary: Story = {
   args: {},
   render: ({ ...args }) => (
     <ButtonGroup {...args}>
-      <Button>Test</Button>
-      <Button>Test 2</Button>
-      <Button>Test but long</Button>
+      <Button label="Test"></Button>
+      <Button label="Test 2"></Button>
+      <Button label="Test but long"></Button>
     </ButtonGroup>
   ),
 };
@@ -51,12 +51,8 @@ export const IconOnly: Story = {
   args: {},
   render: ({ ...args }) => (
     <ButtonGroup {...args}>
-      <Button>
-        <IconBrush />
-      </Button>
-      <Button>
-        <IconMenu2 />
-      </Button>
+      <Button icon={IconBrush}></Button>
+      <Button icon={IconMenu2}></Button>
     </ButtonGroup>
   ),
 };
@@ -65,12 +61,8 @@ export const IconAndText: Story = {
   args: {},
   render: ({ ...args }) => (
     <ButtonGroup {...args}>
-      <Button>
-        <IconBrush /> Hey !
-      </Button>
-      <Button>
-        <IconMenu2 /> Hello world
-      </Button>
+      <Button icon={IconBrush} label="Heu"></Button>
+      <Button icon={IconMenu2} label="Hello world"></Button>
     </ButtonGroup>
   ),
 };
@@ -79,16 +71,10 @@ export const Mixed: Story = {
   args: {},
   render: ({ ...args }) => (
     <ButtonGroup {...args}>
-      <InvisibleButton>Oh no ! This is long</InvisibleButton>
-      <Button>
-        <IconBrush /> Hey !
-      </Button>
-      <Button>
-        <IconMenu2 /> Hello world
-      </Button>
-      <Button>
-        <IconMenu2 />
-      </Button>
+      <InvisibleButton label="Oh no ! This is long"></InvisibleButton>
+      <Button label="Hey"></Button>
+      <Button icon={IconMenu2} label="Hello world"></Button>
+      <Button icon={IconMenu2}></Button>
     </ButtonGroup>
   ),
 };
@@ -103,15 +89,9 @@ export const Grouping: Story = {
         width: "500px",
       }}>
       <ButtonGroup {...args}>
-        <Button>
-          <IconBrush /> Hey !
-        </Button>
-        <Button>
-          <IconMenu2 /> Hello world
-        </Button>
-        <Button>
-          <IconMenu2 />
-        </Button>
+        <Button label="Hey"></Button>
+        <Button icon={IconMenu2} label="Hello world"></Button>
+        <Button icon={IconMenu2}></Button>
       </ButtonGroup>
     </div>
   ),

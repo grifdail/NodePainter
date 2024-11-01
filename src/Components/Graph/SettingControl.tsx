@@ -7,7 +7,6 @@ export const SettingControl = ({ y, value, def, onChange, nodeData }: { y: numbe
   var height = DefinedComponent.getSize(value, def);
   return (
     <g transform={`translate(0, ${y})`}>
-      <rect x="20" y={0} height={height} width="260" fill="rgba(0,0,0,0.1)"></rect>
       <foreignObject x="25" height={height} width="250">
         <DefinedComponent value={value} def={def} onChange={onChange} />
       </foreignObject>

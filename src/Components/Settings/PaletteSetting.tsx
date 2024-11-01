@@ -1,6 +1,6 @@
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
-import { ColorInput } from "./ColorInput";
+import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";

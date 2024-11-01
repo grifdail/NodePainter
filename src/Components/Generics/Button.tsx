@@ -1,7 +1,8 @@
+import { Icon } from "@tabler/icons-react";
 import { ReactNode } from "react";
 import styled, { css } from "styled-components";
 
-export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: boolean }>`
+export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: boolean; iconOnly?: boolean }>`
   background: var(--color-background-button);
   border: var(--border-size) solid var(--color-border);
 
@@ -11,6 +12,14 @@ export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: bool
   padding: var(--padding-medium);
   border-radius: var(--border-radius-large);
   box-shadow: var(--card-shadow);
+
+  ${(props) =>
+    !props.iconOnly
+      ? css`
+          padding-left: calc(var(--padding-medium) * 3);
+          padding-right: calc(var(--padding-medium) * 3);
+        `
+      : ""}
 
   display: flex;
   justify-content: center;
@@ -48,32 +57,36 @@ export const ToolbarButtonStyled = styled(InvisibleButtonStyled)`
 `;
 
 export type ButtonProps = {
-  children?: ReactNode;
   onClick?: () => void;
   tooltip?: string;
   disabled?: boolean;
+  icon?: Icon;
+  label?: string;
 };
 
-export const Button = ({ children, onClick, tooltip, disabled }: ButtonProps) => {
+export const Button = ({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps) => {
   return (
-    <ButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} data-icon={!Array.isArray(children) && typeof children !== "string"}>
-      {children}
+    <ButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null} data-icon={label === undefined && Icon != null}>
+      {Icon !== undefined && <Icon></Icon>}
+      {label}
     </ButtonStyled>
   );
 };
 
-export const InvisibleButton = ({ children, onClick, tooltip, disabled }: ButtonProps) => {
+export const InvisibleButton = ({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps) => {
   return (
-    <InvisibleButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
-      {children}
+    <InvisibleButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
+      {Icon !== undefined && <Icon></Icon>}
+      {label}
     </InvisibleButtonStyled>
   );
 };
 
-export const ToolbarButton = ({ children, onClick, tooltip, disabled, selected }: ButtonProps & { selected?: boolean }) => {
+export const ToolbarButton = ({ label, icon: Icon, onClick, tooltip, disabled, selected }: ButtonProps & { selected?: boolean }) => {
   return (
-    <ToolbarButtonStyled selected={selected} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
-      {children}
+    <ToolbarButtonStyled selected={selected} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
+      {Icon !== undefined && <Icon></Icon>}
+      {label}
     </ToolbarButtonStyled>
   );
 };

@@ -1,6 +1,6 @@
 import { useId } from "react";
 import styled from "styled-components";
-import { InputProps } from "../Settings/InputProps";
+import { InputProps } from "../Inputs/InputProps";
 
 const FieldsetStyled = styled.fieldset`
   border: none;

@@ -1,18 +1,16 @@
-import { IconTriangle, IconTriangleInverted, IconX } from "@tabler/icons-react";
+import { IconTriangle, IconX } from "@tabler/icons-react";
 import { PortRole } from "../../../Types/PortRole";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { PortType } from "../../../Types/PortType";
-import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PortColor } from "../../StyledComponents/PortColor";
 import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { capitalCase } from "change-case";
 import { Fieldset } from "../../StyledComponents/Fieldset";
-import { TextInput } from "../../Settings/TextInput";
+import { TextInput } from "../../Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
-import { Button, InvisibleButton } from "../../Generics/Button";
+import { InvisibleButton } from "../../Generics/Button";
 import styled from "styled-components";
-import { DropdownInput } from "../../Settings/DropdownInput";
-import { boolean } from "mathjs";
+import { DropdownInput } from "../../Inputs/DropdownInput";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;
@@ -93,10 +91,7 @@ export function InputPortEdit({ port, setPortId, deletePort, setPortDefaultValue
           {PortValueEditor && <Fieldset label="Default value" input={PortValueEditor} onChange={(a) => setPortDefaultValue(role, index, a)} value={port.defaultValue} />}
 
           <ButtonGroup>
-            <InvisibleButton onClick={() => deletePort(role, index)}>
-              <IconX />
-              Delete
-            </InvisibleButton>
+            <InvisibleButton icon={IconX} label="Delete" onClick={() => deletePort(role, index)}></InvisibleButton>
           </ButtonGroup>
         </FieldsDiv>
       )}

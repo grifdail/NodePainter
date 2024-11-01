@@ -53,9 +53,7 @@ export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, 
         <h3>{label}</h3>
         {tooltip && <IconInfoCircle data-tooltip-id="tooltip" data-tooltip-content={tooltip}></IconInfoCircle>}
         <span></span>
-        <InvisibleButton onClick={addPort}>
-          <IconPlus></IconPlus>
-        </InvisibleButton>
+        <InvisibleButton icon={IconPlus} onClick={addPort}></InvisibleButton>
       </HeaderStyled>
       {ports.map((port, i) => (
         <InputPortEdit open={selected === i} onOpen={() => toggle(i)} key={i} port={port} index={i} role="inputData" availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />

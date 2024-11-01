@@ -2,10 +2,11 @@ import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconX } from "@tabler/icons-react";
-import { NumberInput } from "./NumberInput";
+import { IconPlus, IconX } from "@tabler/icons-react";
+import { NumberInput } from "../Inputs/NumberInput";
 import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeEasingType, EnvelopeStop } from "../../Types/EnvelopeData";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import { Button } from "../Generics/Button";
 
 const ColorList = styled.ul`
   display: flex;
@@ -63,7 +64,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
     onChange(newList);
   }
 
-  function addNewStop(event: any): void {
+  function addNewStop(): void {
     var newList: EnvelopeData = [...list, createDefaultEnvelopeStop()];
     newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
     onChange(newList);
@@ -96,13 +97,13 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
       </ColorList>
 
       <ButtonGroup>
-        <button onClick={addNewStop}>Add</button>
+        <Button icon={IconPlus} onClick={addNewStop}></Button>
       </ButtonGroup>
     </div>
   );
 };
 EnvelopeSetting.getSize = function (value, def): number {
-  return 32 * value.length + 70 + 100 + 10;
+  return 32 * value.length + 32 + 100 + 10;
 };
 
 var StyledPreview = styled.svg`

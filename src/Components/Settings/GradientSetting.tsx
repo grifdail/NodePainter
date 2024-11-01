@@ -1,12 +1,12 @@
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponent } from "./SettingsComponents";
-import { ColorInput } from "./ColorInput";
+import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
-import { NumberInput } from "./NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";

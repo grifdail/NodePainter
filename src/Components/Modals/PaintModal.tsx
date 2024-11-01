@@ -2,11 +2,11 @@ import { IconBrush, IconBucketDroplet, IconCircle, IconCircleFilled, IconClearAl
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { usePainting } from "../../Hooks/usePainting";
-import { ColorInput } from "../Settings/ColorInput";
+import { ColorInput } from "../Inputs/ColorInput";
 import { toHex } from "../../Utils/colorUtils";
 import { PaintingSketch } from "./Drawing/PaintingSketch";
 import { PaletteColorSelector } from "./PaletteColorSelector";
-import { NumberInput } from "../Settings/NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 import { Tools } from "./Drawing/Tools";
 

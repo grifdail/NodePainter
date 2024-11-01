@@ -1,12 +1,12 @@
 ﻿import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { Fieldset } from "../Components/StyledComponents/Fieldset";
-import { NumberInput } from "../Components/Settings/NumberInput";
-import { TextInput } from "../Components/Settings/TextInput";
-import { BoolInput } from "../Components/Settings/BoolInput";
-import { ColorInput } from "../Components/Settings/ColorInput";
-import { DropdownInput } from "../Components/Settings/DropdownInput";
-import { VectorInput } from "../Components/Settings/VectorInput";
+import { NumberInput } from "../Components/Inputs/NumberInput";
+import { TextInput } from "../Components/Inputs/TextInput";
+import { BoolInput } from "../Components/Inputs/BoolInput";
+import { ColorInput } from "../Components/Inputs/ColorInput";
+import { DropdownInput } from "../Components/Inputs/DropdownInput";
+import { VectorInput } from "../Components/Inputs/VectorInput";
 import { GraphNodeUI } from "../Components/Graph/GraphNodeUI";
 import { createNodeData } from "../Utils/createNodeData";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
@@ -17,6 +17,8 @@ import { Envelope } from "../Nodes/Math/Envelope";
 import { Palette } from "../Nodes/Color/PickFromPalette";
 import { GradientNode } from "../Nodes/Color/GradientNode";
 import { UploadImage } from "../Nodes/Images/UploadImage";
+import { StartNode } from "../Nodes/System/StartNode";
+import { DrawText } from "../Nodes/Draw/DrawText";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -91,5 +93,17 @@ export const GradientNodeStory: Story = {
 export const UploadImageStory: Story = {
   args: {
     node: createNodeData(UploadImage, 10, 10),
+  },
+};
+
+export const StartStory: Story = {
+  args: {
+    node: createNodeData(StartNode, 10, 10),
+  },
+};
+
+export const DrawTextStory: Story = {
+  args: {
+    node: createNodeData(DrawText, 10, 10),
   },
 };

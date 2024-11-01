@@ -4,14 +4,14 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NumberInput } from "../Settings/NumberInput";
+import { NumberInput } from "../Inputs/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
-import { BoolInput } from "../Settings/BoolInput";
+import { BoolInput } from "../Inputs/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
@@ -177,10 +177,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
         </div>
         <progress value={progress} max="100" />
         <ButtonGroup>
-          {renderState === "waiting" && <Button onClick={() => setRenderState("rendering")}> Render</Button>}
-          {renderState === "rendering" && <Button disabled> Rendering</Button>}
-          {renderState === "processing" && <Button disabled> Processing</Button>}
-          {renderState === "done" && <Button onClick={() => download(blob as Blob, filename)}>Download</Button>}
+          {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
+          {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
+          {renderState === "processing" && <Button label="Processing" disabled></Button>}
+          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filename)}></Button>}
         </ButtonGroup>
       </MainDiv>
     </Modal>

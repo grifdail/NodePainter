@@ -34,10 +34,8 @@ export const CustomFunctionModalNoLogic = ({ close, nodeDefinition, mode, addInp
           <PortDiv label="Output" ports={nodeDefinition.dataOutputs} tooltip="Test" addPort={() => addOutput("output")} role="outputData" availableTypes={availableTypesOutput} {...context} />
         </PortRootDiv>
         <ButtonGroup>
-          <InvisibleButton onClick={cancel}>Cancel</InvisibleButton>
-          <Button disabled={!isNameValid()} onClick={create}>
-            Create
-          </Button>
+          <InvisibleButton label="Cancel" onClick={cancel}></InvisibleButton>
+          <Button label="Create" disabled={!isNameValid()} onClick={create}></Button>
         </ButtonGroup>
       </CustomNodeMainDiv>
     </Modal>

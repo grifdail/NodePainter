@@ -5,7 +5,6 @@ import { PortColor } from "../StyledComponents/PortColor";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import styled from "styled-components";
-import { PORT_HEIGHT } from "./NodeVisualConst";
 
 const StyledPath = styled.path`
   fill: color-mix(in srgb, var(--color-property), transparent 90%);

@@ -2,7 +2,7 @@ import { useTree } from "../../Hooks/useTree";
 import { Modal } from "../Modal";
 import styled from "styled-components";
 import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
-import { IconDeviceFloppy } from "@tabler/icons-react";
+import { IconClipboard, IconDeviceFloppy, IconDownload } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { SketchTemplate } from "../../Data/templates";
 import { Button } from "../Generics/Button";
@@ -47,8 +47,8 @@ export function SaveModal({ close }: { close: () => void }) {
         <textarea value={json}></textarea>
 
         <ButtonGroup>
-          <Button onClick={() => clip(json)}> {lastValue === json ? "Succesfully copied !" : "Copy to clipboard"}</Button>
-          <Button onClick={() => download(json, "node_painter_save.json")}> download as file</Button>
+          <Button label={lastValue === json ? "Succesfully copied !" : "Copy to clipboard"} icon={IconClipboard} onClick={() => clip(json)}></Button>
+          <Button label="Download as file" icon={IconDownload} onClick={() => download(json, "node_painter_save.json")}></Button>
         </ButtonGroup>
       </MainDiv>
     </Modal>

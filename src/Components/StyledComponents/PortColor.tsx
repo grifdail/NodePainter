@@ -1,11 +1,11 @@
 import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
-import { NumberInput } from "../Settings/NumberInput";
-import { ColorInput } from "../Settings/ColorInput";
-import { VectorInput } from "../Settings/VectorInput";
-import { BoolInput } from "../Settings/BoolInput";
-import { TextInput } from "../Settings/TextInput";
+import { NumberInput } from "../Inputs/NumberInput";
+import { ColorInput } from "../Inputs/ColorInput";
+import { VectorInput } from "../Inputs/VectorInput";
+import { BoolInput } from "../Inputs/BoolInput";
+import { TextInput } from "../Inputs/TextInput";
 import { PortType } from "../../Types/PortType";
-import { MaterialInput } from "../Settings/MaterialInput";
+import { MaterialInput } from "../Inputs/MaterialInput";
 
 type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
 

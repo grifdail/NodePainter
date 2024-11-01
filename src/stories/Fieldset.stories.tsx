@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { Fieldset } from "../Components/StyledComponents/Fieldset";
-import { NumberInput } from "../Components/Settings/NumberInput";
-import { TextInput } from "../Components/Settings/TextInput";
-import { BoolInput } from "../Components/Settings/BoolInput";
-import { ColorInput } from "../Components/Settings/ColorInput";
-import { DropdownInput } from "../Components/Settings/DropdownInput";
-import { VectorInput } from "../Components/Settings/VectorInput";
+import { NumberInput } from "../Components/Inputs/NumberInput";
+import { TextInput } from "../Components/Inputs/TextInput";
+import { BoolInput } from "../Components/Inputs/BoolInput";
+import { ColorInput } from "../Components/Inputs/ColorInput";
+import { DropdownInput } from "../Components/Inputs/DropdownInput";
+import { VectorInput } from "../Components/Inputs/VectorInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
