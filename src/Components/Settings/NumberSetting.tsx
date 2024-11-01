@@ -1,6 +1,5 @@
 import { SettingComponent } from "./SettingsComponents";
 import { NumberInput } from "../Inputs/NumberInput";
-import styled from "styled-components";
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { Fieldset } from "../StyledComponents/Fieldset";
 

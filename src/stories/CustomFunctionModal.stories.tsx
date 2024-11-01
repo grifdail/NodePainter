@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { IconBrush } from "@tabler/icons-react";
-import { Modal } from "../Components/Modal";
-import { DrawCircle } from "../Nodes/Draw/DrawCircle";
 import { Remap } from "../Nodes/Math/Remap";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { CustomFunctionModalNoLogic } from "../Components/Modals/CustomNodes/CustomFunctionModalNoLogic";

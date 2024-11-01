@@ -6,7 +6,7 @@ import { PortForeignObject } from "../StyledComponents/PortForeignObject";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { PortRole } from "../../Types/PortRole";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { PORT_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { PORT_HEIGHT } from "./NodeVisualConst";
 import styled from "styled-components";
 
 const ImprovedFieldSet = styled(Fieldset)`

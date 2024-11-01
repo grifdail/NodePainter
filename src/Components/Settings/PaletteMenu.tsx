@@ -1,4 +1,4 @@
-﻿import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
+import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { ColorPalette } from "../../Types/vectorDataType";
 import { IconMenu2 } from "@tabler/icons-react";

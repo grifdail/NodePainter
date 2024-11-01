@@ -3,7 +3,7 @@ import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { Menu, MenuButton, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
+import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
 import { NumberInput } from "../Inputs/NumberInput";

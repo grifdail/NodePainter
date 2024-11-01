@@ -1,4 +1,4 @@
-import { Icon, IconFunctionFilled } from "@tabler/icons-react";
+import { Icon } from "@tabler/icons-react";
 import { Button, InvisibleButton } from "../../Generics/Button";
 import { Modal } from "../../Modal";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";

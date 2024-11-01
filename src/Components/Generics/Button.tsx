@@ -1,5 +1,4 @@
 import { Icon } from "@tabler/icons-react";
-import { ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: boolean; iconOnly?: boolean }>`

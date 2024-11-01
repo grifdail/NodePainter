@@ -1,12 +1,7 @@
-import { Modal } from "../../Modal";
 import { IconFunctionFilled } from "@tabler/icons-react";
-import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
-import { InputPortEdit } from "./InputPortEdit";
-import { CustomNodeModalHeader } from "./CustomNodeModalHeader";
-import { CustomNodeMainDiv } from "./CustomNodeMainDiv";
 import { CustomFunctionModalNoLogic } from "./CustomFunctionModalNoLogic";
 
 const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string"];

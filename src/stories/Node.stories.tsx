@@ -1,12 +1,5 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { Fieldset } from "../Components/StyledComponents/Fieldset";
-import { NumberInput } from "../Components/Inputs/NumberInput";
-import { TextInput } from "../Components/Inputs/TextInput";
-import { BoolInput } from "../Components/Inputs/BoolInput";
-import { ColorInput } from "../Components/Inputs/ColorInput";
-import { DropdownInput } from "../Components/Inputs/DropdownInput";
-import { VectorInput } from "../Components/Inputs/VectorInput";
 import { GraphNodeUI } from "../Components/Graph/GraphNodeUI";
 import { createNodeData } from "../Utils/createNodeData";
 import { DrawRect } from "../Nodes/Draw/DrawRect";

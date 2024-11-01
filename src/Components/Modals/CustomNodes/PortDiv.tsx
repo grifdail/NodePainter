@@ -3,7 +3,7 @@ import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctio
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { PortRole } from "../../../Types/PortRole";
 import { PortType } from "../../../Types/PortType";
-import { Button, InvisibleButton } from "../../Generics/Button";
+import { InvisibleButton } from "../../Generics/Button";
 import { InputPortEdit } from "./InputPortEdit";
 import styled from "styled-components";
 import { useCallback, useState } from "react";
