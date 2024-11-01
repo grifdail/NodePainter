@@ -17,7 +17,7 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
     },
     onDragEnd: ({ movement: [mx, my], elapsedTime }) => {
       if (elapsedTime > 1000 && mx + my < 10) {
-        useRouter.getState().open(Routes.NodeCreation);
+        //useRouter.getState().open(Routes.NodeCreation);
       }
       viewBox.set(viewBox.x - mx * viewBox.scale, viewBox.y - my * viewBox.scale, viewBox.scale);
     },

@@ -24,7 +24,7 @@ const ImprovedFieldSet = styled(Fieldset)`
   }
 `;
 
-export function PortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
+export function InputPortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
   var portDescription = PortColor[portData.type];
   var Icon = portDescription.icon;
   var PortSettings = portDescription.input;
