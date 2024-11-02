@@ -7,6 +7,7 @@ import { SketchTemplate, Templates } from "../Data/templates";
 import { Sketch, useAllSavedSketch } from "../Hooks/db";
 import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
+import { useDialog } from "../Hooks/useDialog";
 
 export function MainMenu() {
   const openModal = useRouter((state) => state.open);
@@ -28,6 +29,20 @@ export function MainMenu() {
     },
     [saveSketch]
   );
+
+  const withConfirm = (cb: Function) => {
+    return (...args: any[]) => {
+      useDialog.getState().openConfirm(
+        (isConfirmed) => {
+          if (isConfirmed) {
+            cb(...args);
+          }
+        },
+        "Are you sure ?",
+        "You will lose all your data for this sketch."
+      );
+    };
+  };
 
   return (
     <Menu
@@ -51,9 +66,9 @@ export function MainMenu() {
             <IconFile></IconFile> New
           </>
         }>
-        <MenuItem onClick={reset}>Default</MenuItem>
+        <MenuItem onClick={withConfirm(reset)}>Default</MenuItem>
         {Object.entries(Templates).map(([key, value]) => (
-          <MenuItem onClick={() => loadTemplate(value)} key={key}>
+          <MenuItem onClick={withConfirm(() => loadTemplate(value))} key={key}>
             Template {key}
           </MenuItem>
         ))}
@@ -71,7 +86,7 @@ export function MainMenu() {
         <MenuItem onClick={() => openModal(Routes.Load)}>Load from JSON</MenuItem>
         <MenuDivider></MenuDivider>
         {sketches?.map((sketch) => (
-          <MenuItem key={sketch.name} onClick={() => loadSketch(sketch)}>
+          <MenuItem key={sketch.name} onClick={withConfirm(() => loadSketch(sketch))}>
             {sketch.name}
           </MenuItem>
         ))}

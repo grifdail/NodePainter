@@ -51,4 +51,5 @@ export type TreeStore = {
   getSketchName: () => string;
   freeSpace: (direction: EDirection, amount: number, offsetX: number, offsetY: number) => void;
   createBlackboardNode: (type: PortType, key: string, name: string, x: number, y: number) => void;
+  dangerouselyUpdateNode: (nodeId: string, cb: (node: NodeData) => void) => void;
 };

@@ -5,6 +5,7 @@ import { IconDeviceFloppy, IconFileUpload } from "@tabler/icons-react";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { useDialog } from "../../Hooks/useDialog";
 
 const MainDiv = styled.div`
   display: flex;
@@ -48,9 +49,22 @@ export function LoadModal({ close }: { close: () => void }) {
   const [rawField, setRawField] = useState("");
 
   const onValidateFile = (file: string) => {
-    const result = useTree.getState().loadTemplate(JSON.parse(file));
-    if (result) {
-      close();
+    try {
+      var parsed = JSON.parse(file);
+      useDialog.getState().openConfirm(
+        (isConfirmed) => {
+          if (isConfirmed) {
+            const result = useTree.getState().loadTemplate(parsed);
+            if (result) {
+              close();
+            }
+          }
+        },
+        "Are you sure ?",
+        "You will lose all your data for this sketch."
+      );
+    } catch (err) {
+      console.log(err);
     }
   };
 

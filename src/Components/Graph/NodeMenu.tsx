@@ -27,6 +27,7 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
   const deleteNode = useTree((state) => state.deleteNode);
   const resetNode = useTree((state) => state.resetNode);
   const executeCallback = useTree((state) => state.executeCallback);
+  var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
   return (
     <foreignObject x="260" y="10" height="30" width="30" className="context-menu">
       <Menu
@@ -35,8 +36,7 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
           <StyledButton>
             <IconMenu2></IconMenu2>
           </StyledButton>
-        }
-      >
+        }>
         <MenuItem key="delete" onClick={() => deleteNode(node.id)}>
           Delete
         </MenuItem>
@@ -46,9 +46,9 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
         <MenuItem key="reset" onClick={() => resetNode(node.id)}>
           Reset
         </MenuItem>
-        {def.contextMenu && [
+        {contextMenu && [
           <MenuDivider key="divider" />,
-          ...Object.entries(def.contextMenu).map(([key, fn]) => {
+          ...Object.entries(contextMenu).map(([key, fn]) => {
             return (
               <MenuItem key={key} onClick={() => executeCallback(node.id, fn)}>
                 {key}

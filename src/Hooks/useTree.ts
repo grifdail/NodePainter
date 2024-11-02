@@ -555,6 +555,13 @@ export const useTree = create<TreeStore>()(
           console.log(newNodeData);
           set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
         },
+        dangerouselyUpdateNode(nodeId, cb) {
+          set(
+            produce((state) => {
+              cb(state.nodes[nodeId]);
+            })
+          );
+        },
       };
       return a;
     },

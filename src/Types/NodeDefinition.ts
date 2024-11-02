@@ -8,6 +8,10 @@ import { PortType } from "./PortType";
 import { SettingDefinition } from "./SettingDefinition";
 import { TreeStore } from "./TreeStore";
 
+type ContextMenuData = {
+  [key: string]: (node: NodeData, tree: TreeStore) => void;
+};
+
 export type NodeDefinition = {
   hideInLibrary?: boolean;
   IsUnique?: boolean;
@@ -29,7 +33,7 @@ export type NodeDefinition = {
   canBeExecuted?: boolean;
   bindPort?: (portId: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
   unbindPort?: (portId: string, self: NodeData, selfPosition: PortRole) => void;
-  contextMenu?: { [key: string]: (node: NodeData, tree: TreeStore) => void };
+  contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];
   defaultType?: PortType;

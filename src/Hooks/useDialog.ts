@@ -65,8 +65,8 @@ export const useDialog = create<DialogStore>()((set, get) => {
     setField(dialogId, field, newValue) {
       set(
         produce((state) => {
-          for (let index = 0; index < state.dialog.length; index++) {
-            const element = state.dialog[index] as DialogData;
+          for (let index = 0; index < state.dialogs.length; index++) {
+            const element = state.dialogs[index] as DialogData;
             if (element.id === dialogId && element.fieldResult) {
               element.fieldResult[field] = newValue;
             }
