@@ -121,18 +121,21 @@ var Dot = styled.circle`
 function EnvelopePreview({ value, width, height, onChange }: { onChange: (value: any) => void; value: EnvelopeData; width: number; height: number }) {
   var [localCopy, setLocalCopy] = useState(structuredClone(value));
   const bind = useDrag(({ args: [i, item], tap, active, delta: [x, y] }) => {
-    var pos = Math.min(1, Math.max(item.pos + x / width, 0));
-    var h = Math.min(1, Math.max(0, item.height - y / height));
-    var newItem = { ...localCopy[i], pos: pos, height: h };
-    if (tap) {
-      newItem.lerp = moveUpArray(EnvelopeEasingTypeArray, newItem.lerp);
-    }
-    var newList = [...localCopy.slice(0, i), newItem, ...localCopy.slice(i + 1, localCopy.length)];
+    if (svgBlock.current) {
+      var rect = svgBlock.current.getBoundingClientRect();
+      var pos = Math.min(1, Math.max(item.pos + x / rect.width, 0));
+      var h = Math.min(1, Math.max(0, item.height - y / rect.height));
+      var newItem = { ...localCopy[i], pos: pos, height: h };
+      if (tap) {
+        newItem.lerp = moveUpArray(EnvelopeEasingTypeArray, newItem.lerp);
+      }
+      var newList = [...localCopy.slice(0, i), newItem, ...localCopy.slice(i + 1, localCopy.length)];
 
-    newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
-    setLocalCopy(newList);
-    if (!active) {
-      onChange(newList);
+      newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
+      setLocalCopy(newList);
+      if (!active) {
+        onChange(newList);
+      }
     }
   });
 
