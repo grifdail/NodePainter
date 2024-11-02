@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import { IconPlus, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
@@ -236,6 +236,13 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
     [addNode, close, nodeFav]
   );
 
+  function onSubmitSearch(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    if (finalList && finalList.length > 0) {
+      onClickNode(finalList[0]);
+    }
+  }
+
   return (
     <Modal title="Add a new node" icon={IconPlus} onClose={close} size="large">
       <AddModalDiv>
@@ -248,7 +255,10 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         </menu>
         <section>
           <div>
-            <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></input>
+            <form onSubmit={onSubmitSearch}>
+              <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></input>
+            </form>
+
             <Menu
               menuButton={
                 <MenuButton>
