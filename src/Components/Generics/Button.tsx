@@ -1,4 +1,5 @@
 import { Icon } from "@tabler/icons-react";
+import { forwardRef } from "react";
 import styled, { css } from "styled-components";
 
 export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: boolean; iconOnly?: boolean }>`
@@ -63,29 +64,29 @@ export type ButtonProps = {
   label?: string;
 };
 
-export const Button = ({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps) => {
+export const Button = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps, ref) => {
   return (
-    <ButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null} data-icon={label === undefined && Icon != null}>
+    <ButtonStyled ref={ref as any} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null} data-icon={label === undefined && Icon != null}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </ButtonStyled>
   );
-};
+});
 
-export const InvisibleButton = ({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps) => {
+export const InvisibleButton = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled }: ButtonProps, ref) => {
   return (
-    <InvisibleButtonStyled onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
+    <InvisibleButtonStyled ref={ref as any} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </InvisibleButtonStyled>
   );
-};
+});
 
-export const ToolbarButton = ({ label, icon: Icon, onClick, tooltip, disabled, selected }: ButtonProps & { selected?: boolean }) => {
+export const ToolbarButton = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled, selected }: ButtonProps & { selected?: boolean }, ref) => {
   return (
-    <ToolbarButtonStyled selected={selected} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
+    <ToolbarButtonStyled ref={ref as any} selected={selected} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} iconOnly={label === undefined && Icon != null}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </ToolbarButtonStyled>
   );
-};
+});
