@@ -68,6 +68,7 @@ import { DrawCircleStroke } from "./Draw/DrawCircleStroke";
 import { DrawGradientRect } from "./Draw/DrawGradientRect";
 import { DrawLine } from "./Draw/DrawLine";
 import { DrawPolygon } from "./Draw/DrawPolygon";
+import { DrawPolygonArray } from "./Draw/DrawPolygonArray";
 import { DrawQuad } from "./Draw/DrawQuad";
 import { DrawRect } from "./Draw/DrawRect";
 import { DrawRegularPolygon } from "./Draw/DrawRegularPolygon";
@@ -283,6 +284,7 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTriangle,
   DrawQuad,
   DrawPolygon,
+  DrawPolygonArray,
   DrawText,
   DrawBezier,
 

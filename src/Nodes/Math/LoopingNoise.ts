@@ -19,6 +19,6 @@ export const LoopingNoise: NodeDefinition = {
     var pos = context.getInputValueNumber(nodeData, "pos");
     var scale = context.getInputValueNumber(nodeData, "scale");
     var seed = context.getInputValueVector(nodeData, "seed");
-    return context.p5.noise(seed[0] + Math.cos(pos * Math.PI * 2) * scale, seed[0] + Math.cos(pos * Math.PI * 2) * scale);
+    return context.p5.noise(seed[0] + Math.cos(pos * Math.PI * 2) * scale, seed[1] + Math.sin(pos * Math.PI * 2) * scale);
   },
 };

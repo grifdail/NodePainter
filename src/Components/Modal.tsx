@@ -2,7 +2,7 @@ import React from "react";
 import { Icon, IconX } from "@tabler/icons-react";
 import { useSpring } from "@react-spring/web";
 import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import styled, { css, RuleSet } from "styled-components";
 
 export type ModalSize = "small" | "medium" | "large" | "tiny" | "fullscreen";
 
@@ -22,37 +22,46 @@ export const FullScreenDiv = styled.div<{ modal?: boolean }>`
   pointer-events: ${(props) => (props.modal ? "auto" : "none")};
 `;
 
-const ModalSizeCSS: { [key in ModalSize]: string } = {
-  small: `
+const ModalSizeCSS: { [key in ModalSize]: RuleSet } = {
+  small: css`
     width: 50%;
     min-height: 200px;
     max-height: 80%;
   `,
-  medium: `
+  medium: css`
     width: 70%;
     min-height: 200px;
-    max-height 80%;
-    
+    max-height: 80%;
   `,
-  large: `
+  large: css`
     width: 80%;
     min-height: 500px;
     height: 80%;
     max-height: 90%;
   `,
-  tiny: `
-    width:auto;
+  tiny: css`
+    width: auto;
     max-width: 33%;
     min-height: 100px;
     height: auto;
-    max-height: 50%;`,
+    max-height: 50%;
 
-  fullscreen: `
-    width:100%;
+    @media (max-width: 840px) {
+      max-width: 90%;
+      max-height: 90%;
+      height: auto;
+      border: var(--border-size) solid #333;
+      border-radius: var(--border-radius-large);
+    }
+  `,
+
+  fullscreen: css`
+    width: 100%;
     height: 100%;
     min-width: 100%;
     flex-grow: 1;
-    border-radius: 0;`,
+    border-radius: 0;
+  `,
 };
 
 export const ModalHeader = styled.div`
@@ -115,6 +124,14 @@ export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: bool
   border: var(--border-size) solid #333;
   border-radius: var(--border-radius-large);
   box-shadow: var(--card-shadow);
+  @media (max-width: 840px) {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+  }
   ${(props) => ModalSizeCSS[props.size || "medium"]}
   ${(props) => (props.stretch ? " height: auto;" : "")}
 
@@ -126,15 +143,6 @@ export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: bool
   position: relative;
 
   & > & > section {
-  }
-
-  @media (max-width: 840px) {
-    width: 100%;
-    border-radius: 0;
-    border: none;
-    height: 100%;
-    max-height: 100%;
-    min-height: 0;
   }
 `;
 
