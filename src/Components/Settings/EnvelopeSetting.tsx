@@ -4,9 +4,12 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { NumberInput } from "../Inputs/NumberInput";
-import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeEasingType, EnvelopeStop } from "../../Types/EnvelopeData";
+import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeEasingType, EnvelopeEasingTypeArray, EnvelopeStop } from "../../Types/EnvelopeData";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Button } from "../Generics/Button";
+import { useEffect, useRef, useState } from "react";
+import { useDrag } from "@use-gesture/react";
+import { moveUpArray } from "../../Utils/moveUpArray";
 
 const ColorList = styled.ul`
   display: flex;
@@ -78,7 +81,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
 
   return (
     <div>
-      <EnvelopePreview value={list} width={250} height={100}></EnvelopePreview>
+      <EnvelopePreview value={list} width={250} height={100} onChange={onChange}></EnvelopePreview>
       <ColorList>
         {list.map((stop: EnvelopeStop, i: number) => (
           <li key={i}>
@@ -110,9 +113,68 @@ var StyledPreview = styled.svg`
   background-color: white;
 `;
 
-function EnvelopePreview({ value, width, height }: { value: EnvelopeData; width: number; height: number }) {
-  var path = [`M 0,${height} `];
-  var prev = value[0];
+var Dot = styled.circle`
+  fill: var(--color-number);
+  cursor: pointer;
+`;
+
+function EnvelopePreview({ value, width, height, onChange }: { onChange: (value: any) => void; value: EnvelopeData; width: number; height: number }) {
+  var [localCopy, setLocalCopy] = useState(structuredClone(value));
+  const bind = useDrag(({ args: [i, item], tap, active, delta: [x, y] }) => {
+    var pos = Math.min(1, Math.max(item.pos + x / width, 0));
+    var h = Math.min(1, Math.max(0, item.height - y / height));
+    var newItem = { ...localCopy[i], pos: pos, height: h };
+    if (tap) {
+      newItem.lerp = moveUpArray(EnvelopeEasingTypeArray, newItem.lerp);
+    }
+    var newList = [...localCopy.slice(0, i), newItem, ...localCopy.slice(i + 1, localCopy.length)];
+
+    newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
+    setLocalCopy(newList);
+    if (!active) {
+      onChange(newList);
+    }
+  });
+
+  useEffect(() => {
+    setLocalCopy(structuredClone(value));
+  }, [value]);
+
+  var svgBlock = useRef<SVGSVGElement>(null);
+  function onDoubleClick(event: any) {
+    if (svgBlock.current) {
+      var rect = svgBlock.current.getBoundingClientRect();
+      var x = (event.clientX - rect.x) / rect.width;
+      var y = 1 - (event.clientY - rect.y) / rect.height;
+
+      var newList: EnvelopeData = [
+        ...value,
+        {
+          pos: x,
+          height: y,
+          lerp: EnvelopeEasingType.Linear,
+        },
+      ];
+      newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
+      onChange(newList);
+    }
+  }
+
+  const path = calculatePath(height, localCopy, width);
+
+  return (
+    <StyledPreview width={width} height={height} onDoubleClick={onDoubleClick} ref={svgBlock}>
+      <path d={path.join("\n")} fill="rgba(0,0,0,0.5)"></path>
+      {localCopy.map((item: EnvelopeStop, i: number) => (
+        <Dot r="5" {...bind(i, item)} cx={item.pos * width} cy={height * (1 - item.height)}></Dot>
+      ))}
+    </StyledPreview>
+  );
+}
+
+function calculatePath(height: number, value: EnvelopeData, width: number) {
+  const path = [`M 0,${height} `];
+  let prev = value[0];
   for (let i = 0; i < value.length; i++) {
     let current = value[i];
     if (i === 0 || prev.lerp === "linear") {
@@ -138,10 +200,5 @@ function EnvelopePreview({ value, width, height }: { value: EnvelopeData; width:
     prev = value[i];
   }
   path.push(`L ${width},${height} Z`);
-
-  return (
-    <StyledPreview width={width} height={height}>
-      <path d={path.join("\n")} fill="rgba(0,0,0,0.5)"></path>
-    </StyledPreview>
-  );
+  return path;
 }

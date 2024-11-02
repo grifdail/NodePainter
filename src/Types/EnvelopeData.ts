@@ -10,6 +10,7 @@ export enum EnvelopeEasingType {
   Easeout = "easeout",
   Easeinout = "easeinout",
 }
+export const EnvelopeEasingTypeArray = Object.values(EnvelopeEasingType);
 
 export type EnvelopeData = EnvelopeStop[];
 export type EnvelopeStop = {
