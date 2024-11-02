@@ -8,9 +8,10 @@ import { IconMenu2, IconX } from "@tabler/icons-react";
 import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
 import { NumberInput } from "../Inputs/NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { GradientPreview, MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
+import { MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";
 import { Button } from "../Generics/Button";
+import { EditableGradientPreview } from "./EditableGradientPreview";
 
 const ColorList = styled.ul`
   display: flex;
@@ -99,7 +100,7 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
 
   return (
     <div>
-      <GradientPreview gradient={list} />
+      <EditableGradientPreview gradient={list} onChange={onChange} />
       <ColorList>
         {list.map((stop: GradientStop, i: number) => (
           <li key={i}>
@@ -145,5 +146,5 @@ export const GradientSetting: SettingComponent = function GradientSetting({ onCh
   );
 };
 GradientSetting.getSize = function (value, def): number {
-  return 32 * value.length + 70 + 32 + 10;
+  return 32 * value.length + 70 + 64 + 10;
 };

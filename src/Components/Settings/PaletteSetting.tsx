@@ -3,10 +3,11 @@ import { SettingComponent } from "./SettingsComponents";
 import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconX } from "@tabler/icons-react";
+import { IconAdjustments, IconArrowDown, IconArrowUp, IconTrash } from "@tabler/icons-react";
 import { createColor } from "../../Types/vectorDataType";
 import { PaletteMenu } from "./PaletteMenu";
 import { Button } from "../Generics/Button";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 
 const ColorList = styled.ul`
   display: flex;
@@ -30,7 +31,7 @@ const ColorList = styled.ul`
 
     & > span {
       width: 50px;
-      flex: 0 0 50px;
+      flex: 0 0 30px;
       text-align: center;
     }
 
@@ -63,6 +64,15 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
     }
   }
 
+  function move(i: number, direction: "up" | "down") {
+    if (direction === "up") {
+      console.log([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
+      onChange([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
+    } else {
+      onChange([...list.slice(0, i), list[i + 1], list[i], ...list.slice(i + 2, list.length)]);
+    }
+  }
+
   return (
     <div>
       <ColorList>
@@ -70,9 +80,22 @@ export const PaletteSetting: SettingComponent = function PaletteSetting({ onChan
           <li key={i}>
             <span>{i}</span>
             <ColorInput value={color} onChange={(v) => onChangeColor(i, v)}></ColorInput>
-            <button className="delete" onClick={() => removeColor(i)} disabled={list.length <= 1}>
-              <IconX />
-            </button>
+            <Menu
+              menuButton={
+                <button className="delete">
+                  <IconAdjustments />
+                </button>
+              }>
+              <MenuItem onClick={() => removeColor(i)} disabled={list.length <= 1}>
+                <IconTrash></IconTrash> Delete
+              </MenuItem>
+              <MenuItem onClick={() => move(i, "up")} disabled={i === 0}>
+                <IconArrowUp></IconArrowUp>Move Up
+              </MenuItem>
+              <MenuItem onClick={() => move(i, "down")} disabled={i === list.length - 1}>
+                <IconArrowDown></IconArrowDown> Move Down
+              </MenuItem>
+            </Menu>
           </li>
         ))}
       </ColorList>

@@ -3,7 +3,7 @@ import { MenuItem } from "@szhsin/react-menu";
 import { ColorPalette, Gradient } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 
-const GradientDiv = styled.div<{ gradient: string }>`
+export const GradientDiv = styled.div<{ gradient: string }>`
   display: block;
   width: calc(100% - 4px);
   height: 32px;
@@ -12,6 +12,7 @@ const GradientDiv = styled.div<{ gradient: string }>`
   margin-top: 5px;
   margin-bottom: 5px;
   min-width: 100px;
+  position: relative;
 `;
 const MenuItemWithPreview = styled(MenuItem)`
   display: flex;

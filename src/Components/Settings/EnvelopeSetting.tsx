@@ -169,7 +169,7 @@ function EnvelopePreview({ value, width, height, onChange }: { onChange: (value:
     <StyledPreview width={width} height={height} onDoubleClick={onDoubleClick} ref={svgBlock}>
       <path d={path.join("\n")} fill="rgba(0,0,0,0.5)"></path>
       {localCopy.map((item: EnvelopeStop, i: number) => (
-        <Dot r="5" {...bind(i, item)} cx={item.pos * width} cy={height * (1 - item.height)}></Dot>
+        <Dot r="10" {...bind(i, item)} cx={item.pos * width} cy={height * (1 - item.height)}></Dot>
       ))}
     </StyledPreview>
   );
