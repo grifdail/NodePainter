@@ -22,7 +22,7 @@ const Body = styled.div`
     object-fit: contain;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
+    background: var(--gradient-transparent);
     max-height: 180px;
   }
   & svg {

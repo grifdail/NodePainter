@@ -41,6 +41,7 @@
 
   --size-text: 14px;
 
+  --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
   @media (prefers-color-scheme: dark) {
     --card-shadow: none;
   }

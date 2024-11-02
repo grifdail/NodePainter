@@ -8,7 +8,7 @@ export const GradientDiv = styled.div<{ gradient: string }>`
   width: calc(100% - 4px);
   height: 32px;
   border: 2px solid black;
-  background: linear-gradient(to right, ${(props) => props.gradient});
+  background: linear-gradient(to right, ${(props) => props.gradient}), var(--gradient-transparent);
   margin-top: 5px;
   margin-bottom: 5px;
   min-width: 100px;
@@ -29,12 +29,12 @@ const MenuItemWithPreview = styled(MenuItem)`
 `;
 
 export const GradientPreview = ({ gradient }: { gradient: Gradient }) => {
-  var str = gradient.map((stop) => `${toHex(stop.color)} ${Math.floor(stop.pos * 100)}%`).join(",");
+  var str = gradient.map((stop) => `${toHex(stop.color, true)} ${Math.floor(stop.pos * 100)}%`).join(",");
   return <GradientDiv gradient={str}></GradientDiv>;
 };
 
 export const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
-  var str = palette.map((color, i) => `${toHex(color)} ${Math.floor((i / palette.length) * 100)}%, ${toHex(color)} ${Math.floor(((i + 1) / palette.length) * 100)}%`).join(", ");
+  var str = palette.map((color, i) => `${toHex(color, true)} ${Math.floor((i / palette.length) * 100)}%, ${toHex(color, true)} ${Math.floor(((i + 1) / palette.length) * 100)}%`).join(", ");
   return <GradientDiv gradient={str}></GradientDiv>;
 };
 

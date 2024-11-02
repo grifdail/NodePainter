@@ -24,6 +24,7 @@ const Body = styled.div`
     align-items: center;
     background-color: rgba(0, 0, 0, 0.2);
     max-height: 180px;
+    background: var(--gradient-transparent);
   }
   & svg {
     height: 50%;
