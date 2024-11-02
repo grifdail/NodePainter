@@ -248,7 +248,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         </menu>
         <section>
           <div>
-            <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..."></input>
+            <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></input>
             <Menu
               menuButton={
                 <MenuButton>

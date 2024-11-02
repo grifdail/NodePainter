@@ -10,10 +10,13 @@ import { CustomSimulationModal } from "./Modals/CustomNodes/CustomSimulationModa
 import { SettingsModal } from "./Modals/SettingsModal";
 import { AboutModal } from "./Modals/AboutModal";
 import { PaintModal } from "./Modals/PaintModal";
+import { useDialog } from "../Hooks/useDialog";
+import { DialogModal } from "./Modals/DialogModel";
 
 export function Router() {
   const close = useRouter((state) => state.close);
   const route = useRouter((state) => state.current);
+  const dialog = useDialog();
   return (
     <div>
       {route === "default" && <GridUi />}
@@ -27,6 +30,9 @@ export function Router() {
       {route === "settings" && <SettingsModal close={close} />}
       {route === "about" && <AboutModal close={close} />}
       {route === "paint" && <PaintModal />}
+      {dialog.dialogs.map((d) => (
+        <DialogModal dialog={d} controler={dialog}></DialogModal>
+      ))}
     </div>
   );
 }

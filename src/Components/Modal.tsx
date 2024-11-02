@@ -153,9 +153,11 @@ export function Modal({ children, title, icon: Icon, onClose, stretch, size = "m
         <ModalHeader>
           {Icon && <Icon />}
           <h2>{title}</h2>
-          <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
-            <IconX />
-          </CloseButton>
+          {onClose && (
+            <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
+              <IconX />
+            </CloseButton>
+          )}
         </ModalHeader>
         <ModalContent>{children}</ModalContent>
       </ModalBody>

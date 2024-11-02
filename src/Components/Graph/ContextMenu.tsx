@@ -85,7 +85,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
 
   return (
     <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
-      <FocusableItem>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={filter} onChange={(e) => setFilter(e.target.value)} />}</FocusableItem>
+      <FocusableItem autoFocus>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={filter} onChange={(e) => setFilter(e.target.value)} />}</FocusableItem>
       {nodesSelected.map((item) => (
         <NodeMenuItem onClick={onClick} node={item} key={item.id} />
       ))}
