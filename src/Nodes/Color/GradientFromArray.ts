@@ -4,8 +4,8 @@ import { Color, createColor, createDefaultGradient } from "../../Types/vectorDat
 
 export const GradientFromArray: NodeDefinition = {
   id: "GradientFromArray",
-  label: "Generate Gradient from the color in a array, spaced evenly",
-  description: "Create a gradient from dynamics color",
+  label: "Gradient from Array",
+  description: "Generate Gradient from the color in a array, spaced evenly",
   icon: IconColorFilter,
   tags: ["Color"],
   dataInputs: [{ id: "array", type: "array-color", defaultValue: [createColor()] }],
