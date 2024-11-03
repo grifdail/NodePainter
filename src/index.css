@@ -20,6 +20,7 @@
   --color-background-card: light-dark(#fcfcfc, #22262c);
   --color-background-button: light-dark(#ffffff, #151b23);
   --color-text: light-dark(#000000, #cad1d8);
+  --color-text-minor: light-dark(#00000088, #cad1d888);
   --color-background-highghlight: light-dark(#eeeeee, #282828);
   --color-border: light-dark(#222, #dee4ea);
   --color-border-input: light-dark(#22222288, #dee4ea7e);

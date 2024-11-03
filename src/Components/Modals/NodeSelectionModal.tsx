@@ -1,5 +1,5 @@
 import { FormEvent, useCallback, useMemo, useState } from "react";
-import { IconPlus, IconSortDescending } from "@tabler/icons-react";
+import { IconPlus, IconSearch, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { useTree } from "../../Hooks/useTree";
@@ -7,9 +7,11 @@ import { NodePreview } from "../NodePreview";
 import { Modal } from "../Modal";
 import styled from "styled-components";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { Menu, MenuButton, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
 import { useShallow } from "zustand/react/shallow";
+import { Input } from "../StyledComponents/Input";
+import { InvisibleButton } from "../Generics/Button";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -21,155 +23,60 @@ const AddModalDiv = styled.div`
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
+  flex-direction: column;
+  gap: var(--padding-large);
+  padding-top: var(--padding-large);
+`;
 
-  & > menu {
-    width: 150px;
+const SearchForm = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 5px;
+  height: 45px;
+  position: sticky;
+
+  & input {
+    text-align: left;
+    padding-left: 35px;
+  }
+
+  & span {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: stretch;
     justify-content: stretch;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-    flex-shrink: 0;
-    flex-grow: 0;
-    margin-right: 10px;
+    flex: 1 1 auto;
+    position: relative;
 
-    & button {
-    }
-  }
-  & > section {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
-    flex-shrink: 1;
-    max-height: 100%;
-    align-items: stretch;
-
-    & > div {
-      display: flex;
-      flex-direction: row;
-      justify-content: stretch;
-      align-items: stretch;
-      height: 50px;
-      flex: 0 0 30px;
-      & > Input {
-        display: block;
-        flex: 1 0 100px;
-      }
-      & > button {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        vertical-align: middle;
-      }
-    }
-
-    & > menu {
-      overflow: auto;
-      width: 100%;
-      background: var(--color-background);
-      padding: 10px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      //grid-template-rows: repeat(auto-fill, minmax(150px, 1fr));
-
-      gap: 10px;
-      align-self: flex-start;
-      margin: 0;
-      max-height: 100%;
-      padding-bottom: 25px;
-      box-sizing: border-box;
-      flex-grow: 1;
-
-      & > button {
-        background: var(--color-background-card);
-        padding: 10px;
-        box-sizing: 10px;
-        //aspect-ratio: 2;
-        display: flex;
-        gap: 10px;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        cursor: pointer;
-
-        & > div {
-          padding-bottom: 5px;
-          font-weight: bold;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-        }
-
-        & > div.fav {
-          position: absolute;
-          width: 10px;
-          border: 0;
-          height: 10px;
-          right: 20px;
-          top: 5px;
-          cursor: pointer;
-        }
-
-        & > svg {
-          height: 50px;
-          width: 50px;
-          flex: 0 0 50px;
-        }
-        & p {
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-        }
-      }
-    }
-  }
-
-  @media (max-width: 840px), (max-height: 500px) {
-    & > menu {
-      width: 100px;
-    }
-    & > section > div {
-      height: 24px;
-      flex: 0 0 24px;
-      font-size: 18px;
-
-      & > input,
-      & > button {
-        font-size: 12px;
-      }
-    }
-
-    & > section > menu > button {
-      font-size: 12px;
-      gap: 3px;
-      padding: 5px;
-      & > svg {
-        height: 32px;
-        width: 32px;
-      }
-      & > div.fav {
-        right: 15px;
-        & > svg {
-          height: 20px;
-        }
-      }
-      & > p {
-      }
+    & > svg {
+      position: absolute;
+      left: 5px;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 `;
 
+const NodeList = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  overflow: auto;
+  gap: var(--padding-small);
+`;
+
 const CategoryButton = styled.button<{ selected?: boolean }>`
   padding: 10px;
-  background: ${(props) => (props.selected ? "rgba(0,0,0,0.2)" : "none")};
+  background: ${(props) => (props.selected ? "var(--color-selected)" : "none")};
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 24px;
+  padding: var(--padding-small);
   text-transform: capitalize;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--color-selected);
   }
 
   @media (max-width: 840px), (max-height: 500px) {
@@ -178,12 +85,33 @@ const CategoryButton = styled.button<{ selected?: boolean }>`
   }
 `;
 
+const TagList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--padding-small);
+`;
+
+type SearchTermData = {
+  tags: string[];
+  name: string;
+};
+
+const TagRegex = /tag:(\w+)/gi;
+
+const parseSearchTerm = (raw: string): SearchTermData => {
+  var base = raw.trim().toLowerCase();
+  var result = Array.from(base.matchAll(TagRegex));
+  console.log(result, TagRegex, base.matchAll(TagRegex));
+  return {
+    name: base.replaceAll(TagRegex, "").trim(),
+    tags: result.map((r) => r[1]),
+  };
+};
+
 export function NodeSelectionModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState("");
-
-  const searchTerm = useMemo(() => searchTermRaw.trim().toLowerCase(), [searchTermRaw]);
+  const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
   const nodeFav = usePlayerPref();
-  const [selectedCategory, setCategory] = useState("");
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
   const treeShaderLib = useTree(useShallow((state) => state.getNodeLibrary()));
   const nodeLibrary = useMemo(
@@ -200,28 +128,27 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   const filteredList = useMemo(
     () =>
       nodeLibrary.filter((item) => {
-        if (item.hideInLibrary) {
-          return false;
-        }
-        if (!!selectedCategory) {
-          if (!item.tags.includes(selectedCategory)) {
-            return false;
+        if (searchTerm.tags.length > 0) {
+          for (let index = 0; index < searchTerm.tags.length; index++) {
+            const target = searchTerm.tags[index];
+            if (!item.tags.some((tag) => tag.toLowerCase() === target)) {
+              return false;
+            }
           }
         }
 
-        return searchTerm.length === 0 || item.id.toLowerCase().includes(searchTerm);
+        return searchTerm.name.length === 0 || item.id.toLowerCase().includes(searchTerm.name);
       }),
-    [nodeLibrary, searchTerm, selectedCategory]
+    [nodeLibrary, searchTerm]
   );
-  const finalList = useMemo(() => sortNodeList(nodeFav, filteredList), [filteredList, nodeFav]);
+  const finalList = useMemo(() => sortNodeList(nodeFav, filteredList, searchTerm.name.length === 0), [filteredList, nodeFav, searchTerm]);
 
   const tags = useMemo(
     () =>
       nodeLibrary
         .flatMap((item) => item.tags) // Get the tags from all the node in the library
-        .filter((value, index, array) => array.indexOf(value) === index) // Remove duplicate
-        .concat(["all"]), // Add the "All" category
-    [nodeLibrary] // Everytime the librairy has change
+        .filter((value, index, array) => array.indexOf(value) === index),
+    [nodeLibrary] // Remove duplicate // Everytime the librairy has change
   );
 
   const addNode = useTree((state) => state.addNode);
@@ -243,57 +170,61 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
     }
   }
 
+  function toggleTag(tag: string): void {
+    var key = `tag:${tag.toLowerCase()}`;
+    var regexKey = new RegExp(key, "gi");
+    if (searchTermRaw.match(regexKey)) {
+      setSearchTerm(searchTermRaw.replaceAll(regexKey, "").trim());
+    } else {
+      setSearchTerm(searchTermRaw.trim() + " " + key);
+    }
+  }
+
   return (
-    <Modal title="Add a new node" icon={IconPlus} onClose={close} size="large">
+    <Modal title="Add a new node" icon={IconPlus} onClose={close} size="small">
       <AddModalDiv>
-        <menu>
+        <SearchForm onSubmit={onSubmitSearch}>
+          <span>
+            <IconSearch> </IconSearch>
+            <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
+          </span>
+
+          <Menu menuButton={<InvisibleButton icon={IconSortDescending} type="button" />}>
+            <MenuRadioGroup value={nodeFav.nodeSorting}>
+              <MenuItem value="name" onClick={() => nodeFav.setSorting("featured")}>
+                Featured
+              </MenuItem>
+              <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
+                Name
+              </MenuItem>
+              <MenuItem value="last" onClick={() => nodeFav.setSorting("last")}>
+                Last used
+              </MenuItem>
+              <MenuItem value="most" onClick={() => nodeFav.setSorting("most")}>
+                Most used
+              </MenuItem>
+            </MenuRadioGroup>
+          </Menu>
+        </SearchForm>
+        <TagList>
           {tags.map((tag) => (
-            <CategoryButton key={tag} selected={tag === selectedCategory || (!selectedCategory && tag === "all")} onClick={() => setCategory(tag === "all" ? "" : tag)}>
+            <CategoryButton key={tag} selected={searchTerm.tags.includes(tag.toLowerCase())} onClick={() => toggleTag(tag)}>
               {tag}
             </CategoryButton>
           ))}
-        </menu>
-        <section>
-          <div>
-            <form onSubmit={onSubmitSearch}>
-              <input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></input>
-            </form>
+        </TagList>
 
-            <Menu
-              menuButton={
-                <MenuButton>
-                  Sort By: <IconSortDescending />
-                </MenuButton>
-              }>
-              <MenuRadioGroup value={nodeFav.nodeSorting}>
-                <MenuItem value="name" onClick={() => nodeFav.setSorting("featured")}>
-                  Featured
-                </MenuItem>
-                <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
-                  Name
-                </MenuItem>
-                <MenuItem value="last" onClick={() => nodeFav.setSorting("last")}>
-                  Last used
-                </MenuItem>
-                <MenuItem value="most" onClick={() => nodeFav.setSorting("most")}>
-                  Most used
-                </MenuItem>
-              </MenuRadioGroup>
-            </Menu>
-          </div>
-
-          <menu>
-            {finalList.map((item) => (
-              <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.favNodes.includes(item.id)} />
-            ))}
-          </menu>
-        </section>
+        <NodeList>
+          {finalList.map((item) => (
+            <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.favNodes.includes(item.id)} />
+          ))}
+        </NodeList>
       </AddModalDiv>
     </Modal>
   );
 }
-function sortNodeList(nodeFav: PlayerPrefStore, filteredList: NodeDefinition[]) {
-  const favSorting = compareFav(nodeFav);
+function sortNodeList(nodeFav: PlayerPrefStore, filteredList: NodeDefinition[], useFavSorting: boolean = true) {
+  const favSorting = useFavSorting ? compareFav(nodeFav) : () => 0;
   const lastSorting = (a: NodeDefinition, b: NodeDefinition) => (nodeFav.nodesLastUsedDates[b.id] || 0) - (nodeFav.nodesLastUsedDates[a.id] || 0);
   const mostSorting = (a: NodeDefinition, b: NodeDefinition) => (nodeFav.nodesUseCount[b.id] || 0) - (nodeFav.nodesUseCount[a.id] || 0);
   const featuredSorting = (a: NodeDefinition, b: NodeDefinition) => (b.featureLevel || 0) - (a.featureLevel || 0);

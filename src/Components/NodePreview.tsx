@@ -1,6 +1,45 @@
 import React, { MouseEvent } from "react";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  background: var(--color-background-card);
+
+  border: none;
+  border-radius: var(--border-radius-small);
+  padding: 10px;
+  box-sizing: 10px;
+  //aspect-ratio: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+
+  & p {
+    margin: 0;
+    text-align: left;
+    color: var(--color-text-minor);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  & .spacer {
+    flex: 1 1 0px;
+  }
+
+  & .fav {
+    color: var(--color-text-minor);
+  }
+
+  & > svg {
+    flex: 0 0 auto;
+  }
+`;
 
 export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void; onFav: () => void; isFav: boolean }) {
   const onClickFav = (e: MouseEvent<HTMLDivElement, Event>) => {
@@ -11,14 +50,14 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
 
   const Icon = node.icon;
   return (
-    <button onClick={() => onClick(node)}>
-      <div>{node.label || node.id}</div>
-      <div className="fav" onClick={onClickFav}>
-        {isFav ? <IconStarFilled /> : <IconStar color="#262626" />}
-      </div>
-
+    <StyledButton onClick={() => onClick(node)}>
       {Icon != null ? <Icon></Icon> : null}
+      <div>{node.label || node.id}</div>
       <p title={node.description}>{node.description}</p>
-    </button>
+      <span className="spacer"></span>
+      <div className="fav" onClick={onClickFav}>
+        {isFav ? <IconStarFilled /> : <IconStar />}
+      </div>
+    </StyledButton>
   );
 }
