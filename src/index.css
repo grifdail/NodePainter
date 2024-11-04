@@ -27,6 +27,8 @@
   --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
   --color-selected: light-dark(rgba(0, 0, 0, 0.1), rgba(1, 1, 1, 0.3));
   --color-input: light-dark(#888, #888);
+  --color-slider-track: light-dark(#eeeeee, #282828);
+  --color-slider-output: light-dark(#00000088, #cad1d888);
 
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);

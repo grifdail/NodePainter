@@ -7,6 +7,7 @@ import { BoolInput } from "../Components/Inputs/BoolInput";
 import { ColorInput } from "../Components/Inputs/ColorInput";
 import { DropdownInput } from "../Components/Inputs/DropdownInput";
 import { VectorInput } from "../Components/Inputs/VectorInput";
+import { SliderInput } from "../Components/Inputs/SliderInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -109,6 +110,19 @@ export const Dropdown: Story = {
     value: "Oh no",
     passtrough: {
       options: ["test", "Oh no", "pancake"],
+    },
+  },
+};
+
+export const Slider: Story = {
+  args: {
+    label: "Hello",
+    input: SliderInput as any,
+    onChange: fn(),
+    value: 10,
+    passtrough: {
+      min: 1,
+      max: 100,
     },
   },
 };

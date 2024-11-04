@@ -1,13 +1,11 @@
-import { IconBrush, IconCircleFilled, IconClearAll, IconPointFilled, IconSquare, IconSquareFilled } from "@tabler/icons-react";
+import { IconBrush, IconCircleFilled, IconClearAll, IconPointFilled } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { PaintingTool, usePainting } from "../../Hooks/usePainting";
 import { ColorInput } from "../Inputs/ColorInput";
-import { toHex } from "../../Utils/colorUtils";
 import { PaintingSketch } from "./Drawing/PaintingSketch";
 import { PaletteColorSelector } from "./PaletteColorSelector";
 import { NumberInput } from "../Inputs/NumberInput";
-import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 import { Tools } from "./Drawing/Tools";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { Fieldset } from "../StyledComponents/Fieldset";
