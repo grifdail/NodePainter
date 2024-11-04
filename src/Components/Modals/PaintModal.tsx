@@ -10,19 +10,23 @@ import { NumberInput } from "../Inputs/NumberInput";
 import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 import { Tools } from "./Drawing/Tools";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
+import { Fieldset } from "../StyledComponents/Fieldset";
+import { DropdownInput } from "../Inputs/DropdownInput";
 
 const MainDiv = styled.div`
   width: 100%;
   //overflow: hidden;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: stretch;
   gap: var(--padding-medium);
   align-items: stretch;
 
-  & > ${PaintingToolbar} {
-    flex: 0 0 content;
+  @media (max-width: 800px) {
+    flex: 1 1 10px;
+
+    flex-direction: column;
   }
 `;
 
@@ -35,6 +39,8 @@ const ToolbarButton = styled.button`
 
   border-radius: var(--border-radius-small);
 `;
+
+const ToolDiv = styled.div``;
 
 export function PaintModal() {
   var paintingState = usePainting();
@@ -82,40 +88,49 @@ export function PaintModal() {
     });
   };
 
+  var currentTool = Tools[paintingState.tool];
   return (
-    <Modal onClose={paintingState.close} title="Paint" icon={IconBrush}>
+    <Modal onClose={paintingState.close} title="Paint" icon={IconBrush} size="small">
       <MainDiv>
-        <PaintingToolbar className="toolbar">
+        <PaintingSketch onSaveGraphics={paintingState.saveImage} />
+        <ToolDiv>
           <ToolbarButton onClick={onClear} data-tooltip-id="tooltip" data-tooltip-content="Clear">
             <IconClearAll />
           </ToolbarButton>
-          {Object.entries(Tools).map(([id, tool]) => {
-            const Icon = tool.icon;
-            return (
-              <ToolbarButton onClick={() => paintingState.setTool(id as PaintingTool)} data-tooltip-id="tooltip" data-tooltip-content={tool.label} className={paintingState.tool === id ? "selected" : ""}>
-                <Icon></Icon>
-              </ToolbarButton>
-            );
-          })}
-
-          <ColorInput onChange={paintingState.setColor} value={paintingState.color} disabled={!Tools[paintingState.tool].hasColor}>
-            <button data-tooltip-id="tooltip" data-tooltip-content={`Color ${toHex(paintingState.color)}`} disabled={!Tools[paintingState.tool].hasColor}>
-              <IconCircleFilled style={{ color: toHex(paintingState.color) }}></IconCircleFilled>
-            </button>
-          </ColorInput>
-          <ToolbarButton onClick={paintingState.togleFillMode} data-tooltip-id="tooltip" data-tooltip-content={`Fill mode: ${paintingState.fillMode}`} disabled={!Tools[paintingState.tool].hasFillMode}>
-            {paintingState.fillMode === "stroke" ? <IconSquare /> : <IconSquareFilled />}
-          </ToolbarButton>
+          <Fieldset
+            input={DropdownInput}
+            value={paintingState.tool}
+            onChange={(tool) => paintingState.setTool(tool as PaintingTool)}
+            label="Tool"
+            passtrough={{
+              options: Object.keys(Tools),
+              useTemplateForField: true,
+              template: (toolId: PaintingTool) => {
+                const tool = Tools[toolId];
+                if (tool) {
+                  const Icon = tool.icon;
+                  return (
+                    <>
+                      <Icon></Icon>
+                      {tool.label}
+                    </>
+                  );
+                } else {
+                  return tool;
+                }
+              },
+            }}
+          />
+          {currentTool.hasColor && <Fieldset label="Color" value={paintingState.color} input={ColorInput} onChange={paintingState.setColor} />}
+          {currentTool.hasFillMode && <Fieldset label="Fill Mode" input={DropdownInput} value={paintingState.fillMode} onChange={paintingState.setFillMode} passtrough={{ options: ["stroke", "fill"] }} />}
           <fieldset className="slider" disabled={!Tools[paintingState.tool].hasLineWidth} data-tooltip-id="tooltip" data-tooltip-content={`line width: ${paintingState.lineWidth}`}>
             <IconPointFilled />
             <input type="range" value={paintingState.lineWidth} min={1} max={100} onChange={(e) => paintingState.setLineWidth(parseInt(e.target.value))} />
             <IconCircleFilled />
             <NumberInput className="label" value={paintingState.lineWidth} onChange={paintingState.setLineWidth} />
           </fieldset>
-        </PaintingToolbar>
-
-        <PaintingSketch onSaveGraphics={paintingState.saveImage} />
-        <PaletteColorSelector onChangePalette={paintingState.setColorPalette} onSelectColor={paintingState.setColor} currentPalette={paintingState.colorPalette} currentColor={paintingState.color} />
+          <PaletteColorSelector onChangePalette={paintingState.setColorPalette} onSelectColor={paintingState.setColor} currentPalette={paintingState.colorPalette} currentColor={paintingState.color} />
+        </ToolDiv>
       </MainDiv>
     </Modal>
   );

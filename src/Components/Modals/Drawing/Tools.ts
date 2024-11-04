@@ -17,23 +17,6 @@ export type PaintingToolDef = {
 };
 
 export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
-  fill: {
-    label: "Fill",
-    icon: IconBucketDroplet,
-    onMouseReleased: undefined,
-    onMousePressed(graphic, p5, paintingState, mouse, pmouse, startClick) {
-      floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 225);
-    },
-    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
-      if (!hasPointer) {
-        return;
-      }
-      p5.stroke(toHex(paintingState.color));
-      p5.strokeWeight(5);
-      p5.point(mouse[0], mouse[1]);
-    },
-    hasColor: true,
-  },
   pen: {
     icon: IconBrush,
     label: "Brush",
@@ -54,6 +37,23 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     },
     hasColor: true,
     hasLineWidth: true,
+  },
+  fill: {
+    label: "Fill",
+    icon: IconBucketDroplet,
+    onMouseReleased: undefined,
+    onMousePressed(graphic, p5, paintingState, mouse, pmouse, startClick) {
+      floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 225);
+    },
+    onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
+      if (!hasPointer) {
+        return;
+      }
+      p5.stroke(toHex(paintingState.color));
+      p5.strokeWeight(5);
+      p5.point(mouse[0], mouse[1]);
+    },
+    hasColor: true,
   },
   eraser: {
     icon: IconEraser,

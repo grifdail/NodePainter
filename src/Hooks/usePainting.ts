@@ -27,8 +27,8 @@ export type PaintingStore = {
   setColor: (color: Color) => void;
   clear: () => void;
   setColorPalette: (colorPalette: ColorPalette) => void;
+  setFillMode: (newMode: "fill" | "stroke") => void;
   togleFillMode: () => void;
-
   newImage(width: number, height: number): unknown;
 };
 
@@ -90,6 +90,9 @@ export const usePainting = create<PaintingStore>()((set, get) => {
     },
     togleFillMode() {
       set((state) => ({ fillMode: state.fillMode === "fill" ? "stroke" : "fill" }));
+    },
+    setFillMode(newMode) {
+      set((state) => ({ fillMode: newMode }));
     },
   };
 });

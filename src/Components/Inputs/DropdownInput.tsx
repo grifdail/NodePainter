@@ -27,14 +27,14 @@ const StyledButton = styled.button`
   }
 `;
 
-export const DropdownInput = function DropdownInput({ onChange, value, options, template }: InputProps<any> & { options?: string[]; template?: (value: string) => ReactNode }) {
+export const DropdownInput = function DropdownInput({ onChange, value, options, template, useTemplateForField }: InputProps<any> & { options?: string[]; template?: (value: string) => ReactNode; useTemplateForField?: boolean }) {
   return (
     <Menu
       portal
       overflow="auto"
       menuButton={
         <StyledButton>
-          {value}
+          {useTemplateForField && template ? template(value) : value}
           <IconTriangleInverted size={14} />
         </StyledButton>
       }>

@@ -6,9 +6,9 @@ import { Graphics } from "p5";
 import { Tools } from "./Tools";
 
 const Preview = styled.div<{ scale: number; basis: number }>`
-  flex: 1 1 ${(props) => props.basis}px;
+  flex: 1 0 ${(props) => props.basis}px;
   position: relative;
-
+  min-height: ${(props) => props.basis}px;
   & > div {
     position: absolute;
     width: 100%;
@@ -22,10 +22,12 @@ const Preview = styled.div<{ scale: number; basis: number }>`
     padding: 0;
     margin: 0;
     background: var(--gradient-transparent);
+    border: 1px solid var(--color-border);
   }
 
   @media (max-width: 800px) {
     flex: 1 1 10px;
+    min-height: 0;
 
     & > div {
       transform: scale(${(state) => state.scale});
@@ -39,7 +41,7 @@ export function PaintingSketch({ onSaveGraphics }: { onSaveGraphics: (g: Graphic
 
   var smallestDim = Math.min(1, Math.min((width || paintingState.width || 400) / paintingState.width, (height || paintingState.height || 400) / paintingState.height));
   return (
-    <Preview scale={smallestDim} basis={paintingState.height}>
+    <Preview scale={smallestDim} basis={paintingState.width}>
       <div ref={ref}>
         <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} scale={smallestDim} />
       </div>
