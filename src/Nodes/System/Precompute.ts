@@ -11,25 +11,6 @@ import { PortType, PortTypeArray } from "../../Types/PortType";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
 
-export const contextMenuCreateAllNode = Object.fromEntries(
-  PortTypeArray.map((type) => [
-    `Add a ${type} port`,
-    (node: NodeData) => {
-      var count = Object.entries(node.dataInputs).length;
-      node.dataInputs[`type-${count}-in`] = createPortConnection({
-        id: `type-${count}-in`,
-        type: type,
-        defaultValue: createDefaultValue(type),
-      });
-      node.dataOutputs[`type-${count}`] = {
-        id: `type-${count}`,
-        type: type,
-        defaultValue: createDefaultValue(type),
-      };
-    },
-  ])
-);
-
 export const Precompute: NodeDefinition = {
   id: "Precompute",
   description: "Precompute the input before executing the rest of the instruction. The random wont change and may help performance",
@@ -71,12 +52,12 @@ export const Precompute: NodeDefinition = {
                 node.dataInputs[`${fieldResult.name}-in`] = createPortConnection({
                   id: `${fieldResult.name}-in`,
                   type: fieldResult.type as PortType,
-                  defaultValue: fieldResult.defaultValue,
+                  defaultValue: createDefaultValue(fieldResult.type as PortType),
                 });
                 node.dataOutputs[fieldResult.name] = {
                   id: fieldResult.name,
                   type: fieldResult.type as PortType,
-                  defaultValue: fieldResult.defaultValue,
+                  defaultValue: createDefaultValue(fieldResult.type as PortType),
                 };
               });
             }

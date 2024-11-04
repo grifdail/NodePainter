@@ -43,7 +43,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     icon: IconBucketDroplet,
     onMouseReleased: undefined,
     onMousePressed(graphic, p5, paintingState, mouse, pmouse, startClick) {
-      floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 225);
+      floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 10);
     },
     onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
       if (!hasPointer) {

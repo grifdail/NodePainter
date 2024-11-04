@@ -20,6 +20,9 @@ export function VectorInput({ onChange, value }: { onChange: (value: any) => voi
     newVector[property] = newValue;
     onChange(newVector);
   };
+  if (value === undefined) {
+    value = [0, 0, 0, 0] as unknown as Vector2;
+  }
   return (
     <StyledDiv>
       {value.map((comp, i) => (
