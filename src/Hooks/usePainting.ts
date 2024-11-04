@@ -28,6 +28,8 @@ export type PaintingStore = {
   clear: () => void;
   setColorPalette: (colorPalette: ColorPalette) => void;
   togleFillMode: () => void;
+
+  newImage(width: number, height: number): unknown;
 };
 
 export const usePainting = create<PaintingStore>()((set, get) => {
@@ -43,7 +45,14 @@ export const usePainting = create<PaintingStore>()((set, get) => {
     clearCount: 0,
     fillMode: "fill",
     open(current, callback) {
-      set({ callback: callback, baseImage: current, colorPalette: usePlayerPref.getState().colorPreset });
+      set({ callback: callback, baseImage: current, colorPalette: usePlayerPref.getState().colorPreset, width: 400, height: 400 });
+      if (current != null) {
+        var img = new Image();
+        img.onload = () => {
+          set({ width: img.width, height: img.height });
+        };
+        img.src = current;
+      }
 
       useRouter.getState().open(Routes.Paint);
     },
@@ -65,6 +74,9 @@ export const usePainting = create<PaintingStore>()((set, get) => {
     },
     clear() {
       set((state) => ({ clearCount: state.clearCount + 1 }));
+    },
+    newImage(width, height) {
+      set((state) => ({ clearCount: state.clearCount + 1, width: width, height: height }));
     },
     saveImage(g) {
       if (g == null) {

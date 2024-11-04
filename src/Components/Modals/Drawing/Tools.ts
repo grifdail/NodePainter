@@ -1,3 +1,4 @@
+import { Icon, IconBrush, IconBucketDroplet, IconCircle, IconEraser, IconLine } from "@tabler/icons-react";
 import p5, { Graphics } from "p5";
 import { PaintingStore, PaintingTool } from "../../../Hooks/usePainting";
 import { toHex, toRGB255Array } from "../../../Utils/colorUtils";
@@ -11,10 +12,14 @@ export type PaintingToolDef = {
   onMouseReleased?: (graphic: Graphics, p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
   onMousePressed?: (graphic: Graphics, p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null) => void;
   onPreview?: (p5: p5, paintingState: PaintingStore, mouse: [number, number], pmouse: [number, number], startClick: [number, number] | null, hasPointer: boolean) => void;
+  icon: Icon;
+  label: string;
 };
 
 export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
   fill: {
+    label: "Fill",
+    icon: IconBucketDroplet,
     onMouseReleased: undefined,
     onMousePressed(graphic, p5, paintingState, mouse, pmouse, startClick) {
       floodFill({ x: Math.floor(mouse[0]), y: Math.floor(mouse[1]) }, toRGB255Array(paintingState.color), graphic, 225);
@@ -30,6 +35,8 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     hasColor: true,
   },
   pen: {
+    icon: IconBrush,
+    label: "Brush",
     onFrameMouseDown(graphic, p5, paintingState, mouse, pmouse, startClick) {
       graphic.stroke(toHex(paintingState.color));
       graphic.strokeWeight(paintingState.lineWidth);
@@ -49,6 +56,8 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     hasLineWidth: true,
   },
   eraser: {
+    icon: IconEraser,
+    label: "Eraser",
     onFrameMouseDown(graphic, p5, paintingState, mouse, pmouse, startClick) {
       graphic.erase();
       graphic.stroke(toHex(paintingState.color));
@@ -72,6 +81,8 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     hasLineWidth: true,
   },
   line: {
+    icon: IconLine,
+    label: "Line",
     onFrameMouseDown: undefined,
     onMouseReleased(graphic, p5, paintingState, mouse, pmouse, startClick) {
       if (startClick == null) {
@@ -95,6 +106,8 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     hasLineWidth: true,
   },
   circle: {
+    icon: IconCircle,
+    label: "Circle",
     onFrameMouseDown: undefined,
     onMouseReleased(graphic, p5, paintingState, mouse, pmouse, startClick) {
       if (startClick == null) {

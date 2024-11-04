@@ -1,50 +1,48 @@
 import { ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import styled from "styled-components";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { useMeasure } from "@uidotdev/usehooks";
 import { PaintingStore, usePainting } from "../../../Hooks/usePainting";
 import { Graphics } from "p5";
 import { Tools } from "./Tools";
 
-const Preview = styled.div<{ scale: number }>`
-  padding: 20px;
-  display: flex;
-  justify-content: center;
+const Preview = styled.div<{ scale: number; basis: number }>`
+  flex: 1 1 ${(props) => props.basis}px;
+  position: relative;
 
-  & div {
-    border: 2px solid black;
-    //width: 404px;
-    //height: 404px;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    font-size: 0;
-    line-height: 0;
-
-    & canvas {
-      padding: 0;
-      margin: 0;
-    }
+  & > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  @media (max-width: 800px), (max-height: 800px) {
-    justify-content: center;
-    align-items: center;
-    background-color: white;
+  & canvas {
+    padding: 0;
+    margin: 0;
+    background: var(--gradient-transparent);
+  }
 
-    & div {
+  @media (max-width: 800px) {
+    flex: 1 1 10px;
+
+    & > div {
       transform: scale(${(state) => state.scale});
     }
   }
 `;
 
 export function PaintingSketch({ onSaveGraphics }: { onSaveGraphics: (g: Graphics) => void }) {
-  var dim = useWindowSize();
+  const [ref, { width, height }] = useMeasure();
   var paintingState = usePainting();
 
-  var smallestDim = Math.min(1, Math.min(dim.width || paintingState.width || 400, dim.height || paintingState.height || 400) / 450);
+  var smallestDim = Math.min(1, Math.min((width || paintingState.width || 400) / paintingState.width, (height || paintingState.height || 400) / paintingState.height));
   return (
-    <Preview scale={smallestDim}>
-      <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} key={`${paintingState.width} / ${paintingState.height}`} scale={smallestDim} />
+    <Preview scale={smallestDim} basis={paintingState.height}>
+      <div ref={ref}>
+        <ReactP5Wrapper sketch={sketch} onSaveGraphics={onSaveGraphics} painting={paintingState} scale={smallestDim} />
+      </div>
     </Preview>
   );
 }

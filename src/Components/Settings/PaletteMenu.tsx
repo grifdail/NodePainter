@@ -5,8 +5,9 @@ import { IconMenu2 } from "@tabler/icons-react";
 import { DefaultPalettes } from "../../Data/Palettes";
 import { MenuItemWithPalettePreview } from "./ColorPreview";
 import { Button } from "../Generics/Button";
+import { ReactElement } from "react";
 
-export function PaletteMenu({ onLoaded, currentPalette }: { onLoaded: (arg: ColorPalette) => void; currentPalette: ColorPalette }) {
+export function PaletteMenu({ onLoaded, currentPalette, button, children }: { onLoaded: (arg: ColorPalette) => void; currentPalette: ColorPalette; button?: ReactElement; children?: ReactElement }) {
   const savedPalettes = usePlayerPref((state) => state.palettes);
   const setSavedPalette = usePlayerPref((state) => state.savePalette);
 
@@ -18,7 +19,7 @@ export function PaletteMenu({ onLoaded, currentPalette }: { onLoaded: (arg: Colo
   }
 
   return (
-    <Menu portal menuButton={<Button icon={IconMenu2}></Button>}>
+    <Menu portal menuButton={button != null ? button : <Button icon={IconMenu2}></Button>}>
       <MenuItem onClick={savePalette}>Save Palette</MenuItem>
       <MenuDivider></MenuDivider>
       <SubMenu label="Create from default palette" overflow="auto">
@@ -31,6 +32,8 @@ export function PaletteMenu({ onLoaded, currentPalette }: { onLoaded: (arg: Colo
           <MenuItemWithPalettePreview key={key} id={key} value={value} onClick={() => onLoaded(value)} />
         ))}
       </SubMenu>
+      {children && <MenuDivider />}
+      {children}
     </Menu>
   );
 }

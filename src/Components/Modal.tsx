@@ -114,6 +114,7 @@ export const ModalContent = styled.section`
   flex-shrink: 1;
   flex-grow: 1;
   flex-direction: column;
+  position: relative;
 `;
 
 export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: boolean }>`

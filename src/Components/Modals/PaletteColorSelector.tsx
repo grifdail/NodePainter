@@ -1,4 +1,4 @@
-import { IconCircleFilled, IconPencilPlus } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 import { ColorPalette, Color } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
@@ -6,13 +6,44 @@ import { Key, useState } from "react";
 import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
 import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 import { PaletteMenu } from "../Settings/PaletteMenu";
+import styled from "styled-components";
+
+const StyledButton = styled.button<{ color: string }>`
+  background: none;
+  padding: none;
+  border: none;
+  cursor: pointer;
+  background: ${(props) => props.color};
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 15px;
+  border: 1px solid var(--color-border);
+
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const IconButton = styled.button`
+  background: none;
+  padding: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+`;
 
 function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick: (c: Color) => void; index: number; color: Color; key: Key; onDelete: (index: number) => void; onMove: (index: number, dir: number) => void }) {
   const [isOpen, setOpen] = useState(false);
   const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
   return (
-    <button
+    <StyledButton
+      color={toHex(color)}
       onClick={() => onClick(color)}
       onContextMenu={(e) => {
         if (typeof document.hasFocus === "function" && !document.hasFocus()) return;
@@ -21,16 +52,12 @@ function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick
         setAnchorPoint({ x: e.clientX, y: e.clientY });
         setOpen(true);
       }}>
-      <IconCircleFilled
-        style={{
-          color: toHex(color),
-        }}></IconCircleFilled>
       <ControlledMenu anchorPoint={anchorPoint} state={isOpen ? "open" : "closed"} direction="right" onClose={() => setOpen(false)}>
         <MenuItem onClick={() => onDelete(index)}>Delete</MenuItem>
         <MenuItem onClick={() => onMove(index, -1)}>Move Left</MenuItem>
         <MenuItem onClick={() => onMove(index, 1)}>Move Right</MenuItem>
       </ControlledMenu>
-    </button>
+    </StyledButton>
   );
 }
 
@@ -68,22 +95,20 @@ export function PaletteColorSelector({ onChangePalette, onSelectColor, currentPa
 
   return (
     <PaintingToolbar className="color">
-      <div className="section">
-        <PaletteMenu onLoaded={onChangePalette} currentPalette={currentPalette} />
-      </div>
-      <div className="section large">
-        {currentPalette.map((color, index) => (
-          <ColorButton onClick={onSelectColor} color={color} key={index} index={index} onDelete={onDelete} onMove={onMove}></ColorButton>
-        ))}
-      </div>
-      <div className="section">
-        <button onClick={addCurrentColor} disabled={isCurrentSelectorInPalette}>
-          <IconPencilPlus
-            style={{
-              color: toHex(currentColor),
-            }}></IconPencilPlus>
-        </button>
-      </div>
+      {currentPalette.map((color, index) => (
+        <ColorButton onClick={onSelectColor} color={color} key={index} index={index} onDelete={onDelete} onMove={onMove}></ColorButton>
+      ))}
+      <span></span>
+      <PaletteMenu
+        onLoaded={onChangePalette}
+        currentPalette={currentPalette}
+        button={
+          <IconButton>
+            <IconMenu2 />
+          </IconButton>
+        }>
+        <MenuItem onClick={addCurrentColor}>Add current color to the palette </MenuItem>
+      </PaletteMenu>
     </PaintingToolbar>
   );
 }
