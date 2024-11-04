@@ -7,7 +7,6 @@ import { DropdownInput } from "../Inputs/DropdownInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { MenuItemWithPalettePreview } from "../Settings/ColorPreview";
 import { DefaultPalettes } from "../../Data/Palettes";
-import { InputBackgroundColor } from "../StyledComponents/Input";
 
 const StyledButton = styled.button<{ color: string }>`
   background: none;
