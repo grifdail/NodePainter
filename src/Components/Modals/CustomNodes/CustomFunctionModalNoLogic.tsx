@@ -14,6 +14,10 @@ export const PortRootDiv = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--padding-medium);
+
+  @media (max-width: 840px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 type CustomNodeModalNoLogicProps = {
