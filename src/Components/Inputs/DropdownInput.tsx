@@ -27,7 +27,7 @@ const StyledButton = styled.button`
   }
 `;
 
-export const DropdownInput = function DropdownInput({ onChange, value, options, template, useTemplateForField }: InputProps<any> & { options?: string[]; template?: (value: string) => ReactNode; useTemplateForField?: boolean }) {
+export const DropdownInput = function DropdownInput({ onChange, value, options, template, templateRaw, useTemplateForField }: InputProps<any> & { options?: string[]; templateRaw?: (value: string, args?: any) => ReactNode; template?: (value: string, args?: any) => ReactNode; useTemplateForField?: boolean }) {
   return (
     <Menu
       portal
@@ -39,11 +39,13 @@ export const DropdownInput = function DropdownInput({ onChange, value, options, 
         </StyledButton>
       }>
       {options?.map((option: string) => {
-        return (
-          <MenuItem value={option} key={option} onClick={() => onChange(option)}>
-            {template ? template(option) : option}
-          </MenuItem>
-        );
+        var args = { key: option, onClick: () => onChange(option), value: option };
+
+        if (templateRaw) {
+          return templateRaw(option, args);
+        } else {
+          return <MenuItem {...args}>{template ? template(option, args) : option}</MenuItem>;
+        }
       })}
     </Menu>
   );

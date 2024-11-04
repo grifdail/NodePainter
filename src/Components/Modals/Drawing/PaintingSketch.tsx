@@ -90,8 +90,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       clearCount = paintingState.clearCount;
       canvas.mousePressed(mousePressed);
       canvas.mouseReleased(mouseReleased);
-      canvas.mouseMoved((e) => console.log(e.preventDefault()));
-      canvas.touchMoved((e) => console.log(e.preventDefault()));
+      canvas.mouseMoved((e) => e.preventDefault());
+      canvas.touchMoved((e) => e.preventDefault());
       canvas.touchStarted(mousePressed);
       canvas.touchEnded(mouseReleased);
       historyPast = [graphic.drawingContext.canvas.toDataURL()];

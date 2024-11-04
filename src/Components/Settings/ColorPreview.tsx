@@ -38,7 +38,7 @@ export const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
   return <GradientDiv gradient={str}></GradientDiv>;
 };
 
-export const MenuItemWithPalettePreview = ({ onClick, id, value }: { onClick: () => void; id: string; value: ColorPalette }) => {
+export const MenuItemWithPalettePreview = ({ onClick, id, value }: { onClick?: () => void; id: string; value: ColorPalette }) => {
   return (
     <MenuItemWithPreview key={id} onClick={onClick}>
       <span>{id}</span>

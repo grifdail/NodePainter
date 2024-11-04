@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const InputBackgroundColor = "color-mix(in srgb, var(--color-property, var(--color-input)), transparent 90%)";
+export const InputBackgroundColor = "color-mix(in srgb, var(--color-input), transparent 90%)";
 
 export const Input = styled.input`
   background: ${InputBackgroundColor};
