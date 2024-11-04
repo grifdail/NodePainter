@@ -21,7 +21,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     icon: IconBrush,
     label: "Brush",
     onFrameMouseDown(graphic, p5, paintingState, mouse, pmouse, startClick) {
-      graphic.stroke(toHex(paintingState.color));
+      graphic.stroke(toHex(paintingState.color, true));
       graphic.strokeWeight(paintingState.lineWidth);
       graphic.line(mouse[0], mouse[1], pmouse[0], pmouse[1]);
     },
@@ -31,7 +31,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
       if (!hasPointer) {
         return;
       }
-      p5.stroke(toHex(paintingState.color));
+      p5.stroke(toHex(paintingState.color, true));
       p5.strokeWeight(paintingState.lineWidth);
       p5.point(mouse[0], mouse[1]);
     },
@@ -49,7 +49,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
       if (!hasPointer) {
         return;
       }
-      p5.stroke(toHex(paintingState.color));
+      p5.stroke(toHex(paintingState.color, true));
       p5.strokeWeight(5);
       p5.point(mouse[0], mouse[1]);
     },
@@ -60,7 +60,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     label: "Eraser",
     onFrameMouseDown(graphic, p5, paintingState, mouse, pmouse, startClick) {
       graphic.erase();
-      graphic.stroke(toHex(paintingState.color));
+      graphic.stroke(toHex(paintingState.color, true));
       graphic.strokeWeight(paintingState.lineWidth);
       graphic.line(mouse[0], mouse[1], pmouse[0], pmouse[1]);
       graphic.noErase();
@@ -72,7 +72,7 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
         return;
       }
       p5.erase();
-      p5.stroke(toHex(paintingState.color));
+      p5.stroke(toHex(paintingState.color, true));
       p5.strokeWeight(paintingState.lineWidth);
       p5.point(mouse[0], mouse[1]);
       p5.noErase();
@@ -88,13 +88,13 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
       if (startClick == null) {
         return;
       }
-      graphic.stroke(toHex(paintingState.color));
+      graphic.stroke(toHex(paintingState.color, true));
       graphic.strokeWeight(paintingState.lineWidth);
       graphic.line(mouse[0], mouse[1], startClick[0], startClick[1]);
     },
     onMousePressed: undefined,
     onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
-      p5.stroke(toHex(paintingState.color));
+      p5.stroke(toHex(paintingState.color, true));
       p5.strokeWeight(paintingState.lineWidth);
       if (startClick !== null) {
         p5.line(mouse[0], mouse[1], startClick[0], startClick[1]);
@@ -114,12 +114,12 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
         return;
       }
       if (paintingState.fillMode === "stroke") {
-        graphic.stroke(toHex(paintingState.color));
+        graphic.stroke(toHex(paintingState.color, true));
         graphic.strokeWeight(paintingState.lineWidth);
         graphic.noFill();
       } else {
         graphic.noStroke();
-        graphic.fill(toHex(paintingState.color));
+        graphic.fill(toHex(paintingState.color, true));
       }
       var w = Math.abs(mouse[0] - startClick[0]);
       var h = Math.abs(mouse[1] - startClick[1]);
@@ -135,12 +135,12 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     onMousePressed: undefined,
     onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
       if (paintingState.fillMode === "stroke") {
-        p5.stroke(toHex(paintingState.color));
+        p5.stroke(toHex(paintingState.color, true));
         p5.strokeWeight(paintingState.lineWidth);
         p5.noFill();
       } else {
         p5.noStroke();
-        p5.fill(toHex(paintingState.color));
+        p5.fill(toHex(paintingState.color, true));
       }
 
       if (startClick !== null) {
@@ -171,12 +171,12 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
         return;
       }
       if (paintingState.fillMode === "stroke") {
-        graphic.stroke(toHex(paintingState.color));
+        graphic.stroke(toHex(paintingState.color, true));
         graphic.strokeWeight(paintingState.lineWidth);
         graphic.noFill();
       } else {
         graphic.noStroke();
-        graphic.fill(toHex(paintingState.color));
+        graphic.fill(toHex(paintingState.color, true));
       }
       let w = mouse[0] - startClick[0];
       let h = mouse[1] - startClick[1];
@@ -194,12 +194,12 @@ export const Tools: { [key in PaintingTool]: PaintingToolDef } = {
     onMousePressed: undefined,
     onPreview(p5, paintingState, mouse, pmouse, startClick, hasPointer) {
       if (paintingState.fillMode === "stroke") {
-        p5.stroke(toHex(paintingState.color));
+        p5.stroke(toHex(paintingState.color, true));
         p5.strokeWeight(paintingState.lineWidth);
         p5.noFill();
       } else {
         p5.noStroke();
-        p5.fill(toHex(paintingState.color));
+        p5.fill(toHex(paintingState.color, true));
       }
 
       if (startClick !== null) {
