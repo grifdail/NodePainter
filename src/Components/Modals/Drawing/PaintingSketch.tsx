@@ -66,6 +66,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   let mouseJustPressed = false;
 
   let mouseJustReleased = false;
+  let historyPast: string[] = [];
+  let historyForward: string[] = [];
 
   p5.setup = () => {
     p5.createCanvas(paintingState?.width || 0, paintingState?.height || 0);
@@ -90,11 +92,35 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       canvas.mouseReleased(mouseReleased);
       canvas.touchStarted(mousePressed);
       canvas.touchEnded(mouseReleased);
+      historyPast = [graphic.drawingContext.canvas.toDataURL()];
+      historyForward = [];
     }
     if (paintingState.baseImage != null && firstInit) {
       var img = p5.loadImage(paintingState.baseImage, () => {
         graphic?.image(img, 0, 0, graphic.width, graphic.height);
       });
+    }
+  };
+
+  p5.keyPressed = (e: Event) => {
+    console.log("zeee");
+    if (p5.keyIsDown(p5.CONTROL) && p5.keyIsDown(90)) {
+      moveHistory(historyForward, historyPast);
+    } else if (p5.keyIsDown(p5.CONTROL) && p5.keyIsDown(89)) {
+      moveHistory(historyPast, historyForward);
+    }
+  };
+
+  const moveHistory = (forward: string[], past: string[]) => {
+    if (past.length > 0) {
+      const [deleted] = past.splice(past.length - 1, 1);
+      forward.push(deleted);
+      if (historyPast.length > 0) {
+        const img = p5.loadImage(historyPast[historyPast.length - 1], () => {
+          graphic?.clear();
+          graphic?.image(img, 0, 0, graphic.width, graphic.height);
+        });
+      }
     }
   };
 
@@ -131,6 +157,12 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         tool.onMouseReleased(graphic, p5, paintingState, [p5.mouseX / scale, p5.mouseY / scale], [p5.pmouseX / scale, p5.pmouseY / scale], startMousePosition);
       }
       startMousePosition = null;
+      historyPast.push(graphic.drawingContext.canvas.toDataURL());
+      console.log(historyPast);
+      if (historyPast.length > 10) {
+        historyPast.splice(0, 1);
+      }
+      historyForward = [];
       onSaveGraphics(graphic as Graphics);
     }
 

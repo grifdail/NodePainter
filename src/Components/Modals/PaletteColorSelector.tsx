@@ -4,7 +4,6 @@ import { toHex } from "../../Utils/colorUtils";
 import { VectorSquareDistance } from "../../Utils/vectorUtils";
 import { Key, useState } from "react";
 import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
-import { PaintingToolbar } from "../StyledComponents/PaintingToolbar";
 import { PaletteMenu } from "../Settings/PaletteMenu";
 import styled from "styled-components";
 
@@ -35,6 +34,19 @@ const IconButton = styled.button`
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
+`;
+
+export const PaintingToolbar = styled.div`
+  //display: none;
+  //background: red;
+  display: flex;
+  flex-direction: row;
+  gap: var(--padding-small);
+  align-items: stretch;
+  flex-wrap: wrap;
+
+  justify-content: start;
+  //overflow: scroll;
 `;
 
 function ColorButton({ onClick, index, color, key, onDelete, onMove }: { onClick: (c: Color) => void; index: number; color: Color; key: Key; onDelete: (index: number) => void; onMove: (index: number, dir: number) => void }) {

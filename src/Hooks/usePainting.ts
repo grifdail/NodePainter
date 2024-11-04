@@ -6,7 +6,7 @@ import { Color, ColorPalette, createColor } from "../Types/vectorDataType";
 import { usePlayerPref } from "./usePlayerPref";
 import { useRouter } from "./useRouter";
 
-export type PaintingTool = "pen" | "eraser" | "fill" | "line" | "circle";
+export type PaintingTool = "pen" | "eraser" | "fill" | "line" | "circle" | "rectangle";
 
 export type PaintingStore = {
   clearCount: number;
@@ -61,6 +61,7 @@ export const usePainting = create<PaintingStore>()((set, get) => {
       useRouter.getState().close();
     },
     setLineWidth(size) {
+      size = Math.round(Math.max(size, 1));
       set({ lineWidth: size });
     },
     setTool(tool) {

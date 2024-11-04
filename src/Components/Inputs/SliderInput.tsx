@@ -1,4 +1,4 @@
-﻿import styled from "styled-components";
+import styled from "styled-components";
 import { InputBackgroundColor } from "../StyledComponents/Input";
 import { InputProps } from "./InputProps";
 import { NumberInput } from "./NumberInput";

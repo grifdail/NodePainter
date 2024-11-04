@@ -1,4 +1,4 @@
-import { IconBrush, IconCircleFilled, IconClearAll, IconPointFilled } from "@tabler/icons-react";
+import { IconBrush, IconClearAll } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { PaintingTool, usePainting } from "../../Hooks/usePainting";
@@ -10,6 +10,9 @@ import { Tools } from "./Drawing/Tools";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Inputs/DropdownInput";
+import { SliderInput } from "../Inputs/SliderInput";
+import { Button } from "../Generics/Button";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -22,23 +25,34 @@ const MainDiv = styled.div`
   align-items: stretch;
 
   @media (max-width: 800px) {
-    flex: 1 1 10px;
-
     flex-direction: column;
   }
 `;
 
-const ToolbarButton = styled.button`
-  border: 0;
-  padding: 0;
-  flex: 0 0 24px;
-  color: white;
-  padding: var(--padding-small);
+const ToolDiv = styled.div`
+  gap: var(--padding-medium);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 400px;
 
-  border-radius: var(--border-radius-small);
+  & > hr {
+    appearance: none;
+    flex: 1 1 0;
+    align-items: stretch;
+    opacity: 0;
+  }
+
+  @media (max-width: 800px) {
+    flex: 1 1 0;
+
+    & > hr {
+      appearance: none;
+      flex: 0 0 0;
+      align-items: stretch;
+      opacity: 0;
+    }
+  }
 `;
-
-const ToolDiv = styled.div``;
 
 export function PaintModal() {
   var paintingState = usePainting();
@@ -92,9 +106,6 @@ export function PaintModal() {
       <MainDiv>
         <PaintingSketch onSaveGraphics={paintingState.saveImage} />
         <ToolDiv>
-          <ToolbarButton onClick={onClear} data-tooltip-id="tooltip" data-tooltip-content="Clear">
-            <IconClearAll />
-          </ToolbarButton>
           <Fieldset
             input={DropdownInput}
             value={paintingState.tool}
@@ -121,13 +132,13 @@ export function PaintModal() {
           />
           {currentTool.hasColor && <Fieldset label="Color" value={paintingState.color} input={ColorInput} onChange={paintingState.setColor} />}
           {currentTool.hasFillMode && <Fieldset label="Fill Mode" input={DropdownInput} value={paintingState.fillMode} onChange={paintingState.setFillMode} passtrough={{ options: ["stroke", "fill"] }} />}
-          <fieldset className="slider" disabled={!Tools[paintingState.tool].hasLineWidth} data-tooltip-id="tooltip" data-tooltip-content={`line width: ${paintingState.lineWidth}`}>
-            <IconPointFilled />
-            <input type="range" value={paintingState.lineWidth} min={1} max={100} onChange={(e) => paintingState.setLineWidth(parseInt(e.target.value))} />
-            <IconCircleFilled />
-            <NumberInput className="label" value={paintingState.lineWidth} onChange={paintingState.setLineWidth} />
-          </fieldset>
+          {currentTool.hasLineWidth && <Fieldset label="Line Width" input={SliderInput as any} value={paintingState.lineWidth} onChange={paintingState.setLineWidth} passtrough={{ min: 1, max: 100 }} />}
+          <hr></hr>
           <PaletteColorSelector onChangePalette={paintingState.setColorPalette} onSelectColor={paintingState.setColor} currentPalette={paintingState.colorPalette} currentColor={paintingState.color} />
+
+          <ButtonGroup>
+            <Button icon={IconClearAll} label="New image" onClick={onClear} data-tooltip-id="tooltip" data-tooltip-content="Clear" />
+          </ButtonGroup>
         </ToolDiv>
       </MainDiv>
     </Modal>
