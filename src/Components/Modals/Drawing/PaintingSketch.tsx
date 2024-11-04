@@ -90,6 +90,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       clearCount = paintingState.clearCount;
       canvas.mousePressed(mousePressed);
       canvas.mouseReleased(mouseReleased);
+      canvas.mouseMoved((e) => console.log(e.preventDefault()));
+      canvas.touchMoved((e) => console.log(e.preventDefault()));
       canvas.touchStarted(mousePressed);
       canvas.touchEnded(mouseReleased);
       historyPast = [graphic.drawingContext.canvas.toDataURL()];
@@ -103,7 +105,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   };
 
   p5.keyPressed = (e: Event) => {
-    console.log("zeee");
     if (p5.keyIsDown(p5.CONTROL) && p5.keyIsDown(90)) {
       moveHistory(historyForward, historyPast);
     } else if (p5.keyIsDown(p5.CONTROL) && p5.keyIsDown(89)) {
@@ -158,7 +159,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       }
       startMousePosition = null;
       historyPast.push(graphic.drawingContext.canvas.toDataURL());
-      console.log(historyPast);
       if (historyPast.length > 10) {
         historyPast.splice(0, 1);
       }
