@@ -18,9 +18,11 @@ const openCreateModal = () => {
 const openCreateShaderModal = () => {
   useCustomNodeCreationContext.getState().openCreate("shader");
 };
+/*
 const openCreateShaderMaterialModal = () => {
   useCustomNodeCreationContext.getState().openCreate("shaderMaterial", "shader");
 };
+*/
 const opencreateSimulation = () => {
   useCustomNodeCreationContext.getState().openCreate("simulation");
 };
