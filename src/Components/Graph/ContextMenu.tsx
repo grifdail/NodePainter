@@ -1,4 +1,4 @@
-import { ControlledMenu, FocusableItem, MenuDivider, MenuItem, MenuState, SubMenu } from "@szhsin/react-menu";
+import { ControlledMenu, MenuDivider, MenuItem, MenuState } from "@szhsin/react-menu";
 import { useCallback, useMemo, useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
@@ -9,6 +9,8 @@ import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { EDirection } from "../../Types/EDirection";
 import { useShallow } from "zustand/react/shallow";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
+import { useRouter } from "../../Hooks/useRouter";
+import { Routes } from "../../Types/Routes";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -31,9 +33,9 @@ export function NodeMenuItem({ node, onClick }: { node: NodeDefinition; onClick:
 
 export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter, setFilter }: ContextMenuProps) {
   const nodesLastUsedDates = usePlayerPref((state) => state.nodesLastUsedDates);
-  const mostSorting = useMemo(() => (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0), [nodesLastUsedDates]);
+  const favNodes = usePlayerPref((state) => state.favNodes);
+  const mostRecentSorting = useMemo(() => (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0), [nodesLastUsedDates]);
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
-  const searchTerm = useMemo(() => filter.toLowerCase(), [filter]);
   const treeNodeLibrary = useTree(useShallow((state) => state.getNodeLibrary()));
   const nodeLibrary = useMemo(
     () =>
@@ -59,53 +61,22 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
     },
     [onClose, getClickPositionWorld]
   );
-  const categories = useMemo(() => {
-    return nodeLibrary.reduce((old, value) => {
-      value.tags.forEach((tag) => {
-        if (old[tag] === undefined) {
-          old[tag] = [value];
-        } else {
-          old[tag].push(value);
-        }
-      });
-      return old;
-    }, {} as { [key: string]: NodeDefinition[] });
-  }, [nodeLibrary]);
 
-  const nodesSelected = useMemo(() => {
-    if (searchTerm === "") {
-      return [];
-    } else {
-      const filtered = nodeLibrary.filter((node) => node.id.toLowerCase().includes(searchTerm) || node.label?.toLowerCase().includes(searchTerm)) as any;
-      return filtered.toSorted(mostSorting).slice(0, 5) as NodeDefinition[];
-    }
-  }, [nodeLibrary, searchTerm, mostSorting]);
+  const favoritedNode = useMemo(() => {
+    return (nodeLibrary.filter((node) => favNodes.includes(node.id)) as any).toSorted(mostRecentSorting).slice(0, 5) as NodeDefinition[];
+  }, [nodeLibrary, mostRecentSorting, favNodes]);
 
   var theme = useColorScheme();
 
   return (
     <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
-      <FocusableItem autoFocus>{({ ref }) => <input ref={ref} type="text" autoFocus placeholder="Type to filter" value={filter} onChange={(e) => setFilter(e.target.value)} />}</FocusableItem>
-      {nodesSelected.map((item) => (
+      {favoritedNode.map((item) => (
         <NodeMenuItem onClick={onClick} node={item} key={item.id} />
       ))}
-      <MenuDivider></MenuDivider>
-      <SubMenu
-        overflow="auto"
-        label={
-          <>
-            <IconPlus />
-            Add Node
-          </>
-        }>
-        {Object.entries(categories).map(([category, content]) => (
-          <SubMenu label={category} overflow="auto" key={category}>
-            {content.map((item) => (
-              <NodeMenuItem onClick={onClick} node={item} key={item.id} />
-            ))}
-          </SubMenu>
-        ))}
-      </SubMenu>
+      {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
+      <MenuItem onClick={() => useRouter.getState().open(Routes.NodeCreation)}>
+        <IconPlus /> Add a new Node
+      </MenuItem>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => resetCamera()}>
         <IconFocusCentered /> Reset Camera

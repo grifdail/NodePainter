@@ -189,18 +189,18 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
             <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
           </span>
 
-          <Menu menuButton={<InvisibleButton icon={IconSortDescending} type="button" />}>
+          <Menu menuButton={<InvisibleButton icon={IconSortDescending} type="button" />} portal>
             <MenuRadioGroup value={nodeFav.nodeSorting}>
-              <MenuItem value="name" onClick={() => nodeFav.setSorting("featured")}>
+              <MenuItem type="radio" value="featured" onClick={() => nodeFav.setSorting("featured")}>
                 Featured
               </MenuItem>
-              <MenuItem value="name" onClick={() => nodeFav.setSorting("name")}>
+              <MenuItem type="radio" value="name" onClick={() => nodeFav.setSorting("name")}>
                 Name
               </MenuItem>
-              <MenuItem value="last" onClick={() => nodeFav.setSorting("last")}>
+              <MenuItem type="radio" value="last" onClick={() => nodeFav.setSorting("last")}>
                 Last used
               </MenuItem>
-              <MenuItem value="most" onClick={() => nodeFav.setSorting("most")}>
+              <MenuItem type="radio" value="most" onClick={() => nodeFav.setSorting("most")}>
                 Most used
               </MenuItem>
             </MenuRadioGroup>
