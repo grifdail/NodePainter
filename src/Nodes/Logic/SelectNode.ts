@@ -1,30 +1,8 @@
 import { IconAssembly } from "@tabler/icons-react";
-import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeArray } from "../../Types/PortType";
 import { createColor } from "../../Types/vectorDataType";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
-import { createPortConnection } from "../../Utils/createPortConnection";
-
-export const contextMenuCreateAllNode = Object.fromEntries(
-  PortTypeArray.map((type) => [
-    `Add a ${type} port`,
-    (node: NodeData) => {
-      var count = Object.entries(node.dataInputs).length;
-      node.dataInputs[`type-${count}-in`] = createPortConnection({
-        id: `type-${count}-in`,
-        type: type,
-        defaultValue: createDefaultValue(type),
-      });
-      node.dataOutputs[`type-${count}`] = {
-        id: `type-${count}`,
-        type: type,
-        defaultValue: createDefaultValue(type),
-      };
-    },
-  ])
-);
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const Select: NodeDefinition = {
   id: "Select",
@@ -33,17 +11,17 @@ export const Select: NodeDefinition = {
   tags: ["Control"],
   dataInputs: [
     {
-      id: "index",
-      type: "number",
+      id: "test",
+      type: "bool",
       defaultValue: 0,
     },
     {
-      id: "value-0",
+      id: "when-true",
       type: "color",
       defaultValue: createColor(),
     },
     {
-      id: "value-1",
+      id: "when-false",
       type: "color",
       defaultValue: createColor(),
     },
@@ -54,35 +32,9 @@ export const Select: NodeDefinition = {
   canBeExecuted: false,
   defaultType: "color",
   availableTypes: PortTypeArray,
-  onChangeType(node, type) {
-    Object.keys(node.dataInputs)
-      .filter((data) => data !== "index")
-      .forEach((key) => {
-        node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);
-        node.dataInputs[key].type = type;
-      });
-    node.dataOutputs["out"].type = type;
-  },
+  onChangeType: changeTypeGenerator(["when-true", "when-false"], ["out"]),
   getData: (portId, node, context) => {
-    var entries = Object.keys(node.dataInputs).filter((data) => data !== "index");
-    const index = Math.floor(context.getInputValueNumber(node, "index"));
-    return context.getInputValue(node, entries[index % entries.length], node.selectedType);
-  },
-  contextMenu: {
-    "`Add a port": (node: NodeData) => {
-      var count = Object.entries(node.dataInputs).filter((data) => data[0] !== "index").length;
-      node.dataInputs[`value-${count}`] = createPortConnection({
-        id: `value-${count}`,
-        type: node.selectedType,
-        defaultValue: createDefaultValue(node.selectedType),
-      });
-    },
-    "Remove last port": (node) => {
-      var entries = Object.entries(node.dataInputs).filter((data) => data[0] !== "index");
-      if (entries.length > 1) {
-        var [key] = entries[entries.length - 1];
-        delete node.dataInputs[key];
-      }
-    },
+    const index = context.getInputValueBoolean(node, "test");
+    return context.getInputValue(node, index ? "when-true" : "when-false", node.selectedType);
   },
 };

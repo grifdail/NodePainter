@@ -1,10 +1,10 @@
 import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { Vector, createVector2 } from "../../Types/vectorDataType";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { VectorTypesFull } from "../../Types/PortType";
+import { createVector2 } from "../../Types/vectorDataType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { EnforceGoodType, VectorScale } from "../../Utils/vectorUtils";
 
 export const Scale: NodeDefinition = {
   id: "Scale",
@@ -45,7 +45,3 @@ export const Scale: NodeDefinition = {
     return generateShaderCodeFromNodeData(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);
   },
 };
-
-export function VectorScale(a: Vector, b: number): number[] {
-  return a.map((value) => value * b);
-}

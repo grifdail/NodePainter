@@ -1,13 +1,12 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { VectorNormalize } from "./Normalize";
-import { VectorDotProduct } from "./DotProduct";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { VectorAddition, VectorIsZero, VectorScale } from "../../Utils/vectorUtils";
 import { VectorCrossProduct } from "./CrossProduct";
-import { VectorAddition, VectorIsZero } from "../../Utils/vectorUtils";
-import { VectorScale } from "./Scale";
+import { VectorDotProduct } from "./DotProduct";
+import { VectorNormalize } from "./Normalize";
 
 export const VectorFromAngle: NodeDefinition = {
   id: "VectorFromAngle",

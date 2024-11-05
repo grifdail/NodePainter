@@ -26,6 +26,9 @@ export function VectorMagnitude(vec: number[]): any {
 export function VectorDistance(a: number[], b: number[]): any {
   return Math.sqrt(VectorSquareDistance(a, b));
 }
+export function VectorScale(a: number[], b: number): number[] {
+  return a.map((value) => value * b);
+}
 
 export function VectorSquareMagnitude(vec: number[]): number {
   return vec.reduce((old, b) => old + b * b, 0);
