@@ -15,6 +15,8 @@ import { BoolInput } from "../Inputs/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
+import { CUSTOM_SIMULATION } from "../../Nodes/CustomFunction/CustomSimulation";
+import { TextInput } from "../Inputs/TextInput";
 
 const MainDiv = styled.div`
   display: flex;
@@ -24,12 +26,15 @@ const MainDiv = styled.div`
   align-self: stretch;
   flex-grow: 1;
   gap: var(--padding-medium);
-  overflow: auto;
 
   & form {
-    display: grid;
-    gap: var(--padding-large);
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    align-self: stretch;
+    flex-grow: 1;
+    gap: var(--padding-medium);
   }
 
   & progress {
@@ -126,13 +131,15 @@ function download(blob: Blob, filename: string = "data.json") {
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
   const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
+  const hasPreload = Object.values(tree.nodes).some((node) => tree.getNodeTypeDefinition(node).executeAs === CUSTOM_SIMULATION);
   const [fixedFrameRate, setFixedFrameRate] = useState(32);
-  const [preloadDuration, setPreloadDuration] = useState(0);
+  const [preloadDuration, setPreloadDuration] = useState(hasPreload ? tree.globalSettings.progress || 0 : 0);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
   const [isGif, setIsGif] = useState(true);
   const name = tree.getSketchName();
+  const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
 
   const start = tree.getNode(START_NODE);
 
@@ -142,12 +149,14 @@ export function ExportGifModal({ close }: { close: () => void }) {
       setRenderState("processing");
     }
   };
-  const filename = `${name}-np-${Date.now()}.${isGif ? "gif" : "webm"}`;
+
+  const filenameWithExt = `${filename}.${isGif ? "gif" : "webm"}`;
 
   return (
-    <Modal onClose={close} title="Export a gif" icon={IconGif} size="small" stretch>
+    <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
       <MainDiv>
         <form>
+          <Fieldset label="Filename" input={TextInput} value={filename} onChange={setFilename} />
           <Fieldset label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`} input={NumberInput} value={duration} onChange={setDuration}></Fieldset>
           <Fieldset label="FrameRate" input={NumberInput} value={fixedFrameRate} onChange={setFixedFrameRate} />
           <Fieldset label="Preload" input={NumberInput} value={preloadDuration} onChange={setPreloadDuration} />
@@ -169,7 +178,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
                 setRenderState("waiting");
                 setProgress(100);
                 setBlob(blob);
-                download(blob as Blob, filename);
+                download(blob as Blob, filenameWithExt);
               }}
               onProgress={onProgress}
             />
@@ -180,7 +189,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
           {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
           {renderState === "processing" && <Button label="Processing" disabled></Button>}
-          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filename)}></Button>}
+          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filenameWithExt)}></Button>}
         </ButtonGroup>
       </MainDiv>
     </Modal>
