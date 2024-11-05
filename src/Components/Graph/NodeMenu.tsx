@@ -26,6 +26,7 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
   const duplicateNode = useTree((state) => state.duplicateNode);
   const deleteNode = useTree((state) => state.deleteNode);
   const resetNode = useTree((state) => state.resetNode);
+  const sortAroundNode = useTree((state) => state.sortAroundNode);
   const executeCallback = useTree((state) => state.executeCallback);
   var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
   return (
@@ -45,6 +46,9 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
         </MenuItem>
         <MenuItem key="reset" onClick={() => resetNode(node.id)}>
           Reset
+        </MenuItem>
+        <MenuItem key="sortAround" onClick={() => sortAroundNode(node.id)}>
+          Sort Arount
         </MenuItem>
         {contextMenu && [
           <MenuDivider key="divider" />,

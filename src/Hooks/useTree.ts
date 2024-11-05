@@ -26,6 +26,7 @@ import { createPortConnectionsForInputsDefinition } from "../Utils/createPortCon
 import { createSettingObjectForSettingDefinition } from "../Utils/createSettingObjectForSettingDefinition";
 import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { resetCamera } from "../Utils/resetCamera";
+import { sortAroundNode } from "../Utils/sortAroundNode";
 import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 import { usePortSelection } from "./usePortSelection";
@@ -561,6 +562,9 @@ export const useTree = create<TreeStore>()(
               cb(state.nodes[nodeId]);
             })
           );
+        },
+        sortAroundNode(nodeId) {
+          set(produce((state) => sortAroundNode(state, nodeId)));
         },
       };
       return a;
