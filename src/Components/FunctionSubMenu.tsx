@@ -104,9 +104,7 @@ export function FunctionSubMenu() {
       <MenuItem onClick={openCreateShaderModal}>
         <IconPhotoScan /> Create New Shader
       </MenuItem>
-      <MenuItem onClick={openCreateShaderMaterialModal}>
-        <IconPhotoScan /> Create new Shader Material
-      </MenuItem>
+
       <MenuItem onClick={opencreateSimulation}>
         <IconRepeat /> Create New Simulation
       </MenuItem>
