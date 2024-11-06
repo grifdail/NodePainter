@@ -336,6 +336,8 @@ export const useTree = create<TreeStore>()(
                 }
               }
               state.editedGraph = def.id;
+
+              resetCamera();
             })
           );
           get().enforceValidGraph();

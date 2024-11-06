@@ -3,6 +3,7 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 import { TreeStore } from "../Types/TreeStore";
 import { createNodeData } from "../Utils/createNodeData";
 import { createPortConnection } from "../Utils/createPortConnection";
+import { resetCamera } from "../Utils/resetCamera";
 
 export function createFunction(def: NodeDefinition, state: TreeStore) {
   const start = getCustomFunctionStartId(def);
@@ -56,6 +57,8 @@ export function createFunction(def: NodeDefinition, state: TreeStore) {
     }
   }
   state.editedGraph = def.id;
+
+  resetCamera();
 }
 export function getCustomFunctionEndId(def: NodeDefinition | string) {
   const id = typeof def === "string" ? def : def.id;

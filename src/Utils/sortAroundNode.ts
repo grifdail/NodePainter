@@ -9,6 +9,8 @@ export const sortAroundNode = (tree: TreeStore, targetId: string) => {
   const columns: { [id: number]: number } = {};
   const recomputedPosition: { [id: string]: { x: number; y: number } } = { [rootNode.id]: { x: 0, y: 0 } };
 
+  columns[0] = GetNodeHeight(rootNode, tree.getNodeTypeDefinition(rootNode)) + 100;
+
   const sortInput = (parentNode: NodeData, column: number) => {
     visited[parentNode.id] = true;
     const nodeDef = tree.getNodeTypeDefinition(parentNode);
@@ -66,23 +68,25 @@ function findNodeUsing(tree: TreeStore, nodeId: string): NodeData[] {
 }
 function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition) {
   var result = [];
-  if (nodeDef.canBeExecuted) {
-    result.push(...findNodeExecuting(tree, node.id));
-  }
+
   result.push(
     ...Object.values(node.dataInputs)
       .filter((port) => port.hasConnection)
       .map((port) => tree.nodes[port.connectedNode as string])
   );
+  if (nodeDef.canBeExecuted) {
+    result.push(...findNodeExecuting(tree, node.id));
+  }
   return result;
 }
 function getOutputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition) {
   var result = [];
+
+  result.push(...findNodeUsing(tree, node.id));
   result.push(
     ...Object.values(node.execOutputs)
       .map((nodeId) => tree.nodes[nodeId as string])
       .filter((output) => output !== undefined)
   );
-  result.push(...findNodeUsing(tree, node.id));
   return result;
 }

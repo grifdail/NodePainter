@@ -2,16 +2,23 @@ import { useTree } from "../Hooks/useTree";
 import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
 import { BoundingBox } from "../Types/BoundingBox";
 import { useViewbox } from "../Hooks/useViewbox";
+import { NodeData } from "../Types/NodeData";
 
 export const resetCamera = () => {
   const tree = useTree.getState();
 
+  const toBoundingBox = (node: NodeData) => {
+    return new BoundingBox(node.positionY, node.positionX + 300, node.positionY + GetNodeHeight(node, tree.getNodeTypeDefinition(node)), node.positionX);
+  };
+
+  var firstNode = Object.values(tree.nodes).find((node) => node.graph === tree.editedGraph);
+
+  var defaultBB = firstNode ? toBoundingBox(firstNode) : new BoundingBox(0, 100, 100, 0);
+
   const boundingBox = Object.values(tree.nodes)
     .filter((node) => node.graph === tree.editedGraph)
-    .map((node) => {
-      return new BoundingBox(node.positionY, node.positionX + 300, node.positionY + GetNodeHeight(node, tree.getNodeTypeDefinition(node)), node.positionX);
-    })
-    .reduce((old, bb) => old.extend(bb), new BoundingBox(0, 100, 100, 0))
+    .map(toBoundingBox)
+    .reduce((old, bb) => old.extend(bb), defaultBB)
     .grow(100, 200, 100, 200);
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
