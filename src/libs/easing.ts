@@ -141,4 +141,14 @@ var Linear = function (x: number) {
   return x;
 };
 
-export { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine };
+var Horizontal = function (x: number) {
+  return 0;
+};
+var Vertical = function (x: number) {
+  return 1;
+};
+var Toggle = function (x: number) {
+  return x < 0.5 ? 0 : 1;
+};
+
+export const Easing = { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine, Horizontal, Vertical, Toggle };

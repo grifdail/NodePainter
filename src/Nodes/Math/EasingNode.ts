@@ -1,6 +1,6 @@
 import { IconEaseInOut } from "@tabler/icons-react";
+import { Easing } from "../../libs/easing";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import * as Easing from "../../libs/easing";
 
 export const EasingNode: NodeDefinition = {
   id: "Easing",
@@ -10,6 +10,7 @@ export const EasingNode: NodeDefinition = {
   dataInputs: [{ id: "input", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
   executeOutputs: [],
+
   settings: [
     {
       id: "easing",

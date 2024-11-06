@@ -1,8 +1,7 @@
 import { clamp01, map } from "../Utils/colorUtils";
 import { VectorLerp } from "../Utils/vectorUtils";
-import { createColor } from "./vectorDataType";
 
-export enum EnvelopeEasingType {
+export enum AnimationEasingType {
   Linear = "linear",
   Horizontal = "horizontal",
   Vertical = "vertical",
@@ -10,20 +9,20 @@ export enum EnvelopeEasingType {
   Easeout = "easeout",
   Easeinout = "easeinout",
 }
-export const EnvelopeEasingTypeArray = Object.values(EnvelopeEasingType);
+export const AnimationEasingTypeArray = Object.values(AnimationEasingType);
 
 export type EnvelopeData = EnvelopeStop[];
 export type EnvelopeStop = {
   pos: number;
   height: number;
-  lerp: EnvelopeEasingType;
+  lerp: AnimationEasingType;
 };
 export const createDefaultEnvelope = (): EnvelopeData => [
-  { pos: 0, height: 0, lerp: EnvelopeEasingType.Linear },
-  { pos: 1, height: 1, lerp: EnvelopeEasingType.Linear },
+  { pos: 0, height: 0, lerp: AnimationEasingType.Linear },
+  { pos: 1, height: 1, lerp: AnimationEasingType.Linear },
 ];
 
-const lerpFunction: { [key in EnvelopeEasingType]: (x: number) => number } = {
+export const AnimationLerpFunction: { [key in AnimationEasingType]: (x: number) => number } = {
   linear: (x) => x,
   horizontal: (x) => 0,
   vertical: (x) => 1,
@@ -35,11 +34,11 @@ const lerpFunction: { [key in EnvelopeEasingType]: (x: number) => number } = {
 export const createDefaultEnvelopeStop = (): EnvelopeStop => ({
   pos: 0.5,
   height: 0.5,
-  lerp: EnvelopeEasingType.Linear,
+  lerp: AnimationEasingType.Linear,
 });
 export function interpolateEnvelope(envelope: EnvelopeData, pos: number): any {
   if (envelope.length === 0) {
-    return createColor();
+    return 0;
   }
   let prev = envelope[0];
   if (pos <= prev.pos) {
@@ -47,7 +46,7 @@ export function interpolateEnvelope(envelope: EnvelopeData, pos: number): any {
   }
   for (var stop of envelope) {
     if (pos < stop.pos) {
-      return VectorLerp([prev.height], [stop.height], lerpFunction[prev.lerp](clamp01(map(prev.pos, stop.pos, pos))));
+      return VectorLerp([prev.height], [stop.height], AnimationLerpFunction[prev.lerp](clamp01(map(prev.pos, stop.pos, pos))));
     } else {
       prev = stop;
     }

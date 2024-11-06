@@ -3,7 +3,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import { NumberInput } from "../Inputs/NumberInput";
-import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeEasingType, EnvelopeEasingTypeArray, EnvelopeStop } from "../../Types/EnvelopeData";
+import { createDefaultEnvelopeStop, EnvelopeData, AnimationEasingType, AnimationEasingTypeArray, EnvelopeStop } from "../../Types/EnvelopeData";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Button } from "../Generics/Button";
 import { useEffect, useRef, useState } from "react";
@@ -56,7 +56,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
     console.log(i, value);
     onChange([...list.slice(0, i), { ...list[i], height: value }, ...list.slice(i + 1, list.length)]);
   }
-  function onChangeLerp(i: number, value: EnvelopeEasingType): void {
+  function onChangeLerp(i: number, value: AnimationEasingType): void {
     console.log(i, value);
     onChange([...list.slice(0, i), { ...list[i], lerp: value }, ...list.slice(i + 1, list.length)]);
   }
@@ -87,7 +87,7 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
             <NumberInput value={stop.pos} onChange={(v) => onChangePosition(i, v)}></NumberInput>
             <NumberInput value={stop.height} onChange={(v) => onChangeHeight(i, v)}></NumberInput>
             <Menu menuButton={<MenuButton className={"button"}>{stop.lerp}</MenuButton>}>
-              {Object.values(EnvelopeEasingType).map((item) => (
+              {Object.values(AnimationEasingType).map((item) => (
                 <MenuItem onClick={() => onChangeLerp(i, item)}>{item}</MenuItem>
               ))}
             </Menu>
@@ -126,7 +126,7 @@ function EnvelopePreview({ value, width, height, onChange }: { onChange: (value:
       var h = Math.min(1, Math.max(0, item.height - y / rect.height));
       var newItem = { ...localCopy[i], pos: pos, height: h };
       if (tap) {
-        newItem.lerp = moveUpArray(EnvelopeEasingTypeArray, newItem.lerp);
+        newItem.lerp = moveUpArray(AnimationEasingTypeArray, newItem.lerp);
       }
       var newList = [...localCopy.slice(0, i), newItem, ...localCopy.slice(i + 1, localCopy.length)];
 
@@ -154,7 +154,7 @@ function EnvelopePreview({ value, width, height, onChange }: { onChange: (value:
         {
           pos: x,
           height: y,
-          lerp: EnvelopeEasingType.Linear,
+          lerp: AnimationEasingType.Linear,
         },
       ];
       newList.sort((a: EnvelopeStop, b: EnvelopeStop) => a.pos - b.pos);
@@ -182,21 +182,21 @@ function calculatePath(height: number, value: EnvelopeData, width: number) {
     if (i === 0 || prev.lerp === "linear") {
       path.push(`L ${current.pos * width}, ${height * (1 - current.height)}`);
     }
-    if (prev.lerp === EnvelopeEasingType.Horizontal) {
+    if (prev.lerp === AnimationEasingType.Horizontal) {
       path.push(`L ${current.pos * width} ${height * (1 - prev.height)}`);
       path.push(`L ${current.pos * width} ${height * (1 - current.height)}`);
     }
-    if (prev.lerp === EnvelopeEasingType.Vertical) {
+    if (prev.lerp === AnimationEasingType.Vertical) {
       path.push(`L ${prev.pos * width}, ${height * (1 - current.height)}`);
       path.push(`L ${current.pos * width}, ${height * (1 - current.height)}`);
     }
-    if (prev.lerp === EnvelopeEasingType.Easein) {
+    if (prev.lerp === AnimationEasingType.Easein) {
       path.push(`Q ${(prev.pos + current.pos) * 0.5 * width}, ${height * (1 - prev.height)}, ${current.pos * width}, ${height * (1 - current.height)}`);
     }
-    if (prev.lerp === EnvelopeEasingType.Easeout) {
+    if (prev.lerp === AnimationEasingType.Easeout) {
       path.push(`Q ${(prev.pos + current.pos) * 0.5 * width}, ${height * (1 - current.height)}, ${current.pos * width}, ${height * (1 - current.height)}`);
     }
-    if (prev.lerp === EnvelopeEasingType.Easeinout) {
+    if (prev.lerp === AnimationEasingType.Easeinout) {
       path.push(`C ${(prev.pos + current.pos) * 0.5 * width}, ${height * (1 - prev.height)}, ${(prev.pos + current.pos) * 0.5 * width}, ${height * (1 - current.height)}, ${current.pos * width}, ${height * (1 - current.height)}`);
     }
     prev = value[i];

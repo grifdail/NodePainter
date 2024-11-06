@@ -125,6 +125,7 @@ import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
 import { Abs } from "./Math/Abs";
 import { Acos } from "./Math/Acos";
+import { AnimationCurve } from "./Math/AnimationCurve";
 import { Asin } from "./Math/Asin";
 import { Atan } from "./Math/Atan";
 import { Atan2 } from "./Math/Atan2";
@@ -379,6 +380,9 @@ export const Nodes: Array<NodeDefinition> = [
   Closest,
   Slice,
   GenerateArray,
+
+  //Misc
+  AnimationCurve,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
