@@ -39,9 +39,10 @@ const MainDiv = styled.div`
 
   & progress {
     display: block;
-    width: calc(100% - 20px);
-    margin: 10px;
-    height: 50px;
+    width: 100%;
+    margin: 0px;
+    height: 24px;
+    border-radius: 15px;
     border: none;
     background: rgba(0, 0, 0, 0.2);
   }
@@ -155,6 +156,13 @@ export function ExportGifModal({ close }: { close: () => void }) {
   return (
     <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
       <MainDiv>
+        <ButtonGroup align="stretch">
+          {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
+          {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
+          {renderState === "processing" && <Button label="Processing" disabled></Button>}
+          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filenameWithExt)}></Button>}
+        </ButtonGroup>
+
         <form>
           <Fieldset label="Filename" input={TextInput} value={filename} onChange={setFilename} />
           <Fieldset label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`} input={NumberInput} value={duration} onChange={setDuration}></Fieldset>
@@ -163,7 +171,6 @@ export function ExportGifModal({ close }: { close: () => void }) {
           <Fieldset label="Output as a gif ?" input={BoolInput} value={isGif} onChange={setIsGif} />
         </form>
 
-        <hr></hr>
         <div className="rendering">
           {renderState === "rendering" && (
             <ReactP5Wrapper
@@ -185,12 +192,6 @@ export function ExportGifModal({ close }: { close: () => void }) {
           )}
         </div>
         <progress value={progress} max="100" />
-        <ButtonGroup>
-          {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
-          {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
-          {renderState === "processing" && <Button label="Processing" disabled></Button>}
-          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filenameWithExt)}></Button>}
-        </ButtonGroup>
       </MainDiv>
     </Modal>
   );
