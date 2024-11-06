@@ -120,6 +120,7 @@ import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
 import { Abs } from "./Math/Abs";
@@ -159,9 +160,9 @@ import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
-import { ScaleAdd } from "./Vector/ScaleAdd";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
+import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
@@ -246,6 +247,7 @@ export const Nodes: Array<NodeDefinition> = [
   Random,
   SeededRandom,
   RandomOnSphere,
+  RandomInt,
 
   //Input Misc
   Dimension,

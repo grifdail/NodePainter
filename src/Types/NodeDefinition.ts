@@ -8,7 +8,7 @@ import { PortType } from "./PortType";
 import { SettingDefinition } from "./SettingDefinition";
 import { TreeStore } from "./TreeStore";
 
-type ContextMenuData = {
+export type ContextMenuData = {
   [key: string]: (node: NodeData, tree: TreeStore) => void;
 };
 
