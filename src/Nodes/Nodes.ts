@@ -159,6 +159,7 @@ import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
+import { ScaleAdd } from "./Vector/ScaleAdd";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { SeededRandom } from "./Vector/SeededRandom";
@@ -185,6 +186,7 @@ export const Nodes: Array<NodeDefinition> = [
   Divide,
   Scale,
   Distance,
+  ScaleAdd,
 
   //2D specific
   VectorFromAngle,
