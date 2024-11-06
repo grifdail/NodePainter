@@ -1,4 +1,5 @@
-import { IconAssembly } from "@tabler/icons-react";
+import { IconAssembly, IconPlus } from "@tabler/icons-react";
+import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const ThenNode: NodeDefinition = {
@@ -10,7 +11,23 @@ export const ThenNode: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   executeOutputs: ["0"],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      defaultValue: undefined,
+      buttons: [
+        {
+          label: "Add a new Port",
+          icon: IconPlus,
+          onClick: (node: NodeData) => {
+            var count = Object.entries(node.execOutputs).length;
+            node.execOutputs[count] = null;
+          },
+        },
+      ],
+    },
+  ],
   canBeExecuted: true,
   execute: (data, context) => {
     var count = Object.entries(data.execOutputs).length;

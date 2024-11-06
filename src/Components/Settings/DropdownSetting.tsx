@@ -1,9 +1,8 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Inputs/DropdownInput";
 
-export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: SettingProps) {
   return <Fieldset input={DropdownInput} passtrough={{ options: def.options }} value={value} onChange={onChange} label={def.id} />;
 };
 DropdownSetting.getSize = function (value, def): number {

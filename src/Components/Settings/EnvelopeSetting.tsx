@@ -1,5 +1,4 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconPlus, IconX } from "@tabler/icons-react";
@@ -50,7 +49,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const EnvelopeSetting: SettingComponent = function GradientSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const EnvelopeSetting: SettingComponent = function GradientSetting({ onChange, value, def }: SettingProps) {
   const list = value as EnvelopeData;
 
   function onChangeHeight(i: number, value: any): void {

@@ -1,5 +1,4 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
@@ -31,7 +30,7 @@ const Body = styled.div`
   }
 `;
 
-export const ImageUploadSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const ImageUploadSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: SettingProps) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length >= 1) {

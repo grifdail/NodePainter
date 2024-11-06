@@ -1,5 +1,4 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
@@ -47,7 +46,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const PaletteSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const PaletteSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
   var list = value as Array<any>;
 
   function onChangeColor(i: number, v: any): void {

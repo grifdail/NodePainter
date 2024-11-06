@@ -16,8 +16,8 @@ export const ButtonStyled = styled.button<{ invisible?: boolean; selected?: bool
   ${(props) =>
     !props.iconOnly
       ? css`
-          padding-left: calc(var(--padding-medium) * 3);
-          padding-right: calc(var(--padding-medium) * 3);
+          padding-left: calc(var(--padding-medium) * 2);
+          padding-right: calc(var(--padding-medium) * 2);
         `
       : ""}
 

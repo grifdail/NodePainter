@@ -1,8 +1,24 @@
-import { IconPolygon } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Types/vectorDataType";
-import { createPortConnection } from "../../Utils/createPortConnection";
+import { IconMinus, IconPlus, IconPolygon } from "@tabler/icons-react";
+import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
+import { createPortConnection } from "../../Utils/createPortConnection";
+
+const addCorner = (node: NodeData) => {
+  const count = Object.keys(node.dataInputs).length;
+  const key = `corner-${count}`;
+  node.dataInputs[key] = createPortConnection({
+    id: key,
+    type: "vector2",
+    defaultValue: createVector2(),
+  });
+};
+const removeCorner = (node: NodeData) => {
+  const count = Object.keys(node.dataInputs).length - 1;
+  const key = `corner-${count}`;
+  delete node.dataInputs[key];
+};
 
 export const DrawPolygon: NodeDefinition = {
   id: "DrawPolygon",
@@ -34,7 +50,25 @@ export const DrawPolygon: NodeDefinition = {
   ],
   dataOutputs: [],
   executeOutputs: [],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      defaultValue: undefined,
+      buttons: [
+        {
+          label: null,
+          icon: IconMinus,
+          onClick: removeCorner,
+        },
+        {
+          label: null,
+          icon: IconPlus,
+          onClick: addCorner,
+        },
+      ],
+    },
+  ],
   canBeExecuted: true,
   execute: (data, context) => {
     const color = context.getInputValueColor(data, "color");
@@ -51,19 +85,7 @@ export const DrawPolygon: NodeDefinition = {
     context.target.endShape();
   },
   contextMenu: {
-    "Add corner": (node) => {
-      const count = Object.keys(node.dataInputs).length;
-      const key = `corner-${count}`;
-      node.dataInputs[key] = createPortConnection({
-        id: key,
-        type: "vector2",
-        defaultValue: createVector2(),
-      });
-    },
-    "Remove corner": (node) => {
-      const count = Object.keys(node.dataInputs).length - 1;
-      const key = `corner-${count}`;
-      delete node.dataInputs[key];
-    },
+    "Add corner": addCorner,
+    "Remove corner": removeCorner,
   },
 };

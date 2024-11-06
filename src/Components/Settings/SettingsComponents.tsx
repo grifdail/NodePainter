@@ -8,12 +8,21 @@ import { GradientSetting } from "./GradientSetting";
 import { ImageUploadSetting } from "./ImageUploadSetting";
 import { EnvelopeSetting } from "./EnvelopeSetting";
 import { ImagePaintSetting } from "./ImagePaintSetting";
+import { NodeData } from "../../Types/NodeData";
+import { ButtonsSettings } from "./ButtonsSettings";
 
-export type SettingComponent = (({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => any) & {
-  getSize: (value: any, def: SettingDefinition) => number;
+export type SettingProps = {
+  onChange: (value: any) => void;
+  value: any;
+  def: SettingDefinition;
+  node: NodeData;
 };
 
-export const EmptySetting = ({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) => {
+export type SettingComponent = ((props: SettingProps) => any) & {
+  getSize: (value: any, def: SettingDefinition, node: NodeData) => number;
+};
+
+export const EmptySetting = ({ onChange, value, def }: SettingProps) => {
   return null;
 };
 EmptySetting.getSize = (value: any, def: SettingDefinition) => 0;
@@ -28,4 +37,5 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   "image-paint": ImagePaintSetting,
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
+  buttons: ButtonsSettings,
 };

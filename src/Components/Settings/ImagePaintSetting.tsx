@@ -1,5 +1,4 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
@@ -32,7 +31,7 @@ const Body = styled.div`
   }
 `;
 
-export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: SettingProps) {
   return (
     <Body>
       {value === null && (

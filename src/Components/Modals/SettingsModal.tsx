@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { IconSettings } from "@tabler/icons-react";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { PaletteSetting } from "../Settings/PaletteSetting";
+import { NodeData } from "../../Types/NodeData";
 
 const MainDiv = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ export function SettingsModal({ close }: { close: () => void }) {
     <Modal onClose={close} title="Settings" icon={IconSettings}>
       <MainDiv>
         Color preset:
-        <PaletteSetting value={colorPreset} onChange={setColorPreset} def={{ id: "colorPreset", defaultValue: [], type: "palette" }}></PaletteSetting>
+        <PaletteSetting value={colorPreset} onChange={setColorPreset} def={{ id: "colorPreset", defaultValue: [], type: "palette" }} node={null as unknown as NodeData}></PaletteSetting>
       </MainDiv>
     </Modal>
   );

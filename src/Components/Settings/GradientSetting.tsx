@@ -1,5 +1,4 @@
-import { SettingDefinition } from "../../Types/SettingDefinition";
-import { SettingComponent } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
@@ -51,7 +50,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const GradientSetting: SettingComponent = function GradientSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const GradientSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
   const list = value as Gradient;
 
   function onChangeColor(i: number, color: any): void {

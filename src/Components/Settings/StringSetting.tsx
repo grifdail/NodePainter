@@ -1,9 +1,8 @@
-import { SettingComponent } from "./SettingsComponents";
-import { SettingDefinition } from "../../Types/SettingDefinition";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { TextInput } from "../Inputs/TextInput";
 import { Fieldset } from "../StyledComponents/Fieldset";
 
-export const StringSetting: SettingComponent = function NumberSetting({ onChange, value, def }: { onChange: (value: any) => void; value: any; def: SettingDefinition }) {
+export const StringSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
   return <Fieldset label={def.id} input={TextInput} value={value} onChange={onChange}></Fieldset>;
 };
 StringSetting.getSize = function (value, def): number {

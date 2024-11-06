@@ -1,4 +1,4 @@
-import { IconList } from "@tabler/icons-react";
+import { IconList, IconPlus } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { CommonTypes, PortType } from "../../Types/PortType";
@@ -6,6 +6,15 @@ import { createColor } from "../../Types/vectorDataType";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
+
+const addNewPort = (node: NodeData) => {
+  var count = Object.entries(node.dataInputs).length;
+  node.dataInputs[`value-${count}`] = createPortConnection({
+    id: `value-${count}`,
+    type: node.selectedType,
+    defaultValue: createDefaultValue(node.selectedType),
+  });
+};
 
 export const StaticArray: NodeDefinition = {
   id: "StaticArray",
@@ -26,7 +35,20 @@ export const StaticArray: NodeDefinition = {
   ],
   dataOutputs: [{ id: "out", defaultValue: createColor(), type: "color" }],
   executeOutputs: [],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      defaultValue: undefined,
+      buttons: [
+        {
+          label: "Add a new Port",
+          icon: IconPlus,
+          onClick: addNewPort,
+        },
+      ],
+    },
+  ],
   canBeExecuted: false,
   defaultType: "color",
   availableTypes: CommonTypes,
@@ -42,14 +64,7 @@ export const StaticArray: NodeDefinition = {
     return entries.map((key) => context.getInputValue(node, key, node.selectedType));
   },
   contextMenu: {
-    "`Add a port": (node: NodeData) => {
-      var count = Object.entries(node.dataInputs).length;
-      node.dataInputs[`value-${count}`] = createPortConnection({
-        id: `value-${count}`,
-        type: node.selectedType,
-        defaultValue: createDefaultValue(node.selectedType),
-      });
-    },
+    "`Add a port": addNewPort,
     "Remove last port": (node) => {
       var entries = Object.entries(node.dataInputs);
       if (entries.length > 1) {

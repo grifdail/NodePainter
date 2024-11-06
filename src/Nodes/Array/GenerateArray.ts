@@ -1,8 +1,15 @@
-import { IconList } from "@tabler/icons-react";
+import { IconList, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { CommonTypes } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+
+const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
+  setTimeout(() => {
+    useTree.getState().createBlackboardNode("number", `${id}-index`, "Generate array index", positionX - 400, positionY);
+  }, 10);
+};
 
 export const GenerateArray: NodeDefinition = {
   id: "GenerateArray",
@@ -16,16 +23,25 @@ export const GenerateArray: NodeDefinition = {
   ],
   dataOutputs: [{ id: "array", type: "array-number", defaultValue: [] }],
   executeOutputs: [],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      defaultValue: undefined,
+      buttons: [
+        {
+          label: "Create index node",
+          icon: IconPlus,
+          onClick: createIndexNode,
+        },
+      ],
+    },
+  ],
   canBeExecuted: false,
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
   contextMenu: {
-    "Create the index node": ({ id, positionX, positionY }, tree) => {
-      setTimeout(() => {
-        useTree.getState().createBlackboardNode("number", `${id}-index`, "Generate array index", positionX + 300, positionY);
-      }, 10);
-    },
+    "Create the index node": createIndexNode,
   },
   getData: (portId, nodeData, context) => {
     var count = context.getInputValueNumber(nodeData, "count");

@@ -1,4 +1,4 @@
-import { IconAssembly } from "@tabler/icons-react";
+import { IconAssembly, IconPlus } from "@tabler/icons-react";
 import { DropdownInput } from "../../Components/Inputs/DropdownInput";
 import { TextInput } from "../../Components/Inputs/TextInput";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
@@ -19,7 +19,20 @@ export const Precompute: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   executeOutputs: ["execute"],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      defaultValue: undefined,
+      buttons: [
+        {
+          label: "Add a new Port",
+          icon: IconPlus,
+          onClick: (node: NodeData) => addNewPort(node),
+        },
+      ],
+    },
+  ],
   canBeExecuted: true,
   getData: (portId, data, context) => {
     const target = context.blackboard[`${data.id}-context`];
@@ -42,56 +55,7 @@ export const Precompute: NodeDefinition = {
           },
         ])
       ),
-      "Add a new port": (node) => {
-        var count = Object.entries(node.dataInputs).length;
-        var nodeId = node.id;
-        var dialog: DialogData = {
-          callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
-            if (button === "confirm" && fieldResult) {
-              useTree.getState().dangerouselyUpdateNode(nodeId, (node: NodeData) => {
-                node.dataInputs[`${fieldResult.name}-in`] = createPortConnection({
-                  id: `${fieldResult.name}-in`,
-                  type: fieldResult.type as PortType,
-                  defaultValue: createDefaultValue(fieldResult.type as PortType),
-                });
-                node.dataOutputs[fieldResult.name] = {
-                  id: fieldResult.name,
-                  type: fieldResult.type as PortType,
-                  defaultValue: createDefaultValue(fieldResult.type as PortType),
-                };
-              });
-            }
-          },
-          buttons: [
-            {
-              key: "cancel",
-              label: "Cancel",
-              style: "invisible",
-            },
-            {
-              key: "confirm",
-              label: "Confirm",
-              style: "normal",
-            },
-          ],
-          fields: [
-            {
-              key: "name",
-              label: "id",
-              input: TextInput,
-              defaultValue: `port-${count}`,
-            },
-            {
-              key: "type",
-              label: "type",
-              input: DropdownInput,
-              defaultValue: "number",
-              passTrough: { options: PortTypeArray },
-            },
-          ],
-        };
-        useDialog.getState().open(dialog);
-      },
+      "Add a new port": addNewPort,
       "Remove last port": (node) => {
         var entries = Object.entries(node.dataOutputs);
         if (entries.length > 0) {
@@ -103,3 +67,54 @@ export const Precompute: NodeDefinition = {
     };
   },
 };
+
+function addNewPort(node: NodeData): void {
+  var count = Object.entries(node.dataInputs).length;
+  var nodeId = node.id;
+  var dialog: DialogData = {
+    callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
+      if (button === "confirm" && fieldResult) {
+        useTree.getState().dangerouselyUpdateNode(nodeId, (node: NodeData) => {
+          node.dataInputs[`${fieldResult.name}-in`] = createPortConnection({
+            id: `${fieldResult.name}-in`,
+            type: fieldResult.type as PortType,
+            defaultValue: createDefaultValue(fieldResult.type as PortType),
+          });
+          node.dataOutputs[fieldResult.name] = {
+            id: fieldResult.name,
+            type: fieldResult.type as PortType,
+            defaultValue: createDefaultValue(fieldResult.type as PortType),
+          };
+        });
+      }
+    },
+    buttons: [
+      {
+        key: "cancel",
+        label: "Cancel",
+        style: "invisible",
+      },
+      {
+        key: "confirm",
+        label: "Confirm",
+        style: "normal",
+      },
+    ],
+    fields: [
+      {
+        key: "name",
+        label: "id",
+        input: TextInput,
+        defaultValue: `port-${count}`,
+      },
+      {
+        key: "type",
+        label: "type",
+        input: DropdownInput,
+        defaultValue: "number",
+        passTrough: { options: PortTypeArray },
+      },
+    ],
+  };
+  useDialog.getState().open(dialog);
+}
