@@ -5,24 +5,25 @@ import { PortType } from "../../Types/PortType";
 import styled from "styled-components";
 import { PortColor } from "../StyledComponents/PortColor";
 import { Icon, IconPlus } from "@tabler/icons-react";
-import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 
-const MAX_TYPE_SINGLE_LINE = 5;
+const MAX_TYPE_SINGLE_LINE = 300 / (30 + 2) - 1;
 
 var StyledButton = styled.button<{ selected: boolean }>`
-  width: 20px;
+  width: 30px;
   text-align: center;
-  height: 20px;
+  height: 30px;
   align-items: center;
   justify-content: center;
   transform: scale(1);
   animation: transform 0.3s ease-in-out;
-  border-radius: 50%;
+  border-radius: 24px 24px 0 0;
   border: 2px solid var(--color-property);
-  background: ${(props) => (props.selected ? "var(--color-property)" : "none")};
+  border-bottom: none;
+  background: ${(props) => (props.selected ? "var(--color-property)" : "var(--color-background-card)")};
   padding: 0;
   display: flex;
-
+  margin-top: 3px;
   &.plus {
     --color-property: black;
     border-radius: 3px;
@@ -36,12 +37,12 @@ var StyledButton = styled.button<{ selected: boolean }>`
   & svg {
     height: 80%;
     width: 80%;
-    stroke: ${(props) => (props.selected ? "black" : "var(--color-property)")};
+    color: ${(props) => (props.selected ? "black" : "var(--color-property)")};
   }
 
   &:hover {
     transform: scale(1.1);
-    background: ${(props) => (props.selected ? "var(--color-property)" : "rgba(0, 0, 0, 0.2)")};
+    background: ${(props) => (props.selected ? "var(--color-property)" : "var(--color-background-highghlight)")};
   }
 `;
 var StyledDiv = styled.div`
@@ -49,20 +50,29 @@ var StyledDiv = styled.div`
   height: 100%;
   display: flex;
   display: block flex;
-  justify-content: right;
+  justify-content: left;
   align-items: center;
   padding-right: 2px;
+  gap: var(--padding-small);
+`;
+
+var StyledSpan = styled.span<{ selected?: boolean }>`
+  margin-right: var(--padding-small);
+  border-radius: 50px;
+
+  & svg {
+    color: var(--color-property);
+  }
 `;
 
 function TypeMenuItem({ type, onClick, selectedtype }: { type: PortType; selectedtype: PortType; onClick: (type: PortType) => void }) {
   const portDescription = PortColor[type];
   const Icon = portDescription.tinyIcon as Icon;
   return (
-    <MenuItem onClick={() => onClick(type)}>
-      <StyledButton className={type} selected={type === selectedtype} style={{ marginRight: "10px" }}>
+    <MenuItem type="radio" value={type} onClick={() => onClick(type)}>
+      <StyledSpan className={type}>
         <Icon />
-      </StyledButton>
-
+      </StyledSpan>
       {type}
     </MenuItem>
   );
@@ -71,9 +81,8 @@ function TypeMenuItem({ type, onClick, selectedtype }: { type: PortType; selecte
 export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinition }) {
   const types = def.availableTypes as PortType[];
   const onClick = (type: PortType) => useTree.getState().changeNodeType(node.id, type);
-  var width = Math.min(types.length, MAX_TYPE_SINGLE_LINE + 1) * 20;
   return (
-    <foreignObject x={260 - width} y="10" height="30" width={width}>
+    <foreignObject x={0} y="-30" height="30" width={300}>
       <StyledDiv>
         {types.slice(0, MAX_TYPE_SINGLE_LINE).map((item) => (
           <TypeButton key={item} type={item} onClick={onClick} selectedtype={node.selectedType} />
@@ -87,9 +96,11 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
                 <IconPlus />
               </StyledButton>
             }>
-            {types.map((type) => (
-              <TypeMenuItem onClick={onClick} type={type} selectedtype={node.selectedType}></TypeMenuItem>
-            ))}
+            <MenuRadioGroup value={node.selectedType}>
+              {types.map((type) => (
+                <TypeMenuItem onClick={onClick} type={type} selectedtype={node.selectedType}></TypeMenuItem>
+              ))}
+            </MenuRadioGroup>
           </Menu>
         )}
       </StyledDiv>

@@ -113,6 +113,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   return (
     <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""} onContextMenu={(e) => e.stopPropagation()}>
       <animated.g style={styles}>
+        {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
         <rect width="300" height={GetNodeHeight(node, definition)} style={{}} rx="5" {...bind()} onClick={onTap}></rect>
         {Icon && (
           <Icon
@@ -137,7 +138,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           onClick={onTap}>
           {node.label || definition.label || definition.id}
         </text>
-        {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
+
         {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
         {definition.canBeExecuted ? <OutputPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")} location="inputExecute" nodeId={node.id}></OutputPortView> : null}
         {Object.entries(node.dataInputs).map(([key, item], i) => {
