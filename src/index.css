@@ -13,6 +13,7 @@
   --color-gradient: #f59f00;
   --color-image: #ab5236;
   --color-material: #f7df07;
+  --color-model: #7e2553;
 
   --color-selected: rgba(0, 0, 0, 0.3);
 
@@ -160,4 +161,8 @@ body .szh-menu__divider {
 .material,
 .array-material {
   --color-property: var(--color-material);
+}
+.model,
+.array-model {
+  --color-property: var(--color-model);
 }

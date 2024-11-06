@@ -97,6 +97,7 @@ import { createConstant } from "./createConstant";
 import { DrawBox } from "./3D/DrawBox";
 import { DrawCilinder } from "./3D/DrawCilinder";
 import { DrawCone } from "./3D/DrawCone";
+import { DrawModel } from "./3D/DrawModel";
 import { DrawPlane } from "./3D/DrawPlane";
 import { DrawSphere } from "./3D/DrawSphere";
 import { DrawTorus } from "./3D/DrawTorus";
@@ -120,6 +121,7 @@ import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { UploadModel } from "./Images/UploadModel";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -365,6 +367,8 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTorus,
   DrawCone,
   DrawCilinder,
+  UploadModel,
+  DrawModel,
   //Materials
   ExecuteWithLight,
   RegularMaterial,

@@ -67,6 +67,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
   var seed = 0;
 
+  console.log(p5.VERSION);
   p5.setup = () => {};
 
   p5.updateWithProps = (props: MySketchProps) => {

@@ -10,7 +10,8 @@ import { EnvelopeSetting } from "./EnvelopeSetting";
 import { ImagePaintSetting } from "./ImagePaintSetting";
 import { NodeData } from "../../Types/NodeData";
 import { ButtonsSettings } from "./ButtonsSettings";
-import { AnimationTrackSettings } from "./AnimationTrackSettings";
+import { AnimationTrackSettings as AnimationTrackSetting } from "./AnimationTrackSettings";
+import { ModelUploadSetting } from "./ModelUploadSetting";
 
 export type SettingProps = {
   onChange: (value: any) => void;
@@ -39,5 +40,6 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
   buttons: ButtonsSettings,
-  animationTrack: AnimationTrackSettings,
+  animationTrack: AnimationTrackSetting,
+  "model-upload": ModelUploadSetting,
 };

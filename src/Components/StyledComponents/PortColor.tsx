@@ -1,4 +1,4 @@
-import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 import { NumberInput } from "../Inputs/NumberInput";
 import { ColorInput } from "../Inputs/ColorInput";
 import { VectorInput } from "../Inputs/VectorInput";
@@ -72,6 +72,11 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
     input: MaterialInput,
     tinyIcon: IconPaint,
   },
+  model: {
+    icon: IconCube,
+    input: undefined,
+    tinyIcon: IconCube,
+  },
   unknown: {
     icon: IconQuestionMark,
     input: undefined,
@@ -120,5 +125,9 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
   "array-vector4": {
     icon: IconArrowUpRightCircle,
     tinyIcon: IconNumber4,
+  },
+  "array-model": {
+    icon: IconCube,
+    tinyIcon: IconCube,
   },
 };

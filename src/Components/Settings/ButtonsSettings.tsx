@@ -11,7 +11,7 @@ export const ButtonsSettings: SettingComponent = function ({ onChange, value, de
   return (
     <ButtonGroup>
       {buttons.map((btn) => (
-        <Button icon={btn.icon} label={btn.label} onClick={() => useTree.getState().dangerouselyUpdateNode(node.id, btn.onClick)} />
+        <Button key={btn.label} icon={btn.icon} label={btn.label} onClick={() => useTree.getState().dangerouselyUpdateNode(node.id, btn.onClick)} />
       ))}
     </ButtonGroup>
   );
