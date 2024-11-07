@@ -42,7 +42,7 @@ export const DrawModel: NodeDefinition = {
   canBeExecuted: true,
   execute: (data, context) => {
     var model = context.getInputValueModel(data, "model");
-    if (model === null) {
+    if (model == null) {
       return;
     }
     var material = context.getInputValueMaterial(data, "material");
@@ -59,7 +59,6 @@ export const DrawModel: NodeDefinition = {
     if (material) {
       context.applyMaterial(material);
     }
-    //context.target.box(10, 10, 10);
     context.target.model(model);
     context.target.pop();
   },

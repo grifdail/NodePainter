@@ -110,6 +110,7 @@ import { WireframeMaterial } from "./3D/WireframeMaterial";
 import { Closest } from "./Array/Closest";
 import { Count } from "./Array/Count";
 import { GenerateArray } from "./Array/GenerateArray";
+import { GenerateUVModel } from "./Array/GenerateUVModel";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
@@ -369,6 +370,7 @@ export const Nodes: Array<NodeDefinition> = [
   DrawCilinder,
   UploadModel,
   DrawModel,
+  GenerateUVModel,
   //Materials
   ExecuteWithLight,
   RegularMaterial,
