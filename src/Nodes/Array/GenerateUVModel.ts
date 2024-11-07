@@ -63,7 +63,8 @@ export const GenerateUVModel: NodeDefinition = {
       const width = node.settings.width;
       const height = node.settings.height;
       const uvKey = `${node.id}-uv`;
-      model = model ? model : new p5.Geometry(width, height);
+      const firstRun = model == null;
+      model = !firstRun ? model : new p5.Geometry(width, height);
 
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
@@ -73,7 +74,7 @@ export const GenerateUVModel: NodeDefinition = {
           const selfId = y * width + x;
           model.vertices[selfId] = new p5.Vector(pos[0], pos[1], pos[2]);
 
-          if (x > 0 && y > 0) {
+          if (x > 0 && y > 0 && firstRun) {
             const upId = (y - 1) * width + x;
             const leftId = y * width + (x - 1);
             const upLeftId = (y - 1) * width + (x - 1);
