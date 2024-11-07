@@ -101,7 +101,6 @@ const TagRegex = /tag:(\w+)/gi;
 const parseSearchTerm = (raw: string): SearchTermData => {
   var base = raw.trim().toLowerCase();
   var result = Array.from(base.matchAll(TagRegex));
-  console.log(result, TagRegex, base.matchAll(TagRegex));
   return {
     name: base.replaceAll(TagRegex, "").trim(),
     tags: result.map((r) => r[1]),

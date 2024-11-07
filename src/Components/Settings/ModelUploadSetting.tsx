@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../Generics/Button";
+import p5 from "p5";
 
 const Body = styled.div`
   width: 100%;
@@ -44,6 +45,7 @@ export const ModelUploadSetting: SettingComponent = function ({ onChange, value,
 
         reader.onabort = () => console.log("file reading was aborted");
         reader.onerror = () => console.log("file reading has failed");
+
         reader.onload = () => {
           console.log(reader.result, file.name.split(".").pop());
           onChange({ source: reader.result, ext: file.name.split(".").pop(), name: file.name });

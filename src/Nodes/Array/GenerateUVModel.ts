@@ -63,31 +63,34 @@ export const GenerateUVModel: NodeDefinition = {
       const width = node.settings.width;
       const height = node.settings.height;
       const uvKey = `${node.id}-uv`;
-      model = new p5.Geometry(width, height, function (this: any) {
-        for (let y = 0; y < height; y++) {
-          for (let x = 0; x < width; x++) {
-            var uv = createVector2(x / (width - 1), y / (height - 1));
-            context.blackboard[uvKey] = uv;
-            var pos = context.getInputValueVector3(node, "pos");
-            this.vertices.push(new p5.Vector(pos[0], pos[1], pos[2]));
-            if (x > 0 && y > 0) {
-              var selfId = y * width + x;
-              var upId = (y - 1) * width + x;
-              var leftId = y * width + (x - 1);
-              var upLeftId = (y - 1) * width + (x - 1);
-              var side = (x + y) % 2 === 0;
-              if (side) {
-                this.faces.push([selfId, upId, leftId]);
-                this.faces.push([upId, upLeftId, leftId]);
-              } else {
-                this.faces.push([leftId, selfId, upLeftId]);
-                this.faces.push([selfId, upId, upLeftId]);
-              }
+      model = model ? model : new p5.Geometry(width, height);
+
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          var uv = createVector2(x / (width - 1), y / (height - 1));
+          context.blackboard[uvKey] = uv;
+          var pos = context.getInputValueVector3(node, "pos");
+          const selfId = y * width + x;
+          model.vertices[selfId] = new p5.Vector(pos[0], pos[1], pos[2]);
+
+          if (x > 0 && y > 0) {
+            const upId = (y - 1) * width + x;
+            const leftId = y * width + (x - 1);
+            const upLeftId = (y - 1) * width + (x - 1);
+            const side = (x + y) % 2 === 0;
+            if (side) {
+              model.faces.push([selfId, upId, leftId]);
+              model.faces.push([upId, upLeftId, leftId]);
+            } else {
+              model.faces.push([leftId, selfId, upLeftId]);
+              model.faces.push([selfId, upId, upLeftId]);
             }
           }
         }
-        this.computeNormals();
-      });
+      }
+      model.computeNormals();
+      model.dirtyFlags.vertices = true;
+      model.dirtyFlags.vertexNormals = true;
       context.blackboard[keyCache] = model;
       context.blackboard[keyComputed] = true;
       context.frameBlackboard[keyComputed] = true;
