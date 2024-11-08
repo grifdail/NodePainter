@@ -7,7 +7,19 @@ import { createVector2, createVector3 } from "../../Types/vectorDataType";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
-    useTree.getState().createBlackboardNode("vector2", `${id}-uv`, "Generate UV", positionX - 400, positionY);
+    useTree.getState().createBlackboardNode(
+      [
+        {
+          type: "vector2",
+          key: `${id}-uv`,
+          id: "uv",
+        },
+      ],
+      "Generate UV",
+      positionX - 400,
+      positionY,
+      id
+    );
   }, 10);
 };
 
@@ -18,7 +30,7 @@ export const GenerateUVModel: NodeDefinition = {
   icon: IconList,
   tags: ["3D"],
   dataInputs: [{ id: "pos", type: "vector3", defaultValue: createVector3(0, 0, 0) }],
-  dataOutputs: [{ id: "model", type: "model", defaultValue: null }],
+  dataOutputs: [{ id: "model", type: "mesh", defaultValue: null }],
   executeOutputs: [],
   settings: [
     {

@@ -141,14 +141,23 @@ var Linear = function (x: number) {
   return x;
 };
 
-var Horizontal = function (x: number) {
+var SnapPrevious = function (x: number) {
   return 0;
 };
-var Vertical = function (x: number) {
+var SnapNext = function (x: number) {
   return 1;
 };
 var Toggle = function (x: number) {
   return x < 0.5 ? 0 : 1;
 };
 
-export const Easing = { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine, Horizontal, Vertical, Toggle };
+export const AllEasing = { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine, SnapPrevious, SnapNext, Toggle };
+export type EasingFunctionType = keyof typeof AllEasing;
+export const Easing: { [key: string]: EasingFunctionType } = Object.fromEntries(Object.keys(AllEasing).map((name) => [name as string, name as EasingFunctionType]));
+export const evaluate = (fn: EasingFunctionType, value: number) => {
+  if (AllEasing[fn] === undefined) {
+    console.warn(`Function ${fn} is not a valid easing function`);
+    return 0;
+  }
+  return AllEasing[fn](value);
+};

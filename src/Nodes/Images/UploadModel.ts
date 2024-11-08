@@ -8,10 +8,10 @@ export const UploadModel: NodeDefinition = {
   icon: IconPhoto,
   description: "Upload a 3d Model",
   dataInputs: [],
-  dataOutputs: [{ id: "model", type: "model", defaultValue: null }],
+  dataOutputs: [{ id: "model", type: "mesh", defaultValue: null }],
   tags: ["3d"],
   executeOutputs: [],
-  settings: [{ id: "model", type: "model-upload", defaultValue: null }],
+  settings: [{ id: "model", type: "mesh-upload", defaultValue: null }],
   getData(portId, data, context) {
     if (data.settings.model != null) {
       var key = `${data.id}-model-cache`;

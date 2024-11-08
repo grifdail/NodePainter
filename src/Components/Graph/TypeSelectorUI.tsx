@@ -24,6 +24,8 @@ var StyledButton = styled.button<{ selected: boolean }>`
   padding: 0;
   display: flex;
   margin-top: 3px;
+  cursor: pointer;
+
   &.plus {
     --color-property: black;
     border-radius: 3px;
@@ -69,7 +71,10 @@ function TypeMenuItem({ type, onClick, selectedtype }: { type: PortType; selecte
   const portDescription = PortColor[type];
   const Icon = portDescription.tinyIcon as Icon;
   return (
-    <MenuItem type="radio" value={type} onClick={() => onClick(type)}>
+    <MenuItem
+      type="radio"
+      value={type}
+      onClick={() => onClick(type)}>
       <StyledSpan className={type}>
         <Icon />
       </StyledSpan>
@@ -82,23 +87,38 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
   const types = def.availableTypes as PortType[];
   const onClick = (type: PortType) => useTree.getState().changeNodeType(node.id, type);
   return (
-    <foreignObject x={0} y="-30" height="30" width={300}>
+    <foreignObject
+      x={0}
+      y="-30"
+      height="30"
+      width={300}>
       <StyledDiv>
         {types.slice(0, MAX_TYPE_SINGLE_LINE).map((item) => (
-          <TypeButton key={item} type={item} onClick={onClick} selectedtype={node.selectedType} />
+          <TypeButton
+            key={item}
+            type={item}
+            onClick={onClick}
+            selectedtype={node.selectedType}
+          />
         ))}
         {types.length > MAX_TYPE_SINGLE_LINE && (
           <Menu
             overflow="auto"
             portal={true}
             menuButton={
-              <StyledButton selected={false} className="plus">
+              <StyledButton
+                selected={false}
+                className="plus">
                 <IconPlus />
               </StyledButton>
             }>
             <MenuRadioGroup value={node.selectedType}>
               {types.map((type) => (
-                <TypeMenuItem onClick={onClick} type={type} selectedtype={node.selectedType}></TypeMenuItem>
+                <TypeMenuItem
+                  key={type}
+                  onClick={onClick}
+                  type={type}
+                  selectedtype={node.selectedType}></TypeMenuItem>
               ))}
             </MenuRadioGroup>
           </Menu>
@@ -112,7 +132,10 @@ export function TypeButton({ type, onClick, selectedtype }: { type: PortType; se
   const portDescription = PortColor[type];
   const Icon = portDescription.tinyIcon as Icon;
   return (
-    <StyledButton className={type} onClick={() => onClick(type)} selected={type === selectedtype}>
+    <StyledButton
+      className={type}
+      onClick={() => onClick(type)}
+      selected={type === selectedtype}>
       <Icon />
     </StyledButton>
   );

@@ -15,7 +15,7 @@ export const PortTypeDefaultValue: {
   bool: () => false,
   gradient: () => createDefaultGradient(),
   image: () => null,
-  model: () => null,
+  mesh: () => null,
   execute: () => null,
   material: () => createDefaultMaterial(),
   unknown: () => null,
@@ -30,7 +30,7 @@ export const PortTypeDefaultValue: {
   "array-vector3": () => [],
   "array-vector4": () => [],
   "array-material": () => [],
-  "array-model": () => [],
+  "array-mesh": () => [],
 };
 
 export function createDefaultValue(type: PortType) {

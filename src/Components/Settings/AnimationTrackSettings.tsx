@@ -1,13 +1,14 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconVectorBezier2, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { NumberInput } from "../Inputs/NumberInput";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";
 import { PortColor } from "../StyledComponents/PortColor";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
-import { Easing } from "../../libs/easing";
+import { Easing, EasingFunctionType } from "../../libs/easing";
+import { EasingIcon } from "../../libs/EasingIcon";
 
 const ColorList = styled.ul`
   display: flex;
@@ -87,21 +88,40 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
     <div>
       <ColorList>
         {track.keyframes.map((stop: AnimationKeyFrame, i: number) => (
-          <li key={i} className={type}>
-            <NumberInput className="pos" value={stop.pos} onChange={(v) => onChangePosition(i, v)}></NumberInput>
-            {PortSettings && <PortSettings value={stop.value} onChange={(v) => onChangeValue(i, v)} />}
+          <li
+            key={i}
+            className={type}>
+            <NumberInput
+              className="pos"
+              value={stop.pos}
+              onChange={(v) => onChangePosition(i, v)}></NumberInput>
+            {PortSettings && (
+              <PortSettings
+                value={stop.value}
+                onChange={(v) => onChangeValue(i, v)}
+              />
+            )}
             <Menu
               menuButton={
                 <MenuButton className={"button"}>
-                  <IconVectorBezier2 />
+                  <EasingIcon
+                    fn={stop.lerp}
+                    size={20}
+                  />
                 </MenuButton>
               }
               portal>
               {Object.keys(Easing).map((item) => (
-                <MenuItem onClick={() => onChangeLerp(i, item)}>{item}</MenuItem>
+                <MenuItem onClick={() => onChangeLerp(i, item)}>
+                  <EasingIcon fn={item as EasingFunctionType} />
+                  {item}
+                </MenuItem>
               ))}
             </Menu>
-            <button className="delete" onClick={() => removeTrack(i)} disabled={track.keyframes.length <= 1}>
+            <button
+              className="delete"
+              onClick={() => removeTrack(i)}
+              disabled={track.keyframes.length <= 1}>
               <IconX />
             </button>
           </li>
@@ -109,7 +129,10 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
       </ColorList>
 
       <ButtonGroup>
-        <Button onClick={addNewColor} label="Add" />
+        <Button
+          onClick={addNewColor}
+          label="Add"
+        />
       </ButtonGroup>
     </div>
   );

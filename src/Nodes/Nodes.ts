@@ -107,8 +107,9 @@ import { RegularMaterial } from "./3D/RegularMaterial";
 import { Render3D } from "./3D/Render3D";
 import { TextureMaterial } from "./3D/TextureMaterial";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
-import { Closest } from "./Array/Closest";
 import { Count } from "./Array/Count";
+import { Filter } from "./Array/Filter";
+import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
 import { GenerateUVModel } from "./Array/GenerateUVModel";
 import { SelectFromArray } from "./Array/SelectFromArray";
@@ -164,6 +165,7 @@ import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
+import { ForEachNode } from "./System/ForEach";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { ScaleAdd } from "./Vector/ScaleAdd";
@@ -383,9 +385,11 @@ export const Nodes: Array<NodeDefinition> = [
   StaticArray,
   Count,
   Sum,
-  Closest,
+  FindBest,
+  Filter,
   Slice,
   GenerateArray,
+  ForEachNode,
 
   //Misc
   AnimationCurve,

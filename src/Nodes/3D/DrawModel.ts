@@ -32,7 +32,7 @@ export const DrawModel: NodeDefinition = {
     },
     {
       id: "model",
-      type: "model",
+      type: "mesh",
       defaultValue: null,
     },
   ],

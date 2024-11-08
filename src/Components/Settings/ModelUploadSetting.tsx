@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../Generics/Button";
-import p5 from "p5";
 
 const Body = styled.div`
   width: 100%;
@@ -60,7 +59,9 @@ export const ModelUploadSetting: SettingComponent = function ({ onChange, value,
   return (
     <Body>
       {value === null && (
-        <div className="file" {...getRootProps()}>
+        <div
+          className="file"
+          {...getRootProps()}>
           <input {...getInputProps()}></input>
           <IconFileUpload />
         </div>
@@ -68,7 +69,9 @@ export const ModelUploadSetting: SettingComponent = function ({ onChange, value,
       {value !== null && <div className="loaded">loaded {value.name}</div>}
 
       <ButtonGroup hidden={value !== null}>
-        <Button label="Reset" onClick={() => onChange(null)}></Button>
+        <Button
+          label="Reset"
+          onClick={() => onChange(null)}></Button>
       </ButtonGroup>
     </Body>
   );

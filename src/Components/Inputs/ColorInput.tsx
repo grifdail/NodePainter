@@ -11,8 +11,8 @@ import styled from "styled-components";
 import { Input, InputBackgroundColor } from "../StyledComponents/Input";
 import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
 
-export const ColorButton = styled.button<{ color: string }>`
-  background: ${(props) => props.color};
+export const ColorButton = styled.button<{ $color: string }>`
+  background: ${(props) => props.$color};
   width: 100px;
   flex-shrink: 0;
   flex-basis: 24;
@@ -24,7 +24,7 @@ export const ColorButton = styled.button<{ color: string }>`
   border: none;
 `;
 
-export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
+export const ColorInputDiv = styled.div<{ $color: string; $opposite: string }>`
   display: flex;
   justify-content: end;
   align-items: center;
@@ -54,10 +54,10 @@ export const ColorInputDiv = styled.div<{ color: string; opposite: string }>`
     background: var(--color-selected);
   }
   &:has(button:hover) {
-    background: ${(props) => props.color};
+    background: ${(props) => props.$color};
 
     & input {
-      color: ${(props) => props.opposite};
+      color: ${(props) => props.$opposite};
     }
   }
 `;
@@ -67,7 +67,10 @@ function ColorPicker({ disabled, value, onChange }: { disabled?: boolean; value:
   var paletteHex = useMemo(() => palette.map((item) => toHex(item)), [palette]);
 
   return (
-    <Menu portal aria-disabled={disabled} menuButton={<ColorButton color={toHex(value, true)} />}>
+    <Menu
+      portal
+      aria-disabled={disabled}
+      menuButton={<ColorButton $color={toHex(value, true)} />}>
       <Sketch
         color={toHex(value, true)}
         presetColors={paletteHex}
@@ -92,9 +95,20 @@ export function ColorInput({ onChange, value, disabled }: InputProps<Color> & { 
   });
 
   return (
-    <ColorInputDiv color={hex} opposite={invertColor(hex, true)}>
-      <Input value={rawField} onBlur={(e) => onBlur(e.target.value)} onChange={(e) => setRawField(e.target.value)} disabled={disabled} />
-      <ColorPicker onChange={onChange} value={value} disabled={disabled} toHexFull={toHexFull}></ColorPicker>
+    <ColorInputDiv
+      $color={hex}
+      $opposite={invertColor(hex, true)}>
+      <Input
+        value={rawField}
+        onBlur={(e) => onBlur(e.target.value)}
+        onChange={(e) => setRawField(e.target.value)}
+        disabled={disabled}
+      />
+      <ColorPicker
+        onChange={onChange}
+        value={value}
+        disabled={disabled}
+        toHexFull={toHexFull}></ColorPicker>
     </ColorInputDiv>
   );
 }

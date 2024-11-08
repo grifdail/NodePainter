@@ -14,9 +14,9 @@ export const EasingNode: NodeDefinition = {
   settings: [
     {
       id: "easing",
-      type: "dropdown",
-      defaultValue: "easeInOutQuad",
-      options: Object.keys(Easing),
+      type: "easing-preview",
+      defaultValue: "Linear",
+      target: "easing",
     },
   ],
 

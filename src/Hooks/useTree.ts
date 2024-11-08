@@ -8,6 +8,7 @@ import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
+import { Blackboard } from "../Nodes/System/Blackboard";
 import { START_NODE } from "../Nodes/System/StartNode";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -18,6 +19,7 @@ import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
+import { createDefaultValue } from "../Utils/createDefaultValue";
 import { createExecOutputData } from "../Utils/createExecOutputData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { createNodeData } from "../Utils/createNodeData";
@@ -194,7 +196,8 @@ export const useTree = create<TreeStore>()(
               const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
               if (def.availableTypes && def.availableTypes.includes(type)) {
                 if (def.onChangeType) {
-                  def.onChangeType(sourceNode, type);
+                  var blackboards = (Object.values(state.nodes) as NodeData[]).filter((n) => n.type === Blackboard.id && n.pairedNode === nodeId);
+                  def.onChangeType(sourceNode, type, blackboards);
                 }
                 sourceNode.selectedType = type;
                 ensureValidGraph(state);
@@ -549,12 +552,20 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
-        createBlackboardNode(type, key, name, x, y) {
+        createBlackboardNode(ports, name, x, y, pairedNode) {
           const newNodeData = createNodeData(get().getNodeTypeDefinition("Blackboard"), x, y);
           newNodeData.graph = get().editedGraph;
           newNodeData.label = name;
-          newNodeData.dataOutputs["value"].type = type;
-          newNodeData.settings.key = key;
+          ports.forEach((element, index) => {
+            newNodeData.dataOutputs[element.id] = {
+              id: element.id,
+              label: element.label || element.id,
+              type: element.type,
+              defaultValue: createDefaultValue(element.type),
+            };
+          });
+          newNodeData.pairedNode = pairedNode;
+          newNodeData.settings.blackboardData = Object.fromEntries(ports.map((port) => [port.id, port]));
           console.log(newNodeData);
           set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
         },

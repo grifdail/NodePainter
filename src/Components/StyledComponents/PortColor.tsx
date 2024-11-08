@@ -72,7 +72,7 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
     input: MaterialInput,
     tinyIcon: IconPaint,
   },
-  model: {
+  mesh: {
     icon: IconCube,
     input: undefined,
     tinyIcon: IconCube,
@@ -126,7 +126,7 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
     icon: IconArrowUpRightCircle,
     tinyIcon: IconNumber4,
   },
-  "array-model": {
+  "array-mesh": {
     icon: IconCube,
     tinyIcon: IconCube,
   },

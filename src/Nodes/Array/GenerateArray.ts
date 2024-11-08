@@ -7,7 +7,19 @@ import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
-    useTree.getState().createBlackboardNode("number", `${id}-index`, "Generate array index", positionX - 400, positionY);
+    useTree.getState().createBlackboardNode(
+      [
+        {
+          key: `${id}-index`,
+          type: "number",
+          id: "index",
+        },
+      ],
+      "Generate Array index",
+      positionX - 400,
+      positionY,
+      id
+    );
   }, 10);
 };
 
@@ -39,6 +51,7 @@ export const GenerateArray: NodeDefinition = {
   ],
   canBeExecuted: false,
   availableTypes: CommonTypes,
+  defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
   contextMenu: {
     "Create the index node": createIndexNode,

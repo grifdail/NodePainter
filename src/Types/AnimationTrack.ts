@@ -1,4 +1,4 @@
-import { Easing } from "../libs/easing";
+import { Easing, EasingFunctionType, evaluate } from "../libs/easing";
 import { clamp01, map } from "../Utils/colorUtils";
 import { convertTypeValue } from "../Utils/convertTypeValue";
 import { createDefaultValue } from "../Utils/createDefaultValue";
@@ -12,13 +12,13 @@ export type AnimationTrack = {
 export type AnimationKeyFrame = {
   pos: number;
   value: any;
-  lerp: keyof typeof Easing;
+  lerp: EasingFunctionType;
 };
 export const createDefaultAnimationTrack = (type: PortType): AnimationTrack => ({
   type: type,
   keyframes: [
-    { pos: 0, value: createDefaultValue(type), lerp: "Linear" },
-    { pos: 1, value: createDefaultValue(type), lerp: "Linear" },
+    { pos: 0, value: createDefaultValue(type), lerp: Easing.Linear },
+    { pos: 1, value: createDefaultValue(type), lerp: Easing.Linear },
   ],
 });
 
@@ -50,7 +50,7 @@ export function interpolateAnimation(track: AnimationTrack, pos: number): any {
       if (isLerpable) {
         var a = track.type === "number" ? [prev.value] : prev.value;
         var b = track.type === "number" ? [stop.value] : stop.value;
-        return VectorLerp(a, b, Easing[prev.lerp](clamp01(map(prev.pos, stop.pos, pos))));
+        return VectorLerp(a, b, evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))));
       } else {
         return prev.value;
       }
