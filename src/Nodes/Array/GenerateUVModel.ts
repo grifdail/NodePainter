@@ -1,4 +1,4 @@
-﻿import { IconList, IconPlus } from "@tabler/icons-react";
+import { IconList, IconPlus } from "@tabler/icons-react";
 import p5 from "p5";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
