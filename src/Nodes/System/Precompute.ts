@@ -20,6 +20,7 @@ export const Precompute: NodeDefinition = {
   dataOutputs: [],
   executeOutputs: ["execute"],
   settings: [
+    { id: "when", type: "dropdown", defaultValue: "Everytime", options: ["Once", "Per frame", "Everytime"] },
     {
       id: "buttons",
       type: "buttons",
@@ -35,13 +36,25 @@ export const Precompute: NodeDefinition = {
   ],
   canBeExecuted: true,
   getData: (portId, data, context) => {
-    const target = context.blackboard[`${data.id}-context`];
+    const target = context.blackboard[`${data.id}-cache`];
     return target[`${portId}-in`];
   },
   execute: (data, context) => {
-    var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context.getInputValue(data, key, value.type)];
-    const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
-    context.blackboard[`${data.id}-context`] = target;
+    const when = data.settings.when || "Everytime";
+    const keyCache = `${data.id}-cache`;
+    const keyComputed = `${data.id}-is-computed`;
+    let needRedraw = false;
+    needRedraw ||= when === "Once" && !context.blackboard[keyComputed];
+    needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
+    needRedraw ||= when === "Everytime";
+    if (needRedraw) {
+      var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context.getInputValue(data, key, value.type)];
+      const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
+      context.blackboard[keyComputed] = true;
+      context.frameBlackboard[keyComputed] = true;
+      context.blackboard[keyCache] = target;
+    }
+
     context.execute(data.execOutputs["execute"] as string);
   },
   contextMenu: (node) => {
