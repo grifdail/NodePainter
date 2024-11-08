@@ -14,4 +14,5 @@ export type NodeData = {
   positionY: number;
   selectedType: PortType;
   label?: string;
+  pairedNode?: string;
 };

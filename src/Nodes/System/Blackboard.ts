@@ -1,5 +1,12 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { PortType } from "../../Types/PortType";
+
+export type BlackboardPortData = {
+  key: string;
+  label: string;
+  type: PortType;
+};
 
 export const Blackboard: NodeDefinition = {
   id: "Blackboard",
@@ -8,12 +15,12 @@ export const Blackboard: NodeDefinition = {
   icon: IconAssembly,
   tags: ["Control"],
   dataInputs: [],
-  dataOutputs: [{ id: "value", defaultValue: 0, type: "number" }],
-  settings: [{ id: "key", defaultValue: null, type: "hidden" }],
+  dataOutputs: [],
+  settings: [{ id: "blackboardData", defaultValue: null, type: "hidden" }],
   canBeExecuted: false,
   hideInLibrary: true,
   getData: (portId, nodeData, context) => {
-    return context.blackboard[nodeData.settings.key] || 0;
+    return context.blackboard[nodeData.settings.blackboardData[portId].key] || 0;
   },
   executeOutputs: [],
 };

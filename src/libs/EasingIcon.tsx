@@ -1,5 +1,5 @@
-﻿import { FC, forwardRef } from "react";
-import { AllEasing, Easing, EasingFunctionType } from "./easing";
+import { forwardRef } from "react";
+import { AllEasing, EasingFunctionType } from "./easing";
 import { Icon, TablerIconsProps } from "@tabler/icons-react";
 import { calculatePathForFunction } from "../Components/Settings/calculatePathForFunction";
 

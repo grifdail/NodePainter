@@ -7,7 +7,19 @@ import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
-    useTree.getState().createBlackboardNode("number", `${id}-index`, "Generate array index", positionX - 400, positionY);
+    useTree.getState().createBlackboardNode(
+      [
+        {
+          key: `${id}-index`,
+          type: "number",
+          label: "index",
+        },
+      ],
+      "Generate Array index",
+      positionX - 400,
+      positionY,
+      id
+    );
   }, 10);
 };
 

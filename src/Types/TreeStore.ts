@@ -1,4 +1,5 @@
 import { SketchTemplate } from "../Data/templates";
+import { BlackboardPortData } from "../Nodes/System/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { EDirection } from "./EDirection";
@@ -50,7 +51,7 @@ export type TreeStore = {
   loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
   getSketchName: () => string;
   freeSpace: (direction: EDirection, amount: number, offsetX: number, offsetY: number) => void;
-  createBlackboardNode: (type: PortType, key: string, name: string, x: number, y: number) => void;
+  createBlackboardNode: (port: BlackboardPortData[], name: string, x: number, y: number, pairedNode: string) => void;
   dangerouselyUpdateNode: (nodeId: string, cb: (node: NodeData) => void) => void;
   sortAroundNode: (nodeId: string) => void;
 };

@@ -1,7 +1,7 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconVectorBezier2, IconX } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { NumberInput } from "../Inputs/NumberInput";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";

@@ -18,6 +18,7 @@ import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
+import { createDefaultValue } from "../Utils/createDefaultValue";
 import { createExecOutputData } from "../Utils/createExecOutputData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { createNodeData } from "../Utils/createNodeData";
@@ -549,12 +550,20 @@ export const useTree = create<TreeStore>()(
             })
           );
         },
-        createBlackboardNode(type, key, name, x, y) {
+        createBlackboardNode(ports, name, x, y, pairedNode) {
           const newNodeData = createNodeData(get().getNodeTypeDefinition("Blackboard"), x, y);
           newNodeData.graph = get().editedGraph;
           newNodeData.label = name;
-          newNodeData.dataOutputs["value"].type = type;
-          newNodeData.settings.key = key;
+          ports.forEach((element, index) => {
+            newNodeData.dataOutputs[index.toString()] = {
+              id: index.toString(),
+              label: element.label,
+              type: element.type,
+              defaultValue: createDefaultValue(element.type),
+            };
+          });
+          newNodeData.pairedNode = pairedNode;
+          newNodeData.settings.blackboardData = ports;
           console.log(newNodeData);
           set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
         },

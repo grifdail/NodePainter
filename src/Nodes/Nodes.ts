@@ -108,6 +108,7 @@ import { TextureMaterial } from "./3D/TextureMaterial";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
 import { Closest } from "./Array/Closest";
 import { Count } from "./Array/Count";
+import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
@@ -378,6 +379,7 @@ export const Nodes: Array<NodeDefinition> = [
   Count,
   Sum,
   Closest,
+  FindBest,
   Slice,
   GenerateArray,
 
