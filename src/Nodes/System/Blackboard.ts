@@ -4,8 +4,9 @@ import { PortType } from "../../Types/PortType";
 
 export type BlackboardPortData = {
   key: string;
-  label: string;
+  label?: string;
   type: PortType;
+  id: string;
 };
 
 export const Blackboard: NodeDefinition = {

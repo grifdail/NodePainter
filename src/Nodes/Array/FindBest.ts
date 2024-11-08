@@ -13,12 +13,12 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
         {
           key: `${id}-index`,
           type: "number",
-          label: "index",
+          id: "index",
         },
         {
           key: `${id}-value`,
           type: selectedType,
-          label: "value",
+          id: "value",
         },
       ],
       "Find best index",

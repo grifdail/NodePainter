@@ -1,8 +1,10 @@
+import { useTree } from "../Hooks/useTree";
 import { NodeData } from "../Types/NodeData";
+import { PortChangeFunction } from "../Types/NodeDefinition";
 import { PortType } from "../Types/PortType";
 import { convertTypeValue } from "./convertTypeValue";
 
-export function changeTypeGenerator(inputs: string[], outputs: string[], arrayInput: string[] = [], arrayOutput: string[] = []) {
+export function changeTypeGenerator(inputs: string[], outputs: string[], arrayInput: string[] = [], arrayOutput: string[] = [], blackboard?: PortChangeFunction): PortChangeFunction {
   return (node: NodeData, type: PortType) => {
     inputs.forEach((key) => {
       node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);
@@ -18,5 +20,11 @@ export function changeTypeGenerator(inputs: string[], outputs: string[], arrayIn
     arrayOutput.forEach((key) => {
       node.dataOutputs[key].type = `array-${type}` as PortType;
     });
+    if (blackboard) {
+      var tree = useTree.getState();
+      Object.values(tree.nodes)
+        .filter((n) => n.pairedNode === node.id)
+        .forEach((node) => tree.dangerouselyUpdateNode(node.id, () => blackboard(node, type)));
+    }
   };
 }

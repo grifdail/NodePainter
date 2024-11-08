@@ -12,7 +12,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
         {
           key: `${id}-index`,
           type: "number",
-          label: "index",
+          id: "index",
         },
       ],
       "Generate Array index",
@@ -51,6 +51,7 @@ export const GenerateArray: NodeDefinition = {
   ],
   canBeExecuted: false,
   availableTypes: CommonTypes,
+  defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
   contextMenu: {
     "Create the index node": createIndexNode,

@@ -555,15 +555,15 @@ export const useTree = create<TreeStore>()(
           newNodeData.graph = get().editedGraph;
           newNodeData.label = name;
           ports.forEach((element, index) => {
-            newNodeData.dataOutputs[index.toString()] = {
-              id: index.toString(),
-              label: element.label,
+            newNodeData.dataOutputs[element.id] = {
+              id: element.id,
+              label: element.label || element.id,
               type: element.type,
               defaultValue: createDefaultValue(element.type),
             };
           });
           newNodeData.pairedNode = pairedNode;
-          newNodeData.settings.blackboardData = ports;
+          newNodeData.settings.blackboardData = Object.fromEntries(ports.map((port) => [port.id, port]));
           console.log(newNodeData);
           set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
         },

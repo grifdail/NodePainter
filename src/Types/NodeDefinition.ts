@@ -12,6 +12,8 @@ export type ContextMenuData = {
   [key: string]: (node: NodeData, tree: TreeStore) => void;
 };
 
+export type PortChangeFunction = (node: NodeData, type: PortType) => void;
+
 export type NodeDefinition = {
   hideInLibrary?: boolean;
   IsUnique?: boolean;
@@ -37,7 +39,7 @@ export type NodeDefinition = {
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];
   defaultType?: PortType;
-  onChangeType?: (node: NodeData, type: PortType) => void;
+  onChangeType?: PortChangeFunction;
   onCreate?: (node: NodeData) => void;
   featureLevel?: number;
 };
