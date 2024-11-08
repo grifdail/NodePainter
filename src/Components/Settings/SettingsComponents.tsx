@@ -11,6 +11,7 @@ import { ImagePaintSetting } from "./ImagePaintSetting";
 import { NodeData } from "../../Types/NodeData";
 import { ButtonsSettings } from "./ButtonsSettings";
 import { AnimationTrackSettings } from "./AnimationTrackSettings";
+import { EasingPreviewSetting } from "./EasingPreview";
 
 export type SettingProps = {
   onChange: (value: any) => void;
@@ -40,4 +41,5 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   hidden: EmptySetting,
   buttons: ButtonsSettings,
   animationTrack: AnimationTrackSettings,
+  "easing-preview": EasingPreviewSetting,
 };

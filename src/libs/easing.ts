@@ -151,4 +151,9 @@ var Toggle = function (x: number) {
   return x < 0.5 ? 0 : 1;
 };
 
-export const Easing = { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine, Horizontal, Vertical, Toggle };
+export const AllEasing = { Linear, InBack, InBounce, InCirc, InCubic, InElastic, InExpo, InOutBack, InOutBounce, InOutCirc, InOutCubic, InOutElastic, InOutExpo, InOutQuad, InOutQuart, InOutQuint, InOutSine, InQuad, InQuart, InQuint, InSine, OutBack, OutBounce, OutCirc, OutCubic, OutElastic, OutExpo, OutQuad, OutQuart, OutQuint, OutSine, Horizontal, Vertical, Toggle };
+export type EasingFunctionType = keyof typeof AllEasing;
+export const Easing: { [key: string]: EasingFunctionType } = Object.fromEntries(Object.keys(AllEasing).map((name) => [name as string, name as EasingFunctionType]));
+export const evaluate = (fn: EasingFunctionType, value: number) => {
+  return AllEasing[fn](value);
+};
