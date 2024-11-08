@@ -1,10 +1,14 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import styled from "styled-components";
 import { useMemo } from "react";
-import { EasingFunctionType, evaluate } from "../../libs/easing";
+import { Easing, EasingFunctionType, evaluate } from "../../libs/easing";
+import { Fieldset } from "../StyledComponents/Fieldset";
+import { DropdownInput } from "../Inputs/DropdownInput";
+import { EasingIcon } from "../../libs/EasingIcon";
+import { calculatePathForFunction, invertLerp } from "./calculatePathForFunction";
 
-export const EasingPreviewSetting: SettingComponent = function GradientSetting({ onChange, value, def, node }: SettingProps) {
-  const functionName = node.settings[def.target] as EasingFunctionType;
+export const EasingSetting: SettingComponent = function GradientSetting({ onChange, value, def, node }: SettingProps) {
+  const functionName = value as EasingFunctionType;
 
   var fn = useMemo(() => (x: number) => evaluate(functionName, x), [functionName]);
 
@@ -15,11 +19,25 @@ export const EasingPreviewSetting: SettingComponent = function GradientSetting({
         width={272}
         height={100}
         resolution={100}></FunctionPreview>
+
+      <Fieldset
+        label="Easing"
+        input={DropdownInput}
+        onChange={onChange}
+        passtrough={{
+          options: Object.values(Easing),
+          template: (name: EasingFunctionType) => (
+            <>
+              <EasingIcon fn={name} /> {name}
+            </>
+          ),
+        }}
+        value={value}></Fieldset>
     </div>
   );
 };
-EasingPreviewSetting.getSize = function (value, def): number {
-  return 108 + 10;
+EasingSetting.getSize = function (value, def): number {
+  return 108 + 32 + 10;
 };
 
 var StyledPreview = styled.svg`
@@ -31,8 +49,8 @@ var StyledPreview = styled.svg`
 function FunctionPreview({ fn, resolution, height, width }: { fn: (value: number) => number; resolution: number; height: number; width: number }) {
   var values = useMemo(() => Array.from({ length: resolution }).map((v: any, i: number) => fn(i / (resolution - 1))), [fn, resolution]);
 
-  var max = useMemo(() => Math.max(...values) + 0.1, [values]);
-  var min = useMemo(() => Math.min(...values) - 0.1, [values]);
+  var max = useMemo(() => Math.max(...values, 1) + 0.1, [values]);
+  var min = useMemo(() => Math.min(...values, 0) - 0.1, [values]);
 
   const path = useMemo(() => calculatePathForFunction(values, width, height, min, max), [height, max, min, values, width]);
 
@@ -58,16 +76,3 @@ function FunctionPreview({ fn, resolution, height, width }: { fn: (value: number
     </StyledPreview>
   );
 }
-
-export function calculatePathForFunction(values: number[], width: number, height: number, max: number, min: number) {
-  const path = [`M 0,${height} `];
-  for (let i = 0; i < values.length; i++) {
-    path.push(`L ${(i / (values.length - 1)) * width}, ${height * invertLerp(min, max, values[i])}`);
-  }
-  path.push(`L ${width},${height} Z`);
-  return path;
-}
-
-const invertLerp = (a: number, b: number, v: number) => {
-  return (v - a) / (b - a);
-};

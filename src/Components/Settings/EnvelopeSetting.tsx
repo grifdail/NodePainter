@@ -9,8 +9,9 @@ import { Button } from "../Generics/Button";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDrag } from "@use-gesture/react";
 import { moveUpArray } from "../../Utils/moveUpArray";
-import { calculatePathForFunction } from "./EasingPreview";
+import { calculatePathForFunction } from "./calculatePathForFunction";
 import { Easing, EasingFunctionType } from "../../libs/easing";
+import { EasingIcon } from "../../libs/EasingIcon";
 
 const ColorList = styled.ul`
   display: flex;
@@ -34,13 +35,16 @@ const ColorList = styled.ul`
 
     & > input {
       width: 50px;
-      flex: 0 0 50px;
+      flex: 1 0 50px;
       text-align: center;
     }
 
     & > button {
-      flex: 1 0 50px;
+      flex: 0 0 30px;
       height: 100%;
+      border: none;
+      background: none;
+      cursor: pointer;
     }
 
     & > button.delete {
@@ -97,9 +101,15 @@ export const EnvelopeSetting: SettingComponent = function GradientSetting({ onCh
             <Menu
               portal
               viewScroll="auto"
-              menuButton={<MenuButton className={"button"}>{stop.lerp}</MenuButton>}>
+              menuButton={
+                <MenuButton className={"button"}>
+                  <EasingIcon fn={stop.lerp}></EasingIcon>
+                </MenuButton>
+              }>
               {Object.values(Easing).map((item) => (
-                <MenuItem onClick={() => onChangeLerp(i, item)}>{item}</MenuItem>
+                <MenuItem onClick={() => onChangeLerp(i, item)}>
+                  <EasingIcon fn={item}></EasingIcon> {item}
+                </MenuItem>
               ))}
             </Menu>
             <button

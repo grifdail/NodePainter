@@ -13,16 +13,10 @@ export const EasingNode: NodeDefinition = {
 
   settings: [
     {
-      id: "preview",
-      type: "easing-preview",
-      defaultValue: undefined,
-      target: "easing",
-    },
-    {
       id: "easing",
-      type: "dropdown",
+      type: "easing-preview",
       defaultValue: "Linear",
-      options: Object.keys(Easing),
+      target: "easing",
     },
   ],
 
