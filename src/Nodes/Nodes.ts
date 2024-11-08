@@ -107,6 +107,7 @@ import { Render3D } from "./3D/Render3D";
 import { TextureMaterial } from "./3D/TextureMaterial";
 import { WireframeMaterial } from "./3D/WireframeMaterial";
 import { Count } from "./Array/Count";
+import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
 import { SelectFromArray } from "./Array/SelectFromArray";
@@ -379,6 +380,7 @@ export const Nodes: Array<NodeDefinition> = [
   Count,
   Sum,
   FindBest,
+  Filter,
   Slice,
   GenerateArray,
   ForEachNode,

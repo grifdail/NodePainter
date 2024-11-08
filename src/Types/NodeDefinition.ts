@@ -12,7 +12,7 @@ export type ContextMenuData = {
   [key: string]: (node: NodeData, tree: TreeStore) => void;
 };
 
-export type PortChangeFunction = (node: NodeData, type: PortType) => void;
+export type PortChangeFunction = (node: NodeData, type: PortType, blackboards: NodeData[]) => void;
 
 export type NodeDefinition = {
   hideInLibrary?: boolean;

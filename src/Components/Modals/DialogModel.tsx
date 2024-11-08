@@ -14,12 +14,16 @@ const MainDiv = styled.div`
 
 export function DialogModal({ dialog, controler }: { dialog: DialogData; controler: DialogStore }) {
   return (
-    <Modal title={dialog.header} icon={IconInfoCircle} size="tiny">
+    <Modal
+      title={dialog.header}
+      icon={IconInfoCircle}
+      size="tiny">
       <MainDiv>
         {dialog.text}
         <div>
           {dialog.fields.map((field) => (
             <Fieldset
+              key={field.key}
               label={field.label}
               input={field.input}
               onChange={function (value: any): void {
@@ -33,9 +37,21 @@ export function DialogModal({ dialog, controler }: { dialog: DialogData; control
         <ButtonGroup>
           {dialog.buttons.map((btn) => {
             if (btn.style === "invisible") {
-              return <InvisibleButton label={btn.label} icon={btn.icon} onClick={() => controler.clickButton(dialog.id as string, btn.key)}></InvisibleButton>;
+              return (
+                <InvisibleButton
+                  key={btn.key}
+                  label={btn.label}
+                  icon={btn.icon}
+                  onClick={() => controler.clickButton(dialog.id as string, btn.key)}></InvisibleButton>
+              );
             } else {
-              return <Button label={btn.label} icon={btn.icon} onClick={() => controler.clickButton(dialog.id as string, btn.key)}></Button>;
+              return (
+                <Button
+                  key={btn.key}
+                  label={btn.label}
+                  icon={btn.icon}
+                  onClick={() => controler.clickButton(dialog.id as string, btn.key)}></Button>
+              );
             }
           })}
         </ButtonGroup>

@@ -161,3 +161,6 @@ body .szh-menu__divider {
 .array-material {
   --color-property: var(--color-material);
 }
+iframe {
+  display: none;
+}

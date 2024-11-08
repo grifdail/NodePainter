@@ -8,6 +8,7 @@ import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
+import { Blackboard } from "../Nodes/System/Blackboard";
 import { START_NODE } from "../Nodes/System/StartNode";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -195,7 +196,8 @@ export const useTree = create<TreeStore>()(
               const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
               if (def.availableTypes && def.availableTypes.includes(type)) {
                 if (def.onChangeType) {
-                  def.onChangeType(sourceNode, type);
+                  var blackboards = (Object.values(state.nodes) as NodeData[]).filter((n) => n.type === Blackboard.id && n.pairedNode === nodeId);
+                  def.onChangeType(sourceNode, type, blackboards);
                 }
                 sourceNode.selectedType = type;
                 ensureValidGraph(state);

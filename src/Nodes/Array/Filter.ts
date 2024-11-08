@@ -2,7 +2,7 @@ import { IconList, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { CommonTypes } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 
@@ -29,9 +29,9 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
   }, 10);
 };
 
-export const FindBest: NodeDefinition = {
-  id: "FindBest",
-  description: "Find and return the best element out an array",
+export const Filter: NodeDefinition = {
+  id: "Filter",
+  description: "Return all the element of the array that evaluate to true",
   icon: IconList,
   tags: ["Array"],
   dataInputs: [
@@ -42,14 +42,11 @@ export const FindBest: NodeDefinition = {
     },
     {
       id: "evaluate",
-      type: "number",
-      defaultValue: 0,
+      type: "bool",
+      defaultValue: false,
     },
   ],
-  dataOutputs: [
-    { id: "out", defaultValue: 0, type: "number" },
-    { id: "index", defaultValue: 0, type: "number" },
-  ],
+  dataOutputs: [{ id: "filtered", defaultValue: [], type: "array-number" }],
   executeOutputs: [],
   settings: [
     {
@@ -67,32 +64,24 @@ export const FindBest: NodeDefinition = {
   ],
   canBeExecuted: false,
   defaultType: "number",
-  availableTypes: VectorTypesFull,
-  onChangeType: changeTypeGenerator([], ["out"], ["array"], [], changeTypeGenerator([], ["value"])),
+  availableTypes: CommonTypes,
+  onChangeType: changeTypeGenerator([], [], ["array"], ["filtered"], changeTypeGenerator([], ["value"])),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.dataInputs["array"].type) as any[];
     if (array.length === 0) {
       return createDefaultValue(node.selectedType);
     }
-    let bestScore: null | number = null;
-    let lastSafeItem = array[0];
-    let lastSafeIndice = 0;
+    const result: any[] = [];
     array.forEach((item, i) => {
       //set the blackboard
 
       context.blackboard[`${node.id}-index`] = i;
       context.blackboard[`${node.id}-value`] = item;
-      var score = context.getInputValueNumber(node, "evaluate");
-      if (bestScore === null || score > bestScore) {
-        lastSafeItem = item;
-        lastSafeIndice = i;
-        bestScore = score;
+      var isFiltered = context.getInputValueBoolean(node, "evaluate");
+      if (isFiltered) {
+        result.push(item);
       }
     });
-    if (portId === "out") {
-      return lastSafeItem;
-    } else {
-      return lastSafeIndice;
-    }
+    return result;
   },
 };
