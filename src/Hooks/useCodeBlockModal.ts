@@ -24,12 +24,16 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
     },
     close: () => {
       //save the image to the node
+      const cb = get().callback;
+      if (cb) {
+        cb(get().current);
+      }
       useRouter.getState().close();
     },
     setOwnVariable(newList) {
       set(
         produce((state) => {
-          state.current.ownVariable = newList;
+          state.current.ownVariables = newList;
         })
       );
     },

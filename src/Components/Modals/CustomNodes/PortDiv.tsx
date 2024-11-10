@@ -30,11 +30,12 @@ type PortEditListProps = {
   tooltip?: string;
   prefix?: string;
   availableTypes: PortType[];
-  onChange: (newList: PortDefinition[]) => void;
+  onChange?: (newList: PortDefinition[]) => void;
 };
 
 export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availableTypes }: PortEditListProps) => {
   var [selected, setSelected] = useState<number | null>(null);
+  const readOnly = onChange === undefined;
 
   var toggle = useCallback(
     (id: number) => {
@@ -47,7 +48,7 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
     [selected]
   );
 
-  const { change, remove, addNew } = useListManipulator(ports, onChange, () => ({
+  const { change, remove, addNew } = useListManipulator(ports, onChange as any, () => ({
     id: `${prefix}-${ports.length}`,
     type: availableTypes[0],
     defaultValue: createDefaultValue(availableTypes[0]),
@@ -63,9 +64,11 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
             data-tooltip-content={tooltip}></IconInfoCircle>
         )}
         <span></span>
-        <InvisibleButton
-          icon={IconPlus}
-          onClick={addNew}></InvisibleButton>
+        {!readOnly && (
+          <InvisibleButton
+            icon={IconPlus}
+            onClick={addNew}></InvisibleButton>
+        )}
       </HeaderStyled>
       {ports.map((port, i) => (
         <PortEdit
@@ -75,8 +78,8 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
           port={port}
           index={i}
           availableTypes={availableTypes}
-          onChangePort={change}
-          onDeletePort={remove}
+          onChangePort={readOnly ? undefined : change}
+          onDeletePort={readOnly ? undefined : remove}
         />
       ))}
     </SectionStyled>

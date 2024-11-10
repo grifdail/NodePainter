@@ -20,6 +20,15 @@ const MainDiv = styled.div`
   }
 `;
 
+const VariableSection = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: stretch;
+  gap: var(--padding-medium);
+  flex-direction: column;
+  flex: 0 0 200px;
+`;
+
 export function CodeBlockModal() {
   const state = useCodeBlockModal();
   const codeBlock = state.current;
@@ -28,15 +37,29 @@ export function CodeBlockModal() {
       onClose={state.close}
       title="Paint"
       icon={IconBrush}
-      size="small">
+      size="large">
       <MainDiv>
-        <PortEditList
-          ports={codeBlock.ownVariables}
-          label="Variables"
-          prefix="var"
-          availableTypes={FullCommonTypes}
-          onChange={state.setOwnVariable}
-        />
+        <VariableSection>
+          <PortEditList
+            ports={codeBlock.ownVariables}
+            label="Variables"
+            prefix="var"
+            availableTypes={FullCommonTypes}
+            onChange={state.setOwnVariable}
+          />
+          <PortEditList
+            ports={codeBlock.inputVariables}
+            label="Inputs"
+            prefix="var"
+            availableTypes={FullCommonTypes}
+          />
+          <PortEditList
+            ports={codeBlock.outputVariables}
+            label="Outputs"
+            prefix="var"
+            availableTypes={FullCommonTypes}
+          />
+        </VariableSection>
       </MainDiv>
     </Modal>
   );
