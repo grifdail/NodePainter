@@ -1,8 +1,11 @@
-﻿import { FunctionContext } from "../Utils/createExecutionContext";
+import { FunctionContext } from "../Utils/createExecutionContext";
+import { PortDefinition } from "./PortDefinition";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];
-  variables: any[];
+  ownVariables: PortDefinition[];
+  inputVariables: PortDefinition[];
+  outputVariables: PortDefinition[];
 };
 
 abstract class CodeBlockStatement {
@@ -12,7 +15,9 @@ abstract class CodeBlockStatement {
 export const createDefaultCodeBlock = (): CodeBlock => {
   return {
     statements: [],
-    variables: [],
+    ownVariables: [],
+    inputVariables: [],
+    outputVariables: [],
   };
 };
 

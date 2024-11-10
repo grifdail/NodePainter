@@ -1,4 +1,4 @@
-﻿import { IconCodeDots } from "@tabler/icons-react";
+import { IconCodeDots } from "@tabler/icons-react";
 import { createDefaultCodeBlock, executeStatementList } from "../../Types/CodeBlock";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 export const CUSTOM_IMPERATIVE_FUNCTION = "CustomImperativeFunction";

@@ -10,4 +10,5 @@ export enum Routes {
   CustomSimulation = "custom-simulation",
   Settings = "settings",
   Paint = "paint",
+  CodeBlock = "code_block",
 }

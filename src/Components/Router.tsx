@@ -12,6 +12,8 @@ import { AboutModal } from "./Modals/AboutModal";
 import { PaintModal } from "./Modals/PaintModal";
 import { useDialog } from "../Hooks/useDialog";
 import { DialogModal } from "./Modals/DialogModel";
+import { Routes } from "../Types/Routes";
+import { CodeBlockModal } from "./Modals/CodeBlockModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -19,19 +21,22 @@ export function Router() {
   const dialog = useDialog();
   return (
     <div>
-      {route === "default" && <GridUi />}
-      {route === "node-creation" && <NodeSelectionModal close={close} />}
-      {route === "save" && <SaveModal close={close} />}
-      {route === "load" && <LoadModal close={close} />}
-      {route === "export-gif" && <ExportGifModal close={close} />}
-      {route === "custom-function" && <CustomNodeModal close={close} />}
-      {route === "custom-shader" && <CustomShaderModal close={close} />}
-      {route === "custom-simulation" && <CustomSimulationModal close={close} />}
-      {route === "settings" && <SettingsModal close={close} />}
-      {route === "about" && <AboutModal close={close} />}
-      {route === "paint" && <PaintModal />}
+      {route === Routes.Default && <GridUi />}
+      {route === Routes.NodeCreation && <NodeSelectionModal close={close} />}
+      {route === Routes.Save && <SaveModal close={close} />}
+      {route === Routes.Load && <LoadModal close={close} />}
+      {route === Routes.ExportGif && <ExportGifModal close={close} />}
+      {route === Routes.CustomFunction && <CustomNodeModal close={close} />}
+      {route === Routes.CustomShader && <CustomShaderModal close={close} />}
+      {route === Routes.CustomSimulation && <CustomSimulationModal close={close} />}
+      {route === Routes.Settings && <SettingsModal close={close} />}
+      {route === Routes.About && <AboutModal close={close} />}
+      {route === Routes.Paint && <PaintModal />}
+      {route === Routes.CodeBlock && <CodeBlockModal />}
       {dialog.dialogs.map((d) => (
-        <DialogModal dialog={d} controler={dialog}></DialogModal>
+        <DialogModal
+          dialog={d}
+          controler={dialog}></DialogModal>
       ))}
     </div>
   );

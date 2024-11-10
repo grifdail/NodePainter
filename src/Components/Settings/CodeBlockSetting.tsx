@@ -1,9 +1,10 @@
-﻿import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconBrush, IconCode } from "@tabler/icons-react";
+import { IconCode } from "@tabler/icons-react";
 import { usePainting } from "../../Hooks/usePainting";
 import { Button } from "../Generics/Button";
+import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 
 const Body = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ export const CodeBlockSetting: SettingComponent = function ({ onChange, value, d
     <Body>
       <ButtonGroup hidden={value !== null}>
         <Button
-          onClick={() => usePainting.getState().open(value, onChange)}
+          onClick={() => useCodeBlockModal.getState().open(value, onChange)}
           label="Edit"
           icon={IconCode}
         />
