@@ -25,6 +25,6 @@ export const RandomInt: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var min = context.getInputValueNumber(nodeData, "min");
     var max = context.getInputValueNumber(nodeData, "max");
-    return Math.floor(context.p5.random() * (max - min) + min);
+    return Math.floor(context.RNG.next() * (max - min) + min);
   },
 };

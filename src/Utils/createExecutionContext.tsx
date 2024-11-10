@@ -15,6 +15,7 @@ import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData } from "../Types/MaterialData";
 import { NodeDefinition, isMaterialNode } from "../Types/NodeDefinition";
+import Rand from "rand-seed";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -35,6 +36,7 @@ export type ExecutionContext = {
   frameBlackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
+  RNG: Rand;
   execute: (nodeId: string) => void;
   getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
   getInputValueVector: (nodeData: NodeData, portId: string) => Vector;
@@ -61,6 +63,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     target: p5 as Graphics,
     frameBlackboard: {},
     functionStack: [],
+    RNG: new Rand(),
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
       if (node != null) {
