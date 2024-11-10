@@ -1,23 +1,9 @@
-import { IconBrush, IconClearAll } from "@tabler/icons-react";
+import { IconBrush } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import { PaintingTool, usePainting } from "../../Hooks/usePainting";
-import { ColorInput } from "../Inputs/ColorInput";
-import { PaintingSketch } from "./Drawing/PaintingSketch";
-import { PaletteColorSelector } from "./PaletteColorSelector";
-import { NumberInput } from "../Inputs/NumberInput";
-import { Tools } from "./Drawing/Tools";
-import { DialogData, useDialog } from "../../Hooks/useDialog";
-import { Fieldset } from "../StyledComponents/Fieldset";
-import { DropdownInput } from "../Inputs/DropdownInput";
-import { SliderInput } from "../Inputs/SliderInput";
-import { Button } from "../Generics/Button";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
-import { CodeBlockVariableList } from "./CodeBlock/CodeBlockVariableList";
-import { PortDiv } from "./CustomNodes/PortDiv";
-import { PortRole } from "../../Types/PortRole";
-import { PortType } from "../../Types/PortType";
+import { PortEditList } from "./CustomNodes/PortDiv";
+import { FullCommonTypes } from "../../Types/PortType";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -44,7 +30,13 @@ export function CodeBlockModal() {
       icon={IconBrush}
       size="small">
       <MainDiv>
-        <div></div>
+        <PortEditList
+          ports={codeBlock.ownVariables}
+          label="Variables"
+          prefix="var"
+          availableTypes={FullCommonTypes}
+          onChange={state.setOwnVariable}
+        />
       </MainDiv>
     </Modal>
   );

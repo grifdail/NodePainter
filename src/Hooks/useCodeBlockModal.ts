@@ -1,9 +1,12 @@
+import { produce } from "immer";
 import { create } from "zustand";
 import { CodeBlock, createDefaultCodeBlock } from "../Types/CodeBlock";
+import { PortDefinition } from "../Types/PortDefinition";
 import { Routes } from "../Types/Routes";
 import { useRouter } from "./useRouter";
 
 export type CodeBlockModalStore = {
+  setOwnVariable: (newList: PortDefinition[]) => void;
   callback: ((newValue: any) => void) | null;
   current: CodeBlock;
   open: (current: CodeBlock, callback: (newValue: any) => void) => void;
@@ -22,6 +25,13 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
     close: () => {
       //save the image to the node
       useRouter.getState().close();
+    },
+    setOwnVariable(newList) {
+      set(
+        produce((state) => {
+          state.current.ownVariable = newList;
+        })
+      );
     },
   };
 });

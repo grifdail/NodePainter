@@ -2,7 +2,6 @@ import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconCode } from "@tabler/icons-react";
-import { usePainting } from "../../Hooks/usePainting";
 import { Button } from "../Generics/Button";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 

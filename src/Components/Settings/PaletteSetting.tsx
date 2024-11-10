@@ -7,6 +7,7 @@ import { createColor } from "../../Types/vectorDataType";
 import { PaletteMenu } from "./PaletteMenu";
 import { Button } from "../Generics/Button";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import { useListManipulator } from "../../Hooks/useListManipulator";
 
 const ColorList = styled.ul`
   display: flex;
@@ -49,28 +50,7 @@ const ColorList = styled.ul`
 export const PaletteSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
   var list = value as Array<any>;
 
-  function onChangeColor(i: number, v: any): void {
-    onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
-  }
-
-  function addNewColor(): void {
-    onChange([...list, createColor()]);
-  }
-
-  function removeColor(i: number): void {
-    if (list.length > 1) {
-      onChange([...list.slice(0, i), ...list.slice(i + 1, list.length)]);
-    }
-  }
-
-  function move(i: number, direction: "up" | "down") {
-    if (direction === "up") {
-      console.log([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
-      onChange([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
-    } else {
-      onChange([...list.slice(0, i), list[i + 1], list[i], ...list.slice(i + 2, list.length)]);
-    }
-  }
+  const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor);
 
   return (
     <div>
@@ -78,20 +58,28 @@ export const PaletteSetting: SettingComponent = function ({ onChange, value, def
         {list.map((color: any, i: number) => (
           <li key={i}>
             <span>{i}</span>
-            <ColorInput value={color} onChange={(v) => onChangeColor(i, v)}></ColorInput>
+            <ColorInput
+              value={color}
+              onChange={(v) => onChangeColor(i, v)}></ColorInput>
             <Menu
               menuButton={
                 <button className="delete">
                   <IconAdjustments />
                 </button>
               }>
-              <MenuItem onClick={() => removeColor(i)} disabled={list.length <= 1}>
+              <MenuItem
+                onClick={() => removeColor(i)}
+                disabled={list.length <= 1}>
                 <IconTrash></IconTrash> Delete
               </MenuItem>
-              <MenuItem onClick={() => move(i, "up")} disabled={i === 0}>
+              <MenuItem
+                onClick={() => move(i, "up")}
+                disabled={i === 0}>
                 <IconArrowUp></IconArrowUp>Move Up
               </MenuItem>
-              <MenuItem onClick={() => move(i, "down")} disabled={i === list.length - 1}>
+              <MenuItem
+                onClick={() => move(i, "down")}
+                disabled={i === list.length - 1}>
                 <IconArrowDown></IconArrowDown> Move Down
               </MenuItem>
             </Menu>
@@ -100,8 +88,13 @@ export const PaletteSetting: SettingComponent = function ({ onChange, value, def
       </ColorList>
 
       <ButtonGroup>
-        <Button label="Add" onClick={addNewColor} />
-        <PaletteMenu onLoaded={(value) => onChange(value)} currentPalette={list}></PaletteMenu>
+        <Button
+          label="Add"
+          onClick={addNewColor}
+        />
+        <PaletteMenu
+          onLoaded={(value) => onChange(value)}
+          currentPalette={list}></PaletteMenu>
       </ButtonGroup>
     </div>
   );

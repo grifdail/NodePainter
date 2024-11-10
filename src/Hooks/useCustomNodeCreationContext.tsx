@@ -1,5 +1,4 @@
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { createDefaultValue } from "../Utils/createDefaultValue";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
@@ -175,33 +174,10 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         })
       );
     },
-    setPortType(type, index, value) {
+    setPortList(type, list) {
       set(
         produce((state) => {
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].type = value;
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].defaultValue = createDefaultValue(value);
-        })
-      );
-    },
-    setPortDefaultValue(type, index, value) {
-      set(
-        produce((state) => {
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].defaultValue = value;
-        })
-      );
-    },
-    setPortId(type, index, value) {
-      set(
-        produce((state) => {
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"][index].id = value;
-        })
-      );
-    },
-
-    deletePort(type, index) {
-      set(
-        produce((state) => {
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"].splice(index, 1);
+          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"] = list;
         })
       );
     },

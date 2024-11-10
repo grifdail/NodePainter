@@ -1,9 +1,7 @@
 import { IconTriangle, IconX } from "@tabler/icons-react";
-import { PortRole } from "../../../Types/PortRole";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { PortType } from "../../../Types/PortType";
 import { PortColor } from "../../StyledComponents/PortColor";
-import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { capitalCase } from "change-case";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { TextInput } from "../../Inputs/TextInput";
@@ -11,6 +9,7 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { InvisibleButton } from "../../Generics/Button";
 import styled from "styled-components";
 import { DropdownInput } from "../../Inputs/DropdownInput";
+import { convertTypeValue } from "../../../Utils/convertTypeValue";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;
@@ -54,16 +53,19 @@ const RotatingIcon = styled(IconTriangle)<{ reversed?: boolean }>`
 type InputPortEditProps = {
   port: PortDefinition;
   index: number;
-  role: PortRole;
+  onChangePort?: (index: number, newValue: PortDefinition) => void;
+  onDeletePort?: (index: number) => void;
   availableTypes: Array<PortType>;
   onOpen?: () => void;
   open?: boolean;
-} & Pick<CustomFunctionCreationContextStore, "setPortType" | "setPortId" | "deletePort" | "setPortDefaultValue">;
+};
 
-export function InputPortEdit({ port, setPortId, deletePort, setPortDefaultValue, setPortType, index, role, availableTypes, open, onOpen }: InputPortEditProps) {
+export function PortEdit({ port, onChangePort, onDeletePort, index, availableTypes, open = true, onOpen }: InputPortEditProps) {
   const portColor = PortColor[port.type];
   const PortValueEditor = portColor.input;
   const Icon = portColor.icon;
+  const canDelete = onDeletePort !== undefined;
+  const canEdit = onChangePort !== undefined;
 
   const typeTemplate = (option: string) => {
     const portColor = PortColor[option as PortType];
@@ -76,23 +78,71 @@ export function InputPortEdit({ port, setPortId, deletePort, setPortDefaultValue
     );
   };
 
+  const setPortId = (value: string) => {
+    if (onChangePort) {
+      onChangePort(index, { ...port, id: value });
+    }
+  };
+
+  const setPortType = (value: string) => {
+    if (onChangePort) {
+      onChangePort(index, { ...port, type: value as PortType, defaultValue: convertTypeValue(port.defaultValue, port.type, value as PortType) });
+    }
+  };
+  const setPortDefaultValue = (value: any) => {
+    if (onChangePort) {
+      onChangePort(index, { ...port, defaultValue: value });
+    }
+  };
+
   return (
-    <InputPortDiv className={port.type} selected={open}>
+    <InputPortDiv
+      className={port.type}
+      selected={open}>
       <Header onClick={onOpen}>
         <Icon></Icon>
         {port.id}
         <span></span>
-        <RotatingIcon reversed={open} size={18} />
+        <RotatingIcon
+          reversed={open}
+          size={18}
+        />
       </Header>
       {open && (
         <FieldsDiv>
-          <Fieldset label="Id" input={TextInput} onChange={(a) => setPortId(role, index, a)} value={port.id} />
-          <Fieldset label="Type" input={DropdownInput} onChange={(a) => setPortType(role, index, a)} value={port.type} passtrough={{ options: availableTypes, template: typeTemplate }} />
-          {PortValueEditor && <Fieldset label="Default value" input={PortValueEditor} onChange={(a) => setPortDefaultValue(role, index, a)} value={port.defaultValue} />}
+          <Fieldset
+            label="Id"
+            input={TextInput}
+            onChange={setPortId}
+            value={port.id}
+            disabled={!canEdit}
+          />
+          <Fieldset
+            label="Type"
+            input={DropdownInput}
+            onChange={setPortType}
+            value={port.type}
+            passtrough={{ options: availableTypes, template: typeTemplate }}
+            disabled={!canEdit}
+          />
+          {PortValueEditor && (
+            <Fieldset
+              label="Default value"
+              input={PortValueEditor}
+              onChange={setPortDefaultValue}
+              value={port.defaultValue}
+              disabled={!canEdit}
+            />
+          )}
 
-          <ButtonGroup>
-            <InvisibleButton icon={IconX} label="Delete" onClick={() => deletePort(role, index)}></InvisibleButton>
-          </ButtonGroup>
+          {canDelete && (
+            <ButtonGroup>
+              <InvisibleButton
+                icon={IconX}
+                label="Delete"
+                onClick={() => onDeletePort(index)}></InvisibleButton>
+            </ButtonGroup>
+          )}
         </FieldsDiv>
       )}
     </InputPortDiv>
