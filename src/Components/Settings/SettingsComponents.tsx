@@ -12,6 +12,7 @@ import { NodeData } from "../../Types/NodeData";
 import { ButtonsSettings } from "./ButtonsSettings";
 import { AnimationTrackSettings } from "./AnimationTrackSettings";
 import { EasingSetting } from "./EasingPreview";
+import { CodeBlockSetting } from "./CodeBlockSetting";
 
 export type SettingProps = {
   onChange: (value: any) => void;
@@ -42,4 +43,5 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   buttons: ButtonsSettings,
   animationTrack: AnimationTrackSettings,
   "easing-preview": EasingSetting,
+  "code-block": CodeBlockSetting,
 };

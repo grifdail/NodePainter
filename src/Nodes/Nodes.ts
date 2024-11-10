@@ -115,6 +115,7 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
+import { CustomImperativeFunction } from "./CustomFunction/CustomImperativeFunction";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
@@ -387,6 +388,7 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Misc
   AnimationCurve,
+  CustomImperativeFunction,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
