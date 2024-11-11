@@ -67,7 +67,7 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
         {!readOnly && (
           <InvisibleButton
             icon={IconPlus}
-            onClick={addNew}></InvisibleButton>
+            onClick={() => addNew()}></InvisibleButton>
         )}
       </HeaderStyled>
       {ports.map((port, i) => (

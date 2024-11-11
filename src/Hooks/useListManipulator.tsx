@@ -1,10 +1,13 @@
-export function useListManipulator<T>(list: T[], onChange: (value: T[]) => void, generateNew: () => T) {
+export function useListManipulator<T>(list: T[], onChange: (value: T[]) => void, generateNew?: () => T) {
   function change(i: number, v: T): void {
     onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
   }
 
-  function addNew(): void {
-    onChange([...list, generateNew()]);
+  function addNew(newValue?: T): void {
+    if (newValue === undefined && generateNew) {
+      newValue = generateNew();
+    }
+    onChange([...list, newValue as T]);
   }
 
   function remove(i: number): void {

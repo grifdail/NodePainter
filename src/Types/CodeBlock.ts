@@ -1,5 +1,9 @@
+import { CodeBlockExpressionType, CodeBlockStatementType } from "../Nodes/CodeBlockTypes";
 import { FunctionContext } from "../Utils/createExecutionContext";
 import { PortDefinition } from "./PortDefinition";
+import { PortType } from "./PortType";
+
+export type CodeBlockPromptType = PortType | `variable-${PortType}` | "option" | "statements";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];
@@ -8,9 +12,30 @@ export type CodeBlock = {
   outputVariables: PortDefinition[];
 };
 
-abstract class CodeBlockStatement {
-  abstract Execute(root: FunctionContext): void;
-}
+export type CodeBlockExpressionField = {
+  label?: string;
+  type: CodeBlockPromptType;
+  value: CodeBlockStatement | CodeBlockStatement[] | null;
+  defaultValue: any;
+};
+
+export type CodeBlockStatement = {
+  type: string;
+  subExpressions: { [key: string]: CodeBlockExpressionField };
+};
+
+export type CodeBlockStatementGenerator = {
+  id: string;
+  create(): CodeBlockStatement;
+  execute(statement: CodeBlockStatement, state: FunctionContext): void;
+};
+
+export type CodeBlockExpressionGenerator = {
+  id: string;
+  create(type: CodeBlockPromptType): CodeBlockStatement;
+  evaluateTo(): CodeBlockPromptType;
+  evaluate(statement: CodeBlockStatement, state: FunctionContext): any;
+};
 
 export const createDefaultCodeBlock = (): CodeBlock => {
   return {
@@ -21,9 +46,26 @@ export const createDefaultCodeBlock = (): CodeBlock => {
   };
 };
 
-export const executeStatementList = (statements: CodeBlockStatement[], root: FunctionContext): void => {
+export const executeStatementList = (statements: CodeBlockStatement[], context: FunctionContext): void => {
   for (let i = 0; i < statements.length; i++) {
     const element = statements[i];
-    element.Execute(root);
+    const type = CodeBlockStatementType[element.type];
+    type.execute(element, context);
+  }
+};
+
+export const evaluateExpression = (expression: CodeBlockExpressionField, context: FunctionContext): any => {
+  var value = expression.value;
+  if (!value) {
+    return expression.defaultValue;
+  }
+  if (Array.isArray(value)) {
+    console.warn("Trying to evaluate a list of statements");
+    return expression.defaultValue;
+  }
+  if (value.type && CodeBlockExpressionType[value.type]) {
+    return CodeBlockExpressionType[value.type].evaluate(value, context);
+  } else {
+    return expression.defaultValue;
   }
 };

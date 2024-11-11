@@ -1,9 +1,10 @@
-import { IconBrush } from "@tabler/icons-react";
+import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { PortEditList } from "./CustomNodes/PortDiv";
 import { FullCommonTypes } from "../../Types/PortType";
+import { CodeBlockStatementList } from "./CodeBlock/CodeBlockStatementList";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -35,8 +36,8 @@ export function CodeBlockModal() {
   return (
     <Modal
       onClose={state.close}
-      title="Paint"
-      icon={IconBrush}
+      title="Code Block"
+      icon={IconCodeDots}
       size="large">
       <MainDiv>
         <VariableSection>
@@ -60,6 +61,9 @@ export function CodeBlockModal() {
             availableTypes={FullCommonTypes}
           />
         </VariableSection>
+        <CodeBlockStatementList
+          statements={codeBlock.statements}
+          onChange={state.setStatements}></CodeBlockStatementList>
       </MainDiv>
     </Modal>
   );

@@ -1,11 +1,12 @@
 import { produce } from "immer";
 import { create } from "zustand";
-import { CodeBlock, createDefaultCodeBlock } from "../Types/CodeBlock";
+import { CodeBlock, CodeBlockStatement, createDefaultCodeBlock } from "../Types/CodeBlock";
 import { PortDefinition } from "../Types/PortDefinition";
 import { Routes } from "../Types/Routes";
 import { useRouter } from "./useRouter";
 
 export type CodeBlockModalStore = {
+  setStatements: (statements: CodeBlockStatement[]) => void;
   setOwnVariable: (newList: PortDefinition[]) => void;
   callback: ((newValue: any) => void) | null;
   current: CodeBlock;
@@ -34,6 +35,13 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
       set(
         produce((state) => {
           state.current.ownVariables = newList;
+        })
+      );
+    },
+    setStatements(statements) {
+      set(
+        produce((state) => {
+          state.current.statements = statements;
         })
       );
     },
