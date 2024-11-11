@@ -1,5 +1,4 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
-import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconAdjustments, IconArrowDown, IconArrowUp, IconTrash } from "@tabler/icons-react";
@@ -8,6 +7,7 @@ import { PaletteMenu } from "./PaletteMenu";
 import { Button } from "../Generics/Button";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useListManipulator } from "../../Hooks/useListManipulator";
+import { ColorInput } from "../Generics/Inputs/ColorInput";
 
 const ColorList = styled.ul`
   display: flex;

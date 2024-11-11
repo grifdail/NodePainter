@@ -4,7 +4,7 @@ export const AssignStatement: CodeBlockStatementGenerator = {
   id: `Assign`,
   execute(block, context) {
     let result = evaluateExpression(block.parameters.value, context);
-    let variableName = block.parameters.target.value as string;
+    let variableName = evaluateExpression(block.parameters.target, context);
     if (context[variableName]) {
       context[variableName] = result;
     } else {
@@ -17,13 +17,13 @@ export const AssignStatement: CodeBlockStatementGenerator = {
       parameters: {
         target: {
           type: `variable`,
-          value: null,
-          defaultValue: 0,
+          targetType: "any",
         },
         value: {
-          type: "value",
-          value: null,
-          defaultValue: 0,
+          type: "expression",
+          targetType: "any",
+          constantValue: 0,
+          expression: null,
         },
       },
     };

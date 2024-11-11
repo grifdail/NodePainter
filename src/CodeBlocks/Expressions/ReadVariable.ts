@@ -1,4 +1,4 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { FunctionContext } from "../../Utils/createExecutionContext";
@@ -10,9 +10,8 @@ export const ReadVariableExpression: CodeBlockExpressionGenerator = {
       type: ReadVariableExpression.id,
       parameters: {
         variable: {
-          type: `variable-${type}`,
-          value: null,
-          defaultValue: createDefaultValue(type),
+          type: `variable`,
+          targetType: type,
         },
       },
     };
@@ -21,11 +20,13 @@ export const ReadVariableExpression: CodeBlockExpressionGenerator = {
     return true;
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var variable = statement.parameters.variable;
-    if (variable.value && state[variable.value as string] !== undefined) {
-      return state[variable.value as string].value;
-    } else {
-      return variable.defaultValue;
+    if (statement.parameters.variable.type !== "variable") {
+      throw new Error("Parameter Variable is of the wrong type");
     }
+    var variable = evaluateExpression(statement.parameters.variable, state) as string;
+    if (variable && state[variable] !== undefined) {
+      return state[variable].value;
+    }
+    return createDefaultValue(statement.parameters.variable.targetType as PortType);
   },
 };

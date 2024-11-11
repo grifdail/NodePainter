@@ -4,12 +4,12 @@ import { PortType } from "../../../Types/PortType";
 import { PortColor } from "../../StyledComponents/PortColor";
 import { capitalCase } from "change-case";
 import { Fieldset } from "../../StyledComponents/Fieldset";
-import { TextInput } from "../../Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { InvisibleButton } from "../../Generics/Button";
 import styled from "styled-components";
-import { DropdownInput } from "../../Inputs/DropdownInput";
 import { convertTypeValue } from "../../../Utils/convertTypeValue";
+import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
+import { TextInput } from "../../Generics/Inputs/TextInput";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;

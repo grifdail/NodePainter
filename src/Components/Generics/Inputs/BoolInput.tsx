@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { InputProps } from "./InputProps";
-import { InputBackgroundColor } from "../StyledComponents/Input";
+import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const BoolDiv = styled.div`
   flex: 1 1 100px;
@@ -25,7 +25,11 @@ const BoolDiv = styled.div`
 export function BoolInput({ onChange, value }: InputProps<boolean>) {
   return (
     <BoolDiv onClick={() => onChange(!value)}>
-      <input type="checkbox" checked={value} onChange={(e) => onChange(!value)} />
+      <input
+        type="checkbox"
+        checked={value}
+        onChange={(e) => onChange(!value)}
+      />
     </BoolDiv>
   );
 }

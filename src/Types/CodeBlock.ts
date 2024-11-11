@@ -1,9 +1,7 @@
-import { CodeBlockExpressionType, CodeBlockStatementType } from "../CodeBlocks/CodeBlockTypes";
+import { CodeBlockExpressionTypes, CodeBlockStatementTypes } from "../CodeBlocks/CodeBlockTypes";
 import { FunctionContext } from "../Utils/createExecutionContext";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
-
-export type CodeBlockPromptType = PortType | `variable-${PortType}` | "value" | "variable" | "option" | "statements";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];
@@ -12,17 +10,43 @@ export type CodeBlock = {
   outputVariables: PortDefinition[];
 };
 
-export type CodeBlockExpressionField = {
+export type CodeBlockParameterFieldExpression = {
   label?: string;
-  type: CodeBlockPromptType;
-  value: CodeBlockStatement | CodeBlockStatement[] | string | null;
-  defaultValue: any;
-  options?: string[];
+  type: "expression";
+  targetType: PortType | "any";
+  constantValue: any;
+  expression: CodeBlockStatement | null;
 };
+
+export type CodeBlockParameterFieldOption = {
+  label?: string;
+  type: "option";
+  selectedOption: string;
+  options: string[];
+};
+export type CodeBlockParameterFieldVariable = {
+  label?: string;
+  type: "variable";
+  targetType: PortType | "any";
+  variableName?: string;
+};
+export type CodeBlockParameterFieldStatements = {
+  label?: string;
+  type: "statements";
+  statements: CodeBlockStatement[];
+};
+export type CodeBlockParameterFieldValue = {
+  label?: string;
+  type: "value";
+  targetType: PortType;
+  value: any;
+};
+
+export type CodeBlockParameterField = CodeBlockParameterFieldStatements | CodeBlockParameterFieldExpression | CodeBlockParameterFieldOption | CodeBlockParameterFieldVariable | CodeBlockParameterFieldValue;
 
 export type CodeBlockStatement = {
   type: string;
-  parameters: { [key: string]: CodeBlockExpressionField };
+  parameters: { [key: string]: CodeBlockParameterField };
 };
 
 export type CodeBlockStatementGenerator = {
@@ -50,27 +74,38 @@ export const createDefaultCodeBlock = (): CodeBlock => {
 export const executeStatementList = (statements: CodeBlockStatement[], context: FunctionContext): void => {
   for (let i = 0; i < statements.length; i++) {
     const element = statements[i];
-    const type = CodeBlockStatementType[element.type];
+    const type = CodeBlockStatementTypes[element.type];
     type.execute(element, context);
   }
 };
 
-export const evaluateExpression = (expression: CodeBlockExpressionField, context: FunctionContext): any => {
-  var value = expression.value;
-  if (!value) {
-    return expression.defaultValue;
-  }
-  if (Array.isArray(value)) {
-    console.warn("Trying to evaluate a list of statements");
-    return expression.defaultValue;
-  }
-  if (typeof value === "string") {
-    console.warn("Trying to evaluate a name");
-    return expression.defaultValue;
-  }
-  if (value.type && CodeBlockExpressionType[value.type]) {
-    return CodeBlockExpressionType[value.type].evaluate(value, context);
+export const executeStatementParameter = (statements: CodeBlockParameterField, context: FunctionContext): void => {
+  if (statements.type === "statements") {
+    executeStatementList(statements.statements, context);
   } else {
-    return expression.defaultValue;
+    throw new Error("Trying to execute a non statement parameter");
+  }
+};
+
+export const evaluateExpression = (expression: CodeBlockParameterField, context: FunctionContext): any => {
+  switch (expression.type) {
+    case "statements":
+      console.warn("Trying to evaluate a list of statements");
+      return null;
+    case "expression":
+      if (expression.expression === null) {
+        return expression.constantValue;
+      } else {
+        var exp = expression.expression;
+        return CodeBlockExpressionTypes[exp.type].evaluate(exp, context);
+      }
+    case "option":
+      return expression.selectedOption;
+    case "variable":
+      return expression.variableName;
+    case "value":
+      return expression.value;
+    default:
+      return null;
   }
 };

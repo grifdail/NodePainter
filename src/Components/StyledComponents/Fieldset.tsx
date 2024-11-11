@@ -1,6 +1,6 @@
 import { useId } from "react";
 import styled from "styled-components";
-import { InputProps } from "../Inputs/InputProps";
+import { InputProps } from "../Generics/Inputs/InputProps";
 
 const FieldsetStyled = styled.fieldset`
   border: none;
@@ -42,9 +42,20 @@ type FieldsetProps = {
 export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className }: FieldsetProps) => {
   var id = useId();
   return (
-    <FieldsetStyled data-tooltip-id="tooltip" data-tooltip-content={tooltip} className={className}>
+    <FieldsetStyled
+      data-tooltip-id="tooltip"
+      data-tooltip-content={tooltip}
+      className={className}>
       <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
-      {Input && <Input name={id} onChange={onChange} value={value} disabled={disabled} {...passtrough} />}
+      {Input && (
+        <Input
+          name={id}
+          onChange={onChange}
+          value={value}
+          disabled={disabled}
+          {...passtrough}
+        />
+      )}
     </FieldsetStyled>
   );
 };

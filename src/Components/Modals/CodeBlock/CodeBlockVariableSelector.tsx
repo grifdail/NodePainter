@@ -1,21 +1,20 @@
 import { useContext } from "react";
 import { PortType } from "../../../Types/PortType";
-import { DropdownInput } from "../../Inputs/DropdownInput";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
 import { MenuItem } from "@szhsin/react-menu";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { PortColor } from "../../StyledComponents/PortColor";
+import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 
-export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: PortType; value: string; onChange: (name: string) => void }) => {
+export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: PortType | "any"; value?: string; onChange: (name: string) => void }) => {
   var CodeBlock = useContext(CodeBlockContext);
   if (!CodeBlock) {
     return null;
   }
 
   var variables = [...CodeBlock.ownVariables, ...CodeBlock.inputVariables, ...CodeBlock.outputVariables];
-  console.log(type);
-  const filterredVariable = type ? variables.filter((port) => port.type === type) : variables;
+  const filterredVariable = type === "any" ? variables : variables.filter((port) => port.type === type);
 
   const selected = filterredVariable.find((port) => port.id === value);
   return (

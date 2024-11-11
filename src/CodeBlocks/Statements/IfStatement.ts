@@ -1,13 +1,13 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementList } from "../../Types/CodeBlock";
+import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter } from "../../Types/CodeBlock";
 
 export const IfStatement: CodeBlockStatementGenerator = {
   id: "if",
   execute(block, context) {
     var result = evaluateExpression(block.parameters.condition, context) as boolean;
     if (result) {
-      executeStatementList(block.parameters.then.value as CodeBlockStatement[], context);
+      executeStatementParameter(block.parameters.then, context);
     } else {
-      executeStatementList(block.parameters.else.value as CodeBlockStatement[], context);
+      executeStatementParameter(block.parameters.else, context);
     }
   },
   create() {
@@ -15,19 +15,18 @@ export const IfStatement: CodeBlockStatementGenerator = {
       type: "if",
       parameters: {
         condition: {
-          type: "bool",
-          value: null,
-          defaultValue: false,
+          type: "expression",
+          targetType: "bool",
+          expression: null,
+          constantValue: false,
         },
         then: {
           type: "statements",
-          value: [],
-          defaultValue: [],
+          statements: [],
         },
         else: {
           type: "statements",
-          value: [],
-          defaultValue: [],
+          statements: [],
         },
       },
     };

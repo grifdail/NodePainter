@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
-import { CodeBlockExpressionView } from "./CodeBlockExpressionView";
+import { CodeBlockParameterView } from "./CodeBlockParameterView";
 import { IconArrowMoveDown, IconArrowMoveUp, IconX } from "@tabler/icons-react";
 import { InvisibleButton } from "../../Generics/Button";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
@@ -62,7 +62,7 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
       </div>
 
       {Object.entries(statement.parameters).map(([key, expression]) => (
-        <CodeBlockExpressionView
+        <CodeBlockParameterView
           key={key}
           id={key}
           expression={expression}

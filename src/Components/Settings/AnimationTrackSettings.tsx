@@ -2,13 +2,13 @@ import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconX } from "@tabler/icons-react";
-import { NumberInput } from "../Inputs/NumberInput";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";
 import { PortColor } from "../StyledComponents/PortColor";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
 
 const ColorList = styled.ul`
   display: flex;

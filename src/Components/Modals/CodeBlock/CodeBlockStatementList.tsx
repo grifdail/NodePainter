@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
 import { Fieldset } from "../../StyledComponents/Fieldset";
-import { DropdownInput } from "../../Inputs/DropdownInput";
 import { CodeBlockStatementView, StatementDiv } from "./CodeBlockStatementView";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
-import { CodeBlockStatementType } from "../../../CodeBlocks/CodeBlockTypes";
+import { CodeBlockStatementTypes } from "../../../CodeBlocks/CodeBlockTypes";
+import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 
 export const RootDiv = styled.div<{ $expand: boolean }>`
   background: var(--color-background-card);
@@ -30,7 +30,7 @@ export const CodeBlockStatementList = ({ statements, onChange }: { statements: C
   var { addNew, remove, change, move } = useListManipulator(statements, onChange);
 
   const addStatement = (type: string) => {
-    var t = CodeBlockStatementType[type];
+    var t = CodeBlockStatementTypes[type];
     if (t) {
       addNew(t.create());
     }
@@ -52,7 +52,7 @@ export const CodeBlockStatementList = ({ statements, onChange }: { statements: C
           label=""
           value="..."
           onChange={addStatement}
-          passtrough={{ options: Object.keys(CodeBlockStatementType) }}
+          passtrough={{ options: Object.keys(CodeBlockStatementTypes) }}
         />
       </StatementDiv>
     </RootDiv>

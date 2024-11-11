@@ -11,9 +11,10 @@ export const LogStatement: CodeBlockStatementGenerator = {
       type: LogStatement.id,
       parameters: {
         text: {
-          type: "string",
-          value: null,
-          defaultValue: "Hello world !",
+          type: "expression",
+          targetType: "string",
+          expression: null,
+          constantValue: "Hello world !",
         },
       },
     };

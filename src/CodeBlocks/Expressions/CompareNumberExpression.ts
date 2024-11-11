@@ -10,20 +10,21 @@ export const CompareNumberExpression: CodeBlockExpressionGenerator = {
       type: CompareNumberExpression.id,
       parameters: {
         A: {
-          type: `number`,
-          value: null,
-          defaultValue: 0,
+          type: "expression",
+          targetType: `number`,
+          constantValue: 0,
+          expression: null,
         },
         comparator: {
           type: `option`,
-          value: ComparatorOps[0],
-          defaultValue: 0,
+          selectedOption: ComparatorOps[0],
           options: ComparatorOps,
         },
         B: {
-          type: `number`,
-          value: null,
-          defaultValue: 0,
+          type: "expression",
+          targetType: `number`,
+          constantValue: 0,
+          expression: null,
         },
       },
     };
@@ -34,7 +35,8 @@ export const CompareNumberExpression: CodeBlockExpressionGenerator = {
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
     var a = evaluateExpression(statement.parameters.A, state) as number;
     var b = evaluateExpression(statement.parameters.A, state) as number;
-    var comparator = statement.parameters.comparator.value as string;
+
+    var comparator = evaluateExpression(statement.parameters.comparator, state) as string;
     var func = Comparator[comparator];
     if (func !== undefined) {
       return func(a, b) as boolean;

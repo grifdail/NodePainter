@@ -4,20 +4,20 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NumberInput } from "../Inputs/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
-import { BoolInput } from "../Inputs/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { CUSTOM_SIMULATION } from "../../Nodes/CustomFunction/CustomSimulation";
-import { TextInput } from "../Inputs/TextInput";
 import Rand from "rand-seed";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { BoolInput } from "../Generics/Inputs/BoolInput";
+import { TextInput } from "../Generics/Inputs/TextInput";
 
 const MainDiv = styled.div`
   display: flex;

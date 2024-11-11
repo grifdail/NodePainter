@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useMemo } from "react";
 import { Easing, EasingFunctionType, evaluate } from "../../libs/easing";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { DropdownInput } from "../Inputs/DropdownInput";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { calculatePathForFunction, invertLerp } from "./calculatePathForFunction";
+import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 
 export const EasingSetting: SettingComponent = function GradientSetting({ onChange, value, def, node }: SettingProps) {
   const functionName = value as EasingFunctionType;

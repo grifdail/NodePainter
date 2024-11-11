@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { DialogModal } from "../Components/Modals/DialogModel";
-import { NumberInput } from "../Components/Inputs/NumberInput";
-import { TextInput } from "../Components/Inputs/TextInput";
-import { DropdownInput } from "../Components/Inputs/DropdownInput";
+import { DropdownInput } from "../Components/Generics/Inputs/DropdownInput";
+import { TextInput } from "../Components/Generics/Inputs/TextInput";
+import { NumberInput } from "../Components/Generics/Inputs/NumberInput";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
