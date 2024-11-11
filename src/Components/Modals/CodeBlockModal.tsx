@@ -5,6 +5,7 @@ import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { PortEditList } from "./CustomNodes/PortDiv";
 import { FullCommonTypes } from "../../Types/PortType";
 import { CodeBlockStatementList } from "./CodeBlock/CodeBlockStatementList";
+import { CodeBlockContext } from "../../Hooks/CodeBlockContext";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -33,6 +34,7 @@ const VariableSection = styled.div`
 export function CodeBlockModal() {
   const state = useCodeBlockModal();
   const codeBlock = state.current;
+
   return (
     <Modal
       onClose={state.close}
@@ -61,9 +63,12 @@ export function CodeBlockModal() {
             availableTypes={FullCommonTypes}
           />
         </VariableSection>
-        <CodeBlockStatementList
-          statements={codeBlock.statements}
-          onChange={state.setStatements}></CodeBlockStatementList>
+        <CodeBlockContext.Provider value={codeBlock}>
+          <CodeBlockStatementList
+            statements={codeBlock.statements}
+            onChange={state.setStatements}
+          />
+        </CodeBlockContext.Provider>
       </MainDiv>
     </Modal>
   );

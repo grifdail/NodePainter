@@ -2,9 +2,9 @@ import styled, { css } from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { DropdownInput } from "../../Inputs/DropdownInput";
-import { CodeBlockStatementType } from "../../../Nodes/CodeBlockTypes";
 import { CodeBlockStatementView, StatementDiv } from "./CodeBlockStatementView";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
+import { CodeBlockStatementType } from "../../../CodeBlocks/CodeBlockTypes";
 
 export const RootDiv = styled.div<{ expand?: boolean }>`
   background: var(--color-background-card);

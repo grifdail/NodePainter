@@ -1,4 +1,4 @@
-export function useListManipulator<T>(list: T[], onChange: (value: T[]) => void, generateNew?: () => T) {
+export function useListManipulator<T>(list: T[], onChange: (value: T[]) => void, generateNew?: () => T, allowEmpty: boolean = true) {
   function change(i: number, v: T): void {
     onChange([...list.slice(0, i), v, ...list.slice(i + 1, list.length)]);
   }
@@ -11,16 +11,16 @@ export function useListManipulator<T>(list: T[], onChange: (value: T[]) => void,
   }
 
   function remove(i: number): void {
-    if (list.length > 1) {
+    if (list.length > 1 || allowEmpty) {
       onChange([...list.slice(0, i), ...list.slice(i + 1, list.length)]);
     }
   }
 
   function move(i: number, direction: "up" | "down") {
-    if (direction === "up") {
+    if (direction === "up" && i > 0) {
       console.log([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
       onChange([...list.slice(0, i - 1), list[i], list[i - 1], ...list.slice(i + 1, list.length)]);
-    } else {
+    } else if (i < list.length - 1) {
       onChange([...list.slice(0, i), list[i + 1], list[i], ...list.slice(i + 2, list.length)]);
     }
   }

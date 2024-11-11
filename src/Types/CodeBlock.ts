@@ -1,9 +1,9 @@
-import { CodeBlockExpressionType, CodeBlockStatementType } from "../Nodes/CodeBlockTypes";
+import { CodeBlockExpressionType, CodeBlockStatementType } from "../CodeBlocks/CodeBlockTypes";
 import { FunctionContext } from "../Utils/createExecutionContext";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 
-export type CodeBlockPromptType = PortType | `variable-${PortType}` | "option" | "statements";
+export type CodeBlockPromptType = PortType | `variable-${PortType}` | "value" | "variable" | "option" | "statements";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];
@@ -15,7 +15,7 @@ export type CodeBlock = {
 export type CodeBlockExpressionField = {
   label?: string;
   type: CodeBlockPromptType;
-  value: CodeBlockStatement | CodeBlockStatement[] | null;
+  value: CodeBlockStatement | CodeBlockStatement[] | string | null;
   defaultValue: any;
 };
 
@@ -61,6 +61,10 @@ export const evaluateExpression = (expression: CodeBlockExpressionField, context
   }
   if (Array.isArray(value)) {
     console.warn("Trying to evaluate a list of statements");
+    return expression.defaultValue;
+  }
+  if (typeof value === "string") {
+    console.warn("Trying to evaluate a name");
     return expression.defaultValue;
   }
   if (value.type && CodeBlockExpressionType[value.type]) {

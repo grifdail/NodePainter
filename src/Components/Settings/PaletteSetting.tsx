@@ -50,7 +50,7 @@ const ColorList = styled.ul`
 export const PaletteSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
   var list = value as Array<any>;
 
-  const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor);
+  const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor, false);
 
   return (
     <div>

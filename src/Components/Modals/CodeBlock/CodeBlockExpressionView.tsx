@@ -4,6 +4,7 @@ import { CodeBlockStatementList } from "./CodeBlockStatementList";
 import { PortType } from "../../../Types/PortType";
 import { PortColor } from "../../StyledComponents/PortColor";
 import { Fieldset } from "../../StyledComponents/Fieldset";
+import { CodeBlockVariableSelector } from "./CodeBlockVariableSelector";
 
 export const ExpressionDiv = styled.div<{ expand?: boolean }>`
   flex: 0 0 content;
@@ -30,6 +31,15 @@ export const CodeBlockExpressionView = ({ expression, id, onChange }: { expressi
       {expression.type === "statements" && (
         <CodeBlockStatementList
           statements={expression.value as CodeBlockStatement[]}
+          onChange={(value) => {
+            onChange({ ...expression, value });
+          }}
+        />
+      )}
+      {expression.type.indexOf("variable") === 0 && (
+        <CodeBlockVariableSelector
+          type={expression.type.slice(9) as PortType}
+          value={expression.value as string}
           onChange={(value) => {
             onChange({ ...expression, value });
           }}
