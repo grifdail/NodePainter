@@ -3,17 +3,17 @@ import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, ex
 export const IfStatement: CodeBlockStatementGenerator = {
   id: "if",
   execute(block, context) {
-    var result = evaluateExpression(block.subExpressions.condition, context) as boolean;
+    var result = evaluateExpression(block.parameters.condition, context) as boolean;
     if (result) {
-      executeStatementList(block.subExpressions.then.value as CodeBlockStatement[], context);
+      executeStatementList(block.parameters.then.value as CodeBlockStatement[], context);
     } else {
-      executeStatementList(block.subExpressions.else.value as CodeBlockStatement[], context);
+      executeStatementList(block.parameters.else.value as CodeBlockStatement[], context);
     }
   },
   create() {
     var data: CodeBlockStatement = {
       type: "if",
-      subExpressions: {
+      parameters: {
         condition: {
           type: "bool",
           value: null,

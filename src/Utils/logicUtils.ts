@@ -9,3 +9,5 @@ export const Comparator: { [key: string]: ComparatorFunc } = {
   "approximately equals": (a, b) => Math.abs(a - b) < 0.00001,
   "approximately different": (a, b) => Math.abs(a - b) > 0.00001,
 };
+
+export const ComparatorOps = Object.keys(Comparator);

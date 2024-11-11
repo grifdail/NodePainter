@@ -17,11 +17,12 @@ export type CodeBlockExpressionField = {
   type: CodeBlockPromptType;
   value: CodeBlockStatement | CodeBlockStatement[] | string | null;
   defaultValue: any;
+  options?: string[];
 };
 
 export type CodeBlockStatement = {
   type: string;
-  subExpressions: { [key: string]: CodeBlockExpressionField };
+  parameters: { [key: string]: CodeBlockExpressionField };
 };
 
 export type CodeBlockStatementGenerator = {
@@ -32,8 +33,8 @@ export type CodeBlockStatementGenerator = {
 
 export type CodeBlockExpressionGenerator = {
   id: string;
-  create(type: CodeBlockPromptType): CodeBlockStatement;
-  evaluateTo(): CodeBlockPromptType;
+  create(type: PortType): CodeBlockStatement;
+  canEvaluateTo(type: PortType): boolean;
   evaluate(statement: CodeBlockStatement, state: FunctionContext): any;
 };
 

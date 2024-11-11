@@ -14,6 +14,7 @@ export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: Por
   }
 
   var variables = [...CodeBlock.ownVariables, ...CodeBlock.inputVariables, ...CodeBlock.outputVariables];
+  console.log(type);
   const filterredVariable = type ? variables.filter((port) => port.type === type) : variables;
 
   const selected = filterredVariable.find((port) => port.id === value);
@@ -25,7 +26,7 @@ export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: Por
       value={value}
       className={selected?.type}
       passtrough={{
-        options: variables,
+        options: filterredVariable,
         templateRaw: (option: PortDefinition, args: any) => {
           var Icon = PortColor[option.type].icon;
           return (

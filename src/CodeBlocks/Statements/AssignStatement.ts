@@ -3,8 +3,8 @@ import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression } f
 export const AssignStatement: CodeBlockStatementGenerator = {
   id: `Assign`,
   execute(block, context) {
-    let result = evaluateExpression(block.subExpressions.value, context);
-    let variableName = block.subExpressions.target.value as string;
+    let result = evaluateExpression(block.parameters.value, context);
+    let variableName = block.parameters.target.value as string;
     if (context[variableName]) {
       context[variableName] = result;
     } else {
@@ -14,7 +14,7 @@ export const AssignStatement: CodeBlockStatementGenerator = {
   create() {
     var data: CodeBlockStatement = {
       type: AssignStatement.id,
-      subExpressions: {
+      parameters: {
         target: {
           type: `variable`,
           value: null,

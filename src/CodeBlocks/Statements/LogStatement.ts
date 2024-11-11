@@ -3,13 +3,13 @@ import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression } f
 export const LogStatement: CodeBlockStatementGenerator = {
   id: "Log",
   execute(block, context) {
-    var result = evaluateExpression(block.subExpressions.text, context);
+    var result = evaluateExpression(block.parameters.text, context);
     console.log(result);
   },
   create() {
     var data: CodeBlockStatement = {
       type: LogStatement.id,
-      subExpressions: {
+      parameters: {
         text: {
           type: "string",
           value: null,

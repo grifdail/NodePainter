@@ -30,8 +30,8 @@ export const StatementDiv = styled.div<{ expand?: boolean }>`
 type Props = {
   statement: CodeBlockStatement;
   onChange: (n: CodeBlockStatement) => void;
-  onDelete: () => void;
-  onMove: (dir: "up" | "down") => void;
+  onDelete?: () => void;
+  onMove?: (dir: "up" | "down") => void;
 };
 
 export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }: Props) => {
@@ -40,28 +40,34 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
       <div className="header">
         <h4>{statement.type}</h4>
         <ButtonGroup>
-          <InvisibleButton
-            icon={IconArrowMoveUp}
-            onClick={() => onMove("up")}
-            tooltip="Move up"></InvisibleButton>
-          <InvisibleButton
-            icon={IconArrowMoveDown}
-            onClick={() => onMove("down")}
-            tooltip="Move down"></InvisibleButton>
-          <InvisibleButton
-            icon={IconX}
-            onClick={onDelete}
-            tooltip="Delete"></InvisibleButton>
+          {onMove && (
+            <InvisibleButton
+              icon={IconArrowMoveUp}
+              onClick={() => onMove("up")}
+              tooltip="Move up"></InvisibleButton>
+          )}
+          {onMove && (
+            <InvisibleButton
+              icon={IconArrowMoveDown}
+              onClick={() => onMove("down")}
+              tooltip="Move down"></InvisibleButton>
+          )}
+          {onDelete && (
+            <InvisibleButton
+              icon={IconX}
+              onClick={onDelete}
+              tooltip="Delete"></InvisibleButton>
+          )}
         </ButtonGroup>
       </div>
 
-      {Object.entries(statement.subExpressions).map(([key, expression]) => (
+      {Object.entries(statement.parameters).map(([key, expression]) => (
         <CodeBlockExpressionView
           key={key}
           id={key}
           expression={expression}
           onChange={(v) => {
-            onChange({ ...statement, subExpressions: { ...statement.subExpressions, [key]: v } });
+            onChange({ ...statement, parameters: { ...statement.parameters, [key]: v } });
           }}
         />
       ))}

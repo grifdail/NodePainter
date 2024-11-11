@@ -6,7 +6,7 @@ import { CodeBlockStatementView, StatementDiv } from "./CodeBlockStatementView";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { CodeBlockStatementType } from "../../../CodeBlocks/CodeBlockTypes";
 
-export const RootDiv = styled.div<{ expand?: boolean }>`
+export const RootDiv = styled.div<{ $expand: boolean }>`
   background: var(--color-background-card);
   flex: 1 1 content;
   padding: var(--padding-medium);
@@ -15,7 +15,7 @@ export const RootDiv = styled.div<{ expand?: boolean }>`
   flex-direction: column;
   gap: var(--padding-small);
   ${(state) =>
-    state.expand
+    state.$expand
       ? css`
           flex: 1 1 content;
           overflow-y: auto;
@@ -37,9 +37,10 @@ export const CodeBlockStatementList = ({ statements, onChange }: { statements: C
   };
 
   return (
-    <RootDiv expand>
+    <RootDiv $expand>
       {statements.map((statement, index) => (
         <CodeBlockStatementView
+          key={index}
           statement={statement}
           onChange={(v) => change(index, v)}
           onDelete={() => remove(index)}
