@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
 import { CodeBlockParameterView } from "./CodeBlockParameterView";
 import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconX } from "@tabler/icons-react";

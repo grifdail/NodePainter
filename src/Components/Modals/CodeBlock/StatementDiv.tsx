@@ -1,4 +1,4 @@
-﻿import styled from "styled-components";
+import styled from "styled-components";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 
 export const StatementDiv = styled.div<{ expand?: boolean }>`
