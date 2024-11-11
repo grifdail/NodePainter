@@ -1,4 +1,4 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { Comparator, ComparatorOps } from "../../Utils/logicUtils";
@@ -43,5 +43,8 @@ export const CompareNumberExpression: CodeBlockExpressionGenerator = {
     } else {
       return false;
     }
+  },
+  toString(statement) {
+    return `( ${toStringExpression(statement.parameters.A)} is ${toStringExpression(statement.parameters.comparator)} ${toStringExpression(statement.parameters.B)} )`;
   },
 };

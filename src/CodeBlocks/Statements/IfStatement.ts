@@ -1,4 +1,4 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter } from "../../Types/CodeBlock";
+import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter, toStringExpression } from "../../Types/CodeBlock";
 
 export const IfStatement: CodeBlockStatementGenerator = {
   id: "if",
@@ -31,5 +31,8 @@ export const IfStatement: CodeBlockStatementGenerator = {
       },
     };
     return data;
+  },
+  toString(statement) {
+    return `If ${toStringExpression(statement.parameters.condition)}`;
   },
 };

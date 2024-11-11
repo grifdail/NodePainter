@@ -3,6 +3,7 @@ import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlock";
 import { PortType } from "../../../Types/PortType";
 import { RawValueField } from "../../Generics/RawValueField";
 import { CodeBlockExpressionMenu } from "./CodeBlockExpressionMenu";
+import { CodeBlockStatementView } from "./CodeBlockStatementView";
 
 export const ParameterExpressionView = ({ onChange, parameter }: { parameter: CodeBlockParameterFieldExpression; onChange: (value: CodeBlockParameterFieldExpression) => void }) => {
   if (parameter.expression === null) {
@@ -24,6 +25,12 @@ export const ParameterExpressionView = ({ onChange, parameter }: { parameter: Co
       </>
     );
   } else {
-    return null;
+    return (
+      <CodeBlockStatementView
+        statement={parameter.expression}
+        onChange={(expression) => onChange({ ...parameter, expression })}
+        onDelete={() => onChange({ ...parameter, expression: null })}
+      />
+    );
   }
 };

@@ -1,4 +1,4 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { FunctionContext } from "../../Utils/createExecutionContext";
@@ -28,5 +28,8 @@ export const ReadVariableExpression: CodeBlockExpressionGenerator = {
       return state[variable].value;
     }
     return createDefaultValue(statement.parameters.variable.targetType as PortType);
+  },
+  toString(statement) {
+    return `$${toStringExpression(statement.parameters.variable)}`;
   },
 };

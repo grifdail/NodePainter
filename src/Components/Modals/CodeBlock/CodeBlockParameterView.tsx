@@ -6,68 +6,83 @@ import { CodeBlockVariableSelector } from "./CodeBlockVariableSelector";
 import { RawValueField } from "../../Generics/RawValueField";
 import { ParameterExpressionView } from "./ParameterExpressionView";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
+import { StatementDiv } from "./StatementDiv";
 
 export const ExpressionDiv = styled.div<{ expand?: boolean }>`
-  flex: 0 0 content;
-  padding: var(--padding-small);
+  grid-column: 1 / 3;
   border-radius: var(--border-radius-small);
 
-  display: flex;
-  flex-direction: row;
-  gap: var(--padding-small);
+  display: grid;
+  grid-template-columns: subgrid;
 
-  & > fieldset {
-    flex: 1 1 10px;
+  & > label {
+    grid-column: 1 / 2;
   }
 
-  & > div {
-    flex: 1 1 10px;
+  & > div.content {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    margin: 0;
+
+    & > fieldset {
+      flex: 1 1 content;
+      align-items: stretch;
+    }
+
+    & > ${StatementDiv} {
+      flex: 1 1 content;
+      padding-right: 0;
+    }
   }
 `;
 export const CodeBlockParameterView = ({ expression, id, onChange }: { expression: CodeBlockParameterField; id: string; onChange: (v: CodeBlockParameterField) => void }) => {
   return (
     <ExpressionDiv>
       <label>{expression.label || id}</label>
-      {expression.type === "statements" && (
-        <CodeBlockStatementList
-          statements={expression.statements}
-          onChange={(statements) => {
-            onChange({ ...expression, statements });
-          }}
-        />
-      )}
-      {expression.type === "option" && (
-        <Fieldset
-          label=""
-          input={DropdownInput}
-          passtrough={{ options: expression.options }}
-          onChange={(value: any) => {
-            onChange({ ...expression, selectedOption: value });
-          }}
-          value={expression.selectedOption}></Fieldset>
-      )}
-      {expression.type === "variable" && (
-        <CodeBlockVariableSelector
-          type={expression.targetType}
-          value={expression.variableName}
-          onChange={(variableName) => {
-            onChange({ ...expression, variableName });
-          }}
-        />
-      )}
-      {expression.type === "value" && (
-        <RawValueField
-          onChange={(value: any) => onChange({ ...expression, value })}
-          type={expression.targetType}
-          value={expression.value}
-        />
-      )}
-      {expression.type === "expression" && (
-        <ParameterExpressionView
-          parameter={expression}
-          onChange={onChange}
-        />
-      )}
+      <div className="content">
+        {expression.type === "statements" && (
+          <CodeBlockStatementList
+            statements={expression.statements}
+            onChange={(statements) => {
+              onChange({ ...expression, statements });
+            }}
+          />
+        )}
+        {expression.type === "option" && (
+          <Fieldset
+            label=""
+            input={DropdownInput}
+            passtrough={{ options: expression.options }}
+            onChange={(value: any) => {
+              onChange({ ...expression, selectedOption: value });
+            }}
+            value={expression.selectedOption}></Fieldset>
+        )}
+        {expression.type === "variable" && (
+          <CodeBlockVariableSelector
+            type={expression.targetType}
+            value={expression.variableName}
+            onChange={(variableName) => {
+              onChange({ ...expression, variableName });
+            }}
+          />
+        )}
+        {expression.type === "value" && (
+          <RawValueField
+            onChange={(value: any) => onChange({ ...expression, value })}
+            type={expression.targetType}
+            value={expression.value}
+          />
+        )}
+        {expression.type === "expression" && (
+          <ParameterExpressionView
+            parameter={expression}
+            onChange={onChange}
+          />
+        )}
+      </div>
     </ExpressionDiv>
   );
 };

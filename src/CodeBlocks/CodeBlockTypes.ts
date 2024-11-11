@@ -18,3 +18,4 @@ const CodeBlocks: (CodeBlockStatementGenerator | CodeBlockExpressionGenerator)[]
 
 export const CodeBlockStatementTypes = Object.fromEntries(CodeBlocks.filter((b) => (b as any)["execute"] !== undefined).map((node) => [node.id, node as CodeBlockStatementGenerator]));
 export const CodeBlockExpressionTypes = Object.fromEntries(CodeBlocks.filter((b) => (b as any)["evaluate"] !== undefined).map((node) => [node.id, node as CodeBlockExpressionGenerator]));
+export const CodeBlockBlocksTypes = { ...CodeBlockExpressionTypes, ...CodeBlockStatementTypes };

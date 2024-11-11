@@ -1,31 +1,12 @@
 import styled from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
 import { CodeBlockParameterView } from "./CodeBlockParameterView";
-import { IconArrowMoveDown, IconArrowMoveUp, IconX } from "@tabler/icons-react";
+import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconX } from "@tabler/icons-react";
 import { InvisibleButton } from "../../Generics/Button";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
-
-export const StatementDiv = styled.div<{ expand?: boolean }>`
-  background: var(--color-background);
-  flex: 0 0 content;
-  padding: var(--padding-small);
-  border-radius: var(--border-radius-small);
-
-  & > div.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    & > h4 {
-      margin: 0;
-    }
-
-    & > ${ButtonGroup} {
-      padding: 0;
-    }
-  }
-`;
+import { CodeBlockBlocksTypes } from "../../../CodeBlocks/CodeBlockTypes";
+import { StatementDiv } from "./StatementDiv";
+import { useToggle } from "@uidotdev/usehooks";
 
 type Props = {
   statement: CodeBlockStatement;
@@ -35,11 +16,17 @@ type Props = {
 };
 
 export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }: Props) => {
+  var def = CodeBlockBlocksTypes[statement.type];
+  var [isOpen, toggleIsOpen] = useToggle(true);
   return (
     <StatementDiv>
       <div className="header">
-        <h4>{statement.type}</h4>
+        <h4>{def?.toString(statement) || statement.type}</h4>
         <ButtonGroup>
+          <InvisibleButton
+            icon={isOpen ? IconFoldUp : IconFoldDown}
+            tooltip={isOpen ? "Fold up" : "Fold Down"}
+            onClick={() => toggleIsOpen()}></InvisibleButton>
           {onMove && (
             <InvisibleButton
               icon={IconArrowMoveUp}
@@ -60,17 +47,20 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
           )}
         </ButtonGroup>
       </div>
-
-      {Object.entries(statement.parameters).map(([key, expression]) => (
-        <CodeBlockParameterView
-          key={key}
-          id={key}
-          expression={expression}
-          onChange={(v) => {
-            onChange({ ...statement, parameters: { ...statement.parameters, [key]: v } });
-          }}
-        />
-      ))}
+      {isOpen && (
+        <div className="parameters">
+          {Object.entries(statement.parameters).map(([key, expression]) => (
+            <CodeBlockParameterView
+              key={key}
+              id={key}
+              expression={expression}
+              onChange={(v) => {
+                onChange({ ...statement, parameters: { ...statement.parameters, [key]: v } });
+              }}
+            />
+          ))}
+        </div>
+      )}
     </StatementDiv>
   );
 };

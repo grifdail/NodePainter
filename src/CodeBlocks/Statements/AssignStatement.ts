@@ -1,4 +1,4 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 
 export const AssignStatement: CodeBlockStatementGenerator = {
   id: `Assign`,
@@ -28,5 +28,8 @@ export const AssignStatement: CodeBlockStatementGenerator = {
       },
     };
     return data;
+  },
+  toString(statement) {
+    return `Set ${toStringExpression(statement.parameters.target)} to ${toStringExpression(statement.parameters.value)}`;
   },
 };
