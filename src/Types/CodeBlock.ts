@@ -29,6 +29,7 @@ export type CodeBlockParameterFieldVariable = {
   type: "variable";
   targetType: PortType | "any";
   variableName?: string;
+  affectTypes?: string[];
 };
 export type CodeBlockParameterFieldStatements = {
   label?: string;

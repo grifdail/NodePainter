@@ -18,6 +18,7 @@ export const AssignStatement: CodeBlockStatementGenerator = {
         target: {
           type: `variable`,
           targetType: "any",
+          affectTypes: ["value"],
         },
         value: {
           type: "expression",

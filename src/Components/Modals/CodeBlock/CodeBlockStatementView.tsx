@@ -1,4 +1,4 @@
-import { CodeBlockStatement } from "../../../Types/CodeBlock";
+import { CodeBlockParameterField, CodeBlockStatement } from "../../../Types/CodeBlock";
 import { CodeBlockParameterView } from "./CodeBlockParameterView";
 import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconX } from "@tabler/icons-react";
 import { InvisibleButton } from "../../Generics/Button";
@@ -6,6 +6,10 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { CodeBlockBlocksTypes } from "../../../CodeBlocks/CodeBlockTypes";
 import { StatementDiv } from "./StatementDiv";
 import { useToggle } from "@uidotdev/usehooks";
+import { convertTypeValue } from "../../../Utils/convertTypeValue";
+import { PortType } from "../../../Types/PortType";
+import { useContext } from "react";
+import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
 
 type Props = {
   statement: CodeBlockStatement;
@@ -17,6 +21,29 @@ type Props = {
 export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }: Props) => {
   var def = CodeBlockBlocksTypes[statement.type];
   var [isOpen, toggleIsOpen] = useToggle(true);
+  var context = useContext(CodeBlockContext);
+
+  var variables = context ? [...context.localVariables, ...context.inputVariables, ...context.outputVariables] : [];
+
+  const changeParameter = (changedParam: CodeBlockParameterField, id: string) => {
+    let newParameters = { ...statement.parameters, [id]: changedParam };
+    if (changedParam.type === "variable" && changedParam.affectTypes) {
+      const newType = variables.find((port) => port.id === changedParam.variableName)?.type;
+      if (!newType) {
+        return;
+      }
+      changedParam.affectTypes.forEach((element) => {
+        var oldParam = newParameters[element];
+        if (oldParam.type === "expression" && oldParam.targetType !== newType) {
+          newParameters[element] = { ...oldParam, expression: null, targetType: newType, constantValue: convertTypeValue(oldParam.constantValue, oldParam.targetType, newType as PortType) };
+        } else if (oldParam.type === "value" && oldParam.targetType !== newType) {
+          newParameters[element] = { ...oldParam, targetType: newType, value: convertTypeValue(oldParam.value, oldParam.targetType, newType as PortType) };
+        }
+      });
+    }
+    onChange({ ...statement, parameters: newParameters });
+  };
+
   return (
     <StatementDiv>
       <div className="header">
@@ -53,9 +80,7 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
               key={key}
               id={key}
               expression={expression}
-              onChange={(v) => {
-                onChange({ ...statement, parameters: { ...statement.parameters, [key]: v } });
-              }}
+              onChange={(p) => changeParameter(p, key)}
             />
           ))}
         </div>
