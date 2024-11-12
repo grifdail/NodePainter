@@ -1,6 +1,6 @@
 import { IconAssembly, IconPlus } from "@tabler/icons-react";
-import { DropdownInput } from "../../Components/Inputs/DropdownInput";
-import { TextInput } from "../../Components/Inputs/TextInput";
+import { DropdownInput } from "../../Components/Generics/Inputs/DropdownInput";
+import { TextInput } from "../../Components/Generics/Inputs/TextInput";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";

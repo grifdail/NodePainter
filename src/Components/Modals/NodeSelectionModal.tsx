@@ -101,7 +101,6 @@ const TagRegex = /tag:(\w+)/gi;
 const parseSearchTerm = (raw: string): SearchTermData => {
   var base = raw.trim().toLowerCase();
   var result = Array.from(base.matchAll(TagRegex));
-  console.log(result, TagRegex, base.matchAll(TagRegex));
   return {
     name: base.replaceAll(TagRegex, "").trim(),
     tags: result.map((r) => r[1]),
@@ -181,26 +180,53 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   }
 
   return (
-    <Modal title="Add a new node" icon={IconPlus} onClose={close} size="small">
+    <Modal
+      title="Add a new node"
+      icon={IconPlus}
+      onClose={close}
+      size="small">
       <AddModalDiv>
         <SearchForm onSubmit={onSubmitSearch}>
           <span>
             <IconSearch> </IconSearch>
-            <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
+            <Input
+              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTermRaw}
+              placeholder="filter..."
+              autoFocus></Input>
           </span>
 
-          <Menu menuButton={<InvisibleButton icon={IconSortDescending} type="button" />} portal>
+          <Menu
+            menuButton={
+              <InvisibleButton
+                icon={IconSortDescending}
+                type="button"
+              />
+            }
+            portal>
             <MenuRadioGroup value={nodeFav.nodeSorting}>
-              <MenuItem type="radio" value="featured" onClick={() => nodeFav.setSorting("featured")}>
+              <MenuItem
+                type="radio"
+                value="featured"
+                onClick={() => nodeFav.setSorting("featured")}>
                 Featured
               </MenuItem>
-              <MenuItem type="radio" value="name" onClick={() => nodeFav.setSorting("name")}>
+              <MenuItem
+                type="radio"
+                value="name"
+                onClick={() => nodeFav.setSorting("name")}>
                 Name
               </MenuItem>
-              <MenuItem type="radio" value="last" onClick={() => nodeFav.setSorting("last")}>
+              <MenuItem
+                type="radio"
+                value="last"
+                onClick={() => nodeFav.setSorting("last")}>
                 Last used
               </MenuItem>
-              <MenuItem type="radio" value="most" onClick={() => nodeFav.setSorting("most")}>
+              <MenuItem
+                type="radio"
+                value="most"
+                onClick={() => nodeFav.setSorting("most")}>
                 Most used
               </MenuItem>
             </MenuRadioGroup>
@@ -208,7 +234,10 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         </SearchForm>
         <TagList>
           {tags.map((tag) => (
-            <CategoryButton key={tag} selected={searchTerm.tags.includes(tag.toLowerCase())} onClick={() => toggleTag(tag)}>
+            <CategoryButton
+              key={tag}
+              selected={searchTerm.tags.includes(tag.toLowerCase())}
+              onClick={() => toggleTag(tag)}>
               {tag}
             </CategoryButton>
           ))}
@@ -216,7 +245,13 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
 
         <NodeList>
           {finalList.map((item) => (
-            <NodePreview node={item} key={item.id} onClick={onClickNode} onFav={() => nodeFav.toggleFav(item.id)} isFav={nodeFav.favNodes.includes(item.id)} />
+            <NodePreview
+              node={item}
+              key={item.id}
+              onClick={onClickNode}
+              onFav={() => nodeFav.toggleFav(item.id)}
+              isFav={nodeFav.favNodes.includes(item.id)}
+            />
           ))}
         </NodeList>
       </AddModalDiv>

@@ -6,7 +6,7 @@ import styled, { css, RuleSet } from "styled-components";
 
 export type ModalSize = "small" | "medium" | "large" | "tiny" | "fullscreen";
 
-export const FullScreenDiv = styled.div<{ modal?: boolean }>`
+export const FullScreenDiv = styled.div<{ $modal: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -18,8 +18,8 @@ export const FullScreenDiv = styled.div<{ modal?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => (props.modal ? "var(--color-screen)" : "none")};
-  pointer-events: ${(props) => (props.modal ? "auto" : "none")};
+  background: ${(props) => (props.$modal ? "var(--color-screen)" : "none")};
+  pointer-events: ${(props) => (props.$modal ? "auto" : "none")};
 `;
 
 const ModalSizeCSS: { [key in ModalSize]: RuleSet } = {
@@ -157,13 +157,19 @@ export function Modal({ children, title, icon: Icon, onClose, stretch, size = "m
     },
   });
   return (
-    <FullScreenDiv modal>
-      <ModalBody size={size} style={styles} stretch={stretch}>
+    <FullScreenDiv $modal>
+      <ModalBody
+        size={size}
+        style={styles}
+        stretch={stretch}>
         <ModalHeader>
           {Icon && <Icon />}
           <h2>{title}</h2>
           {onClose && (
-            <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
+            <CloseButton
+              onClick={onClose}
+              data-tooltip-id="tooltip"
+              data-tooltip-content={`Close`}>
               <IconX />
             </CloseButton>
           )}

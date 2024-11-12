@@ -3,7 +3,6 @@ import { ExecutionContext } from "../Utils/createExecutionContext";
 import { MaterialData } from "./MaterialData";
 import { NodeData } from "./NodeData";
 import { PortDefinition } from "./PortDefinition";
-import { PortRole } from "./PortRole";
 import { PortType } from "./PortType";
 import { SettingDefinition } from "./SettingDefinition";
 import { TreeStore } from "./TreeStore";
@@ -33,8 +32,6 @@ export type NodeDefinition = {
   shaderRequirement?: string | string[];
   executeAs?: string;
   canBeExecuted?: boolean;
-  bindPort?: (portId: string, self: NodeData, outputPorts: PortDefinition, selfPosition: PortRole) => boolean;
-  unbindPort?: (portId: string, self: NodeData, selfPosition: PortRole) => void;
   contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];

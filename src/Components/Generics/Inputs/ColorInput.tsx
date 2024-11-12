@@ -1,15 +1,15 @@
-import { fromHex, invertColor, toHex, validateHex } from "../../Utils/colorUtils";
 import Sketch from "@uiw/react-color-sketch";
 
 import { Menu } from "@szhsin/react-menu";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { ReactNode, useMemo } from "react";
 import { InputProps } from "./InputProps";
-import { Color } from "../../Types/vectorDataType";
 
 import styled from "styled-components";
-import { Input, InputBackgroundColor } from "../StyledComponents/Input";
-import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
+import { Input, InputBackgroundColor } from "../../StyledComponents/Input";
+import { usePlayerPref } from "../../../Hooks/usePlayerPref";
+import { Color } from "../../../Types/vectorDataType";
+import { fromHex, invertColor, toHex, validateHex } from "../../../Utils/colorUtils";
+import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
 
 export const ColorButton = styled.button<{ $color: string }>`
   background: ${(props) => props.$color};

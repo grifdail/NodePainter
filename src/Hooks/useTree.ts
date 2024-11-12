@@ -17,6 +17,7 @@ import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
+import { canConvertCode, convertTypeValue } from "../Utils/convertTypeValue";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
 import { createDefaultValue } from "../Utils/createDefaultValue";
@@ -78,25 +79,13 @@ export const useTree = create<TreeStore>()(
               // eslint-disable-next-line eqeqeq
               if (port !== undefined) {
                 // If were binding data port.
-                const def = tree.getNodeTypeDefinition(node);
-                if (def.bindPort != null) {
-                  const canBind = def.bindPort(targetPort, node, tree.nodes[sourceId].dataOutputs[sourcePort], "outputData");
-                  if (!canBind) {
-                    return;
-                  }
-                }
+
                 port.hasConnection = true;
                 port.connectedNode = sourceId;
                 port.connectedPort = sourcePort;
               } else {
                 node = tree.nodes[sourceId] as NodeData;
-                const def = tree.getNodeTypeDefinition(node);
-                if (def.bindPort != null) {
-                  const canBind = def.bindPort(sourcePort, node, null, "outputExec");
-                  if (!canBind) {
-                    return;
-                  }
-                }
+
                 tree.nodes[sourceId].execOutputs[sourcePort] = targetId;
               }
             })
@@ -128,13 +117,9 @@ export const useTree = create<TreeStore>()(
             produce((state) => {
               const node = state.nodes[nodeId] as NodeData;
               const port = node.dataInputs[portId];
-              const def = state.getNodeTypeDefinition(node) as NodeDefinition;
               port.hasConnection = false;
               port.connectedNode = null;
               port.connectedPort = null;
-              if (def.unbindPort != null) {
-                def.unbindPort(portId, node, "inputData");
-              }
             })
           );
         },
@@ -217,13 +202,8 @@ export const useTree = create<TreeStore>()(
               }
 
               Object.values(nodes).forEach((item: NodeData) => {
-                var def = state.getNodeTypeDefinition(item);
                 Object.values(item.dataInputs).forEach((port) => {
                   if (port.hasConnection && port.connectedNode === node) {
-                    if (def.unbindPort != null) {
-                      def.unbindPort(port.id, item, "inputData");
-                    }
-
                     port.hasConnection = false;
                     port.connectedNode = null;
                     port.connectedPort = null;
@@ -231,9 +211,6 @@ export const useTree = create<TreeStore>()(
                 });
                 Object.entries(item.execOutputs).forEach(([key, target]) => {
                   if (target === node) {
-                    if (def.unbindPort != null) {
-                      def.unbindPort(key, item, "outputExecute");
-                    }
                     item.execOutputs[key] = null;
                   }
                 });
@@ -578,6 +555,87 @@ export const useTree = create<TreeStore>()(
         },
         sortAroundNode(nodeId) {
           set(produce((state) => sortAroundNode(state, nodeId)));
+        },
+        replaceInputs(filter, ports) {
+          set(
+            produce((state) =>
+              Object.values(state.nodes as NodeData[]).forEach((node) => {
+                if (!filter(node)) {
+                  return;
+                }
+                ports.forEach((port) => {
+                  if (node.dataInputs[port.id]) {
+                    var oldPort = node.dataInputs[port.id];
+                    var typeChange = oldPort.type !== port.type;
+                    oldPort.label = port.label;
+                    if (typeChange) {
+                      oldPort.ownValue = convertTypeValue(oldPort.ownValue, oldPort.type, port.type);
+
+                      if (oldPort.hasConnection) {
+                        var targetPort = state.nodes[oldPort.connectedNode as string].dataOutputs[oldPort.connectedPort as string] as PortDefinition;
+                        if (!canConvertCode(targetPort.type, port.type)) {
+                          oldPort.hasConnection = false;
+                          oldPort.connectedNode = null;
+                          oldPort.connectedPort = null;
+                        }
+                      }
+                      oldPort.type = port.type;
+                    }
+                  } else {
+                    node.dataInputs[port.id] = createPortConnection(port);
+                  }
+                });
+
+                Object.keys(node.dataInputs)
+                  .filter((id) => !ports.some((port) => port.id === id))
+                  .forEach((id) => {
+                    delete node.dataInputs[id];
+                  });
+              })
+            )
+          );
+        },
+        replaceOutput(filter, newPorts) {
+          set(
+            produce((state) =>
+              Object.values(state.nodes as NodeData[]).forEach((node) => {
+                if (!filter(node)) {
+                  return;
+                }
+                const allInputPorts = Object.values(state.nodes as NodeData[]).flatMap((node: NodeData) => Object.values(node.dataInputs));
+
+                const removeAllConnections = (portId: string, extraFilter?: (port: PortConnection) => boolean) => {
+                  allInputPorts.forEach((port) => {
+                    if (port.hasConnection && port.connectedNode === node.id && port.connectedPort === portId && (!extraFilter || extraFilter(port))) {
+                      port.hasConnection = false;
+                      port.connectedNode = null;
+                      port.connectedPort = null;
+                    }
+                  });
+                };
+                newPorts.forEach((newPort) => {
+                  if (node.dataOutputs[newPort.id]) {
+                    var oldPort = node.dataOutputs[newPort.id];
+                    var typeChange = oldPort.type !== newPort.type;
+                    oldPort.label = newPort.label;
+                    if (typeChange) {
+                      removeAllConnections(newPort.id, (targetPort) => !canConvertCode(targetPort.type, newPort.type));
+                      oldPort.type = newPort.type;
+                    }
+                  } else {
+                    node.dataOutputs[newPort.id] = structuredClone(newPort);
+                  }
+                });
+
+                Object.keys(node.dataOutputs)
+                  .filter((id) => !newPorts.some((port) => port.id === id))
+                  .forEach((id) => {
+                    removeAllConnections(id);
+                    delete node.dataOutputs[id];
+                  });
+              })
+            )
+          );
         },
       };
       return a;

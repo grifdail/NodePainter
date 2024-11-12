@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { InputProps } from "./InputProps";
 import { IconTriangleInverted } from "@tabler/icons-react";
 import { ReactNode } from "react";
-import { InputBackgroundColor } from "../StyledComponents/Input";
+import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const StyledButton = styled.button`
   flex: 1 1 content;

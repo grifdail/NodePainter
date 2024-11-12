@@ -9,3 +9,19 @@ export const Comparator: { [key: string]: ComparatorFunc } = {
   "approximately equals": (a, b) => Math.abs(a - b) < 0.00001,
   "approximately different": (a, b) => Math.abs(a - b) > 0.00001,
 };
+
+export const ComparatorOps = Object.keys(Comparator);
+
+type OperationFunc = (a: number, b: number) => number;
+export const MathOperation: { [key: string]: OperationFunc } = {
+  "+": (a, b) => a + b,
+  "-": (a, b) => a - b,
+  "*": (a, b) => a * b,
+  "/": (a, b) => a / b,
+  "%": (a, b) => a % b,
+  max: (a, b) => Math.max(a, b),
+  min: (a, b) => Math.min(a, b),
+  pow: (a, b) => Math.pow(a, b),
+};
+
+export const MathOperationOps = Object.keys(MathOperation);

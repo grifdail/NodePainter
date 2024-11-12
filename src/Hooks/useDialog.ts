@@ -2,7 +2,7 @@ import { Icon } from "@tabler/icons-react";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
-import { InputProps } from "../Components/Inputs/InputProps";
+import { InputProps } from "../Components/Generics/Inputs/InputProps";
 
 export type DialogueButtonData = {
   key: any;

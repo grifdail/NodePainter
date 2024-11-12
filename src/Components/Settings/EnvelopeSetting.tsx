@@ -2,7 +2,6 @@ import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconPlus, IconX } from "@tabler/icons-react";
-import { NumberInput } from "../Inputs/NumberInput";
 import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeStop, interpolateEnvelope } from "../../Types/EnvelopeData";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Button } from "../Generics/Button";
@@ -12,6 +11,7 @@ import { moveUpArray } from "../../Utils/moveUpArray";
 import { calculatePathForFunction } from "./calculatePathForFunction";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
 
 const ColorList = styled.ul`
   display: flex;
