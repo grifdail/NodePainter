@@ -1,7 +1,7 @@
 import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 
 export const LogStatement: CodeBlockStatementGenerator = {
-  id: "Log",
+  id: "Debug/Log",
   execute(block, context) {
     var result = evaluateExpression(block.parameters.text, context);
     console.log(result);

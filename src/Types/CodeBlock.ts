@@ -65,6 +65,8 @@ export type CodeBlockExpressionGenerator = {
   toString(statement: CodeBlockStatement): string;
 };
 
+export type CodeBlockGenerator = CodeBlockExpressionGenerator | CodeBlockStatementGenerator;
+
 export const createDefaultCodeBlock = (): CodeBlock => {
   return {
     statements: [],

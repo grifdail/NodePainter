@@ -6,6 +6,10 @@ import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { CodeBlockStatementTypes } from "../../../CodeBlocks/CodeBlockTypes";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { StatementDiv } from "./StatementDiv";
+import { Menu } from "@szhsin/react-menu";
+import { IconPlus } from "@tabler/icons-react";
+import path from "path";
+import { buildMenuItems } from "./buildMenuItems";
 
 export const RootDiv = styled.div<{ $expand: boolean }>`
   background: var(--color-background-card);
@@ -25,6 +29,17 @@ export const RootDiv = styled.div<{ $expand: boolean }>`
           flex: 0 0 content;
           overflow: auto;
         `};
+`;
+
+export const AddButtonStyled = styled.button`
+  flex: 0 0 content;
+  background: var(--color-background-card);
+  align-self: center;
+  width: 25px;
+  display: block;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 `;
 
 export const CodeBlockStatementList = ({ statements, onChange }: { statements: CodeBlockStatement[]; onChange: (statements: CodeBlockStatement[]) => void }) => {
@@ -47,15 +62,19 @@ export const CodeBlockStatementList = ({ statements, onChange }: { statements: C
           onDelete={() => remove(index)}
           onMove={(dir: "up" | "down") => move(index, dir)}></CodeBlockStatementView>
       ))}
-      <StatementDiv>
-        <Fieldset
-          input={DropdownInput}
-          label=""
-          value="..."
-          onChange={addStatement}
-          passtrough={{ options: Object.keys(CodeBlockStatementTypes) }}
-        />
-      </StatementDiv>
+
+      <Menu
+        menuButton={
+          <AddButtonStyled>
+            <IconPlus></IconPlus>
+          </AddButtonStyled>
+        }
+        portal
+        align="center"
+        arrow
+        overflow="auto">
+        {buildMenuItems(CodeBlockStatementTypes, addStatement)}
+      </Menu>
     </RootDiv>
   );
 };

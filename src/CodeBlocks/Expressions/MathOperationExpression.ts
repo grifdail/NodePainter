@@ -4,7 +4,7 @@ import { FunctionContext } from "../../Utils/createExecutionContext";
 import { MathOperation, MathOperationOps } from "../../Utils/logicUtils";
 
 export const MathOperationExpression: CodeBlockExpressionGenerator = {
-  id: "MathOperation",
+  id: "Math/MathOperation",
   create: function (type: PortType): CodeBlockStatement {
     return {
       type: MathOperationExpression.id,

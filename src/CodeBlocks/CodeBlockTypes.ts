@@ -1,4 +1,4 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatementGenerator } from "../Types/CodeBlock";
+import { CodeBlockExpressionGenerator, CodeBlockGenerator, CodeBlockStatementGenerator } from "../Types/CodeBlock";
 import { CompareNumberExpression } from "./Expressions/CompareNumberExpression";
 import { MathOperationExpression } from "./Expressions/MathOperationExpression";
 import { ReadVariableExpression } from "./Expressions/ReadVariable";
@@ -6,11 +6,11 @@ import { AssignStatement } from "./Statements/AssignStatement";
 import { IfStatement } from "./Statements/IfStatement";
 import { LogStatement } from "./Statements/LogStatement";
 
-const CodeBlocks: (CodeBlockStatementGenerator | CodeBlockExpressionGenerator)[] = [
+const CodeBlocks: CodeBlockGenerator[] = [
   //Statement
-  LogStatement,
   IfStatement,
   AssignStatement,
+  LogStatement,
 
   //Expression
   ReadVariableExpression,
