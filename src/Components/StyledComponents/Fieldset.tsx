@@ -39,13 +39,14 @@ type FieldsetProps = {
   className?: string;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className, style }: FieldsetProps) => {
   var id = useId();
   return (
     <FieldsetStyled
       data-tooltip-id="tooltip"
       data-tooltip-content={tooltip}
-      className={className}>
+      className={className}
+      style={style}>
       <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
       {Input && (
         <Input

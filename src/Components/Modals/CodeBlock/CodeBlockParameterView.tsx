@@ -7,6 +7,7 @@ import { RawValueField } from "../../Generics/RawValueField";
 import { ParameterExpressionView } from "./ParameterExpressionView";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { StatementDiv } from "./StatementDiv";
+import { InvisibleButtonStyled } from "../../Generics/Button";
 
 export const ExpressionDiv = styled.div<{ expand?: boolean }>`
   grid-column: 1 / 3;
@@ -31,9 +32,14 @@ export const ExpressionDiv = styled.div<{ expand?: boolean }>`
       align-items: stretch;
     }
 
+    & > ${InvisibleButtonStyled} {
+      padding: var(--padding-small);
+    }
+
     & > ${StatementDiv} {
       flex: 1 1 content;
       padding-right: 0;
+      background: rgba(128, 128, 128, 0.05);
     }
   }
 `;

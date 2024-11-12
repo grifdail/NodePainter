@@ -10,6 +10,7 @@ export const RawValueField = ({ value, onChange, type }: { type: PortType | "any
       return (
         <Fieldset
           label=""
+          className={type}
           input={InputType}
           onChange={onChange}
           value={value}></Fieldset>
