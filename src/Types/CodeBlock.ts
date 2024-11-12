@@ -5,7 +5,7 @@ import { PortType } from "./PortType";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];
-  ownVariables: PortDefinition[];
+  localVariables: PortDefinition[];
   inputVariables: PortDefinition[];
   outputVariables: PortDefinition[];
 };
@@ -67,7 +67,7 @@ export type CodeBlockExpressionGenerator = {
 export const createDefaultCodeBlock = (): CodeBlock => {
   return {
     statements: [],
-    ownVariables: [],
+    localVariables: [],
     inputVariables: [],
     outputVariables: [],
   };

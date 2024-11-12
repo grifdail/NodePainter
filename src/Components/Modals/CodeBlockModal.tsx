@@ -44,23 +44,25 @@ export function CodeBlockModal() {
       <MainDiv>
         <VariableSection>
           <PortEditList
-            ports={codeBlock.ownVariables}
+            ports={codeBlock.localVariables}
             label="Variables"
             prefix="var"
             availableTypes={FullCommonTypes}
-            onChange={state.setOwnVariable}
+            onChange={(ports) => state.setVariables(ports, "local")}
           />
           <PortEditList
             ports={codeBlock.inputVariables}
             label="Inputs"
-            prefix="var"
+            prefix="in"
             availableTypes={FullCommonTypes}
+            onChange={(ports) => state.setVariables(ports, "input")}
           />
           <PortEditList
             ports={codeBlock.outputVariables}
             label="Outputs"
-            prefix="var"
+            prefix="out"
             availableTypes={FullCommonTypes}
+            onChange={(ports) => state.setVariables(ports, "output")}
           />
         </VariableSection>
         <CodeBlockContext.Provider value={codeBlock}>

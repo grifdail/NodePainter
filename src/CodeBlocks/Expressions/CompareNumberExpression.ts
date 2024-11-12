@@ -34,7 +34,7 @@ export const CompareNumberExpression: CodeBlockExpressionGenerator = {
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
     var a = evaluateExpression(statement.parameters.A, state) as number;
-    var b = evaluateExpression(statement.parameters.A, state) as number;
+    var b = evaluateExpression(statement.parameters.B, state) as number;
 
     var comparator = evaluateExpression(statement.parameters.comparator, state) as string;
     var func = Comparator[comparator];

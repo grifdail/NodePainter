@@ -7,7 +7,7 @@ import { useRouter } from "./useRouter";
 
 export type CodeBlockModalStore = {
   setStatements: (statements: CodeBlockStatement[]) => void;
-  setOwnVariable: (newList: PortDefinition[]) => void;
+  setVariables: (newList: PortDefinition[], type: "input" | "output" | "local") => void;
   callback: ((newValue: any) => void) | null;
   current: CodeBlock;
   open: (current: CodeBlock, callback: (newValue: any) => void) => void;
@@ -31,10 +31,16 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
       }
       useRouter.getState().close();
     },
-    setOwnVariable(newList) {
+    setVariables(newList, type) {
       set(
         produce((state) => {
-          state.current.ownVariables = newList;
+          if (type === "local") {
+            state.current.localVariables = newList;
+          } else if (type === "input") {
+            state.current.inputVariables = newList;
+          } else if (type === "output") {
+            state.current.outputVariables = newList;
+          }
         })
       );
     },

@@ -54,4 +54,6 @@ export type TreeStore = {
   createBlackboardNode: (port: BlackboardPortData[], name: string, x: number, y: number, pairedNode: string) => void;
   dangerouselyUpdateNode: (nodeId: string, cb: (node: NodeData) => void) => void;
   sortAroundNode: (nodeId: string) => void;
+  replaceInputs: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
+  replaceOutput: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
 };

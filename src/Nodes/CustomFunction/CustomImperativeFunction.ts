@@ -1,5 +1,5 @@
 import { IconCodeDots } from "@tabler/icons-react";
-import { createDefaultCodeBlock, executeStatementParameter } from "../../Types/CodeBlock";
+import { CodeBlock, createDefaultCodeBlock, executeStatementList } from "../../Types/CodeBlock";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 export const CUSTOM_IMPERATIVE_FUNCTION = "CustomImperativeFunction";
 
@@ -38,9 +38,9 @@ export const CustomImperativeFunction: NodeDefinition = {
       state[key] = { type: value.type, value: value.defaultValue };
     });
 
-    var codeBlock = data.settings.code;
-
-    executeStatementParameter(codeBlock.statements, state);
+    var codeBlock = data.settings.code as CodeBlock;
+    codeBlock.localVariables.forEach((port) => (state[port.id] = { type: port.type, value: port.defaultValue }));
+    executeStatementList(codeBlock.statements, state);
     context.blackboard[stateId] = state;
 
     var execute = data.execOutputs["execute"];

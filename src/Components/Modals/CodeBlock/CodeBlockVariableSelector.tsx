@@ -13,7 +13,7 @@ export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: Por
     return null;
   }
 
-  var variables = [...CodeBlock.ownVariables, ...CodeBlock.inputVariables, ...CodeBlock.outputVariables];
+  var variables = [...CodeBlock.localVariables, ...CodeBlock.inputVariables, ...CodeBlock.outputVariables];
   const filterredVariable = type === "any" ? variables : variables.filter((port) => port.type === type);
 
   const selected = filterredVariable.find((port) => port.id === value);

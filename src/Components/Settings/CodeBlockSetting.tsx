@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { IconCode } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
+import { useTree } from "../../Hooks/useTree";
+import { CodeBlock } from "../../Types/CodeBlock";
 
 const Body = styled.div`
   width: 100%;
@@ -31,12 +33,19 @@ const Body = styled.div`
   }
 `;
 
-export const CodeBlockSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const CodeBlockSetting: SettingComponent = function ({ onChange, value, def, node }: SettingProps) {
   return (
     <Body>
       <ButtonGroup hidden={value !== null}>
         <Button
-          onClick={() => useCodeBlockModal.getState().open(value, onChange)}
+          onClick={() =>
+            useCodeBlockModal.getState().open(value, (newCodeBlock: CodeBlock) => {
+              onChange(newCodeBlock);
+              var tree = useTree.getState();
+              tree.replaceInputs((t) => t.id === node.id, newCodeBlock.inputVariables);
+              tree.replaceOutput((t) => t.id === node.id, newCodeBlock.outputVariables);
+            })
+          }
           label="Edit"
           icon={IconCode}
         />

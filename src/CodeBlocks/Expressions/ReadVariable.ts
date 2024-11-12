@@ -24,6 +24,7 @@ export const ReadVariableExpression: CodeBlockExpressionGenerator = {
       throw new Error("Parameter Variable is of the wrong type");
     }
     var variable = evaluateExpression(statement.parameters.variable, state) as string;
+
     if (variable && state[variable] !== undefined) {
       return state[variable].value;
     }
