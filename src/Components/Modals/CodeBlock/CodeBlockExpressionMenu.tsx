@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Menu } from "@szhsin/react-menu";
 import { IconMenu2 } from "@tabler/icons-react";
 import { CodeBlockExpressionTypes } from "../../../CodeBlocks/CodeBlockTypes";
 import { PortType } from "../../../Types/PortType";

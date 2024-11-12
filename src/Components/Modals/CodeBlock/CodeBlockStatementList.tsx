@@ -1,14 +1,10 @@
 import styled, { css } from "styled-components";
 import { CodeBlockStatement } from "../../../Types/CodeBlock";
-import { Fieldset } from "../../StyledComponents/Fieldset";
 import { CodeBlockStatementView } from "./CodeBlockStatementView";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { CodeBlockStatementTypes } from "../../../CodeBlocks/CodeBlockTypes";
-import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
-import { StatementDiv } from "./StatementDiv";
 import { Menu } from "@szhsin/react-menu";
 import { IconPlus } from "@tabler/icons-react";
-import path from "path";
 import { buildMenuItems } from "./buildMenuItems";
 
 export const RootDiv = styled.div<{ $expand: boolean }>`

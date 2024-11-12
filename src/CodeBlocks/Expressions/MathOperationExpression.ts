@@ -1,4 +1,4 @@
-﻿import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { MathOperation, MathOperationOps } from "../../Utils/logicUtils";
