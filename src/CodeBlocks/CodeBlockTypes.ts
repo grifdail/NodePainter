@@ -5,12 +5,14 @@ import { ReadVariableExpression } from "./Expressions/ReadVariable";
 import { AssignStatement } from "./Statements/AssignStatement";
 import { IfStatement } from "./Statements/IfStatement";
 import { LogStatement } from "./Statements/LogStatement";
+import { WhileStatement } from "./Statements/WhileStatement";
 
 const CodeBlocks: CodeBlockGenerator[] = [
   //Statement
   IfStatement,
   AssignStatement,
   LogStatement,
+  WhileStatement,
 
   //Expression
   ReadVariableExpression,
