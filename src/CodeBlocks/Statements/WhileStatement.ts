@@ -1,10 +1,9 @@
-﻿import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter, toStringExpression } from "../../Types/CodeBlock";
 
 export const WhileStatement: CodeBlockStatementGenerator = {
   id: "While",
   execute(block, context) {
-    var safety = 60000000000;
-    while ((evaluateExpression(block.parameters.condition, context) as boolean) && safety-- > 0) {
+    while (evaluateExpression(block.parameters.condition, context) as boolean) {
       executeStatementParameter(block.parameters.do, context);
     }
   },

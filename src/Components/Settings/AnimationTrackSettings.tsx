@@ -1,6 +1,6 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { IconX } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";
@@ -10,7 +10,6 @@ import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { useListManipulator } from "../../Hooks/useListManipulator";
-import { on } from "events";
 
 const ColorList = styled.ul`
   display: flex;
