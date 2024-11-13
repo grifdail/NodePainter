@@ -2,6 +2,9 @@ import { CodeBlockExpressionGenerator, CodeBlockGenerator, CodeBlockStatementGen
 import { CompareNumberExpression } from "./Expressions/CompareNumberExpression";
 import { MathOperationExpression } from "./Expressions/MathOperationExpression";
 import { ReadVariableExpression } from "./Expressions/ReadVariable";
+import { VectorDistanceExpression } from "./Expressions/VectorDistanceExpression";
+import { VectorDotProductExpression } from "./Expressions/VectorDotProductExpression";
+import { VectorOperationExpression } from "./Expressions/VectorOperationExpression";
 import { AssignStatement } from "./Statements/AssignStatement";
 import { IfStatement } from "./Statements/IfStatement";
 import { LogStatement } from "./Statements/LogStatement";
@@ -18,6 +21,9 @@ const CodeBlocks: CodeBlockGenerator[] = [
   ReadVariableExpression,
   CompareNumberExpression,
   MathOperationExpression,
+  VectorOperationExpression,
+  VectorDistanceExpression,
+  VectorDotProductExpression,
 ];
 
 export const CodeBlockStatementTypes = Object.fromEntries(CodeBlocks.filter((b) => (b as any)["execute"] !== undefined).map((node) => [node.id, node as CodeBlockStatementGenerator]));

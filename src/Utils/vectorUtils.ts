@@ -54,3 +54,13 @@ export function EnforceGoodType(nodeData: NodeData, arg1: number[]): any {
 export function VectorIsZero(normal: number[]) {
   return normal.every((comp) => Math.abs(comp) < Number.EPSILON);
 }
+
+export type VectorOperationFunc = (a: number[], b: number[]) => number[];
+export const VectorOperations: { [key: string]: VectorOperationFunc } = {
+  "+": VectorAddition,
+  "-": VectorSubstraction,
+  "*": VectorMultiplication,
+  "/": VectorDivision,
+};
+
+export const VectorOperationTypes = Object.keys(VectorOperations);

@@ -1,43 +1,44 @@
 import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
+import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { FunctionContext } from "../../Utils/createExecutionContext";
-import { MathOperationTypes, NumberOperations } from "../../Utils/logicUtils";
+import { VectorOperations, VectorOperationTypes } from "../../Utils/vectorUtils";
 
-export const MathOperationExpression: CodeBlockExpressionGenerator = {
-  id: "MathOperation",
+export const VectorOperationExpression: CodeBlockExpressionGenerator = {
+  id: "Vector/VectorOperationExpression",
   create: function (type: PortType): CodeBlockStatement {
     return {
-      type: MathOperationExpression.id,
+      type: VectorOperationExpression.id,
       parameters: {
         A: {
           type: "expression",
-          targetType: `number`,
-          constantValue: 0,
+          targetType: type,
+          constantValue: createDefaultValue(type),
           expression: null,
         },
         operator: {
           type: `option`,
-          selectedOption: MathOperationTypes[0],
-          options: MathOperationTypes,
+          selectedOption: VectorOperationTypes[0],
+          options: VectorOperationTypes,
         },
         B: {
           type: "expression",
-          targetType: `number`,
-          constantValue: 0,
+          targetType: type,
+          constantValue: createDefaultValue(type),
           expression: null,
         },
       },
     };
   },
   canEvaluateTo: function (type: PortType): boolean {
-    return type === "number";
+    return type === "vector2" || type === "vector3" || type === "color" || type === "vector4";
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var a = evaluateExpression(statement.parameters.A, state) as number;
-    var b = evaluateExpression(statement.parameters.B, state) as number;
+    var a = evaluateExpression(statement.parameters.A, state) as number[];
+    var b = evaluateExpression(statement.parameters.B, state) as number[];
 
     var comparator = evaluateExpression(statement.parameters.operator, state) as string;
-    var func = NumberOperations[comparator];
+    var func = VectorOperations[comparator];
     if (func !== undefined) {
       return func(a, b);
     } else {

@@ -13,7 +13,7 @@ export const Comparator: { [key: string]: ComparatorFunc } = {
 export const ComparatorOps = Object.keys(Comparator);
 
 type OperationFunc = (a: number, b: number) => number;
-export const MathOperation: { [key: string]: OperationFunc } = {
+export const NumberOperations: { [key: string]: OperationFunc } = {
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
   "*": (a, b) => a * b,
@@ -24,4 +24,4 @@ export const MathOperation: { [key: string]: OperationFunc } = {
   pow: (a, b) => Math.pow(a, b),
 };
 
-export const MathOperationOps = Object.keys(MathOperation);
+export const MathOperationTypes = Object.keys(NumberOperations);
