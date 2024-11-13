@@ -101,7 +101,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.time = time;
     context.deltaTime = frameRate;
     var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
-    context.p5.randomSeed(seed);
+
     context.RNG = new Rand(seed.toString());
     context.frameBlackboard = {};
     context.execute(START_NODE);

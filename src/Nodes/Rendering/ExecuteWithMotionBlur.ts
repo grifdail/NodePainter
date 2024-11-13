@@ -1,4 +1,5 @@
 import { IconColorFilter } from "@tabler/icons-react";
+import Rand from "rand-seed";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const ExecuteWithMotionBlur: NodeDefinition = {
@@ -28,8 +29,11 @@ export const ExecuteWithMotionBlur: NodeDefinition = {
     var opacity = context.getInputValueNumber(node, "opacity");
     var oldTarget = context.target;
     var oldTime = context.time;
+    var oldRng = context.RNG;
+    var newSeed = oldRng.next().toString();
     for (let i = 0; i < imageCount; i++) {
       graphic.clear();
+      context.RNG = new Rand(newSeed);
       context.target = graphic;
       context.time = oldTime - (i / imageCount) * timeFrame * 1000;
       if (node.execOutputs.execute) {
@@ -40,9 +44,11 @@ export const ExecuteWithMotionBlur: NodeDefinition = {
     }
     context.time = oldTime;
     context.target = oldTarget;
+    context.RNG = new Rand(newSeed);
     oldTarget.tint(255, 255);
     if (node.execOutputs.execute) {
       context.execute(node.execOutputs.execute);
     }
+    context.RNG = oldRng;
   },
 };

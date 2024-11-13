@@ -12,6 +12,7 @@ export const StatementDiv = styled.div<{ expand?: boolean }>`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--padding-small);
 
     & > h4 {
       margin: 0;
@@ -19,6 +20,11 @@ export const StatementDiv = styled.div<{ expand?: boolean }>`
 
     & > ${ButtonGroup} {
       padding: 0;
+      gap: 0;
+
+      & button {
+        padding: var(--padding-small);
+      }
     }
   }
 

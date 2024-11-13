@@ -84,7 +84,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   p5.draw = () => {
     context.frameBlackboard = {};
-    p5.randomSeed(seed);
+
     context.RNG = new Rand(seed.toString());
     context.time = p5.millis();
     context.deltaTime = p5.deltaTime;

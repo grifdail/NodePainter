@@ -30,6 +30,7 @@ export const ExpressionDiv = styled.div<{ expand?: boolean }>`
     & > fieldset {
       flex: 1 1 content;
       align-items: stretch;
+      padding-right: var(--padding-small);
     }
 
     & > ${InvisibleButtonStyled} {
@@ -40,6 +41,15 @@ export const ExpressionDiv = styled.div<{ expand?: boolean }>`
       flex: 1 1 content;
       padding-right: 0;
       background: rgba(128, 128, 128, 0.05);
+    }
+  }
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+
+    & > label {
+      margin-bottom: var(--padding-small);
     }
   }
 `;

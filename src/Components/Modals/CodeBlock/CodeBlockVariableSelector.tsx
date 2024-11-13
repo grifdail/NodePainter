@@ -21,7 +21,7 @@ export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: Por
     <Fieldset
       label=""
       input={DropdownInput}
-      onChange={(data) => onChange(data.id)}
+      onChange={(data: any) => onChange(data.id)}
       value={value}
       className={selected?.type}
       passtrough={{

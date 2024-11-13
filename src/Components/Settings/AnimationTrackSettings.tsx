@@ -1,6 +1,6 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IconX } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";
@@ -9,6 +9,8 @@ import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { useListManipulator } from "../../Hooks/useListManipulator";
+import { on } from "events";
 
 const ColorList = styled.ul`
   display: flex;
@@ -56,32 +58,25 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
   const type = track.type;
   var portDescription = PortColor[type];
   var PortSettings = portDescription.input;
-  var list = track.keyframes;
+
+  var { change, addNew, remove } = useListManipulator(
+    track.keyframes,
+    (list) => {
+      list.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
+      onChange({ ...track, keyframes: list });
+    },
+    () => createDefaultAnimationKeyframe(type),
+    false
+  );
 
   function onChangeValue(i: number, newValue: any): void {
-    onChange({ ...track, keyframes: [...list.slice(0, i), { ...list[i], value: newValue }, ...list.slice(i + 1, list.length)] });
+    change(i, { ...track.keyframes[i], value: newValue });
   }
   function onChangePosition(i: number, pos: any): void {
-    var newList: AnimationKeyFrame[] = [...list.slice(0, i), { ...list[i], pos: Math.min(1, Math.max(pos, 0)) }, ...list.slice(i + 1, list.length)];
-    newList.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
-    onChange({ ...track, keyframes: newList });
+    change(i, { ...track.keyframes[i], pos: pos });
   }
   function onChangeLerp(i: number, newLerp: any): void {
-    var newList: AnimationKeyFrame[] = [...list.slice(0, i), { ...list[i], lerp: newLerp }, ...list.slice(i + 1, list.length)];
-    newList.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
-    onChange({ ...track, keyframes: newList });
-  }
-
-  function addNewColor(): void {
-    var newList: AnimationKeyFrame[] = [...list, createDefaultAnimationKeyframe(track.type)];
-    newList.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
-    onChange({ ...track, keyframes: newList });
-  }
-
-  function removeTrack(i: number): void {
-    if (list.length > 2) {
-      onChange([...list.slice(0, i), ...list.slice(i + 1, list.length)]);
-    }
+    change(i, { ...track.keyframes[i], lerp: newLerp });
   }
 
   return (
@@ -120,7 +115,7 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
             </Menu>
             <button
               className="delete"
-              onClick={() => removeTrack(i)}
+              onClick={() => remove(i)}
               disabled={track.keyframes.length <= 1}>
               <IconX />
             </button>
@@ -130,7 +125,7 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
 
       <ButtonGroup>
         <Button
-          onClick={addNewColor}
+          onClick={() => addNew()}
           label="Add"
         />
       </ButtonGroup>

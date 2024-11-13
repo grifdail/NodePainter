@@ -1,5 +1,5 @@
 import { IconEaseInOut } from "@tabler/icons-react";
-import { Easing } from "../../libs/easing";
+import { EasingFunctionType, evaluate } from "../../libs/easing";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const EasingNode: NodeDefinition = {
@@ -22,12 +22,8 @@ export const EasingNode: NodeDefinition = {
 
   getData: (portId, nodeData, context) => {
     var input = context.getInputValueNumber(nodeData, "input");
-    var funcName = nodeData.settings.easing as string;
-    var func = (Easing as any)[funcName];
-    if (func !== undefined) {
-      return func(input);
-    } else {
-      return input;
-    }
+    var funcName = nodeData.settings.easing as EasingFunctionType;
+    console.log(funcName);
+    return evaluate(funcName, input);
   },
 };
