@@ -1,4 +1,4 @@
-﻿import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { CommonTypes, PortType } from "../../Types/PortType";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 
