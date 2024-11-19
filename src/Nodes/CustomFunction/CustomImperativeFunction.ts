@@ -29,13 +29,13 @@ export const CustomImperativeFunction: NodeDefinition = {
       state = context.blackboard[stateId];
     }
 
-    return state[portId];
+    return state[portId].value;
   },
   execute: (data, context) => {
     const stateId = `${data.id}-state`;
     let state = context.createFunctionContext(data);
     Object.entries(data.dataOutputs).forEach(([key, value]) => {
-      state[key] = { type: value.type, value: value.defaultValue };
+      state[key] = { type: value.type, value: structuredClone(value.defaultValue) };
     });
 
     var codeBlock = data.settings.code as CodeBlock;

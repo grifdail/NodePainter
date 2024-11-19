@@ -1,10 +1,14 @@
 import { CodeBlockExpressionGenerator, CodeBlockGenerator, CodeBlockStatementGenerator } from "../Types/CodeBlock";
 import { CompareNumberExpression } from "./Expressions/CompareNumberExpression";
 import { MathOperationExpression } from "./Expressions/MathOperationExpression";
+import { RandomExpression } from "./Expressions/RandomExpression";
 import { ReadVariableExpression } from "./Expressions/ReadVariable";
+import { VectorComponentExpressions } from "./Expressions/VectorComponentExpression";
+import { VectorComposeExpression } from "./Expressions/VectorComposeExpression";
 import { VectorDistanceExpression } from "./Expressions/VectorDistanceExpression";
 import { VectorDotProductExpression } from "./Expressions/VectorDotProductExpression";
 import { VectorOperationExpression } from "./Expressions/VectorOperationExpression";
+import { ArrayPushStatements } from "./Statements/ArrayPushStatement";
 import { AssignStatement } from "./Statements/AssignStatement";
 import { IfStatement } from "./Statements/IfStatement";
 import { LogStatement } from "./Statements/LogStatement";
@@ -16,6 +20,7 @@ const CodeBlocks: CodeBlockGenerator[] = [
   AssignStatement,
   LogStatement,
   WhileStatement,
+  ...ArrayPushStatements,
 
   //Expression
   ReadVariableExpression,
@@ -24,6 +29,9 @@ const CodeBlocks: CodeBlockGenerator[] = [
   VectorOperationExpression,
   VectorDistanceExpression,
   VectorDotProductExpression,
+  VectorComposeExpression,
+  ...VectorComponentExpressions,
+  RandomExpression,
 ];
 
 export const CodeBlockStatementTypes = Object.fromEntries(CodeBlocks.filter((b) => (b as any)["execute"] !== undefined).map((node) => [node.id, node as CodeBlockStatementGenerator]));

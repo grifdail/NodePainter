@@ -6,7 +6,7 @@ export const AssignStatement: CodeBlockStatementGenerator = {
     let result = evaluateExpression(block.parameters.value, context);
     let variableName = evaluateExpression(block.parameters.target, context);
     if (context[variableName]) {
-      context[variableName] = result;
+      context[variableName].value = result;
     } else {
       console.warn(`Trying to asign variable ${variableName} which does not exist`);
     }
