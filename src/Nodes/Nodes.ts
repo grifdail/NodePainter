@@ -170,6 +170,7 @@ import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
+import { BlurEffect } from "./Effects/BlurEffect";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -389,6 +390,9 @@ export const Nodes: Array<NodeDefinition> = [
   //Misc
   AnimationCurve,
   CustomImperativeFunction,
+
+  //Effect
+  BlurEffect,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
