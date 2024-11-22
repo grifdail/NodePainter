@@ -29,6 +29,7 @@ export const ForEachNode: NodeDefinition = {
   },
   execute: (data, context) => {
     var array = context.getInputValue(data, "array", `array-${data.selectedType}` as PortType) as any[];
+
     for (var i = 0; i < array.length; i++) {
       context.blackboard[`${data.id}-index`] = i;
       context.blackboard[`${data.id}-value`] = array[i];

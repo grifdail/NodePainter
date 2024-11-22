@@ -34,7 +34,7 @@ export function GridUi() {
   const openModal = useRouter((state) => state.open);
 
   return (
-    <FullScreenDiv>
+    <FullScreenDiv $modal={false}>
       {portSelection.hasSelection && (
         <WarningTrack className={portSelection.type}>
           <div>{`${nodes[portSelection.node].type} # ${portSelection.port}`}</div>
@@ -42,13 +42,22 @@ export function GridUi() {
       )}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
-        <button onClick={() => openModal(Routes.NodeCreation)} data-tooltip-id="tooltip" data-tooltip-content="New node">
+        <button
+          onClick={() => openModal(Routes.NodeCreation)}
+          data-tooltip-id="tooltip"
+          data-tooltip-content="New node">
           <IconPlus></IconPlus>
         </button>
-        <button onClick={() => togglePreview()} data-tooltip-id="tooltip" data-tooltip-content={showPreview ? "Preview" : "Stop Preview"}>
+        <button
+          onClick={() => togglePreview()}
+          data-tooltip-id="tooltip"
+          data-tooltip-content={showPreview ? "Preview" : "Stop Preview"}>
           {showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}
         </button>
-        <button onClick={() => toggleSelection()} data-tooltip-id="tooltip" data-tooltip-content={selectionActive ? "Cancel the selection" : "Start a selection"}>
+        <button
+          onClick={() => toggleSelection()}
+          data-tooltip-id="tooltip"
+          data-tooltip-content={selectionActive ? "Cancel the selection" : "Start a selection"}>
           {selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}
         </button>
         <FunctionSubMenu></FunctionSubMenu>

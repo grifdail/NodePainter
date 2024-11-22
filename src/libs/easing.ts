@@ -157,7 +157,7 @@ export const Easing: { [key: string]: EasingFunctionType } = Object.fromEntries(
 export const evaluate = (fn: EasingFunctionType, value: number) => {
   if (AllEasing[fn] === undefined) {
     console.warn(`Function ${fn} is not a valid easing function`);
-    return 0;
+    return value;
   }
   return AllEasing[fn](value);
 };

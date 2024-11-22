@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Comparator } from "../../Utils/logicUtils";
+import { Comparator, ComparatorOps } from "../../Utils/logicUtils";
 
 export const Compare: NodeDefinition = {
   id: "Compare",
@@ -25,8 +25,8 @@ export const Compare: NodeDefinition = {
     {
       id: "comparator",
       type: "dropdown",
-      defaultValue: "==",
-      options: ["equals", "different", "lower that", "lower than or equals", "greater than", "greater than or equals", "approximately equals", "approximately different"],
+      defaultValue: ComparatorOps[0],
+      options: ComparatorOps,
     },
   ],
 

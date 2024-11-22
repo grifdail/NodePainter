@@ -1,16 +1,16 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
-import { ColorInput } from "../Inputs/ColorInput";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
-import { NumberInput } from "../Inputs/NumberInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";
 import { Button } from "../Generics/Button";
 import { EditableGradientPreview } from "./EditableGradientPreview";
+import { ColorInput } from "../Generics/Inputs/ColorInput";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
 
 const ColorList = styled.ul`
   display: flex;
@@ -99,13 +99,23 @@ export const GradientSetting: SettingComponent = function ({ onChange, value, de
 
   return (
     <div>
-      <EditableGradientPreview gradient={list} onChange={onChange} />
+      <EditableGradientPreview
+        gradient={list}
+        onChange={onChange}
+      />
       <ColorList>
         {list.map((stop: GradientStop, i: number) => (
           <li key={i}>
-            <NumberInput value={stop.pos} onChange={(v) => onChangePosition(i, v)}></NumberInput>
-            <ColorInput value={stop.color} onChange={(v) => onChangeColor(i, v)}></ColorInput>
-            <button className="delete" onClick={() => removeColor(i)} disabled={list.length <= 1}>
+            <NumberInput
+              value={stop.pos}
+              onChange={(v) => onChangePosition(i, v)}></NumberInput>
+            <ColorInput
+              value={stop.color}
+              onChange={(v) => onChangeColor(i, v)}></ColorInput>
+            <button
+              className="delete"
+              onClick={() => removeColor(i)}
+              disabled={list.length <= 1}>
               <IconX />
             </button>
           </li>
@@ -113,28 +123,61 @@ export const GradientSetting: SettingComponent = function ({ onChange, value, de
       </ColorList>
 
       <ButtonGroup>
-        <Button onClick={addNewColor} label="Add" />
-        <Menu portal menuButton={<Button icon={IconMenu2} />}>
+        <Button
+          onClick={addNewColor}
+          label="Add"
+        />
+        <Menu
+          portal
+          menuButton={<Button icon={IconMenu2} />}>
           <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
           <MenuDivider></MenuDivider>
-          <SubMenu label="Create from a default palette" overflow="auto">
+          <SubMenu
+            label="Create from a default palette"
+            overflow="auto">
             {Object.entries(DefaultPalettes).map(([key, value]) => (
-              <MenuItemWithPalettePreview id={key} key={key} value={value} onClick={() => loadFromPalette(value)} />
+              <MenuItemWithPalettePreview
+                id={key}
+                key={key}
+                value={value}
+                onClick={() => loadFromPalette(value)}
+              />
             ))}
           </SubMenu>
-          <SubMenu label="Create from a saved palette" overflow="auto">
+          <SubMenu
+            label="Create from a saved palette"
+            overflow="auto">
             {Object.entries(ownPalettes).map(([key, value]) => (
-              <MenuItemWithPalettePreview id={key} key={key} value={value} onClick={() => loadFromPalette(value)} />
+              <MenuItemWithPalettePreview
+                id={key}
+                key={key}
+                value={value}
+                onClick={() => loadFromPalette(value)}
+              />
             ))}
           </SubMenu>
-          <SubMenu label="Create from default Gradient" overflow="auto">
+          <SubMenu
+            label="Create from default Gradient"
+            overflow="auto">
             {Object.entries(DefaultGradient).map(([key, value]) => (
-              <MenuItemWithGradientPreview id={key} key={key} value={value} onClick={() => loadGradient(value)} />
+              <MenuItemWithGradientPreview
+                id={key}
+                key={key}
+                value={value}
+                onClick={() => loadGradient(value)}
+              />
             ))}
           </SubMenu>
-          <SubMenu label="Saved Gradient" overflow="auto">
+          <SubMenu
+            label="Saved Gradient"
+            overflow="auto">
             {Object.entries(ownGradients).map(([key, value]) => (
-              <MenuItemWithGradientPreview id={key} key={key} value={value} onClick={() => loadGradient(value)} />
+              <MenuItemWithGradientPreview
+                id={key}
+                key={key}
+                value={value}
+                onClick={() => loadGradient(value)}
+              />
             ))}
           </SubMenu>
           <MenuDivider />

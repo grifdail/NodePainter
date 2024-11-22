@@ -1,4 +1,5 @@
 import { IconArrowsMove } from "@tabler/icons-react";
+import Rand from "rand-seed";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortDefinition } from "../../Types/PortDefinition";
@@ -61,11 +62,15 @@ export const CustomSimulation: NodeDefinition = {
       })
     );
     context.functionStack.push(params);
+    var oldGen = context.RNG;
+
+    context.RNG = new Rand(Date.now().toString());
     state = Object.fromEntries(
       stateDefinition.map((item) => {
         return [item.id, context.getInputValue(endNode, item.id, item.type)];
       })
     );
+    context.RNG = oldGen;
     context.blackboard[stateId] = state;
     context.blackboard[`${data.id}-${useCount}-progress`] = progress;
     context.functionStack.pop();

@@ -1,7 +1,6 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorLength } from "../../Types/PortType";
-import { VectorTypesFull } from "../../Types/PortType";
+import { VectorLength, VectorTypesFull } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
 
@@ -20,7 +19,7 @@ export const Random: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     return EnforceGoodType(
       nodeData,
-      Array.from(Array(VectorLength[nodeData.selectedType]).keys()).map(() => context.p5.random())
+      Array.from(Array(VectorLength[nodeData.selectedType]).keys()).map(() => context.RNG.next())
     );
   },
 };

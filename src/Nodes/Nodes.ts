@@ -117,9 +117,12 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
+import { CustomImperativeFunction } from "./CustomFunction/CustomImperativeFunction";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
+import { BloomEffect } from "./Effects/BloomEffect";
+import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
@@ -393,6 +396,11 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Misc
   AnimationCurve,
+  CustomImperativeFunction,
+
+  //Effect
+  BlurEffect,
+  BloomEffect,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

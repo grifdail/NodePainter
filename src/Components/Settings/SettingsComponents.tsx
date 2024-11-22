@@ -13,6 +13,7 @@ import { ButtonsSettings } from "./ButtonsSettings";
 import { AnimationTrackSettings } from "./AnimationTrackSettings";
 import { ModelUploadSetting } from "./ModelUploadSetting";
 import { EasingSetting } from "./EasingPreview";
+import { CodeBlockSetting } from "./CodeBlockSetting";
 
 export type SettingProps = {
   onChange: (value: any) => void;
@@ -44,4 +45,5 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   animationTrack: AnimationTrackSettings,
   "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,
+  "code-block": CodeBlockSetting,
 };

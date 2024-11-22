@@ -8,7 +8,13 @@ export const Render3D: NodeDefinition = {
   icon: IconPhoto,
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
   canBeExecuted: false,
-  dataInputs: [],
+  dataInputs: [
+    {
+      id: "fov",
+      type: "number",
+      defaultValue: 800,
+    },
+  ],
   dataOutputs: [
     {
       id: "image",
@@ -42,6 +48,8 @@ export const Render3D: NodeDefinition = {
     if (needRedraw) {
       var oldTarget = context.target;
       context.target = img.image;
+      var fov = context.getInputValueNumber(node, "fov");
+      context.target.perspective(2 * Math.atan(context.target.height / 2 / fov));
       if (node.execOutputs["draw"]) {
         context.execute(node.execOutputs["draw"] as string);
       }

@@ -6,6 +6,8 @@ export const VectorTypesFull: PortType[] = ["number", "vector2", "vector3", "col
 export const VectorTypesPosition: PortType[] = ["number", "vector2", "vector3", "vector4"];
 export const VectorTypeslimited: PortType[] = ["vector2", "vector3"];
 export const VectorLength: { [key: string]: number } = { number: 1, vector2: 2, vector3: 3, vector4: 4, color: 4 };
-export const CommonTypes: PortType[] = ["number", "vector2", "vector3", "color", "gradient", "image", "string", "material", "bool", "mesh"];
+export const CommonTypes: BasePortType[] = ["number", "vector2", "vector3", "color", "gradient", "image", "string", "material", "bool", "mesh"];
+export const ArrayCommonTypes: PortType[] = CommonTypes.map((key) => `array-${key}` as PortType);
+export const FullCommonTypes = [...CommonTypes, ...ArrayCommonTypes];
 export const ArrayTypes: PortType[] = BasePortTypeArray.map((key) => `array-${key}` as PortType);
 export const VectorArrayTypes: PortType[] = VectorTypesFull.map((key) => `array-${key}` as PortType);

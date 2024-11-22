@@ -1,7 +1,7 @@
 import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
-import { Input } from "../StyledComponents/Input";
-import { useSubmitOnBlur } from "../../Hooks/useSubmitOnBlur";
+import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
+import { Input } from "../../StyledComponents/Input";
 
 const math = create(all);
 const limitedEvaluate = math.evaluate;
@@ -52,5 +52,14 @@ export function NumberInput({ onChange, value, className }: InputProps<number> &
     }
   );
 
-  return <Input className={className} value={rawField} onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)} onFocus={(e) => e.target.select()} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
+  return (
+    <Input
+      className={className}
+      value={rawField}
+      onContextMenu={(e) => (isAndroid ? e.preventDefault() : null)}
+      onFocus={(e) => e.target.select()}
+      onChange={(e) => setRawField(e.target.value)}
+      onBlur={(e) => onBlur(e.target.value)}
+    />
+  );
 }

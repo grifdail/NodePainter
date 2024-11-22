@@ -4,19 +4,20 @@ import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconGif } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { NumberInput } from "../Inputs/NumberInput";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/System/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
-import { BoolInput } from "../Inputs/BoolInput";
 import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { CUSTOM_SIMULATION } from "../../Nodes/CustomFunction/CustomSimulation";
-import { TextInput } from "../Inputs/TextInput";
+import Rand from "rand-seed";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { BoolInput } from "../Generics/Inputs/BoolInput";
+import { TextInput } from "../Generics/Inputs/TextInput";
 
 const MainDiv = styled.div`
   display: flex;
@@ -100,7 +101,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.time = time;
     context.deltaTime = frameRate;
     var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
-    context.p5.randomSeed(seed);
+
+    context.RNG = new Rand(seed.toString());
     context.frameBlackboard = {};
     context.execute(START_NODE);
     if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
@@ -154,21 +156,66 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const filenameWithExt = `${filename}.${isGif ? "gif" : "webm"}`;
 
   return (
-    <Modal onClose={close} title="Export a gif" icon={IconGif} size="tiny" stretch>
+    <Modal
+      onClose={close}
+      title="Export a gif"
+      icon={IconGif}
+      size="tiny"
+      stretch>
       <MainDiv>
         <ButtonGroup align="stretch">
-          {renderState === "waiting" && <Button label="Render" onClick={() => setRenderState("rendering")}></Button>}
-          {renderState === "rendering" && <Button label="Rendering" disabled></Button>}
-          {renderState === "processing" && <Button label="Processing" disabled></Button>}
-          {renderState === "done" && <Button label="Download" onClick={() => download(blob as Blob, filenameWithExt)}></Button>}
+          {renderState === "waiting" && (
+            <Button
+              label="Render"
+              onClick={() => setRenderState("rendering")}></Button>
+          )}
+          {renderState === "rendering" && (
+            <Button
+              label="Rendering"
+              disabled></Button>
+          )}
+          {renderState === "processing" && (
+            <Button
+              label="Processing"
+              disabled></Button>
+          )}
+          {renderState === "done" && (
+            <Button
+              label="Download"
+              onClick={() => download(blob as Blob, filenameWithExt)}></Button>
+          )}
         </ButtonGroup>
 
         <form>
-          <Fieldset label="Filename" input={TextInput} value={filename} onChange={setFilename} />
-          <Fieldset label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`} input={NumberInput} value={duration} onChange={setDuration}></Fieldset>
-          <Fieldset label="FrameRate" input={NumberInput} value={fixedFrameRate} onChange={setFixedFrameRate} />
-          <Fieldset label="Preload" input={NumberInput} value={preloadDuration} onChange={setPreloadDuration} />
-          <Fieldset label="Output as a gif ?" input={BoolInput} value={isGif} onChange={setIsGif} />
+          <Fieldset
+            label="Filename"
+            input={TextInput}
+            value={filename}
+            onChange={setFilename}
+          />
+          <Fieldset
+            label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`}
+            input={NumberInput}
+            value={duration}
+            onChange={setDuration}></Fieldset>
+          <Fieldset
+            label="FrameRate"
+            input={NumberInput}
+            value={fixedFrameRate}
+            onChange={setFixedFrameRate}
+          />
+          <Fieldset
+            label="Preload"
+            input={NumberInput}
+            value={preloadDuration}
+            onChange={setPreloadDuration}
+          />
+          <Fieldset
+            label="Output as a gif ?"
+            input={BoolInput}
+            value={isGif}
+            onChange={setIsGif}
+          />
         </form>
 
         <div className="rendering">
@@ -191,7 +238,10 @@ export function ExportGifModal({ close }: { close: () => void }) {
             />
           )}
         </div>
-        <progress value={progress} max="100" />
+        <progress
+          value={progress}
+          max="100"
+        />
       </MainDiv>
     </Modal>
   );

@@ -1,12 +1,12 @@
 import { IconInfoCircle, IconPlus } from "@tabler/icons-react";
-import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { PortDefinition } from "../../../Types/PortDefinition";
-import { PortRole } from "../../../Types/PortRole";
 import { PortType } from "../../../Types/PortType";
 import { InvisibleButton } from "../../Generics/Button";
-import { InputPortEdit } from "./InputPortEdit";
+import { PortEdit } from "./PortEdit";
 import styled from "styled-components";
 import { useCallback, useState } from "react";
+import { createDefaultValue } from "../../../Utils/createDefaultValue";
+import { useListManipulator } from "../../../Hooks/useListManipulator";
 
 const SectionStyled = styled.section``;
 
@@ -24,17 +24,18 @@ const HeaderStyled = styled.header`
   }
 `;
 
-type PortDivProps = {
+type PortEditListProps = {
   ports: PortDefinition[];
   label: string;
   tooltip?: string;
-  addPort: () => void;
-  role: PortRole;
+  prefix?: string;
   availableTypes: PortType[];
-} & Pick<CustomFunctionCreationContextStore, "setPortDefaultValue" | "setPortType" | "setPortId" | "deletePort">;
+  onChange?: (newList: PortDefinition[]) => void;
+};
 
-export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, ...context }: PortDivProps) => {
+export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availableTypes }: PortEditListProps) => {
   var [selected, setSelected] = useState<number | null>(null);
+  const readOnly = onChange === undefined;
 
   var toggle = useCallback(
     (id: number) => {
@@ -47,16 +48,39 @@ export const PortDiv = ({ ports, label, tooltip, addPort, role, availableTypes, 
     [selected]
   );
 
+  const { change, remove, addNew } = useListManipulator(ports, onChange as any, () => ({
+    id: `${prefix}-${ports.length}`,
+    type: availableTypes[0],
+    defaultValue: createDefaultValue(availableTypes[0]),
+  }));
+
   return (
     <SectionStyled>
       <HeaderStyled>
         <h3>{label}</h3>
-        {tooltip && <IconInfoCircle data-tooltip-id="tooltip" data-tooltip-content={tooltip}></IconInfoCircle>}
+        {tooltip && (
+          <IconInfoCircle
+            data-tooltip-id="tooltip"
+            data-tooltip-content={tooltip}></IconInfoCircle>
+        )}
         <span></span>
-        <InvisibleButton icon={IconPlus} onClick={addPort}></InvisibleButton>
+        {!readOnly && (
+          <InvisibleButton
+            icon={IconPlus}
+            onClick={() => addNew()}></InvisibleButton>
+        )}
       </HeaderStyled>
       {ports.map((port, i) => (
-        <InputPortEdit open={selected === i} onOpen={() => toggle(i)} key={i} port={port} index={i} role={role} availableTypes={availableTypes} setPortDefaultValue={context.setPortDefaultValue} setPortId={context.setPortId} setPortType={context.setPortType} deletePort={context.deletePort} />
+        <PortEdit
+          open={selected === i}
+          onOpen={() => toggle(i)}
+          key={i}
+          port={port}
+          index={i}
+          availableTypes={availableTypes}
+          onChangePort={readOnly ? undefined : change}
+          onDeletePort={readOnly ? undefined : remove}
+        />
       ))}
     </SectionStyled>
   );

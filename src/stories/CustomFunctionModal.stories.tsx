@@ -24,10 +24,6 @@ const meta = {
     type: "shader",
     mode: "edit",
     model: null,
-    setPortId: fn(),
-    setPortDefaultValue: fn(),
-    deletePort: fn(),
-    setPortType: fn(),
     create: fn(),
     cancel: fn(),
     addOutput: fn(),
@@ -43,6 +39,7 @@ const meta = {
     availableTypesInput: ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"],
     settings: CustomFunctionModalSettings,
     hasExecuteOption: true,
+    setPortList: fn(),
   },
 } satisfies Meta<typeof CustomFunctionModalNoLogic>;
 

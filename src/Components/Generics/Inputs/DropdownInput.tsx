@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { InputProps } from "./InputProps";
 import { IconTriangleInverted } from "@tabler/icons-react";
 import { ReactNode } from "react";
-import { InputBackgroundColor } from "../StyledComponents/Input";
+import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const StyledButton = styled.button`
   flex: 1 1 content;
@@ -44,7 +44,14 @@ export const DropdownInput = function DropdownInput({ onChange, value, options, 
         if (templateRaw) {
           return templateRaw(option, args);
         } else {
-          return <MenuItem {...args}>{template ? template(option, args) : option}</MenuItem>;
+          return (
+            <MenuItem
+              key={args.key}
+              onClick={args.onClick}
+              value={args.value}>
+              {template ? template(option, args) : option}
+            </MenuItem>
+          );
         }
       })}
     </Menu>

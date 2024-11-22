@@ -2,17 +2,17 @@ import { IconBrush, IconClearAll } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { PaintingTool, usePainting } from "../../Hooks/usePainting";
-import { ColorInput } from "../Inputs/ColorInput";
 import { PaintingSketch } from "./Drawing/PaintingSketch";
 import { PaletteColorSelector } from "./PaletteColorSelector";
-import { NumberInput } from "../Inputs/NumberInput";
 import { Tools } from "./Drawing/Tools";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { DropdownInput } from "../Inputs/DropdownInput";
-import { SliderInput } from "../Inputs/SliderInput";
 import { Button } from "../Generics/Button";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { ColorInput } from "../Generics/Inputs/ColorInput";
+import { SliderInput } from "../Generics/Inputs/SliderInput";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -102,7 +102,11 @@ export function PaintModal() {
 
   var currentTool = Tools[paintingState.tool];
   return (
-    <Modal onClose={paintingState.close} title="Paint" icon={IconBrush} size="small">
+    <Modal
+      onClose={paintingState.close}
+      title="Paint"
+      icon={IconBrush}
+      size="small">
       <MainDiv>
         <PaintingSketch onSaveGraphics={paintingState.saveImage} />
         <ToolDiv>
@@ -130,14 +134,48 @@ export function PaintModal() {
               },
             }}
           />
-          {currentTool.hasColor && <Fieldset label="Color" value={paintingState.color} input={ColorInput} onChange={paintingState.setColor} />}
-          {currentTool.hasFillMode && <Fieldset label="Fill Mode" input={DropdownInput} value={paintingState.fillMode} onChange={paintingState.setFillMode} passtrough={{ options: ["stroke", "fill"] }} />}
-          {currentTool.hasLineWidth && <Fieldset label="Line Width" input={SliderInput as any} value={paintingState.lineWidth} onChange={paintingState.setLineWidth} passtrough={{ min: 1, max: 100 }} />}
+          {currentTool.hasColor && (
+            <Fieldset
+              label="Color"
+              value={paintingState.color}
+              input={ColorInput}
+              onChange={paintingState.setColor}
+            />
+          )}
+          {currentTool.hasFillMode && (
+            <Fieldset
+              label="Fill Mode"
+              input={DropdownInput}
+              value={paintingState.fillMode}
+              onChange={paintingState.setFillMode}
+              passtrough={{ options: ["stroke", "fill"] }}
+            />
+          )}
+          {currentTool.hasLineWidth && (
+            <Fieldset
+              label="Line Width"
+              input={SliderInput as any}
+              value={paintingState.lineWidth}
+              onChange={paintingState.setLineWidth}
+              passtrough={{ min: 1, max: 100 }}
+            />
+          )}
           <hr></hr>
-          <PaletteColorSelector onChangePalette={paintingState.setColorPalette} onSelectColor={paintingState.setColor} currentPalette={paintingState.colorPalette} currentColor={paintingState.color} />
+          <PaletteColorSelector
+            onChangePalette={paintingState.setColorPalette}
+            onSelectColor={paintingState.setColor}
+            currentPalette={paintingState.colorPalette}
+            currentColor={paintingState.color}
+          />
 
           <ButtonGroup>
-            <Button icon={IconClearAll} label="New image" onClick={onClear} data-tooltip-id="tooltip" data-tooltip-content="Clear" />
+            <Button
+              icon={IconClearAll}
+              label="New image"
+              onClick={onClear}
+              data-tooltip-id="tooltip"
+              data-tooltip-content="Clear"
+            />
           </ButtonGroup>
         </ToolDiv>
       </MainDiv>

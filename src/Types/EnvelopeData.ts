@@ -18,7 +18,7 @@ export const createDefaultEnvelopeStop = (): EnvelopeStop => ({
   height: 0.5,
   lerp: Easing.Linear,
 });
-export function interpolateEnvelope(envelope: EnvelopeData, pos: number): any {
+export function interpolateEnvelope(envelope: EnvelopeData, pos: number): number {
   if (envelope.length === 0) {
     return 0;
   }
@@ -28,7 +28,7 @@ export function interpolateEnvelope(envelope: EnvelopeData, pos: number): any {
   }
   for (var stop of envelope) {
     if (pos < stop.pos) {
-      return VectorLerp([prev.height], [stop.height], evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))));
+      return VectorLerp([prev.height], [stop.height], evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))))[0];
     } else {
       prev = stop;
     }

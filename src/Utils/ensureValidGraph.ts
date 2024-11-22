@@ -10,10 +10,6 @@ export function ensureValidGraph(state: any) {
       if (port.hasConnection) {
         let targetNode = state.nodes[port.connectedNode as string] as NodeData;
         if (!targetNode) {
-          var def = state.getNodeTypeDefinition(selfNode);
-          if (def.unbindPort != null) {
-            def.unbindPort(port.id, selfNode, "inputData");
-          }
           port.hasConnection = false;
           port.connectedNode = null;
           port.connectedPort = null;

@@ -1,6 +1,6 @@
 import { IconAssembly, IconPlus } from "@tabler/icons-react";
-import { DropdownInput } from "../../Components/Inputs/DropdownInput";
-import { TextInput } from "../../Components/Inputs/TextInput";
+import { DropdownInput } from "../../Components/Generics/Inputs/DropdownInput";
+import { TextInput } from "../../Components/Generics/Inputs/TextInput";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
@@ -48,7 +48,10 @@ export const Precompute: NodeDefinition = {
     needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
     needRedraw ||= when === "Everytime";
     if (needRedraw) {
-      var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => [key, context.getInputValue(data, key, value.type)];
+      var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => {
+        var v = context.getInputValue(data, key, value.type);
+        return [key, v];
+      };
       const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
       context.blackboard[keyComputed] = true;
       context.frameBlackboard[keyComputed] = true;

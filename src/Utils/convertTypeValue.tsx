@@ -3,9 +3,12 @@ import { PortType } from "../Types/PortType";
 import { ConverterCode } from "./ConverterCode";
 import { ConverterShader } from "./ConverterShader";
 
-export function convertTypeValue(value: any, from: PortType, to: PortType): any {
+export function convertTypeValue(value: any, from: PortType | "any", to: PortType): any {
   if (from === to || from === "unknown" || to === "unknown") {
     return value;
+  }
+  if (from === "any") {
+    return createDefaultValue(to);
   }
 
   var converterFrom = ConverterCode[from];

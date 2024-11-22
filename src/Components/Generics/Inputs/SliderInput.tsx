@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { InputBackgroundColor } from "../StyledComponents/Input";
 import { InputProps } from "./InputProps";
 import { NumberInput } from "./NumberInput";
+import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const SliderInputDiv = styled.div`
   display: flex;
@@ -68,8 +68,18 @@ const SliderInputDiv = styled.div`
 export function SliderInput({ onChange, value, disabled, min, max }: InputProps<number> & { max: number; min: number }) {
   return (
     <SliderInputDiv>
-      <input type="range" value={value} min={min} max={max} onChange={(e) => onChange(parseFloat(e.target.value))} disabled={disabled} />
-      <NumberInput value={value} onChange={onChange} disabled={disabled}></NumberInput>
+      <input
+        type="range"
+        value={value}
+        min={min}
+        max={max}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        disabled={disabled}
+      />
+      <NumberInput
+        value={value}
+        onChange={onChange}
+        disabled={disabled}></NumberInput>
     </SliderInputDiv>
   );
 }

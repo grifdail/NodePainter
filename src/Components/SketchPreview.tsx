@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { START_NODE } from "../Nodes/System/StartNode";
 import { createExecutionContext } from "../Utils/createExecutionContext";
+import Rand from "rand-seed";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;
@@ -54,7 +55,11 @@ export function SketchPreview() {
   var smallestDim = Math.min(1, Math.min(dim.width || start.settings.width || 400, dim.height || start.settings.height || 400) / 450);
   return (
     <Preview scale={smallestDim}>
-      <ReactP5Wrapper sketch={sketch} tree={tree} key={`${start.settings.width} / ${start.settings.height}`} />
+      <ReactP5Wrapper
+        sketch={sketch}
+        tree={tree}
+        key={`${start.settings.width} / ${start.settings.height}`}
+      />
     </Preview>
   );
 }
@@ -80,7 +85,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   p5.draw = () => {
     context.frameBlackboard = {};
-    p5.randomSeed(seed);
+
+    context.RNG = new Rand(seed.toString());
     context.time = p5.millis();
     context.deltaTime = p5.deltaTime;
     context.execute(START_NODE);

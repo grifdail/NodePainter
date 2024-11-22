@@ -3,10 +3,10 @@ import { toHex } from "../../Utils/colorUtils";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { DropdownInput } from "../Inputs/DropdownInput";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { MenuItemWithPalettePreview } from "../Settings/ColorPreview";
 import { DefaultPalettes } from "../../Data/Palettes";
+import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 
 const StyledButton = styled.button<{ color: string }>`
   background: none;
@@ -61,11 +61,21 @@ export function PaletteColorSelector({ onSelectColor, currentColor }: { onChange
         onChange={setCurrentPalette}
         passtrough={{
           options: Object.keys(palettes),
-          templateRaw: (value: string, args: any) => <MenuItemWithPalettePreview {...args} id={value} value={palettes[value]} />,
+          templateRaw: (value: string, args: any) => (
+            <MenuItemWithPalettePreview
+              {...args}
+              id={value}
+              value={palettes[value]}
+            />
+          ),
         }}></Fieldset>
       <ColorList>
         {currentPalette.map((color) => (
-          <StyledButton color={toHex(color)} onClick={() => onSelectColor(color)} key={toHex(color)} />
+          <StyledButton
+            color={toHex(color)}
+            onClick={() => onSelectColor(color)}
+            key={toHex(color)}
+          />
         ))}
       </ColorList>
     </PaletteColorSelectorStyled>
