@@ -20,6 +20,7 @@ const AddModalDiv = styled.div`
   align-items: stretch;
   justify-content: stretch;
   width: 100%;
+  height: 500px;
   align-content: stretch;
   align-self: stretch;
   flex-grow: 1;
