@@ -119,6 +119,8 @@ import { CustomImperativeFunction } from "./CustomFunction/CustomImperativeFunct
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
+import { BloomEffect } from "./Effects/BloomEffect";
+import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
@@ -170,7 +172,6 @@ import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
-import { BlurEffect } from "./Effects/BlurEffect";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -393,6 +394,7 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Effect
   BlurEffect,
+  BloomEffect,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

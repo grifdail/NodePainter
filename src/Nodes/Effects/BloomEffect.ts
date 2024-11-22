@@ -6,7 +6,9 @@ import { ExecutionContext } from "../../Utils/createExecutionContext";
 
 const KEY_BLUR_SHADER_H = "BLUR_EFFECT_SHADER_H";
 const KEY_BLUR_SHADER_V = "BLUR_EFFECT_SHADER_V";
-const KEY_FIRST_PASS = "BLUR_EFFECT_FIRST_PASS";
+const KEY_BLOOM_SHADER = "BLOOM_EFFECT_SHADER_V";
+const KEY_FIRST_PASS = "BLOOM_EFFECT_FIRST_PASS";
+const KEY_SECOND_PASS = "BLOOM_EFFECT_SECOND_PASS";
 
 export const EFFECT_VERTEX_SHADER = `
 // our vertex data
@@ -112,14 +114,54 @@ void main() {
 }
 `;
 
-export const BlurEffect: NodeDefinition = {
-  id: "BlurEffect",
-  label: "Apply Blur Effect",
+const BLOOM_FRAGMENT_SHADER = `
+precision mediump float;
+
+// texcoords from the vertex shader
+varying vec2 vTexCoord;
+
+// our textures coming from p5
+uniform sampler2D tex0;
+uniform sampler2D tex1;
+
+// the mouse value between 0 and 1
+uniform float amount;
+
+float invLerp(float from, float to, float value){
+  return (value - from) / (to - from);
+}
+
+void main() {
+
+  vec2 uv = vTexCoord;
+  // the texture is loaded upside down and backwards by default so lets flip it
+  //uv = 1.0 - uv;
+
+  // get the camera and the blurred image as textures
+  vec4 cam = texture2D(tex0, uv);
+  vec4 blur = texture2D(tex1, uv);
+
+  // calculate an average color for the blurred image
+  // this is essentially the same as saying (blur.r + blur.g + blur.b) / 3.0;
+  float avg = dot(blur.rgb, vec3(0.33333));
+
+  // mix the blur and camera together according to how bright the blurred image is
+  // use the mouse to control the bloom
+  vec4 bloom = mix(cam, blur, clamp(invLerp(1.0, amount, avg), 0.0, 1.0));
+
+  gl_FragColor = bloom;
+}
+`;
+
+export const BloomEffect: NodeDefinition = {
+  id: "BloomEffect",
+  label: "Apply Bloom Effect",
   icon: IconPhoto,
-  description: "Blur an image",
+  description: "Make the bright spot appear brighter",
   dataInputs: [
     { id: "image", type: "image", defaultValue: null },
     { id: "amount", type: "number", defaultValue: 1 },
+    { id: "blurAmount", type: "number", defaultValue: 1 },
   ],
   dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
   tags: ["Image"],
@@ -127,46 +169,57 @@ export const BlurEffect: NodeDefinition = {
   settings: [],
   getData(portId, node, context) {
     var imageData = context.getInputValueImage(node, "image");
-    var blurAmount = context.getInputValueNumber(node, "amount");
+    var amount = context.getInputValueNumber(node, "amount");
+    var blurAmount = context.getInputValueNumber(node, "blurAmount");
     if (!imageData || !imageData.isLoaded) {
       return null;
     }
     let image = imageData.image as p5.Graphics;
-    let shaderH = context.blackboard[KEY_BLUR_SHADER_H] as p5.Shader;
-    if (!shaderH) {
-      shaderH = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
-      context.blackboard[KEY_BLUR_SHADER_H] = shaderH;
-    }
-    let shaderV = context.blackboard[KEY_BLUR_SHADER_V] as p5.Shader;
-    if (!shaderV) {
-      shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
-      context.blackboard[KEY_BLUR_SHADER_V] = shaderV;
-    }
+    let shaderBlurH = createShaderFromCache(context, KEY_BLUR_SHADER_H, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
+    let shaderBlurV = createShaderFromCache(context, KEY_BLUR_SHADER_V, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
+    let shaderBloom = createShaderFromCache(context, KEY_BLOOM_SHADER, EFFECT_VERTEX_SHADER, BLOOM_FRAGMENT_SHADER);
     const keyCache = `${node.id}-image-cache`;
     let firstPass = getPassBuffer(context, KEY_FIRST_PASS, image);
+    let secondPass = getPassBuffer(context, KEY_SECOND_PASS, image);
     let target = getPassBuffer(context, keyCache, image);
 
     let firstPassImage = firstPass.image as p5.Graphics;
+    let secondPassImage = secondPass.image as p5.Graphics;
     let targetPassImage = target.image as p5.Graphics;
 
-    shaderH.setUniform("tex0", image);
-    shaderH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
-    shaderH.setUniform("direction", [1.0, 0.0]);
+    shaderBlurH.setUniform("tex0", image);
+    shaderBlurH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
+    shaderBlurH.setUniform("direction", [1.0, 0.0]);
 
-    firstPassImage.shader(shaderH);
+    firstPassImage.shader(shaderBlurH);
     firstPassImage.rect(0, 0, image.width, image.height);
 
-    targetPassImage.shader(shaderV);
+    shaderBlurV.setUniform("tex0", firstPass.image);
+    shaderBlurV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
+    shaderBlurV.setUniform("direction", [0.0, 1.0]);
 
-    shaderV.setUniform("tex0", firstPass.image);
-    shaderV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
-    shaderV.setUniform("direction", [0.0, 1.0]);
+    secondPassImage.shader(shaderBlurV);
+    secondPassImage.rect(0, 0, image.width, image.height);
 
+    shaderBloom.setUniform("tex0", image);
+    shaderBloom.setUniform("tex1", secondPassImage);
+    shaderBloom.setUniform("amount", amount);
+
+    targetPassImage.shader(shaderBloom);
     targetPassImage.rect(0, 0, image.width, image.height);
 
     return target;
   },
 };
+function createShaderFromCache(context: ExecutionContext, key: string, vertex: string, frag: string) {
+  let shader = context.blackboard[key] as p5.Shader;
+  if (!shader) {
+    shader = context.p5.createShader(vertex, frag);
+    context.blackboard[key] = shader;
+  }
+  return shader;
+}
+
 function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }) {
   let target = context.blackboard[key];
   if (!target) {
