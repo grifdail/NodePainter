@@ -117,10 +117,12 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
+import { ComposeStruct } from "./CustomFunction/ComposeStruct";
 import { CustomImperativeFunction } from "./CustomFunction/CustomImperativeFunction";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
+import { DecomposeStruct } from "./CustomFunction/DecomposeStruct";
 import { BloomEffect } from "./Effects/BloomEffect";
 import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
@@ -322,6 +324,8 @@ export const Nodes: Array<NodeDefinition> = [
   CustomSimulation,
   CustomSimulationEnd,
   CustomSimulationStart,
+  ComposeStruct,
+  DecomposeStruct,
 
   Modulo,
   PowNode,

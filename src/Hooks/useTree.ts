@@ -30,7 +30,8 @@ import { createSettingObjectForSettingDefinition } from "../Utils/createSettingO
 import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { resetCamera } from "../Utils/resetCamera";
 import { sortAroundNode } from "../Utils/sortAroundNode";
-import { createFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
+import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
+import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 import { usePortSelection } from "./usePortSelection";
 
@@ -245,10 +246,18 @@ export const useTree = create<TreeStore>()(
           var t = get();
           return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined });
         },
+        createStructType(ports: PortDefinition[], name: string) {
+          set(
+            produce((state) => {
+              createStructType(ports, name, state);
+            })
+          );
+          get().enforceValidGraph();
+        },
         createFunction(def) {
           set(
             produce((state) => {
-              createFunction(def, state);
+              createCustomFunction(def, state);
             })
           );
           get().enforceValidGraph();
@@ -431,7 +440,7 @@ export const useTree = create<TreeStore>()(
               nodeDef.dataOutputs = preparePortForFunctions(outputs);
               nodeDef.canBeExecuted = canBeExecuted;
 
-              createFunction(nodeDef, state);
+              createCustomFunction(nodeDef, state);
               const newNode = createNodeData(
                 nodeDef,
                 selectedNodes.reduce((o, n) => o + n.positionX / selectedNodes.length, 0),

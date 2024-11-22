@@ -62,7 +62,7 @@ type InputPortEditProps = {
 
 export function PortEdit({ port, onChangePort, onDeletePort, index, availableTypes, open = true, onOpen }: InputPortEditProps) {
   const portColor = PortColor[port.type];
-  const PortValueEditor = portColor.input;
+  const PortValueEditor = portColor.inputInline;
   const Icon = portColor.icon;
   const canDelete = onDeletePort !== undefined;
   const canEdit = onChangePort !== undefined;

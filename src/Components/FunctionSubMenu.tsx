@@ -1,4 +1,4 @@
-import { IconFunction, IconFunctionFilled, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
+import { IconFunction, IconFunctionFilled, IconPackage, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
@@ -11,6 +11,7 @@ import { resetCamera } from "../Utils/resetCamera";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 import { useAllSavedFunction } from "../Hooks/db";
 import { useShallow } from "zustand/react/shallow";
+import { createStructTypeModal } from "../Hooks/createStructTypeModal";
 
 const openCreateModal = () => {
   useCustomNodeCreationContext.getState().openCreate("function");
@@ -91,12 +92,16 @@ export function FunctionSubMenu() {
     <Menu
       portal
       menuButton={
-        <button data-tooltip-id="tooltip" data-tooltip-content="Functions">
+        <button
+          data-tooltip-id="tooltip"
+          data-tooltip-content="Functions">
           <IconFunctionFilled></IconFunctionFilled>
           <span>{graph}</span>
         </button>
       }>
-      <MenuItem onClick={openEditModal} disabled={graph === "main"}>
+      <MenuItem
+        onClick={openEditModal}
+        disabled={graph === "main"}>
         <IconPencil></IconPencil>
         Edit the current {editingType} settings
       </MenuItem>
@@ -110,17 +115,37 @@ export function FunctionSubMenu() {
       <MenuItem onClick={opencreateSimulation}>
         <IconRepeat /> Create New Simulation
       </MenuItem>
+      <MenuItem onClick={() => createStructTypeModal("struct-1", [])}>
+        <IconPackage /> Create Structure type
+      </MenuItem>
       {hasSelection && <MenuItem onClick={createFunctionFromSelection}>Create New Function from selection</MenuItem>}
-      {customFunctionNodes.length > 0 && <GraphSelector list={customFunctionNodes} setGraph={setGraph} name="Functions"></GraphSelector>}
-      {customShaderNode.length > 0 && <GraphSelector list={customShaderNode} setGraph={setGraph} name="Shaders"></GraphSelector>}
-      {customSimulationNode.length > 0 && <GraphSelector list={customSimulationNode} setGraph={setGraph} name="Simulations"></GraphSelector>}
+      {customFunctionNodes.length > 0 && (
+        <GraphSelector
+          list={customFunctionNodes}
+          setGraph={setGraph}
+          name="Functions"></GraphSelector>
+      )}
+      {customShaderNode.length > 0 && (
+        <GraphSelector
+          list={customShaderNode}
+          setGraph={setGraph}
+          name="Shaders"></GraphSelector>
+      )}
+      {customSimulationNode.length > 0 && (
+        <GraphSelector
+          list={customSimulationNode}
+          setGraph={setGraph}
+          name="Simulations"></GraphSelector>
+      )}
 
       <MenuDivider></MenuDivider>
       {graph !== "main" && <MenuItem onClick={() => saveFunction(graph, useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
       {savedFunction && savedFunction.length > 0 && (
         <SubMenu label="Import from a saved function">
           {savedFunction.map((data) => (
-            <MenuItem onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))} key={data.name}>
+            <MenuItem
+              onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))}
+              key={data.name}>
               {data.name}
             </MenuItem>
           ))}
@@ -139,7 +164,9 @@ function GraphSelector({ list, setGraph, name, icon }: { list: string[]; icon?: 
         {name}
       </MenuHeader>
       {list.map((node) => (
-        <MenuItem onClick={() => setGraph(node)} key={node}>
+        <MenuItem
+          onClick={() => setGraph(node)}
+          key={node}>
           {node}
         </MenuItem>
       ))}

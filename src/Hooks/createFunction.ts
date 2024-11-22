@@ -5,7 +5,7 @@ import { createNodeData } from "../Utils/createNodeData";
 import { createPortConnection } from "../Utils/createPortConnection";
 import { resetCamera } from "../Utils/resetCamera";
 
-export function createFunction(def: NodeDefinition, state: TreeStore) {
+export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
   const start = getCustomFunctionStartId(def);
   const end = getCustomFunctionEndId(def);
   state.customNodes[def.id] = def;

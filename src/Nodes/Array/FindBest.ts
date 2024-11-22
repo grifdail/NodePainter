@@ -2,7 +2,7 @@ import { IconList, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { CommonTypes } from "../../Types/PortType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 
@@ -67,7 +67,7 @@ export const FindBest: NodeDefinition = {
   ],
   canBeExecuted: false,
   defaultType: "number",
-  availableTypes: VectorTypesFull,
+  availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], ["out"], ["array"], [], changeTypeGenerator([], ["value"])),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.dataInputs["array"].type) as any[];

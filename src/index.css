@@ -6,7 +6,7 @@
   --color-number: #29adff;
   --color-vector2: #7073c3;
   --color-vector3: #f145bc;
-  --color-vector4: #ff004c;
+  --color-vector4: #f76707;
   --color-color: #f76707;
   --color-string: #ae3ec9;
   --color-bool: #1d2b53;
@@ -14,6 +14,7 @@
   --color-image: #ab5236;
   --color-material: #f7df07;
   --color-mesh: #7e2553;
+  --color-struct: #ff004d;
 
   --color-selected: rgba(0, 0, 0, 0.3);
 
@@ -165,6 +166,10 @@ body .szh-menu__divider {
 .mesh,
 .array-mesh {
   --color-property: var(--color-mesh);
+}
+.struct,
+.array-struct {
+  --color-property: var(--color-struct);
 }
 iframe {
   display: none;

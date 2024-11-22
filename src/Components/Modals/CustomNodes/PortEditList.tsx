@@ -7,8 +7,14 @@ import styled from "styled-components";
 import { useCallback, useState } from "react";
 import { createDefaultValue } from "../../../Utils/createDefaultValue";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
+import { InputProps } from "../../Generics/Inputs/InputProps";
+import { FieldsetStyled } from "../../StyledComponents/Fieldset";
 
-const SectionStyled = styled.section``;
+const SectionStyled = styled.section`
+  ${FieldsetStyled} & {
+    flex-grow: 1;
+  }
+`;
 
 const HeaderStyled = styled.header`
   display: flex;
@@ -83,5 +89,20 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
         />
       ))}
     </SectionStyled>
+  );
+};
+
+/**
+ * Same as PortEditList but as an Input
+ */
+export const PortEditListInput = ({ value, onChange, disabled, ...passtrough }: InputProps<PortDefinition[]>) => {
+  return (
+    <PortEditList
+      label={""}
+      availableTypes={[]}
+      ports={value}
+      onChange={disabled ? undefined : onChange}
+      {...passtrough}
+    />
   );
 };

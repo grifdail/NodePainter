@@ -2,7 +2,7 @@ import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
-import { PortEditList } from "./CustomNodes/PortDiv";
+import { PortEditList } from "./CustomNodes/PortEditList";
 import { FullCommonTypes } from "../../Types/PortType";
 import { CodeBlockStatementList } from "./CodeBlock/CodeBlockStatementList";
 import { CodeBlockContext } from "../../Hooks/CodeBlockContext";

@@ -27,19 +27,43 @@ const ImprovedFieldSet = styled(Fieldset)`
 export function InputPortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
   var portDescription = PortColor[portData.type];
   var Icon = portDescription.icon;
-  var PortSettings = portDescription.input;
+  var PortSettings = portDescription.inputInline;
 
   var portSelection = usePortSelection();
   var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === location;
 
   return (
-    <StyledPortGroup transform={`translate(0, ${y})`} width="300" height="30" className={`${portData.type} ${isSelected ? "selected" : ""} `}>
-      <PortForeignObject height={PORT_HEIGHT} width={300} x={0} y={0}>
-        <ImprovedFieldSet label={portData.label || portData.id} input={(!portData.hasConnection && PortSettings) as any} onChange={onValueChange} value={portData.ownValue} />
+    <StyledPortGroup
+      transform={`translate(0, ${y})`}
+      width="300"
+      height="30"
+      className={`${portData.type} ${isSelected ? "selected" : ""} `}>
+      <PortForeignObject
+        height={PORT_HEIGHT}
+        width={300}
+        x={0}
+        y={0}>
+        <ImprovedFieldSet
+          label={portData.label || portData.id}
+          input={(!portData.hasConnection && PortSettings) as any}
+          onChange={onValueChange}
+          value={portData.ownValue}
+        />
       </PortForeignObject>
-      <g data-tooltip-id="tooltip" data-tooltip-content={portData.label || portData.id} transform={`translate(0, ${PORT_HEIGHT * 0.5})`}>
-        <circle cx={0} cy={0} r={15} onClick={onClick}></circle>
-        <Icon x="-12" y="-12" scale={10} onClick={onClick}></Icon>
+      <g
+        data-tooltip-id="tooltip"
+        data-tooltip-content={portData.label || portData.id}
+        transform={`translate(0, ${PORT_HEIGHT * 0.5})`}>
+        <circle
+          cx={0}
+          cy={0}
+          r={15}
+          onClick={onClick}></circle>
+        <Icon
+          x="-12"
+          y="-12"
+          scale={10}
+          onClick={onClick}></Icon>
       </g>
     </StyledPortGroup>
   );

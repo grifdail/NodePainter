@@ -4,8 +4,8 @@ import { PortType } from "../../../Types/PortType";
 import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
 import { CustomFunctionModalNoLogic } from "./CustomFunctionModalNoLogic";
 
-const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string"];
-const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string"];
+const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string", "struct", "array-struct"];
+const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string", "struct", "array-struct"];
 
 export const CustomSimulationModalSettings = {
   creationTitle: "Create a simulation node",
@@ -24,5 +24,14 @@ export function CustomSimulationModal({ close }: { close: () => void }) {
   var context = useCustomNodeCreationContext();
   var def = context.model as NodeDefinition;
 
-  return <CustomFunctionModalNoLogic close={close} nodeDefinition={def} availableTypesInput={AvailableTypesInput} availableTypesOutput={AvailableTypesOutput} settings={CustomSimulationModalSettings} {...context} />;
+  return (
+    <CustomFunctionModalNoLogic
+      close={close}
+      nodeDefinition={def}
+      availableTypesInput={AvailableTypesInput}
+      availableTypesOutput={AvailableTypesOutput}
+      settings={CustomSimulationModalSettings}
+      {...context}
+    />
+  );
 }

@@ -1,4 +1,4 @@
-import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 
 import { PortType } from "../../Types/PortType";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
@@ -12,6 +12,7 @@ type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; va
 
 type PortColorDefinition = {
   icon: Icon;
+  inputInline?: InputComponent;
   input?: InputComponent;
   tinyIcon?: Icon;
 };
@@ -22,42 +23,42 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
   },
   number: {
     icon: IconNumbers,
-    input: NumberInput,
+    inputInline: NumberInput,
     tinyIcon: IconNumbers,
   },
   vector: {
     icon: IconArrowUpRightCircle,
-    input: VectorInput,
+    inputInline: VectorInput,
     tinyIcon: IconArrowUpRightCircle,
   },
   vector2: {
     icon: IconArrowUpRightCircle,
-    input: VectorInput,
+    inputInline: VectorInput,
     tinyIcon: IconNumber2,
   },
   vector3: {
     icon: IconArrowUpRightCircle,
-    input: VectorInput,
+    inputInline: VectorInput,
     tinyIcon: IconNumber3,
   },
   vector4: {
     icon: IconArrowUpRightCircle,
-    input: VectorInput,
+    inputInline: VectorInput,
     tinyIcon: IconNumber4,
   },
   color: {
     icon: IconPalette,
-    input: ColorInput,
+    inputInline: ColorInput,
     tinyIcon: IconPalette,
   },
   string: {
     icon: IconQuote,
-    input: TextInput,
+    inputInline: TextInput,
     tinyIcon: IconQuote,
   },
   bool: {
     icon: IconToggleLeft,
-    input: BoolInput,
+    inputInline: BoolInput,
     tinyIcon: IconToggleLeft,
   },
   gradient: {
@@ -70,17 +71,22 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
   },
   material: {
     icon: IconPaint,
-    input: MaterialInput,
+    inputInline: MaterialInput,
     tinyIcon: IconPaint,
   },
   mesh: {
     icon: IconCube,
-    input: undefined,
+    inputInline: undefined,
     tinyIcon: IconCube,
+  },
+  struct: {
+    icon: IconPackage,
+    inputInline: undefined,
+    tinyIcon: IconPackage,
   },
   unknown: {
     icon: IconQuestionMark,
-    input: undefined,
+    inputInline: undefined,
     tinyIcon: IconQuestionMark,
   },
   "array-string": {
@@ -130,5 +136,9 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
   "array-mesh": {
     icon: IconCube,
     tinyIcon: IconCube,
+  },
+  "array-struct": {
+    icon: IconPackage,
+    tinyIcon: IconPackage,
   },
 };

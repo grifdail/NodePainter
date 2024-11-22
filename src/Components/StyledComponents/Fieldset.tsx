@@ -2,7 +2,7 @@ import { useId } from "react";
 import styled from "styled-components";
 import { InputProps } from "../Generics/Inputs/InputProps";
 
-const FieldsetStyled = styled.fieldset`
+export const FieldsetStyled = styled.fieldset`
   border: none;
   margin: 0;
   padding: 0;
@@ -47,7 +47,7 @@ export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabl
       data-tooltip-content={tooltip}
       className={className}
       style={style}>
-      <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>
+      {label && <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>}
       {Input && (
         <Input
           name={id}

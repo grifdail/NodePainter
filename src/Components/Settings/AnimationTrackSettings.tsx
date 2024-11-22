@@ -56,7 +56,7 @@ export const AnimationTrackSettings: SettingComponent = function ({ onChange, va
   const track = value as AnimationTrack;
   const type = track.type;
   var portDescription = PortColor[type];
-  var PortSettings = portDescription.input;
+  var PortSettings = portDescription.inputInline;
 
   var { change, addNew, remove } = useListManipulator(
     track.keyframes,

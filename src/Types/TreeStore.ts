@@ -38,6 +38,7 @@ export type TreeStore = {
   reset: () => void;
   loadTemplate: (temp: SketchTemplate) => boolean;
   exportTemplate: () => SketchTemplate;
+  createStructType: (ports: PortDefinition[], name: string) => void;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;
   createSimulation: (def: NodeDefinition) => void;

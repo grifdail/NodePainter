@@ -8,7 +8,7 @@ import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctio
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 import styled from "styled-components";
-import { PortEditList } from "./PortDiv";
+import { PortEditList } from "./PortEditList";
 
 export const PortRootDiv = styled.section`
   display: grid;

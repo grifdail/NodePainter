@@ -19,6 +19,7 @@ export const PortTypeDefaultValue: {
   execute: () => null,
   material: () => createDefaultMaterial(),
   unknown: () => null,
+  struct: () => null,
   "array-string": () => [],
   "array-number": () => [],
   "array-vector2": () => [],
@@ -31,6 +32,7 @@ export const PortTypeDefaultValue: {
   "array-vector4": () => [],
   "array-material": () => [],
   "array-mesh": () => [],
+  "array-struct": () => [],
 };
 
 export function createDefaultValue(type: PortType) {

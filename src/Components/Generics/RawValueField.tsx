@@ -5,7 +5,7 @@ import { PortColor } from "../StyledComponents/PortColor";
 export const RawValueField = ({ value, onChange, type }: { type: PortType | "any"; value: any; onChange: (value: any) => void }) => {
   let InputType = null;
   if (type !== "any" && PortColor[type]) {
-    InputType = PortColor[type].input;
+    InputType = PortColor[type].inputInline;
     if (InputType) {
       return (
         <Fieldset
