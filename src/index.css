@@ -13,6 +13,7 @@
   --color-gradient: #f59f00;
   --color-image: #ab5236;
   --color-material: #f7df07;
+  --color-mesh: #7e2553;
 
   --color-selected: rgba(0, 0, 0, 0.3);
 
@@ -160,6 +161,10 @@ body .szh-menu__divider {
 .material,
 .array-material {
   --color-property: var(--color-material);
+}
+.mesh,
+.array-mesh {
+  --color-property: var(--color-mesh);
 }
 iframe {
   display: none;

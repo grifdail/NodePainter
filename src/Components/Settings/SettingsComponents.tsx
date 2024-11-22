@@ -11,6 +11,7 @@ import { ImagePaintSetting } from "./ImagePaintSetting";
 import { NodeData } from "../../Types/NodeData";
 import { ButtonsSettings } from "./ButtonsSettings";
 import { AnimationTrackSettings } from "./AnimationTrackSettings";
+import { ModelUploadSetting } from "./ModelUploadSetting";
 import { EasingSetting } from "./EasingPreview";
 import { CodeBlockSetting } from "./CodeBlockSetting";
 
@@ -42,6 +43,7 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   hidden: EmptySetting,
   buttons: ButtonsSettings,
   animationTrack: AnimationTrackSettings,
+  "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,
   "code-block": CodeBlockSetting,
 };

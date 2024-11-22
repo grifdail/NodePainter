@@ -97,6 +97,7 @@ import { createConstant } from "./createConstant";
 import { DrawBox } from "./3D/DrawBox";
 import { DrawCilinder } from "./3D/DrawCilinder";
 import { DrawCone } from "./3D/DrawCone";
+import { DrawModel } from "./3D/DrawModel";
 import { DrawPlane } from "./3D/DrawPlane";
 import { DrawSphere } from "./3D/DrawSphere";
 import { DrawTorus } from "./3D/DrawTorus";
@@ -110,6 +111,7 @@ import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
+import { GenerateUVModel } from "./Array/GenerateUVModel";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
@@ -124,6 +126,7 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { UploadModel } from "./Images/UploadModel";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -370,6 +373,9 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTorus,
   DrawCone,
   DrawCilinder,
+  UploadModel,
+  DrawModel,
+  GenerateUVModel,
   //Materials
   ExecuteWithLight,
   RegularMaterial,
