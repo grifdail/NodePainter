@@ -5,9 +5,7 @@ import { TreeStore } from "../Types/TreeStore";
 
 export const sortAroundNode = (tree: TreeStore, targetId: string) => {
   const rootNode = tree.nodes[targetId];
-  const visited: { [id: string]: boolean } = {};
   const columns: { [id: number]: number } = {};
-  const verticalMinPosition: { [id: string]: number | undefined } = { [rootNode.id]: 0 };
   const nodePerColumn: { [id: string]: number } = { [rootNode.id]: 0 };
 
   function parseInput(rootnode: NodeData, currentColumn: number) {
@@ -43,9 +41,10 @@ export const sortAroundNode = (tree: TreeStore, targetId: string) => {
 function findNodeExecuting(tree: TreeStore, nodeId: string): NodeData[] {
   return Object.values(tree.nodes).filter((node) => Object.values(node.execOutputs).some((outputNode) => outputNode === nodeId));
 }
+/*
 function findNodeUsing(tree: TreeStore, nodeId: string): NodeData[] {
   return Object.values(tree.nodes).filter((node) => Object.values(node.dataInputs).some((port) => port.hasConnection && port.connectedNode === nodeId));
-}
+}*/
 function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition): NodeData[] {
   var result = [];
   if (nodeDef.canBeExecuted) {
@@ -59,6 +58,7 @@ function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition)
 
   return result;
 }
+/*
 function getOutputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition) {
   var result = [];
 
@@ -70,3 +70,4 @@ function getOutputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition
   );
   return result;
 }
+*/
