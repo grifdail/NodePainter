@@ -1,19 +1,19 @@
 import { NodeData } from "../Types/NodeData";
 
 export function VectorDivision(a: number[], b: number[]): any {
-  return VectorComponentOperation(1, (old, value) => old / value, a, b);
+  return a.map((p, i) => a[i] / b[i]);
 }
 
 export function VectorSubstraction(a: number[], b: number[]): number[] {
-  return zipVector(a, b).map((params) => params.slice(1).reduce((old, valye) => old - valye, params[0]));
+  return a.map((p, i) => a[i] - b[i]);
 }
 
 export function VectorAddition(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(0, (old, value) => old + value, a, b);
+  return a.map((p, i) => a[i] + b[i]);
 }
 
 export function VectorMultiplication(a: number[], b: number[]): number[] {
-  return VectorComponentOperation(1, (old, value) => old * value, a, b);
+  return a.map((p, i) => a[i] * b[i]);
 }
 
 export function VectorLerp(a: number[], b: number[], t: number): number[] {
