@@ -61,7 +61,7 @@ export function GridUi() {
           {selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}
         </button>
         <FunctionSubMenu></FunctionSubMenu>
-        <MainMenu></MainMenu>
+        <MainMenu showPreview={showPreview}></MainMenu>
       </BottomToolbar>
     </FullScreenDiv>
   );

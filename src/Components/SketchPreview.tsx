@@ -54,7 +54,9 @@ export function SketchPreview() {
 
   var smallestDim = Math.min(1, Math.min(dim.width || start.settings.width || 400, dim.height || start.settings.height || 400) / 450);
   return (
-    <Preview scale={smallestDim}>
+    <Preview
+      scale={smallestDim}
+      id="SketchPreview">
       <ReactP5Wrapper
         sketch={sketch}
         tree={tree}

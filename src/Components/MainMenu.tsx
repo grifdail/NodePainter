@@ -1,4 +1,4 @@
-import { IconDeviceFloppy, IconFile, IconFocusCentered, IconGif, IconInfoCircle, IconMenu2, IconSettings } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconFile, IconFocusCentered, IconGif, IconInfoCircle, IconMenu2, IconPng, IconSettings } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
@@ -9,7 +9,14 @@ import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
 
-export function MainMenu() {
+function download(url: string, filename: string = "data.json") {
+  const link = document.createElement("a");
+  link.download = filename;
+  link.href = url;
+  link.click();
+}
+
+export function MainMenu({ showPreview }: { showPreview: boolean }) {
   const openModal = useRouter((state) => state.open);
   const reset = useTree((state) => state.reset);
   const loadTemplate = useTree((state) => state.loadTemplate);
@@ -30,6 +37,17 @@ export function MainMenu() {
     [saveSketch]
   );
 
+  const exportPng = useCallback(() => {
+    const canvas = document.querySelector("#SketchPreview canvas.p5Canvas") as HTMLCanvasElement;
+    const name = useTree.getState().getSketchName();
+    const filename = `${name}-np-${Date.now()}`;
+    const filenameWithExt = `${filename}.png`;
+
+    const data = canvas.toDataURL("image/png");
+
+    download(data, filenameWithExt);
+  }, []);
+
   const withConfirm = (cb: Function) => {
     return (...args: any[]) => {
       useDialog.getState().openConfirm(
@@ -48,7 +66,9 @@ export function MainMenu() {
     <Menu
       portal
       menuButton={
-        <button data-tooltip-id="tooltip" data-tooltip-content="Menu">
+        <button
+          data-tooltip-id="tooltip"
+          data-tooltip-content="Menu">
           <IconMenu2></IconMenu2>
         </button>
       }>
@@ -68,7 +88,9 @@ export function MainMenu() {
         }>
         <MenuItem onClick={withConfirm(reset)}>Default</MenuItem>
         {Object.entries(Templates).map(([key, value]) => (
-          <MenuItem onClick={withConfirm(() => loadTemplate(value))} key={key}>
+          <MenuItem
+            onClick={withConfirm(() => loadTemplate(value))}
+            key={key}>
             Template {key}
           </MenuItem>
         ))}
@@ -86,7 +108,9 @@ export function MainMenu() {
         <MenuItem onClick={() => openModal(Routes.Load)}>Load from JSON</MenuItem>
         <MenuDivider></MenuDivider>
         {sketches?.map((sketch) => (
-          <MenuItem key={sketch.name} onClick={withConfirm(() => loadSketch(sketch))}>
+          <MenuItem
+            key={sketch.name}
+            onClick={withConfirm(() => loadSketch(sketch))}>
             {sketch.name}
           </MenuItem>
         ))}
@@ -95,6 +119,11 @@ export function MainMenu() {
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => openModal(Routes.ExportGif)}>
         <IconGif></IconGif> Export gif
+      </MenuItem>
+      <MenuItem
+        onClick={() => exportPng()}
+        disabled={!showPreview}>
+        <IconPng></IconPng> Export png
       </MenuItem>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={resetCamera}>
