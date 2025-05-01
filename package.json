@@ -44,13 +44,14 @@
     "zustand": "^4.4.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "dev": "vite"
   },
   "eslintConfig": {
     "extends": [
@@ -86,6 +87,12 @@
     "eslint-plugin-storybook": "^0.10.1",
     "prop-types": "^15.8.1",
     "storybook": "^8.3.6",
-    "webpack": "^5.95.0"
+    "webpack": "^5.95.0",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@types/node": "^22.13.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.1.0",
+    "vite-tsconfig-paths": "^4.3.2"
   }
 }
