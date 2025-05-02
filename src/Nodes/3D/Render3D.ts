@@ -38,7 +38,8 @@ export const Render3D: NodeDefinition = {
     let img = context.blackboard[keyCache];
     if (!img) {
       img = new ImageData();
-      img.set(context.p5.createGraphics(width, height, context.p5.WEBGL));
+      var newCtx = context.p5.createGraphics(width, height, context.p5.WEBGL);
+      img.set(newCtx);
       context.blackboard[keyCache] = img;
     }
     let needRedraw = false;

@@ -94,6 +94,7 @@ import { StartNode } from "./System/StartNode";
 import { ThenNode } from "./System/ThenNode";
 import { createConstant } from "./createConstant";
 
+import { DefaultMaterial } from "./3D/DefaultMaterial";
 import { DrawBox } from "./3D/DrawBox";
 import { DrawCilinder } from "./3D/DrawCilinder";
 import { DrawCone } from "./3D/DrawCone";
@@ -386,6 +387,7 @@ export const Nodes: Array<NodeDefinition> = [
   EmissiveMaterial,
   TextureMaterial,
   WireframeMaterial,
+  DefaultMaterial,
 
   //Array
   SelectFromArray,

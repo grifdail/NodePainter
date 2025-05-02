@@ -50,8 +50,8 @@ export const DrawBox: NodeDefinition = {
     if (material) {
       context.applyMaterial(material);
     }
-    //context.target.box(10, 10, 10);
-    context.target.rect(100, 100, 100, 100);
+    context.target.box(10, 10, 10);
+    //context.target.rect(100, 100, 100, 100);
     context.target.pop();
   },
 };
