@@ -1,4 +1,5 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
+import { Color as TColor } from "three";
 import { Color, createColor, Gradient } from "../Types/vectorDataType";
 import { VectorLerp } from "./vectorUtils";
 
@@ -15,6 +16,13 @@ export function toHex(c: Color, includeAlpha: boolean = false): string {
 
 export function toP5Color(c: Color, p5: P5CanvasInstance) {
   return p5.color(c[0] * 255, c[1] * 255, c[2] * 255, c[3] * 255);
+}
+
+export function toThreeColor(c: Color) {
+  return new TColor(c[0], c[1], c[2]);
+}
+export function toThreeColorWithAlpha(c: Color): [TColor, number] {
+  return [new TColor(c[0], c[1], c[2]), c[3]];
 }
 
 export function toRGB255Array(c: Color, floored: boolean = true) {

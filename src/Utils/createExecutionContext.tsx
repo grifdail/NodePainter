@@ -33,6 +33,7 @@ export type ExecutionContext = {
   time: number;
   target: Graphics;
   blackboard: { [key: string]: any };
+  callCounts: { [key: string]: number };
   frameBlackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
@@ -53,6 +54,9 @@ export type ExecutionContext = {
   getInputValueModel: (nodeData: NodeData, portId: string) => p5.Geometry | null;
   getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
+  getCallId(node: NodeData, ...args: any[]): string;
+  endOfFrameCleanup(): void;
+  endOfRunCleanup(): void;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -64,6 +68,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     target: p5 as Graphics,
     frameBlackboard: {},
     functionStack: [],
+    callCounts: {},
     RNG: new Rand(),
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
@@ -151,6 +156,21 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       if (node != null && isMaterialNode(node)) {
         node.applyMaterial(context, material, isStrokeOnly);
       }
+    },
+    getCallId: function (node: NodeData, ...args: any[]): string {
+      var result = `${node.id} - ${context.callCounts[node.id] || 0} - ${args.join(" - ")}`;
+      context.callCounts[node.id] = (context.callCounts[node.id] || 0) + 1;
+      return result;
+    },
+    endOfFrameCleanup: function (): void {
+      context.callCounts = {};
+    },
+    endOfRunCleanup: function (): void {
+      Object.keys(context.blackboard).forEach((key) => {
+        if (typeof context.blackboard[key].dispose === "function") {
+          context.blackboard[key].dispose();
+        }
+      });
     },
   };
   return context;
