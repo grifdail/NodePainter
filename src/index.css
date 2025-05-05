@@ -15,6 +15,7 @@
   --color-material: #f7df07;
   --color-mesh: #7e2553;
   --color-struct: #ff004d;
+  --color-object3d: #008751;
 
   --color-selected: rgba(0, 0, 0, 0.3);
 
@@ -170,6 +171,11 @@ body .szh-menu__divider {
 .struct,
 .array-struct {
   --color-property: var(--color-struct);
+}
+
+.object3d,
+.array-object3d {
+  --color-property: var(--color-object3d);
 }
 iframe {
   display: none;

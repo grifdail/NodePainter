@@ -1,7 +1,11 @@
 import { IconRectangle } from "@tabler/icons-react";
+import { BoxGeometry, BufferGeometry, Material, Mesh, MeshBasicMaterial, NormalBufferAttributes, Object3DEventMap } from "three";
+import { MaterialData } from "../../Types/MaterialData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createVector3 } from "../../Types/vectorDataType";
+import { createColor, createVector3, Vector3 } from "../../Types/vectorDataType";
+import { toThreeColor } from "../../Utils/colorUtils";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
+import { StatefullElementType, StatefullVirtualElement } from "../../Utils/statefullContext";
 
 export const DrawBox: NodeDefinition = {
   id: "DrawBox",
@@ -31,27 +35,42 @@ export const DrawBox: NodeDefinition = {
       defaultValue: createVector3(0, 0, 0),
     },
   ],
-  dataOutputs: [],
+  dataOutputs: [
+    {
+      id: "object",
+      type: "object3d",
+      defaultValue: null,
+    },
+  ],
   executeOutputs: [],
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var material = context.getInputValueMaterial(data, "material");
+  canBeExecuted: false,
+  execute: (data, context) => {},
+  getData(portId, node, context) {
+    var material = context.getInputValueMaterial(node, "material");
 
-    var rotation = context.getInputValueVector3(data, "rotation");
-    var position = context.getInputValueVector3(data, "position");
-    var dimension = context.getInputValueVector3(data, "dimension");
-    context.target.push();
-    context.target.translate(...position);
-    context.target.rotateZ(rotation[2]);
-    context.target.rotateX(rotation[0]);
-    context.target.rotateY(rotation[1]);
-    context.target.scale(...dimension);
-    if (material) {
-      context.applyMaterial(material);
-    }
-    context.target.box(10, 10, 10);
-    //context.target.rect(100, 100, 100, 100);
-    context.target.pop();
+    var rotation = context.getInputValueVector3(node, "rotation");
+    var position = context.getInputValueVector3(node, "position");
+    var dimension = context.getInputValueVector3(node, "dimension");
+    const id = context.getCallId(node);
+    const virtual = new StatefullVirtualElement<Mesh, boxProps>(id, boxVirtualType, [], material, position, rotation, dimension);
+    return virtual;
+  },
+};
+
+type boxProps = [material: MaterialData | null, position: Vector3, rotation: Vector3, dimension: Vector3];
+const boxVirtualType: StatefullElementType<Mesh, boxProps> = {
+  create: function (material: MaterialData, position: Vector3, rotation: Vector3, dimension: Vector3): Mesh<BufferGeometry<NormalBufferAttributes>, Material | Material[], Object3DEventMap> {
+    const self = new Mesh(new BoxGeometry(3, 3, 3), new MeshBasicMaterial({ color: toThreeColor(createColor(0.2, 0.3, 1)) }));
+    return self;
+  },
+
+  update: function (element: Mesh<BufferGeometry<NormalBufferAttributes>, Material | Material[], Object3DEventMap>, material: MaterialData, position: Vector3, rotation: Vector3, dimension: Vector3): void {
+    element.position.set(...position);
+    element.rotation.set(...rotation);
+    element.scale.set(...dimension);
+  },
+  remove: function (element: Mesh<BufferGeometry<NormalBufferAttributes>, Material | Material[], Object3DEventMap>): void {
+    element.geometry.dispose();
   },
 };

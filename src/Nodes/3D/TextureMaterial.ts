@@ -35,7 +35,7 @@ export const TextureMaterial: MaterialNodeDefinition = {
     context.target.noStroke();
     context.target.fill(255, 255, 255);
     if (mat.texture?.image != null) {
-      context.target.texture(mat.texture?.image);
+      context.target.texture(mat.texture?.image as any);
     }
   },
 };
