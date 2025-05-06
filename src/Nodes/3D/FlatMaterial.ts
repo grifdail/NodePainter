@@ -2,10 +2,11 @@ import { IconBulb } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
+import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 
-export const RegularMaterial: NodeDefinition = {
-  id: "RegularMaterial",
-  description: "create a material that react to the light",
+export const FlatMaterial: NodeDefinition = {
+  id: "FlatMaterial",
+  description: "Render the object in one solid color, unafected by light",
   icon: IconBulb,
   tags: ["3D"],
   dataInputs: [
@@ -25,10 +26,6 @@ export const RegularMaterial: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
-    var m = {
-      id: "RegularMaterial",
-      color: context.getInputValueColor(nodeData, "color"),
-    };
-    return m;
+    return VirtualNodes.FlatMaterialType.generate(context.getCallId(nodeData), [], context.getInputValueColor(nodeData, "color"));
   },
 };

@@ -1,6 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createVector2, createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2, createVector3 } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawCone: NodeDefinition = {
@@ -54,9 +54,7 @@ export const DrawCone: NodeDefinition = {
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
-    if (material) {
-      context.applyMaterial(material);
-    }
+
     context.target.cone(1, 1, Math.floor(details[0]), Math.floor(details[1]));
     context.target.pop();
   },

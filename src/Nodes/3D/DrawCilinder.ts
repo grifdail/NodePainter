@@ -1,6 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector3 } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawCilinder: NodeDefinition = {
@@ -54,9 +54,7 @@ export const DrawCilinder: NodeDefinition = {
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
-    if (material) {
-      context.applyMaterial(material);
-    }
+
     context.target.cylinder(1, 1, side, 1);
     context.target.pop();
   },

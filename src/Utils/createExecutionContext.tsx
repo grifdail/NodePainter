@@ -14,7 +14,7 @@ import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataTy
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData } from "../Types/MaterialData";
-import { NodeDefinition, isMaterialNode } from "../Types/NodeDefinition";
+import { NodeDefinition } from "../Types/NodeDefinition";
 import Rand from "rand-seed";
 
 export type FunctionContext = {
@@ -27,7 +27,6 @@ export type ExecutionContext = {
   getShaderCode(shader: string, uniforms: PortConnection[]): string;
   findNodeOfType(type: string): NodeData | null;
   getNodeDefinition: (type: string) => NodeDefinition | undefined;
-  applyMaterial: (material: MaterialData, isStrokeOnly?: boolean) => void;
   createFunctionContext(node: NodeData): FunctionContext;
   functionStack: Array<FunctionContext>;
   time: number;
@@ -50,7 +49,7 @@ export type ExecutionContext = {
   getInputValueImage: (nodeData: NodeData, portId: string) => null | ImageData;
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
-  getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData | null;
+  getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData;
   getInputValueModel: (nodeData: NodeData, portId: string) => p5.Geometry | null;
   getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
@@ -110,7 +109,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueImage: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "image") as ImageData,
     getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
-    getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material") as MaterialData,
+    getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
     getInputValueModel: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh") as p5.Geometry,
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
@@ -150,12 +149,6 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     },
     getShaderCode(shader, ports) {
       return getShaderCode(shader, ports, tree, context);
-    },
-    applyMaterial(material, isStrokeOnly = false) {
-      var node = tree?.getNodeTypeDefinition(material.id);
-      if (node != null && isMaterialNode(node)) {
-        node.applyMaterial(context, material, isStrokeOnly);
-      }
     },
     getCallId: function (node: NodeData, ...args: any[]): string {
       var result = `${node.id} - ${context.callCounts[node.id] || 0} - ${args.join(" - ")}`;

@@ -1,6 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createVector3 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector3 } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 
 export const DrawPlane: NodeDefinition = {
@@ -47,9 +47,7 @@ export const DrawPlane: NodeDefinition = {
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
-    if (material) {
-      context.applyMaterial(material);
-    }
+
     context.target.plane();
     context.target.pop();
   },

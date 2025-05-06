@@ -56,9 +56,7 @@ export const DrawModel: NodeDefinition = {
     context.target.rotateX(rotation[0]);
     context.target.rotateY(rotation[1]);
     context.target.scale(...dimension);
-    if (material) {
-      context.applyMaterial(material);
-    }
+
     context.target.model(model);
     context.target.pop();
   },

@@ -1,20 +1,22 @@
+import { FlatMaterialType } from "../../../Nodes/3D/VirtualNodeTypes/FlatMaterialType";
 import { MaterialData } from "../../../Types/MaterialData";
 import { Color } from "../../../Types/vectorDataType";
 import { ColorInput } from "./ColorInput";
 
 export function MaterialInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
   var mat = value as MaterialData;
-  if (!mat || mat.color === undefined) {
+  if (!mat || mat.type !== "FlatMaterialType") {
     return null;
   }
+
   const onInputChange = (newValue: Color) => {
-    var newMat = { ...mat, color: newValue };
+    var newMat = { ...mat, props: [newValue] } as MaterialData;
     onChange(newMat);
   };
 
   return (
     <ColorInput
-      value={mat.color as Color}
+      value={mat.props[0] as Color}
       onChange={onInputChange}></ColorInput>
   );
 }
