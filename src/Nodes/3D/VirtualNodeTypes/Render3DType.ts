@@ -25,7 +25,7 @@ export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DP
 
     var lightAmbient = new AmbientLight(toThreeColor([0.3, 0.3, 0.3, 1]));
     scene.add(lightAmbient);
-    var light = new DirectionalLight(toThreeColor([1, 1, 1, 1]), 0.8);
+    var light = new DirectionalLight(toThreeColor([1, 1, 1, 1]), 1);
     light.position.set(0, 1, 1);
     scene.add(light);
 
