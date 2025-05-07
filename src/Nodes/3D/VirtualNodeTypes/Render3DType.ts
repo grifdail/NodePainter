@@ -1,8 +1,8 @@
 import { Graphics } from "p5";
-import { AmbientLight, DirectionalLight, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { Color, Vector3 } from "../../../Types/vectorDataType";
-import { toThreeColor, toThreeColorWithAlpha } from "../../../Utils/colorUtils";
+import { toThreeColorWithAlpha } from "../../../Utils/colorUtils";
 import { StatefullElementType } from "../../../Utils/statefullContext";
 
 export type ThreeJSContext = {
@@ -22,12 +22,6 @@ export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DP
     const imageData = new ImageData();
     renderer.setSize(width, height);
     imageData.set({ width: width, height: height, elt: renderer.domElement } as Graphics);
-
-    var lightAmbient = new AmbientLight(toThreeColor([0.3, 0.3, 0.3, 1]));
-    scene.add(lightAmbient);
-    var light = new DirectionalLight(toThreeColor([1, 1, 1, 1]), 1);
-    light.position.set(0, 1, 1);
-    scene.add(light);
 
     return { renderer, scene, camera, imageData, parent: scene };
   }

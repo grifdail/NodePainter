@@ -160,3 +160,10 @@ export function evaluateGradient(gradient: Gradient, pos: number) {
   }
   return prev.color;
 }
+
+export function White() {
+  return createColor(1, 1, 1, 1);
+}
+export function Black() {
+  return createColor(0, 0, 0, 1);
+}

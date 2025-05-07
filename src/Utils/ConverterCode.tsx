@@ -1,4 +1,4 @@
-import { clamp01 } from "./colorUtils";
+import { clamp01, White } from "./colorUtils";
 import { createColor, createVector2, createVector3, createVector4 } from "../Types/vectorDataType";
 import { PortType } from "../Types/PortType";
 import { createDefaultMaterial } from "./createDefaultMaterial";
@@ -85,7 +85,7 @@ export const ConverterCode: { [key1 in PortType]?: { [key2 in PortType]?: (v: an
     vector2: (a) => (a ? createVector2(1, 1) : createVector2()),
     vector3: (a) => (a ? createVector3(1, 1, 1) : createVector3()),
     vector4: (a) => (a ? createVector4(1, 1, 1, 1) : createVector2()),
-    color: (a) => (a ? createColor(1, 1, 1, 1) : createColor(0, 0, 0, 0)),
+    color: (a) => (a ? White() : createColor(0, 0, 0, 0)),
     string: (a) => a.toString(),
     bool: (a) => a,
     unknown: (a) => a,
@@ -103,5 +103,4 @@ export const ConverterCode: { [key1 in PortType]?: { [key2 in PortType]?: (v: an
     unknown: (a) => a,
   },
   material: {},
-  
 };

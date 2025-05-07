@@ -78,9 +78,9 @@ import { FillBackground } from "./Draw/FillBackground";
 
 import { Compose3D } from "./3D/Compose3D";
 import { DrawBox } from "./3D/DrawBox";
-import { FlatMaterial } from "./3D/FlatMaterial";
+import { LightNodes } from "./3D/LightNodes";
+import { MaterialNodes } from "./3D/MaterialNodes";
 import { Render3D } from "./3D/Render3D";
-import { StandardMaterial } from "./3D/StandardMaterial";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
@@ -365,9 +365,9 @@ export const Nodes: Array<NodeDefinition> = [
   DrawBox,
   UploadModel,
   GenerateUVModel,
-  FlatMaterial,
-  StandardMaterial,
   Compose3D,
+  ...MaterialNodes,
+  ...LightNodes,
 
   //Array
   SelectFromArray,

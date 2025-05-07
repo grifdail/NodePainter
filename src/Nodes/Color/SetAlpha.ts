@@ -1,6 +1,6 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createColor } from "../../Types/vectorDataType";
+import { White } from "../../Utils/colorUtils";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const SetAlpha: NodeDefinition = {
@@ -10,7 +10,7 @@ export const SetAlpha: NodeDefinition = {
   icon: IconColorFilter,
   tags: ["Color"],
   dataInputs: [
-    { id: "color", type: "color", defaultValue: createColor(1, 1, 1, 1) },
+    { id: "color", type: "color", defaultValue: White() },
     { id: "alpha", type: "number", defaultValue: 0 },
   ],
   dataOutputs: [{ id: "out", type: "color", defaultValue: 1 }],
