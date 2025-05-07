@@ -1,4 +1,4 @@
-import { FlatMaterialType } from "../../../Nodes/3D/VirtualNodeTypes/FlatMaterialType";
+import { FlatMaterialType } from "../../../Nodes/3D/VirtualNodeTypes/MaterialsVirtualNodes";
 import { MaterialData } from "../../../Types/MaterialData";
 import { Color } from "../../../Types/vectorDataType";
 import { ColorInput } from "./ColorInput";

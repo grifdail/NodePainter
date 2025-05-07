@@ -76,14 +76,8 @@ import { DrawText } from "./Draw/DrawText";
 import { DrawTriangle } from "./Draw/DrawTriangle";
 import { FillBackground } from "./Draw/FillBackground";
 
+import { Compose3D } from "./3D/Compose3D";
 import { DrawBox } from "./3D/DrawBox";
-import { DrawCilinder } from "./3D/DrawCilinder";
-import { DrawCone } from "./3D/DrawCone";
-import { DrawModel } from "./3D/DrawModel";
-import { DrawPlane } from "./3D/DrawPlane";
-import { DrawSphere } from "./3D/DrawSphere";
-import { DrawTorus } from "./3D/DrawTorus";
-import { ExecuteWithLight } from "./3D/ExecuteWithLights";
 import { FlatMaterial } from "./3D/FlatMaterial";
 import { Render3D } from "./3D/Render3D";
 import { StandardMaterial } from "./3D/StandardMaterial";
@@ -369,17 +363,11 @@ export const Nodes: Array<NodeDefinition> = [
   //3D
   Render3D,
   DrawBox,
-  DrawPlane,
-  DrawSphere,
-  DrawTorus,
-  DrawCone,
-  DrawCilinder,
   UploadModel,
-  DrawModel,
   GenerateUVModel,
-  ExecuteWithLight,
   FlatMaterial,
   StandardMaterial,
+  Compose3D,
 
   //Array
   SelectFromArray,
