@@ -86,6 +86,7 @@ import { DrawTorus } from "./3D/DrawTorus";
 import { ExecuteWithLight } from "./3D/ExecuteWithLights";
 import { FlatMaterial } from "./3D/FlatMaterial";
 import { Render3D } from "./3D/Render3D";
+import { StandardMaterial } from "./3D/StandardMaterial";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
@@ -376,11 +377,9 @@ export const Nodes: Array<NodeDefinition> = [
   UploadModel,
   DrawModel,
   GenerateUVModel,
-  //Materials
   ExecuteWithLight,
-  //RegularMaterial,
   FlatMaterial,
-  //TextureMaterial,
+  StandardMaterial,
 
   //Array
   SelectFromArray,
