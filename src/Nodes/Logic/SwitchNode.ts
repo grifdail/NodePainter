@@ -1,7 +1,7 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { CommonTypes } from "../../Types/PortType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { Black, White } from "../../Utils/colorUtils";
 
 export const SwitchNode: NodeDefinition = {
@@ -20,6 +20,8 @@ export const SwitchNode: NodeDefinition = {
   availableTypes: CommonTypes,
   defaultType: "color",
   onChangeType: changeTypeGenerator(["true", "false"], ["result"]),
+  hasInput: hasInputGenerator(CommonTypes),
+  hasOutput: hasInputGenerator(CommonTypes),
   getData: (portId, nodeData, context) => {
     var input = context.getInputValueBoolean(nodeData, "condition");
     if (input) {

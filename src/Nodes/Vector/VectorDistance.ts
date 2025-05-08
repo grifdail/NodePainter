@@ -2,7 +2,7 @@ import { IconMathXPlusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { VectorTypesFull } from "../../Types/PortType";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { VectorDistance } from "../../Utils/vectorUtils";
 
@@ -20,7 +20,7 @@ export const Distance: NodeDefinition = {
     },
     {
       id: "b",
-      type: "vector",
+      type: "vector2",
       defaultValue: createVector2(),
     },
   ],
@@ -36,6 +36,7 @@ export const Distance: NodeDefinition = {
   defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], []),
+  hasInput: hasInputGenerator(VectorTypesFull),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

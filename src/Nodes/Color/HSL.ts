@@ -1,7 +1,7 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { clamp01, hslToRgb } from "../../Utils/colorUtils";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { hslToRgb, clamp01 } from "../../Utils/colorUtils";
 
 export const HSL: NodeDefinition = {
   id: "HSL",

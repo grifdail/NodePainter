@@ -38,6 +38,8 @@ export type NodeDefinition = {
   onChangeType?: PortChangeFunction;
   onCreate?: (node: NodeData) => void;
   featureLevel?: number;
+  hasInput?(input: PortType): PortType | null;
+  hasOutput?(output: PortType): PortType | null;
 };
 
 export const MainExecuteId = "mainExecute";

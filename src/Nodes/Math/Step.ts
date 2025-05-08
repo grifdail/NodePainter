@@ -1,8 +1,8 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { VectorTypesFull } from "../../Types/PortType";
 import { clamp01 } from "../../Utils/colorUtils";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Step: NodeDefinition = {
   id: "Step",

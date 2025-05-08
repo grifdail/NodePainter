@@ -1,6 +1,6 @@
 import { IconArrowsHorizontal } from "@tabler/icons-react";
-import { createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createVector2 } from "../../Types/vectorDataType";
 
 export const Dimension: NodeDefinition = {
   id: "Dimension",

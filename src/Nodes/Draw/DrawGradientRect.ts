@@ -1,6 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
-import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 
 export const DrawGradientRect: NodeDefinition = {

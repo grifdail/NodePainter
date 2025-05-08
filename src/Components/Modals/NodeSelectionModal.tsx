@@ -12,6 +12,9 @@ import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
 import { useShallow } from "zustand/react/shallow";
 import { Input } from "../StyledComponents/Input";
 import { InvisibleButton } from "../Generics/Button";
+import { PortType, PortTypeArray } from "../../Types/PortType";
+import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
+import { usePortSelection } from "../../Hooks/usePortSelection";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -95,21 +98,30 @@ const TagList = styled.div`
 type SearchTermData = {
   tags: string[];
   name: string;
+  output: PortType | null;
+  input: PortType | null;
 };
 
 const TagRegex = /tag:(\w+)/gi;
+const OutputRegex = new RegExp(`output:(${PortTypeArray.join("|")})`, "gi");
+const InputRegex = new RegExp(`input:(${PortTypeArray.join("|")})`, "gi");
 
 const parseSearchTerm = (raw: string): SearchTermData => {
-  var base = raw.trim().toLowerCase();
-  var result = Array.from(base.matchAll(TagRegex));
+  const base = raw.trim().toLowerCase();
+  const resultTag = Array.from(base.matchAll(TagRegex));
+  const output = OutputRegex.exec(base);
+  const input = InputRegex.exec(base);
   return {
-    name: base.replaceAll(TagRegex, "").trim(),
-    tags: result.map((r) => r[1]),
+    name: base.replaceAll(TagRegex, "").replaceAll(OutputRegex, "").replaceAll(InputRegex, "").trim(),
+    tags: resultTag.map((r) => r[1]),
+    output: output ? (output[1] as PortType) : null,
+    input: input ? (input[1] as PortType) : null,
   };
 };
 
 export function NodeSelectionModal({ close }: { close: () => void }) {
-  const [searchTermRaw, setSearchTerm] = useState("");
+  let a = extractDefaultNode();
+  const [searchTermRaw, setSearchTerm] = useState(a);
   const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
   const nodeFav = usePlayerPref();
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
@@ -134,6 +146,20 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
             if (!item.tags.some((tag) => tag.toLowerCase() === target)) {
               return false;
             }
+          }
+        }
+        if (searchTerm.input) {
+          if (typeof item.hasInput === "function") {
+            return item.hasInput(searchTerm.input);
+          } else {
+            return item.dataInputs.some((port) => port.type === searchTerm.input);
+          }
+        }
+        if (searchTerm.output) {
+          if (typeof item.hasOutput === "function") {
+            return item.hasOutput(searchTerm.output);
+          } else {
+            return item.dataOutputs.some((port) => port.type === searchTerm.output);
           }
         }
 
@@ -259,6 +285,20 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
     </Modal>
   );
 }
+function extractDefaultNode() {
+  const selectedNode = usePortSelection.getState();
+  let a = "";
+  if (selectedNode.hasSelection) {
+    if (selectedNode.location === "inputData") {
+      a = `output:${selectedNode.type} `;
+    }
+    if (selectedNode.location === "outputData") {
+      a = `input:${selectedNode.type} `;
+    }
+  }
+  return a;
+}
+
 function sortNodeList(nodeFav: PlayerPrefStore, filteredList: NodeDefinition[], useFavSorting: boolean = true) {
   const favSorting = useFavSorting ? compareFav(nodeFav) : () => 0;
   const lastSorting = (a: NodeDefinition, b: NodeDefinition) => (nodeFav.nodesLastUsedDates[b.id] || 0) - (nodeFav.nodesLastUsedDates[a.id] || 0);

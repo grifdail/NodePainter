@@ -1,6 +1,6 @@
 import { IconRotate } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithRotation: NodeDefinition = {
   id: "WithRotation",
@@ -17,6 +17,7 @@ export const ExecuteWithRotation: NodeDefinition = {
   defaultType: "number",
   availableTypes: ["number", "vector3"],
   onChangeType: changeTypeGenerator(["angle"], []),
+  hasInput: hasInputGenerator(["number", "vector3"]),
   execute: (data, context) => {
     context.target.push();
     if (data.selectedType === "number") {
