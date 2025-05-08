@@ -10,6 +10,12 @@ export abstract class SimpleNodeVirtualNodeType<TMat, TProps extends any[]> exte
   getLabel(): string {
     return this.getId();
   }
+  getTags(): string[] {
+    return [];
+  }
+  getHash(...props: TProps): string {
+    return "";
+  }
 }
 export abstract class MaterialVirtualNodeType<TMat, TProps extends any[]> extends SimpleNodeVirtualNodeType<TMat, TProps> {
   getOutput(): PortDefinition {
@@ -18,6 +24,9 @@ export abstract class MaterialVirtualNodeType<TMat, TProps extends any[]> extend
       type: "material",
       defaultValue: createDefaultMaterial(),
     };
+  }
+  getTags(): string[] {
+    return ["materials"];
   }
 }
 

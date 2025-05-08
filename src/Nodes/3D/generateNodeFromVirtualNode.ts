@@ -9,13 +9,14 @@ export function generateNodeFromVirtualNode(materialVirtualNodeType: SimpleNodeV
     label: materialVirtualNodeType.getLabel(),
     description: materialVirtualNodeType.getDescription(),
     icon: IconBulb,
-    tags: ["3D", "Material"],
+    tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],
     executeOutputs: [],
     settings: [],
     getData: (portId, nodeData, context) => {
-      return materialVirtualNodeType.generate(context.getCallId(nodeData), [], ...inputs.map((port) => context.getInputValue(nodeData, port.id, port.type)));
+      const params = inputs.map((port) => context.getInputValue(nodeData, port.id, port.type));
+      return materialVirtualNodeType.generate(context.getCallId(nodeData, materialVirtualNodeType.getHash(...params)), [], ...params);
     },
   };
 }

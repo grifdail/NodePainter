@@ -46,7 +46,7 @@ export const Compose3D: NodeDefinition = {
   getData(portId, node, context) {
     var entries = Object.keys(node.dataInputs);
     const id = context.getCallId(node);
-    const virtual = VirtualNodes.Compose3DVirtualNodeType.generate(
+    const virtual = VirtualNodes.ComposeVirtualNodeType.generate(
       id,
       entries.map((key) => context.getInputValue(node, key, "object3d") as StatefullVirtualElement<any, any>).filter((item: any) => item)
     );

@@ -1,5 +1,6 @@
-import { BoxType } from "./BoxType";
-import { Compose3DVirtualNodeType } from "./Compose3DVirtualNodeType";
+import { ComposeVirtualNodeType } from "./Compose3DVirtualNodeType";
+import { GenericModelVirtualNodeType } from "./GenericModelVirtualNodeType";
+import { GeometryVirtualNodeTypes } from "./Geometry";
 import { LightVirtualNodeTypes } from "./LightVirtualNodeType";
 import { MaterialsVirtualNodes } from "./MaterialsVirtualNodes";
 import { Render3DType } from "./Render3DType";
@@ -7,9 +8,10 @@ import { Render3DType } from "./Render3DType";
 export const VirtualNodes = {
   ...MaterialsVirtualNodes,
   ...LightVirtualNodeTypes,
-  Compose3DVirtualNodeType: new Compose3DVirtualNodeType(),
+  ...GeometryVirtualNodeTypes,
+  ComposeVirtualNodeType: new ComposeVirtualNodeType(),
   Render3DType: new Render3DType(),
-  BoxType: new BoxType(),
+  GenericModelVirtualNodeType: new GenericModelVirtualNodeType(),
 };
 
 export type VirtualNodeTypes = keyof typeof VirtualNodes;

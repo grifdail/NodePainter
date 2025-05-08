@@ -13,9 +13,10 @@ import { ImageData } from "../Types/ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
-import { MaterialData } from "../Types/MaterialData";
+import { MaterialData, MeshData } from "../Types/MaterialData";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import Rand from "rand-seed";
+import { StatefullVirtualElement } from "./statefullContext";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -50,7 +51,7 @@ export type ExecutionContext = {
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
   getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData;
-  getInputValueModel: (nodeData: NodeData, portId: string) => p5.Geometry | null;
+  getInputValueMesh: (nodeData: NodeData, portId: string) => MeshData;
   getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
   getCallId(node: NodeData, ...args: any[]): string;
@@ -110,7 +111,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
     getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
-    getInputValueModel: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh") as p5.Geometry,
+    getInputValueMesh: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh"),
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];

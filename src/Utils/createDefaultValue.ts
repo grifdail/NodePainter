@@ -20,7 +20,6 @@ export const PortTypeDefaultValue: {
   material: () => createDefaultMaterial(),
   unknown: () => null,
   struct: () => null,
-
   object3d: () => null,
   "array-string": () => [],
   "array-number": () => [],

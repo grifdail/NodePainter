@@ -76,16 +76,11 @@ import { DrawText } from "./Draw/DrawText";
 import { DrawTriangle } from "./Draw/DrawTriangle";
 import { FillBackground } from "./Draw/FillBackground";
 
-import { Compose3D } from "./3D/Compose3D";
-import { DrawBox } from "./3D/DrawBox";
-import { LightNodes } from "./3D/LightNodes";
-import { MaterialNodes } from "./3D/MaterialNodes";
-import { Render3D } from "./3D/Render3D";
+import { Nodes3D } from "./3D/3DNodes";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
-import { GenerateUVModel } from "./Array/GenerateUVModel";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
@@ -105,7 +100,6 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
-import { UploadModel } from "./Images/UploadModel";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -361,13 +355,7 @@ export const Nodes: Array<NodeDefinition> = [
   createConstant("SQRT2", Math.SQRT2),
 
   //3D
-  Render3D,
-  DrawBox,
-  UploadModel,
-  GenerateUVModel,
-  Compose3D,
-  ...MaterialNodes,
-  ...LightNodes,
+  ...Nodes3D,
 
   //Array
   SelectFromArray,

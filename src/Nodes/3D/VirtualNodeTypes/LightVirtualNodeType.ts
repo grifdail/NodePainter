@@ -26,6 +26,9 @@ export class AmbientLightVirtualNodeType extends Object3DVirtualNodeType<Ambient
     element.intensity = intensity;
   }
   remove(element: AmbientLight): void {}
+  getTags(): string[] {
+    return ["light"];
+  }
 }
 
 export class DirectionalLightVirtualNodeType extends Object3DVirtualNodeType<DirectionalLight, [color: Color, intensity: number, direction: Vector3]> {
@@ -52,6 +55,9 @@ export class DirectionalLightVirtualNodeType extends Object3DVirtualNodeType<Dir
     element.position.set(-direction[0], -direction[1], -direction[2]);
   }
   remove(element: DirectionalLight): void {}
+  getTags(): string[] {
+    return ["light"];
+  }
 }
 
 export class PointLightVirtualNodeType extends Object3DVirtualNodeType<PointLight, [color: Color, intensity: number, position: Vector3, distance: number, decay: number]> {
@@ -82,6 +88,9 @@ export class PointLightVirtualNodeType extends Object3DVirtualNodeType<PointLigh
     element.decay = decay;
   }
   remove(element: PointLight): void {}
+  getTags(): string[] {
+    return ["light"];
+  }
 }
 
 export const LightVirtualNodeTypes = {
