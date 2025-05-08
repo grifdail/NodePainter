@@ -150,16 +150,24 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         }
         if (searchTerm.input) {
           if (typeof item.hasInput === "function") {
-            return item.hasInput(searchTerm.input);
+            if (!item.hasInput(searchTerm.input)) {
+              return false;
+            }
           } else {
-            return item.dataInputs.some((port) => port.type === searchTerm.input);
+            if (!item.dataInputs.some((port) => port.type === searchTerm.input)) {
+              return false;
+            }
           }
         }
         if (searchTerm.output) {
           if (typeof item.hasOutput === "function") {
-            return item.hasOutput(searchTerm.output);
+            if (!item.hasOutput(searchTerm.output)) {
+              return false;
+            }
           } else {
-            return item.dataOutputs.some((port) => port.type === searchTerm.output);
+            if (!item.dataOutputs.some((port) => port.type === searchTerm.output)) {
+              return false;
+            }
           }
         }
 
@@ -182,7 +190,14 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   const onClickNode = useCallback(
     (node: NodeDefinition) => {
       var view = useViewbox.getState();
-      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale);
+      let targetTypeChange: PortType | null = null;
+      if (searchTerm.input && node.hasInput) {
+        targetTypeChange = node.hasInput(searchTerm.input);
+      }
+      if (searchTerm.output && node.hasOutput) {
+        targetTypeChange = node.hasOutput(searchTerm.output);
+      }
+      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale, targetTypeChange);
       nodeFav.markNodeAsUsed(node.id);
       close();
     },
