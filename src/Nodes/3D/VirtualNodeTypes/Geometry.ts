@@ -1,8 +1,22 @@
-import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, SphereGeometry } from "three";
+import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, SphereGeometry } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
+import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
 
-export class BoxGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<BoxGeometry, []> {
+abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> extends SimpleNodeVirtualNodeType<TGeometry, TProps> {
+  getOutput(): PortDefinition {
+    return {
+      id: "output",
+      type: "mesh",
+      defaultValue: null,
+    };
+  }
+  getTags(): string[] {
+    return ["Geometry"];
+  }
+}
+
+export class BoxGeometryVirtualNodeType extends GeometryVirtualNodeType<BoxGeometry, []> {
   getInputs(): PortDefinition[] {
     return [];
   }
@@ -12,13 +26,7 @@ export class BoxGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<BoxGeo
   getDescription(): string {
     return "The geometry for a simple box";
   }
-  getOutput(): PortDefinition {
-    return {
-      id: "output",
-      type: "mesh",
-      defaultValue: null,
-    };
-  }
+
   create(): BoxGeometry {
     const self = new BoxGeometry(1, 1, 1);
     return self;
@@ -27,9 +35,15 @@ export class BoxGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<BoxGeo
   remove(element: BoxGeometry): void {}
 }
 
-export class SphereGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<SphereGeometry, []> {
+export class SphereGeometryVirtualNodeType extends GeometryVirtualNodeType<SphereGeometry, [detail: Vector2]> {
   getInputs(): PortDefinition[] {
-    return [];
+    return [
+      {
+        id: "detail",
+        type: "vector2",
+        defaultValue: createVector2(24, 24),
+      },
+    ];
   }
   getId(): string {
     return "SphereGeometry";
@@ -44,15 +58,18 @@ export class SphereGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<Sph
       defaultValue: null,
     };
   }
-  create(): SphereGeometry {
-    const self = new SphereGeometry(1, 24, 24);
+  create(detail: Vector2): SphereGeometry {
+    const self = new SphereGeometry(1, Math.floor(detail[0]), Math.floor(detail[1]));
     return self;
   }
   update(element: SphereGeometry): void {}
   remove(element: SphereGeometry): void {}
+  getHash(detail: Vector2): string {
+    return `${Math.floor(detail[0])} - ${Math.floor(detail[1])} `;
+  }
 }
 
-export class ConeGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<ConeGeometry, []> {
+export class ConeGeometryVirtualNodeType extends GeometryVirtualNodeType<ConeGeometry, []> {
   getInputs(): PortDefinition[] {
     return [];
   }
@@ -62,13 +79,6 @@ export class ConeGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<ConeG
   getDescription(): string {
     return "The geometry for a Cone";
   }
-  getOutput(): PortDefinition {
-    return {
-      id: "output",
-      type: "mesh",
-      defaultValue: null,
-    };
-  }
   create(): ConeGeometry {
     const self = new ConeGeometry(1, 1, 24);
     return self;
@@ -77,7 +87,7 @@ export class ConeGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<ConeG
   remove(element: ConeGeometry): void {}
 }
 
-export class CylinderGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<CylinderGeometry, [side: number, ratio: number]> {
+export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<CylinderGeometry, [side: number, ratio: number]> {
   getInputs(): PortDefinition[] {
     return [
       {
@@ -98,13 +108,6 @@ export class CylinderGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<C
   getDescription(): string {
     return "The geometry for a cylinder";
   }
-  getOutput(): PortDefinition {
-    return {
-      id: "output",
-      type: "mesh",
-      defaultValue: null,
-    };
-  }
   create(side: number, ratio: number): CylinderGeometry {
     console.log(ratio);
     const tr = 1 / Math.max(ratio, 1 - ratio);
@@ -118,7 +121,7 @@ export class CylinderGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<C
   }
 }
 
-export class IcosahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<IcosahedronGeometry, [detail: number]> {
+export class IcosahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<IcosahedronGeometry, [detail: number]> {
   getInputs(): PortDefinition[] {
     return [
       {
@@ -134,13 +137,7 @@ export class IcosahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeTyp
   getDescription(): string {
     return "The geometry for a regular polyhedron with 12 vertice and 20 face";
   }
-  getOutput(): PortDefinition {
-    return {
-      id: "output",
-      type: "mesh",
-      defaultValue: null,
-    };
-  }
+
   create(detail: number): IcosahedronGeometry {
     const self = new IcosahedronGeometry(1, Math.floor(detail));
     return self;
@@ -152,7 +149,7 @@ export class IcosahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeTyp
   }
 }
 
-export class DodecahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<DodecahedronGeometry, [detail: number]> {
+export class DodecahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<DodecahedronGeometry, [detail: number]> {
   getInputs(): PortDefinition[] {
     return [
       {
@@ -168,13 +165,6 @@ export class DodecahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeTy
   getDescription(): string {
     return "The geometry for a regular polyhedron with 20 vertice and 12 face";
   }
-  getOutput(): PortDefinition {
-    return {
-      id: "output",
-      type: "mesh",
-      defaultValue: null,
-    };
-  }
   create(detail: number): DodecahedronGeometry {
     const self = new DodecahedronGeometry(1, Math.floor(detail));
     return self;
@@ -186,6 +176,51 @@ export class DodecahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeTy
   }
 }
 
+export class QuadGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneGeometry, [detail: number]> {
+  getInputs(): PortDefinition[] {
+    return [];
+  }
+  getId(): string {
+    return "QuadGeometry";
+  }
+  getDescription(): string {
+    return "The geometry for a regular simple 2d quad";
+  }
+  create(detail: number): PlaneGeometry {
+    const self = new PlaneGeometry(1, 1);
+    return self;
+  }
+  update(element: PlaneGeometry): void {}
+  remove(element: PlaneGeometry): void {}
+}
+
+export class PlaneGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneGeometry, [detail: Vector2]> {
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "detail",
+        type: "vector2",
+        defaultValue: 0,
+      },
+    ];
+  }
+  getId(): string {
+    return "PlaneGeometry";
+  }
+  getDescription(): string {
+    return "The geometry for a regular polyhedron with 20 vertice and 12 face";
+  }
+  create(detail: Vector2): PlaneGeometry {
+    const self = new PlaneGeometry(1, 1, Math.floor(detail[0]), Math.floor(detail[0]));
+    return self;
+  }
+  update(element: PlaneGeometry): void {}
+  remove(element: PlaneGeometry): void {}
+  getHash(detail: Vector2): string {
+    return `${Math.floor(detail[0])} - ${Math.floor(detail[1])}`;
+  }
+}
+
 export const GeometryVirtualNodeTypes = {
   ConeGeometryVirtualNodeType: new ConeGeometryVirtualNodeType(),
   BoxGeometryVirtualNodeType: new BoxGeometryVirtualNodeType(),
@@ -193,4 +228,6 @@ export const GeometryVirtualNodeTypes = {
   CylinderGeometryVirtualNodeType: new CylinderGeometryVirtualNodeType(),
   IcosahedronGeometryVirtualNodeType: new IcosahedronGeometryVirtualNodeType(),
   DodecahedronGeometryVirtualNodeType: new DodecahedronGeometryVirtualNodeType(),
+  QuadGeometryVirtualNodeType: new QuadGeometryVirtualNodeType(),
+  PlaneGeometryVirtualNodeType: new PlaneGeometryVirtualNodeType(),
 };
