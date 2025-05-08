@@ -1,4 +1,4 @@
-import { BoxGeometry, ConeGeometry, CylinderGeometry, SphereGeometry } from "three";
+import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, SphereGeometry } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
 
@@ -118,9 +118,79 @@ export class CylinderGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<C
   }
 }
 
+export class IcosahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<IcosahedronGeometry, [detail: number]> {
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "detail",
+        type: "number",
+        defaultValue: 0,
+      },
+    ];
+  }
+  getId(): string {
+    return "IcosahedronGeometry";
+  }
+  getDescription(): string {
+    return "The geometry for a regular polyhedron with 12 vertice and 20 face";
+  }
+  getOutput(): PortDefinition {
+    return {
+      id: "output",
+      type: "mesh",
+      defaultValue: null,
+    };
+  }
+  create(detail: number): IcosahedronGeometry {
+    const self = new IcosahedronGeometry(1, Math.floor(detail));
+    return self;
+  }
+  update(element: IcosahedronGeometry): void {}
+  remove(element: IcosahedronGeometry): void {}
+  getHash(detail: number): string {
+    return `${Math.floor(detail)}`;
+  }
+}
+
+export class DodecahedronGeometryVirtualNodeType extends SimpleNodeVirtualNodeType<DodecahedronGeometry, [detail: number]> {
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "detail",
+        type: "number",
+        defaultValue: 0,
+      },
+    ];
+  }
+  getId(): string {
+    return "DodecahedronGeometry";
+  }
+  getDescription(): string {
+    return "The geometry for a regular polyhedron with 20 vertice and 12 face";
+  }
+  getOutput(): PortDefinition {
+    return {
+      id: "output",
+      type: "mesh",
+      defaultValue: null,
+    };
+  }
+  create(detail: number): DodecahedronGeometry {
+    const self = new DodecahedronGeometry(1, Math.floor(detail));
+    return self;
+  }
+  update(element: DodecahedronGeometry): void {}
+  remove(element: DodecahedronGeometry): void {}
+  getHash(detail: number): string {
+    return `${Math.floor(detail)}`;
+  }
+}
+
 export const GeometryVirtualNodeTypes = {
   ConeGeometryVirtualNodeType: new ConeGeometryVirtualNodeType(),
   BoxGeometryVirtualNodeType: new BoxGeometryVirtualNodeType(),
   SphereGeometryVirtualNodeType: new SphereGeometryVirtualNodeType(),
   CylinderGeometryVirtualNodeType: new CylinderGeometryVirtualNodeType(),
+  IcosahedronGeometryVirtualNodeType: new IcosahedronGeometryVirtualNodeType(),
+  DodecahedronGeometryVirtualNodeType: new DodecahedronGeometryVirtualNodeType(),
 };
