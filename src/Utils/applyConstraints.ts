@@ -37,6 +37,12 @@ const NumberConstraint = {
   Negative(value: number) {
     return Math.min(value, 0);
   },
+  Mod(value: number, divisor: number) {
+    return value % divisor;
+  },
+  Mod1(value: number) {
+    return value % 1;
+  },
 };
 
 type NumberConstrainType = typeof NumberConstraint;

@@ -1,6 +1,7 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { CommonTypes } from "../../Types/PortType";
+import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const Slice: NodeDefinition = {
@@ -18,11 +19,13 @@ export const Slice: NodeDefinition = {
       id: "start",
       type: "number",
       defaultValue: 0,
+      constrains: [Constraints.Positive(), Constraints.Integer()],
     },
     {
       id: "count",
       type: "number",
       defaultValue: 2,
+      constrains: [Constraints.Positive(), Constraints.Integer()],
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: [0], type: "array-number" }],
