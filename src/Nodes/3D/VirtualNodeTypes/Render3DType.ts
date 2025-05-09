@@ -17,7 +17,7 @@ export type Render3DProps = [width: number, height: number, fov: number, cameraP
 export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DProps> {
   create(width: number, height: number, fov: number, cameraPosition: Vector3, cameraRotation: Vector3): ThreeJSContext {
     var scene = new Scene();
-    var camera = new PerspectiveCamera(fov, width / height, 0.1, 1000);
+    var camera = new PerspectiveCamera(fov, width / height, 0.1, 100);
     const renderer = new WebGLRenderer();
     const imageData = new ImageData();
     renderer.setSize(width, height);

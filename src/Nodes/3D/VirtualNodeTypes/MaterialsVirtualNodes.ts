@@ -1,4 +1,4 @@
-import { MeshBasicMaterial, MeshDepthMaterial, MeshNormalMaterial, MeshStandardMaterial } from "three";
+import { MeshBasicMaterial, MeshDepthMaterial, MeshNormalMaterial, MeshStandardMaterial, RGBDepthPacking } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Color } from "../../../Types/vectorDataType";
 import { toThreeColor, White } from "../../../Utils/colorUtils";
@@ -97,7 +97,7 @@ export class DepthMaterialVirtualNodeType extends MaterialVirtualNodeType<MeshDe
     return "Render an object to display their depth relative to the camera";
   }
   create(): MeshDepthMaterial {
-    return new MeshDepthMaterial({});
+    return new MeshDepthMaterial({ depthPacking: RGBDepthPacking });
   }
   remove(element: MeshDepthMaterial): void {
     element.dispose();

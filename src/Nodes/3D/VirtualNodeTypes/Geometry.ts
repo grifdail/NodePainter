@@ -43,6 +43,7 @@ export class SphereGeometryVirtualNodeType extends GeometryVirtualNodeType<Spher
         id: "detail",
         type: "vector2",
         defaultValue: createVector2(24, 24),
+        constrains: [Constraints.VecInteger(), Constraints.VecGreaterThan(3)],
       },
     ];
   }
@@ -101,6 +102,7 @@ export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<Cyl
         id: "ratio",
         type: "number",
         defaultValue: 0.5,
+        constrains: [Constraints.Clamp01()],
       },
     ];
   }
@@ -130,6 +132,7 @@ export class IcosahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<
         id: "detail",
         type: "number",
         defaultValue: 0,
+        constrains: [Constraints.Integer(), Constraints.Positive()],
       },
     ];
   }
@@ -158,6 +161,7 @@ export class DodecahedronGeometryVirtualNodeType extends GeometryVirtualNodeType
         id: "detail",
         type: "number",
         defaultValue: 0,
+        constrains: [Constraints.Integer(), Constraints.Positive()],
       },
     ];
   }
@@ -202,7 +206,8 @@ export class PlaneGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneG
       {
         id: "detail",
         type: "vector2",
-        defaultValue: 0,
+        defaultValue: [0, 0],
+        constrains: [Constraints.VecInteger(), Constraints.VecPositive()],
       },
     ];
   }
