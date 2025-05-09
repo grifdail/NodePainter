@@ -10,4 +10,5 @@ export type PortConnection = {
   connectedPort: string | null;
   type: PortType;
   constrains?: ConstrainDeclaration[];
+  tooltip?: string;
 };

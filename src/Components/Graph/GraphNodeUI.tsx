@@ -98,23 +98,39 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   const styles = useSpring({
     from: {
       opacity: 0,
-      scale: 0,
+      transform: `translate(0, 0)`,
       boxShadow: `0px 0px 15px 0px rgba(0, 0, 0, 0.30)`,
       zIndex: 1,
+      filter: `drop-shadow(0 0 0px rgba(128,128,128,0.5))`,
     },
     to: {
       opacity: 1,
-      scale: dragged ? 0.95 : 1,
-      boxShadow: dragged ? `0px 0px 50px 0px rgba(0, 0, 0, 0.30)` : `0px 5px 15px 0px rgba(0, 0, 0, 0.30)`,
+      transform: `translate(0px, ${dragged ? -10 : 0}px)`,
+      boxShadow: dragged ? `0px 0px 50px 0px rgba(0, 0, 0, 1)` : `0px 5px 15px 0px rgba(0, 0, 0, 1)`,
       zIndex: dragged ? -10 : 1,
+      filter: dragged ? `drop-shadow(0 0 10px rgba(128,128,128,0.5))` : `drop-shadow(0 0 0px rgba(128,128,128,0.5))`,
     },
   });
 
   return (
-    <AnimatedG transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)} className={isSelected ? `selected` : ""} onContextMenu={(e) => e.stopPropagation()}>
+    <AnimatedG
+      transform={xy.to((x, y) => `translate(${x}, ${y}) scale(1)`)}
+      className={isSelected ? `selected` : ""}
+      onContextMenu={(e) => e.stopPropagation()}>
       <animated.g style={styles}>
-        {definition.availableTypes && <TypeSelectorUI node={node} def={definition} />}
-        <rect width="300" height={GetNodeHeight(node, definition)} style={{}} rx="5" {...bind()} onClick={onTap}></rect>
+        {definition.availableTypes && (
+          <TypeSelectorUI
+            node={node}
+            def={definition}
+          />
+        )}
+        <rect
+          width="300"
+          height={GetNodeHeight(node, definition)}
+          style={{}}
+          rx="5"
+          {...bind()}
+          onClick={onTap}></rect>
         {Icon && (
           <Icon
             x="20"
@@ -139,23 +155,79 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           {node.label || definition.label || definition.id}
         </text>
 
-        {!definition.IsUnique && <NodeMenu node={node} def={definition} />}
-        {definition.canBeExecuted ? <OutputPortView x={0} y={15} key={MainExecuteId} id={MainExecuteId} hideLabel type="execute" onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")} location="inputExecute" nodeId={node.id}></OutputPortView> : null}
+        {!definition.IsUnique && (
+          <NodeMenu
+            node={node}
+            def={definition}
+          />
+        )}
+        {definition.canBeExecuted ? (
+          <OutputPortView
+            x={0}
+            y={15}
+            key={MainExecuteId}
+            id={MainExecuteId}
+            hideLabel
+            type="execute"
+            onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")}
+            location="inputExecute"
+            nodeId={node.id}></OutputPortView>
+        ) : null}
         {Object.entries(node.dataInputs).map(([key, item], i) => {
-          return <InputPortView y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + outputCount)} key={key} portData={item} onClick={() => onClickPort(node.id, key, "inputData", item.type)} onValueChange={(v) => setNodeInputValue(node.id, key, v)} location="inputData" nodeId={node.id}></InputPortView>;
+          return (
+            <InputPortView
+              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + outputCount)}
+              key={key}
+              portData={item}
+              onClick={() => onClickPort(node.id, key, "inputData", item.type)}
+              onValueChange={(v) => setNodeInputValue(node.id, key, v)}
+              location="inputData"
+              nodeId={node.id}></InputPortView>
+          );
         })}
         {Object.entries(node.execOutputs).map(([id], i) => {
-          return <OutputPortView x={300} y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * i} key={id} id={id} label={id} type="execute" onClick={() => onClickPort(node.id, id, "outputExecute", "execute")} location="outputExecute" nodeId={node.id}></OutputPortView>;
+          return (
+            <OutputPortView
+              x={300}
+              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * i}
+              key={id}
+              id={id}
+              label={id}
+              type="execute"
+              onClick={() => onClickPort(node.id, id, "outputExecute", "execute")}
+              location="outputExecute"
+              nodeId={node.id}></OutputPortView>
+          );
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
-          return <OutputPortView x={300} y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + executeOutputCount)} key={item.id} id={item.id} label={item.label || item.id} type={item.type} onClick={() => onClickPort(node.id, item.id, "outputData", item.type)} location="outputData" nodeId={node.id}></OutputPortView>;
+          return (
+            <OutputPortView
+              x={300}
+              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + executeOutputCount)}
+              key={item.id}
+              id={item.id}
+              label={item.label || item.id}
+              type={item.type}
+              onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}
+              location="outputData"
+              nodeId={node.id}></OutputPortView>
+          );
         })}
         {definition.settings.map((item, i) => {
           const isGlobal = item.globalKey !== undefined;
 
           const value = isGlobal ? (globalSettings[item.globalKey as string] === undefined ? item.defaultValue : globalSettings[item.globalKey as string]) : node.settings[item.id];
           const changeMethod = isGlobal ? (value: any) => setGlobvalSetting(item.globalKey as string, value) : (value: any) => setNodeSetting(node.id, item.id, value);
-          var n = <SettingControl y={settingOffset} value={value} onChange={changeMethod} def={item} key={i} nodeData={node} />;
+          var n = (
+            <SettingControl
+              y={settingOffset}
+              value={value}
+              onChange={changeMethod}
+              def={item}
+              key={i}
+              nodeData={node}
+            />
+          );
           settingOffset += getSettingHeight(node.settings[item.id], item, node);
           return n;
         })}

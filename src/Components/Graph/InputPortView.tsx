@@ -47,6 +47,7 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId, loc
           input={(!portData.hasConnection && PortSettings) as any}
           onChange={onValueChange}
           value={portData.ownValue}
+          tooltip={portData.tooltip}
           passtrough={{ constrains: portData.constrains }}
         />
       </PortForeignObject>

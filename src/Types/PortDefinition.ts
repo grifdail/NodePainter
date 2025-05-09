@@ -7,4 +7,5 @@ export type PortDefinition = {
   defaultValue: any;
   label?: string;
   constrains?: ConstrainDeclaration[];
+  tooltip?: string;
 };

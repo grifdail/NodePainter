@@ -8,7 +8,7 @@ import { EnforceGoodType, VectorScale } from "../../Utils/vectorUtils";
 
 export const Scale: NodeDefinition = {
   id: "Scale",
-  description: "Scale a value by a scalar",
+  description: "Multiply a vector by a scalar",
   icon: IconMathXy,
   featureLevel: 80,
   tags: ["Math", "Vector"],

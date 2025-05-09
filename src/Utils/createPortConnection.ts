@@ -11,5 +11,6 @@ export function createPortConnection(def: PortDefinition): PortConnection {
     connectedPort: null,
     label: def.label,
     constrains: def.constrains,
+    tooltip: def.tooltip,
   };
 }

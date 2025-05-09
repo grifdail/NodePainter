@@ -16,12 +16,13 @@ export const Render3D: NodeDefinition = {
     {
       id: "fov",
       type: "number",
-      defaultValue: 800,
+      defaultValue: 60,
+      tooltip: "Represent the vertical frustrum angle of the camera in degree",
     },
     {
       id: "cameraPosition",
       type: "vector3",
-      defaultValue: createVector3(0, 0, -10),
+      defaultValue: createVector3(0, 0, 10),
     },
     {
       id: "cameraRotation",
