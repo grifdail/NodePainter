@@ -1,3 +1,4 @@
+import { ConstrainDeclaration } from "../Utils/applyConstraints";
 import { PortType } from "./PortType";
 
 export type PortDefinition = {
@@ -5,4 +6,5 @@ export type PortDefinition = {
   type: PortType;
   defaultValue: any;
   label?: string;
+  constrains?: ConstrainDeclaration[];
 };

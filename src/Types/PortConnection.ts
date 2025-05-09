@@ -1,3 +1,4 @@
+import { ConstrainDeclaration } from "../Utils/applyConstraints";
 import { PortType } from "./PortType";
 
 export type PortConnection = {
@@ -8,4 +9,5 @@ export type PortConnection = {
   connectedNode: string | null;
   connectedPort: string | null;
   type: PortType;
+  constrains?: ConstrainDeclaration[];
 };

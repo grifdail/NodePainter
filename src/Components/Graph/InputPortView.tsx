@@ -31,7 +31,6 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId, loc
 
   var portSelection = usePortSelection();
   var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === location;
-
   return (
     <StyledPortGroup
       transform={`translate(0, ${y})`}
@@ -48,6 +47,7 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId, loc
           input={(!portData.hasConnection && PortSettings) as any}
           onChange={onValueChange}
           value={portData.ownValue}
+          passtrough={{ constrains: portData.constrains }}
         />
       </PortForeignObject>
       <g

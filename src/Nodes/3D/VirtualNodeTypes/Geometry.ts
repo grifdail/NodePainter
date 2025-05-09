@@ -1,6 +1,7 @@
 import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, SphereGeometry } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
+import { Constraints } from "../../../Utils/applyConstraints";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
 
 abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> extends SimpleNodeVirtualNodeType<TGeometry, TProps> {
@@ -94,6 +95,7 @@ export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<Cyl
         id: "side",
         type: "number",
         defaultValue: 6,
+        constrains: [Constraints.Integer(), Constraints.GreaterThan(3)],
       },
       {
         id: "ratio",

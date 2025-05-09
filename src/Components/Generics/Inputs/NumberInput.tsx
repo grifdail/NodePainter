@@ -2,6 +2,8 @@ import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
 import { Input } from "../../StyledComponents/Input";
+import { applyConstraintCompose, ConstrainDeclaration } from "../../../Utils/applyConstraints";
+import { useCallback } from "react";
 
 const math = create(all);
 const limitedEvaluate = math.evaluate;
@@ -33,11 +35,11 @@ math.import(
   { override: true }
 );
 
-export function NumberInput({ onChange, value, className }: InputProps<number> & { className?: string }) {
+export function NumberInput({ onChange, value, className, constrains = [] }: InputProps<number> & { className?: string }) {
   var { rawField, setRawField, onBlur } = useSubmitOnBlur(
     value || 0,
     (a) => a.toString(),
-    onChange,
+    applyConstraintCompose(onChange, constrains),
     (newValue: string): undefined | number => {
       try {
         const parsed = limitedEvaluate(rawField);
