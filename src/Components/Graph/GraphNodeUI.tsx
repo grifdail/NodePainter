@@ -99,16 +99,14 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
     from: {
       opacity: 0,
       transform: `translate(0, 0)`,
-      boxShadow: `0px 0px 15px 0px rgba(0, 0, 0, 0.30)`,
       zIndex: 1,
-      filter: `drop-shadow(0 0 0px rgba(128,128,128,0.5))`,
+      filter: `drop-shadow(0 0px 0px rgba(73, 73, 73, 0.5))`,
     },
     to: {
       opacity: 1,
       transform: `translate(0px, ${dragged ? -10 : 0}px)`,
-      boxShadow: dragged ? `0px 0px 50px 0px rgba(0, 0, 0, 1)` : `0px 5px 15px 0px rgba(0, 0, 0, 1)`,
       zIndex: dragged ? -10 : 1,
-      filter: dragged ? `drop-shadow(0 0 10px rgba(128,128,128,0.5))` : `drop-shadow(0 0 0px rgba(128,128,128,0.5))`,
+      filter: dragged ? `drop-shadow(0 10px 10px rgba(59, 59, 59, 0.5))` : `drop-shadow(0 0px 0px rgba(57, 57, 57, 0.5))`,
     },
   });
 
