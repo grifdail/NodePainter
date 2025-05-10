@@ -1,3 +1,4 @@
+import { ConstrainDeclaration } from "../Utils/applyConstraints";
 import { SettingType } from "./SettingType";
 
 export type SettingDefinition = {
@@ -5,5 +6,6 @@ export type SettingDefinition = {
   type: SettingType;
   defaultValue: any;
   globalKey?: string;
+  constrains?: ConstrainDeclaration[];
   [key: string]: any;
 };

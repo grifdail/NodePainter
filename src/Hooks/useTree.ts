@@ -236,7 +236,7 @@ export const useTree = create<TreeStore>()(
 
               state.nodes[node].inputData = createPortConnectionsForInputsDefinition(def);
               state.nodes[node].outputData = createDataOutputData(def);
-              state.nodes[node].settings = createSettingObjectForSettingDefinition(def);
+              state.nodes[node].settings = createSettingObjectForSettingDefinition(def.settings);
               state.nodes[node].outputExecute = createExecOutputData(def);
             })
           );

@@ -113,7 +113,6 @@ export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<Cyl
     return "The geometry for a cylinder";
   }
   create(side: number, ratio: number): CylinderGeometry {
-    console.log(ratio);
     const tr = 1 / Math.max(ratio, 1 - ratio);
     const self = new CylinderGeometry(ratio * tr, (1 - ratio) * tr, 1, side);
     return self;

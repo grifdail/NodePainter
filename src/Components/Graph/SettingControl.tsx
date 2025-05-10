@@ -2,13 +2,31 @@ import { SettingDefinition } from "../../Types/SettingDefinition";
 import { NodeData } from "../../Types/NodeData";
 import { SettingComponents } from "../Settings/SettingsComponents";
 
-export const SettingControl = ({ y, value, def, onChange, nodeData }: { y: number; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
+export const SettingControl = ({ y, value, def, onChange, nodeData, useHTML }: { y: number; useHTML?: boolean; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
   var DefinedComponent = SettingComponents[def.type];
   var height = DefinedComponent.getSize(value, def, nodeData);
+  if (useHTML) {
+    return (
+      <DefinedComponent
+        value={value}
+        def={def}
+        onChange={onChange}
+        node={nodeData}
+      />
+    );
+  }
   return (
     <g transform={`translate(0, ${y})`}>
-      <foreignObject x="14" height={height} width="274">
-        <DefinedComponent value={value} def={def} onChange={onChange} node={nodeData} />
+      <foreignObject
+        x="14"
+        height={height}
+        width="274">
+        <DefinedComponent
+          value={value}
+          def={def}
+          onChange={onChange}
+          node={nodeData}
+        />
       </foreignObject>
     </g>
   );
