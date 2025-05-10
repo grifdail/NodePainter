@@ -14,6 +14,8 @@ import { AnimationTrackSettings } from "./AnimationTrackSettings";
 import { ModelUploadSetting } from "./ModelUploadSetting";
 import { EasingSetting } from "./EasingPreview";
 import { CodeBlockSetting } from "./CodeBlockSetting";
+import { GroupSetting } from "./GroupSetting";
+import { BoolSetting } from "./BoolSetting";
 
 export type SettingProps = {
   onChange: (value: any) => void;
@@ -23,7 +25,7 @@ export type SettingProps = {
 };
 
 export type SettingComponent = ((props: SettingProps) => any) & {
-  getSize: (value: any, def: SettingDefinition, node: NodeData) => number;
+  getSize: (value: any, def: SettingDefinition, node?: NodeData) => number;
 };
 
 export const EmptySetting = ({ onChange, value, def }: SettingProps) => {
@@ -46,4 +48,6 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,
   "code-block": CodeBlockSetting,
+  group: GroupSetting,
+  bool: BoolSetting,
 };

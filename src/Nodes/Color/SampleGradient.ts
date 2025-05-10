@@ -1,6 +1,7 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor, createDefaultGradient } from "../../Types/vectorDataType";
+import { Constraints } from "../../Utils/applyConstraints";
 import { evaluateGradient } from "../../Utils/colorUtils";
 
 export const SampleGradient: NodeDefinition = {
@@ -11,7 +12,7 @@ export const SampleGradient: NodeDefinition = {
   tags: ["Color"],
   dataInputs: [
     { id: "gradient", type: "gradient", defaultValue: createDefaultGradient() },
-    { id: "pos", type: "number", defaultValue: 0.5 },
+    { id: "pos", type: "number", defaultValue: 0.5, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
   executeOutputs: [],

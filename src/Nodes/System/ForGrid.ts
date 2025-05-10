@@ -1,5 +1,6 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Constraints } from "../../Utils/applyConstraints";
 
 export const ForGrid: NodeDefinition = {
   id: "ForGrid",
@@ -8,8 +9,8 @@ export const ForGrid: NodeDefinition = {
   icon: IconAssembly,
   tags: ["Control"],
   dataInputs: [
-    { id: "width", type: "number", defaultValue: 10 },
-    { id: "height", type: "number", defaultValue: 10 },
+    { id: "width", type: "number", defaultValue: 10, constrains: [Constraints.Integer(), Constraints.GreaterThan(1)] },
+    { id: "height", type: "number", defaultValue: 10, constrains: [Constraints.Integer(), Constraints.GreaterThan(1)] },
   ],
   dataOutputs: [
     { id: "x", type: "number", defaultValue: 10 },

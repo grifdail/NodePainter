@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
 import { ImageData } from "../../Types/ImageData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { convertToUniform } from "../../Utils/convertToShaderValue";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
 

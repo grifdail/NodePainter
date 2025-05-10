@@ -1,7 +1,7 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createPortConnection } from "../../Utils/createPortConnection";
 import { Gradient, createColor, createDefaultGradient } from "../../Types/vectorDataType";
+import { createPortConnection } from "../../Utils/createPortConnection";
 
 export const GenerateGradient: NodeDefinition = {
   id: "GenerateGradient",

@@ -1,5 +1,6 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Constraints } from "../../Utils/applyConstraints";
 
 export const ForNode: NodeDefinition = {
   id: "For",
@@ -7,7 +8,7 @@ export const ForNode: NodeDefinition = {
   featureLevel: 100,
   icon: IconAssembly,
   tags: ["Control"],
-  dataInputs: [{ id: "count", type: "number", defaultValue: 10 }],
+  dataInputs: [{ id: "count", type: "number", defaultValue: 10, constrains: [Constraints.Integer(), Constraints.GreaterThan(1)] }],
   dataOutputs: [{ id: "index", type: "number", defaultValue: 10 }],
   executeOutputs: ["loop"],
   settings: [],

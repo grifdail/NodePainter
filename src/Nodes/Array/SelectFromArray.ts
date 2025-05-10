@@ -1,6 +1,7 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { CommonTypes, PortType } from "../../Types/PortType";
+import { Constraints } from "../../Utils/applyConstraints";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 
@@ -14,6 +15,7 @@ export const SelectFromArray: NodeDefinition = {
       id: "index",
       type: "number",
       defaultValue: 0,
+      constrains: [Constraints.Positive(), Constraints.Integer()],
     },
     {
       id: "array",

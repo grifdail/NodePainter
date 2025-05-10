@@ -1,11 +1,10 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { createVector2 } from "../../Types/vectorDataType";
-import { VectorLerp } from "../../Utils/vectorUtils";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { VectorTypesFull } from "../../Types/PortType";
+import { createVector2 } from "../../Types/vectorDataType";
+import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
 
 export const Lerp: NodeDefinition = {
   id: "Lerp",

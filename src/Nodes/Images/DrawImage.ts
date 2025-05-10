@@ -22,6 +22,7 @@ export const DrawImage: NodeDefinition = {
     var image = context.getInputValueImage(node, "image");
     var pos = context.getInputValueVector(node, "pos");
     var dim = context.getInputValueVector(node, "dim");
+
     if (image && image.isLoaded) {
       context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1]);
     }

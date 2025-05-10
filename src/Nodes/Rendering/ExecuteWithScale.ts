@@ -1,7 +1,7 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { Vector2, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { Vector2, createVector2 } from "../../Types/vectorDataType";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithScale: NodeDefinition = {
   id: "WithScale",
@@ -17,6 +17,8 @@ export const ExecuteWithScale: NodeDefinition = {
   defaultType: "vector2",
   availableTypes: ["vector2", "vector3"],
   onChangeType: changeTypeGenerator(["scale"], []),
+  hasInput: hasInputGenerator(["vector2", "vector3"]),
+  hasOutput: hasInputGenerator(["vector2", "vector3"]),
   execute: (data, context) => {
     var scale = context.getInputValueVector(data, "scale") as Vector2;
     context.target.push();

@@ -1,4 +1,4 @@
-import { Icon, IconArrowUpRightCircle, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconBadge3d, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconPlayerPlayFilled, IconQuestionMark, IconQuote, IconToggleLeft } from "@tabler/icons-react";
 
 import { PortType } from "../../Types/PortType";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
@@ -140,5 +140,13 @@ export const PortColor: { [key in PortType]: PortColorDefinition } = {
   "array-struct": {
     icon: IconPackage,
     tinyIcon: IconPackage,
+  },
+  object3d: {
+    icon: IconBadge3d,
+    tinyIcon: IconBadge3d,
+  },
+  "array-object3d": {
+    icon: IconBadge3d,
+    tinyIcon: IconBadge3d,
   },
 };

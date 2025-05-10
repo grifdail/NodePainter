@@ -13,9 +13,10 @@ import { ImageData } from "../Types/ImageData";
 import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
-import { MaterialData } from "../Types/MaterialData";
-import { NodeDefinition, isMaterialNode } from "../Types/NodeDefinition";
+import { MaterialData, MeshData } from "../Types/MaterialData";
+import { NodeDefinition } from "../Types/NodeDefinition";
 import Rand from "rand-seed";
+import { StatefullVirtualElement } from "./statefullContext";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -27,12 +28,12 @@ export type ExecutionContext = {
   getShaderCode(shader: string, uniforms: PortConnection[]): string;
   findNodeOfType(type: string): NodeData | null;
   getNodeDefinition: (type: string) => NodeDefinition | undefined;
-  applyMaterial: (material: MaterialData, isStrokeOnly?: boolean) => void;
   createFunctionContext(node: NodeData): FunctionContext;
   functionStack: Array<FunctionContext>;
   time: number;
   target: Graphics;
   blackboard: { [key: string]: any };
+  callCounts: { [key: string]: number };
   frameBlackboard: { [key: string]: any };
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
@@ -49,10 +50,13 @@ export type ExecutionContext = {
   getInputValueImage: (nodeData: NodeData, portId: string) => null | ImageData;
   getInputValueString: (nodeData: NodeData, portId: string) => string;
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
-  getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData | null;
-  getInputValueModel: (nodeData: NodeData, portId: string) => p5.Geometry | null;
+  getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData;
+  getInputValueMesh: (nodeData: NodeData, portId: string) => MeshData;
   getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
+  getCallId(node: NodeData, ...args: any[]): string;
+  endOfFrameCleanup(): void;
+  endOfRunCleanup(): void;
 };
 
 export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
@@ -64,6 +68,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     target: p5 as Graphics,
     frameBlackboard: {},
     functionStack: [],
+    callCounts: {},
     RNG: new Rand(),
     execute(nodeId) {
       var node = tree?.nodes[nodeId];
@@ -105,8 +110,8 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueImage: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "image") as ImageData,
     getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
     getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
-    getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material") as MaterialData,
-    getInputValueModel: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh") as p5.Geometry,
+    getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
+    getInputValueMesh: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh"),
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
@@ -146,11 +151,20 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getShaderCode(shader, ports) {
       return getShaderCode(shader, ports, tree, context);
     },
-    applyMaterial(material, isStrokeOnly = false) {
-      var node = tree?.getNodeTypeDefinition(material.id);
-      if (node != null && isMaterialNode(node)) {
-        node.applyMaterial(context, material, isStrokeOnly);
-      }
+    getCallId: function (node: NodeData, ...args: any[]): string {
+      var result = `${node.id} - ${context.callCounts[node.id] || 0} - ${args.join(" - ")}`;
+      context.callCounts[node.id] = (context.callCounts[node.id] || 0) + 1;
+      return result;
+    },
+    endOfFrameCleanup: function (): void {
+      context.callCounts = {};
+    },
+    endOfRunCleanup: function (): void {
+      Object.keys(context.blackboard).forEach((key) => {
+        if (typeof context.blackboard[key].dispose === "function") {
+          context.blackboard[key].dispose();
+        }
+      });
     },
   };
   return context;

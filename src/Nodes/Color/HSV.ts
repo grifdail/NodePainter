@@ -1,7 +1,8 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { Constraints } from "../../Utils/applyConstraints";
 import { clamp01, hsvToRgb } from "../../Utils/colorUtils";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const HSV: NodeDefinition = {
   id: "HSV",
@@ -9,9 +10,9 @@ export const HSV: NodeDefinition = {
   icon: IconColorFilter,
   tags: ["Color"],
   dataInputs: [
-    { id: "hue", type: "number", defaultValue: 0 },
-    { id: "saturation", type: "number", defaultValue: 1 },
-    { id: "value", type: "number", defaultValue: 1 },
+    { id: "hue", type: "number", defaultValue: 0, constrains: [Constraints.Mod1()] },
+    { id: "saturation", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
+    { id: "value", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
   executeOutputs: [],

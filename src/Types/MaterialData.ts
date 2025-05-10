@@ -1,13 +1,6 @@
-import p5 from "p5";
-import { ImageData } from "./ImageData";
-import { Color } from "./vectorDataType";
+import { BufferGeometry, Material } from "three";
+import { StatefullVirtualElement } from "../Utils/statefullContext";
 
-export type MaterialData = {
-  id: string;
-  color?: Color;
-  texture?: ImageData | null;
-  colorWireframe?: Color;
-  wireframeWeight?: number;
-  shader?: p5.Shader;
-  uniforms?: { [key: string]: any };
-};
+export type MaterialDataAny<TProps extends any[]> = StatefullVirtualElement<Material, TProps>;
+export type MaterialData = MaterialDataAny<any[]>;
+export type MeshData = StatefullVirtualElement<BufferGeometry, any[]>;

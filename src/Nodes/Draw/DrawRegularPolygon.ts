@@ -1,6 +1,7 @@
 import { IconTriangle } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
+import { Constraints } from "../../Utils/applyConstraints";
 import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawRegularPolygon: NodeDefinition = {
@@ -29,6 +30,7 @@ export const DrawRegularPolygon: NodeDefinition = {
       id: "side",
       type: "number",
       defaultValue: 3,
+      constrains: [Constraints.Integer(), Constraints.GreaterThan(3)],
     },
     {
       id: "offset",

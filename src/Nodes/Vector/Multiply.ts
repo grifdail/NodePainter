@@ -1,11 +1,10 @@
 import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { createVector2 } from "../../Types/vectorDataType";
-import { VectorMultiplication } from "../../Utils/vectorUtils";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { VectorTypesFull } from "../../Types/PortType";
+import { createVector2 } from "../../Types/vectorDataType";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { EnforceGoodType, VectorMultiplication } from "../../Utils/vectorUtils";
 
 export const Multiply: NodeDefinition = {
   id: "Multiply",
@@ -37,6 +36,9 @@ export const Multiply: NodeDefinition = {
   defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
+
+  hasInput: hasInputGenerator(VectorTypesFull),
+  hasOutput: hasInputGenerator(VectorTypesFull),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

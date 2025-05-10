@@ -64,7 +64,7 @@ export const StaticArray: NodeDefinition = {
     return entries.map((key) => context.getInputValue(node, key, node.selectedType));
   },
   contextMenu: {
-    "`Add a port": addNewPort,
+    "Add a port": addNewPort,
     "Remove last port": (node) => {
       var entries = Object.entries(node.dataInputs);
       if (entries.length > 1) {

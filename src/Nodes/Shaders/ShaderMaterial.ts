@@ -1,7 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
-import { MaterialData } from "../../Types/MaterialData";
-import { MaterialNodeDefinition } from "../../Types/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { convertToUniform } from "../../Utils/convertToShaderValue";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 import { ExecutionContext, FunctionContext } from "../../Utils/createExecutionContext";
@@ -37,7 +36,7 @@ void main(void) {
   OUT_COLOR = vec4(vVertexNormal, 1.0);
 }`;
 
-export const ShaderMaterial: MaterialNodeDefinition = {
+export const ShaderMaterial: NodeDefinition = {
   id: "ShaderMaterial",
   hideInLibrary: true,
   icon: IconPhoto,
@@ -60,20 +59,8 @@ export const ShaderMaterial: MaterialNodeDefinition = {
         console.error(error);
       }
     }
-    var mat: MaterialData = {
-      id: "ShaderMaterial",
-      shader: shader,
-      uniforms: context.createFunctionContext(node),
-    };
-    return mat;
-  },
-  applyMaterial(context, mat, isStrokeOnly) {
-    if (mat.shader !== undefined && mat.uniforms !== undefined) {
-      ApplyUniformFromData(mat.shader, context, mat.uniforms);
 
-      console.log(mat.shader);
-      context.target.shader(mat.shader);
-    }
+    return null;
   },
 };
 export const SHADER_MATERIAL = "ShaderMaterial";

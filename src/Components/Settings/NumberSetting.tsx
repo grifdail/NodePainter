@@ -8,7 +8,8 @@ export const NumberSetting: SettingComponent = function ({ onChange, value, def 
       label={def.id}
       value={value}
       onChange={onChange}
-      input={NumberInput}></Fieldset>
+      input={NumberInput}
+      constrains={def.constrains}></Fieldset>
   );
 };
 NumberSetting.getSize = function (value, def): number {

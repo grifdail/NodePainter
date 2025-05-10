@@ -1,6 +1,6 @@
 import { IconPolygon } from "@tabler/icons-react";
-import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawQuad: NodeDefinition = {

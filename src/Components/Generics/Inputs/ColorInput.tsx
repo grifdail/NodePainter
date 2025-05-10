@@ -10,6 +10,7 @@ import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Color } from "../../../Types/vectorDataType";
 import { fromHex, invertColor, toHex, validateHex } from "../../../Utils/colorUtils";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
 
 export const ColorButton = styled.button<{ $color: string }>`
   background: ${(props) => props.$color};
@@ -62,7 +63,7 @@ export const ColorInputDiv = styled.div<{ $color: string; $opposite: string }>`
   }
 `;
 
-function ColorPicker({ disabled, value, onChange }: { disabled?: boolean; value: Color; toHexFull: (c: Color) => string; onChange: (c: Color) => void }) {
+function ColorPicker({ disabled, value, onChange, constrains }: { disabled?: boolean; value: Color; toHexFull: (c: Color) => string; onChange: (c: Color) => void; constrains?: ConstrainDeclaration[] }) {
   const palette = usePlayerPref((state) => state.colorPreset);
   var paletteHex = useMemo(() => palette.map((item) => toHex(item)), [palette]);
 
@@ -75,7 +76,7 @@ function ColorPicker({ disabled, value, onChange }: { disabled?: boolean; value:
         color={toHex(value, true)}
         presetColors={paletteHex}
         onChange={(color) => {
-          onChange(fromHex(color.hexa));
+          onChange(applyConstraint(fromHex(color.hexa), constrains));
         }}
       />
     </Menu>

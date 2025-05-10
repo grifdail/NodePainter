@@ -1,6 +1,9 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor, createVector3 } from "../../Types/vectorDataType";
+import { StatefullInstance, StatefullVirtualElement } from "../../Utils/statefullContext";
+import { Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
+import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 
 export const Render3D: NodeDefinition = {
   id: "Render3D",
@@ -8,11 +11,33 @@ export const Render3D: NodeDefinition = {
   icon: IconPhoto,
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
   canBeExecuted: false,
+  executeOutputs: [],
   dataInputs: [
     {
       id: "fov",
       type: "number",
-      defaultValue: 800,
+      defaultValue: 60,
+      tooltip: "Represent the vertical frustrum angle of the camera in degree",
+    },
+    {
+      id: "cameraPosition",
+      type: "vector3",
+      defaultValue: createVector3(0, 0, 10),
+    },
+    {
+      id: "cameraRotation",
+      type: "vector3",
+      defaultValue: createVector3(0, 0, 0),
+    },
+    {
+      id: "clearColor",
+      type: "color",
+      defaultValue: createColor(1, 1, 1, 1),
+    },
+    {
+      id: "scene",
+      type: "object3d",
+      defaultValue: null,
     },
   ],
   dataOutputs: [
@@ -23,42 +48,35 @@ export const Render3D: NodeDefinition = {
     },
   ],
   tags: ["3D"],
-  executeOutputs: ["draw"],
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
-    { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
   ],
   getData(portId, node, context) {
-    const width = node.settings.width;
-    const height = node.settings.height;
-    const when = node.settings.when;
-    const keyCache = `${node.id}-image-cache`;
-    const keyComputed = `${node.id}-is-computed`;
-    let img = context.blackboard[keyCache];
-    if (!img) {
-      img = new ImageData();
-      var newCtx = context.p5.createGraphics(width, height, context.p5.WEBGL);
-      img.set(newCtx);
-      context.blackboard[keyCache] = img;
-    }
-    let needRedraw = false;
-    needRedraw ||= when === "Once" && !context.blackboard[keyComputed];
-    needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
-    needRedraw ||= when === "Everytime";
-    if (needRedraw) {
-      var oldTarget = context.target;
-      context.target = img.image;
-      var fov = context.getInputValueNumber(node, "fov");
-      context.target.perspective(2 * Math.atan(context.target.height / 2 / fov));
-      if (node.execOutputs["draw"]) {
-        context.execute(node.execOutputs["draw"] as string);
-      }
+    const width = Math.floor(node.settings.width);
+    const height = Math.floor(node.settings.height);
+    //Inputs
+    const fov = context.getInputValueNumber(node, "fov");
+    const cameraRotation = context.getInputValueVector3(node, "cameraRotation");
+    const cameraPosition = context.getInputValueVector3(node, "cameraPosition");
+    const clearColor = context.getInputValueColor(node, "clearColor");
+    const child = context.getInputValue(node, "scene", "object3d") as StatefullVirtualElement<any, any>;
 
-      context.target = oldTarget;
-      context.blackboard[keyComputed] = true;
-      context.frameBlackboard[keyComputed] = true;
+    const id = context.getCallId(node, width, height);
+    const virtual = VirtualNodes.Render3DType.generate(id, [child], width, height, fov, cameraPosition, cameraRotation, clearColor);
+
+    const keyCache = `${node.id}-cache`;
+    let threeContext = context.blackboard[keyCache] as StatefullInstance<ThreeJSContext, Render3DProps> | undefined;
+
+    if (!threeContext) {
+      threeContext = new StatefullInstance<ThreeJSContext, Render3DProps>(virtual);
+      context.blackboard[keyCache] = threeContext;
     }
-    return img;
+
+    threeContext.update(virtual, threeContext.instance.scene);
+
+    threeContext.instance.renderer.render(threeContext.instance.scene, threeContext.instance.camera);
+
+    return threeContext.instance.imageData;
   },
 };

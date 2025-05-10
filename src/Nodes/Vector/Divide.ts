@@ -1,11 +1,10 @@
 import { IconMathXDivideY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { createVector2 } from "../../Types/vectorDataType";
-import { VectorDivision } from "../../Utils/vectorUtils";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { VectorTypesFull } from "../../Types/PortType";
+import { createVector2 } from "../../Types/vectorDataType";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { EnforceGoodType, VectorDivision } from "../../Utils/vectorUtils";
 
 export const Divide: NodeDefinition = {
   id: "Divide",
@@ -36,6 +35,8 @@ export const Divide: NodeDefinition = {
   defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
+  hasInput: hasInputGenerator(VectorTypesFull),
+  hasOutput: hasInputGenerator(VectorTypesFull),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

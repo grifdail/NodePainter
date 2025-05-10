@@ -11,7 +11,7 @@ export function createNodeData(def: NodeDefinition, x: number, y: number, id: st
     type: def.id,
     id: id || "node" + nanoid().replaceAll("_", "y"),
     dataInputs: createPortConnectionsForInputsDefinition(def),
-    settings: createSettingObjectForSettingDefinition(def),
+    settings: createSettingObjectForSettingDefinition(def.settings),
     dataOutputs: createDataOutputData(def),
     execOutputs: createExecOutputData(def),
     positionX: x,

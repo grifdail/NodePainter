@@ -24,3 +24,12 @@ export function changeTypeGenerator(inputs: string[], outputs: string[], arrayIn
     }
   };
 }
+
+export function hasInputGenerator(ports: PortType[]): (t: PortType) => PortType | null {
+  return (target: PortType) => {
+    if (ports.includes(target)) {
+      return target;
+    }
+    return null;
+  };
+}

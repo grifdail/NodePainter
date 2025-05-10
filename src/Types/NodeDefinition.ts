@@ -1,6 +1,5 @@
 import { Icon } from "@tabler/icons-react";
 import { ExecutionContext } from "../Utils/createExecutionContext";
-import { MaterialData } from "./MaterialData";
 import { NodeData } from "./NodeData";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
@@ -39,14 +38,8 @@ export type NodeDefinition = {
   onChangeType?: PortChangeFunction;
   onCreate?: (node: NodeData) => void;
   featureLevel?: number;
+  hasInput?(input: PortType): PortType | null;
+  hasOutput?(output: PortType): PortType | null;
 };
-
-export type MaterialNodeDefinition = NodeDefinition & {
-  applyMaterial: (context: ExecutionContext, mat: MaterialData, isStrokeOnly?: boolean) => void;
-};
-
-export function isMaterialNode(node: NodeDefinition): node is MaterialNodeDefinition {
-  return (node as MaterialNodeDefinition).applyMaterial != null;
-}
 
 export const MainExecuteId = "mainExecute";

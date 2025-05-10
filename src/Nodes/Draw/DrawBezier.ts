@@ -1,8 +1,7 @@
 import { IconVectorBezier2 } from "@tabler/icons-react";
-import { Vector3, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Vector3, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const DrawBezier: NodeDefinition = {
   id: "DrawBezier",
@@ -46,9 +45,6 @@ export const DrawBezier: NodeDefinition = {
   executeOutputs: [],
   settings: [],
   canBeExecuted: true,
-  availableTypes: ["vector2", "vector3"],
-  onChangeType: changeTypeGenerator(["start", "cp1", "cp2", "end"], []),
-  defaultType: "vector2",
   execute: (data, context) => {
     const color = context.getInputValueColor(data, "color");
     const size = context.getInputValueNumber(data, "lineWidth");

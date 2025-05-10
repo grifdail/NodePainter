@@ -1,6 +1,6 @@
 import { IconBucketDroplet } from "@tabler/icons-react";
-import { createColor } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createColor } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
 export const FillBackground: NodeDefinition = {

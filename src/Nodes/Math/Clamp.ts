@@ -1,8 +1,8 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { VectorTypesFull } from "../../Types/PortType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Clamp: NodeDefinition = {
   id: "Clamp",
@@ -39,6 +39,8 @@ export const Clamp: NodeDefinition = {
   availableTypes: VectorTypesFull,
   defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], ["result"]),
+  hasInput: hasInputGenerator(VectorTypesFull),
+  hasOutput: hasInputGenerator(VectorTypesFull),
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
       var value = context.getInputValueVector(nodeData, "value");

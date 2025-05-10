@@ -1,6 +1,6 @@
 import { IconVectorTriangle } from "@tabler/icons-react";
-import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
 export const DrawTriangle: NodeDefinition = {

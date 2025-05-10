@@ -76,49 +76,20 @@ import { DrawText } from "./Draw/DrawText";
 import { DrawTriangle } from "./Draw/DrawTriangle";
 import { FillBackground } from "./Draw/FillBackground";
 
-import { CustomFunction } from "./CustomFunction/CustomFunction";
-import { CustomFunctionEnd } from "./CustomFunction/CustomFunctionEnd";
-import { CustomFunctionStart } from "./CustomFunction/CustomFunctionStart";
-import { ExecuteWithBlending } from "./Rendering/ExecuteWithBlending";
-import { ExecuteWithMask } from "./Rendering/ExecuteWithMask";
-import { ExecuteWithMotionBlur } from "./Rendering/ExecuteWithMotionBlur";
-import { ExecuteWithRotation } from "./Rendering/ExecuteWithRotation";
-import { ExecuteWithScale } from "./Rendering/ExecuteWithScale";
-import { ExecuteWithShadow } from "./Rendering/ExecuteWithShadow";
-import { ExecuteWithTranslation } from "./Rendering/ExecuteWithTranslation";
-import { ExecuteInOrder } from "./System/ExecuteInOrder";
-import { ForGrid } from "./System/ForGrid";
-import { ForNode } from "./System/ForNode";
-import { Precompute } from "./System/Precompute";
-import { StartNode } from "./System/StartNode";
-import { ThenNode } from "./System/ThenNode";
-import { createConstant } from "./createConstant";
-
-import { DefaultMaterial } from "./3D/DefaultMaterial";
-import { DrawBox } from "./3D/DrawBox";
-import { DrawCilinder } from "./3D/DrawCilinder";
-import { DrawCone } from "./3D/DrawCone";
-import { DrawModel } from "./3D/DrawModel";
-import { DrawPlane } from "./3D/DrawPlane";
-import { DrawSphere } from "./3D/DrawSphere";
-import { DrawTorus } from "./3D/DrawTorus";
-import { EmissiveMaterial } from "./3D/EmissiveMaterial";
-import { ExecuteWithLight } from "./3D/ExecuteWithLights";
-import { RegularMaterial } from "./3D/RegularMaterial";
-import { Render3D } from "./3D/Render3D";
-import { TextureMaterial } from "./3D/TextureMaterial";
-import { WireframeMaterial } from "./3D/WireframeMaterial";
+import { Nodes3D } from "./3D/3DNodes";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
-import { GenerateUVModel } from "./Array/GenerateUVModel";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
 import { ComposeStruct } from "./CustomFunction/ComposeStruct";
+import { CustomFunction } from "./CustomFunction/CustomFunction";
+import { CustomFunctionEnd } from "./CustomFunction/CustomFunctionEnd";
+import { CustomFunctionStart } from "./CustomFunction/CustomFunctionStart";
 import { CustomImperativeFunction } from "./CustomFunction/CustomImperativeFunction";
 import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
@@ -129,7 +100,6 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
-import { UploadModel } from "./Images/UploadModel";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -169,15 +139,29 @@ import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
+import { ExecuteWithBlending } from "./Rendering/ExecuteWithBlending";
+import { ExecuteWithMask } from "./Rendering/ExecuteWithMask";
+import { ExecuteWithMotionBlur } from "./Rendering/ExecuteWithMotionBlur";
+import { ExecuteWithRotation } from "./Rendering/ExecuteWithRotation";
+import { ExecuteWithScale } from "./Rendering/ExecuteWithScale";
+import { ExecuteWithShadow } from "./Rendering/ExecuteWithShadow";
+import { ExecuteWithTranslation } from "./Rendering/ExecuteWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
+import { ExecuteInOrder } from "./System/ExecuteInOrder";
 import { ForEachNode } from "./System/ForEach";
+import { ForGrid } from "./System/ForGrid";
+import { ForNode } from "./System/ForNode";
+import { Precompute } from "./System/Precompute";
+import { StartNode } from "./System/StartNode";
+import { ThenNode } from "./System/ThenNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
+import { createConstant } from "./createConstant";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -371,23 +355,7 @@ export const Nodes: Array<NodeDefinition> = [
   createConstant("SQRT2", Math.SQRT2),
 
   //3D
-  Render3D,
-  DrawBox,
-  DrawPlane,
-  DrawSphere,
-  DrawTorus,
-  DrawCone,
-  DrawCilinder,
-  UploadModel,
-  DrawModel,
-  GenerateUVModel,
-  //Materials
-  ExecuteWithLight,
-  RegularMaterial,
-  EmissiveMaterial,
-  TextureMaterial,
-  WireframeMaterial,
-  DefaultMaterial,
+  ...Nodes3D,
 
   //Array
   SelectFromArray,

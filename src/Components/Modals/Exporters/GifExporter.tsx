@@ -1,4 +1,4 @@
-import * as GIF from "gif.js.optimized";
+import GIF from "gif.js.optimized";
 import { CanvasExporter } from "./CanvasExporter";
 
 export function GifExporter(): CanvasExporter {
@@ -6,6 +6,7 @@ export function GifExporter(): CanvasExporter {
   let delay = 32;
   return {
     init(width, height, frameDelay, onFinished, onProgress) {
+      console.log(GIF);
       gif = new GIF({
         workerScript: "/gif.worker.js",
         workers: 8,

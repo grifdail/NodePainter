@@ -3,7 +3,7 @@ import { Graphics, Image } from "p5";
 
 export class ImageData {
   isLoaded: boolean = false;
-  image: Image | Graphics | null = null;
+  image: Image | Graphics | HTMLCanvasElement | null = null;
   pixels: number[] | null = null;
 
   load(url: string, p5: P5CanvasInstance) {
@@ -15,7 +15,7 @@ export class ImageData {
     }
   }
 
-  set(img: Image | Graphics) {
+  set(img: Image | Graphics | HTMLCanvasElement) {
     this.image = img;
     this.isLoaded = true;
   }
