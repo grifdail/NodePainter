@@ -148,6 +148,9 @@ import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslatio
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
 import { Combine } from "./System/Combine";
+import { CombineArray } from "./System/CombineArray";
+import { CombineGridLoop } from "./System/CombineGridLoop";
+import { CombineLoop } from "./System/CombineLoop";
 import { StartNode } from "./System/StartNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
@@ -160,6 +163,9 @@ export const Nodes: Array<NodeDefinition> = [
   StartNode,
   //Control flow
   Combine,
+  CombineLoop,
+  CombineArray,
+  CombineGridLoop,
 
   // Vector Compositions
   ComposeNode,

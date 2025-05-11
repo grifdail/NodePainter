@@ -1,6 +1,4 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Compose3D } from "./Compose3D";
-import { ComposeLoop3D } from "./ComposeLoop3D";
 import { generateMaterialNodeFromVirtualNode, generateNodeFromVirtualNode } from "./generateNodeFromVirtualNode";
 import { Render3D } from "./Render3D";
 import { RenderModel } from "./RenderModel";
@@ -19,7 +17,5 @@ export const Nodes3D = [
   Render3D,
   //UploadModel,
   //GenerateUVModel,
-  Compose3D,
-  ComposeLoop3D,
   RenderModel,
 ];

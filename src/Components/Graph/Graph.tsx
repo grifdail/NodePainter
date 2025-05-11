@@ -16,6 +16,7 @@ import { ContextMenu, useContextMenu } from "./ContextMenu";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { NODE_HEADER_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { PairingLine } from "./PairingLine";
 
 export function Graph() {
   useGesturePrevention();
@@ -84,6 +85,7 @@ export function Graph() {
           return [
             node.id,
             {
+              "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
               ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
               ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
             },
@@ -190,6 +192,17 @@ export function Graph() {
           height="100%"
           fill="url(#grid)"
           style={{ touchAction: "none" }}></animated.rect>
+        {nodes
+          .filter((node) => node.pairedNode != undefined)
+          .map((node) => {
+            return (
+              <PairingLine
+                key={`${node.id}-pairing`}
+                start={getNodePort(node.id, "self", "in")}
+                end={getNodePort(node.pairedNode as string, "self", "in")}
+              />
+            );
+          })}
         {edges.map((edge) => {
           return (
             <Edge

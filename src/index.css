@@ -18,6 +18,8 @@
   --color-struct: #ff004d;
   --color-object3d: #008751;
 
+  --color-pairing: light-dark(#88888855, #88888855);
+
   --color-background: light-dark(#ffffff, #0d1117);
   --color-background-card: light-dark(#fcfcfc, #22262c);
   --color-background-button: light-dark(#ffffff, #151b23);
