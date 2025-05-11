@@ -1,5 +1,6 @@
 import { IconCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -31,18 +32,19 @@ export const DrawCircleStroke: NodeDefinition = {
       defaultValue: 10,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    var position = context.getInputValueVector(data, "position");
-    var radius = context.getInputValueNumber(data, "radius");
-    var lineWidth = context.getInputValueNumber(data, "lineWidth");
-    context.target.stroke(toP5Color(color, context.p5));
-    context.target.noFill();
-    context.target.strokeWeight(lineWidth);
-    context.target.circle(position[0], position[1], radius);
+  getData(portId, node, context) {
+    var color = context.getInputValueColor(node, "color");
+    var position = context.getInputValueVector(node, "position");
+    var radius = context.getInputValueNumber(node, "radius");
+    var lineWidth = context.getInputValueNumber(node, "lineWidth");
+    return () => {
+      context.target.stroke(toP5Color(color, context.p5));
+      context.target.noFill();
+      context.target.strokeWeight(lineWidth);
+      context.target.circle(position[0], position[1], radius);
+    };
   },
 };

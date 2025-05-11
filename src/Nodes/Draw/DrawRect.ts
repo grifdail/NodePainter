@@ -1,5 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -31,17 +32,18 @@ export const DrawRect: NodeDefinition = {
       defaultValue: 10,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    var p1 = context.getInputValueVector(data, "corner");
-    var width = context.getInputValueNumber(data, "width");
-    var height = context.getInputValueNumber(data, "height");
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.noStroke();
-    context.target.rect(p1[0], p1[1], width, height);
+  getData(portId, node, context) {
+    var color = context.getInputValueColor(node, "color");
+    var p1 = context.getInputValueVector(node, "corner");
+    var width = context.getInputValueNumber(node, "width");
+    var height = context.getInputValueNumber(node, "height");
+    return () => {
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.rect(p1[0], p1[1], width, height);
+    };
   },
 };

@@ -11,7 +11,7 @@ export const Palette: NodeDefinition = {
   tags: ["Color", "Array"],
   dataInputs: [],
   dataOutputs: [{ id: "color", type: "array-color", defaultValue: [createColor()] }],
-  executeOutputs: [],
+
   settings: [{ id: "palette", type: "palette", defaultValue: [Black(), White()] }],
   getData: (portId, nodeData, context) => {
     const palette = nodeData.settings.palette as Array<any>;

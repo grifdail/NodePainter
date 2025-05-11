@@ -27,8 +27,7 @@ export const ComposeLoop3D: NodeDefinition = {
   label: "Compose Loop 3D",
   icon: IconBadge3d,
   description: "Compose an object from multiple object on a loop",
-  canBeExecuted: false,
-  executeOutputs: [],
+
   dataInputs: [
     { id: "count", type: "number", defaultValue: 10 },
     { id: "value", type: "object3d", defaultValue: null },

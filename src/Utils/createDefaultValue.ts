@@ -21,6 +21,7 @@ export const PortTypeDefaultValue: {
   unknown: () => null,
   struct: () => null,
   object3d: () => null,
+  drawing2d: () => null,
   "array-string": () => [],
   "array-number": () => [],
   "array-vector2": () => [],
@@ -35,6 +36,7 @@ export const PortTypeDefaultValue: {
   "array-mesh": () => [],
   "array-struct": () => [],
   "array-object3d": () => [],
+  "array-drawing2d": () => [],
 };
 
 export function createDefaultValue(type: PortType) {

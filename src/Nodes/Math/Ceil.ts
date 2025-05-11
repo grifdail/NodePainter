@@ -24,7 +24,7 @@ export const Ceil: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "number",
   availableTypes: VectorTypesFull,

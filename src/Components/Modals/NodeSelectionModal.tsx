@@ -120,7 +120,7 @@ const parseSearchTerm = (raw: string): SearchTermData => {
 };
 
 export function NodeSelectionModal({ close }: { close: () => void }) {
-  let a = extractDefaultNode();
+  let a = extractFilteredEdgeTypeFromEditedEdge();
   const [searchTermRaw, setSearchTerm] = useState(a);
   const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
   const nodeFav = usePlayerPref();
@@ -132,7 +132,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         if (item.hideInLibrary) {
           return false;
         }
-        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
+        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.executeAs != null;
       }),
     [isShader, treeShaderLib]
   );
@@ -300,14 +300,14 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
     </Modal>
   );
 }
-function extractDefaultNode() {
+function extractFilteredEdgeTypeFromEditedEdge() {
   const selectedNode = usePortSelection.getState();
   let a = "";
   if (selectedNode.hasSelection) {
-    if (selectedNode.location === "inputData") {
+    if (selectedNode.location === "input") {
       a = `output:${selectedNode.type} `;
     }
-    if (selectedNode.location === "outputData") {
+    if (selectedNode.location === "output") {
       a = `input:${selectedNode.type} `;
     }
   }

@@ -10,7 +10,7 @@ export const MousePosition: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector2() }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return createVector2(context.p5.mouseX, context.p5.mouseY);

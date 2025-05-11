@@ -23,14 +23,11 @@ export type NodeDefinition = {
   isShader?: false;
   dataInputs: Array<PortDefinition>;
   dataOutputs: Array<PortDefinition>;
-  executeOutputs: Array<string>;
   settings: Array<SettingDefinition>;
   getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
-  execute?: (node: NodeData, context: ExecutionContext) => void;
   getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
   shaderRequirement?: string | string[];
   executeAs?: string;
-  canBeExecuted?: boolean;
   contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
   onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
   availableTypes?: PortType[];

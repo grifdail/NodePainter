@@ -38,9 +38,9 @@ export const EvaluateBezier: NodeDefinition = {
     { id: "point", type: "vector2", defaultValue: createVector2() },
     { id: "tangent", type: "vector2", defaultValue: createVector2() },
   ],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   getData: (portId, data, context) => {
     var t = context.getInputValueNumber(data, "t");
     var start = context.getInputValueVector(data, "start");

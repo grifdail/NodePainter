@@ -7,7 +7,7 @@ export type SketchTemplate = {
   editedGraph?: string;
   globalSettings?: { [key: string]: any };
 };
-
+/*
 export const ShaderTemplate: SketchTemplate = {
   nodes: {
     Start: {
@@ -81,14 +81,12 @@ export const ShaderTemplate: SketchTemplate = {
       tags: ["Custom"],
       dataInputs: [],
       dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
-      executeOutputs: ["execute"],
       settings: [
         { id: "width", type: "number", defaultValue: 400 },
         { id: "height", type: "number", defaultValue: 400 },
         { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
       ],
       executeAs: "RenderShader",
-      canBeExecuted: true,
     },
     "MainShader-start": {
       IsUnique: true,
@@ -98,10 +96,9 @@ export const ShaderTemplate: SketchTemplate = {
       tags: [],
       dataInputs: [],
       dataOutputs: [{ id: "uv", type: "vector2", defaultValue: [0, 0] }],
-      executeOutputs: [],
+
       settings: [],
       executeAs: "CustomShader-start",
-      canBeExecuted: false,
     },
     "MainShader-end": {
       IsUnique: true,
@@ -111,15 +108,14 @@ export const ShaderTemplate: SketchTemplate = {
       tags: [],
       dataInputs: [{ id: "color", type: "color", defaultValue: [0, 0, 0, 1] }],
       dataOutputs: [],
-      executeOutputs: [],
+
       settings: [],
       executeAs: "CustomShader-end",
-      canBeExecuted: false,
     },
   },
   editedGraph: "MainShader",
-};
-
+};*/
+/*
 export const ThreeDTemplate: SketchTemplate = {
   nodes: {
     Start: {
@@ -235,8 +231,5 @@ export const ThreeDTemplate: SketchTemplate = {
   customNodes: {},
   editedGraph: undefined,
 };
-
-export const Templates = {
-  Shader: ShaderTemplate,
-  "3d": ThreeDTemplate,
-};
+*/
+export const Templates: { [key: string]: SketchTemplate } = {};

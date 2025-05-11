@@ -16,9 +16,9 @@ export const Count: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   defaultType: "array-color",
   availableTypes: ArrayTypes,
   onChangeType: changeTypeGenerator(["array"], []),

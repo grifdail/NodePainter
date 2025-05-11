@@ -1,8 +1,4 @@
-import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes, PortType } from "../../Types/PortType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-
+/*
 export const ForEachNode: NodeDefinition = {
   id: "ForEach",
   description: "Execute an instruction for each element of an array",
@@ -39,3 +35,5 @@ export const ForEachNode: NodeDefinition = {
     }
   },
 };
+*/
+export {};

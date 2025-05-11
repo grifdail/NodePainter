@@ -22,7 +22,6 @@ import { canConvertCode, convertTypeValue } from "../Utils/convertTypeValue";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
 import { createDefaultValue } from "../Utils/createDefaultValue";
-import { createExecOutputData } from "../Utils/createExecOutputData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { createNodeData } from "../Utils/createNodeData";
 import { createPortConnection } from "../Utils/createPortConnection";
@@ -175,7 +174,6 @@ export const useTree = create<TreeStore>()(
               const clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 200, sourceNode.positionY + 50);
               clone.dataInputs = structuredClone(current(sourceNode.dataInputs));
               clone.dataOutputs = structuredClone(current(sourceNode.dataOutputs));
-              clone.execOutputs = structuredClone(current(sourceNode.execOutputs));
               clone.settings = structuredClone(current(sourceNode.settings));
               clone.selectedType = sourceNode.selectedType;
               clone.graph = sourceNode.graph;
@@ -218,11 +216,6 @@ export const useTree = create<TreeStore>()(
                     port.connectedPort = null;
                   }
                 });
-                Object.entries(item.execOutputs).forEach(([key, target]) => {
-                  if (target === node) {
-                    item.execOutputs[key] = null;
-                  }
-                });
               });
               state.nodeDeletionCount++;
               delete state.nodes[node];
@@ -237,7 +230,6 @@ export const useTree = create<TreeStore>()(
               state.nodes[node].inputData = createPortConnectionsForInputsDefinition(def);
               state.nodes[node].outputData = createDataOutputData(def);
               state.nodes[node].settings = createSettingObjectForSettingDefinition(def.settings);
-              state.nodes[node].outputExecute = createExecOutputData(def);
             })
           );
         },
@@ -292,10 +284,9 @@ export const useTree = create<TreeStore>()(
                   },
                   ...structuredClone(def.dataInputs),
                 ],
-                executeOutputs: [],
+
                 settings: [],
                 executeAs: "CustomShader-start",
-                canBeExecuted: false,
               };
               const endNodeDef: NodeDefinition = {
                 IsUnique: true,
@@ -311,10 +302,9 @@ export const useTree = create<TreeStore>()(
                   },
                 ],
                 dataOutputs: [],
-                executeOutputs: [],
+
                 settings: [],
                 executeAs: "CustomShader-end",
-                canBeExecuted: false,
               };
               state.customNodes[start] = startNodeDef;
               state.customNodes[end] = endNodeDef;
@@ -357,10 +347,9 @@ export const useTree = create<TreeStore>()(
                 tags: [],
                 dataInputs: [],
                 dataOutputs: [...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
-                executeOutputs: [],
+
                 settings: [],
                 executeAs: "CustomSimulation-start",
-                canBeExecuted: false,
               };
               const endNodeDef: NodeDefinition = {
                 IsUnique: true,
@@ -370,10 +359,9 @@ export const useTree = create<TreeStore>()(
                 tags: [],
                 dataInputs: [...structuredClone(def.dataOutputs)],
                 dataOutputs: [],
-                executeOutputs: [],
+
                 settings: [],
                 executeAs: "CustomSimulation-end",
-                canBeExecuted: false,
               };
               state.customNodes[start] = startNodeDef;
               state.customNodes[end] = endNodeDef;
@@ -434,7 +422,6 @@ export const useTree = create<TreeStore>()(
               const inputs = selectedNodes.flatMap((node) => {
                 return Object.values(node.dataInputs).flatMap((port) => (port.hasConnection && !selectedNodes.some((item) => item.id === port.connectedNode) ? [{ node, port: structuredClone(current(port)), portId: port.id }] : []));
               });
-              const canBeExecuted = selectedNodes.some((node) => get().getNodeTypeDefinition(node).canBeExecuted);
               const outputs = Object.values(state.nodes).flatMap((node) => {
                 if (selectedNodes.some((item) => item.id === node.id)) {
                   return [];
@@ -446,7 +433,6 @@ export const useTree = create<TreeStore>()(
               nodeDef.id = id;
               nodeDef.dataInputs = preparePortForFunctions(inputs);
               nodeDef.dataOutputs = preparePortForFunctions(outputs);
-              nodeDef.canBeExecuted = canBeExecuted;
 
               createCustomFunction(nodeDef, state);
               const newNode = createNodeData(
@@ -476,26 +462,7 @@ export const useTree = create<TreeStore>()(
                 endNode.dataInputs[portId].connectedNode = port.connectedNode;
                 endNode.dataInputs[portId].connectedPort = port.connectedPort;
               });
-              Object.keys(state.nodes).forEach((nodeId) => {
-                const node = state.nodes[nodeId];
-                if (nodeId === startNode.id) {
-                  return;
-                }
-                if (selectedNodesId.includes(nodeId)) {
-                  Object.entries(node.execOutputs).forEach(([portKey, target]) => {
-                    if (target != null && !selectedNodesId.includes(target)) {
-                      node.execOutputs[portKey] = null;
-                    }
-                  });
-                } else {
-                  Object.entries(node.execOutputs).forEach(([portKey, target]) => {
-                    if (target != null && selectedNodesId.includes(target)) {
-                      startNode.execOutputs["execute"] = target;
-                      node.execOutputs[portKey] = newNode.id;
-                    }
-                  });
-                }
-              });
+
               resetCamera();
             })
           );

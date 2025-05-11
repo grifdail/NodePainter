@@ -26,7 +26,7 @@ export const ComposeNode: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2() }],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: [...VectorTypeslimited, "color"],

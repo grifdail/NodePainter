@@ -10,7 +10,7 @@ export const UploadImage: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Image"],
-  executeOutputs: [],
+
   settings: [{ id: "image", type: "image-upload", defaultValue: null }],
   getData(portId, data, context) {
     if (data.settings.image != null) {

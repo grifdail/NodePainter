@@ -13,7 +13,7 @@ export const Clock: NodeDefinition = {
     { id: "minute", type: "number", defaultValue: 0 },
     { id: "seconds", type: "number", defaultValue: 0 },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "hour24") {

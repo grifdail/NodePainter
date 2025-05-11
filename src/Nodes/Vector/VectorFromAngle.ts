@@ -27,7 +27,7 @@ export const VectorFromAngle: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector2() }],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: ["vector2", "vector3"],
   onChangeType(node, type) {

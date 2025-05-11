@@ -10,7 +10,7 @@ export const UploadModel: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "model", type: "mesh", defaultValue: null }],
   tags: ["3D"],
-  executeOutputs: [],
+
   settings: [{ id: "model", type: "mesh-upload", defaultValue: null }],
   getData(portId, data, context) {
     if (data.settings.model != null) {

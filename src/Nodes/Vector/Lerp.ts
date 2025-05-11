@@ -36,7 +36,7 @@ export const Lerp: NodeDefinition = {
       defaultValue: createVector2(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypesFull,

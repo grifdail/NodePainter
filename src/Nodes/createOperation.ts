@@ -27,7 +27,7 @@ export function createOperation(id: string, evalOperation: (a: number, b: number
         defaultValue: 0,
       },
     ],
-    executeOutputs: [],
+
     settings: [],
     getData: (portId, nodeData, context) => {
       const a = context.getInputValueNumber(nodeData, "a");

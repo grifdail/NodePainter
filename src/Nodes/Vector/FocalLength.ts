@@ -23,7 +23,7 @@ export const FocalLength: NodeDefinition = {
     { id: "vec", type: "vector2", defaultValue: createVector2() },
     { id: "scale", type: "number", defaultValue: 1 },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var position = context.getInputValueVector3(nodeData, "position");

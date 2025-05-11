@@ -16,7 +16,7 @@ export function createConstant(id: string, value: number): NodeDefinition {
         defaultValue: 0,
       },
     ],
-    executeOutputs: [],
+
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "value") {

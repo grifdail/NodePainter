@@ -37,7 +37,7 @@ const AnimatedG = animated(styled.g`
 
 export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
-  var outputCount = Object.keys(node.execOutputs).length + Object.keys(node.dataOutputs).length;
+  var outputCount = Object.keys(node.dataOutputs).length;
   var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def, node), 0);
   return NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (inputCount + outputCount) + NODE_FOOTER_HEIGHT + sumSetting + typeDef.settings.length * 2;
 }
@@ -58,9 +58,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const globalSettings = useTree((state) => state.globalSettings);
   const inputCount = Object.keys(node.dataInputs).length;
-  const executeOutputCount = Object.keys(node.execOutputs).length;
-  const dataOutputCount = Object.keys(node.dataOutputs).length;
-  const outputCount = executeOutputCount + dataOutputCount;
+  const outputCount = Object.keys(node.dataOutputs).length;
   const definition = getNodeTypeDefinition(node);
   const [dragged, setDragged] = useState(false);
 
@@ -159,55 +157,27 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
             def={definition}
           />
         )}
-        {definition.canBeExecuted ? (
-          <OutputPortView
-            x={0}
-            y={15}
-            key={MainExecuteId}
-            id={MainExecuteId}
-            hideLabel
-            type="execute"
-            onClick={() => onClickPort(node.id, MainExecuteId, "inputExecute", "execute")}
-            location="inputExecute"
-            nodeId={node.id}></OutputPortView>
-        ) : null}
         {Object.entries(node.dataInputs).map(([key, item], i) => {
           return (
             <InputPortView
               y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + outputCount)}
               key={key}
               portData={item}
-              onClick={() => onClickPort(node.id, key, "inputData", item.type)}
+              onClick={() => onClickPort(node.id, key, "input", item.type)}
               onValueChange={(v) => setNodeInputValue(node.id, key, v)}
-              location="inputData"
               nodeId={node.id}></InputPortView>
-          );
-        })}
-        {Object.entries(node.execOutputs).map(([id], i) => {
-          return (
-            <OutputPortView
-              x={300}
-              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * i}
-              key={id}
-              id={id}
-              label={id}
-              type="execute"
-              onClick={() => onClickPort(node.id, id, "outputExecute", "execute")}
-              location="outputExecute"
-              nodeId={node.id}></OutputPortView>
           );
         })}
         {Object.values(node.dataOutputs).map((item, i) => {
           return (
             <OutputPortView
               x={300}
-              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (i + executeOutputCount)}
+              y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * i}
               key={item.id}
               id={item.id}
               label={item.label || item.id}
               type={item.type}
-              onClick={() => onClickPort(node.id, item.id, "outputData", item.type)}
-              location="outputData"
+              onClick={() => onClickPort(node.id, item.id, "output", item.type)}
               nodeId={node.id}></OutputPortView>
           );
         })}

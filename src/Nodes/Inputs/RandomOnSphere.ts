@@ -10,7 +10,7 @@ export const RandomOnSphere: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "value", type: "vector3", defaultValue: createVector3() }],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector3",
   availableTypes: ["vector2", "vector3"],

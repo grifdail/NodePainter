@@ -1,16 +1,4 @@
-import { IconAssembly, IconPlus } from "@tabler/icons-react";
-import { DropdownInput } from "../../Components/Generics/Inputs/DropdownInput";
-import { TextInput } from "../../Components/Generics/Inputs/TextInput";
-import { DialogData, useDialog } from "../../Hooks/useDialog";
-import { useTree } from "../../Hooks/useTree";
-import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortConnection } from "../../Types/PortConnection";
-import { PortDefinition } from "../../Types/PortDefinition";
-import { PortType, PortTypeArray } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
-import { createPortConnection } from "../../Utils/createPortConnection";
-
+/*
 export const Precompute: NodeDefinition = {
   id: "Precompute",
   description: "Precompute the input before executing the rest of the instruction. The random wont change and may help performance",
@@ -134,3 +122,5 @@ function addNewPort(node: NodeData): void {
   };
   useDialog.getState().open(dialog);
 }
+*/
+export {};

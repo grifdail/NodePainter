@@ -1,6 +1,7 @@
 import { IconMinus, IconPlus, IconPolygon } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 import { createPortConnection } from "../../Utils/createPortConnection";
@@ -48,8 +49,8 @@ export const DrawPolygon: NodeDefinition = {
       defaultValue: createVector2(0, 25),
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [
     {
       id: "buttons",
@@ -69,20 +70,20 @@ export const DrawPolygon: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    const color = context.getInputValueColor(data, "color");
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.noStroke();
-    context.target.beginShape();
-    for (let i = 1; i < 20; i++) {
-      const key = `corner-${i}`;
-      if (data.dataInputs[key]) {
-        const p = context.getInputValueVector(data, key);
-        context.target.vertex(p[0], p[1]);
+  getData(portId, node, context) {
+    const color = context.getInputValueColor(node, "color");
+    const points = Object.keys(node.dataInputs)
+      .filter((key) => key !== "color")
+      .map((key) => context.getInputValueVector(node, key));
+    return () => {
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.beginShape();
+      for (let i = 0; i < points.length; i++) {
+        context.target.vertex(points[i][0], points[i][1]);
       }
-    }
-    context.target.endShape();
+      context.target.endShape();
+    };
   },
   contextMenu: {
     "Add corner": addCorner,

@@ -14,7 +14,7 @@ export function generateNodeFromVirtualNode(materialVirtualNodeType: SimpleNodeV
     tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],
-    executeOutputs: [],
+
     settings: [],
     getData: (portId, nodeData, context) => {
       const params = inputs.map((port) => context.getInputValue(nodeData, port.id, port.type));
@@ -33,7 +33,7 @@ export function generateMaterialNodeFromVirtualNode(materialVirtualNodeType: Sim
     tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],
-    executeOutputs: [],
+
     settings: [
       {
         type: "group",

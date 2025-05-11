@@ -9,7 +9,6 @@ export const EasingNode: NodeDefinition = {
   description: "Apply one of the standard easing function to a number .",
   dataInputs: [{ id: "input", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
 
   settings: [
     {

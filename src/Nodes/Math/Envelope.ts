@@ -10,7 +10,7 @@ export const Envelope: NodeDefinition = {
   tags: ["Math"],
   dataInputs: [{ id: "pos", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "envelope",

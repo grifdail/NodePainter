@@ -16,7 +16,7 @@ export const SampleTexture: NodeDefinition = {
 
   dataOutputs: [{ id: "out", type: "color", defaultValue: createColor() }],
   tags: ["UV"],
-  executeOutputs: [],
+
   settings: [],
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["uv"], ({ uv }) => `texture2D(${sanitizeForShader(`uniform_${node.dataInputs["sampler"].connectedPort}`)}, ${uv})`);

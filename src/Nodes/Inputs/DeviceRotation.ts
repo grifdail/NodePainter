@@ -13,7 +13,7 @@ export const DeviceRotation: NodeDefinition = {
     { id: "y", type: "number", defaultValue: 0 },
     { id: "z", type: "number", defaultValue: 0 },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "x") {

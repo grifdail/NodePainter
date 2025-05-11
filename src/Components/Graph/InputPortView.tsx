@@ -24,13 +24,13 @@ const ImprovedFieldSet = styled(Fieldset)`
   }
 `;
 
-export function InputPortView({ y, portData, onClick, onValueChange, nodeId, location }: { y: number; nodeId: string; location: PortRole; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
+export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: { y: number; nodeId: string; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
   var portDescription = PortColor[portData.type];
   var Icon = portDescription.icon;
   var PortSettings = portDescription.inputInline;
 
   var portSelection = usePortSelection();
-  var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === location;
+  var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
   return (
     <StyledPortGroup
       transform={`translate(0, ${y})`}

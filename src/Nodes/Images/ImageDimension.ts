@@ -7,7 +7,7 @@ export const ImageDimension: NodeDefinition = {
   label: "Image dimension",
   icon: IconPhoto,
   description: "Return the dimension of an image",
-  canBeExecuted: false,
+
   dataInputs: [{ id: "image", type: "image", defaultValue: null }],
   dataOutputs: [
     {
@@ -17,7 +17,7 @@ export const ImageDimension: NodeDefinition = {
     },
   ],
   tags: ["Image"],
-  executeOutputs: [],
+
   settings: [],
   getData(portId, node, context) {
     var image = context.getInputValueImage(node, "image");

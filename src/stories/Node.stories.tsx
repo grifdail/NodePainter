@@ -5,7 +5,6 @@ import { createNodeData } from "../Utils/createNodeData";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { SpringValue } from "@react-spring/web";
 import { Remap } from "../Nodes/Math/Remap";
-import { ForGrid } from "../Nodes/System/ForGrid";
 import { Envelope } from "../Nodes/Math/Envelope";
 import { Palette } from "../Nodes/Color/PickFromPalette";
 import { GradientNode } from "../Nodes/Color/GradientNode";
@@ -37,7 +36,10 @@ const meta = {
     onClickPort: fn(),
   },
   render: ({ ...args }) => (
-    <svg style={{ width: `100%`, height: "100%" }} width={500} height={800}>
+    <svg
+      style={{ width: `100%`, height: "100%" }}
+      width={500}
+      height={800}>
       <GraphNodeUI {...args} />
     </svg>
   ),
@@ -56,12 +58,6 @@ export const DrawRectStory: Story = {
 export const RemapStory: Story = {
   args: {
     node: createNodeData(Remap, 10, 10),
-  },
-};
-
-export const ForGridStory: Story = {
-  args: {
-    node: createNodeData(ForGrid, 10, 10),
   },
 };
 

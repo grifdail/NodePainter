@@ -10,8 +10,7 @@ export const Render3D: NodeDefinition = {
   label: "Render in 3D",
   icon: IconPhoto,
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
-  canBeExecuted: false,
-  executeOutputs: [],
+
   dataInputs: [
     {
       id: "fov",

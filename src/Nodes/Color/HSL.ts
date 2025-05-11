@@ -15,7 +15,7 @@ export const HSL: NodeDefinition = {
     { id: "lightness", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var hue = context.getInputValueNumber(nodeData, "hue");

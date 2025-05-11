@@ -19,7 +19,7 @@ export const RandomInt: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "number",
   getData: (portId, nodeData, context) => {

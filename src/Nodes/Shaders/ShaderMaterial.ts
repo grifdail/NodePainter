@@ -44,9 +44,9 @@ export const ShaderMaterial: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "material", type: "material", defaultValue: createDefaultMaterial() }],
   tags: ["Shader", "Material"],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   getData(portId, node, context) {
     const keyShader = `${node.id}-shader`;
     let shader = context.blackboard[keyShader];

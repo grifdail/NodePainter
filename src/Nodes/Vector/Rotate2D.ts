@@ -32,7 +32,7 @@ export const RotateVector: NodeDefinition = {
       defaultValue: createVector2(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: ["vector2", "vector3"],
   defaultType: "vector2",

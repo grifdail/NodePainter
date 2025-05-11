@@ -18,10 +18,9 @@ export const Blackboard: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   settings: [{ id: "blackboardData", defaultValue: null, type: "hidden" }],
-  canBeExecuted: false,
+
   hideInLibrary: true,
   getData: (portId, nodeData, context) => {
     return context.blackboard[nodeData.settings.blackboardData[portId].key] || 0;
   },
-  executeOutputs: [],
 };

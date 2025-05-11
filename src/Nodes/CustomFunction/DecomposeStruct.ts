@@ -10,7 +10,6 @@ export const DecomposeStruct: NodeDefinition = {
   tags: [],
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "struct", "struct") as any;

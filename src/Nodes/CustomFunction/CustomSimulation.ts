@@ -15,7 +15,7 @@ export const CustomSimulation: NodeDefinition = {
   hideInLibrary: true,
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, data, context) => {
     const useCount = context.frameBlackboard[`${data.id}-use`];
@@ -29,56 +29,6 @@ export const CustomSimulation: NodeDefinition = {
 
     return state[portId];
   },
-  execute: (data, context) => {
-    context.frameBlackboard[`${data.id}-use`] = context.frameBlackboard[`${data.id}-use`] !== undefined ? context.frameBlackboard[`${data.id}-use`] + 1 : 0;
-    var useCount = context.frameBlackboard[`${data.id}-use`];
-    const stateId = `${data.id}-${useCount}-state`;
-    var progress = context.getInputValueNumber(data, "progress");
-    let state: { [k: string]: any } = {};
-    const stateDefinition = context.getNodeDefinition(`${data.type}-end`)?.dataInputs;
-
-    if (stateDefinition == null) {
-      return null;
-    }
-    if (context.blackboard[stateId] === undefined || progress < context.blackboard[`${data.id}-${useCount}-progress`]) {
-      state = createDefaultState(data, context, stateDefinition);
-    } else {
-      state = context.blackboard[stateId];
-    }
-
-    const endNode = context.findNodeOfType(`${data.type}-end`);
-    if (!endNode) {
-      return null;
-    }
-
-    const startNode = context.findNodeOfType(`${data.type}-start`);
-    if (!startNode) {
-      return null;
-    }
-
-    const params = Object.fromEntries(
-      Object.entries(startNode.dataOutputs).map(([key, def]) => {
-        return [key, { type: def.type, value: state[key] === undefined ? context.getInputValue(data, key, def.type) : state[key] }];
-      })
-    );
-    context.functionStack.push(params);
-    var oldGen = context.RNG;
-
-    context.RNG = new Rand(Date.now().toString());
-    state = Object.fromEntries(
-      stateDefinition.map((item) => {
-        return [item.id, context.getInputValue(endNode, item.id, item.type)];
-      })
-    );
-    context.RNG = oldGen;
-    context.blackboard[stateId] = state;
-    context.blackboard[`${data.id}-${useCount}-progress`] = progress;
-    context.functionStack.pop();
-    var execute = data.execOutputs["execute"];
-    if (execute != null) {
-      context.execute(execute);
-    }
-  },
 };
 
 function createDefaultState(data: NodeData, context: ExecutionContext, dataInputs: PortDefinition[] | undefined): { [k: string]: any } {
@@ -90,4 +40,51 @@ function createDefaultState(data: NodeData, context: ExecutionContext, dataInput
       return [value.id, context.getInputValue(data, value.id, value.type)];
     })
   );
+}
+
+function execute(data: NodeData, context: ExecutionContext) {
+  context.frameBlackboard[`${data.id}-use`] = context.frameBlackboard[`${data.id}-use`] !== undefined ? context.frameBlackboard[`${data.id}-use`] + 1 : 0;
+  var useCount = context.frameBlackboard[`${data.id}-use`];
+  const stateId = `${data.id}-${useCount}-state`;
+  var progress = context.getInputValueNumber(data, "progress");
+  let state: { [k: string]: any } = {};
+  const stateDefinition = context.getNodeDefinition(`${data.type}-end`)?.dataInputs;
+
+  if (stateDefinition == null) {
+    return null;
+  }
+  if (context.blackboard[stateId] === undefined || progress < context.blackboard[`${data.id}-${useCount}-progress`]) {
+    state = createDefaultState(data, context, stateDefinition);
+  } else {
+    state = context.blackboard[stateId];
+  }
+
+  const endNode = context.findNodeOfType(`${data.type}-end`);
+  if (!endNode) {
+    return null;
+  }
+
+  const startNode = context.findNodeOfType(`${data.type}-start`);
+  if (!startNode) {
+    return null;
+  }
+
+  const params = Object.fromEntries(
+    Object.entries(startNode.dataOutputs).map(([key, def]) => {
+      return [key, { type: def.type, value: state[key] === undefined ? context.getInputValue(data, key, def.type) : state[key] }];
+    })
+  );
+  context.functionStack.push(params);
+  var oldGen = context.RNG;
+
+  context.RNG = new Rand(Date.now().toString());
+  state = Object.fromEntries(
+    stateDefinition.map((item) => {
+      return [item.id, context.getInputValue(endNode, item.id, item.type)];
+    })
+  );
+  context.RNG = oldGen;
+  context.blackboard[stateId] = state;
+  context.blackboard[`${data.id}-${useCount}-progress`] = progress;
+  context.functionStack.pop();
 }

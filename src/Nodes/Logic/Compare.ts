@@ -20,7 +20,7 @@ export const Compare: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "comparator",

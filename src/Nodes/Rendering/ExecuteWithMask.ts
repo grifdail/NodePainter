@@ -1,5 +1,6 @@
 import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 
 export const ExecuteWithMask: NodeDefinition = {
   id: "WithMask",
@@ -7,22 +8,20 @@ export const ExecuteWithMask: NodeDefinition = {
   description: "Execute the draw instruction masked by the mask.",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  dataInputs: [{ id: "inverted", type: "bool", defaultValue: false }],
-  dataOutputs: [],
-  executeOutputs: ["mask", "draw"],
+  dataInputs: [{ id: "inverted", type: "bool", defaultValue: false }, Port.drawing2d("mask"), Port.drawing2d("drawing")],
+  dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var inverted = context.getInputValueBoolean(data, "inverted");
-    context.target.push();
-    (context.p5 as any).beginClip({ invert: inverted });
-    if (data.execOutputs.mask) {
-      context.execute(data.execOutputs.mask);
-    }
-    (context.p5 as any).endClip();
-    if (data.execOutputs.draw) {
-      context.execute(data.execOutputs.draw);
-    }
-    context.target.pop();
+  getData(portId, data, context) {
+    const inverted = context.getInputValueBoolean(data, "inverted");
+    const mask = context.getInputValueDrawing(data, "mask");
+    const drawing = context.getInputValueDrawing(data, "drawing");
+    return () => {
+      context.target.push();
+      (context.p5 as any).beginClip({ invert: inverted });
+      mask();
+      (context.p5 as any).endClip();
+      drawing();
+      context.target.pop();
+    };
   },
 };

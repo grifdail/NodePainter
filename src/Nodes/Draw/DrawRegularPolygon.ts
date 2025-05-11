@@ -1,5 +1,6 @@
 import { IconTriangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/applyConstraints";
 import { toP5Color } from "../../Utils/colorUtils";
@@ -38,25 +39,24 @@ export const DrawRegularPolygon: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    const color = context.getInputValueColor(data, "color");
-    const center = context.getInputValueVector(data, "center");
-    const radius = context.getInputValueNumber(data, "radius");
-    const side = context.getInputValueNumber(data, "side");
-    const offset = context.getInputValueNumber(data, "offset");
-    context.target.noStroke();
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.beginShape();
-    for (let i = 0; i < side; i++) {
-      const alpha = (i / side + offset) * Math.PI * 2;
+  getData(portId, node, context) {
+    const color = context.getInputValueColor(node, "color");
+    const center = context.getInputValueVector(node, "center");
+    const radius = context.getInputValueNumber(node, "radius");
+    const side = context.getInputValueNumber(node, "side");
+    const offset = context.getInputValueNumber(node, "offset");
+    return () => {
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.beginShape();
+      for (let i = 0; i < side; i++) {
+        const alpha = (i / side + offset) * Math.PI * 2;
 
-      context.target.vertex(center[0] + Math.cos(alpha) * radius, center[1] + Math.sin(alpha) * radius);
-    }
-
-    context.target.endShape();
+        context.target.vertex(center[0] + Math.cos(alpha) * radius, center[1] + Math.sin(alpha) * radius);
+      }
+    };
   },
 };

@@ -9,7 +9,7 @@ export const Dimension: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "dim", type: "vector2", defaultValue: createVector2(0, 0) }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return createVector2(context.p5.width, context.p5.height);

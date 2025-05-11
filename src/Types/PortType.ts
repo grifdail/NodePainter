@@ -1,6 +1,6 @@
-export type BasePortType = "number" | "vector" | "vector2" | "vector3" | "vector4" | "color" | "string" | "bool" | "image" | "gradient" | "material" | "mesh" | "struct" | "object3d";
+export type BasePortType = "number" | "vector" | "vector2" | "vector3" | "vector4" | "color" | "string" | "bool" | "image" | "gradient" | "material" | "mesh" | "struct" | "object3d" | "drawing2d";
 export type PortType = "execute" | BasePortType | `array-${BasePortType}` | "unknown";
-export const BasePortTypeArray: PortType[] = ["number", "vector2", "vector3", "vector4", "color", "string", "bool", "image", "gradient", "material", "mesh", "struct", "object3d"];
+export const BasePortTypeArray: PortType[] = ["number", "vector2", "vector3", "vector4", "color", "string", "bool", "image", "gradient", "material", "mesh", "struct", "object3d", "drawing2d"];
 export const PortTypeArray: PortType[] = [...BasePortTypeArray, ...BasePortTypeArray.map((key) => `array-${key}` as PortType)];
 export const VectorTypesFull: PortType[] = ["number", "vector2", "vector3", "color"];
 export const VectorTypesPosition: PortType[] = ["number", "vector2", "vector3", "vector4"];

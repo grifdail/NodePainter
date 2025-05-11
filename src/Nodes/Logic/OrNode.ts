@@ -11,7 +11,6 @@ export const OrNode: NodeDefinition = {
     { id: "b", type: "bool", defaultValue: false },
   ],
   dataOutputs: [{ id: "result", type: "bool", defaultValue: false }],
-  executeOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValueBoolean(nodeData, "a") || context.getInputValueBoolean(nodeData, "b");

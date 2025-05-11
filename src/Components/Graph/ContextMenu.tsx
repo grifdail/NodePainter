@@ -43,7 +43,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
         if (item.hideInLibrary) {
           return false;
         }
-        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.execute !== undefined || item.executeAs != null;
+        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.executeAs != null;
       }),
     [treeNodeLibrary, isShader]
   );
@@ -69,9 +69,19 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
   var theme = useColorScheme();
 
   return (
-    <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
+    <ControlledMenu
+      theming={theme}
+      anchorPoint={anchorPoint}
+      state={state}
+      direction="right"
+      onClose={onClose}
+      overflow="auto">
       {favoritedNode.map((item) => (
-        <NodeMenuItem onClick={onClick} node={item} key={item.id} />
+        <NodeMenuItem
+          onClick={onClick}
+          node={item}
+          key={item.id}
+        />
       ))}
       {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
       <MenuItem onClick={() => useRouter.getState().open(Routes.NodeCreation)}>

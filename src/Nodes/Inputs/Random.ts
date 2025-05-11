@@ -11,7 +11,7 @@ export const Random: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator([], ["value"]),

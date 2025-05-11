@@ -8,7 +8,7 @@ export const DeltatTime: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "dt", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.deltaTime / 1000;

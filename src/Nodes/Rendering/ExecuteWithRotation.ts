@@ -1,5 +1,6 @@
 import { IconRotate } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithRotation: NodeDefinition = {
@@ -9,30 +10,22 @@ export const ExecuteWithRotation: NodeDefinition = {
   featureLevel: 4,
   icon: IconRotate,
   tags: ["Transform"],
-  dataInputs: [{ id: "angle", type: "number", defaultValue: 0 }],
-  dataOutputs: [],
-  executeOutputs: ["execute"],
+  dataInputs: [{ id: "angle", type: "number", defaultValue: 0 }, Port.drawing2d("drawing")],
+  dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  canBeExecuted: true,
   defaultType: "number",
-  availableTypes: ["number", "vector3"],
+  availableTypes: ["number"],
   onChangeType: changeTypeGenerator(["angle"], []),
   hasInput: hasInputGenerator(["number", "vector3"]),
-  execute: (data, context) => {
-    context.target.push();
-    if (data.selectedType === "number") {
-      const angle = context.getInputValueNumber(data, "angle");
-      context.target.rotate(angle);
-    } else {
-      const angle = context.getInputValueVector3(data, "angle");
-      context.target.rotateZ(angle[2]);
-      context.target.rotateX(angle[0]);
-      context.target.rotateY(angle[1]);
-    }
+  getData(portId, data, context) {
+    const angle = context.getInputValueNumber(data, "angle");
+    const drawing = context.getInputValueDrawing(data, "drawing");
 
-    if (data.execOutputs.execute) {
-      context.execute(data.execOutputs.execute);
-    }
-    context.target.pop();
+    return () => {
+      context.target.push();
+      context.target.rotate(angle);
+      drawing();
+      context.target.pop();
+    };
   },
 };

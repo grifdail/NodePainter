@@ -40,7 +40,7 @@ type CustomNodeModalNoLogicProps = {
   };
 } & CustomFunctionCreationContextStore;
 
-export const CustomFunctionModalNoLogic = ({ settings, hasExecuteOption, close, nodeDefinition, mode, addInputs, addOutput, cancel, isNameValid, create, availableTypesOutput, availableTypesInput, ...context }: CustomNodeModalNoLogicProps) => {
+export const CustomFunctionModalNoLogic = ({ settings, close, nodeDefinition, mode, addInputs, addOutput, cancel, isNameValid, create, availableTypesOutput, availableTypesInput, ...context }: CustomNodeModalNoLogicProps) => {
   return (
     <Modal
       onClose={close}
@@ -52,7 +52,6 @@ export const CustomFunctionModalNoLogic = ({ settings, hasExecuteOption, close, 
         <p className="subtitle">{settings.subtitle}</p>
         <CustomNodeModalHeader
           def={nodeDefinition}
-          hasExecuteOption={!!hasExecuteOption}
           isNameValid={isNameValid}
           setCanBeExecuted={context.setCanBeExecuted}
           setDescription={context.setDescription}
@@ -67,7 +66,7 @@ export const CustomFunctionModalNoLogic = ({ settings, hasExecuteOption, close, 
               prefix={settings.inputPrefix}
               availableTypes={availableTypesInput}
               onChange={(newList) => {
-                context.setPortList("inputData", newList);
+                context.setPortList("input", newList);
               }}
             />
           )}
@@ -79,7 +78,7 @@ export const CustomFunctionModalNoLogic = ({ settings, hasExecuteOption, close, 
               tooltip={settings.outputTooltip}
               availableTypes={availableTypesOutput}
               onChange={(newList) => {
-                context.setPortList("outputData", newList);
+                context.setPortList("output", newList);
               }}
             />
           )}

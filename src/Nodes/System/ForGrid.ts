@@ -1,7 +1,4 @@
-import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Constraints } from "../../Utils/applyConstraints";
-
+/*
 export const ForGrid: NodeDefinition = {
   id: "ForGrid",
   label: "For grid",
@@ -38,3 +35,5 @@ export const ForGrid: NodeDefinition = {
     }
   },
 };
+*/
+export {};

@@ -1,6 +1,7 @@
 import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Vector3, createVector2 } from "../../Types/vectorDataType";
+import { Port } from "../../Types/PortTypeGenerator";
+import { Vector3 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
 export const ExecuteWithTranslation: NodeDefinition = {
@@ -11,22 +12,21 @@ export const ExecuteWithTranslation: NodeDefinition = {
   description: "Execute the next instruction as if the canvas was moved",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  dataInputs: [{ id: "translation", type: "vector2", defaultValue: createVector2() }],
-  dataOutputs: [],
-  executeOutputs: ["execute"],
+  dataInputs: [Port.vector2("translation"), Port.drawing2d("drawing")],
+  dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  canBeExecuted: true,
   defaultType: "vector2",
   availableTypes: ["vector2", "vector3"],
   onChangeType: changeTypeGenerator(["translation"], []),
   hasInput: hasInputGenerator(["vector2", "vector3"]),
-  execute: (data, context) => {
-    var translation = context.getInputValueVector(data, "translation") as Vector3;
-    context.target.push();
-    context.target.translate(...translation);
-    if (data.execOutputs.execute) {
-      context.execute(data.execOutputs.execute);
-    }
-    context.target.pop();
+  getData(portId, node, context) {
+    const translation = context.getInputValueVector(node, "translation") as Vector3;
+    const drawing = context.getInputValueDrawing(node, "drawing");
+    return () => {
+      context.target.push();
+      context.target.translate(...translation);
+      drawing();
+      context.target.pop();
+    };
   },
 };

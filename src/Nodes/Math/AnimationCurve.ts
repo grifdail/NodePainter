@@ -12,7 +12,7 @@ export const AnimationCurve: NodeDefinition = {
   tags: ["Misc"],
   dataInputs: [{ id: "pos", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "value", type: "vector2", defaultValue: 0 }],
-  executeOutputs: [],
+
   availableTypes: CommonTypes,
   onChangeType(node, type) {
     node.settings["track"] = convertAnimationTrackType(type, node.settings["track"]);

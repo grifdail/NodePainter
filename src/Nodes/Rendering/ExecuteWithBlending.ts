@@ -1,6 +1,7 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { BLEND_MODE } from "p5";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 
 export const ExecuteWithBlending: NodeDefinition = {
   id: "WithBlending",
@@ -8,19 +9,16 @@ export const ExecuteWithBlending: NodeDefinition = {
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,
   tags: ["Transform"],
-  dataInputs: [],
+  dataInputs: [Port.drawing2d("drawing")],
   dataOutputs: [],
-  executeOutputs: ["execute"],
   settings: [{ id: "mode", type: "dropdown", defaultValue: "Blend", options: ["Blend", "Add", "Darkest", "Lightest", "Difference", "Exclusion", "Multiply", "Screen", "Replace", "Remove", "Overlay", "Hard_light", "Soft_light", "Dodge", "Burn"] }],
-  canBeExecuted: true,
-  execute: (data, context) => {
+  getData(portId, data, context) {
     var mode = data.settings.mode as string;
-
-    context.target.blendMode((context.p5 as any)[mode.toUpperCase()] as BLEND_MODE);
-    if (data.execOutputs.execute) {
-      context.execute(data.execOutputs.execute);
-    }
-
-    context.target.blendMode(context.p5.BLEND);
+    var drawing = context.getInputValueDrawing(data, "drawing");
+    return () => {
+      context.target.blendMode((context.p5 as any)[mode.toUpperCase()] as BLEND_MODE);
+      drawing();
+      context.target.blendMode(context.p5.BLEND);
+    };
   },
 };

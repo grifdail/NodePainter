@@ -17,10 +17,8 @@ export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
     tags: [],
     dataInputs: [],
     dataOutputs: structuredClone(def.dataInputs),
-    executeOutputs: def.canBeExecuted ? ["execute"] : [],
     settings: [],
     executeAs: "CustomFunction-start",
-    canBeExecuted: false,
   };
   const endNodeDef: NodeDefinition = {
     IsUnique: true,
@@ -30,10 +28,9 @@ export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
     tags: [],
     dataInputs: structuredClone(def.dataOutputs),
     dataOutputs: [],
-    executeOutputs: [],
+
     settings: [],
     executeAs: "CustomFunction-end",
-    canBeExecuted: false,
   };
   state.customNodes[start] = startNodeDef;
   state.customNodes[end] = endNodeDef;

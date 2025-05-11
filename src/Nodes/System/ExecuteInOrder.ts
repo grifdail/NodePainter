@@ -9,29 +9,25 @@ export const ExecuteInOrder: NodeDefinition = {
   tags: ["Control"],
   dataInputs: [
     { id: "a", type: "number", defaultValue: 10 },
+    { id: "A", type: "drawing2d", defaultValue: null },
     { id: "b", type: "number", defaultValue: 10 },
+    { id: "B", type: "drawing2d", defaultValue: null },
   ],
-  dataOutputs: [],
-  executeOutputs: ["A", "B"],
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
+  dataOutputs: [{ id: "out", type: "drawing2d", defaultValue: null }],
+  getData(portId, data, context) {
     var a = context.getInputValueNumber(data, "a");
     var b = context.getInputValueNumber(data, "b");
-    if (a >= b) {
-      if (data.execOutputs.A) {
-        context.execute(data.execOutputs.A);
+    var A = context.getInputValueDrawing(data, "A");
+    var B = context.getInputValueDrawing(data, "B");
+    return () => {
+      if (a >= b) {
+        B();
+        A();
+      } else {
+        A();
+        B();
       }
-      if (data.execOutputs.B) {
-        context.execute(data.execOutputs.B);
-      }
-    } else {
-      if (data.execOutputs.B) {
-        context.execute(data.execOutputs.B);
-      }
-      if (data.execOutputs.A) {
-        context.execute(data.execOutputs.A);
-      }
-    }
+    };
   },
 };

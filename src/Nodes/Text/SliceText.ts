@@ -12,7 +12,7 @@ export const SliceText: NodeDefinition = {
     { id: "end", type: "number", defaultValue: 1 },
   ],
   dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const text = context.getInputValueString(nodeData, "text");

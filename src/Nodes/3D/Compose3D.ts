@@ -20,8 +20,7 @@ export const Compose3D: NodeDefinition = {
   label: "Compose 3D",
   icon: IconBadge3d,
   description: "Compose an object from multiple object",
-  canBeExecuted: false,
-  executeOutputs: [],
+
   dataInputs: [
     {
       id: "object-1",

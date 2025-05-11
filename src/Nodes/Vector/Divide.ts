@@ -30,7 +30,7 @@ export const Divide: NodeDefinition = {
       defaultValue: createVector2(1, 1),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypesFull,

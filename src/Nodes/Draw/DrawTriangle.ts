@@ -1,5 +1,6 @@
 import { IconVectorTriangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -31,17 +32,18 @@ export const DrawTriangle: NodeDefinition = {
       defaultValue: createVector2(0, 25),
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    var p1 = context.getInputValueVector(data, "corner1") as Vector2;
-    var p2 = context.getInputValueVector(data, "corner2") as Vector2;
-    var p3 = context.getInputValueVector(data, "corner3") as Vector2;
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.noStroke();
-    context.target.triangle(...p1, ...p2, ...p3);
+  getData(portId, node, context) {
+    var color = context.getInputValueColor(node, "color");
+    var p1 = context.getInputValueVector(node, "corner1") as Vector2;
+    var p2 = context.getInputValueVector(node, "corner2") as Vector2;
+    var p3 = context.getInputValueVector(node, "corner3") as Vector2;
+    return () => {
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.triangle(...p1, ...p2, ...p3);
+    };
   },
 };

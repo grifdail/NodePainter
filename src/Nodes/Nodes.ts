@@ -24,7 +24,6 @@ import { VectorFromAngle } from "./Vector/VectorFromAngle";
 
 import { AndNode } from "./Logic/AndNode";
 import { Compare } from "./Logic/Compare";
-import { IfNode } from "./Logic/IfNode";
 import { NotNode } from "./Logic/NotNode";
 import { OrNode } from "./Logic/OrNode";
 import { SwitchNode } from "./Logic/SwitchNode";
@@ -141,20 +140,13 @@ import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
 import { ExecuteWithBlending } from "./Rendering/ExecuteWithBlending";
 import { ExecuteWithMask } from "./Rendering/ExecuteWithMask";
-import { ExecuteWithMotionBlur } from "./Rendering/ExecuteWithMotionBlur";
 import { ExecuteWithRotation } from "./Rendering/ExecuteWithRotation";
 import { ExecuteWithScale } from "./Rendering/ExecuteWithScale";
 import { ExecuteWithShadow } from "./Rendering/ExecuteWithShadow";
 import { ExecuteWithTranslation } from "./Rendering/ExecuteWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
-import { ExecuteInOrder } from "./System/ExecuteInOrder";
-import { ForEachNode } from "./System/ForEach";
-import { ForGrid } from "./System/ForGrid";
-import { ForNode } from "./System/ForNode";
-import { Precompute } from "./System/Precompute";
 import { StartNode } from "./System/StartNode";
-import { ThenNode } from "./System/ThenNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { ScaleAdd } from "./Vector/ScaleAdd";
@@ -166,11 +158,6 @@ import { createConstant } from "./createConstant";
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
   //Control flow
-  ThenNode,
-  ForNode,
-  ForGrid,
-  ExecuteInOrder,
-  Precompute,
 
   // Vector Compositions
   ComposeNode,
@@ -222,7 +209,6 @@ export const Nodes: Array<NodeDefinition> = [
 
   // Logic
   Compare,
-  IfNode,
   SwitchNode,
   Select,
 
@@ -300,7 +286,6 @@ export const Nodes: Array<NodeDefinition> = [
   ExecuteWithShadow,
   ExecuteWithMask,
   ExecuteWithBlending,
-  ExecuteWithMotionBlur,
 
   //Custom function
   CustomFunction,
@@ -366,7 +351,6 @@ export const Nodes: Array<NodeDefinition> = [
   Filter,
   Slice,
   GenerateArray,
-  ForEachNode,
 
   //Misc
   AnimationCurve,

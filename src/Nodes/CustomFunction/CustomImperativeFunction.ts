@@ -1,5 +1,5 @@
 import { IconCodeDots } from "@tabler/icons-react";
-import { CodeBlock, createDefaultCodeBlock, executeStatementList } from "../../Types/CodeBlock";
+import { createDefaultCodeBlock } from "../../Types/CodeBlock";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 export const CUSTOM_IMPERATIVE_FUNCTION = "CustomImperativeFunction";
 
@@ -11,8 +11,6 @@ export const CustomImperativeFunction: NodeDefinition = {
   hideInLibrary: false,
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: ["execute"],
-  canBeExecuted: true,
   settings: [
     {
       id: "code",
@@ -31,6 +29,7 @@ export const CustomImperativeFunction: NodeDefinition = {
 
     return state[portId].value;
   },
+  /*
   execute: (data, context) => {
     const stateId = `${data.id}-state`;
     let state = context.createFunctionContext(data);
@@ -47,5 +46,5 @@ export const CustomImperativeFunction: NodeDefinition = {
     if (execute != null) {
       context.execute(execute);
     }
-  },
+  },*/
 };
