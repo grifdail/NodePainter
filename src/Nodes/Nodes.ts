@@ -85,6 +85,7 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
+import { createConstant } from "./createConstant";
 import { ComposeStruct } from "./CustomFunction/ComposeStruct";
 import { CustomFunction } from "./CustomFunction/CustomFunction";
 import { CustomFunctionEnd } from "./CustomFunction/CustomFunctionEnd";
@@ -138,14 +139,15 @@ import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
-import { ExecuteWithBlending } from "./Rendering/ExecuteWithBlending";
-import { ExecuteWithMask } from "./Rendering/ExecuteWithMask";
-import { ExecuteWithRotation } from "./Rendering/ExecuteWithRotation";
-import { ExecuteWithScale } from "./Rendering/ExecuteWithScale";
-import { ExecuteWithShadow } from "./Rendering/ExecuteWithShadow";
-import { ExecuteWithTranslation } from "./Rendering/ExecuteWithTranslation";
+import { RenderWithRotation } from "./RenderWithRotation/ExecuteWithRotation";
+import { RenderWithBlending } from "./RenderWithRotation/RenderWithBlending";
+import { RenderWithMask } from "./RenderWithRotation/RenderWithMask";
+import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
+import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
+import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
+import { Combine } from "./System/Combine";
 import { StartNode } from "./System/StartNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
@@ -153,11 +155,11 @@ import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
-import { createConstant } from "./createConstant";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
   //Control flow
+  Combine,
 
   // Vector Compositions
   ComposeNode,
@@ -280,12 +282,12 @@ export const Nodes: Array<NodeDefinition> = [
   Clear,
 
   //Transform
-  ExecuteWithRotation,
-  ExecuteWithTranslation,
-  ExecuteWithScale,
-  ExecuteWithShadow,
-  ExecuteWithMask,
-  ExecuteWithBlending,
+  RenderWithRotation,
+  RenderWithTranslation,
+  RenderWithScale,
+  RenderWithShadow,
+  RenderWithMask,
+  RenderWithBlending,
 
   //Custom function
   CustomFunction,

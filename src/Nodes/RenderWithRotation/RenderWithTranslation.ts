@@ -4,8 +4,8 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { Vector3 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
-export const ExecuteWithTranslation: NodeDefinition = {
-  id: "WithTranslation",
+export const RenderWithTranslation: NodeDefinition = {
+  id: "RenderWithTranslation",
   label: "Render with translation",
 
   featureLevel: 4,

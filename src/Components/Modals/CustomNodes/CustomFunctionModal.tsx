@@ -1,11 +1,11 @@
 import { NodeDefinition } from "../../../Types/NodeDefinition";
-import { PortType } from "../../../Types/PortType";
+import { FullCommonTypes, PortType } from "../../../Types/PortType";
 import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
 import { CustomFunctionModalNoLogic } from "./CustomFunctionModalNoLogic";
 import { IconFunctionFilled } from "@tabler/icons-react";
 
-const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "material"];
-const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "material"];
+const AvailableTypesInput: Array<PortType> = FullCommonTypes;
+const AvailableTypesOutput: Array<PortType> = FullCommonTypes;
 
 export const CustomFunctionModalSettings = {
   creationTitle: "Create a custom node",
@@ -24,5 +24,15 @@ export function CustomNodeModal({ close }: { close: () => void }) {
   var context = useCustomNodeCreationContext();
   var def = context.model as NodeDefinition;
 
-  return <CustomFunctionModalNoLogic close={close} nodeDefinition={def} hasExecuteOption availableTypesInput={AvailableTypesInput} availableTypesOutput={AvailableTypesOutput} settings={CustomFunctionModalSettings} {...context} />;
+  return (
+    <CustomFunctionModalNoLogic
+      close={close}
+      nodeDefinition={def}
+      hasExecuteOption
+      availableTypesInput={AvailableTypesInput}
+      availableTypesOutput={AvailableTypesOutput}
+      settings={CustomFunctionModalSettings}
+      {...context}
+    />
+  );
 }

@@ -3,14 +3,14 @@ import { BLEND_MODE } from "p5";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
-export const ExecuteWithBlending: NodeDefinition = {
-  id: "WithBlending",
+export const RenderWithBlending: NodeDefinition = {
+  id: "RenderWithBlending",
   label: "Render With Blending",
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,
   tags: ["Transform"],
   dataInputs: [Port.drawing2d("drawing")],
-  dataOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
   settings: [{ id: "mode", type: "dropdown", defaultValue: "Blend", options: ["Blend", "Add", "Darkest", "Lightest", "Difference", "Exclusion", "Multiply", "Screen", "Replace", "Remove", "Overlay", "Hard_light", "Soft_light", "Dodge", "Burn"] }],
   getData(portId, data, context) {
     var mode = data.settings.mode as string;

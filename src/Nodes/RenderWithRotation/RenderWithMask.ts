@@ -2,13 +2,13 @@ import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
-export const ExecuteWithMask: NodeDefinition = {
-  id: "WithMask",
+export const RenderWithMask: NodeDefinition = {
+  id: "RenderWithMask",
   label: "Render With Mask",
   description: "Execute the draw instruction masked by the mask.",
   icon: IconArrowsMove,
   tags: ["Transform"],
-  dataInputs: [{ id: "inverted", type: "bool", defaultValue: false }, Port.drawing2d("mask"), Port.drawing2d("drawing")],
+  dataInputs: [Port.bool("inverted"), Port.drawing2d("mask"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],
   getData(portId, data, context) {
