@@ -15,14 +15,12 @@ export const EasingNode: NodeDefinition = {
       id: "easing",
       type: "easing-preview",
       defaultValue: "Linear",
-      target: "easing",
     },
   ],
 
   getData: (portId, nodeData, context) => {
     var input = context.getInputValueNumber(nodeData, "input");
     var funcName = nodeData.settings.easing as EasingFunctionType;
-    console.log(funcName);
     return evaluate(funcName, input);
   },
 };

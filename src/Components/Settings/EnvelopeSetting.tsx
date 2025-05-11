@@ -12,6 +12,7 @@ import { calculatePathForFunction } from "./calculatePathForFunction";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { EnvelopeSettingDefinition } from "../../Types/SettingDefinition";
 
 const ColorList = styled.ul`
   display: flex;
@@ -55,7 +56,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const EnvelopeSetting: SettingComponent = function GradientSetting({ onChange, value, def }: SettingProps) {
+export const EnvelopeSetting: SettingComponent<EnvelopeSettingDefinition> = function GradientSetting({ onChange, value, def }: SettingProps<EnvelopeSettingDefinition>) {
   const list = value as EnvelopeData;
 
   function onChangeHeight(i: number, value: any): void {

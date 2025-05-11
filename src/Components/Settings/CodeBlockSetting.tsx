@@ -6,6 +6,7 @@ import { Button } from "../Generics/Button";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { useTree } from "../../Hooks/useTree";
 import { CodeBlock } from "../../Types/CodeBlock";
+import { CodeBlockSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ const Body = styled.div`
   }
 `;
 
-export const CodeBlockSetting: SettingComponent = function ({ onChange, value, def, node }: SettingProps) {
+export const CodeBlockSetting: SettingComponent<CodeBlockSettingDefinition> = function ({ onChange, value, def, node }: SettingProps<CodeBlockSettingDefinition>) {
   return (
     <Body>
       <ButtonGroup hidden={value !== null}>

@@ -38,7 +38,7 @@ const AnimatedG = animated(styled.g`
 export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
   var inputCount = Object.keys(node.dataInputs).length;
   var outputCount = Object.keys(node.dataOutputs).length;
-  var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def, node), 0);
+  var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def as any, node), 0);
   return NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (inputCount + outputCount) + NODE_FOOTER_HEIGHT + sumSetting + typeDef.settings.length * 2;
 }
 
@@ -184,7 +184,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         {definition.settings.map((item, i) => {
           const isGlobal = item.globalKey !== undefined;
 
-          const value = isGlobal ? (globalSettings[item.globalKey as string] === undefined ? item.defaultValue : globalSettings[item.globalKey as string]) : node.settings[item.id];
+          const value = isGlobal ? (globalSettings[item.globalKey as string] === undefined && "defaultValue" in item ? item.defaultValue : globalSettings[item.globalKey as string]) : node.settings[item.id];
           const changeMethod = isGlobal ? (value: any) => setGlobvalSetting(item.globalKey as string, value) : (value: any) => setNodeSetting(node.id, item.id, value);
           var n = (
             <SettingControl

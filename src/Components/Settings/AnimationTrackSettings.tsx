@@ -10,6 +10,7 @@ import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { useListManipulator } from "../../Hooks/useListManipulator";
+import { AnimationTrackSettingDefinition } from "../../Types/SettingDefinition";
 
 const ColorList = styled.ul`
   display: flex;
@@ -52,7 +53,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const AnimationTrackSettings: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const AnimationTrackSettings: SettingComponent<AnimationTrackSettingDefinition> = function ({ onChange, value, def }: SettingProps<AnimationTrackSettingDefinition>) {
   const track = value as AnimationTrack;
   const type = track.type;
   var portDescription = PortColor[type];

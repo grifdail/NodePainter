@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../Generics/Button";
+import { MeshUploadSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`
   width: 100%;
@@ -33,7 +34,7 @@ const Body = styled.div`
   }
 `;
 
-export const ModelUploadSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> = function ({ onChange, value, def }: SettingProps<MeshUploadSettingDefinition>) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles, fileRejection) => {
       console.log(acceptedFiles, fileRejection);

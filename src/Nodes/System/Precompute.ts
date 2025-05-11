@@ -1,4 +1,15 @@
-/*
+import { IconAssembly, IconPlus } from "@tabler/icons-react";
+import { DropdownInput } from "../../Components/Generics/Inputs/DropdownInput";
+import { TextInput } from "../../Components/Generics/Inputs/TextInput";
+import { DialogData, useDialog } from "../../Hooks/useDialog";
+import { useTree } from "../../Hooks/useTree";
+import { NodeData } from "../../Types/NodeData";
+import { NodeDefinition } from "../../Types/NodeDefinition";
+import { PortDefinition } from "../../Types/PortDefinition";
+import { PortType, PortTypeArray } from "../../Types/PortType";
+import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { createPortConnection } from "../../Utils/createPortConnection";
+
 export const Precompute: NodeDefinition = {
   id: "Precompute",
   description: "Precompute the input before executing the rest of the instruction. The random wont change and may help performance",
@@ -6,7 +17,6 @@ export const Precompute: NodeDefinition = {
   tags: ["Control"],
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: ["execute"],
   settings: [
     { id: "when", type: "dropdown", defaultValue: "Everytime", options: ["Once", "Per frame", "Everytime"] },
     {
@@ -22,11 +32,11 @@ export const Precompute: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: true,
   getData: (portId, data, context) => {
     const target = context.blackboard[`${data.id}-cache`];
     return target[`${portId}-in`];
   },
+  /*
   execute: (data, context) => {
     const when = data.settings.when || "Everytime";
     const keyCache = `${data.id}-cache`;
@@ -47,7 +57,7 @@ export const Precompute: NodeDefinition = {
     }
 
     context.execute(data.execOutputs["execute"] as string);
-  },
+  },*/
   contextMenu: (node) => {
     return {
       ...Object.fromEntries(
@@ -122,5 +132,3 @@ function addNewPort(node: NodeData): void {
   };
   useDialog.getState().open(dialog);
 }
-*/
-export {};

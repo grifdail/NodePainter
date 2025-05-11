@@ -4,13 +4,12 @@ import { Icon } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
+import { ButtonSettingDefinition } from "../../Types/SettingDefinition";
 
-export const ButtonsSettings: SettingComponent = function ({ onChange, value, def, node }: SettingProps) {
-  var buttons = def.buttons as Array<{ label: string; icon: Icon; onClick: (node: NodeData) => void }>;
-
+export const ButtonsSettings: SettingComponent<ButtonSettingDefinition> = function ({ onChange, value, def, node }: SettingProps<ButtonSettingDefinition>) {
   return (
     <ButtonGroup>
-      {buttons.map((btn, i) => (
+      {def.buttons.map((btn, i) => (
         <Button
           icon={btn.icon}
           key={i}

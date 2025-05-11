@@ -1,8 +1,9 @@
+import { NumberSettingDefinition } from "../../Types/SettingDefinition";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 
-export const NumberSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const NumberSetting: SettingComponent<NumberSettingDefinition> = function ({ onChange, value, def }: SettingProps<NumberSettingDefinition>) {
   return (
     <Fieldset
       label={def.id}

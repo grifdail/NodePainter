@@ -33,7 +33,6 @@ export function generateMaterialNodeFromVirtualNode(materialVirtualNodeType: Sim
     tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],
-
     settings: [
       {
         type: "group",

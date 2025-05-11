@@ -1,11 +1,102 @@
+import { Icon } from "@tabler/icons-react";
+import { EasingFunctionType } from "../libs/easing";
 import { ConstrainDeclaration } from "../Utils/applyConstraints";
-import { SettingType } from "./SettingType";
+import { AnimationTrack } from "./AnimationTrack";
+import { CodeBlock } from "./CodeBlock";
+import { EnvelopeData } from "./EnvelopeData";
+import { NodeData } from "./NodeData";
+import { Color, Gradient } from "./vectorDataType";
 
-export type SettingDefinition = {
+type BaseSettingDefinition = {
   id: string;
-  type: SettingType;
-  defaultValue: any;
   globalKey?: string;
+};
+
+export type NumberSettingDefinition = BaseSettingDefinition & {
+  type: "number";
+  defaultValue: number;
   constrains?: ConstrainDeclaration[];
+};
+export type DropdownSettingDefinition = BaseSettingDefinition & {
+  type: "dropdown";
+  defaultValue: string;
+  options: string[];
+};
+export type PaletteSettingDefinition = BaseSettingDefinition & {
+  type: "palette";
+  defaultValue: Color[];
+};
+export type BoolSettingDefinition = BaseSettingDefinition & {
+  type: "bool";
+  defaultValue: boolean;
+};
+export type GradientSettingDefinition = BaseSettingDefinition & {
+  type: "gradient";
+  defaultValue: Gradient;
+};
+export type ImageUploadSettingDefinition = BaseSettingDefinition & {
+  type: "image-upload";
+};
+export type ImagePaintSettingDefinition = BaseSettingDefinition & {
+  type: "image-paint";
+};
+export type EnvelopeSettingDefinition = BaseSettingDefinition & {
+  type: "envelope";
+  defaultValue: EnvelopeData;
+};
+export type StringSettingDefinition = BaseSettingDefinition & {
+  type: "string";
+  defaultValue: string;
+  constrains?: ConstrainDeclaration[];
+};
+export type HiddenSettingDefinition = BaseSettingDefinition & {
+  type: "hidden";
+  defaultValue: any;
   [key: string]: any;
 };
+
+export type ButtonSettingDefinition = BaseSettingDefinition & {
+  type: "buttons";
+  buttons: { label: string; icon: Icon; onClick: (node: NodeData) => void }[];
+};
+export type AnimationTrackSettingDefinition = BaseSettingDefinition & {
+  type: "animation-track";
+  defaultValue: AnimationTrack;
+};
+export type MeshUploadSettingDefinition = BaseSettingDefinition & {
+  type: "mesh-upload";
+};
+export type EasingPreviewSettingDefinition = BaseSettingDefinition & {
+  type: "easing-preview";
+  defaultValue: EasingFunctionType;
+};
+export type CodeBlockSettingDefinition = BaseSettingDefinition & {
+  type: "code-block";
+  defaultValue: CodeBlock;
+};
+export type GroupSettingDefinition = BaseSettingDefinition & {
+  type: "group";
+  defaultValue: { [key: string]: any };
+  settings: SettingDefinition[];
+  label?: string;
+};
+
+export type SettingDefinition =
+  | NumberSettingDefinition
+  | DropdownSettingDefinition
+  | PaletteSettingDefinition
+  | BoolSettingDefinition
+  | GradientSettingDefinition
+  | ImageUploadSettingDefinition
+  | ImagePaintSettingDefinition
+  | EnvelopeSettingDefinition
+  | StringSettingDefinition
+  | HiddenSettingDefinition
+  | ButtonSettingDefinition
+  | AnimationTrackSettingDefinition
+  | MeshUploadSettingDefinition
+  | EasingPreviewSettingDefinition
+  | CodeBlockSettingDefinition
+  | GroupSettingDefinition;
+
+export type SettingType = SettingDefinition["type"];

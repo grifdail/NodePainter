@@ -20,7 +20,7 @@ export const AnimationCurve: NodeDefinition = {
   settings: [
     {
       id: "track",
-      type: "animationTrack",
+      type: "animation-track",
       defaultValue: createDefaultAnimationTrack("vector2"),
     },
   ],

@@ -55,15 +55,14 @@ export const DrawPolygon: NodeDefinition = {
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
-          label: null,
+          label: "",
           icon: IconMinus,
           onClick: removeCorner,
         },
         {
-          label: null,
+          label: "",
           icon: IconPlus,
           onClick: addCorner,
         },

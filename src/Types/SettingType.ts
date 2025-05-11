@@ -1,1 +1,0 @@
-export type SettingType = "dropdown" | "palette" | "number" | "bool" | "gradient" | "image-upload" | "image-paint" | "envelope" | "string" | "hidden" | "buttons" | "animationTrack" | "mesh-upload" | "easing-preview" | "code-block" | "group";
