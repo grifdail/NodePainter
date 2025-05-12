@@ -1,5 +1,7 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
+import { Constraints } from "../../Utils/applyConstraints";
 
 export const RandomInt: NodeDefinition = {
   id: "RandomInt",
@@ -17,6 +19,7 @@ export const RandomInt: NodeDefinition = {
       type: "number",
       defaultValue: 6,
     },
+    Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()]),
   ],
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
 
@@ -25,6 +28,10 @@ export const RandomInt: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var min = context.getInputValueNumber(nodeData, "min");
     var max = context.getInputValueNumber(nodeData, "max");
-    return Math.floor(context.RNG.next() * (max - min) + min);
+    const cacheId = Math.floor(context.getInputValueNumber(nodeData, "cache-id"));
+    const cacheKey = `random-${nodeData.id}-${cacheId}`;
+
+    const r = context.blackboard[cacheKey] !== undefined ? context.blackboard[cacheKey] : context.RNG.next();
+    return Math.floor(r * (max - min) + min);
   },
 };

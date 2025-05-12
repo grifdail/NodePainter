@@ -79,6 +79,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       tree = props.tree;
       context = createExecutionContext(tree, p5 as P5CanvasInstance);
       ownProps = props;
+      context.RNG = new Rand(seed.toString());
       const start = tree.getNode(START_NODE);
 
       if (renderer == null) {
@@ -102,7 +103,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.deltaTime = frameRate;
     var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
 
-    context.RNG = new Rand(seed.toString());
     context.frameBlackboard = {};
     if (tree) {
       const start = tree.getNode(START_NODE);
