@@ -5,24 +5,26 @@ import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { PortConnection } from "../../Types/PortConnection";
 import { PortDefinition } from "../../Types/PortDefinition";
 import { PortType, PortTypeArray } from "../../Types/PortType";
+import { Port } from "../../Types/PortTypeGenerator";
+import { Constraints } from "../../Utils/applyConstraints";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
+import { useCache } from "../../Utils/useCache";
 
-export const Precompute: NodeDefinition = {
-  id: "Precompute",
-  description: "Precompute the input before executing the rest of the instruction. The random wont change and may help performance",
+export const CacheNode: NodeDefinition = {
+  id: "Cache",
+  description: "Precompute and cache the input. The randomness wont change and it may help performance",
   icon: IconAssembly,
   tags: ["Control"],
-  dataInputs: [],
+  dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
   dataOutputs: [],
   settings: [
-    { id: "when", type: "dropdown", defaultValue: "Everytime", options: ["Once", "Per frame", "Everytime"] },
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
           label: "Add a new Port",
@@ -33,31 +35,16 @@ export const Precompute: NodeDefinition = {
     },
   ],
   getData: (portId, data, context) => {
-    const target = context.blackboard[`${data.id}-cache`];
-    return target[`${portId}-in`];
-  },
-  /*
-  execute: (data, context) => {
-    const when = data.settings.when || "Everytime";
-    const keyCache = `${data.id}-cache`;
-    const keyComputed = `${data.id}-is-computed`;
-    let needRedraw = false;
-    needRedraw ||= when === "Once" && !context.blackboard[keyComputed];
-    needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
-    needRedraw ||= when === "Everytime";
-    if (needRedraw) {
+    var target = useCache(context, data, () => {
       var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => {
         var v = context.getInputValue(data, key, value.type);
         return [key, v];
       };
-      const target = Object.fromEntries(Object.entries(data.dataInputs).map(fn));
-      context.blackboard[keyComputed] = true;
-      context.frameBlackboard[keyComputed] = true;
-      context.blackboard[keyCache] = target;
-    }
+      return Object.fromEntries(Object.entries(data.dataInputs).map(fn));
+    });
+    return target[`${portId}-in`];
+  },
 
-    context.execute(data.execOutputs["execute"] as string);
-  },*/
   contextMenu: (node) => {
     return {
       ...Object.fromEntries(

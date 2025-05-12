@@ -2,6 +2,7 @@ import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
+import { useCache } from "../../Utils/useCache";
 
 export const RandomInt: NodeDefinition = {
   id: "RandomInt",
@@ -28,10 +29,7 @@ export const RandomInt: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var min = context.getInputValueNumber(nodeData, "min");
     var max = context.getInputValueNumber(nodeData, "max");
-    const cacheId = Math.floor(context.getInputValueNumber(nodeData, "cache-id"));
-    const cacheKey = `random-${nodeData.id}-${cacheId}`;
-
-    const r = context.blackboard[cacheKey] !== undefined ? context.blackboard[cacheKey] : context.RNG.next();
+    const r = useCache(context, nodeData, () => context.RNG.next());
     return Math.floor(r * (max - min) + min);
   },
 };

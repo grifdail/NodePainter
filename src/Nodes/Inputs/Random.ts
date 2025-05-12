@@ -4,6 +4,7 @@ import { VectorLength, VectorTypesFull } from "../../Types/PortType";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { useCache } from "../../Utils/useCache";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
 
 export const Random: NodeDefinition = {
@@ -19,17 +20,13 @@ export const Random: NodeDefinition = {
   hasOutput: hasInputGenerator(VectorTypesFull),
   defaultType: "number",
   getData: (portId, nodeData, context) => {
-    const cacheId = Math.floor(context.getInputValueNumber(nodeData, "cache-id"));
-    const cacheKey = `random-${nodeData.id}-${cacheId}`;
-    if (context.blackboard[cacheKey] !== undefined) {
-      return context.blackboard[cacheKey];
-    } else {
-      const newValue = EnforceGoodType(
+    const value = useCache(context, nodeData, () =>
+      EnforceGoodType(
         nodeData,
         Array.from(Array(VectorLength[nodeData.selectedType]).keys()).map(() => context.RNG.next())
-      );
-      context.blackboard[cacheKey] = newValue;
-      return newValue;
-    }
+      )
+    );
+
+    return value;
   },
 };

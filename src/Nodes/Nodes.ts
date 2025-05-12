@@ -147,6 +147,7 @@ import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
 import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
+import { CacheNode } from "./System/Cache";
 import { Combine } from "./System/Combine";
 import { CombineArray } from "./System/CombineArray";
 import { CombineGridLoop } from "./System/CombineGridLoop";
@@ -166,6 +167,7 @@ export const Nodes: Array<NodeDefinition> = [
   CombineLoop,
   CombineArray,
   CombineGridLoop,
+  CacheNode,
 
   // Vector Compositions
   ComposeNode,
