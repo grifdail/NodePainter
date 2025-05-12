@@ -12,7 +12,7 @@ export const Progress: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "progress", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [{ id: "preview-duration", defaultValue: 1, type: "number", globalKey: "progress" }],
   getData: (portId, nodeData, context) => {
     var value = context.getGlobalSetting<number>("progress") || 1;

@@ -13,7 +13,7 @@ export const LoopingNoise: NodeDefinition = {
     { id: "seed", type: "vector2", defaultValue: createVector2(0, 0) },
   ],
   dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var pos = context.getInputValueNumber(nodeData, "pos");

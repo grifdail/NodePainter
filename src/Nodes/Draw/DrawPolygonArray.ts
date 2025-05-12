@@ -1,5 +1,6 @@
 import { IconPolygon } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -21,20 +22,21 @@ export const DrawPolygonArray: NodeDefinition = {
       defaultValue: [createVector2(25, 0), createVector2(0, 0), createVector2(0, 25)],
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    const color = context.getInputValueColor(data, "color");
-    const points = context.getInputValueVectorArray(data, "points");
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.noStroke();
-    context.target.beginShape();
-    for (let i = 0; i < points.length; i++) {
-      const p = points[i];
-      context.target.vertex(p[0], p[1]);
-    }
-    context.target.endShape();
+  getData(portId, node, context) {
+    const color = context.getInputValueColor(node, "color");
+    const points = context.getInputValueVectorArray(node, "points");
+    return () => {
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.noStroke();
+      context.target.beginShape();
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        context.target.vertex(p[0], p[1]);
+      }
+      context.target.endShape();
+    };
   },
 };

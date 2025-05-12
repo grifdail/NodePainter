@@ -16,7 +16,7 @@ export const GenerateGradient: NodeDefinition = {
     { id: "pos-1", type: "number", defaultValue: 1 },
   ],
   dataOutputs: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var list: Gradient = [];

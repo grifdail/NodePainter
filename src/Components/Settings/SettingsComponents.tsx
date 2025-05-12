@@ -1,5 +1,4 @@
-import { SettingType } from "../../Types/SettingType";
-import { SettingDefinition } from "../../Types/SettingDefinition";
+import { HiddenSettingDefinition, SettingDefinition, SettingType } from "../../Types/SettingDefinition";
 import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
 import { StringSetting } from "./StringSetting";
@@ -17,23 +16,23 @@ import { CodeBlockSetting } from "./CodeBlockSetting";
 import { GroupSetting } from "./GroupSetting";
 import { BoolSetting } from "./BoolSetting";
 
-export type SettingProps = {
+export type SettingProps<T extends SettingDefinition> = {
   onChange: (value: any) => void;
   value: any;
-  def: SettingDefinition;
+  def: T;
   node: NodeData;
 };
 
-export type SettingComponent = ((props: SettingProps) => any) & {
-  getSize: (value: any, def: SettingDefinition, node?: NodeData) => number;
+export type SettingComponent<T extends SettingDefinition> = ((props: SettingProps<T>) => any) & {
+  getSize: (value: any, def: T, node?: NodeData) => number;
 };
 
-export const EmptySetting = ({ onChange, value, def }: SettingProps) => {
+export const EmptySetting = ({ onChange, value, def }: SettingProps<HiddenSettingDefinition>) => {
   return null;
 };
 EmptySetting.getSize = (value: any, def: SettingDefinition) => 0;
 
-export const SettingComponents: { [key in SettingType]: SettingComponent } = {
+export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
   palette: PaletteSetting,
   number: NumberSetting,
@@ -44,7 +43,7 @@ export const SettingComponents: { [key in SettingType]: SettingComponent } = {
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
   buttons: ButtonsSettings,
-  animationTrack: AnimationTrackSettings,
+  "animation-track": AnimationTrackSettings,
   "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,
   "code-block": CodeBlockSetting,

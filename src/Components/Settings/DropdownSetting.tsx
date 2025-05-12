@@ -1,8 +1,9 @@
 import { SettingComponent, SettingProps } from "./SettingsComponents";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { DropdownSettingDefinition } from "../../Types/SettingDefinition";
 
-export const DropdownSetting: SettingComponent = function DropdownSetting({ onChange, value, def }: SettingProps) {
+export const DropdownSetting: SettingComponent<DropdownSettingDefinition> = function DropdownSetting({ onChange, value, def }: SettingProps<DropdownSettingDefinition>) {
   return (
     <Fieldset
       input={DropdownInput}

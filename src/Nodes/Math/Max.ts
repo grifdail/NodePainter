@@ -25,7 +25,7 @@ export const Max: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const a = context.getInputValueNumber(nodeData, "a");

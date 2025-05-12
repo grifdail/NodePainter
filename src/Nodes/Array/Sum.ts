@@ -18,9 +18,9 @@ export const Sum: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator([], ["out"], ["array"]),

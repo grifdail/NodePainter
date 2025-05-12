@@ -45,10 +45,8 @@ export const RenderModel: NodeDefinition = {
       defaultValue: null,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
-  execute: (data, context) => {},
   getData(portId, node, context) {
     var material = context.getInputValueMaterial(node, "material") as MaterialData;
     var mesh = context.getInputValueMesh(node, "mesh");

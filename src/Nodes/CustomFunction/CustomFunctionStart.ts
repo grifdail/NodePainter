@@ -10,15 +10,10 @@ export const CustomFunctionStart: NodeDefinition = {
   hideInLibrary: true,
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var contextFn = context.functionStack[context.functionStack.length - 1];
     return contextFn[portId].value;
-  },
-  execute: (data, context) => {
-    if (data.execOutputs.execute) {
-      context.execute(data.execOutputs.execute);
-    }
   },
 };

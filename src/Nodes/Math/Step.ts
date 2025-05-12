@@ -30,7 +30,7 @@ export const Step: NodeDefinition = {
       defaultValue: 5,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: VectorTypesFull,
   defaultType: "number",

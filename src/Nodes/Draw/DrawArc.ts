@@ -1,5 +1,6 @@
 import { IconCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -41,30 +42,32 @@ export const DrawArc: NodeDefinition = {
       defaultValue: 1,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
-  settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    const color = context.getInputValueColor(data, "color");
-    const center = context.getInputValueVector(data, "center");
-    const innerRadius = context.getInputValueNumber(data, "innerRadius");
-    const outerRadius = context.getInputValueNumber(data, "outerRadius");
-    const startAngle = context.getInputValueNumber(data, "startAngle");
-    const angle = context.getInputValueNumber(data, "angle");
-    context.target.noStroke();
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.beginShape();
-    const count = Math.ceil((angle * 180) / Math.PI);
-    for (let i = 0; i <= count; i++) {
-      const alpha = (i / count) * angle + startAngle;
+  dataOutputs: [Port.drawing2d("out")],
 
-      context.target.vertex(center[0] + Math.cos(alpha) * outerRadius, center[1] + Math.sin(alpha) * outerRadius);
-    }
-    for (let i = 0; i <= count; i++) {
-      const alpha = (1 - i / count) * angle + startAngle;
-      context.target.vertex(center[0] + Math.cos(alpha) * innerRadius, center[1] + Math.sin(alpha) * innerRadius);
-    }
-    context.target.endShape();
+  settings: [],
+  getData(portId, node, context) {
+    const color = context.getInputValueColor(node, "color");
+    const center = context.getInputValueVector(node, "center");
+    const innerRadius = context.getInputValueNumber(node, "innerRadius");
+    const outerRadius = context.getInputValueNumber(node, "outerRadius");
+    const startAngle = context.getInputValueNumber(node, "startAngle");
+    const angle = context.getInputValueNumber(node, "angle");
+
+    return () => {
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.beginShape();
+      const count = Math.ceil((angle * 180) / Math.PI);
+      for (let i = 0; i <= count; i++) {
+        const alpha = (i / count) * angle + startAngle;
+
+        context.target.vertex(center[0] + Math.cos(alpha) * outerRadius, center[1] + Math.sin(alpha) * outerRadius);
+      }
+      for (let i = 0; i <= count; i++) {
+        const alpha = (1 - i / count) * angle + startAngle;
+        context.target.vertex(center[0] + Math.cos(alpha) * innerRadius, center[1] + Math.sin(alpha) * innerRadius);
+      }
+      context.target.endShape();
+    };
   },
 };

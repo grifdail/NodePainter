@@ -50,7 +50,7 @@ export const FindBest: NodeDefinition = {
     { id: "out", defaultValue: 0, type: "number" },
     { id: "index", defaultValue: 0, type: "number" },
   ],
-  executeOutputs: [],
+
   settings: [
     {
       id: "buttons",
@@ -65,7 +65,7 @@ export const FindBest: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: false,
+
   defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], ["out"], ["array"], [], changeTypeGenerator([], ["value"])),

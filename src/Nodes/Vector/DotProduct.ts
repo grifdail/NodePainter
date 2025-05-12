@@ -30,7 +30,7 @@ export const DotProduct: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypeslimited,

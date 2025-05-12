@@ -23,7 +23,7 @@ export const Value: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "number",
   availableTypes: CommonTypes,

@@ -1,13 +1,14 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 
 export const PrecomputeImage: NodeDefinition = {
   id: "PrecomputeImage",
   label: "Precompute image",
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",
-  canBeExecuted: false,
+
   dataInputs: [],
   dataOutputs: [
     {
@@ -15,9 +16,9 @@ export const PrecomputeImage: NodeDefinition = {
       type: "image",
       defaultValue: null,
     },
+    Port.drawing2d("drawing"),
   ],
   tags: ["Image"],
-  executeOutputs: ["draw"],
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
@@ -42,9 +43,8 @@ export const PrecomputeImage: NodeDefinition = {
     if (needRedraw) {
       var oldTarget = context.target;
       context.target = img.image;
-      if (node.execOutputs["draw"]) {
-        context.execute(node.execOutputs["draw"] as string);
-      }
+      const drawing = context.getInputValueDrawing(node, "drawing");
+      drawing();
 
       context.target = oldTarget;
       context.blackboard[keyComputed] = true;

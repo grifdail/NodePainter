@@ -50,7 +50,7 @@ export const Remap: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "number",
   availableTypes: VectorTypesFull,

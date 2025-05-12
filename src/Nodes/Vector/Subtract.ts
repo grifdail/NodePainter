@@ -31,7 +31,7 @@ export const Subtract: NodeDefinition = {
       defaultValue: createVector2(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
 
   defaultType: "vector2",

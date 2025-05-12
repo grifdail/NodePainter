@@ -25,7 +25,7 @@ export const Normalize: NodeDefinition = {
       defaultValue: createVector2(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypeslimited,

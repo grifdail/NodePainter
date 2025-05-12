@@ -1,9 +1,8 @@
-import { SettingDefinition } from "../Types/SettingDefinition";
-import { SettingType } from "../Types/SettingType";
+import { GroupSettingDefinition, SettingDefinition, SettingType } from "../Types/SettingDefinition";
 
 const identity = (x: any) => x;
 
-export const CustomInitializer: { [key in SettingType]: (clonedValue: any, setting: SettingDefinition) => any } = {
+export const CustomInitializer: { [key in SettingType]: <T extends SettingDefinition>(clonedValue: any, setting: T) => any } = {
   string: identity,
 
   number: identity,
@@ -16,19 +15,19 @@ export const CustomInitializer: { [key in SettingType]: (clonedValue: any, setti
   "image-paint": identity,
   envelope: identity,
   buttons: identity,
-  animationTrack: identity,
   "mesh-upload": identity,
   "easing-preview": identity,
   "code-block": identity,
-  group: function (clonedValue: any, setting: SettingDefinition) {
+  group: function (clonedValue: any, setting: GroupSettingDefinition) {
     return { ...createSettingObjectForSettingDefinition(setting.settings), _open: false };
-  },
+  } as any,
   bool: identity,
+  "animation-track": identity,
 };
 
 export function createSettingObjectForSettingDefinition(def: SettingDefinition[]): { [key: string]: any } {
   return def.reduce((old: any, setting: SettingDefinition) => {
-    var base = structuredClone(setting.defaultValue);
+    var base = "defaultValue" in setting ? structuredClone(setting.defaultValue) : undefined;
     var initializer = (old[setting.id] = CustomInitializer[setting.type](base, setting));
     return old;
   }, {});

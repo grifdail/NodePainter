@@ -20,7 +20,7 @@ export const WorleyNoise: NodeDefinition = {
     { id: "dir", type: "vector2", defaultValue: createVector2() },
   ],
   tags: ["UV"],
-  executeOutputs: [],
+
   settings: [],
   shaderRequirement: `vec2 unity_voronoi_noise_randomVector (vec2 UV, float offset)
 {

@@ -31,7 +31,7 @@ export const Scale: NodeDefinition = {
       defaultValue: createVector2(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypesFull,

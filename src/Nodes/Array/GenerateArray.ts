@@ -34,7 +34,7 @@ export const GenerateArray: NodeDefinition = {
     { id: "value", type: "number", defaultValue: 0 },
   ],
   dataOutputs: [{ id: "array", type: "array-number", defaultValue: [] }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "buttons",
@@ -49,7 +49,7 @@ export const GenerateArray: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: false,
+
   availableTypes: CommonTypes,
   defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),

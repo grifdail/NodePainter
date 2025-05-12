@@ -1,1 +1,1 @@
-export type PortRole = "inputData" | "outputData" | "inputExecute" | "outputExecute";
+export type PortRole = "input" | "output";

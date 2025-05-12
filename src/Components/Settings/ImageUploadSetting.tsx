@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "../Generics/Button";
+import { ImageUploadSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`
   width: 100%;
@@ -30,7 +31,7 @@ const Body = styled.div`
   }
 `;
 
-export const ImageUploadSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: SettingProps) {
+export const ImageUploadSetting: SettingComponent<ImageUploadSettingDefinition> = function PaletteSetting({ onChange, value, def }: SettingProps<ImageUploadSettingDefinition>) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length >= 1) {
@@ -52,15 +53,23 @@ export const ImageUploadSetting: SettingComponent = function PaletteSetting({ on
   return (
     <Body>
       {value === null && (
-        <div className="file" {...getRootProps()}>
+        <div
+          className="file"
+          {...getRootProps()}>
           <input {...getInputProps()}></input>
           <IconFileUpload />
         </div>
       )}
-      {value !== null && <img src={value} alt="loaded"></img>}
+      {value !== null && (
+        <img
+          src={value}
+          alt="loaded"></img>
+      )}
 
       <ButtonGroup hidden={value !== null}>
-        <Button label="Reset" onClick={() => onChange(null)}></Button>
+        <Button
+          label="Reset"
+          onClick={() => onChange(null)}></Button>
       </ButtonGroup>
     </Body>
   );

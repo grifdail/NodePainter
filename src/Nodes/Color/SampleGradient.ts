@@ -15,7 +15,7 @@ export const SampleGradient: NodeDefinition = {
     { id: "pos", type: "number", defaultValue: 0.5, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const gradient = context.getInputValueGradient(nodeData, "gradient") || createDefaultGradient();

@@ -27,7 +27,7 @@ export const CrossProduct: NodeDefinition = {
       defaultValue: createVector3(),
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector3",
   getData: (portId, nodeData, context) => {

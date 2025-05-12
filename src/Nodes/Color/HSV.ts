@@ -15,7 +15,7 @@ export const HSV: NodeDefinition = {
     { id: "value", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const hue = context.getInputValueNumber(nodeData, "hue");

@@ -29,9 +29,9 @@ export const Slice: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: [0], type: "array-number" }],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], [], ["array"], ["out"]),

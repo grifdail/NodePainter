@@ -12,17 +12,13 @@ export const RenderShader: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Shader"],
-  executeOutputs: [],
+
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
     { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
   ],
   getData(portId, node, context) {
-    var keyComputed = `${node.id}-image-cache`;
-    return context.blackboard[keyComputed];
-  },
-  execute(node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
     const when = node.settings.when;
@@ -71,9 +67,8 @@ export const RenderShader: NodeDefinition = {
       context.blackboard[keyComputed] = true;
       context.frameBlackboard[keyComputed] = true;
     }
-    if (node.execOutputs["execute"]) {
-      context.execute(node.execOutputs["execute"] as string);
-    }
+
+    return context.blackboard[keyCache];
   },
 };
 export const CUSTOM_SHADER = "RenderShader";

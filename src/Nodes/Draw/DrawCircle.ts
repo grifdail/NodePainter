@@ -1,5 +1,6 @@
 import { IconCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -27,16 +28,17 @@ export const DrawCircle: NodeDefinition = {
       defaultValue: 10,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    var position = context.getInputValueVector(data, "position");
-    var radius = context.getInputValueNumber(data, "radius");
-    context.target.noStroke();
-    context.target.fill(toP5Color(color, context.p5));
-    context.target.circle(position[0], position[1], radius * 2);
+  getData(portId, node, context) {
+    var color = context.getInputValueColor(node, "color");
+    var position = context.getInputValueVector(node, "position");
+    var radius = context.getInputValueNumber(node, "radius");
+    return () => {
+      context.target.noStroke();
+      context.target.fill(toP5Color(color, context.p5));
+      context.target.circle(position[0], position[1], radius * 2);
+    };
   },
 };

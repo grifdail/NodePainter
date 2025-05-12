@@ -42,7 +42,7 @@ export const SineWave: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     var time = context.getInputValueNumber(nodeData, "time");

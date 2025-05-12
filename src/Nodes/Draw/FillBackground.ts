@@ -1,5 +1,6 @@
 import { IconBucketDroplet } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createColor } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
@@ -16,12 +17,12 @@ export const FillBackground: NodeDefinition = {
       defaultValue: createColor(1, 1, 1),
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var color = context.getInputValueColor(data, "color");
-    context.target.background(toP5Color(color, context.p5));
+  getData(portId, node, context) {
+    const color = context.getInputValueColor(node, "color");
+    return () => {
+      context.target.background(toP5Color(color, context.p5));
+    };
   },
 };

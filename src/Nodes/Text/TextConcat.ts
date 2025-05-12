@@ -11,7 +11,7 @@ export const TextConcat: NodeDefinition = {
     { id: "end", type: "string", defaultValue: "world" },
   ],
   dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValueString(nodeData, "start") + context.getInputValueString(nodeData, "end");

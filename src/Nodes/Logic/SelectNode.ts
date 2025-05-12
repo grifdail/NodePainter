@@ -27,9 +27,9 @@ export const Select: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: createColor(), type: "color" }],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   defaultType: "color",
   availableTypes: PortTypeArray,
   onChangeType: changeTypeGenerator(["when-true", "when-false"], ["out"]),

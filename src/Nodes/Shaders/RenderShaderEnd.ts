@@ -9,7 +9,7 @@ export const RenderShaderEnd: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Shader"],
-  executeOutputs: [],
+
   settings: [],
   getShaderCode(node, context) {
     return `gl_FragColor  = ${context.getShaderVar(node, "color", "color")};`;

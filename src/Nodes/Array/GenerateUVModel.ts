@@ -31,7 +31,7 @@ export const GenerateUVModel: NodeDefinition = {
   tags: ["3D"],
   dataInputs: [{ id: "pos", type: "vector3", defaultValue: createVector3(0, 0, 0) }],
   dataOutputs: [{ id: "model", type: "mesh", defaultValue: null }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "width",
@@ -57,7 +57,7 @@ export const GenerateUVModel: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: false,
+
   contextMenu: {
     "Create the UV node": createIndexNode,
   },

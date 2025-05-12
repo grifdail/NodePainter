@@ -3,6 +3,7 @@
 
 :root {
   --color-execute: #00e436;
+  --color-drawing2d: #00e436;
   --color-number: #29adff;
   --color-vector2: #7073c3;
   --color-vector3: #f145bc;
@@ -16,6 +17,8 @@
   --color-mesh: #7e2553;
   --color-struct: #ff004d;
   --color-object3d: #008751;
+
+  --color-pairing: light-dark(#88888855, #88888855);
 
   --color-background: light-dark(#ffffff, #0d1117);
   --color-background-card: light-dark(#fcfcfc, #22262c);
@@ -174,6 +177,10 @@ body .szh-menu__divider {
 .object3d,
 .array-object3d {
   --color-property: var(--color-object3d);
+}
+.drawing2d,
+.array-drawing2d {
+  --color-property: var(--color-drawing2d);
 }
 iframe {
   display: none;

@@ -16,6 +16,7 @@ import { ContextMenu, useContextMenu } from "./ContextMenu";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { NODE_HEADER_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { PairingLine } from "./PairingLine";
 
 export function Graph() {
   useGesturePrevention();
@@ -51,14 +52,9 @@ export function Graph() {
   const edges = useMemo(
     () =>
       nodes.flatMap((node) => {
-        return [
-          ...Object.entries(node.dataInputs)
-            .filter(([key, port]) => port.hasConnection)
-            .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]),
-          ...Object.entries(node.execOutputs)
-            .filter(([key, connection]) => connection != null)
-            .map(([key, port]) => [node.id, key, port, MainExecuteId, "execute"]),
-        ];
+        return Object.entries(node.dataInputs)
+          .filter(([key, port]) => port.hasConnection)
+          .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]);
       }),
     [nodes]
   );
@@ -84,16 +80,14 @@ export function Graph() {
     () =>
       Object.fromEntries(
         nodes.map((node, i) => {
-          const executeOutputCount = Object.values(node.execOutputs).length;
-          const outputCount = Object.values(node.dataOutputs).length + executeOutputCount;
+          const outputCount = Object.values(node.dataOutputs).length;
           var xy = nodePositionSpring[i].xy;
           return [
             node.id,
             {
+              "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
               ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
-              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + executeOutputCount)])])),
-              ...Object.fromEntries(Object.entries(node.execOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
-              [`${MainExecuteId}-in`]: xy.to((x, y) => [x, y + 25]),
+              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
             },
           ];
         })
@@ -198,6 +192,17 @@ export function Graph() {
           height="100%"
           fill="url(#grid)"
           style={{ touchAction: "none" }}></animated.rect>
+        {nodes
+          .filter((node) => node.pairedNode != undefined)
+          .map((node) => {
+            return (
+              <PairingLine
+                key={`${node.id}-pairing`}
+                start={getNodePort(node.id, "self", "in")}
+                end={getNodePort(node.pairedNode as string, "self", "in")}
+              />
+            );
+          })}
         {edges.map((edge) => {
           return (
             <Edge
@@ -211,10 +216,10 @@ export function Graph() {
         {portSelection.hasSelection && !hasNoCursor && (
           <Edge
             key="edge-creation"
-            start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "inputData" || portSelection.location === "inputExecute" ? "in" : "out")}
+            start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "input" ? "in" : "out")}
             end={mousePosition}
             type={portSelection.type}
-            reverse={portSelection.location === "inputData" || portSelection.location === "inputExecute"}
+            reverse={portSelection.location === "input"}
           />
         )}
         {nodes.map((node, i) => {

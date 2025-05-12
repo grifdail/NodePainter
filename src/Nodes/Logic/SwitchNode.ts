@@ -15,7 +15,7 @@ export const SwitchNode: NodeDefinition = {
     { id: "false", type: "color", defaultValue: White() },
   ],
   dataOutputs: [{ id: "result", type: "color", defaultValue: Black() }],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: CommonTypes,
   defaultType: "color",

@@ -123,7 +123,7 @@ export const BlurEffect: NodeDefinition = {
   ],
   dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
   tags: ["Image"],
-  executeOutputs: [],
+
   settings: [],
   getData(portId, node, context) {
     var imageData = context.getInputValueImage(node, "image");

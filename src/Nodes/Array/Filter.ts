@@ -47,7 +47,7 @@ export const Filter: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "filtered", defaultValue: [], type: "array-number" }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "buttons",
@@ -62,7 +62,7 @@ export const Filter: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: false,
+
   defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], [], ["array"], ["filtered"], changeTypeGenerator([], ["value"])),

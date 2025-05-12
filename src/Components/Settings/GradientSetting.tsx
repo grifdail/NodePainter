@@ -11,6 +11,7 @@ import { Button } from "../Generics/Button";
 import { EditableGradientPreview } from "./EditableGradientPreview";
 import { ColorInput } from "../Generics/Inputs/ColorInput";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { GradientSettingDefinition } from "../../Types/SettingDefinition";
 
 const ColorList = styled.ul`
   display: flex;
@@ -50,7 +51,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const GradientSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const GradientSetting: SettingComponent<GradientSettingDefinition> = function ({ onChange, value, def }: SettingProps<GradientSettingDefinition>) {
   const list = value as Gradient;
 
   function onChangeColor(i: number, color: any): void {

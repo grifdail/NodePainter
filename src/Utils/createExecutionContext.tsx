@@ -38,7 +38,6 @@ export type ExecutionContext = {
   getNodeOutput: (nodeId: string, portId: string) => any;
   p5: P5CanvasInstance;
   RNG: Rand;
-  execute: (nodeId: string) => void;
   getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
   getInputValueVector: (nodeData: NodeData, portId: string) => Vector;
   getInputValueVector2: (nodeData: NodeData, portId: string) => Vector2;
@@ -52,6 +51,7 @@ export type ExecutionContext = {
   getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
   getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData;
   getInputValueMesh: (nodeData: NodeData, portId: string) => MeshData;
+  getInputValueDrawing: (nodeData: NodeData, portId: string) => () => void;
   getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
   getGlobalSetting<T>(arg0: string): T;
   getCallId(node: NodeData, ...args: any[]): string;
@@ -70,23 +70,6 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     functionStack: [],
     callCounts: {},
     RNG: new Rand(),
-    execute(nodeId) {
-      var node = tree?.nodes[nodeId];
-      if (node != null) {
-        let def = tree?.getNodeTypeDefinition(node);
-        if (def) {
-          if (def.executeAs) {
-            def = tree?.getNodeTypeDefinition(def.executeAs);
-          }
-          if (def?.execute) {
-            def.execute(node, context);
-          }
-        } else {
-          throw new Error("Trying to execute a node of unknow type");
-        }
-      }
-    },
-
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
     },
@@ -113,6 +96,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
     getInputValueMesh: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh"),
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
+    getInputValueDrawing: (nodeData: NodeData, portId: string) => (context.getInputValue(nodeData, portId, "drawing2d") || (() => {})) as () => void,
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {

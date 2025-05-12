@@ -26,7 +26,7 @@ export const Atan2: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

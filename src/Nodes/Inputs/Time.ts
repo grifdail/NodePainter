@@ -8,7 +8,7 @@ export const Time: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "time", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.time / 1000;

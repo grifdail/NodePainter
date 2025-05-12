@@ -24,7 +24,6 @@ import { VectorFromAngle } from "./Vector/VectorFromAngle";
 
 import { AndNode } from "./Logic/AndNode";
 import { Compare } from "./Logic/Compare";
-import { IfNode } from "./Logic/IfNode";
 import { NotNode } from "./Logic/NotNode";
 import { OrNode } from "./Logic/OrNode";
 import { SwitchNode } from "./Logic/SwitchNode";
@@ -86,6 +85,7 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/GradientFromArray";
+import { createConstant } from "./createConstant";
 import { ComposeStruct } from "./CustomFunction/ComposeStruct";
 import { CustomFunction } from "./CustomFunction/CustomFunction";
 import { CustomFunctionEnd } from "./CustomFunction/CustomFunctionEnd";
@@ -139,38 +139,35 @@ import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
-import { ExecuteWithBlending } from "./Rendering/ExecuteWithBlending";
-import { ExecuteWithMask } from "./Rendering/ExecuteWithMask";
-import { ExecuteWithMotionBlur } from "./Rendering/ExecuteWithMotionBlur";
-import { ExecuteWithRotation } from "./Rendering/ExecuteWithRotation";
-import { ExecuteWithScale } from "./Rendering/ExecuteWithScale";
-import { ExecuteWithShadow } from "./Rendering/ExecuteWithShadow";
-import { ExecuteWithTranslation } from "./Rendering/ExecuteWithTranslation";
+import { RenderWithRotation } from "./RenderWithRotation/ExecuteWithRotation";
+import { RenderWithBlending } from "./RenderWithRotation/RenderWithBlending";
+import { RenderWithMask } from "./RenderWithRotation/RenderWithMask";
+import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
+import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
+import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { Blackboard } from "./System/Blackboard";
-import { ExecuteInOrder } from "./System/ExecuteInOrder";
-import { ForEachNode } from "./System/ForEach";
-import { ForGrid } from "./System/ForGrid";
-import { ForNode } from "./System/ForNode";
-import { Precompute } from "./System/Precompute";
+import { CacheNode } from "./System/Cache";
+import { Combine } from "./System/Combine";
+import { CombineArray } from "./System/CombineArray";
+import { CombineGridLoop } from "./System/CombineGridLoop";
+import { CombineLoop } from "./System/CombineLoop";
 import { StartNode } from "./System/StartNode";
-import { ThenNode } from "./System/ThenNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
-import { createConstant } from "./createConstant";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
   //Control flow
-  ThenNode,
-  ForNode,
-  ForGrid,
-  ExecuteInOrder,
-  Precompute,
+  Combine,
+  CombineLoop,
+  CombineArray,
+  CombineGridLoop,
+  CacheNode,
 
   // Vector Compositions
   ComposeNode,
@@ -222,7 +219,6 @@ export const Nodes: Array<NodeDefinition> = [
 
   // Logic
   Compare,
-  IfNode,
   SwitchNode,
   Select,
 
@@ -294,13 +290,12 @@ export const Nodes: Array<NodeDefinition> = [
   Clear,
 
   //Transform
-  ExecuteWithRotation,
-  ExecuteWithTranslation,
-  ExecuteWithScale,
-  ExecuteWithShadow,
-  ExecuteWithMask,
-  ExecuteWithBlending,
-  ExecuteWithMotionBlur,
+  RenderWithRotation,
+  RenderWithTranslation,
+  RenderWithScale,
+  RenderWithShadow,
+  RenderWithMask,
+  RenderWithBlending,
 
   //Custom function
   CustomFunction,
@@ -366,7 +361,6 @@ export const Nodes: Array<NodeDefinition> = [
   Filter,
   Slice,
   GenerateArray,
-  ForEachNode,
 
   //Misc
   AnimationCurve,

@@ -17,7 +17,7 @@ export const Twirl: NodeDefinition = {
 
   dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2(0, 0) }],
   tags: ["UV"],
-  executeOutputs: [],
+
   settings: [],
   shaderRequirement: `vec2 Twirl(vec2 UV, vec2 Center, float Strength, vec2 Offset )
 {

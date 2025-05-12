@@ -1,5 +1,6 @@
 import { IconRectangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType";
 import { toHex } from "../../Utils/colorUtils";
 
@@ -36,28 +37,29 @@ export const DrawGradientRect: NodeDefinition = {
       defaultValue: 10,
     },
   ],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    var gradient = context.getInputValueGradient(data, "gradient");
-    var gradientDirection = context.getInputValueNumber(data, "direction");
-    var p1 = context.getInputValueVector(data, "corner");
-    var width = context.getInputValueNumber(data, "width");
-    var height = context.getInputValueNumber(data, "height");
-    context.target.noFill();
-    context.target.noStroke();
-    const ctx = context.target.drawingContext as CanvasRenderingContext2D;
-    var c = Math.cos(gradientDirection);
-    var s = Math.sin(gradientDirection);
-    var px = p1[0] + width * 0.5;
-    var py = p1[1] + height * 0.5;
-    var ctxGrad = ctx.createLinearGradient(px - c * width * 0.5, py - s * height * 0.5, px + c * width * 0.5, py + s * height * 0.5);
-    gradient.forEach((stop) => {
-      ctxGrad.addColorStop(stop.pos, toHex(stop.color));
-    });
-    ctx.fillStyle = ctxGrad;
-    ctx.fillRect(p1[0], p1[1], width, height);
+  getData(portId, node, context) {
+    var gradient = context.getInputValueGradient(node, "gradient");
+    var gradientDirection = context.getInputValueNumber(node, "direction");
+    var p1 = context.getInputValueVector(node, "corner");
+    var width = context.getInputValueNumber(node, "width");
+    var height = context.getInputValueNumber(node, "height");
+    return () => {
+      context.target.noFill();
+      context.target.noStroke();
+      const ctx = context.target.drawingContext as CanvasRenderingContext2D;
+      var c = Math.cos(gradientDirection);
+      var s = Math.sin(gradientDirection);
+      var px = p1[0] + width * 0.5;
+      var py = p1[1] + height * 0.5;
+      var ctxGrad = ctx.createLinearGradient(px - c * width * 0.5, py - s * height * 0.5, px + c * width * 0.5, py + s * height * 0.5);
+      gradient.forEach((stop) => {
+        ctxGrad.addColorStop(stop.pos, toHex(stop.color));
+      });
+      ctx.fillStyle = ctxGrad;
+      ctx.fillRect(p1[0], p1[1], width, height);
+    };
   },
 };

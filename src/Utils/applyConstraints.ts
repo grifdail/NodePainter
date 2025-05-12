@@ -66,6 +66,12 @@ const ConstrainDefinition = {
   NonTransparent: (color: Color) => {
     return [color[0], color[1], color[2], 1];
   },
+  UpperCase: (text: string) => {
+    return text.toUpperCase();
+  },
+  LowerCase: (text: string) => {
+    return text.toLowerCase();
+  },
 };
 
 type ConstrainDefinitionType = typeof ConstrainDefinition;

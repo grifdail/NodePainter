@@ -10,10 +10,9 @@ export const CustomFunctionEnd: NodeDefinition = {
   tags: [],
   dataInputs: [],
   dataOutputs: [],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, portId, "unknown");
   },
-  execute: (data, context) => {},
 };

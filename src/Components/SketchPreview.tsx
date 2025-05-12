@@ -82,15 +82,20 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     seed = Date.now();
     var start = tree.getNode(START_NODE);
     p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+    context.RNG = new Rand(seed.toString());
   };
 
   p5.draw = () => {
     context.frameBlackboard = {};
 
-    context.RNG = new Rand(seed.toString());
     context.time = p5.millis();
     context.deltaTime = p5.deltaTime;
-    context.execute(START_NODE);
+    if (tree) {
+      var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
+      if (typeof result === "function") {
+        result();
+      }
+    }
     context.endOfFrameCleanup();
   };
 };

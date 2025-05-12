@@ -34,7 +34,7 @@ export const StaticArray: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: createColor(), type: "color" }],
-  executeOutputs: [],
+
   settings: [
     {
       id: "buttons",
@@ -49,7 +49,7 @@ export const StaticArray: NodeDefinition = {
       ],
     },
   ],
-  canBeExecuted: false,
+
   defaultType: "color",
   availableTypes: CommonTypes,
   onChangeType(node, type) {

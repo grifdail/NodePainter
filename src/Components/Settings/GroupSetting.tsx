@@ -8,7 +8,7 @@ import { Button } from "../Generics/Button";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useListManipulator } from "../../Hooks/useListManipulator";
 import { ColorInput } from "../Generics/Inputs/ColorInput";
-import { SettingDefinition } from "../../Types/SettingDefinition";
+import { GroupSettingDefinition, SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingControl } from "../Graph/SettingControl";
 import { boolean } from "mathjs";
 
@@ -35,8 +35,7 @@ const RotatingIcon = styled(IconTriangle)<{ reversed?: boolean }>`
   transform: rotate(${(props) => (props.reversed ? 0 : 180)}deg);
 `;
 
-export const GroupSetting: SettingComponent = function ({ onChange, value, def, node }: SettingProps) {
-  const settings = def.settings as SettingDefinition[];
+export const GroupSetting: SettingComponent<GroupSettingDefinition> = function ({ onChange, value, def, node }: SettingProps<GroupSettingDefinition>) {
   var open = value._open;
 
   const toggle = () => onChange({ ...value, _open: !value._open });
@@ -49,8 +48,8 @@ export const GroupSetting: SettingComponent = function ({ onChange, value, def, 
       </div>
       {value._open && (
         <div className="content">
-          {settings.map((subSetting, i) => {
-            const subSettingValue = value[subSetting.id] !== undefined ? value[subSetting.id] : subSetting.defaultValue;
+          {def.settings.map((subSetting, i) => {
+            const subSettingValue = value[subSetting.id] !== undefined ? value[subSetting.id] : "defaultValue" in subSetting ? subSetting.defaultValue : undefined;
             const changeMethod = (v: any) => onChange({ ...value, [subSetting.id]: v });
             var n = (
               <SettingControl
@@ -73,7 +72,7 @@ export const GroupSetting: SettingComponent = function ({ onChange, value, def, 
 };
 GroupSetting.getSize = function (value, setting): number {
   if (value._open) {
-    return 32 + (setting.settings as SettingDefinition[]).reduce((prev, def) => prev + SettingComponents[def.type].getSize(value[def.id], def) + 4, 0);
+    return 32 + setting.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(value[def.id], def as any) + 4, 0);
   }
   return 32;
 };

@@ -8,6 +8,7 @@ import { Button } from "../Generics/Button";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useListManipulator } from "../../Hooks/useListManipulator";
 import { ColorInput } from "../Generics/Inputs/ColorInput";
+import { PaletteSettingDefinition } from "../../Types/SettingDefinition";
 
 const ColorList = styled.ul`
   display: flex;
@@ -47,7 +48,7 @@ const ColorList = styled.ul`
   }
 `;
 
-export const PaletteSetting: SettingComponent = function ({ onChange, value, def }: SettingProps) {
+export const PaletteSetting: SettingComponent<PaletteSettingDefinition> = function ({ onChange, value }: SettingProps<PaletteSettingDefinition>) {
   var list = value as Array<any>;
 
   const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor, false);

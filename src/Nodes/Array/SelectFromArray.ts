@@ -24,9 +24,9 @@ export const SelectFromArray: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-  executeOutputs: [],
+
   settings: [],
-  canBeExecuted: false,
+
   defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType(node, type) {

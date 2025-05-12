@@ -14,7 +14,7 @@ export const Noise: NodeDefinition = {
     { id: "time", type: "number", defaultValue: 0 },
   ],
   dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   shaderRequirement: `vec2 gradientNoise_dir(vec2 p)
 {

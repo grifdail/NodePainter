@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
 import { usePainting } from "../../Hooks/usePainting";
 import { Button } from "../Generics/Button";
+import { ImagePaintSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`
   width: 100%;
@@ -31,7 +32,7 @@ const Body = styled.div`
   }
 `;
 
-export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onChange, value, def }: SettingProps) {
+export const ImagePaintSetting: SettingComponent<ImagePaintSettingDefinition> = function PaletteSetting({ onChange, value, def }: SettingProps<ImagePaintSettingDefinition>) {
   return (
     <Body>
       {value === null && (
@@ -39,10 +40,18 @@ export const ImagePaintSetting: SettingComponent = function PaletteSetting({ onC
           <IconBrush />
         </div>
       )}
-      {value !== null && <img src={value} alt="loaded"></img>}
+      {value !== null && (
+        <img
+          src={value}
+          alt="loaded"></img>
+      )}
 
       <ButtonGroup hidden={value !== null}>
-        <Button onClick={() => usePainting.getState().open(value, onChange)} label="Paint" icon={IconBrush} />
+        <Button
+          onClick={() => usePainting.getState().open(value, onChange)}
+          label="Paint"
+          icon={IconBrush}
+        />
       </ButtonGroup>
     </Body>
   );

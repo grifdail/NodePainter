@@ -38,18 +38,14 @@ export const sortAroundNode = (tree: TreeStore, targetId: string) => {
     columns[columnId] = column + height + 100;
   });
 };
-function findNodeExecuting(tree: TreeStore, nodeId: string): NodeData[] {
-  return Object.values(tree.nodes).filter((node) => Object.values(node.execOutputs).some((outputNode) => outputNode === nodeId));
-}
+
 /*
 function findNodeUsing(tree: TreeStore, nodeId: string): NodeData[] {
   return Object.values(tree.nodes).filter((node) => Object.values(node.dataInputs).some((port) => port.hasConnection && port.connectedNode === nodeId));
 }*/
 function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition): NodeData[] {
   var result = [];
-  if (nodeDef.canBeExecuted) {
-    result.push(...findNodeExecuting(tree, node.id));
-  }
+
   result.push(
     ...Object.values(node.dataInputs)
       .filter((port) => port.hasConnection)

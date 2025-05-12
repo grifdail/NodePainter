@@ -22,7 +22,7 @@ export function createFunc(id: string, evalOperation: (input: any) => any, descr
         defaultValue: 0,
       },
     ],
-    executeOutputs: [],
+
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {

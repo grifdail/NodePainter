@@ -31,7 +31,7 @@ export const Distance: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "vector2",
   availableTypes: VectorTypesFull,

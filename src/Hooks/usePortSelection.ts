@@ -20,7 +20,7 @@ export const usePortSelection = create<PortSelectionStore>()((set) => ({
   node: "",
   port: "",
   type: "bool",
-  location: "inputData",
+  location: "input",
   reset() {
     set((state) => ({ hasSelection: false }));
   },

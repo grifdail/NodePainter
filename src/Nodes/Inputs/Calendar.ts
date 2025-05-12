@@ -13,7 +13,7 @@ export const Calendar: NodeDefinition = {
     { id: "year", type: "number", defaultValue: 0 },
     { id: "dayOfTheWeek", type: "number", defaultValue: 0 },
   ],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "day") {

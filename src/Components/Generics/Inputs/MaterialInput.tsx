@@ -10,7 +10,7 @@ export function MaterialInput({ onChange, value }: { onChange: (value: any) => v
   }
 
   const onInputChange = (newValue: Color) => {
-    var newMat = { ...mat, props: [newValue] } as MaterialData;
+    var newMat = { ...mat, props: [newValue, mat.props.slice(1)] } as MaterialData;
     onChange(newMat);
   };
 

@@ -10,7 +10,7 @@ export const GradientFromArray: NodeDefinition = {
   tags: ["Color"],
   dataInputs: [{ id: "array", type: "array-color", defaultValue: [createColor()] }],
   dataOutputs: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const data = context.getInputValue(nodeData, "array", "array-color") as Color[];

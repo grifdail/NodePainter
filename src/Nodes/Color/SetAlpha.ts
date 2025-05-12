@@ -15,7 +15,7 @@ export const SetAlpha: NodeDefinition = {
     { id: "alpha", type: "number", defaultValue: 0, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "out", type: "color", defaultValue: 1 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     const color = context.getInputValueColor(nodeData, "color");

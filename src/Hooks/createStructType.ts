@@ -20,8 +20,6 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
     ],
     settings: [],
     executeAs: "ComposeStruct",
-    canBeExecuted: false,
-    executeOutputs: [],
   };
 
   const decomposeNodeDef: NodeDefinition = {
@@ -40,8 +38,6 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
     dataOutputs: structuredClone(ports),
     settings: [],
     executeAs: "DecomposeStruct",
-    canBeExecuted: false,
-    executeOutputs: [],
   };
 
   state.customNodes[composeNodeDef.id] = composeNodeDef;

@@ -34,7 +34,7 @@ export const Clamp: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   availableTypes: VectorTypesFull,
   defaultType: "number",

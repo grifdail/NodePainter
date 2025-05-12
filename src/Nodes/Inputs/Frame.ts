@@ -8,7 +8,7 @@ export const Frame: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [],
   dataOutputs: [{ id: "frame", type: "number", defaultValue: 0 }],
-  executeOutputs: [],
+
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.p5.frameCount;

@@ -1,5 +1,6 @@
 import { IconBucketDroplet } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 
 export const Clear: NodeDefinition = {
   id: "Clear",
@@ -7,11 +8,12 @@ export const Clear: NodeDefinition = {
   icon: IconBucketDroplet,
   tags: ["Draw"],
   dataInputs: [],
-  dataOutputs: [],
-  executeOutputs: [],
+  dataOutputs: [Port.drawing2d("out")],
+
   settings: [],
-  canBeExecuted: true,
-  execute: (data, context) => {
-    context.target.clear(0, 0, 0, 0);
+  getData(portId, node, context) {
+    return () => {
+      context.target.clear(0, 0, 0, 0);
+    };
   },
 };

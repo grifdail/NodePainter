@@ -10,7 +10,7 @@ export const RenderShaderStart: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   tags: ["Shader"],
-  executeOutputs: [],
+
   settings: [],
   getShaderCode(node, context) {
     return [

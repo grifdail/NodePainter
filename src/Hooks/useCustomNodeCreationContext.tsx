@@ -28,10 +28,9 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       tags: ["Custom"],
       dataInputs: [],
       dataOutputs: [],
-      executeOutputs: [],
+
       settings: [],
       executeAs: CUSTOM_FUNCTION,
-      canBeExecuted: false,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createFunction(node);
@@ -46,14 +45,12 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       tags: ["Custom"],
       dataInputs: [],
       dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
-      executeOutputs: ["execute"],
       settings: [
         { id: "width", type: "number", defaultValue: 400 },
         { id: "height", type: "number", defaultValue: 400 },
         { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
       ],
       executeAs: CUSTOM_SHADER,
-      canBeExecuted: true,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createShader(node);
@@ -68,10 +65,9 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       tags: ["Custom"],
       dataInputs: [],
       dataOutputs: [{ id: "mat", type: "material", defaultValue: createDefaultMaterial() }],
-      executeOutputs: [],
+
       settings: [],
       executeAs: SHADER_MATERIAL,
-      canBeExecuted: false,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createShader(node);
@@ -86,10 +82,8 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       tags: ["Custom"],
       dataInputs: [],
       dataOutputs: [],
-      executeOutputs: ["execute"],
       settings: [],
       executeAs: CUSTOM_SIMULATION,
-      canBeExecuted: true,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createSimulation(node);
@@ -177,7 +171,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
     setPortList(type, list) {
       set(
         produce((state) => {
-          state.model[type === "inputData" ? "dataInputs" : "dataOutputs"] = list;
+          state.model[type === "input" ? "dataInputs" : "dataOutputs"] = list;
         })
       );
     },

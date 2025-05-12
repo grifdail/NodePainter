@@ -9,7 +9,7 @@ export const GradientNode: NodeDefinition = {
   tags: ["Color"],
   dataInputs: [],
   dataOutputs: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
-  executeOutputs: [],
+
   settings: [{ id: "gradient", type: "gradient", defaultValue: createDefaultGradient() }],
   getData: (portId, nodeData, context) => {
     return nodeData.settings.gradient;

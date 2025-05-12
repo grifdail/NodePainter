@@ -31,7 +31,7 @@ export const SmoothStep: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-  executeOutputs: [],
+
   settings: [],
   defaultType: "number",
   getData: (portId, nodeData, context) => {

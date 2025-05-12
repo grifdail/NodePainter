@@ -7,7 +7,6 @@ export type NodeData = {
   type: string;
   graph?: string;
   dataInputs: { [key: string]: PortConnection }; //Hold the potential connection to another node
-  execOutputs: { [key: string]: string | null }; //Hold the refference to another node
   dataOutputs: { [key: string]: PortDefinition }; //Hold the definition
   settings: { [key: string]: any };
   positionX: number;

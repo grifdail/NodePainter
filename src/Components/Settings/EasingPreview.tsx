@@ -6,8 +6,9 @@ import { Fieldset } from "../StyledComponents/Fieldset";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { calculatePathForFunction, invertLerp } from "./calculatePathForFunction";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { EasingPreviewSettingDefinition } from "../../Types/SettingDefinition";
 
-export const EasingSetting: SettingComponent = function GradientSetting({ onChange, value, def, node }: SettingProps) {
+export const EasingSetting: SettingComponent<EasingPreviewSettingDefinition> = function GradientSetting({ onChange, value, def, node }: SettingProps<EasingPreviewSettingDefinition>) {
   const functionName = value as EasingFunctionType;
 
   var fn = useMemo(() => (x: number) => evaluate(functionName, x), [functionName]);
