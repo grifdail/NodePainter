@@ -102,6 +102,7 @@ export const EnvelopeSetting: SettingComponent<EnvelopeSettingDefinition> = func
             <Menu
               portal
               viewScroll="auto"
+              overflow="auto"
               menuButton={
                 <MenuButton className={"button"}>
                   <EasingIcon fn={stop.lerp}></EasingIcon>
