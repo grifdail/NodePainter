@@ -41,8 +41,8 @@ export const CombineGridLoop: NodeDefinition = {
     const size = context.getInputValueVector2(node, "size");
 
     const array: any[] = [];
-    for (var x = 0; x < size[0]; x++) {
-      for (var y = 0; y < size[1]; y++) {
+    for (var y = 0; y < size[1]; y++) {
+      for (var x = 0; x < size[0]; x++) {
         context.blackboard[`${node.id}-index`] = createVector2(x, y);
         array[x * size[0] + y] = context.getInputValue(node, "value", node.selectedType);
       }
