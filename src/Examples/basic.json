@@ -1,0 +1,92 @@
+{
+    "nodes": {
+        "Start": {
+            "type": "Start",
+            "id": "Start",
+            "dataInputs": {
+                "drawing": {
+                    "id": "drawing",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "Combine",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "name": "sketch",
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {},
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "Combine": {
+            "type": "Combine",
+            "id": "Combine",
+            "dataInputs": {
+                "object-1": {
+                    "id": "object-1",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "Background",
+                    "connectedPort": "out"
+                },
+                "object-2": {
+                    "id": "object-2",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -430,
+            "positionY": 0,
+            "selectedType": "drawing2d"
+        },
+        "Background": {
+            "type": "FillBackground",
+            "id": "Background",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -860,
+            "positionY": 0,
+            "selectedType": "unknown"
+        }
+    },
+    "customNodes": {},
+    "globalSettings": {}
+}

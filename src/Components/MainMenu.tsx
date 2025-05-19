@@ -8,12 +8,40 @@ import { Sketch, useAllSavedSketch } from "../Hooks/db";
 import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
+import { PathNode } from "../Data/PathNode";
 
 function download(url: string, filename: string = "data.json") {
   const link = document.createElement("a");
   link.download = filename;
   link.href = url;
   link.click();
+}
+
+export function TreeMenu<T>({ tree, callback }: { tree: PathNode<T>; callback: (value: T) => void }) {
+  return (
+    <>
+      {Object.entries(tree.children).map(([key, node]) => {
+        const value = node.value;
+        if (value !== null) {
+          return (
+            <MenuItem
+              onClick={() => callback(value)}
+              key={key}>
+              {key}
+            </MenuItem>
+          );
+        } else {
+          return (
+            <SubMenu label={key}>
+              <TreeMenu
+                tree={node}
+                callback={callback}></TreeMenu>
+            </SubMenu>
+          );
+        }
+      })}
+    </>
+  );
 }
 
 export function MainMenu({ showPreview }: { showPreview: boolean }) {
@@ -87,13 +115,10 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
           </>
         }>
         <MenuItem onClick={withConfirm(reset)}>Default</MenuItem>
-        {Object.entries(Templates).map(([key, value]) => (
-          <MenuItem
-            onClick={withConfirm(() => loadTemplate(value))}
-            key={key}>
-            Template {key}
-          </MenuItem>
-        ))}
+        <TreeMenu
+          tree={Templates}
+          callback={withConfirm((value: any) => value().then((text: SketchTemplate) => loadTemplate(text)))}
+        />
       </SubMenu>
 
       <SubMenu

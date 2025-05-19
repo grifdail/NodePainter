@@ -4,8 +4,6 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2 } from "../../Types/vectorDataType";
 
-console.log(Port);
-
 export const DrawImage: NodeDefinition = {
   id: "DrawImage",
   label: "Draw Image",

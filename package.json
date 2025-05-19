@@ -26,6 +26,7 @@
     "dexie-react-hooks": "^1.1.7",
     "gif.js.optimized": "^1.0.1",
     "immer": "^10.0.3",
+    "json-url": "^3.1.0",
     "mathjs": "^12.1.0",
     "nanoid": "^5.0.3",
     "normalize.css": "^8.0.1",
