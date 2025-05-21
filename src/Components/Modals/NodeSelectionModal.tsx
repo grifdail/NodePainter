@@ -13,7 +13,6 @@ import { useShallow } from "zustand/react/shallow";
 import { Input } from "../StyledComponents/Input";
 import { InvisibleButton } from "../Generics/Button";
 import { PortType, PortTypeArray } from "../../Types/PortType";
-import { useEdgeCreation } from "../../Hooks/useEdgeCreation";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 
 const AddModalDiv = styled.div`

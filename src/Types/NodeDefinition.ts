@@ -12,31 +12,45 @@ export type ContextMenuData = {
 
 export type PortChangeFunction = (node: NodeData, type: PortType, blackboards: NodeData[]) => void;
 
-export type NodeDefinition = {
+export type BaseNodeDefinition = {
+  id: string;
+  // Display
   hideInLibrary?: boolean;
-  IsUnique?: boolean;
+  featureLevel?: number;
+  IsUnique?: boolean; //There can only be one of these node per sketch: Start, Custom Function Start & End, ect...
   description?: string;
   icon?: Icon;
-  id: string;
   label?: string;
   tags: Array<string>;
-  isShader?: false;
-  dataInputs: Array<PortDefinition>;
-  dataOutputs: Array<PortDefinition>;
-  settings: Array<SettingDefinition>;
-  getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
-  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
-  shaderRequirement?: string | string[];
+
+  //Meta
   executeAs?: string;
   contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
-  onSettingChange?: (node: NodeData, settingId: string, value: any, tree: TreeStore) => void;
+  onCreate?: (node: NodeData) => void;
+
+  //Types
   availableTypes?: PortType[];
   defaultType?: PortType;
   onChangeType?: PortChangeFunction;
-  onCreate?: (node: NodeData) => void;
-  featureLevel?: number;
-  hasInput?(input: PortType): PortType | null;
-  hasOutput?(output: PortType): PortType | null;
+  //Logic
+  settings: Array<SettingDefinition>;
+
+  //Shader
+  shaderRequirement?: string | string[];
 };
 
-export const MainExecuteId = "mainExecute";
+export type LogicNodeDefinition = {
+  //Shader
+  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
+
+  //Data
+  dataInputs: Array<PortDefinition>;
+  dataOutputs: Array<PortDefinition>;
+  getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
+  hasInput?(input: PortType): PortType | null;
+  hasOutput?(output: PortType): PortType | null;
+
+  //Multi Types
+};
+
+export type NodeDefinition = BaseNodeDefinition & LogicNodeDefinition;

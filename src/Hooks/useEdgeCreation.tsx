@@ -1,5 +1,4 @@
 import { NodeData } from "../Types/NodeData";
-import { MainExecuteId } from "../Types/NodeDefinition";
 import { PortRole } from "../Types/PortRole";
 import { PortType } from "../Types/PortType";
 import { canConvertCode } from "../Utils/convertTypeValue";

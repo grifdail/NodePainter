@@ -6,7 +6,7 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
-import { MainExecuteId, NodeDefinition } from "../../Types/NodeDefinition";
+import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortRole } from "../../Types/PortRole";
 import { PortType } from "../../Types/PortType";
 import { SettingComponents } from "../Settings/SettingsComponents";

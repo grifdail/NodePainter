@@ -151,9 +151,6 @@ export const useTree = create<TreeStore>()(
               const node = state.nodes[nodeId];
               node.settings[settingId] = newValue;
               const def = get().getNodeTypeDefinition(node);
-              if (def.onSettingChange !== undefined) {
-                def.onSettingChange(node, settingId, newValue, get());
-              }
             })
           );
         },
