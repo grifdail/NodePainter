@@ -26,7 +26,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 export const GenerateArray: NodeDefinition = {
   id: "GenerateArray",
   description: "Execute an instruction multiple time",
-  featureLevel: 100,
+  featureLevel: 80,
   icon: IconList,
   tags: ["Array"],
   dataInputs: [
@@ -39,7 +39,6 @@ export const GenerateArray: NodeDefinition = {
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
           label: "Create index node",

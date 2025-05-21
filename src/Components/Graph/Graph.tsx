@@ -15,7 +15,7 @@ import { useSelection } from "../../Hooks/useSelection";
 import { ContextMenu, useContextMenu } from "./ContextMenu";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
-import { NODE_HEADER_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { PairingLine } from "./PairingLine";
 
 export function Graph() {
@@ -86,8 +86,8 @@ export function Graph() {
             node.id,
             {
               "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
-              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
-              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
+              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
+              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + 300, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
             },
           ];
         })

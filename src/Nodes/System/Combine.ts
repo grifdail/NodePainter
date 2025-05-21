@@ -1,4 +1,4 @@
-import { IconArrowMerge } from "@tabler/icons-react";
+import { IconArrowMerge, IconPlus } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
@@ -23,12 +23,25 @@ export const Combine: NodeDefinition = {
   id: "Combine",
   label: "Combine",
   icon: IconArrowMerge,
+  featureLevel: 101,
   description: "Compose an object from multiple object",
 
   dataInputs: [Port.drawing2d("object-1"), Port.drawing2d("object-2")],
   dataOutputs: [Port.drawing2d("out")],
   tags: ["3D"],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      buttons: [
+        {
+          label: "Add new port",
+          icon: IconPlus,
+          onClick: addNewPort,
+        },
+      ],
+    },
+  ],
   availableTypes: ["drawing2d", "object3d"],
   onChangeType(node: NodeData, type: PortType, blackboards: NodeData[]) {
     Object.keys(node.dataInputs).forEach((key) => {

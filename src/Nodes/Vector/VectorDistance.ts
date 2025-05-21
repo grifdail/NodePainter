@@ -10,7 +10,7 @@ export const Distance: NodeDefinition = {
   id: "Distance",
   description: "Return the distance between two value",
   icon: IconMathXPlusY,
-  featureLevel: 100,
+  featureLevel: 90,
   tags: ["Math", "Vector"],
   dataInputs: [
     {

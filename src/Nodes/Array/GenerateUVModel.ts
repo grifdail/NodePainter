@@ -47,7 +47,6 @@ export const GenerateUVModel: NodeDefinition = {
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
           label: "Create UV node",

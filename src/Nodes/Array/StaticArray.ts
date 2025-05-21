@@ -39,7 +39,6 @@ export const StaticArray: NodeDefinition = {
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
           label: "Add a new Port",
