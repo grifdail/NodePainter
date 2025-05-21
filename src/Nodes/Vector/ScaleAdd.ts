@@ -38,7 +38,6 @@ export const ScaleAdd: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["value", "added"], ["out"]),
   getData: (portId, nodeData, context) => {

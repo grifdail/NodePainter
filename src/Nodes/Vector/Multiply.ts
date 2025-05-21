@@ -33,7 +33,6 @@ export const Multiply: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
 

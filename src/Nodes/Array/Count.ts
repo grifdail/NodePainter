@@ -19,7 +19,6 @@ export const Count: NodeDefinition = {
 
   settings: [],
 
-  defaultType: "array-color",
   availableTypes: ArrayTypes,
   onChangeType: changeTypeGenerator(["array"], []),
   getData: (portId, node, context) => {

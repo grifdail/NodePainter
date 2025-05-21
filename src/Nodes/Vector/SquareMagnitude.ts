@@ -27,7 +27,6 @@ export const SquareMagnitude: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypeslimited,
   onChangeType: changeTypeGenerator(["vec"], []),
   hasInput: hasInputGenerator(VectorTypeslimited),

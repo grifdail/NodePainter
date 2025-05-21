@@ -15,7 +15,6 @@ export const RenderWithTranslation: NodeDefinition = {
   dataInputs: [Port.vector2("translation"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  defaultType: "vector2",
   availableTypes: ["vector2", "vector3"],
   onChangeType: changeTypeGenerator(["translation"], []),
   hasInput: hasInputGenerator(["vector2", "vector3"]),

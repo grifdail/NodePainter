@@ -20,8 +20,6 @@ export const Sum: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
 
   settings: [],
-
-  defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator([], ["out"], ["array"]),
   getData: (portId, node, context) => {

@@ -37,7 +37,6 @@ export const Clamp: NodeDefinition = {
 
   settings: [],
   availableTypes: VectorTypesFull,
-  defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], ["result"]),
   hasInput: hasInputGenerator(VectorTypesFull),
   hasOutput: hasInputGenerator(VectorTypesFull),

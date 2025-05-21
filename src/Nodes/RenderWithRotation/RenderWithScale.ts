@@ -13,7 +13,6 @@ export const RenderWithScale: NodeDefinition = {
   dataInputs: [Port.vector2("scale", createVector2(1, 1)), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  defaultType: "vector2",
   availableTypes: ["vector2", "vector3"],
   onChangeType: changeTypeGenerator(["scale"], []),
   hasInput: hasInputGenerator(["vector2", "vector3"]),

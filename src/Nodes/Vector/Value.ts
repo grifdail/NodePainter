@@ -25,7 +25,6 @@ export const Value: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator(["value"], ["out"]),
   hasInput: hasInputGenerator(CommonTypes),

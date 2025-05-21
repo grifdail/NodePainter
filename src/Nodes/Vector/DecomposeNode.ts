@@ -31,7 +31,6 @@ export const DecomposeNode: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: [...VectorTypeslimited, "color"],
   onChangeType(node, type) {
     var count = { vector2: 2, vector3: 3, vector4: 4, color: 4 }[type as string] as number;

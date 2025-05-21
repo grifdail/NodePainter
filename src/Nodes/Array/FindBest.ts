@@ -65,8 +65,6 @@ export const FindBest: NodeDefinition = {
       ],
     },
   ],
-
-  defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], ["out"], ["array"], [], changeTypeGenerator([], ["value"])),
   getData: (portId, node, context) => {

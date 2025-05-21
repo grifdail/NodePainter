@@ -27,7 +27,6 @@ export const Normalize: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypeslimited,
   onChangeType: changeTypeGenerator(["vec"], ["out"]),
   hasInput: hasInputGenerator(VectorTypeslimited),

@@ -33,7 +33,6 @@ export const SmoothStep: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   getData: (portId, nodeData, context) => {
     const min = context.getInputValueNumber(nodeData, "min");
     const max = context.getInputValueNumber(nodeData, "max");

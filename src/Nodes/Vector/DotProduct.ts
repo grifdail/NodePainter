@@ -32,7 +32,6 @@ export const DotProduct: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypeslimited,
   onChangeType: changeTypeGenerator(["a", "b"], []),
   hasInput: hasInputGenerator(VectorTypeslimited),

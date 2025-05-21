@@ -18,7 +18,6 @@ export const SwitchNode: NodeDefinition = {
 
   settings: [],
   availableTypes: CommonTypes,
-  defaultType: "color",
   onChangeType: changeTypeGenerator(["true", "false"], ["result"]),
   hasInput: hasInputGenerator(CommonTypes),
   hasOutput: hasInputGenerator(CommonTypes),

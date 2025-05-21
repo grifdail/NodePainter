@@ -62,8 +62,6 @@ export const Filter: NodeDefinition = {
       ],
     },
   ],
-
-  defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], [], ["array"], ["filtered"], changeTypeGenerator([], ["value"])),
   getData: (portId, node, context) => {

@@ -13,7 +13,6 @@ export const RenderWithRotation: NodeDefinition = {
   dataInputs: [Port.number("angle"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  defaultType: "number",
   availableTypes: ["number"],
   onChangeType: changeTypeGenerator(["angle"], []),
   hasInput: hasInputGenerator(["number", "vector3"]),

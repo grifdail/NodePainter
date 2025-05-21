@@ -26,7 +26,6 @@ export const Floor: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["x"], ["out"]),
   hasInput: hasInputGenerator(VectorTypesFull),

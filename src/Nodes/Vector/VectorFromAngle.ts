@@ -44,7 +44,6 @@ export const VectorFromAngle: NodeDefinition = {
     }
     node.dataOutputs["vec"].type = type;
   },
-  defaultType: "vector2",
   getData: (portId, nodeData, context) => {
     const angle = context.getInputValueNumber(nodeData, "angle");
     const length = context.getInputValueNumber(nodeData, "length");

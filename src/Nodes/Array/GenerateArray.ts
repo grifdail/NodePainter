@@ -50,7 +50,6 @@ export const GenerateArray: NodeDefinition = {
   ],
 
   availableTypes: CommonTypes,
-  defaultType: "number",
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
   contextMenu: {
     "Create the index node": createIndexNode,

@@ -38,7 +38,6 @@ export const Lerp: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["from", "to"], ["result"]),
   getData: (portId, nodeData, context) => {

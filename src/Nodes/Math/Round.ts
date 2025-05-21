@@ -26,7 +26,6 @@ export const Round: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["input"], ["out"]),
   hasInput: hasInputGenerator(VectorTypesFull),

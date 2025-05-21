@@ -33,7 +33,6 @@ export const Add: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
   hasInput: hasInputGenerator(VectorTypesFull),

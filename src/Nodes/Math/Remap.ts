@@ -52,7 +52,6 @@ export const Remap: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["outmin", "outmax"], ["result"]),
   getData: (portId, nodeData, context) => {

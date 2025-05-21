@@ -51,7 +51,6 @@ export const IntegrateVelocity: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: VectorTypesPosition,
   onChangeType: changeTypeGenerator(["position", "acceleration", "velocity"], ["next-position", "next-velocity"]),
   getData: (portId, nodeData, context) => {

@@ -20,12 +20,13 @@ export function createMultiTypeNodeDefinition(
     }
   };
 
-  const firstType = Object.values(types)[0];
+  const firstType = Object.entries(types)[0];
   return {
     ...base,
     getShaderCode: Object.values(types).some((type) => type.getShaderCode) ? getShaderCode : undefined,
-    dataInputs: structuredClone(firstType.dataInputs),
-    dataOutputs: structuredClone(firstType.dataOutputs),
+    dataInputs: structuredClone(firstType[1].dataInputs),
+    dataOutputs: structuredClone(firstType[1].dataOutputs),
+    availableTypes: Object.keys(types) as PortType[],
     getData(portId: string, node: NodeData, context: ExecutionContext) {
       const type = types[node.selectedType];
       if (type !== undefined && typeof type.getData === "function") {

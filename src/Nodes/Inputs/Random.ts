@@ -18,7 +18,6 @@ export const Random: NodeDefinition = {
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator([], ["value"]),
   hasOutput: hasInputGenerator(VectorTypesFull),
-  defaultType: "number",
   getData: (portId, nodeData, context) => {
     const value = useCache(context, nodeData, () =>
       EnforceGoodType(

@@ -33,7 +33,6 @@ export const Distance: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["a", "b"], []),
   hasInput: hasInputGenerator(VectorTypesFull),

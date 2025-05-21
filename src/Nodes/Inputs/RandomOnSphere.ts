@@ -13,9 +13,7 @@ export const RandomOnSphere: NodeDefinition = {
   tags: ["Input"],
   dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
   dataOutputs: [{ id: "value", type: "vector3", defaultValue: createVector3() }],
-
   settings: [],
-  defaultType: "vector3",
   availableTypes: ["vector2", "vector3"],
   onChangeType: changeTypeGenerator([], ["value"]),
   hasOutput: hasInputGenerator(["vector2", "vector3"]),

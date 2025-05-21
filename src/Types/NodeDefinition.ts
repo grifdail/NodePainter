@@ -26,12 +26,11 @@ export type BaseNodeDefinition = {
   //Meta
   executeAs?: string;
   contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
-  onCreate?: (node: NodeData) => void;
 
   //Types
   availableTypes?: PortType[];
-  defaultType?: PortType;
   onChangeType?: PortChangeFunction;
+
   //Logic
   settings: Array<SettingDefinition>;
 
@@ -40,17 +39,14 @@ export type BaseNodeDefinition = {
 };
 
 export type LogicNodeDefinition = {
-  //Shader
-  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
-
   //Data
   dataInputs: Array<PortDefinition>;
   dataOutputs: Array<PortDefinition>;
   getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
   hasInput?(input: PortType): PortType | null;
   hasOutput?(output: PortType): PortType | null;
-
-  //Multi Types
+  //Shader
+  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
 };
 
 export type NodeDefinition = BaseNodeDefinition & LogicNodeDefinition;

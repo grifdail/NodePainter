@@ -25,7 +25,6 @@ export const RandomInt: NodeDefinition = {
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
 
   settings: [],
-  defaultType: "number",
   getData: (portId, nodeData, context) => {
     var min = context.getInputValueNumber(nodeData, "min");
     var max = context.getInputValueNumber(nodeData, "max");

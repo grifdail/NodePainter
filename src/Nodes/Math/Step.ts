@@ -33,7 +33,6 @@ export const Step: NodeDefinition = {
 
   settings: [],
   availableTypes: VectorTypesFull,
-  defaultType: "number",
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
       var value = context.getInputValueNumber(nodeData, "value");

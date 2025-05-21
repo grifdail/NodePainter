@@ -30,7 +30,6 @@ export const SeededRandom: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["seed"], []),
   getData: (portId, nodeData, context) => {

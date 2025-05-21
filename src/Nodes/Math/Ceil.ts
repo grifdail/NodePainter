@@ -26,7 +26,6 @@ export const Ceil: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "number",
   availableTypes: VectorTypesFull,
   onChangeType: changeTypeGenerator(["input"], ["out"]),
   hasInput: hasInputGenerator(VectorTypesFull),

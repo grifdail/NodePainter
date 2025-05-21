@@ -28,7 +28,6 @@ export const ComposeNode: NodeDefinition = {
   dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2() }],
 
   settings: [],
-  defaultType: "vector2",
   availableTypes: [...VectorTypeslimited, "color"],
   onChangeType(node, type) {
     var count = VectorLength[type as string];

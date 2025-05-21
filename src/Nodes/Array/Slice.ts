@@ -31,8 +31,6 @@ export const Slice: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: [0], type: "array-number" }],
 
   settings: [],
-
-  defaultType: "number",
   availableTypes: CommonTypes,
   onChangeType: changeTypeGenerator([], [], ["array"], ["out"]),
   getData: (portId, node, context) => {

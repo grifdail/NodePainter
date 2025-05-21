@@ -48,8 +48,6 @@ export const StaticArray: NodeDefinition = {
       ],
     },
   ],
-
-  defaultType: "color",
   availableTypes: CommonTypes,
   onChangeType(node, type) {
     Object.keys(node.dataInputs).forEach((key) => {

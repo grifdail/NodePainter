@@ -14,14 +14,11 @@ export function createNodeData(def: NodeDefinition, x: number, y: number, id: st
     dataOutputs: createDataOutputData(def),
     positionX: x,
     positionY: y,
-    selectedType: def.defaultType ? def.defaultType : def.availableTypes ? def.availableTypes[0] : "unknown",
+    selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",
     graph: graph,
   };
   if (def.onChangeType && def.availableTypes !== undefined) {
-    def.onChangeType(node, def.defaultType || def.availableTypes[0], []);
-  }
-  if (def.onCreate) {
-    def.onCreate(node);
+    def.onChangeType(node, def.availableTypes[0], []);
   }
   return node;
 }

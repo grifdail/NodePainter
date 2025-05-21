@@ -35,7 +35,6 @@ export const RotateVector: NodeDefinition = {
 
   settings: [],
   availableTypes: ["vector2", "vector3"],
-  defaultType: "vector2",
   onChangeType(node, type) {
     if (type === "vector3") {
       node.dataInputs["vec"].ownValue = convertTypeValue(node.dataInputs["vec"].ownValue, node.dataInputs["vec"].type, type);

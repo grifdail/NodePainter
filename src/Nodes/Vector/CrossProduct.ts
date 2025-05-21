@@ -29,7 +29,6 @@ export const CrossProduct: NodeDefinition = {
   ],
 
   settings: [],
-  defaultType: "vector3",
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector3(nodeData, "a");
     var b = context.getInputValueVector3(nodeData, "b");
