@@ -1,0 +1,288 @@
+{
+    "nodes": {
+        "Start": {
+            "type": "Start",
+            "id": "Start",
+            "dataInputs": {
+                "drawing": {
+                    "id": "drawing",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodefZ4NW8v8BJrGBmfM893tj",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "name": "sketch",
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {},
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodegbJooyzLxfXFHgccT7eSS": {
+            "type": "Render3D",
+            "id": "nodegbJooyzLxfXFHgccT7eSS",
+            "dataInputs": {
+                "fov": {
+                    "id": "fov",
+                    "type": "number",
+                    "ownValue": 60,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null,
+                    "tooltip": "Represent the vertical frustrum angle of the camera in degree"
+                },
+                "cameraPosition": {
+                    "id": "cameraPosition",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        10
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cameraRotation": {
+                    "id": "cameraRotation",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clearColor": {
+                    "id": "clearColor",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "scene": {
+                    "id": "scene",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -800,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodefZ4NW8v8BJrGBmfM893tj": {
+            "type": "DrawImage",
+            "id": "nodefZ4NW8v8BJrGBmfM893tj",
+            "dataInputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodegbJooyzLxfXFHgccT7eSS",
+                    "connectedPort": "image"
+                },
+                "pos": {
+                    "id": "pos",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "dim": {
+                    "id": "dim",
+                    "type": "vector2",
+                    "ownValue": [
+                        400,
+                        400
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -400,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodePMUNtVzw1jyJWEa89Eqfa": {
+            "type": "BoxGeometry",
+            "id": "nodePMUNtVzw1jyJWEa89Eqfa",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {
+                "output": {
+                    "id": "output",
+                    "type": "mesh",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -2000,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodeQJeyzyHDcnwtd9AyvtPSF": {
+            "type": "Combine",
+            "id": "nodeQJeyzyHDcnwtd9AyvtPSF",
+            "dataInputs": {
+                "object-1": {
+                    "id": "object-1",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeiRDQxT18v9hktaE0yDrUg",
+                    "connectedPort": "object"
+                },
+                "object-2": {
+                    "id": "object-2",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "object3d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -1200,
+            "positionY": 0,
+            "selectedType": "object3d"
+        },
+        "nodeiRDQxT18v9hktaE0yDrUg": {
+            "type": "RenderModel",
+            "id": "nodeiRDQxT18v9hktaE0yDrUg",
+            "dataInputs": {
+                "mesh": {
+                    "id": "mesh",
+                    "type": "mesh",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodePMUNtVzw1jyJWEa89Eqfa",
+                    "connectedPort": "output"
+                },
+                "material": {
+                    "id": "material",
+                    "type": "material",
+                    "ownValue": {
+                        "type": "FlatMaterialType",
+                        "props": [
+                            [
+                                0,
+                                0.5,
+                                1,
+                                1
+                            ],
+                            {
+                                "blendingMode": "NormalBlending",
+                                "transparent": false,
+                                "side": "FrontSide",
+                                "alphaTest": 0,
+                                "flatShading": false,
+                                "wireframe": false
+                            }
+                        ],
+                        "key": "material",
+                        "children": {}
+                    },
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "dimension": {
+                    "id": "dimension",
+                    "type": "vector3",
+                    "ownValue": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "rotation": {
+                    "id": "rotation",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "object": {
+                    "id": "object",
+                    "type": "object3d",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -1600,
+            "positionY": 0,
+            "selectedType": "unknown"
+        }
+    },
+    "customNodes": {},
+    "globalSettings": {}
+}
