@@ -100,6 +100,7 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { UsePatternImage } from "./Images/UsePatternImage";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -124,7 +125,7 @@ import { LogNode } from "./Math/LogNode";
 import { LoopingNoise } from "./Math/LoopingNoise";
 import { Max } from "./Math/Max";
 import { Min } from "./Math/Min";
-import { Modulo } from "./Math/Modulo";
+import { Modulo, Remainder } from "./Math/Modulo";
 import { Noise } from "./Math/Noise";
 import { OneMinus } from "./Math/OneMinus";
 import { PingPong } from "./Math/PingPong";
@@ -159,6 +160,7 @@ import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
+import { UseParticleImage } from "./Images/UseParticleImage";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -252,6 +254,8 @@ export const Nodes: Array<NodeDefinition> = [
   PrecomputeImage,
   ImageDimension,
   PaintImage,
+  UsePatternImage,
+  UseParticleImage,
 
   //Shader
   RenderShaderStart,
@@ -308,6 +312,7 @@ export const Nodes: Array<NodeDefinition> = [
   DecomposeStruct,
 
   Modulo,
+  Remainder,
   PowNode,
   Max,
   Min,

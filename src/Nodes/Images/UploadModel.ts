@@ -11,7 +11,7 @@ export const UploadModel: NodeDefinition = {
   dataOutputs: [{ id: "model", type: "mesh", defaultValue: null }],
   tags: ["3D"],
 
-  settings: [{ id: "model", type: "mesh-upload", defaultValue: null }],
+  settings: [{ id: "model", type: "mesh-upload" }],
   getData(portId, data, context) {
     if (data.settings.model != null) {
       var key = `${data.id}-model-cache`;

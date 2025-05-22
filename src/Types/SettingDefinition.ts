@@ -22,6 +22,13 @@ export type DropdownSettingDefinition = BaseSettingDefinition & {
   defaultValue: string;
   options: string[];
 };
+export type ImageSelectSettingDefinition = BaseSettingDefinition & {
+  type: "image-select";
+  options: Array<{
+    label: string;
+    url: string;
+  }>;
+};
 export type PaletteSettingDefinition = BaseSettingDefinition & {
   type: "palette";
   defaultValue: Color[];
@@ -84,6 +91,7 @@ export type GroupSettingDefinition = BaseSettingDefinition & {
 export type SettingDefinition =
   | NumberSettingDefinition
   | DropdownSettingDefinition
+  | ImageSelectSettingDefinition
   | PaletteSettingDefinition
   | BoolSettingDefinition
   | GradientSettingDefinition

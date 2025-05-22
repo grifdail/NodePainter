@@ -15,6 +15,7 @@ import { EasingSetting } from "./EasingPreview";
 import { CodeBlockSetting } from "./CodeBlockSetting";
 import { GroupSetting } from "./GroupSetting";
 import { BoolSetting } from "./BoolSetting";
+import { ImageSelectSetting } from "./ImageSelectSetting";
 
 export type SettingProps<T extends SettingDefinition> = {
   onChange: (value: any) => void;
@@ -49,4 +50,5 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   "code-block": CodeBlockSetting,
   group: GroupSetting,
   bool: BoolSetting,
+  "image-select": ImageSelectSetting,
 };

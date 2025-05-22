@@ -11,7 +11,7 @@ export const UploadImage: NodeDefinition = {
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Image"],
 
-  settings: [{ id: "image", type: "image-upload", defaultValue: null }],
+  settings: [{ id: "image", type: "image-upload" }],
   getData(portId, data, context) {
     if (data.settings.image != null) {
       var key = `${data.id}-image-cache`;

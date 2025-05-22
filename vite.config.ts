@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import path, { resolve } from "node:path";
 import { createFilter, defineConfig, loadEnv, Plugin, transformWithEsbuild } from "vite";
 import checker from "vite-plugin-checker";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -10,6 +10,11 @@ export default defineConfig(({ mode }) => {
   setEnv(mode);
   return {
     plugins: [react(), tsconfigPaths(), envPlugin(), devServerPlugin(), sourcemapPlugin(), buildPathPlugin(), basePlugin(), importPrefixPlugin(), htmlPlugin(mode), svgrPlugin(), checker({ typescript: true })],
+    resolve: {
+      alias: {
+        "@assets": path.resolve(__dirname, "public/assets"),
+      },
+    },
   };
 });
 
