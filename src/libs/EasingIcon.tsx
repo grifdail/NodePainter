@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { AllEasing, EasingFunctionType } from "./easing";
-import { Icon, TablerIconsProps } from "@tabler/icons-react";
+import { Icon, IconProps } from "@tabler/icons-react";
 import { calculatePathForFunction } from "../Components/Settings/calculatePathForFunction";
 
 const defaultAttributes = {
@@ -22,7 +22,7 @@ export const EasingIcons: { [key in EasingFunctionType]: Icon } = Object.fromEnt
     var path = calculatePathForFunction(values, 24, 24, min, max, false);
     return [
       key as EasingFunctionType,
-      forwardRef<SVGSVGElement, TablerIconsProps>(({ color = "currentColor", size = 24, stroke = 2, className, children, ...rest }: TablerIconsProps, ref) => {
+      forwardRef<SVGSVGElement, IconProps>(({ color = "currentColor", size = 24, stroke = 2, className, children, ...rest }: IconProps, ref) => {
         return (
           <svg
             ref={ref}
@@ -40,7 +40,7 @@ export const EasingIcons: { [key in EasingFunctionType]: Icon } = Object.fromEnt
   })
 ) as any;
 
-export const EasingIcon = ({ fn, ...rest }: TablerIconsProps & { fn: EasingFunctionType }) => {
+export const EasingIcon = ({ fn, ...rest }: IconProps & { fn: EasingFunctionType }) => {
   var Icon = EasingIcons[fn];
   return <Icon {...rest} />;
 };

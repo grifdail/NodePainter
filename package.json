@@ -7,7 +7,7 @@
     "@phosphor-icons/react": "github:phosphor-icons/react",
     "@react-spring/web": "^9.7.3",
     "@szhsin/react-menu": "^4.1.0",
-    "@tabler/icons-react": "^2.42.0",
+    "@tabler/icons-react": "^3.33.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
