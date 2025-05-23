@@ -12,6 +12,7 @@ export type SelectionStore = {
   startSelection: ([x, y]: [number, number]) => void;
   endSelection: ([x, y]: [number, number]) => void;
   clear: () => void;
+  hasArea: boolean;
   toggleSetMode: (value: boolean | null) => void;
 };
 export const useSelection = create<SelectionStore>()(
@@ -20,6 +21,7 @@ export const useSelection = create<SelectionStore>()(
       nodes: [],
       isInSelectionMode: false,
       areaStart: null,
+      hasArea: false,
       toggleNode(id) {
         if (get().nodes.includes(id)) {
           set((state) => {
@@ -36,6 +38,7 @@ export const useSelection = create<SelectionStore>()(
       startSelection(start) {
         set((state) => {
           state.areaStart = start;
+          state.hasArea = true;
         });
       },
       toggleSetMode(value) {
@@ -45,7 +48,7 @@ export const useSelection = create<SelectionStore>()(
         set((state) => {
           state.isInSelectionMode = value as boolean;
           state.nodes = [];
-          state.areaStart = null;
+          state.areaStart = [0, 0];
         });
       },
       endSelection(end) {
@@ -70,11 +73,13 @@ export const useSelection = create<SelectionStore>()(
 
         set((state) => {
           state.nodes = nodes;
+          state.hasArea = false;
         });
       },
       clear: () => {
         set((state) => {
           state.nodes = [];
+          state.hasArea = false;
         });
       },
     };

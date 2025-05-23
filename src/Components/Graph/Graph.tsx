@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
-import { useSpring, animated, useSprings } from "@react-spring/web";
+import { useSpring, animated, useSprings, SpringValue } from "@react-spring/web";
 import { useMeasure, useMediaQuery } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
@@ -16,6 +16,21 @@ import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { PairingLine } from "./PairingLine";
+import { useGesture } from "@use-gesture/react";
+
+function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<number[]> }) {
+  return (
+    <animated.rect
+      fill="light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))"
+      stroke="var(--color-border)"
+      strokeDasharray="4 10"
+      strokeWidth={5}
+      x={mousePosition.to((x, y) => Math.min(x, areaSelection[0]))}
+      y={mousePosition.to((x, y) => Math.min(y, areaSelection[1]))}
+      width={mousePosition.to((x, y) => Math.abs(x - areaSelection[0]))}
+      height={mousePosition.to((x, y) => Math.abs(y - areaSelection[1]))}></animated.rect>
+  );
+}
 
 export function Graph() {
   useGesturePrevention();
@@ -24,7 +39,7 @@ export function Graph() {
   const { onClickPort, onClickNode: onClickNodeEdgeCreation } = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
   const [xyz, bind] = useSVGMapDrag();
-  const { nodes: selectedNode } = useSelection();
+  const { nodes: selectedNode, hasArea, areaStart } = useSelection();
   const contextMenuData = useContextMenu();
   const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
     mousePosition: [0, 0],
@@ -237,6 +252,11 @@ export function Graph() {
             />
           );
         })}
+        {hasArea && (
+          <AreaSelectionRect
+            areaSelection={areaStart as [number, number]}
+            mousePosition={mousePosition}></AreaSelectionRect>
+        )}
       </animated.svg>
       <ContextMenu {...contextMenuData}></ContextMenu>
     </div>
