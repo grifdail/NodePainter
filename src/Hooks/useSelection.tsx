@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useTree } from "./useTree";
 import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 
 export type SelectionStore = {
   toggleNode(id: string): void;
@@ -59,7 +60,7 @@ export const useSelection = create<SelectionStore>()(
         const tree = useTree.getState();
         const nodes = Object.values(tree.nodes)
           .filter((node) => {
-            if (node.positionX + 300 < minX || node.positionX > maxX || node.positionY > maxY) {
+            if (node.positionX + NODE_WIDTH < minX || node.positionX > maxX || node.positionY > maxY) {
               return false;
             }
             var nodeHeight = GetNodeHeight(node, tree.getNodeTypeDefinition(node));
@@ -77,5 +78,3 @@ export const useSelection = create<SelectionStore>()(
         });
       },
     };
-  })
-);

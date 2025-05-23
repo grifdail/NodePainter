@@ -17,7 +17,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
-import { NODE_FOOTER_HEIGHT, NODE_HEADER_HEIGHT, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { NODE_FOOTER_HEIGHT, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
@@ -121,7 +121,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           />
         )}
         <rect
-          width="300"
+          width={NODE_WIDTH}
           height={GetNodeHeight(node, definition)}
           style={{}}
           rx="5"
@@ -171,7 +171,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         {Object.values(node.dataOutputs).map((item, i) => {
           return (
             <OutputPortView
-              x={300}
+              x={NODE_WIDTH}
               y={NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * i}
               key={item.id}
               id={item.id}

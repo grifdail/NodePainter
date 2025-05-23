@@ -6,8 +6,9 @@ import styled from "styled-components";
 import { PortColor } from "../StyledComponents/PortColor";
 import { Icon, IconPlus } from "@tabler/icons-react";
 import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { NODE_WIDTH } from "./NodeVisualConst";
 
-const MAX_TYPE_SINGLE_LINE = 300 / (30 + 2) - 1;
+const MAX_TYPE_SINGLE_LINE = NODE_WIDTH / (30 + 2) - 1;
 
 var StyledButton = styled.button<{ selected: boolean }>`
   width: 30px;
@@ -91,7 +92,7 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
       x={0}
       y="-30"
       height="30"
-      width={300}>
+      width={NODE_WIDTH}>
       <StyledDiv>
         {types.slice(0, MAX_TYPE_SINGLE_LINE).map((item) => (
           <TypeButton

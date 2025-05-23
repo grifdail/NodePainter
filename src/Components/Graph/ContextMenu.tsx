@@ -11,6 +11,8 @@ import { useShallow } from "zustand/react/shallow";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
+import { useSelection } from "../../Hooks/useSelection";
+import { AlignMenu } from "./AlignMenu";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -66,6 +68,8 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
     return (nodeLibrary.filter((node) => favNodes.includes(node.id)) as any).toSorted(mostRecentSorting).slice(0, 5) as NodeDefinition[];
   }, [nodeLibrary, mostRecentSorting, favNodes]);
 
+  const selectionNodes = useSelection((state) => state.nodes);
+
   var theme = useColorScheme();
 
   return (
@@ -97,6 +101,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...getClickPositionWorld())}>
         <IconArrowsVertical /> Make room verticaly
       </MenuItem>
+      <AlignMenu nodes={selectionNodes}></AlignMenu>
     </ControlledMenu>
   );
 }

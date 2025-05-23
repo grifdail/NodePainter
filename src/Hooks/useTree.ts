@@ -4,12 +4,15 @@ import { create } from "zustand";
 import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { persist } from "zustand/middleware";
+import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { Blackboard } from "../Nodes/System/Blackboard";
 import { START_NODE } from "../Nodes/System/StartNode";
+import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
 import { NodeData } from "../Types/NodeData";
@@ -87,7 +90,6 @@ export const useTree = create<TreeStore>()(
               // eslint-disable-next-line eqeqeq
               if (port !== undefined) {
                 // If were binding data port.
-
                 port.hasConnection = true;
                 port.connectedNode = sourceId;
                 port.connectedPort = sourcePort;
@@ -616,6 +618,27 @@ export const useTree = create<TreeStore>()(
                   });
               })
             )
+          );
+        },
+        align: function (nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void): void {
+          if (nodeIds.length <= 1) {
+            return;
+          }
+
+          set(
+            produce((state) => {
+              var nodes = nodeIds.map((id) => {
+                const n = state.nodes[id];
+                return {
+                  node: n,
+                  boundingBox: new BoundingBox(n.positionY, n.positionX + NODE_WIDTH, n.positionY + GetNodeHeight(n, state.getNodeTypeDefinition(n)), n.positionX),
+                };
+              });
+              var defaultBB = nodes[0].boundingBox;
+              var bb = nodes.reduce((old, bb) => old.extend(bb.boundingBox), defaultBB);
+              console.log("pouet", bb, nodes);
+              callback(bb, nodes);
+            })
           );
         },
       };

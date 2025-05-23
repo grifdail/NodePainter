@@ -10,6 +10,9 @@ export class BoundingBox {
     this.bottom = bottom;
     this.left = left;
   }
+  clone() {
+    return new BoundingBox(this.top, this.right, this.bottom, this.left);
+  }
 
   extend(box: BoundingBox) {
     return new BoundingBox(Math.min(this.top, box.top), Math.max(this.right, box.right), Math.max(this.bottom, box.bottom), Math.min(this.left, box.left));
@@ -22,5 +25,8 @@ export class BoundingBox {
   }
   height() {
     return this.bottom - this.top;
+  }
+  center() {
+    return [(this.left + this.right) / 2, (this.top + this.bottom) / 2];
   }
 }

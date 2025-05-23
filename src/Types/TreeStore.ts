@@ -1,6 +1,7 @@
 import { SketchTemplate } from "../Data/templates";
 import { BlackboardPortData } from "../Nodes/System/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
+import { BoundingBox } from "./BoundingBox";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { EDirection } from "./EDirection";
 import { ExportedCustomFunction } from "./ExportedCustomFunction";
@@ -57,4 +58,6 @@ export type TreeStore = {
   sortAroundNode: (nodeId: string) => void;
   replaceInputs: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
   replaceOutput: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
+
+  align: (nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void) => void;
 };

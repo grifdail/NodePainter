@@ -6,7 +6,7 @@ import { PortForeignObject } from "../StyledComponents/PortForeignObject";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { PortRole } from "../../Types/PortRole";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { PORT_HEIGHT } from "./NodeVisualConst";
+import { NODE_WIDTH, PORT_HEIGHT } from "./NodeVisualConst";
 import styled from "styled-components";
 
 const ImprovedFieldSet = styled(Fieldset)`
@@ -34,12 +34,12 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: {
   return (
     <StyledPortGroup
       transform={`translate(0, ${y})`}
-      width="300"
+      width={NODE_WIDTH}
       height="30"
       className={`${portData.type} ${isSelected ? "selected" : ""} `}>
       <PortForeignObject
         height={PORT_HEIGHT}
-        width={300}
+        width={NODE_WIDTH}
         x={0}
         y={0}>
         <ImprovedFieldSet
