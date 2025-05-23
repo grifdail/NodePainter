@@ -107,7 +107,9 @@ export const AnimationTrackSettings: SettingComponent<AnimationTrackSettingDefin
               }
               portal>
               {Object.keys(Easing).map((item) => (
-                <MenuItem onClick={() => onChangeLerp(i, item)}>
+                <MenuItem
+                  key={item}
+                  onClick={() => onChangeLerp(i, item)}>
                   <EasingIcon fn={item as EasingFunctionType} />
                   {item}
                 </MenuItem>

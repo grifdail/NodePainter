@@ -22,16 +22,13 @@ import { NODE_FOOTER_HEIGHT, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SP
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
 
-  & > g > rect {
+  & > g > rect.main {
     //box-shadow: 0px 0px 10px #ffffff;
     touch-action: none;
     fill: var(--color-background-card);
     stroke: var(--color-border);
     stroke-width: var(--border-size);
     filter: drop-shadow(var(--card-shadow));
-  }
-  &.selected > g > rect {
-    stroke: red;
   }
 `);
 
@@ -107,6 +104,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
       filter: dragged ? `drop-shadow(0 10px 10px rgba(59, 59, 59, 0.5))` : `drop-shadow(0 0px 0px rgba(57, 57, 57, 0.5))`,
     },
   });
+  const height = GetNodeHeight(node, definition);
 
   return (
     <AnimatedG
@@ -114,15 +112,29 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
       className={isSelected ? `selected` : ""}
       onContextMenu={(e) => e.stopPropagation()}>
       <animated.g style={styles}>
+        {isSelected && (
+          <rect
+            style={{}}
+            x="-10"
+            y="-10"
+            width={NODE_WIDTH + 20}
+            height={height + 20}
+            fill="transparent"
+            strokeDasharray="4 10"
+            strokeWidth={5}
+            stroke="var(--color-border)"></rect>
+        )}
         {definition.availableTypes && (
           <TypeSelectorUI
             node={node}
             def={definition}
           />
         )}
+
         <rect
+          className="main"
           width={NODE_WIDTH}
-          height={GetNodeHeight(node, definition)}
+          height={height}
           style={{}}
           rx="5"
           {...bind()}

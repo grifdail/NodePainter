@@ -70,10 +70,18 @@ export const EditableGradientPreview = ({ gradient, onChange }: { gradient: Grad
   var str = gradient.map((stop) => `${toHex(stop.color, true)} ${Math.floor(stop.pos * 100)}%`).join(",");
   return (
     <div>
-      <GradientDiv gradient={str} onDoubleClick={onDoubleClick}></GradientDiv>
-      <StyledStopContainter ref={parent} onDoubleClick={onDoubleClick}>
+      <GradientDiv
+        gradient={str}
+        onDoubleClick={onDoubleClick}></GradientDiv>
+      <StyledStopContainter
+        ref={parent}
+        onDoubleClick={onDoubleClick}>
         {localCopy.map((stop: GradientStop, i: number) => (
-          <StyledGradientStop color={toHex(stop.color)} pos={Math.floor(stop.pos * 100)} {...bind(i, stop)}>
+          <StyledGradientStop
+            key={i}
+            color={toHex(stop.color)}
+            pos={Math.floor(stop.pos * 100)}
+            {...bind(i, stop)}>
             <IconArrowUp></IconArrowUp>
           </StyledGradientStop>
         ))}

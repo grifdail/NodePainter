@@ -78,3 +78,5 @@ export const useSelection = create<SelectionStore>()(
         });
       },
     };
+  })
+);

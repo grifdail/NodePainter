@@ -109,7 +109,9 @@ export const EnvelopeSetting: SettingComponent<EnvelopeSettingDefinition> = func
                 </MenuButton>
               }>
               {Object.values(Easing).map((item) => (
-                <MenuItem onClick={() => onChangeLerp(i, item)}>
+                <MenuItem
+                  key={item}
+                  onClick={() => onChangeLerp(i, item)}>
                   <EasingIcon fn={item}></EasingIcon> {item}
                 </MenuItem>
               ))}
@@ -205,6 +207,7 @@ function EnvelopePreview({ value, width, height, onChange }: { onChange: (value:
         fill="rgba(0,0,0,0.5)"></path>
       {localCopy.map((item: EnvelopeStop, i: number) => (
         <Dot
+          key={i}
           r="10"
           {...bind(i, item)}
           cx={item.pos * width}
