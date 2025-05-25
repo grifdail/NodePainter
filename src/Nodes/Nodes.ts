@@ -100,7 +100,6 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
-import { UsePatternImage } from "./Images/UsePatternImage";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -160,7 +159,6 @@ import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
-import { UseParticleImage } from "./Images/UseParticleImage";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
@@ -254,8 +252,8 @@ export const Nodes: Array<NodeDefinition> = [
   PrecomputeImage,
   ImageDimension,
   PaintImage,
-  UsePatternImage,
-  UseParticleImage,
+  // UsePatternImage,
+  //UseParticleImage,
 
   //Shader
   RenderShaderStart,

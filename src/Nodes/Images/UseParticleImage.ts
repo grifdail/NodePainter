@@ -6,6 +6,7 @@ import { useCache } from "../../Utils/useCache";
 
 const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
 function basename(path: string) {
+  console.log(path);
   return path.split("/").reverse()[0];
 }
 
