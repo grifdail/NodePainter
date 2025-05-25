@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { useCache } from "../../Utils/useCache";
 
-const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, as: "url" }));
+const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
 function basename(path: string) {
   return path.split("/").reverse()[0];
 }
