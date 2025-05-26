@@ -13,7 +13,7 @@ import { SettingComponents } from "../Settings/SettingsComponents";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { OutputPortView } from "./OutputPortView";
 import { SettingControl, getSettingHeight } from "./SettingControl";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
@@ -46,7 +46,7 @@ export type GraphNodeProps = {
   xy: SpringValue<number[]>;
   isSelected: boolean;
   onMove: (x: number, y: number, definitive: boolean) => void;
-  onTap: () => void;
+  onTap: MouseEventHandler<SVGRectElement>;
   onClickPort: PortNodeCallback;
 };
 
@@ -78,7 +78,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         setDragged(false);
       },
     },
-    { drag: { filterTaps: false } }
+    { drag: { filterTaps: true } }
   );
 
   var setNodeInputValue = useTree((state) => state.setNodeInputValue);
@@ -158,8 +158,8 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           {...bind()}
           style={{
             touchAction: "none",
-          }}
-          onClick={onTap}>
+            pointerEvents: "none",
+          }}>
           {node.label || definition.label || definition.id}
         </text>
 

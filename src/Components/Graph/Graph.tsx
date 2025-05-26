@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { MouseEvent, useCallback, useEffect, useMemo } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
 import { useSpring, animated, useSprings, SpringValue } from "@react-spring/web";
 import { useMeasure, useMediaQuery } from "@uidotdev/usehooks";
@@ -16,7 +16,6 @@ import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { PairingLine } from "./PairingLine";
-import { useGesture } from "@use-gesture/react";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<number[]> }) {
   return (
@@ -117,9 +116,10 @@ export function Graph() {
   );
 
   const onTapNode = useCallback(
-    function onTapNode(node: NodeData): void {
+    function onTapNode(node: NodeData, e: MouseEvent<Element>): void {
       var selection = useSelection.getState();
-      if (selection.isInSelectionMode) {
+      if (selection.isInSelectionMode || e.ctrlKey) {
+        console.log("hehe");
         selection.toggleNode(node.id);
       } else {
         onClickNodeEdgeCreation(node);
@@ -246,7 +246,7 @@ export function Graph() {
             onClickPort,
             xy: nodePositionSpring[i].xy,
             isSelected: selectedNode.some((id) => id === node.id),
-            onTap: () => onTapNode(node),
+            onTap: (e: MouseEvent<Element>) => onTapNode(node, e),
             onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
           };
           return (
