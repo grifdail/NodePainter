@@ -4,7 +4,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
-import { useCache } from "../../Utils/useCache";
+import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const RandomOnSphere: NodeDefinition = {
   id: "RandomOnSphere",
@@ -18,7 +18,7 @@ export const RandomOnSphere: NodeDefinition = {
   onChangeType: changeTypeGenerator([], ["value"]),
   hasOutput: hasInputGenerator(["vector2", "vector3"]),
   getData: (portId, nodeData, context) => {
-    const value = useCache(context, nodeData, () => [context.RNG.next(), context.RNG.next()]);
+    const value = createOrSelectFromCache(context, nodeData, () => [context.RNG.next(), context.RNG.next()]);
     const [rx, ry] = value;
     if (nodeData.selectedType === "vector3") {
       // https://mathworld.wolfram.com/SpherePointPicking.html

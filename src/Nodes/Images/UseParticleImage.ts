@@ -2,7 +2,7 @@ import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { useCache } from "../../Utils/useCache";
+import { createOrSelectFromCache } from "../../Utils/useCache";
 
 const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
 function basename(path: string) {
@@ -31,7 +31,7 @@ export const UseParticleImage: NodeDefinition = {
   ],
   getData(portId, node, context) {
     const imgSetting = node.settings["image"];
-    const cachedImage = useCache(
+    const cachedImage = createOrSelectFromCache(
       context,
       node,
       () => {
@@ -39,7 +39,6 @@ export const UseParticleImage: NodeDefinition = {
         img.load(imgSetting.url, context.p5);
         return img;
       },
-      null,
       imgSetting.url
     );
 

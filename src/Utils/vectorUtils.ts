@@ -15,7 +15,9 @@ export function VectorAddition(a: number[], b: number[]): number[] {
 export function VectorMultiplication(a: number[], b: number[]): number[] {
   return a.map((p, i) => a[i] * b[i]);
 }
-
+export function VectorAbsolute(a: number[]): number[] {
+  return a.map((p, i) => Math.abs(p));
+}
 export function VectorLerp(a: number[], b: number[], t: number): number[] {
   return zipVector(a, b).map(([a, b]) => lerp(a, b, t));
 }

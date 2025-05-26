@@ -12,7 +12,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
 import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { useCache } from "../../Utils/useCache";
+import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const CacheNode: NodeDefinition = {
   id: "Cache",
@@ -35,7 +35,7 @@ export const CacheNode: NodeDefinition = {
     },
   ],
   getData: (portId, data, context) => {
-    var target = useCache(context, data, () => {
+    var target = createOrSelectFromCache(context, data, () => {
       var fn: (args: [key: string, port: PortConnection]) => [string, any] = ([key, value]) => {
         var v = context.getInputValue(data, key, value.type);
         return [key, v];

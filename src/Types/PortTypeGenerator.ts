@@ -1,4 +1,4 @@
-import { ConstrainDeclaration } from "../Utils/applyConstraints";
+import { ConstrainDeclaration, Constraints } from "../Utils/applyConstraints";
 import { createDefaultValue } from "../Utils/createDefaultValue";
 import { PortDefinition } from "./PortDefinition";
 import { PortType, PortTypeArray } from "./PortType";
@@ -8,7 +8,7 @@ type PortTypeGenerator = {
   [key in PortType]: PortTypeGeneratorFunction;
 };
 
-export const Port: PortTypeGenerator = Object.fromEntries(
+var defaultPort: PortTypeGenerator = Object.fromEntries(
   PortTypeArray.map((portType) => [
     portType,
     (id: string | [string, string], defaultValue?: any, tooltip?: string | ConstrainDeclaration[], constrains?: ConstrainDeclaration[]): PortDefinition => {
@@ -27,3 +27,8 @@ export const Port: PortTypeGenerator = Object.fromEntries(
     },
   ])
 ) as PortTypeGenerator;
+
+export const Port = {
+  ...defaultPort,
+  CacheId: () => defaultPort.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()]),
+};

@@ -146,6 +146,9 @@ import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
 import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
 import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
+import { Counter } from "./Statefull/CounterNode";
+import { DetectChangeNode } from "./Statefull/DetectChangeNode";
+import { EdgeNode } from "./Statefull/EdgeNode";
 import { Blackboard } from "./System/Blackboard";
 import { CacheNode } from "./System/Cache";
 import { Combine } from "./System/Combine";
@@ -372,6 +375,11 @@ export const Nodes: Array<NodeDefinition> = [
   //Effect
   BlurEffect,
   BloomEffect,
+
+  //Statefull
+  EdgeNode,
+  Counter,
+  DetectChangeNode,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

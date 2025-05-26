@@ -131,6 +131,10 @@ export function Graph() {
   const onMoveNode = useCallback(
     function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
       let selectedNode = useSelection.getState().nodes;
+      if (selectedNode.length > 0 && !selectedNode.includes(nodes[i].id)) {
+        selectedNode = [];
+        useSelection.getState().clear();
+      }
       if (selectedNode.length <= 0) {
         selectedNode = [nodes[i].id];
       }
