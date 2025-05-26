@@ -146,9 +146,13 @@ import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
 import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
 import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
+import { ChangeNode } from "./Statefull/ChangeNode";
 import { Counter } from "./Statefull/CounterNode";
 import { DetectChangeNode } from "./Statefull/DetectChangeNode";
 import { EdgeNode } from "./Statefull/EdgeNode";
+import { PreviousNode } from "./Statefull/PreviousNode";
+import { SaveNode } from "./Statefull/SaveNode";
+import { ToggleFlipFlopNode, ToggleSwitchNode } from "./Statefull/ToggleSwitch";
 import { Blackboard } from "./System/Blackboard";
 import { CacheNode } from "./System/Cache";
 import { Combine } from "./System/Combine";
@@ -380,6 +384,11 @@ export const Nodes: Array<NodeDefinition> = [
   EdgeNode,
   Counter,
   DetectChangeNode,
+  ChangeNode,
+  PreviousNode,
+  SaveNode,
+  ToggleSwitchNode,
+  ToggleFlipFlopNode,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
