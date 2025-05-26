@@ -39,8 +39,6 @@ import { DeltatTime } from "./Inputs/DeltatTime";
 import { DeviceRotation } from "./Inputs/DeviceRotation";
 import { Dimension } from "./Inputs/Dimension";
 import { Frame } from "./Inputs/Frame";
-import { MouseMouvement } from "./Inputs/MouseMouvement";
-import { MousePosition } from "./Inputs/MousePosition";
 import { Progress } from "./Inputs/Progress";
 import { Random } from "./Inputs/Random";
 import { Time } from "./Inputs/Time";
@@ -100,6 +98,9 @@ import { BlurEffect } from "./Effects/BlurEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { KeyPressed } from "./Inputs/KeyPressed";
+import { MouseButton } from "./Inputs/MouseButton";
+import { MousePosition } from "./Inputs/MousePosition";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
 import { Select } from "./Logic/SelectNode";
@@ -240,7 +241,8 @@ export const Nodes: Array<NodeDefinition> = [
   // Device
   MousePosition,
   DeviceRotation,
-  MouseMouvement,
+  MouseButton,
+  KeyPressed,
 
   // Random
   Random,
