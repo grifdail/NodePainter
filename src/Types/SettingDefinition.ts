@@ -10,6 +10,8 @@ import { Color, Gradient } from "./vectorDataType";
 type BaseSettingDefinition = {
   id: string;
   globalKey?: string;
+  label?: string;
+  tooltip?: string;
 };
 
 export type NumberSettingDefinition = BaseSettingDefinition & {

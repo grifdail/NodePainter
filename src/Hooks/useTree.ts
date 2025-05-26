@@ -7,7 +7,7 @@ import { persist } from "zustand/middleware";
 import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
-import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { Blackboard } from "../Nodes/System/Blackboard";
@@ -335,7 +335,8 @@ export const useTree = create<TreeStore>()(
               const end = `${def.id}-end`;
               const node: NodeDefinition = {
                 ...def,
-                dataInputs: [{ id: "progress", type: "number", defaultValue: 0 }, ...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+                dataInputs: [...structuredClone(CustomSimulation.dataInputs), ...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
+                settings: CustomSimulation.settings,
               };
               state.customNodes[def.id] = node;
               const startNodeDef: NodeDefinition = {

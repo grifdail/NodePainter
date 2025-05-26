@@ -2,7 +2,9 @@ import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortDefinition } from "../../Types/PortDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { ExecutionContext } from "../../Utils/createExecutionContext";
+import { getCacheKey, updateAndReadFromCache } from "../../Utils/useCache";
 export const CUSTOM_SIMULATION = "CustomSimulation";
 
 export const CustomSimulation: NodeDefinition = {
@@ -12,20 +14,21 @@ export const CustomSimulation: NodeDefinition = {
   icon: IconArrowsMove,
   tags: [],
   hideInLibrary: true,
-  dataInputs: [],
+  dataInputs: [Port.CacheId(), Port.bool("reset")],
   dataOutputs: [],
+  settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }],
+  getData: (portId, node, context) => {
+    const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
+    const reset = context.getInputValueBoolean(node, "reset");
+    const key = `${node.id}-${cacheId}-cache`;
 
-  settings: [],
-  getData: (portId, data, context) => {
-    const useCount = context.frameBlackboard[`${data.id}-use`];
-    const stateId = `${data.id}-${useCount}-state`;
-    let state: { [k: string]: any } = {};
-    if (context.blackboard[stateId] === undefined) {
-      state = createDefaultState(data, context, context.getNodeDefinition(`${data.type}-end`)?.dataInputs);
-    } else {
-      state = context.blackboard[stateId];
+    const isComputedThisTime = context.frameBlackboard[key];
+    if (isComputedThisTime && node.settings.cache) {
+      return context.blackboard[getCacheKey(key, context, node)][portId];
     }
 
+    var state = updateAndReadFromCache<{ [k: string]: any }>(context, node, (oldState) => execute(node, context, oldState, reset), key);
+    context.frameBlackboard[key] = true;
     return state[portId];
   },
 };
@@ -41,46 +44,39 @@ function createDefaultState(data: NodeData, context: ExecutionContext, dataInput
   );
 }
 
-function execute(data: NodeData, context: ExecutionContext) {
-  context.frameBlackboard[`${data.id}-use`] = context.frameBlackboard[`${data.id}-use`] !== undefined ? context.frameBlackboard[`${data.id}-use`] + 1 : 0;
-  var useCount = context.frameBlackboard[`${data.id}-use`];
-  const stateId = `${data.id}-${useCount}-state`;
-  var progress = context.getInputValueNumber(data, "progress");
-  let state: { [k: string]: any } = {};
+function execute(data: NodeData, context: ExecutionContext, previousState: { [k: string]: any } | undefined, reset: boolean): { [key: string]: any } {
   const stateDefinition = context.getNodeDefinition(`${data.type}-end`)?.dataInputs;
 
   if (stateDefinition == null) {
-    return null;
+    return {};
   }
-  if (context.blackboard[stateId] === undefined || progress < context.blackboard[`${data.id}-${useCount}-progress`]) {
-    state = createDefaultState(data, context, stateDefinition);
-  } else {
-    state = context.blackboard[stateId];
+  if (previousState === undefined || reset) {
+    previousState = createDefaultState(data, context, stateDefinition);
   }
 
   const endNode = context.findNodeOfType(`${data.type}-end`);
   if (!endNode) {
-    return null;
+    return previousState;
   }
 
   const startNode = context.findNodeOfType(`${data.type}-start`);
   if (!startNode) {
-    return null;
+    return previousState;
   }
 
   const params = Object.fromEntries(
     Object.entries(startNode.dataOutputs).map(([key, def]) => {
-      return [key, { type: def.type, value: state[key] === undefined ? context.getInputValue(data, key, def.type) : state[key] }];
+      return [key, { type: def.type, value: previousState === undefined || previousState[key] === undefined ? context.getInputValue(data, key, def.type) : previousState[key] }];
     })
   );
   context.functionStack.push(params);
 
-  state = Object.fromEntries(
+  const state = Object.fromEntries(
     stateDefinition.map((item) => {
       return [item.id, context.getInputValue(endNode, item.id, item.type)];
     })
   );
-  context.blackboard[stateId] = state;
-  context.blackboard[`${data.id}-${useCount}-progress`] = progress;
+
   context.functionStack.pop();
+  return state;
 }

@@ -21,17 +21,6 @@ export function createOrSelectFromCache<T>(context: ExecutionContext, nodeData: 
   return value;
 }
 
-export function readAndUpdateFromCache<T>(context: ExecutionContext, nodeData: NodeData, cacheId: string | undefined = undefined): [T | null, (v: T) => void] {
-  let cacheKey = getCacheKey(cacheId, context, nodeData);
-  const value = context.blackboard[cacheKey] !== undefined ? context.blackboard[cacheKey] : null;
-  return [
-    value,
-    (v: T) => {
-      context.blackboard[cacheKey] = v;
-    },
-  ];
-}
-
 export function updateAndReadPreviousFromCache<T>(context: ExecutionContext, nodeData: NodeData, newValue: T, cacheId: string | undefined = undefined): T {
   let cacheKey = getCacheKey(cacheId, context, nodeData);
   const value = context.blackboard[cacheKey] !== undefined ? context.blackboard[cacheKey] : newValue;
@@ -46,7 +35,7 @@ export function updateAndReadFromCache<T>(context: ExecutionContext, nodeData: N
   return newValue;
 }
 
-function getCacheKey(cacheId: string | undefined, context: ExecutionContext, nodeData: NodeData) {
+export function getCacheKey(cacheId: string | undefined, context: ExecutionContext, nodeData: NodeData) {
   cacheId = cacheId || Math.floor(context.getInputValueNumber(nodeData, "cache-id" as string)).toString();
   const cacheKey = `cache-${nodeData.id}-${cacheId}`;
   return cacheKey;
