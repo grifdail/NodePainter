@@ -61,7 +61,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   const bind = useGesture(
     {
-      onDrag: ({ movement: [mx, my], tap, elapsedTime }) => {
+      onDrag: ({ movement: [mx, my], tap, elapsedTime, cancel }) => {
         if (!tap) {
           onMove(mx * viewPortScale, my * viewPortScale, false);
           if (!dragged) {
@@ -70,6 +70,8 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
         } else {
           if (elapsedTime > 1000) {
             useSelection.getState().toggleSetMode(true);
+            useSelection.getState().toggleNode(node.id);
+            //cancel();
           }
         }
       },
