@@ -1,5 +1,5 @@
-import { SketchTemplate } from "../Data/templates";
 import { useTree } from "../Hooks/useTree";
+import { SketchTemplate } from "../Types/SketchTemplate";
 
 export async function loadFromUrl(encodedUrl: string | null) {
   if (!encodedUrl) {

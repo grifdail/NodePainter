@@ -1,6 +1,6 @@
 import createClient from "json-url";
 import { useTree } from "../Hooks/useTree";
-import { SketchTemplate } from "../Data/templates";
+import { SketchTemplate } from "../Types/SketchTemplate";
 
 export async function loadJsonDecrypt(parse: any) {
   var codec = createClient("lzma");

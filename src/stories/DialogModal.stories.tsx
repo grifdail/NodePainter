@@ -27,6 +27,7 @@ const meta = {
       clickButton: fn(),
       setField: fn(),
       openConfirm: fn(),
+      openError: fn(),
     },
   },
 } satisfies Meta<typeof DialogModal>;

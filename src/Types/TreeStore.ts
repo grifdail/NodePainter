@@ -1,4 +1,3 @@
-import { SketchTemplate } from "../Data/templates";
 import { BlackboardPortData } from "../Nodes/System/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { BoundingBox } from "./BoundingBox";
@@ -11,6 +10,7 @@ import { NodeDefinition } from "./NodeDefinition";
 import { PortConnection } from "./PortConnection";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
+import { SketchTemplate } from "./SketchTemplate";
 
 export type TreeStore = {
   key: number;

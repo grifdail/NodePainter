@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconClipboard, IconDeviceFloppy, IconDownload, IconLink } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { SketchTemplate } from "../../Data/templates";
 import { Button } from "../Generics/Button";
 import { useEffect, useState } from "react";
 import { compressSketchJson } from "../../Utils/loadJsonDecrypt";
+import { SketchTemplate } from "../../Types/SketchTemplate";
 
 const MAX_URL_LENGTH = 2083;
 

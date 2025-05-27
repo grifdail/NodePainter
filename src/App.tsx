@@ -8,6 +8,8 @@ import { Routes } from "./Types/Routes";
 import { Tooltip } from "react-tooltip";
 import { loadFromUrl } from "./Utils/loadFromUrl";
 import { loadJsonDecrypt } from "./Utils/loadJsonDecrypt";
+import { useViewbox } from "./Hooks/useViewbox";
+import { resetCamera } from "./Utils/resetCamera";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);
@@ -15,6 +17,21 @@ function GraphCache() {
 }
 
 function App() {
+  useAboutOnFirstLaunch();
+  useParseUrl();
+  useResetCamera();
+  return (
+    <div className="app">
+      <GraphCache />
+      <Router />
+      <Tooltip id="tooltip"></Tooltip>
+    </div>
+  );
+}
+
+export default App;
+
+function useAboutOnFirstLaunch() {
   useEffect(() => {
     setTimeout(() => {
       if (!usePlayerPref.getState().hasSeenIntroPopup) {
@@ -23,6 +40,17 @@ function App() {
       }
     }, 1000);
   }, []);
+}
+
+function useResetCamera() {
+  useEffect(() => {
+    setTimeout(() => {
+      resetCamera();
+    }, 500);
+  }, []);
+}
+
+function useParseUrl() {
   useEffect(() => {
     setTimeout(() => {
       var search = new URLSearchParams(window.location.search);
@@ -34,13 +62,4 @@ function App() {
       }
     }, 500);
   }, [window.location.search]);
-  return (
-    <div className="app">
-      <GraphCache />
-      <Router />
-      <Tooltip id="tooltip"></Tooltip>
-    </div>
-  );
 }
-
-export default App;

@@ -14,6 +14,8 @@ import { Input } from "../StyledComponents/Input";
 import { InvisibleButton } from "../Generics/Button";
 import { PortType, PortTypeArray } from "../../Types/PortType";
 import { usePortSelection } from "../../Hooks/usePortSelection";
+import { CategoryButton, TagList } from "./CategoryButton";
+import { SearchForm } from "./SearchForm";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -31,79 +33,11 @@ const AddModalDiv = styled.div`
   padding-top: var(--padding-large);
 `;
 
-const SearchForm = styled.form`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: stretch;
-  gap: 5px;
-  height: 45px;
-  position: sticky;
-
-  & input {
-    text-align: left;
-    padding-left: 35px;
-  }
-
-  & span {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: stretch;
-    flex: 1 1 auto;
-    position: relative;
-
-    & > svg {
-      position: absolute;
-      left: 5px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-`;
-
 const NodeList = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   overflow: auto;
-  gap: var(--padding-small);
-`;
-
-const CategoryButton = styled.button<{ selected?: boolean }>`
-  padding: 10px;
-  background: ${(props) => (props.selected ? "var(--color-selected)" : "none")};
-  border: none;
-  border-radius: 24px;
-  padding: var(--padding-small);
-  text-transform: capitalize;
-  text-decoration: ${(props) => (props.selected ? "underline" : "none")};
-  font-weight: ${(props) => (props.selected ? "bold" : "none")};
-
-  &::after {
-    display: block;
-    content: attr(title);
-    font-weight: bold;
-    height: 1px;
-    color: transparent;
-    overflow: hidden;
-    visibility: hidden;
-    text-transform: capitalize;
-  }
-
-  &:hover {
-    background: var(--color-selected);
-  }
-
-  @media (max-width: 840px), (max-height: 500px) {
-    padding: 5px;
-    font-size: 12px;
-  }
-`;
-
-const TagList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
   gap: var(--padding-small);
 `;
 

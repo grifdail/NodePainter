@@ -14,6 +14,8 @@ import { useDialog } from "../Hooks/useDialog";
 import { DialogModal } from "./Modals/DialogModel";
 import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlockModal";
+import { MainMenu } from "./MainMenu";
+import { IntroMenuModal } from "./Modals/IntroMenu";
 
 export function Router() {
   const close = useRouter((state) => state.close);
@@ -33,6 +35,7 @@ export function Router() {
       {route === Routes.About && <AboutModal close={close} />}
       {route === Routes.Paint && <PaintModal />}
       {route === Routes.CodeBlock && <CodeBlockModal />}
+      {route === Routes.IntroMenu && <IntroMenuModal close={close} />}
       {dialog.dialogs.map((d) => (
         <DialogModal
           dialog={d}

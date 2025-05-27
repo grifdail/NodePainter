@@ -11,7 +11,7 @@ const MainDiv = styled.div`
 
   @media (max-width: 840px), (max-height: 500px) {
     flex-direction: column;
-    align-items: center
+    align-items: center;
     gap: 1em;
   }
 
@@ -26,9 +26,15 @@ const MainDiv = styled.div`
 
 export function AboutModal({ close }: { close: () => void }) {
   return (
-    <Modal onClose={close} title="About" icon={IconInfoCircle}>
+    <Modal
+      onClose={close}
+      title="About"
+      icon={IconInfoCircle}>
       <MainDiv>
-        <img src="/demo_avatar.gif" alt="demo of my avatar floating around" />
+        <img
+          src="/demo_avatar.gif"
+          alt="demo of my avatar floating around"
+        />
         <div>
           <p>
             Hi ! I'm julien and this is <b>Node Painter</b>, a tool to make visuals and animation programaticaly through a graph based editor.

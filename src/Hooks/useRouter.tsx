@@ -9,7 +9,7 @@ export type RouterStore = {
 
 export const useRouter = create<RouterStore>()((set) => {
   return {
-    current: Routes.Default,
+    current: Routes.IntroMenu,
     close() {
       set({ current: Routes.Default });
     },

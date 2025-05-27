@@ -1,0 +1,20 @@
+import { SketchTemplate } from "../Types/SketchTemplate";
+import { useTree } from "./useTree";
+
+const SAVE_ID = "nodepainter-last-active-sketch";
+
+useTree.subscribe((state) => {
+  var data = state.exportTemplate();
+  localStorage.setItem(SAVE_ID, JSON.stringify(state.exportTemplate()));
+});
+let lastClosedSketch: SketchTemplate | null = null;
+
+window.addEventListener("load", () => {
+  try {
+    lastClosedSketch = JSON.parse(localStorage.getItem(SAVE_ID) || "");
+  } catch (error) {}
+});
+
+export function getLastSavedSketch() {
+  return lastClosedSketch;
+}

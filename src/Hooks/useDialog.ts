@@ -30,6 +30,7 @@ export type DialogData = {
 };
 
 export type DialogStore = {
+  openError(message?: string, callback?: () => void): unknown;
   dialogs: DialogData[];
   open: (dialog: DialogData) => void;
   close: (dialogId: string) => void;
@@ -90,6 +91,24 @@ export const useDialog = create<DialogStore>()((set, get) => {
           {
             key: "confirm",
             label: textConfirm,
+            style: "normal",
+          },
+        ],
+        fields: [],
+      };
+      get().open(d);
+    },
+    openError(message: string = "Something went wrong", callback: () => void = () => {}) {
+      var d: DialogData = {
+        text: message,
+        header: "Error",
+        callback: (button: any, fieldResult: { [key: string]: any } | undefined) => {
+          callback();
+        },
+        buttons: [
+          {
+            key: "confirm",
+            label: "ok",
             style: "normal",
           },
         ],

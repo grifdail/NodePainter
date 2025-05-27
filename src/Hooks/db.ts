@@ -1,8 +1,8 @@
 import Dexie, { Table } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback } from "react";
-import { SketchTemplate } from "../Data/templates";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
+import { SketchTemplate } from "../Types/SketchTemplate";
 
 export interface Sketch {
   name: string;
