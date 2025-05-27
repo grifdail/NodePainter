@@ -79,7 +79,7 @@ export const ModalHeader = styled.div`
   }
 
   @media (max-width: 840px) {
-    height: 32px;
+    min-height: 32px;
   }
 `;
 

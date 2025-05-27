@@ -1,7 +1,7 @@
-import { IconFilePlus, IconInfoCircle, IconReload, IconSearch, IconUpload } from "@tabler/icons-react";
+import { Icon, IconCross, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPlayerPlay, IconReload, IconSearch, IconUpload, IconX } from "@tabler/icons-react";
 import styled from "styled-components";
-import { Modal } from "../Modal";
-import { Button } from "../Generics/Button";
+import { CloseButton, Modal } from "../Modal";
+import { Button, InvisibleButton } from "../Generics/Button";
 import { Sketch, useAllSavedSketch } from "../../Hooks/db";
 import { useDialog } from "../../Hooks/useDialog";
 import { Templates } from "../../Data/templates";
@@ -9,7 +9,7 @@ import { useTree } from "../../Hooks/useTree";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { SketchTemplate } from "../../Types/SketchTemplate";
 import { TemplateLibrary } from "../../Types/TemplateLibrary";
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { SearchForm } from "./SearchForm";
 import { Input } from "../StyledComponents/Input";
 import { CategoryButton, TagList } from "./CategoryButton";
@@ -18,6 +18,8 @@ import { sketch } from "../SketchPreview";
 import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
 import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
+
+const MY_SAVED_SKETCH = "My Saved Sketch";
 
 const MainDiv = styled.div`
   max-width: 100%;
@@ -90,6 +92,15 @@ const StyledButton = styled.button`
   }
 `;
 
+const IconPerTypes: Record<string, Icon> = {
+  default: IconFile,
+  Templates: IconFile,
+  [MY_SAVED_SKETCH]: IconDeviceFloppy,
+  Examples: IconPlayerPlay,
+};
+
+type SketchElement = { content: () => Promise<SketchTemplate>; name: string; category: string };
+
 const TagRegex = /tag:(\w+)/gi;
 
 type SearchTermData = {
@@ -110,10 +121,50 @@ function toCategoryId(cat: string) {
   return cat.toLowerCase().replaceAll(" ", "_");
 }
 
+export const DeleteButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  transition: opacity 0.3s;
+
+  opacity: 0%;
+
+  &:hover {
+    opacity: 100%;
+  }
+
+  button:hover & {
+    opacity: 50%;
+  }
+`;
+
+function SketchButton({ onClick, item, onDelete }: { onClick: MouseEventHandler<Element>; onDelete: MouseEventHandler<Element> | undefined; item: SketchElement }) {
+  var Icon = IconPerTypes[item.category] === undefined ? IconPerTypes.default : IconPerTypes[item.category];
+  return (
+    <StyledButton onClick={onClick}>
+      <Icon></Icon>
+      <div>{item.name}</div>
+      <p>{item.category}</p>
+      <span className="spacer"></span>
+      {onDelete && (
+        <DeleteButton onClick={onDelete}>
+          <IconX></IconX>
+        </DeleteButton>
+      )}
+    </StyledButton>
+  );
+}
+
 export function IntroMenuModal({ close }: { close: () => void }) {
   const loadSketch = useLoadSketch(close);
   const withConfirm = useWithConfirm();
-  const [allItem, categories] = useSketchCollection();
+  const [allItem, categories, deleteSavedSketch] = useSketchCollection();
   const [searchTermRaw, setSearchTerm] = useState("");
   const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
   const openModal = useRouter((state) => state.open);
@@ -136,7 +187,10 @@ export function IntroMenuModal({ close }: { close: () => void }) {
       title="Open or create a new sketch"
       icon={IconInfoCircle}>
       <MainDiv>
-        <ButtonGroup align="stretch">
+        <ButtonGroup
+          align="stretch"
+          forceStretch
+          responsive>
           <Button
             onClick={withConfirm(() => loadSketch(new Promise<SketchTemplate>((r) => r(lastSavedSketch as SketchTemplate))))}
             disabled={lastSavedSketch === null}
@@ -179,13 +233,20 @@ export function IntroMenuModal({ close }: { close: () => void }) {
 
           <NodeList>
             {filteredList.map((item) => (
-              <StyledButton
+              <SketchButton
+                onDelete={
+                  item.category === MY_SAVED_SKETCH
+                    ? (e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        withConfirm(() => deleteSavedSketch(item.name))();
+                      }
+                    : undefined
+                }
                 key={`${item.category}/${item.name}`}
-                onClick={withConfirm(() => loadSketch(item.content()))}>
-                <div>{item.name}</div>
-                <p>{item.category}</p>
-                <span className="spacer"></span>
-              </StyledButton>
+                onClick={withConfirm(() => loadSketch(item.content()))}
+                item={item}
+              />
             ))}
           </NodeList>
         </div>
@@ -208,7 +269,6 @@ export function IntroMenuModal({ close }: { close: () => void }) {
   }
 }
 
-const MY_SAVED_SKETCH = "My Saved Sketch";
 function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void) {
   return useCallback(
     function toggleTag(tag: string): void {
@@ -224,8 +284,8 @@ function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void)
   );
 }
 
-function useSketchCollection(): [{ content: () => Promise<SketchTemplate>; name: string; category: string }[], string[]] {
-  const [sketches] = useAllSavedSketch();
+function useSketchCollection(): [SketchElement[], string[], (name: string) => void] {
+  const [sketches, saveSketch, deleteSketch] = useAllSavedSketch();
   const tags = new Set([MY_SAVED_SKETCH]);
   return [
     [
@@ -246,6 +306,7 @@ function useSketchCollection(): [{ content: () => Promise<SketchTemplate>; name:
       }),
     ],
     Array.from(tags),
+    deleteSketch,
   ];
 }
 

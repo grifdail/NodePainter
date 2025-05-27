@@ -19,9 +19,7 @@ function download(url: string, filename: string = "data.json") {
 
 export function MainMenu({ showPreview }: { showPreview: boolean }) {
   const openModal = useRouter((state) => state.open);
-  const reset = useTree((state) => state.reset);
-  const loadTemplate = useTree((state) => state.loadTemplate);
-  const [sketches, saveSketch] = useAllSavedSketch();
+  const [_, saveSketch] = useAllSavedSketch();
 
   function loadSketch(sketch: Sketch): void {
     var template: SketchTemplate = JSON.parse(sketch.content);
@@ -48,20 +46,6 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
 
     download(data, filenameWithExt);
   }, []);
-
-  const withConfirm = (cb: Function) => {
-    return (...args: any[]) => {
-      useDialog.getState().openConfirm(
-        (isConfirmed) => {
-          if (isConfirmed) {
-            cb(...args);
-          }
-        },
-        "Are you sure ?",
-        "You will lose all your data for this sketch."
-      );
-    };
-  };
 
   return (
     <Menu

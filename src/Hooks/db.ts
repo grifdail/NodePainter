@@ -30,7 +30,7 @@ export class NodepainterDexie extends Dexie {
 
 export const db = new NodepainterDexie();
 
-export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketchData: SketchTemplate) => void] {
+export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketchData: SketchTemplate) => void, (name: string) => void] {
   const sketchs = useLiveQuery(() => db.sketchs.toArray());
   const saveSketch = useCallback((name: string, sketchData: SketchTemplate) => {
     db.sketchs.put({
@@ -38,7 +38,10 @@ export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketc
       content: JSON.stringify(sketchData),
     });
   }, []);
-  return [sketchs, saveSketch];
+  const deleteSketch = useCallback((name: string) => {
+    db.sketchs.delete(name);
+  }, []);
+  return [sketchs, saveSketch, deleteSketch];
 }
 
 export function useAllSavedFunction(): [Sketch[] | undefined, (name: string, functionData: ExportedCustomFunction) => void] {

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const ButtonGroup = styled.div<{ vertical?: boolean; nested?: boolean; align?: "start" | "end" | "center" | "stretch"; forceStretch?: boolean }>`
+export const ButtonGroup = styled.div<{ vertical?: boolean; nested?: boolean; align?: "start" | "end" | "center" | "stretch"; forceStretch?: boolean; responsive?: boolean }>`
   display: flex;
   gap: var(--padding-small);
   flex-direction: ${(state) => (state.vertical ? "column" : "row")};
@@ -14,6 +14,15 @@ export const ButtonGroup = styled.div<{ vertical?: boolean; nested?: boolean; al
       ? css`
           & > button:not([data-icon="true"]) {
             flex: 1 1 ${props.forceStretch ? "0" : "auto"};
+          }
+        `
+      : ""}
+
+  ${(props) =>
+    props.responsive && !props.vertical
+      ? css`
+          @media (max-width: 840px) {
+            flex-direction: column;
           }
         `
       : ""}
