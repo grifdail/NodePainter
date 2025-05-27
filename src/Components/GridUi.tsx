@@ -7,7 +7,7 @@ import { useTree } from "../Hooks/useTree";
 import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
 import { useRouter } from "../Hooks/useRouter";
-import { WarningTrack } from "./StyledComponents/WarningTrack";
+import { WarningTrack, WarningTrackSelection } from "./StyledComponents/WarningTrack";
 import { useSelection } from "../Hooks/useSelection";
 import { MainMenu } from "./MainMenu";
 import { FunctionSubMenu } from "./FunctionSubMenu";
@@ -40,6 +40,7 @@ export function GridUi() {
           <div>{`${nodes[portSelection.node].type} # ${portSelection.port}`}</div>
         </WarningTrack>
       )}
+      {selectionActive && <WarningTrackSelection></WarningTrackSelection>}
       {showPreview && <SketchPreview></SketchPreview>}
       <BottomToolbar reversed>
         <button
