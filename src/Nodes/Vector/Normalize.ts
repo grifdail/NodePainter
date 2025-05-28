@@ -1,10 +1,10 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { VectorTypeslimited } from "../../Types/PortType";
-import { Vector, createVector2 } from "../../Types/vectorDataType";
+import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorMagnitude } from "../../Utils/vectorUtils";
+import { EnforceGoodType, VectorNormalize } from "../../Utils/vectorUtils";
 
 export const Normalize: NodeDefinition = {
   id: "Normalize",
@@ -40,8 +40,3 @@ export const Normalize: NodeDefinition = {
     return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
   },
 };
-export function VectorNormalize(a: Vector): number[] {
-  const length = VectorMagnitude(a);
-  const vec = a.map((comp) => comp / length);
-  return vec;
-}

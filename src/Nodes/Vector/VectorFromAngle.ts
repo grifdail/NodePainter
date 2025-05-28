@@ -3,10 +3,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorAddition, VectorIsZero, VectorScale } from "../../Utils/vectorUtils";
+import { VectorAddition, VectorIsZero, VectorNormalize, VectorScale } from "../../Utils/vectorUtils";
 import { VectorCrossProduct } from "./CrossProduct";
 import { VectorDotProduct } from "./DotProduct";
-import { VectorNormalize } from "./Normalize";
 
 export const VectorFromAngle: NodeDefinition = {
   id: "VectorFromAngle",

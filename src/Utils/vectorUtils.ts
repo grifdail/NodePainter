@@ -57,6 +57,12 @@ export function VectorIsZero(normal: number[]) {
   return normal.every((comp) => Math.abs(comp) < Number.EPSILON);
 }
 
+export function VectorNormalize(a: number[]): number[] {
+  const length = VectorMagnitude(a);
+  const vec = a.map((comp) => comp / length);
+  return vec;
+}
+
 export type VectorOperationFunc = (a: number[], b: number[]) => number[];
 export const VectorOperations: { [key: string]: VectorOperationFunc } = {
   "+": VectorAddition,

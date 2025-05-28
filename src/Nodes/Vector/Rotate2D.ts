@@ -3,10 +3,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { VectorComponentOperation, VectorIsZero, VectorScale } from "../../Utils/vectorUtils";
+import { VectorComponentOperation, VectorIsZero, VectorNormalize, VectorScale } from "../../Utils/vectorUtils";
 import { VectorCrossProduct } from "./CrossProduct";
 import { VectorDotProduct } from "./DotProduct";
-import { VectorNormalize } from "./Normalize";
 
 export const RotateVector: NodeDefinition = {
   id: "RotateVector",
