@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { useTree } from "../Hooks/useTree";
 import { TreeStore } from "../Types/TreeStore";
@@ -51,6 +51,15 @@ export function SketchPreview() {
   var tree = useTree();
   var dim = useWindowSize();
   var start = tree.getNode(START_NODE);
+  var cleanup = useRef(() => {});
+
+  useEffect(() => {
+    return () => {
+      if (cleanup.current) {
+        cleanup.current();
+      }
+    };
+  }, []);
 
   var smallestDim = Math.min(1, Math.min(dim.width || start.settings.width || 400, dim.height || start.settings.height || 400) / 450);
   return (
@@ -60,6 +69,7 @@ export function SketchPreview() {
       <ReactP5Wrapper
         sketch={sketch}
         tree={tree}
+        setCleanup={(cb: any) => (cleanup.current = cb)}
         key={`${start.settings.width} / ${start.settings.height}`}
       />
     </Preview>
@@ -67,6 +77,7 @@ export function SketchPreview() {
 }
 type MySketchProps = SketchProps & {
   tree: TreeStore;
+  setCleanup: (cleanup: () => void) => void;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
@@ -78,11 +89,15 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
   p5.updateWithProps = (props: MySketchProps) => {
     tree = props.tree;
+    if (context) {
+      context.endOfRunCleanup();
+    }
     context = createExecutionContext(tree, p5 as P5CanvasInstance);
     seed = Date.now();
     var start = tree.getNode(START_NODE);
     p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
     context.RNG = new Rand(seed.toString());
+    props.setCleanup(context.endOfRunCleanup);
   };
 
   p5.draw = () => {
@@ -99,12 +114,3 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.endOfFrameCleanup();
   };
 };
-
-export function getInputValue(nodeData: NodeData, portId: string, context: ExecutionContext) {
-  const inputPorts = nodeData.dataInputs[portId];
-  if (inputPorts.hasConnection) {
-    return context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
-  } else {
-    return inputPorts.ownValue;
-  }
-}

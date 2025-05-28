@@ -46,19 +46,19 @@ export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> =
         reader.onerror = () => console.log("file reading has failed");
 
         reader.onload = () => {
-          console.log(reader.result, file.name.split(".").pop());
+          console.log(reader.result, file.name);
           onChange({ source: reader.result, ext: file.name.split(".").pop(), name: file.name });
         };
-        reader.readAsText(file);
+        reader.readAsArrayBuffer(file);
       }
     },
-    accept: { "model/obj": [".obj"] },
+    accept: { "model/gltf-binary": [".glb"] },
     maxFiles: 1,
   });
 
   return (
     <Body>
-      {value === null && (
+      {value == undefined && (
         <div
           className="file"
           {...getRootProps()}>
@@ -66,7 +66,7 @@ export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> =
           <IconFileUpload />
         </div>
       )}
-      {value !== null && <div className="loaded">loaded {value.name}</div>}
+      {value != null && <div className="loaded">loaded {value.name}</div>}
 
       <ButtonGroup hidden={value !== null}>
         <Button

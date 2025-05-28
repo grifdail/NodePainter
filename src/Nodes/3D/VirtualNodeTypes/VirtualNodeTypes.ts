@@ -5,6 +5,7 @@ import { LightVirtualNodeTypes } from "./LightVirtualNodeType";
 import { Line3DVirtualNodeType } from "./Line3DVirtualNodeType";
 import { MaterialsVirtualNodes } from "./MaterialsVirtualNodes";
 import { Render3DType } from "./Render3DType";
+import { UploadedModelVirtualNodeType } from "./UploadedModelVirtualNodeType";
 
 export const VirtualNodes = {
   ...MaterialsVirtualNodes,
@@ -14,6 +15,7 @@ export const VirtualNodes = {
   Render3DType: new Render3DType(),
   GenericModelVirtualNodeType: new GenericModelVirtualNodeType(),
   Line3DVirtualNodeType: new Line3DVirtualNodeType(),
+  UploadedModelVirtualNodeType: new UploadedModelVirtualNodeType(),
 };
 
 export type VirtualNodeTypes = keyof typeof VirtualNodes;

@@ -144,8 +144,11 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       context.callCounts = {};
     },
     endOfRunCleanup: function (): void {
+      console.log("cleanup");
       Object.keys(context.blackboard).forEach((key) => {
-        if (typeof context.blackboard[key].dispose === "function") {
+        console.log("cleaning " + key);
+        if (context.blackboard[key] && typeof context.blackboard[key].dispose === "function") {
+          console.log("disposing ");
           context.blackboard[key].dispose();
         }
       });

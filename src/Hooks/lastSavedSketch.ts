@@ -22,7 +22,6 @@ export function getLastSavedSketch() {
 if (import.meta.hot) {
   import.meta.hot.on("vite:afterUpdate", (data) => {
     if (data.updates.some((item) => item.path.includes("useTree") || item.path.includes("App.tsx") || item.path.includes("Graph"))) {
-      console.log("aaaaa");
       useTree.getState().loadTemplate(JSON.parse(localStorage.getItem(SAVE_ID) || ""));
     }
     //console.log(data);

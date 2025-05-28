@@ -3,6 +3,7 @@ import { generateMaterialNodeFromVirtualNode, generateNodeFromVirtualNode } from
 import { Render3D } from "./Render3D";
 import { Render3DLine } from "./Render3DLine";
 import { RenderModel } from "./RenderModel";
+import { UploadModel } from "./UploadModel";
 import { GeometryVirtualNodeTypes } from "./VirtualNodeTypes/Geometry";
 import { LightVirtualNodeTypes } from "./VirtualNodeTypes/LightVirtualNodeType";
 import { MaterialsVirtualNodes } from "./VirtualNodeTypes/MaterialsVirtualNodes";
@@ -16,7 +17,7 @@ export const Nodes3D = [
   ...MaterialNodes,
   ...GeometryNodes,
   Render3D,
-  //UploadModel,
+  UploadModel,
   //GenerateUVModel,
   RenderModel,
   Render3DLine,
