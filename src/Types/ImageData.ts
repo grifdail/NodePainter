@@ -1,6 +1,6 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { Graphics, Image } from "p5";
-import { Texture, TextureLoader } from "three";
+import { CanvasTexture, Texture, TextureLoader } from "three";
 
 type FakeCanvas = { elt: HTMLCanvasElement; width: number; height: number };
 
@@ -56,10 +56,19 @@ export class ImageData {
 
   getThreeJs() {
     if (this.threeTexture) {
-      return this.p5Graphics;
+      return this.threeTexture;
+    }
+    if (this.p5Graphics) {
+      this.threeTexture = new CanvasTexture(this.p5Graphics.elt);
+      return this.threeTexture;
     }
     if (this.p5Images) {
-      return this.p5Images;
+      this.threeTexture = new CanvasTexture((this.p5Images as any).canvas);
+      return this.threeTexture;
+    }
+    if (this.canvas) {
+      this.threeTexture = new CanvasTexture(this.canvas.elt);
+      return this.threeTexture;
     }
     if (this.url && !this.loadingThree) {
       this.loadingThree = new TextureLoader();
@@ -68,5 +77,6 @@ export class ImageData {
         this.loadingThree = null;
       });
     }
+    return null;
   }
 }
