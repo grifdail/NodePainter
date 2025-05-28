@@ -1,4 +1,4 @@
-import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, SphereGeometry } from "three";
+import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, RingGeometry, SphereGeometry } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { Constraints } from "../../../Utils/applyConstraints";
@@ -124,6 +124,40 @@ export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<Cyl
   }
 }
 
+export class DiskGeometryVirtualNodeType extends GeometryVirtualNodeType<RingGeometry, [side: number, hole: number]> {
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "side",
+        type: "number",
+        defaultValue: 32,
+        constrains: [Constraints.Integer(), Constraints.GreaterThan(3)],
+      },
+      {
+        id: "hole",
+        type: "number",
+        defaultValue: 0.5,
+        constrains: [Constraints.Clamp01()],
+      },
+    ];
+  }
+  getId(): string {
+    return "DiskGeometry";
+  }
+  getDescription(): string {
+    return "The geometry for a cylinder";
+  }
+  create(side: number, hole: number): RingGeometry {
+    const self = new RingGeometry(hole, 1, side, 1);
+    return self;
+  }
+  update(element: RingGeometry): void {}
+  remove(element: RingGeometry): void {}
+  getHash(side: number, ratio: number): string {
+    return `${Math.floor(side)}-${Math.floor(ratio * 1000)}`;
+  }
+}
+
 export class IcosahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<IcosahedronGeometry, [detail: number]> {
   getInputs(): PortDefinition[] {
     return [
@@ -236,4 +270,5 @@ export const GeometryVirtualNodeTypes = {
   DodecahedronGeometryVirtualNodeType: new DodecahedronGeometryVirtualNodeType(),
   QuadGeometryVirtualNodeType: new QuadGeometryVirtualNodeType(),
   PlaneGeometryVirtualNodeType: new PlaneGeometryVirtualNodeType(),
+  DiskGeometryVirtualNodeType: new DiskGeometryVirtualNodeType(),
 };
