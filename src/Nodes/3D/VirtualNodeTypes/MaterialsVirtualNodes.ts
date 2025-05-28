@@ -141,7 +141,6 @@ export class MatcapMaterialType extends MaterialVirtualNodeType<MeshMatcapMateri
   }
   update(element: MeshMatcapMaterial, texture: ImageData, mat: MaterialGenericData): void {
     const oldMap = element.matcap;
-    console.log(texture?.getThreeJs());
     element.matcap = texture?.getThreeJs();
     if (element.matcap != oldMap) {
       element.needsUpdate = true;
@@ -211,8 +210,6 @@ export class StandardTextureMaterialType extends MaterialVirtualNodeType<MeshSta
     element.roughness = roughness;
     element.metalness = metalness;
     var olds = [element.map, element.roughnessMap, element.metalnessMap];
-
-    console.log(colorTexture?.getThreeJs());
     element.map = colorTexture?.getThreeJs();
     element.roughnessMap = roughnessTexture?.getThreeJs();
     element.metalnessMap = metalnessTexture?.getThreeJs();

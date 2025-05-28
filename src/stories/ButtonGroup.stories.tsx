@@ -61,8 +61,12 @@ export const IconAndText: Story = {
   args: {},
   render: ({ ...args }) => (
     <ButtonGroup {...args}>
-      <Button icon={IconBrush} label="Heu"></Button>
-      <Button icon={IconMenu2} label="Hello world"></Button>
+      <Button
+        icon={IconBrush}
+        label="Heu"></Button>
+      <Button
+        icon={IconMenu2}
+        label="Hello world"></Button>
     </ButtonGroup>
   ),
 };
@@ -73,7 +77,9 @@ export const Mixed: Story = {
     <ButtonGroup {...args}>
       <InvisibleButton label="Oh no ! This is long"></InvisibleButton>
       <Button label="Hey"></Button>
-      <Button icon={IconMenu2} label="Hello world"></Button>
+      <Button
+        icon={IconMenu2}
+        label="Hello world"></Button>
       <Button icon={IconMenu2}></Button>
     </ButtonGroup>
   ),
@@ -81,7 +87,7 @@ export const Mixed: Story = {
 
 export const Grouping: Story = {
   args: {
-    forceStretch: false,
+    $forceStretch: false,
   },
   render: ({ ...args }) => (
     <div
@@ -90,7 +96,9 @@ export const Grouping: Story = {
       }}>
       <ButtonGroup {...args}>
         <Button label="Hey"></Button>
-        <Button icon={IconMenu2} label="Hello world"></Button>
+        <Button
+          icon={IconMenu2}
+          label="Hello world"></Button>
         <Button icon={IconMenu2}></Button>
       </ButtonGroup>
     </div>

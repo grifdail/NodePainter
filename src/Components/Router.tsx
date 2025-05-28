@@ -38,6 +38,7 @@ export function Router() {
       {route === Routes.IntroMenu && <IntroMenuModal close={close} />}
       {dialog.dialogs.map((d) => (
         <DialogModal
+          key={d.id}
           dialog={d}
           controler={dialog}></DialogModal>
       ))}

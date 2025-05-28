@@ -186,8 +186,8 @@ export function IntroMenuModal({ close }: { close: () => void }) {
       <MainDiv>
         <ButtonGroup
           align="stretch"
-          forceStretch
-          responsive>
+          $forceStretch
+          $responsive>
           <Button
             onClick={withConfirm(() => loadSketch(new Promise<SketchTemplate>((r) => r(lastSavedSketch as SketchTemplate))))}
             disabled={lastSavedSketch === null}
