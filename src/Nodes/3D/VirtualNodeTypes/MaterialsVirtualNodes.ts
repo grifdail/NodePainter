@@ -1,4 +1,4 @@
-import { AdditiveBlending, BackSide, Blending, DoubleSide, FrontSide, Material, MeshBasicMaterial, MeshDepthMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshStandardMaterial, MultiplyBlending, NoBlending, NormalBlending, RGBDepthPacking, SubtractiveBlending } from "three";
+import { AdditiveBlending, BackSide, Blending, DoubleSide, FrontSide, Material, MeshBasicMaterial, MeshDepthMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshStandardMaterial, MultiplyBlending, NoBlending, NormalBlending, RGBDepthPacking, SubtractiveBlending, Texture } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
@@ -192,30 +192,37 @@ export class StandardMaterialType extends MaterialVirtualNodeType<MeshStandardMa
   }
 }
 
-export class StandardTextureMaterialType extends MaterialVirtualNodeType<MeshStandardMaterial, [color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, mat: MaterialGenericData]> {
+export class StandardTextureMaterialType extends MaterialVirtualNodeType<MeshStandardMaterial, [color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, normalTexture: ImageData, mat: MaterialGenericData]> {
   getId(): string {
     return "StandardTextureMaterial";
   }
   getDescription(): string {
     return "Render an object with physicaly based shader";
   }
-  create(color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, mat: MaterialGenericData): MeshStandardMaterial {
-    return new MeshStandardMaterial({ color: toThreeColor(color), roughness, metalness, map: colorTexture?.getThreeJs(), roughnessMap: roughnessTexture?.getThreeJs(), metalnessMap: metalnessTexture?.getThreeJs(), ...toThreeSetting(mat) });
+  create(color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, normalTexture: ImageData, mat: MaterialGenericData): MeshStandardMaterial {
+    return new MeshStandardMaterial({
+      color: toThreeColor(color),
+      roughness,
+      metalness,
+      map: colorTexture?.getThreeJs(),
+      roughnessMap: roughnessTexture?.getThreeJs(),
+      metalnessMap: metalnessTexture?.getThreeJs(),
+      normalMap: normalTexture?.getThreeJs(),
+      ...toThreeSetting(mat),
+    });
   }
   remove(element: MeshStandardMaterial): void {
     element.dispose();
   }
-  update(element: MeshStandardMaterial, color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, mat: MaterialGenericData): void {
+  update(element: MeshStandardMaterial, color: Color, colorTexture: ImageData, roughness: number, roughnessTexture: ImageData, metalness: number, metalnessTexture: ImageData, normalTexture: ImageData, mat: MaterialGenericData): void {
     element.color.set(toThreeColor(color));
     element.roughness = roughness;
     element.metalness = metalness;
-    var olds = [element.map, element.roughnessMap, element.metalnessMap];
-    element.map = colorTexture?.getThreeJs();
-    element.roughnessMap = roughnessTexture?.getThreeJs();
-    element.metalnessMap = metalnessTexture?.getThreeJs();
-    if (olds[0] !== element.map || olds[1] !== element.roughnessMap || olds[2] !== element.metalnessMap) {
-      element.needsUpdate = true;
-    }
+    setMaterial(element, "map", colorTexture?.getThreeJs());
+    setMaterial(element, "roughnessMap", roughnessTexture?.getThreeJs());
+    setMaterial(element, "metalnessMap", metalnessTexture?.getThreeJs());
+    setMaterial(element, "normalMap", normalTexture?.getThreeJs());
+
     updateTreeMaterial(element, mat);
   }
   getInputs(): PortDefinition[] {
@@ -230,6 +237,7 @@ export class StandardTextureMaterialType extends MaterialVirtualNodeType<MeshSta
       Port.image("roughnessTexture"),
       Port.number("metalness", 0.5),
       Port.image("metalnessTexture"),
+      Port.image("normalTexture"),
     ];
   }
 }
@@ -285,3 +293,11 @@ export const MaterialsVirtualNodes = {
   DepthMaterialVirtualNodeType: new DepthMaterialVirtualNodeType(),
   MatcapMaterialType: new MatcapMaterialType(),
 };
+
+function setMaterial<T extends Material>(mat: T, props: keyof T, value: Texture | null) {
+  var old = mat[props];
+  if (old != value) {
+    mat[props] = value as any;
+    mat.needsUpdate = true;
+  }
+}
