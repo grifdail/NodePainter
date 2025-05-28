@@ -69,7 +69,7 @@ export function getShaderType(type: PortType): string {
   }
 }
 
-export function convertToUniform(type: PortType, value: any): any {
+export function convertToP5Uniform(type: PortType, value: any): any {
   switch (type) {
     case "bool":
       return value;

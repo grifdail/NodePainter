@@ -75,7 +75,6 @@ export const Render3D: NodeDefinition = {
     threeContext.update(virtual, threeContext.instance.scene);
 
     threeContext.instance.renderer.render(threeContext.instance.scene, threeContext.instance.camera);
-
     return threeContext.instance.imageData;
   },
 };

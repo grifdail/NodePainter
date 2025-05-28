@@ -113,7 +113,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
     } else if (!ended) {
       time += frameRate;
-      console.log(time - ownProps.preloadDuration * 1000 >= 0);
       if (time - ownProps.preloadDuration * 1000 >= 0) {
         renderer?.addFrame(p5.drawingContext);
       }

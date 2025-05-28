@@ -11,13 +11,12 @@ export const PaintImage: NodeDefinition = {
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
   tags: ["Image"],
 
-  settings: [{ id: "image", type: "image-paint", defaultValue: null }],
+  settings: [{ id: "image", type: "image-paint" }],
   getData(portId, data, context) {
     if (data.settings.image != null) {
       var key = `${data.id}-image-cache`;
       if (!context.blackboard[key]) {
-        const img = new ImageData();
-        img.load(data.settings.image, context.p5);
+        const img = new ImageData({ url: data.settings.image });
         context.blackboard[key] = img;
         return img;
       } else {

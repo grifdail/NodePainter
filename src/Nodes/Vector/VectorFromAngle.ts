@@ -49,7 +49,6 @@ export const VectorFromAngle: NodeDefinition = {
     const length = context.getInputValueNumber(nodeData, "length");
     const cos = Math.cos(angle) * length;
     const sin = Math.sin(angle) * length;
-    //console.log(cos * cos + sin * sin);
     if (nodeData.selectedType === "vector2") {
       return createVector2(cos, sin);
     } else {

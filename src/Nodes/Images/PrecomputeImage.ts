@@ -32,8 +32,7 @@ export const PrecomputeImage: NodeDefinition = {
     const keyComputed = `${node.id}-is-computed`;
     let img = context.blackboard[keyCache];
     if (!img) {
-      img = new ImageData();
-      img.set(context.p5.createGraphics(width, height));
+      img = new ImageData({ p5Graphics: context.p5.createGraphics(width, height) });
       context.blackboard[keyCache] = img;
     }
     let needRedraw = false;
@@ -42,7 +41,7 @@ export const PrecomputeImage: NodeDefinition = {
     needRedraw ||= when === "Everytime";
     if (needRedraw) {
       var oldTarget = context.target;
-      context.target = img.image;
+      context.target = img.p5Graphics;
       const drawing = context.getInputValueDrawing(node, "drawing");
       drawing();
 

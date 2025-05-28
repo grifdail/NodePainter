@@ -37,7 +37,6 @@ const Body = styled.div`
 export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> = function ({ onChange, value, def }: SettingProps<MeshUploadSettingDefinition>) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles, fileRejection) => {
-      console.log(acceptedFiles, fileRejection);
       if (acceptedFiles.length >= 1) {
         var file = acceptedFiles[0];
 

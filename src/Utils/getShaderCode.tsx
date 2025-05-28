@@ -67,7 +67,6 @@ function buildDependencyList(start: string, nodes: NodeCollection) {
     const node = nodes[nodeId];
     if (distances[nodeId] === undefined || distances[nodeId] < distance || start === nodeId) {
       distances[nodeId] = distance;
-      console.log(nodeId, node);
       Object.entries(node.dataInputs).forEach(([id, port]) => {
         if (port.hasConnection) {
           walk(port.connectedNode as string, distance + 1);

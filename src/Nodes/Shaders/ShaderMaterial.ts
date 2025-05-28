@@ -1,7 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { convertToUniform } from "../../Utils/convertToShaderValue";
+import { convertToP5Uniform } from "../../Utils/convertToShaderValue";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 import { ExecutionContext, FunctionContext } from "../../Utils/createExecutionContext";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
@@ -71,12 +71,12 @@ function ApplyUniformFromData(shader: any, context: ExecutionContext, data: Func
   Object.entries(data).forEach(([id, { value, type }]) => {
     if (type === "image") {
       const image = value as ImageData;
-      if (!image || !image.isLoaded) {
+      if (!image || !image.getP5(context.p5)) {
         return;
       }
-      shader.setUniform(sanitizeForShader(`uniform_${id}`), convertToUniform("image", value));
+      shader.setUniform(sanitizeForShader(`uniform_${id}`), image.getP5(context.p5));
     } else {
-      shader.setUniform(sanitizeForShader(`uniform_${id}`), convertToUniform(type, value));
+      shader.setUniform(sanitizeForShader(`uniform_${id}`), convertToP5Uniform(type, value));
     }
   });
 }

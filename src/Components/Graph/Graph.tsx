@@ -119,7 +119,6 @@ export function Graph() {
     function onTapNode(node: NodeData, e: MouseEvent<Element>): void {
       var selection = useSelection.getState();
       if (selection.isInSelectionMode || e.ctrlKey) {
-        console.log("hehe");
         selection.toggleNode(node.id);
       } else {
         onClickNodeEdgeCreation(node);

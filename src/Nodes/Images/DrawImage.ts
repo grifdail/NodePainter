@@ -23,8 +23,8 @@ export const DrawImage: NodeDefinition = {
     var pos = context.getInputValueVector(node, "pos");
     var dim = context.getInputValueVector(node, "dim");
     return () => {
-      if (image && image.isLoaded) {
-        context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1]);
+      if (image && image.getP5(context.p5)) {
+        context.target.image(image.getP5(context.p5) as Image, pos[0], pos[1], dim[0], dim[1]);
       }
     };
   },

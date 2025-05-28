@@ -1,7 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { convertToUniform } from "../../Utils/convertToShaderValue";
+import { convertToP5Uniform } from "../../Utils/convertToShaderValue";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
 
 export const RenderShader: NodeDefinition = {
@@ -28,15 +28,13 @@ export const RenderShader: NodeDefinition = {
 
     let img = context.blackboard[keyCache];
     if (!img) {
-      img = new ImageData();
-      img.set(context.p5.createGraphics(width, height, context.p5.WEBGL));
+      img = new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
       context.blackboard[keyCache] = img;
     }
     let shader = context.blackboard[keyShader];
     if (!shader) {
       try {
         const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
-        console.log(shaderCode);
         shader = (img.image as any).createFilterShader(shaderCode);
         context.blackboard[keyShader] = shader;
       } catch (error) {
@@ -53,13 +51,13 @@ export const RenderShader: NodeDefinition = {
       Object.values(node.dataInputs).forEach((port) => {
         if (port.type === "image") {
           const data = context.getInputValueImage(node, port.id);
-          if (!data || !data.isLoaded) {
+          if (!data || !data.getP5(context.p5)) {
             return;
           }
-          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
+          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5(context.p5));
         } else {
           const data = context.getInputValue(node, port.id, port.type);
-          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToUniform(port.type, data));
+          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToP5Uniform(port.type, data));
         }
       });
       img.image.clear(0, 0, 0, 0);

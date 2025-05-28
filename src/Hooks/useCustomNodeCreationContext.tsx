@@ -89,7 +89,6 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       useTree.getState().createSimulation(node);
     },
     prepareNodeForEdit(node) {
-      console.log(node);
       node.dataInputs = node.dataInputs.filter((item) => item.id !== "progress" && !node.dataOutputs.some((output) => output.id === item.id));
       return node;
     },

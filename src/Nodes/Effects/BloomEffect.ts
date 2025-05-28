@@ -171,10 +171,10 @@ export const BloomEffect: NodeDefinition = {
     var imageData = context.getInputValueImage(node, "image");
     var amount = context.getInputValueNumber(node, "amount");
     var blurAmount = context.getInputValueNumber(node, "blurAmount");
-    if (!imageData || !imageData.isLoaded) {
+    if (!imageData || !imageData.getP5(context.p5)) {
       return null;
     }
-    let image = imageData.image as p5.Graphics;
+    let image = imageData.getP5(context.p5) as p5.Graphics;
     let shaderBlurH = createShaderFromCache(context, KEY_BLUR_SHADER_H, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
     let shaderBlurV = createShaderFromCache(context, KEY_BLUR_SHADER_V, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
     let shaderBloom = createShaderFromCache(context, KEY_BLOOM_SHADER, EFFECT_VERTEX_SHADER, BLOOM_FRAGMENT_SHADER);
@@ -223,8 +223,7 @@ function createShaderFromCache(context: ExecutionContext, key: string, vertex: s
 function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }) {
   let target = context.blackboard[key];
   if (!target) {
-    target = new ImageData();
-    target.set(context.p5.createGraphics(image.width, image.height, context.p5.WEBGL));
+    target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
     context.blackboard[key] = target;
   }
   return target;

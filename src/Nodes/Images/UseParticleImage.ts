@@ -4,9 +4,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createOrSelectFromCache } from "../../Utils/useCache";
 
-const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
+//const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
+const gallery = [] as string[];
 function basename(path: string) {
-  console.log(path);
   return path.split("/").reverse()[0];
 }
 
@@ -35,8 +35,7 @@ export const UseParticleImage: NodeDefinition = {
       context,
       node,
       () => {
-        const img = new ImageData();
-        img.load(imgSetting.url, context.p5);
+        const img = new ImageData({ url: imgSetting });
         return img;
       },
       imgSetting.url

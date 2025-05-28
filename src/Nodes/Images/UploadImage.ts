@@ -16,8 +16,7 @@ export const UploadImage: NodeDefinition = {
     if (data.settings.image != null) {
       var key = `${data.id}-image-cache`;
       if (!context.blackboard[key]) {
-        const img = new ImageData();
-        img.load(data.settings.image, context.p5);
+        const img = new ImageData({ url: data.settings.image });
         context.blackboard[key] = img;
         return img;
       } else {

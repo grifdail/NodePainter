@@ -24,7 +24,6 @@ export const Sum: NodeDefinition = {
   onChangeType: changeTypeGenerator([], ["out"], ["array"]),
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");
-    console.log(array);
     return EnforceGoodType(node, array.reduce(VectorAddition, createDefaultVector(node.selectedType)));
   },
 };

@@ -27,8 +27,8 @@ export const DrawImagePart: NodeDefinition = {
     var sourcePos = context.getInputValueVector(node, "sourcePos");
     var sourceDim = context.getInputValueVector(node, "sourceDim");
     return () => {
-      if (image && image.isLoaded) {
-        context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1], sourcePos[0], sourcePos[1], sourceDim[0], sourceDim[1]);
+      if (image && image.getP5(context.p5)) {
+        context.target.image(image.getP5(context.p5) as Image, pos[0], pos[1], dim[0], dim[1], sourcePos[0], sourcePos[1], sourceDim[0], sourceDim[1]);
       }
     };
   },

@@ -1,4 +1,3 @@
-import { Graphics } from "p5";
 import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { Color, Vector3 } from "../../../Types/vectorDataType";
@@ -19,10 +18,8 @@ export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DP
     var scene = new Scene();
     var camera = new PerspectiveCamera(fov, width / height, 0.1, 100);
     const renderer = new WebGLRenderer();
-    const imageData = new ImageData();
+    const imageData = new ImageData({ canvas: { width: width, height: height, elt: renderer.domElement } });
     renderer.setSize(width, height);
-    imageData.set({ width: width, height: height, elt: renderer.domElement } as Graphics);
-
     return { renderer, scene, camera, imageData, parent: scene };
   }
   remove(element: ThreeJSContext): void {

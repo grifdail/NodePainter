@@ -128,10 +128,10 @@ export const BlurEffect: NodeDefinition = {
   getData(portId, node, context) {
     var imageData = context.getInputValueImage(node, "image");
     var blurAmount = context.getInputValueNumber(node, "amount");
-    if (!imageData || !imageData.isLoaded) {
+    if (!imageData || !imageData.getP5(context.p5)) {
       return null;
     }
-    let image = imageData.image as p5.Graphics;
+    let image = imageData.getP5(context.p5) as p5.Graphics;
     let shaderH = context.blackboard[KEY_BLUR_SHADER_H] as p5.Shader;
     if (!shaderH) {
       shaderH = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
@@ -170,8 +170,7 @@ export const BlurEffect: NodeDefinition = {
 function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }) {
   let target = context.blackboard[key];
   if (!target) {
-    target = new ImageData();
-    target.set(context.p5.createGraphics(image.width, image.height, context.p5.WEBGL));
+    target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
     context.blackboard[key] = target;
   }
   return target;

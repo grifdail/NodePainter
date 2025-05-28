@@ -21,11 +21,20 @@ export const ImageDimension: NodeDefinition = {
   settings: [],
   getData(portId, node, context) {
     var image = context.getInputValueImage(node, "image");
-    if (image && image.isLoaded) {
-      console.log(image);
-      return createVector2(image.image?.width, image.image?.height);
-    } else {
+    if (!image) {
       return createVector2();
+    }
+    if (image.p5Graphics) {
+      return createVector2(image.p5Graphics.width, image.p5Graphics.height);
+    }
+    if (image.p5Images) {
+      return createVector2(image.p5Images.width, image.p5Images.height);
+    }
+    if (image.canvas) {
+      return createVector2(image.canvas.width, image.canvas.height);
+    }
+    if (image.threeTexture) {
+      return createVector2(image.threeTexture.image.width, image.threeTexture.image.height);
     }
   },
 };

@@ -26,9 +26,9 @@ export const DrawImageWithTint: NodeDefinition = {
     var dim = context.getInputValueVector(node, "dim");
     var color = context.getInputValueColor(node, "color");
     return () => {
-      if (image && image.isLoaded) {
+      if (image && image.getP5(context.p5)) {
         context.target.tint(toP5Color(color, context.p5));
-        context.target.image(image.image as Image, pos[0], pos[1], dim[0], dim[1]);
+        context.target.image(image.getP5(context.p5) as Image, pos[0], pos[1], dim[0], dim[1]);
         context.target.tint(255, 255);
       }
     };

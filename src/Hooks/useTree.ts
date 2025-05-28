@@ -524,7 +524,6 @@ export const useTree = create<TreeStore>()((set, get) => {
       });
       newNodeData.pairedNode = pairedNode;
       newNodeData.settings.blackboardData = Object.fromEntries(ports.map((port) => [port.id, port]));
-      console.log(newNodeData);
       set((state) => ({ nodes: { ...state.nodes, [newNodeData.id]: newNodeData } }));
     },
     dangerouselyUpdateNode(nodeId, cb) {
@@ -634,7 +633,6 @@ export const useTree = create<TreeStore>()((set, get) => {
           });
           var defaultBB = nodes[0].boundingBox;
           var bb = nodes.reduce((old, bb) => old.extend(bb.boundingBox), defaultBB);
-          console.log("pouet", bb, nodes);
           callback(bb, nodes);
         })
       );
