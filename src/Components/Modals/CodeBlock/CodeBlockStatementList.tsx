@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { CodeBlockStatement } from "../../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../../Types/CodeBlockStatement";
 import { CodeBlockStatementView } from "./CodeBlockStatementView";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { CodeBlockStatementTypes } from "../../../CodeBlocks/CodeBlockTypes";

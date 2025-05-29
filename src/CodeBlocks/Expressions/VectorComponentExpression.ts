@@ -1,6 +1,9 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 const Mapping = {
@@ -49,13 +52,13 @@ export const VectorComponentExpressions: CodeBlockExpressionGenerator[] = ["vect
       return type === "number";
     },
     evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-      var a = evaluateExpression(statement.parameters.vector, state) as number[];
+      var a = evaluateCodeBlockExpression(statement.parameters.vector, state) as number[];
 
-      var component = evaluateExpression(statement.parameters.component, state) as string;
+      var component = evaluateCodeBlockExpression(statement.parameters.component, state) as string;
       return a[Mapping[component as keyof typeof Mapping]];
     },
     toString(statement) {
-      return `${toStringExpression(statement.parameters.vector)}.${toStringExpression(statement.parameters.component)}`;
+      return `${toStringCodeBlockExpression(statement.parameters.vector)}.${toStringCodeBlockExpression(statement.parameters.component)}`;
     },
   };
   return self;

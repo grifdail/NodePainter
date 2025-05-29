@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";

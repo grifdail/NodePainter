@@ -1,9 +1,12 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 
 export const LogStatement: CodeBlockStatementGenerator = {
   id: "Debug/Log",
   execute(block, context) {
-    var result = evaluateExpression(block.parameters.text, context);
+    var result = evaluateCodeBlockExpression(block.parameters.text, context);
     console.log(result);
   },
   create() {
@@ -21,6 +24,6 @@ export const LogStatement: CodeBlockStatementGenerator = {
     return data;
   },
   toString(statement) {
-    return `Log ${toStringExpression(statement.parameters.text)}`;
+    return `Log ${toStringCodeBlockExpression(statement.parameters.text)}`;
   },
 };

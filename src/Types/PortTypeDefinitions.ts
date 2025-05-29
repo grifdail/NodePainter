@@ -342,7 +342,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     icon: IconPaint,
     inlineInput: MaterialInput,
     smallIcon: IconPaint,
-    createDefaultValue: createDefaultMaterial,
+    createDefaultValue: () => createDefaultMaterial(),
     convert: {},
     shaderConvert: {},
   },

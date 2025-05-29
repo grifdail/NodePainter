@@ -1,9 +1,7 @@
 import Sketch from "@uiw/react-color-sketch";
-
 import { Menu } from "@szhsin/react-menu";
 import { ReactNode, useMemo } from "react";
 import { InputProps } from "./InputProps";
-
 import styled from "styled-components";
 import { Input, InputBackgroundColor } from "../../StyledComponents/Input";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";

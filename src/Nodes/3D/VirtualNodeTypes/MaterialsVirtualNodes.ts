@@ -5,7 +5,7 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { Color } from "../../../Types/vectorDataType";
 import { toThreeColor, White } from "../../../Utils/colorUtils";
 import { MaterialGenericData } from "./MaterialGenericData";
-import { MaterialVirtualNodeType } from "./SimpleNodeVirtualNodeType";
+import { MaterialVirtualNodeType } from "./MaterialVirtualNodeType";
 
 function toThreeSetting({ blendingMode, side, ...rest }: MaterialGenericData) {
   return { ...rest, blending: convertToThreeBlending(blendingMode), side: convertToThreeSide(side) };

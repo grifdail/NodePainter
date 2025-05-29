@@ -1,4 +1,5 @@
-import { CodeBlockParameterField, CodeBlockStatement } from "../../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../../Types/CodeBlockStatement";
+import { CodeBlockParameterField } from "../../../Types/CodeBlockParameterField";
 import { CodeBlockParameterView } from "./CodeBlockParameterView";
 import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconX } from "@tabler/icons-react";
 import { InvisibleButton } from "../../Generics/Button";

@@ -1,7 +1,8 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor, createVector3 } from "../../Types/vectorDataType";
-import { StatefullInstance, StatefullVirtualElement } from "../../Utils/statefullContext";
+import { StatefullInstance } from "../../Utils/StatefullInstance";
+import { StatefullVirtualElement } from "../../Utils/StatefullVirtualElement";
 import { Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
 import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 

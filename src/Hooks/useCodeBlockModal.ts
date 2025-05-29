@@ -1,6 +1,8 @@
 import { produce } from "immer";
 import { create } from "zustand";
-import { CodeBlock, CodeBlockStatement, createDefaultCodeBlock } from "../Types/CodeBlock";
+import { CodeBlock } from "../Types/CodeBlock";
+import { CodeBlockStatement } from "../Types/CodeBlockStatement";
+import { createDefaultCodeBlock } from "../Types/createDefaultCodeBlock";
 import { PortDefinition } from "../Types/PortDefinition";
 import { Routes } from "../Types/Routes";
 import { useRouter } from "./useRouter";

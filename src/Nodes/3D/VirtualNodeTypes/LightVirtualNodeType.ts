@@ -2,7 +2,7 @@ import { AmbientLight, DirectionalLight, PointLight } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Color, createVector3, Vector3 } from "../../../Types/vectorDataType";
 import { toThreeColor, White } from "../../../Utils/colorUtils";
-import { Object3DVirtualNodeType } from "./SimpleNodeVirtualNodeType";
+import { Object3DVirtualNodeType } from "./Object3DVirtualNodeType";
 
 export class AmbientLightVirtualNodeType extends Object3DVirtualNodeType<AmbientLight, [color: Color, intensity: number]> {
   getInputs(): PortDefinition[] {

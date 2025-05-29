@@ -1,9 +1,13 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { executeStatementParameter } from "../../Types/executeStatementParameter";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 
 export const IfStatement: CodeBlockStatementGenerator = {
   id: "if",
   execute(block, context) {
-    var result = evaluateExpression(block.parameters.condition, context) as boolean;
+    var result = evaluateCodeBlockExpression(block.parameters.condition, context) as boolean;
     if (result) {
       executeStatementParameter(block.parameters.then, context);
     } else {
@@ -33,6 +37,6 @@ export const IfStatement: CodeBlockStatementGenerator = {
     return data;
   },
   toString(statement) {
-    return `If ${toStringExpression(statement.parameters.condition)}`;
+    return `If ${toStringCodeBlockExpression(statement.parameters.condition)}`;
   },
 };

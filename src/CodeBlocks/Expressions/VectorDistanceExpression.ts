@@ -1,6 +1,9 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { VectorDistance, VectorSquareDistance } from "../../Utils/vectorUtils";
 
@@ -34,13 +37,13 @@ export const VectorDistanceExpression: CodeBlockExpressionGenerator = {
     return type === "vector2" || type === "vector3" || type === "color" || type === "vector4";
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var a = evaluateExpression(statement.parameters.A, state) as number[];
-    var b = evaluateExpression(statement.parameters.B, state) as number[];
+    var a = evaluateCodeBlockExpression(statement.parameters.A, state) as number[];
+    var b = evaluateCodeBlockExpression(statement.parameters.B, state) as number[];
 
-    var comparator = evaluateExpression(statement.parameters.operation, state) as string;
+    var comparator = evaluateCodeBlockExpression(statement.parameters.operation, state) as string;
     return comparator === "Distance" ? VectorDistance(a, b) : VectorSquareDistance(a, b);
   },
   toString(statement) {
-    return `${toStringExpression(statement.parameters.operator)} from ${toStringExpression(statement.parameters.A)} to ${toStringExpression(statement.parameters.B)}`;
+    return `${toStringCodeBlockExpression(statement.parameters.operator)} from ${toStringCodeBlockExpression(statement.parameters.A)} to ${toStringCodeBlockExpression(statement.parameters.B)}`;
   },
 };

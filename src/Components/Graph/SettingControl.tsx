@@ -1,6 +1,7 @@
 import { SettingDefinition } from "../../Types/SettingDefinition";
 import { NodeData } from "../../Types/NodeData";
-import { SettingComponent, SettingComponents } from "../Settings/SettingsComponents";
+import { SettingComponents } from "../Settings/SettingsComponents";
+import { SettingComponent } from "../Settings/SettingComponent";
 
 export const SettingControl = ({ y, value, def, onChange, nodeData, useHTML }: { y: number; useHTML?: boolean; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
   var DefinedComponent = SettingComponents[def.type] as SettingComponent<any>;

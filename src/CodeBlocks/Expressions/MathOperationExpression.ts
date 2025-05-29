@@ -1,5 +1,8 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { MathOperationTypes, NumberOperations } from "../../Utils/logicUtils";
 
@@ -33,10 +36,10 @@ export const MathOperationExpression: CodeBlockExpressionGenerator = {
     return type === "number";
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var a = evaluateExpression(statement.parameters.A, state) as number;
-    var b = evaluateExpression(statement.parameters.B, state) as number;
+    var a = evaluateCodeBlockExpression(statement.parameters.A, state) as number;
+    var b = evaluateCodeBlockExpression(statement.parameters.B, state) as number;
 
-    var comparator = evaluateExpression(statement.parameters.operator, state) as string;
+    var comparator = evaluateCodeBlockExpression(statement.parameters.operator, state) as string;
     var func = NumberOperations[comparator];
     if (func !== undefined) {
       return func(a, b);
@@ -45,6 +48,6 @@ export const MathOperationExpression: CodeBlockExpressionGenerator = {
     }
   },
   toString(statement) {
-    return `( ${toStringExpression(statement.parameters.A)} ${toStringExpression(statement.parameters.operator)} ${toStringExpression(statement.parameters.B)} )`;
+    return `( ${toStringCodeBlockExpression(statement.parameters.A)} ${toStringCodeBlockExpression(statement.parameters.operator)} ${toStringCodeBlockExpression(statement.parameters.B)} )`;
   },
 };
