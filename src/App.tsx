@@ -10,6 +10,8 @@ import { loadFromUrl } from "./Utils/loadFromUrl";
 import { loadJsonDecrypt } from "./Utils/loadJsonDecrypt";
 import { useViewbox } from "./Hooks/useViewbox";
 import { resetCamera } from "./Utils/resetCamera";
+import { css } from "styled-components";
+import { PortStyle } from "./PortStyle";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);
@@ -22,6 +24,7 @@ function App() {
   useResetCamera();
   return (
     <div className="app">
+      <PortStyle />
       <GraphCache />
       <Router />
       <Tooltip id="tooltip"></Tooltip>
