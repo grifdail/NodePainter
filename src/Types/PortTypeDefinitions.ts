@@ -1,4 +1,4 @@
-import { Icon, IconArrowUpRightCircle, IconBadge3d, IconBrush, IconColorSwatch, IconCube, IconNumber2, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconQuote, IconRotate3d, IconToggleLeft } from "@tabler/icons-react";
+import { Icon, IconArrowUpRightCircle, IconBadge3d, IconBrush, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconQuote, IconRotate3d, IconToggleLeft } from "@tabler/icons-react";
 import { BoolInput } from "../Components/Generics/Inputs/BoolInput";
 import { ColorInput } from "../Components/Generics/Inputs/ColorInput";
 import { MaterialInput } from "../Components/Generics/Inputs/MaterialInput";
@@ -144,7 +144,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     color: "#f145bc",
     icon: IconArrowUpRightCircle,
     inlineInput: VectorInput,
-    smallIcon: IconNumber4,
+    smallIcon: IconNumber3,
     createDefaultValue: createVector3,
     componentNames: ["x", "y", "z"],
     convert: {

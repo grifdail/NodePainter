@@ -55,7 +55,7 @@ export const ComposeNode: NodeDefinition = {
   },
   getData: (portId, nodeData, context) => {
     var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 2;
-    return new Array(vectorLength).map((_, i) => context.getInputValueNumber(nodeData, i.toString()));
+    return new Array(vectorLength).fill(null).map((_, i) => context.getInputValueNumber(nodeData, i.toString()));
   },
   getShaderCode(node, context) {
     if (node.selectedType === "vector3") {
