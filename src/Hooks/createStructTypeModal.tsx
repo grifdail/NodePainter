@@ -2,7 +2,7 @@ import { TextInput } from "../Components/Generics/Inputs/TextInput";
 import { PortEditListInput } from "../Components/Modals/CustomNodes/PortEditList";
 import { useDialog } from "../Hooks/useDialog";
 import { PortDefinition } from "../Types/PortDefinition";
-import { FullCommonTypes } from "../Types/PortType";
+import { portTypesWithTags } from "../Types/PortTypeDefinitions";
 import { useTree } from "./useTree";
 
 export const createStructTypeModal = (name: string, ports: PortDefinition[]) => {
@@ -39,7 +39,7 @@ export const createStructTypeModal = (name: string, ports: PortDefinition[]) => 
         passTrough: {
           label: "Fields",
           prefix: "field",
-          availableTypes: FullCommonTypes,
+          availableTypes: portTypesWithTags(["common"], []),
         },
       },
     ],

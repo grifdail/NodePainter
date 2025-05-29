@@ -1,14 +1,14 @@
 import { IconInfoCircle, IconPlus } from "@tabler/icons-react";
 import { PortDefinition } from "../../../Types/PortDefinition";
-import { PortType } from "../../../Types/PortType";
 import { InvisibleButton } from "../../Generics/Button";
 import { PortEdit } from "./PortEdit";
 import styled from "styled-components";
 import { useCallback, useState } from "react";
-import { createDefaultValue } from "../../../Utils/createDefaultValue";
 import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { InputProps } from "../../Generics/Inputs/InputProps";
 import { FieldsetStyled } from "../../StyledComponents/Fieldset";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
+import { PortType } from "../../../Types/PortType";
 
 const SectionStyled = styled.section`
   ${FieldsetStyled} & {
@@ -57,7 +57,7 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
   const { change, remove, addNew } = useListManipulator(ports, onChange as any, () => ({
     id: `${prefix}-${ports.length}`,
     type: availableTypes[0],
-    defaultValue: createDefaultValue(availableTypes[0]),
+    defaultValue: PortTypeDefinitions[availableTypes[0]].createDefaultValue(),
   }));
 
   return (

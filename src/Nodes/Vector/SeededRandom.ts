@@ -1,7 +1,7 @@
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { fraction } from "mathjs";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorLength, VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -30,10 +30,10 @@ export const SeededRandom: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
   onChangeType: changeTypeGenerator(["seed"], []),
   getData: (portId, nodeData, context) => {
-    return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, VectorLength[nodeData.selectedType])) * 43758.5453123));
+    return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, PortTypeDefinitions[nodeData.selectedType].vectorLength)) * 43758.5453123));
   },
   shaderRequirement: `
   float rand(float n){return fract(sin(n) * 43758.5453123);}

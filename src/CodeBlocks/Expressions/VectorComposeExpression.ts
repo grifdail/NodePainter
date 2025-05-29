@@ -1,5 +1,6 @@
 import { CodeBlockExpressionGenerator, CodeBlockParameterField, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
-import { PortType, VectorLength } from "../../Types/PortType";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 export const VectorComposeExpression: CodeBlockExpressionGenerator = {
@@ -13,7 +14,7 @@ export const VectorComposeExpression: CodeBlockExpressionGenerator = {
       expression: null,
     });
     var parameters: CodeBlockStatement["parameters"] = {};
-    const vec = VectorLength[type];
+    const vec = PortTypeDefinitions[type].vectorLength as number;
     for (let index = 0; index < vec; index++) {
       parameters[index.toString()] = createParameters(type === "color" ? "rgba"[index] : "xyzw"[index]);
     }

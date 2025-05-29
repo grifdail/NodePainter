@@ -1,6 +1,6 @@
 import { IconTrendingDown3 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesPosition } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { EnforceGoodType, VectorAddition, VectorScale } from "../../Utils/vectorUtils";
 
@@ -51,7 +51,7 @@ export const IntegrateVelocity: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesPosition,
+  availableTypes: portTypesWithTags(["common", "spatial"]),
   onChangeType: changeTypeGenerator(["position", "acceleration", "velocity"], ["next-position", "next-velocity"]),
   getData: (portId, nodeData, context) => {
     const decelerationRate = context.getInputValueNumber(nodeData, "decelerationRate");

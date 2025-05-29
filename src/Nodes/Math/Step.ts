@@ -1,6 +1,5 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
 import { Constraints } from "../../Utils/applyConstraints";
 import { clamp01 } from "../../Utils/colorUtils";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -32,7 +31,6 @@ export const Step: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
   getData: (portId, nodeData, context) => {
     if (portId === "result") {
       var value = context.getInputValueNumber(nodeData, "value");

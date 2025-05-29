@@ -1,17 +1,15 @@
-import { createDefaultValue } from "./createDefaultValue";
+import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { PortType } from "../Types/PortType";
-import { ConverterCode } from "./ConverterCode";
-import { ConverterShader } from "./ConverterShader";
 
 export function convertTypeValue(value: any, from: PortType | "any", to: PortType): any {
   if (from === to || from === "unknown" || to === "unknown") {
     return value;
   }
   if (from === "any") {
-    return createDefaultValue(to);
+    return PortTypeDefinitions[to].createDefaultValue();
   }
 
-  var converterFrom = ConverterCode[from];
+  var converterFrom = PortTypeDefinitions[from].convert;
   if (converterFrom !== undefined) {
     var fn = converterFrom[to];
     if (fn !== undefined) {
@@ -25,7 +23,7 @@ export function convertTypeValue(value: any, from: PortType | "any", to: PortTyp
   } else if (to.startsWith("array-") && from.startsWith("array-") && canConvertCode(from.slice(6) as PortType, to.slice(6) as PortType)) {
     return value.map((item: any) => convertTypeValue(item, from.slice(6) as PortType, to.slice(6) as PortType));
   } else {
-    return createDefaultValue(to);
+    return PortTypeDefinitions[to].createDefaultValue();
   }
 }
 
@@ -33,7 +31,7 @@ export function canConvertCode(from: PortType, to: PortType): boolean {
   if (from === to || from === "unknown" || to === "unknown" || to === `array-${from}`) {
     return true;
   }
-  var converterFrom = ConverterCode[from];
+  var converterFrom = PortTypeDefinitions[from].convert;
   if (converterFrom) {
     if (converterFrom[to] !== undefined) {
       return true;
@@ -51,7 +49,7 @@ export function canConvertShader(from: PortType, to: PortType): boolean {
   if (from === to || from === "unknown" || to === "unknown") {
     return true;
   }
-  var converterFrom = ConverterShader[from];
+  var converterFrom = PortTypeDefinitions[from].shaderConvert;
   if (converterFrom) {
     return converterFrom[to] !== undefined;
   }
@@ -62,14 +60,14 @@ export function convertShaderType(varName: string, from: PortType, to: PortType)
   if (from === to || from === "unknown" || to === "unknown") {
     return varName;
   }
-  var converterFrom = ConverterShader[from];
+  var converterFrom = PortTypeDefinitions[from].shaderConvert;
   if (converterFrom === undefined) {
-    return createDefaultValue(to);
+    return PortTypeDefinitions[to].createDefaultValue();
   }
   var fn = converterFrom[to];
   if (fn !== undefined) {
     return fn(varName);
   } else {
-    return createDefaultValue(to);
+    return PortTypeDefinitions[to].createDefaultValue();
   }
 }

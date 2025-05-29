@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { PortType } from "../../../Types/PortType";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
 import { MenuItem } from "@szhsin/react-menu";
 import { PortDefinition } from "../../../Types/PortDefinition";
-import { PortColor } from "../../StyledComponents/PortColor";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
+import { PortType } from "../../../Types/PortType";
 
 export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: PortType | "any"; value?: string; onChange: (name: string) => void }) => {
   var CodeBlock = useContext(CodeBlockContext);
@@ -27,7 +27,7 @@ export const CodeBlockVariableSelector = ({ type, value, onChange }: { type: Por
       passtrough={{
         options: filterredVariable,
         templateRaw: (option: PortDefinition, args: any) => {
-          var Icon = PortColor[option.type].icon;
+          var Icon = PortTypeDefinitions[option.type].icon;
           return (
             <MenuItem
               key={option.id}

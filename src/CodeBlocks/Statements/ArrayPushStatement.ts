@@ -1,8 +1,8 @@
 import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
-import { CommonTypes, PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 
-export const ArrayPushStatements: CodeBlockStatementGenerator[] = CommonTypes.map((type) => {
+export const ArrayPushStatements: CodeBlockStatementGenerator[] = portTypesWithTags(["common"], ["array"]).map((type) => {
   var self: CodeBlockStatementGenerator = {
     id: `Array/Push/${type}`,
     execute(block, context) {
@@ -25,7 +25,7 @@ export const ArrayPushStatements: CodeBlockStatementGenerator[] = CommonTypes.ma
           value: {
             type: "expression",
             targetType: type,
-            constantValue: createDefaultValue(type),
+            constantValue: PortTypeDefinitions[type].createDefaultValue(),
             expression: null,
           },
         },

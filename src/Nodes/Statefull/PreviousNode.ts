@@ -1,6 +1,6 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { FullCommonTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
@@ -14,7 +14,7 @@ export const PreviousNode: NodeDefinition = {
   dataInputs: [Port.bool("in"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
   tags: ["Statefull"],
-  availableTypes: FullCommonTypes,
+  availableTypes: portTypesWithTags(["common"]),
   onChangeType: changeTypeGenerator(["in"], ["out"]),
   settings: [],
   getData(portId, node, context) {

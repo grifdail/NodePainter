@@ -1,7 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { convertToP5Uniform } from "../../Utils/convertToShaderValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
 import { ExecutionContext, FunctionContext } from "../../Utils/createExecutionContext";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
@@ -76,7 +76,8 @@ function ApplyUniformFromData(shader: any, context: ExecutionContext, data: Func
       }
       shader.setUniform(sanitizeForShader(`uniform_${id}`), image.getP5(context.p5));
     } else {
-      shader.setUniform(sanitizeForShader(`uniform_${id}`), convertToP5Uniform(type, value));
+      const converter = PortTypeDefinitions[type].convertToShaderP5Uniform;
+      shader.setUniform(sanitizeForShader(`uniform_${id}`), converter ? converter(value) : value);
     }
   });
 }

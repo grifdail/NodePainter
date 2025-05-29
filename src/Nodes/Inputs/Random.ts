@@ -1,6 +1,6 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorLength, VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
@@ -15,14 +15,14 @@ export const Random: NodeDefinition = {
   dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
   dataOutputs: [Port.number("value")],
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithProperty("vectorLength"),
   onChangeType: changeTypeGenerator([], ["value"]),
-  hasOutput: hasInputGenerator(VectorTypesFull),
+  hasOutput: hasInputGenerator(portTypesWithProperty("vectorLength")),
   getData: (portId, nodeData, context) => {
     const value = createOrSelectFromCache(context, nodeData, () =>
       EnforceGoodType(
         nodeData,
-        Array.from(Array(VectorLength[nodeData.selectedType]).keys()).map(() => context.RNG.next())
+        Array.from(Array(PortTypeDefinitions[nodeData.selectedType].vectorLength).keys()).map(() => context.RNG.next())
       )
     );
 

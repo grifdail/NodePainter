@@ -1,7 +1,7 @@
 import { NodeData } from "../Types/NodeData";
 import { PortType } from "../Types/PortType";
-import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
+import { getShaderType } from "./getShaderCode";
 
 export function generateShaderCodeFromNodeData(node: NodeData, context: ExecutionContext, outputName: string, inputNames: string[] | { [key: string]: PortType }, gen: (arg: { [key: string]: string }) => string) {
   const outputPort = node.dataOutputs[outputName];

@@ -12,10 +12,11 @@ import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
 import { useShallow } from "zustand/react/shallow";
 import { Input } from "../StyledComponents/Input";
 import { InvisibleButton } from "../Generics/Button";
-import { PortType, PortTypeArray } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { CategoryButton, TagList } from "./CategoryButton";
 import { SearchForm } from "./SearchForm";
+import { PortType } from "../../Types/PortType";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -49,8 +50,8 @@ type SearchTermData = {
 };
 
 const TagRegex = /tag:(\w+)/gi;
-const OutputRegex = new RegExp(`output:(${PortTypeArray.join("|")})`, "gi");
-const InputRegex = new RegExp(`input:(${PortTypeArray.join("|")})`, "gi");
+const OutputRegex = new RegExp(`output:(${portTypesWithTags([]).join("|")})`, "gi");
+const InputRegex = new RegExp(`input:(${portTypesWithTags([]).join("|")})`, "gi");
 
 const parseSearchTerm = (raw: string): SearchTermData => {
   const base = raw.trim().toLowerCase();

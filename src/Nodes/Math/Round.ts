@@ -1,6 +1,6 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
@@ -26,10 +26,10 @@ export const Round: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
   onChangeType: changeTypeGenerator(["input"], ["out"]),
-  hasInput: hasInputGenerator(VectorTypesFull),
-  hasOutput: hasInputGenerator(VectorTypesFull),
+  hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
+  hasOutput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "input");
     return EnforceGoodType(

@@ -1,7 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { convertToP5Uniform } from "../../Utils/convertToShaderValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
 
 export const RenderShader: NodeDefinition = {
@@ -57,7 +57,8 @@ export const RenderShader: NodeDefinition = {
           shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5(context.p5));
         } else {
           const data = context.getInputValue(node, port.id, port.type);
-          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), convertToP5Uniform(port.type, data));
+          const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;
+          shader.setUniform(sanitizeForShader(`uniform_${port.id}`), converter ? converter(data) : data);
         }
       });
       img.image.clear(0, 0, 0, 0);

@@ -9,6 +9,7 @@
   --color-vector3: #f145bc;
   --color-vector4: #f76707;
   --color-color: #f76707;
+  --color-quaternion: #f73f07;
   --color-string: #ae3ec9;
   --color-bool: #1d2b53;
   --color-gradient: #f59f00;
@@ -140,6 +141,10 @@ body .szh-menu__divider {
 .vector4,
 .array-vector4 {
   --color-property: var(--color-vector4);
+}
+.quaternion,
+.array-quaternion {
+  --color-property: var(--color-quaternion);
 }
 .string,
 .array-string {

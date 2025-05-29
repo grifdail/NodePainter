@@ -1,6 +1,6 @@
 import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 const Mapping = {
@@ -34,7 +34,7 @@ export const VectorComponentExpressions: CodeBlockExpressionGenerator[] = ["vect
           vector: {
             type: "expression",
             targetType: type as PortType,
-            constantValue: createDefaultValue(type as PortType),
+            constantValue: PortTypeDefinitions[type as PortType].createDefaultValue(),
             expression: null,
           },
           component: {

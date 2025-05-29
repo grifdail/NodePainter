@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypeslimited } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -27,10 +27,10 @@ export const Normalize: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypeslimited,
+  availableTypes: portTypesWithTags(["common", "true-vector"], ["array"]),
   onChangeType: changeTypeGenerator(["vec"], ["out"]),
-  hasInput: hasInputGenerator(VectorTypeslimited),
-  hasOutput: hasInputGenerator(VectorTypeslimited),
+  hasInput: hasInputGenerator(portTypesWithTags(["common", "true-vector"], ["array"])),
+  hasOutput: hasInputGenerator(portTypesWithTags(["common", "true-vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     const a = context.getInputValueVector(nodeData, "vec");
     const vec = VectorNormalize(a);

@@ -1,7 +1,7 @@
 import { VectorDotProduct } from "../../Nodes/Vector/DotProduct";
 import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 export const VectorDotProductExpression: CodeBlockExpressionGenerator = {
@@ -13,13 +13,13 @@ export const VectorDotProductExpression: CodeBlockExpressionGenerator = {
         A: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
         B: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
       },

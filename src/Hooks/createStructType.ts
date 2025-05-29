@@ -1,7 +1,7 @@
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { PortDefinition } from "../Types/PortDefinition";
+import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { TreeStore } from "../Types/TreeStore";
-import { createDefaultValue } from "../Utils/createDefaultValue";
 
 export function createStructType(ports: PortDefinition[], name: string, state: TreeStore) {
   const composeNodeDef: NodeDefinition = {
@@ -15,7 +15,7 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
       {
         id: "out",
         type: "struct",
-        defaultValue: createDefaultValue("struct"),
+        defaultValue: PortTypeDefinitions["struct"].createDefaultValue(),
       },
     ],
     settings: [],
@@ -32,7 +32,7 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
       {
         id: "struct",
         type: "struct",
-        defaultValue: createDefaultValue("struct"),
+        defaultValue: PortTypeDefinitions["struct"].createDefaultValue(),
       },
     ],
     dataOutputs: structuredClone(ports),

@@ -6,9 +6,9 @@ import { CustomNodeMainDiv } from "./CustomNodeMainDiv";
 import { CustomNodeModalHeader } from "./CustomNodeModalHeader";
 import { CustomFunctionCreationContextStore } from "../../../Types/CustomFunctionCreationContextStore";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
-import { PortType } from "../../../Types/PortType";
 import styled from "styled-components";
 import { PortEditList } from "./PortEditList";
+import { PortType } from "../../../Types/PortType";
 
 export const PortRootDiv = styled.section`
   display: grid;

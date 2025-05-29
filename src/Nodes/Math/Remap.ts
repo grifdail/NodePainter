@@ -1,6 +1,6 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
@@ -52,7 +52,7 @@ export const Remap: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
   onChangeType: changeTypeGenerator(["outmin", "outmax"], ["result"]),
   getData: (portId, nodeData, context) => {
     const t = context.getInputValueNumber(nodeData, "t");

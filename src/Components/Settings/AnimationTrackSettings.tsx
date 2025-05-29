@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { IconX } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { AnimationKeyFrame, AnimationTrack, createDefaultAnimationKeyframe } from "../../Types/AnimationTrack";
-import { PortColor } from "../StyledComponents/PortColor";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { useListManipulator } from "../../Hooks/useListManipulator";
 import { AnimationTrackSettingDefinition } from "../../Types/SettingDefinition";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 
 const ColorList = styled.ul`
   display: flex;
@@ -56,8 +56,8 @@ const ColorList = styled.ul`
 export const AnimationTrackSettings: SettingComponent<AnimationTrackSettingDefinition> = function ({ onChange, value, def }: SettingProps<AnimationTrackSettingDefinition>) {
   const track = value as AnimationTrack;
   const type = track.type;
-  var portDescription = PortColor[type];
-  var PortSettings = portDescription.inputInline;
+  var portDescription = PortTypeDefinitions[type];
+  var PortSettings = portDescription.inlineInput;
 
   var { change, addNew, remove } = useListManipulator(
     track.keyframes,

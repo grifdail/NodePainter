@@ -1,6 +1,6 @@
 import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
 import { PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { VectorOperations, VectorOperationTypes } from "../../Utils/vectorUtils";
 
@@ -13,7 +13,7 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
         A: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
         operator: {
@@ -24,7 +24,7 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
         B: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
       },

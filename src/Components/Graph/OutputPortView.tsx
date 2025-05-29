@@ -1,10 +1,9 @@
 import React from "react";
-import { PortRole } from "../../Types/PortRole";
-import { PortType } from "../../Types/PortType";
-import { PortColor } from "../StyledComponents/PortColor";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import styled from "styled-components";
+import { PortType } from "../../Types/PortType";
 
 const StyledPath = styled.path`
   fill: color-mix(in srgb, var(--color-property), transparent 90%);
@@ -14,7 +13,7 @@ const StyledPath = styled.path`
 `;
 
 export function OutputPortView({ x, y, id, label, type, hideLabel, onClick, nodeId }: { x: number; y: number; nodeId: string; hideLabel?: boolean; id: string; label?: string; type: PortType; onClick: () => void }) {
-  var portDescription = PortColor[type];
+  var portDescription = PortTypeDefinitions[type];
   var Icon = portDescription.icon;
   var portSelection = usePortSelection();
   var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === id && portSelection.location === "output";

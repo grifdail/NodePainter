@@ -1,6 +1,6 @@
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -38,7 +38,7 @@ export const ScaleAdd: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
   onChangeType: changeTypeGenerator(["value", "added"], ["out"]),
   getData: (portId, nodeData, context) => {
     var value = context.getInputValueVector(nodeData, "value");

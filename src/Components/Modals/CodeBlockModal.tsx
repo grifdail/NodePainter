@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { Modal } from "../Modal";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { PortEditList } from "./CustomNodes/PortEditList";
-import { FullCommonTypes } from "../../Types/PortType";
 import { CodeBlockStatementList } from "./CodeBlock/CodeBlockStatementList";
 import { CodeBlockContext } from "../../Hooks/CodeBlockContext";
+import { portTypesWithProperty, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -47,21 +47,21 @@ export function CodeBlockModal() {
             ports={codeBlock.localVariables}
             label="Variables"
             prefix="var"
-            availableTypes={FullCommonTypes}
+            availableTypes={portTypesWithTags(["common"])}
             onChange={(ports) => state.setVariables(ports, "local")}
           />
           <PortEditList
             ports={codeBlock.inputVariables}
             label="Inputs"
             prefix="in"
-            availableTypes={FullCommonTypes}
+            availableTypes={portTypesWithTags(["common"])}
             onChange={(ports) => state.setVariables(ports, "input")}
           />
           <PortEditList
             ports={codeBlock.outputVariables}
             label="Outputs"
             prefix="out"
-            availableTypes={FullCommonTypes}
+            availableTypes={portTypesWithTags(["common"])}
             onChange={(ports) => state.setVariables(ports, "output")}
           />
         </VariableSection>

@@ -1,10 +1,9 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
 
 export const Lerp: NodeDefinition = {
   id: "Lerp",
@@ -38,13 +37,14 @@ export const Lerp: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithProperty("lerpOperator"),
   onChangeType: changeTypeGenerator(["from", "to"], ["result"]),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "from");
-    var b = context.getInputValueVector(nodeData, "to");
-    var t = context.getInputValueNumber(nodeData, "t");
-    return EnforceGoodType(nodeData, VectorLerp(a, b, t));
+    const t = context.getInputValueNumber(nodeData, "t");
+    const a = context.getInputValue(nodeData, "from", nodeData.selectedType);
+    const b = context.getInputValue(nodeData, "to", nodeData.selectedType);
+    const operator = PortTypeDefinitions[nodeData.selectedType].lerpOperator;
+    return operator ? operator(a, b, t) : PortTypeDefinitions[nodeData.selectedType].createDefaultValue();
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "result", ["from", "to", "t"], ({ from, to, t }) => `mix(${from}, ${to}, ${t})`);

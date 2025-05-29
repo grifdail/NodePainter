@@ -1,11 +1,11 @@
 import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { PortColor } from "../StyledComponents/PortColor";
 
 export const RawValueField = ({ value, onChange, type }: { type: PortType | "any"; value: any; onChange: (value: any) => void }) => {
   let InputType = null;
-  if (type !== "any" && PortColor[type]) {
-    InputType = PortColor[type].inputInline;
+  if (type !== "any" && PortTypeDefinitions[type]) {
+    InputType = PortTypeDefinitions[type].inlineInput;
     if (InputType) {
       return (
         <Fieldset

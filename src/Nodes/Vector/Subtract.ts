@@ -1,10 +1,9 @@
 import { IconMathXMinusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorSubstraction } from "../../Utils/vectorUtils";
 
 export const Subtract: NodeDefinition = {
   id: "Subtract",
@@ -33,15 +32,16 @@ export const Subtract: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithProperty("subtractionOperator"),
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
 
-  hasInput: hasInputGenerator(VectorTypesFull),
-  hasOutput: hasInputGenerator(VectorTypesFull),
+  hasInput: hasInputGenerator(portTypesWithProperty("subtractionOperator")),
+  hasOutput: hasInputGenerator(portTypesWithProperty("subtractionOperator")),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "a");
-    var b = context.getInputValueVector(nodeData, "b");
-    return EnforceGoodType(nodeData, VectorSubstraction(a, b));
+    var a = context.getInputValue(nodeData, "a", nodeData.selectedType);
+    var b = context.getInputValue(nodeData, "b", nodeData.selectedType);
+    const operator = PortTypeDefinitions[nodeData.selectedType].subtractionOperator;
+    return operator ? operator(a, b) : PortTypeDefinitions[nodeData.selectedType].createDefaultValue();
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} - ${b}`);

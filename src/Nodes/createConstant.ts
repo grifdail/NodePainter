@@ -1,6 +1,6 @@
 import { IconCalculator } from "@tabler/icons-react";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { convertToShaderValue } from "../Utils/convertToShaderValue";
+import { convertToShaderNumber } from "../Types/convertToShaderNumber";
 
 export function createConstant(id: string, value: number): NodeDefinition {
   return {
@@ -24,7 +24,7 @@ export function createConstant(id: string, value: number): NodeDefinition {
       }
     },
     getShaderCode(node, context) {
-      return `float ${context.getShaderVar(node, "value", "number", true)} = ${convertToShaderValue(value, "number")};`;
+      return `float ${context.getShaderVar(node, "value", "number", true)} = ${convertToShaderNumber(value)};`;
     },
   };
 }
