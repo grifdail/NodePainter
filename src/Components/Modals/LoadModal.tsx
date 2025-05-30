@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { useDialog } from "../../Hooks/useDialog";
+import { Button } from "../Generics/Button";
 
 const MainDiv = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ const MainDiv = styled.div`
 
     & textarea {
       flex-grow: 1;
+      min-height: 300px;
     }
   }
 
@@ -89,16 +91,26 @@ export function LoadModal({ close }: { close: () => void }) {
   });
 
   return (
-    <Modal onClose={close} title="Load" icon={IconDeviceFloppy}>
+    <Modal
+      onClose={close}
+      title="Load"
+      icon={IconDeviceFloppy}>
       <MainDiv>
         <div className="json">
-          <textarea value={rawField} placeholder="//copy your json here..." onChange={(e) => setRawField(e.target.value)}></textarea>
+          <textarea
+            value={rawField}
+            placeholder="//copy your json here..."
+            onChange={(e) => setRawField(e.target.value)}></textarea>
           <ButtonGroup>
-            <button onClick={() => onValidateFile(rawField)}> Load</button>
+            <Button
+              label={"Load"}
+              onClick={() => onValidateFile(rawField)}></Button>
           </ButtonGroup>
         </div>
 
-        <div className="file" {...getRootProps()}>
+        <div
+          className="file"
+          {...getRootProps()}>
           <input {...getInputProps()}></input>
           <IconFileUpload></IconFileUpload>
         </div>

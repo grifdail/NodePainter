@@ -1,21 +1,4 @@
 {
-	"src\\Nodes\\3D\\VirtualNodeTypes\\MaterialsVirtualNodes.ts": [
-		[
-			"src\\Nodes\\3D\\VirtualNodeTypes\\MaterialsVirtualNodes.ts",
-			"src\\Nodes\\3D\\VirtualNodeTypes\\VirtualNodeTypes.ts",
-			"src\\Types\\PortTypeDefinitions.ts",
-			"src\\Types\\PortTypeGenerator.ts",
-			"src\\Utils\\createDefaultMaterial.ts"
-		]
-	],
-	"src\\Nodes\\3D\\VirtualNodeTypes\\MaterialVirtualNodeType.ts": [
-		[
-			"src\\Nodes\\3D\\VirtualNodeTypes\\MaterialVirtualNodeType.ts",
-			"src\\Nodes\\3D\\VirtualNodeTypes\\MaterialsVirtualNodes.ts",
-			"src\\Nodes\\3D\\VirtualNodeTypes\\VirtualNodeTypes.ts",
-			"src\\Utils\\createDefaultMaterial.ts"
-		]
-	],
 	"src\\Components\\Graph\\GetNodeHeight.tsx": [
 		[
 			"src\\Components\\Graph\\GetNodeHeight.tsx",

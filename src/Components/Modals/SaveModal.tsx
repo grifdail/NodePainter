@@ -79,7 +79,7 @@ export function SaveModal({ close }: { close: () => void }) {
 
         <ButtonGroup>
           <Button
-            label={lastValue === decodeUrl ? "Succesfully copied !" : "Copy URL to clipboard"}
+            label={lastValue === decodeUrl ? "Succesfully copied !" : "Copy link"}
             icon={IconLink}
             disabled={!hasUrl || loading}
             onClick={() => hasUrl && clip(decodeUrl)}></Button>
