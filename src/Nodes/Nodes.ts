@@ -139,6 +139,7 @@ import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
+import { TriangleWave } from "./Math/TriangleWave";
 import { AlignRotation } from "./Quaternion/AlignRotation";
 import { AxisAngle } from "./Quaternion/AxisAngle";
 import { EulerAngle } from "./Quaternion/EulerAngle";
@@ -329,6 +330,7 @@ export const Nodes: Array<NodeDefinition> = [
   Cos,
   Sin,
   SawToothWave,
+  TriangleWave,
   Sqrt,
   Abs,
   Acos,
