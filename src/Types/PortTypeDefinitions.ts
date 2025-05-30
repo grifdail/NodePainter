@@ -1,4 +1,5 @@
 import { Icon, IconArrowUpRightCircle, IconBadge3d, IconBrush, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconQuote, IconRotate3d, IconToggleLeft } from "@tabler/icons-react";
+import { Euler, Quaternion } from "three";
 import { BoolInput } from "../Components/Generics/Inputs/BoolInput";
 import { ColorInput } from "../Components/Generics/Inputs/ColorInput";
 import { MaterialInput } from "../Components/Generics/Inputs/MaterialInput";
@@ -9,6 +10,7 @@ import { VectorInput } from "../Components/Generics/Inputs/VectorInput";
 import { createGradientFromPalette } from "../Data/Palettes";
 import { clamp01, White } from "../Utils/colorUtils";
 import { createDefaultMaterial } from "../Utils/createDefaultMaterial";
+import { toQuaternion } from "../Utils/quaternionUtils";
 import { VectorAddition, VectorDivision, VectorLerp, VectorMultiplication, VectorSubstraction } from "../Utils/vectorUtils";
 import { compareVector } from "./compareVector";
 import { convertToShaderNumber } from "./convertToShaderNumber";
@@ -158,6 +160,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector2: (a) => createVector2(...a),
       vector3: (a) => a,
       vector4: (a) => createVector4(...a),
+      quaternion: (a) => toQuaternion(new Quaternion().setFromEuler(new Euler(...a))),
     },
     subtractionOperator: VectorSubstraction,
     additionOperator: VectorAddition,
@@ -196,6 +199,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector2: (a) => createVector2(...a),
       vector3: (a) => createVector3(...a),
       vector4: (a) => a,
+      quaternion: (a) => a,
     },
     subtractionOperator: VectorSubstraction,
     additionOperator: VectorAddition,
@@ -227,8 +231,16 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => createVector4(0, 0, 0, 1),
     convert: {},
     vectorLength: 4,
-    multiplicationOperator: undefined, //TODO
-    lerpOperator: undefined, //TODO
+    multiplicationOperator: (a, b) => {
+      var aq = new Quaternion(...a);
+      var bq = new Quaternion(...b);
+      return toQuaternion(aq.multiply(bq));
+    },
+    lerpOperator: (a, b, t) => {
+      var aq = new Quaternion(...a);
+      var bq = new Quaternion(...b);
+      return toQuaternion(aq.slerp(bq, t));
+    },
     equalityOperator: compareVector,
     shaderConvert: {},
   },
