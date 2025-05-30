@@ -11,7 +11,7 @@ export const UploadModel: NodeDefinition = {
   label: "Upload Model",
   icon: IconPhoto,
   description: "Upload a 3d Model",
-  dataInputs: [Port.vector3("position"), Port.vector3("dimension", createVector3(1, 1, 1)), Port.vector3("rotation")],
+  dataInputs: [Port.vector3("position"), Port.vector3("dimension", createVector3(1, 1, 1)), Port.quaternion("rotation")],
   dataOutputs: [Port.object3d("out")],
   tags: ["3D"],
 
@@ -21,7 +21,7 @@ export const UploadModel: NodeDefinition = {
       const key = `${node.id}-model-cache`;
       const keyLoading = `${node.id}-model-loading`;
       if (context.blackboard[key]) {
-        const rotation = context.getInputValueVector3(node, "rotation");
+        const rotation = context.getInputValueQuaternion(node, "rotation");
         const position = context.getInputValueVector3(node, "position");
         const dimension = context.getInputValueVector3(node, "dimension");
         const id = context.getCallId(node);

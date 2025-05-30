@@ -26,8 +26,8 @@ export const Render3D: NodeDefinition = {
     },
     {
       id: "cameraRotation",
-      type: "vector3",
-      defaultValue: createVector3(0, 0, 0),
+      type: "quaternion",
+      defaultValue: [0, 0, 0, 1],
     },
     {
       id: "clearColor",
@@ -57,7 +57,7 @@ export const Render3D: NodeDefinition = {
     const height = Math.floor(node.settings.height);
     //Inputs
     const fov = context.getInputValueNumber(node, "fov");
-    const cameraRotation = context.getInputValueVector3(node, "cameraRotation");
+    const cameraRotation = context.getInputValueQuaternion(node, "cameraRotation");
     const cameraPosition = context.getInputValueVector3(node, "cameraPosition");
     const clearColor = context.getInputValueColor(node, "clearColor");
     const child = context.getInputValue(node, "scene", "object3d") as StatefullVirtualElement<any, any>;

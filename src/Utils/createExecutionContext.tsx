@@ -9,7 +9,7 @@ import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "../Types/ImageData";
-import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
+import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData, MeshData } from "../Types/MaterialData";
@@ -42,6 +42,7 @@ export type ExecutionContext = {
   getInputValueVector2: (nodeData: NodeData, portId: string) => Vector2;
   getInputValueVector3: (nodeData: NodeData, portId: string) => Vector3;
   getInputValueVector4: (nodeData: NodeData, portId: string) => Vector4;
+  getInputValueQuaternion: (nodeData: NodeData, portId: string) => Quaternion;
   getInputValueNumber: (nodeData: NodeData, portId: string) => number;
   getInputValueColor: (nodeData: NodeData, portId: string) => Color;
   getInputValueGradient: (nodeData: NodeData, portId: string) => Gradient;
@@ -86,6 +87,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueVector2: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector2") as Vector2,
     getInputValueVector3: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector3") as Vector3,
     getInputValueVector4: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector4") as Vector4,
+    getInputValueQuaternion: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "quaternion") as Quaternion,
     getInputValueNumber: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "number") as number,
     getInputValueColor: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "color") as Color,
     getInputValueGradient: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "gradient") as Gradient,

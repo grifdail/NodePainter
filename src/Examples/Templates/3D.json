@@ -50,11 +50,12 @@
                 },
                 "cameraRotation": {
                     "id": "cameraRotation",
-                    "type": "vector3",
+                    "type": "quaternion",
                     "ownValue": [
                         0,
                         0,
-                        0
+                        0,
+                        1
                     ],
                     "hasConnection": false,
                     "connectedNode": null,
@@ -259,11 +260,12 @@
                 },
                 "rotation": {
                     "id": "rotation",
-                    "type": "vector3",
+                    "type": "quaternion",
                     "ownValue": [
                         0,
                         0,
-                        0
+                        0,
+                        1
                     ],
                     "hasConnection": false,
                     "connectedNode": null,

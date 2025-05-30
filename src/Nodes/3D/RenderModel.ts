@@ -34,8 +34,8 @@ export const RenderModel: NodeDefinition = {
     },
     {
       id: "rotation",
-      type: "vector3",
-      defaultValue: createVector3(0, 0, 0),
+      type: "quaternion",
+      defaultValue: [0, 0, 0, 1],
     },
   ],
   dataOutputs: [
@@ -50,7 +50,7 @@ export const RenderModel: NodeDefinition = {
   getData(portId, node, context) {
     var material = context.getInputValueMaterial(node, "material") as MaterialData;
     var mesh = context.getInputValueMesh(node, "mesh");
-    var rotation = context.getInputValueVector3(node, "rotation");
+    var rotation = context.getInputValueQuaternion(node, "rotation");
     var position = context.getInputValueVector3(node, "position");
     var dimension = context.getInputValueVector3(node, "dimension");
     const id = context.getCallId(node);

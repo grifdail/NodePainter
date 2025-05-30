@@ -3,6 +3,7 @@ import { BoolInput } from "../Components/Generics/Inputs/BoolInput";
 import { ColorInput } from "../Components/Generics/Inputs/ColorInput";
 import { MaterialInput } from "../Components/Generics/Inputs/MaterialInput";
 import { NumberInput } from "../Components/Generics/Inputs/NumberInput";
+import { QuaternionInput } from "../Components/Generics/Inputs/QuaternionInput";
 import { TextInput } from "../Components/Generics/Inputs/TextInput";
 import { VectorInput } from "../Components/Generics/Inputs/VectorInput";
 import { createGradientFromPalette } from "../Data/Palettes";
@@ -221,7 +222,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     color: "#f73f07",
     icon: IconRotate3d,
     smallIcon: IconRotate3d,
-    inlineInput: undefined,
+    inlineInput: QuaternionInput,
     componentNames: ["x", "y", "z", "w"],
     createDefaultValue: () => createVector4(0, 0, 0, 1),
     convert: {},
