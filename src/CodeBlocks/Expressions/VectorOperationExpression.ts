@@ -1,6 +1,9 @@
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 import { VectorOperations, VectorOperationTypes } from "../../Utils/vectorUtils";
 
@@ -13,7 +16,7 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
         A: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
         operator: {
@@ -24,7 +27,7 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
         B: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
       },
@@ -34,10 +37,10 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
     return type === "vector2" || type === "vector3" || type === "color" || type === "vector4";
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var a = evaluateExpression(statement.parameters.A, state) as number[];
-    var b = evaluateExpression(statement.parameters.B, state) as number[];
+    var a = evaluateCodeBlockExpression(statement.parameters.A, state) as number[];
+    var b = evaluateCodeBlockExpression(statement.parameters.B, state) as number[];
 
-    var comparator = evaluateExpression(statement.parameters.operator, state) as string;
+    var comparator = evaluateCodeBlockExpression(statement.parameters.operator, state) as string;
     var func = VectorOperations[comparator];
     if (func !== undefined) {
       return func(a, b);
@@ -46,6 +49,6 @@ export const VectorOperationExpression: CodeBlockExpressionGenerator = {
     }
   },
   toString(statement) {
-    return `( ${toStringExpression(statement.parameters.A)} ${toStringExpression(statement.parameters.operator)} ${toStringExpression(statement.parameters.B)} )`;
+    return `( ${toStringCodeBlockExpression(statement.parameters.A)} ${toStringCodeBlockExpression(statement.parameters.operator)} ${toStringCodeBlockExpression(statement.parameters.B)} )`;
   },
 };

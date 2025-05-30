@@ -1,10 +1,11 @@
 export type Vector2 = [number, number];
 export type Vector4 = [number, number, number, number];
+export type Quaternion = [number, number, number, number];
 export type Vector3 = [number, number, number];
 export type Color = [number, number, number, number];
 export type GradientStop = { pos: number; color: Color };
 export type Gradient = GradientStop[];
-export type Vector = Vector2 | Vector3 | Vector4 | Color;
+export type Vector = Vector2 | Vector3 | Vector4 | Color | Quaternion;
 export type ColorPalette = Array<Color>;
 export type PaletteCollection = { [key: string]: ColorPalette };
 export type GradientCollection = { [key: string]: Gradient };

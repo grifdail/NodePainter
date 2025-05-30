@@ -1,4 +1,5 @@
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { TextInput } from "../Generics/Inputs/TextInput";
 import { StringSettingDefinition } from "../../Types/SettingDefinition";

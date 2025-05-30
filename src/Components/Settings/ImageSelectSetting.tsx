@@ -1,4 +1,5 @@
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { DropdownSettingDefinition, ImageSelectSettingDefinition } from "../../Types/SettingDefinition";

@@ -1,5 +1,4 @@
 import React from "react";
-import { PortColor } from "../StyledComponents/PortColor";
 import { PortConnection } from "../../Types/PortConnection";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { PortForeignObject } from "../StyledComponents/PortForeignObject";
@@ -8,6 +7,7 @@ import { PortRole } from "../../Types/PortRole";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { NODE_WIDTH, PORT_HEIGHT } from "./NodeVisualConst";
 import styled from "styled-components";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 
 const ImprovedFieldSet = styled(Fieldset)`
   background: color-mix(in srgb, var(--color-property), transparent 90%);
@@ -25,9 +25,9 @@ const ImprovedFieldSet = styled(Fieldset)`
 `;
 
 export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: { y: number; nodeId: string; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
-  var portDescription = PortColor[portData.type];
+  var portDescription = PortTypeDefinitions[portData.type];
   var Icon = portDescription.icon;
-  var PortSettings = portDescription.inputInline;
+  var PortSettings = portDescription.inlineInput;
 
   var portSelection = usePortSelection();
   var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";

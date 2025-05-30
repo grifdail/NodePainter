@@ -1,7 +1,10 @@
 import { VectorDotProduct } from "../../Nodes/Vector/DotProduct";
-import { CodeBlockExpressionGenerator, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 export const VectorDotProductExpression: CodeBlockExpressionGenerator = {
@@ -13,13 +16,13 @@ export const VectorDotProductExpression: CodeBlockExpressionGenerator = {
         A: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
         B: {
           type: "expression",
           targetType: type,
-          constantValue: createDefaultValue(type),
+          constantValue: PortTypeDefinitions[type].createDefaultValue(),
           expression: null,
         },
       },
@@ -29,12 +32,12 @@ export const VectorDotProductExpression: CodeBlockExpressionGenerator = {
     return type === "vector2" || type === "vector3" || type === "color" || type === "vector4";
   },
   evaluate: function (statement: CodeBlockStatement, state: FunctionContext) {
-    var a = evaluateExpression(statement.parameters.A, state) as number[];
-    var b = evaluateExpression(statement.parameters.B, state) as number[];
+    var a = evaluateCodeBlockExpression(statement.parameters.A, state) as number[];
+    var b = evaluateCodeBlockExpression(statement.parameters.B, state) as number[];
 
     return VectorDotProduct(a, b);
   },
   toString(statement) {
-    return `${toStringExpression(statement.parameters.A)} ⋅ ${toStringExpression(statement.parameters.B)}`;
+    return `${toStringCodeBlockExpression(statement.parameters.A)} ⋅ ${toStringCodeBlockExpression(statement.parameters.B)}`;
   },
 };

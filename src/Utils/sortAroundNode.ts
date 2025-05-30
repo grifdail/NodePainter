@@ -1,4 +1,4 @@
-import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NodeData } from "../Types/NodeData";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { TreeStore } from "../Types/TreeStore";

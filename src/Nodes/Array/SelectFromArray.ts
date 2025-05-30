@@ -1,9 +1,9 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes, PortType } from "../../Types/PortType";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Constraints } from "../../Utils/applyConstraints";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
 
 export const SelectFromArray: NodeDefinition = {
   id: "SelectFromArray",
@@ -26,7 +26,7 @@ export const SelectFromArray: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
 
   settings: [],
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"]),
   onChangeType(node, type) {
     node.dataInputs["array"].ownValue = convertTypeValue(node.dataInputs["array"].ownValue, node.dataInputs["array"].type, `array-${type}` as PortType);
     node.dataInputs["array"].type = `array-${type}` as PortType;
@@ -35,7 +35,7 @@ export const SelectFromArray: NodeDefinition = {
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];
     if (array.length < 1) {
-      return createDefaultValue(node.selectedType);
+      return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
     const index = Math.floor(context.getInputValueNumber(node, "index"));
     return array[index % array.length];

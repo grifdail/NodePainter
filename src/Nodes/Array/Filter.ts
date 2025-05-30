@@ -2,9 +2,8 @@ import { IconList, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
 
 const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): void => {
   setTimeout(() => {
@@ -52,7 +51,6 @@ export const Filter: NodeDefinition = {
     {
       id: "buttons",
       type: "buttons",
-      defaultValue: undefined,
       buttons: [
         {
           label: "Create index node",
@@ -62,12 +60,12 @@ export const Filter: NodeDefinition = {
       ],
     },
   ],
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType: changeTypeGenerator([], [], ["array"], ["filtered"], changeTypeGenerator([], ["value"])),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.dataInputs["array"].type) as any[];
     if (array.length === 0) {
-      return createDefaultValue(node.selectedType);
+      return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
     const result: any[] = [];
     array.forEach((item, i) => {

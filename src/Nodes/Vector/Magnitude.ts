@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypeslimited } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -27,9 +27,9 @@ export const Magnitude: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypeslimited,
+  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
   onChangeType: changeTypeGenerator(["vec"], []),
-  hasInput: hasInputGenerator(VectorTypeslimited),
+  hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
     return VectorMagnitude(vec);

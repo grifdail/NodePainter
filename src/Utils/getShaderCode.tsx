@@ -3,9 +3,10 @@ import { NodeCollection } from "../Types/NodeCollection";
 import { TreeStore } from "../Types/TreeStore";
 import { PortConnection } from "../Types/PortConnection";
 import { NodeData } from "../Types/NodeData";
-import { getShaderType } from "./convertToShaderValue";
 import { ExecutionContext } from "./createExecutionContext";
 import { sanitizeForShader } from "./sanitizeForShader";
+import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
+import { PortType } from "../Types/PortType";
 
 export function getShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
@@ -76,4 +77,7 @@ function buildDependencyList(start: string, nodes: NodeCollection) {
   };
   walk(start, 0);
   return (Object.entries(distances) as any).toSorted(([, a]: [string, number], [, b]: [string, number]) => b - a).map(([id]: [string]) => id);
+}
+export function getShaderType(type: PortType) {
+  return PortTypeDefinitions[type].convertToShaderType;
 }

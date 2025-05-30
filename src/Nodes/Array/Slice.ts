@@ -1,6 +1,6 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
@@ -31,7 +31,7 @@ export const Slice: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: [0], type: "array-number" }],
 
   settings: [],
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType: changeTypeGenerator([], [], ["array"], ["out"]),
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");

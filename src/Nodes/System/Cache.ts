@@ -7,10 +7,10 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortConnection } from "../../Types/PortConnection";
 import { PortDefinition } from "../../Types/PortDefinition";
-import { PortType, PortTypeArray } from "../../Types/PortType";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
 import { createOrSelectFromCache } from "../../Utils/useCache";
 
@@ -79,12 +79,12 @@ function addNewPort(node: NodeData): void {
           node.dataInputs[`${fieldResult.name}-in`] = createPortConnection({
             id: `${fieldResult.name}-in`,
             type: fieldResult.type as PortType,
-            defaultValue: createDefaultValue(fieldResult.type as PortType),
+            defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
           });
           node.dataOutputs[fieldResult.name] = {
             id: fieldResult.name,
             type: fieldResult.type as PortType,
-            defaultValue: createDefaultValue(fieldResult.type as PortType),
+            defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
           };
         });
       }
@@ -113,7 +113,7 @@ function addNewPort(node: NodeData): void {
         label: "type",
         input: DropdownInput,
         defaultValue: "number",
-        passTrough: { options: PortTypeArray },
+        passTrough: { options: portTypesWithTags(["common"]) },
       },
     ],
   };

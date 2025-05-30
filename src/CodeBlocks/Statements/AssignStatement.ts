@@ -1,10 +1,13 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 
 export const AssignStatement: CodeBlockStatementGenerator = {
   id: `Assign`,
   execute(block, context) {
-    let result = evaluateExpression(block.parameters.value, context);
-    let variableName = evaluateExpression(block.parameters.target, context);
+    let result = evaluateCodeBlockExpression(block.parameters.value, context);
+    let variableName = evaluateCodeBlockExpression(block.parameters.target, context);
     if (context[variableName]) {
       context[variableName].value = result;
     } else {
@@ -31,6 +34,6 @@ export const AssignStatement: CodeBlockStatementGenerator = {
     return data;
   },
   toString(statement) {
-    return `Set ${toStringExpression(statement.parameters.target)} to ${toStringExpression(statement.parameters.value)}`;
+    return `Set ${toStringCodeBlockExpression(statement.parameters.target)} to ${toStringCodeBlockExpression(statement.parameters.value)}`;
   },
 };

@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypeslimited } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -31,7 +31,7 @@ export const DecomposeNode: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: [...VectorTypeslimited, "color"],
+  availableTypes: portTypesWithProperty("componentNames"),
   onChangeType(node, type) {
     var count = { vector2: 2, vector3: 3, vector4: 4, color: 4 }[type as string] as number;
     for (var i = 0; i < 4; i++) {
@@ -50,7 +50,8 @@ export const DecomposeNode: NodeDefinition = {
           };
           node.dataOutputs[i.toString()] = port;
         }
-        port.label = type === "color" ? "rgba"[i] : "xyzw"[i];
+        var source = PortTypeDefinitions[type].componentNames || [];
+        port.label = source[i];
       }
     }
 

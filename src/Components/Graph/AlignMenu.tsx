@@ -4,7 +4,7 @@ import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { BoundingBox } from "../../Types/BoundingBox";
 import { NODE_FOOTER_HEIGHT, NODE_WIDTH } from "./NodeVisualConst";
-import { GetNodeHeight } from "./GraphNodeUI";
+import { GetNodeHeight } from "./GetNodeHeight";
 
 export function AlignMenu({ nodes }: { nodes: string[] }) {
   var align = useTree((state) => state.align);

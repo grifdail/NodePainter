@@ -5,18 +5,17 @@ import { PortConnection } from "../Types/PortConnection";
 import { NodeData } from "../Types/NodeData";
 import p5, { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
-import { convertToShaderValue } from "./convertToShaderValue";
-import { PortType } from "../Types/PortType";
+import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "../Types/ImageData";
-import { Color, Gradient, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
+import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData, MeshData } from "../Types/MaterialData";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import Rand from "rand-seed";
-import { StatefullVirtualElement } from "./statefullContext";
+import { PortType } from "../Types/PortType";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -43,6 +42,7 @@ export type ExecutionContext = {
   getInputValueVector2: (nodeData: NodeData, portId: string) => Vector2;
   getInputValueVector3: (nodeData: NodeData, portId: string) => Vector3;
   getInputValueVector4: (nodeData: NodeData, portId: string) => Vector4;
+  getInputValueQuaternion: (nodeData: NodeData, portId: string) => Quaternion;
   getInputValueNumber: (nodeData: NodeData, portId: string) => number;
   getInputValueColor: (nodeData: NodeData, portId: string) => Color;
   getInputValueGradient: (nodeData: NodeData, portId: string) => Gradient;
@@ -87,6 +87,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueVector2: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector2") as Vector2,
     getInputValueVector3: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector3") as Vector3,
     getInputValueVector4: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector4") as Vector4,
+    getInputValueQuaternion: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "quaternion") as Quaternion,
     getInputValueNumber: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "number") as number,
     getInputValueColor: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "color") as Color,
     getInputValueGradient: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "gradient") as Gradient,
@@ -106,7 +107,8 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
         var outPort = tree?.getOutputPort(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
         return convertShaderType(`${sanitizeForShader(inputPorts.connectedNode)}_${sanitizeForShader(inputPorts.connectedPort)}`, outPort?.type as PortType, inputPorts.type);
       } else {
-        return convertToShaderValue(inputPorts.ownValue, inputPorts.type);
+        var converter = PortTypeDefinitions[inputPorts.type].convertToShaderValue;
+        return converter ? converter(inputPorts.ownValue) : "";
       }
     },
     getGlobalSetting<T>(arg0: string) {

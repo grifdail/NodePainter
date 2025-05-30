@@ -6,10 +6,8 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import { NodeMenu } from "./NodeMenu";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortRole } from "../../Types/PortRole";
 import { PortType } from "../../Types/PortType";
-import { SettingComponents } from "../Settings/SettingsComponents";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { OutputPortView } from "./OutputPortView";
 import { SettingControl, getSettingHeight } from "./SettingControl";
@@ -17,7 +15,8 @@ import { MouseEventHandler, useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
-import { NODE_FOOTER_HEIGHT, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
+import { GetNodeHeight } from "./GetNodeHeight";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
@@ -31,13 +30,6 @@ const AnimatedG = animated(styled.g`
     filter: drop-shadow(var(--card-shadow));
   }
 `);
-
-export function GetNodeHeight(node: NodeData, typeDef: NodeDefinition) {
-  var inputCount = Object.keys(node.dataInputs).length;
-  var outputCount = Object.keys(node.dataOutputs).length;
-  var sumSetting = typeDef.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(node.settings[def.id], def as any, node), 0);
-  return NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (inputCount + outputCount) + NODE_FOOTER_HEIGHT + sumSetting + typeDef.settings.length * 2;
-}
 
 export type PortNodeCallback = (node: string, port: string, location: PortRole, type: PortType) => void;
 

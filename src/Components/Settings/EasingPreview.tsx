@@ -1,4 +1,5 @@
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import styled from "styled-components";
 import { useMemo } from "react";
 import { Easing, EasingFunctionType, evaluate } from "../../libs/easing";

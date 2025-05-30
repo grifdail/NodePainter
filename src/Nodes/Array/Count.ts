@@ -1,6 +1,6 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { ArrayTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 export const Count: NodeDefinition = {
@@ -19,7 +19,7 @@ export const Count: NodeDefinition = {
 
   settings: [],
 
-  availableTypes: ArrayTypes,
+  availableTypes: portTypesWithTags(["array"]),
   onChangeType: changeTypeGenerator(["array"], []),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.selectedType) as any[];

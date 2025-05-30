@@ -1,9 +1,8 @@
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { Icon } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { useTree } from "../../Hooks/useTree";
-import { NodeData } from "../../Types/NodeData";
 import { ButtonSettingDefinition } from "../../Types/SettingDefinition";
 
 export const ButtonsSettings: SettingComponent<ButtonSettingDefinition> = function ({ onChange, value, def, node }: SettingProps<ButtonSettingDefinition>) {

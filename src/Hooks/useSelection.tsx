@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useTree } from "./useTree";
-import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 
 export type SelectionStore = {

@@ -2,7 +2,8 @@ import { BoolSettingDefinition } from "../../Types/SettingDefinition";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 
 export const BoolSetting: SettingComponent<BoolSettingDefinition> = function ({ onChange, value, def }: SettingProps<BoolSettingDefinition>) {
   return (

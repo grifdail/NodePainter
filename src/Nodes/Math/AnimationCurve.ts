@@ -1,7 +1,7 @@
 import { IconEaseInOut } from "@tabler/icons-react";
 import { AnimationTrack, convertAnimationTrackType, createDefaultAnimationTrack, interpolateAnimation } from "../../Types/AnimationTrack";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { EnforceGoodType } from "../../Utils/vectorUtils";
 
 export const AnimationCurve: NodeDefinition = {
@@ -13,7 +13,7 @@ export const AnimationCurve: NodeDefinition = {
   dataInputs: [{ id: "pos", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "value", type: "vector2", defaultValue: 0 }],
 
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType(node, type) {
     node.settings["track"] = convertAnimationTrackType(type, node.settings["track"]);
   },

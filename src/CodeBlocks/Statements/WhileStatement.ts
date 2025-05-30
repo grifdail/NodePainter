@@ -1,9 +1,13 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, executeStatementParameter, toStringExpression } from "../../Types/CodeBlock";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { executeStatementParameter } from "../../Types/executeStatementParameter";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 
 export const WhileStatement: CodeBlockStatementGenerator = {
   id: "While",
   execute(block, context) {
-    while (evaluateExpression(block.parameters.condition, context) as boolean) {
+    while (evaluateCodeBlockExpression(block.parameters.condition, context) as boolean) {
       executeStatementParameter(block.parameters.do, context);
     }
   },
@@ -26,6 +30,6 @@ export const WhileStatement: CodeBlockStatementGenerator = {
     return data;
   },
   toString(statement) {
-    return `While ${toStringExpression(statement.parameters.condition)}`;
+    return `While ${toStringCodeBlockExpression(statement.parameters.condition)}`;
   },
 };

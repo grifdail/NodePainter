@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { GetNodeHeight } from "../Components/Graph/GraphNodeUI";
+import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
@@ -18,12 +18,12 @@ import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
 import { PortType } from "../Types/PortType";
+import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/convertTypeValue";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
-import { createDefaultValue } from "../Utils/createDefaultValue";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { createNodeData } from "../Utils/createNodeData";
 import { createPortConnection } from "../Utils/createPortConnection";
@@ -519,7 +519,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           id: element.id,
           label: element.label || element.id,
           type: element.type,
-          defaultValue: createDefaultValue(element.type),
+          defaultValue: PortTypeDefinitions[element.type].createDefaultValue(),
         };
       });
       newNodeData.pairedNode = pairedNode;

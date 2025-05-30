@@ -2,7 +2,7 @@ import { IconList, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
@@ -49,7 +49,7 @@ export const GenerateArray: NodeDefinition = {
     },
   ],
 
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
   contextMenu: {
     "Create the index node": createIndexNode,

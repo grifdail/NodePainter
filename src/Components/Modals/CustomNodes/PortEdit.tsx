@@ -1,7 +1,6 @@
 import { IconTriangle, IconX } from "@tabler/icons-react";
 import { PortDefinition } from "../../../Types/PortDefinition";
-import { PortType } from "../../../Types/PortType";
-import { PortColor } from "../../StyledComponents/PortColor";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { capitalCase } from "change-case";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
@@ -10,6 +9,7 @@ import styled from "styled-components";
 import { convertTypeValue } from "../../../Utils/convertTypeValue";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { TextInput } from "../../Generics/Inputs/TextInput";
+import { PortType } from "../../../Types/PortType";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;
@@ -61,14 +61,14 @@ type InputPortEditProps = {
 };
 
 export function PortEdit({ port, onChangePort, onDeletePort, index, availableTypes, open = true, onOpen }: InputPortEditProps) {
-  const portColor = PortColor[port.type];
-  const PortValueEditor = portColor.inputInline;
+  const portColor = PortTypeDefinitions[port.type];
+  const PortValueEditor = portColor.inlineInput;
   const Icon = portColor.icon;
   const canDelete = onDeletePort !== undefined;
   const canEdit = onChangePort !== undefined;
 
   const typeTemplate = (option: string) => {
-    const portColor = PortColor[option as PortType];
+    const portColor = PortTypeDefinitions[option as PortType];
     const Icon = portColor.icon;
     return (
       <>

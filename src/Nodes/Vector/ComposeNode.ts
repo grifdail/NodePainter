@@ -1,7 +1,7 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorLength, VectorTypeslimited } from "../../Types/PortType";
-import { createColor, createVector2, createVector3 } from "../../Types/vectorDataType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
+import { createVector2 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
@@ -28,9 +28,9 @@ export const ComposeNode: NodeDefinition = {
   dataOutputs: [{ id: "out", type: "vector2", defaultValue: createVector2() }],
 
   settings: [],
-  availableTypes: [...VectorTypeslimited, "color"],
+  availableTypes: portTypesWithProperty("componentNames"),
   onChangeType(node, type) {
-    var count = VectorLength[type as string];
+    var count = PortTypeDefinitions[type].vectorLength || 4;
     for (var i = 0; i < 4; i++) {
       if (i >= count) {
         if (node.dataInputs[i.toString()] !== undefined) {
@@ -47,20 +47,15 @@ export const ComposeNode: NodeDefinition = {
           });
           node.dataInputs[i.toString()] = port;
         }
-        port.label = type === "color" ? "rgba"[i] : "xyzw"[i];
+        var source = PortTypeDefinitions[type].componentNames || [];
+        port.label = source[i];
       }
     }
     node.dataOutputs["out"].type = type;
   },
   getData: (portId, nodeData, context) => {
-    if (nodeData.selectedType === "vector3") {
-      return createVector3(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"));
-    }
-    if (nodeData.selectedType === "vector4" || nodeData.selectedType === "color") {
-      return createColor(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"), context.getInputValueNumber(nodeData, "2"), context.getInputValueNumber(nodeData, "3"));
-    } else {
-      return createVector2(context.getInputValueNumber(nodeData, "0"), context.getInputValueNumber(nodeData, "1"));
-    }
+    var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 2;
+    return new Array(vectorLength).fill(null).map((_, i) => context.getInputValueNumber(nodeData, i.toString()));
   },
   getShaderCode(node, context) {
     if (node.selectedType === "vector3") {

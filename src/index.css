@@ -2,22 +2,6 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css);
 
 :root {
-  --color-execute: #00e436;
-  --color-drawing2d: #00e436;
-  --color-number: #29adff;
-  --color-vector2: #7073c3;
-  --color-vector3: #f145bc;
-  --color-vector4: #f76707;
-  --color-color: #f76707;
-  --color-string: #ae3ec9;
-  --color-bool: #1d2b53;
-  --color-gradient: #f59f00;
-  --color-image: #ab5236;
-  --color-material: #f7df07;
-  --color-mesh: #7e2553;
-  --color-struct: #ff004d;
-  --color-object3d: #008751;
-
   --color-pairing: light-dark(#88888855, #88888855);
 
   --color-background: light-dark(#ffffff, #0d1117);
@@ -117,71 +101,6 @@ body .szh-menu__divider {
   background-color: light-dark(rgba(0, 0, 0, 0.12), #3a3a3a);
 }
 
-.number,
-.array-number {
-  --color-property: var(--color-number);
-}
-.execute,
-.array-execute {
-  --color-property: var(--color-execute);
-}
-.vector,
-.array-vector {
-  --color-property: var(--color-vector2);
-}
-.vector2,
-.array-vector2 {
-  --color-property: var(--color-vector2);
-}
-.vector3,
-.array-vector3 {
-  --color-property: var(--color-vector3);
-}
-.vector4,
-.array-vector4 {
-  --color-property: var(--color-vector4);
-}
-.string,
-.array-string {
-  --color-property: var(--color-string);
-}
-.bool,
-.array-bool {
-  --color-property: var(--color-bool);
-}
-.color,
-.array-color {
-  --color-property: var(--color-color);
-}
-.gradient,
-.array-gradient {
-  --color-property: var(--color-gradient);
-}
-.image,
-.array-image {
-  --color-property: var(--color-image);
-}
-.material,
-.array-material {
-  --color-property: var(--color-material);
-}
-.mesh,
-.array-mesh {
-  --color-property: var(--color-mesh);
-}
-.struct,
-.array-struct {
-  --color-property: var(--color-struct);
-}
-
-.object3d,
-.array-object3d {
-  --color-property: var(--color-object3d);
-}
-.drawing2d,
-.array-drawing2d {
-  --color-property: var(--color-drawing2d);
-}
 iframe {
   display: none;
 }

@@ -1,12 +1,12 @@
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import styled from "styled-components";
-import { PortColor } from "../StyledComponents/PortColor";
 import { Icon, IconPlus } from "@tabler/icons-react";
 import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { NODE_WIDTH } from "./NodeVisualConst";
+import { PortType } from "../../Types/PortType";
 
 const MAX_TYPE_SINGLE_LINE = NODE_WIDTH / (30 + 2) - 1;
 
@@ -69,8 +69,8 @@ var StyledSpan = styled.span<{ selected?: boolean }>`
 `;
 
 function TypeMenuItem({ type, onClick, selectedtype }: { type: PortType; selectedtype: PortType; onClick: (type: PortType) => void }) {
-  const portDescription = PortColor[type];
-  const Icon = portDescription.tinyIcon as Icon;
+  const portDescription = PortTypeDefinitions[type];
+  const Icon = portDescription.smallIcon as Icon;
   return (
     <MenuItem
       type="radio"
@@ -130,8 +130,8 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
 }
 
 export function TypeButton({ type, onClick, selectedtype }: { type: PortType; selectedtype: PortType; onClick: (type: PortType) => void }) {
-  const portDescription = PortColor[type];
-  const Icon = portDescription.tinyIcon as Icon;
+  const portDescription = PortTypeDefinitions[type];
+  const Icon = portDescription.smallIcon as Icon;
   return (
     <StyledButton
       className={type}

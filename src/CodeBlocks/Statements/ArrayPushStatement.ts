@@ -1,13 +1,16 @@
-import { CodeBlockStatement, CodeBlockStatementGenerator, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
-import { CommonTypes, PortType } from "../../Types/PortType";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 
-export const ArrayPushStatements: CodeBlockStatementGenerator[] = CommonTypes.map((type) => {
+export const ArrayPushStatements: CodeBlockStatementGenerator[] = portTypesWithTags(["common"], ["array"]).map((type) => {
   var self: CodeBlockStatementGenerator = {
     id: `Array/Push/${type}`,
     execute(block, context) {
-      let result = evaluateExpression(block.parameters.value, context);
-      let variableName = evaluateExpression(block.parameters.target, context);
+      let result = evaluateCodeBlockExpression(block.parameters.value, context);
+      let variableName = evaluateCodeBlockExpression(block.parameters.target, context);
       if (context[variableName]) {
         context[variableName].value = [...context[variableName].value, result];
       } else {
@@ -25,7 +28,7 @@ export const ArrayPushStatements: CodeBlockStatementGenerator[] = CommonTypes.ma
           value: {
             type: "expression",
             targetType: type,
-            constantValue: createDefaultValue(type),
+            constantValue: PortTypeDefinitions[type].createDefaultValue(),
             expression: null,
           },
         },
@@ -33,7 +36,7 @@ export const ArrayPushStatements: CodeBlockStatementGenerator[] = CommonTypes.ma
       return data;
     },
     toString(statement) {
-      return `Push ${toStringExpression(statement.parameters.value)} to array ${toStringExpression(statement.parameters.target)}`;
+      return `Push ${toStringCodeBlockExpression(statement.parameters.value)} to array ${toStringCodeBlockExpression(statement.parameters.target)}`;
     },
   };
   return self;

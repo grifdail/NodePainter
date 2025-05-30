@@ -1,10 +1,10 @@
 import { IconList, IconPlus } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes, PortType } from "../../Types/PortType";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createColor } from "../../Types/vectorDataType";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
 
 const addNewPort = (node: NodeData) => {
@@ -12,7 +12,7 @@ const addNewPort = (node: NodeData) => {
   node.dataInputs[`value-${count}`] = createPortConnection({
     id: `value-${count}`,
     type: node.selectedType,
-    defaultValue: createDefaultValue(node.selectedType),
+    defaultValue: PortTypeDefinitions[node.selectedType].createDefaultValue(),
   });
 };
 
@@ -48,7 +48,7 @@ export const StaticArray: NodeDefinition = {
       ],
     },
   ],
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType(node, type) {
     Object.keys(node.dataInputs).forEach((key) => {
       node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);

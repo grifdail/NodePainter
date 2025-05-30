@@ -8,7 +8,7 @@ import { createPortConnection } from "./createPortConnection";
 export function createMultiTypeNodeDefinition(
   base: BaseNodeDefinition,
   types: {
-    [key in PortType]: LogicNodeDefinition;
+    [key in PortType]?: LogicNodeDefinition;
   }
 ): NodeDefinition {
   const getShaderCode = (node: NodeData, context: ExecutionContext): string => {

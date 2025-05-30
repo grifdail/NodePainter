@@ -3,13 +3,30 @@ import { readFileSync } from "node:fs";
 import path, { resolve } from "node:path";
 import { createFilter, defineConfig, loadEnv, Plugin, transformWithEsbuild } from "vite";
 import checker from "vite-plugin-checker";
+import circleDependency from "vite-plugin-circular-dependency";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   setEnv(mode);
   return {
-    plugins: [react(), tsconfigPaths(), envPlugin(), devServerPlugin(), sourcemapPlugin(), buildPathPlugin(), basePlugin(), importPrefixPlugin(), htmlPlugin(mode), svgrPlugin(), checker({ typescript: true })],
+    plugins: [
+      react(),
+      tsconfigPaths(),
+      envPlugin(),
+      devServerPlugin(),
+      sourcemapPlugin(),
+      buildPathPlugin(),
+      basePlugin(),
+      importPrefixPlugin(),
+      htmlPlugin(mode),
+      svgrPlugin(),
+      checker({ typescript: true }),
+      circleDependency({
+        outputFilePath: "./circleDep",
+        circleImportThrowErr: false,
+      }),
+    ],
     resolve: {
       alias: {
         "@assets": path.resolve(__dirname, "public/assets"),

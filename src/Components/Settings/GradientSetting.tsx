@@ -1,4 +1,5 @@
-import { SettingComponent, SettingProps } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";

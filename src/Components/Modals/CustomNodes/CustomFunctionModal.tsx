@@ -1,11 +1,12 @@
 import { NodeDefinition } from "../../../Types/NodeDefinition";
-import { FullCommonTypes, PortType } from "../../../Types/PortType";
+import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
 import { CustomFunctionModalNoLogic } from "./CustomFunctionModalNoLogic";
 import { IconFunctionFilled } from "@tabler/icons-react";
+import { PortType } from "../../../Types/PortType";
 
-const AvailableTypesInput: Array<PortType> = FullCommonTypes;
-const AvailableTypesOutput: Array<PortType> = FullCommonTypes;
+const AvailableTypesInput: Array<PortType> = portTypesWithTags(["common"]);
+const AvailableTypesOutput: Array<PortType> = portTypesWithTags(["common"]);
 
 export const CustomFunctionModalSettings = {
   creationTitle: "Create a custom node",

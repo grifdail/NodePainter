@@ -1,6 +1,6 @@
 import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypeslimited } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -32,9 +32,9 @@ export const DotProduct: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypeslimited,
+  availableTypes: portTypesWithTags(["common", "true-vector"], ["array"]),
   onChangeType: changeTypeGenerator(["a", "b"], []),
-  hasInput: hasInputGenerator(VectorTypeslimited),
+  hasInput: hasInputGenerator(portTypesWithTags(["common", "true-vector"])),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

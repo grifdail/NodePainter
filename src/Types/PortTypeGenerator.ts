@@ -1,7 +1,7 @@
 import { ConstrainDeclaration, Constraints } from "../Utils/applyConstraints";
-import { createDefaultValue } from "../Utils/createDefaultValue";
 import { PortDefinition } from "./PortDefinition";
-import { PortType, PortTypeArray } from "./PortType";
+import { PortType } from "./PortType";
+import { PortTypeDefinitions } from "./PortTypeDefinitions";
 
 type PortTypeGeneratorFunction = (id: string | [string | string], defaultValue?: any, tooltip?: string | ConstrainDeclaration[], constrains?: ConstrainDeclaration[]) => PortDefinition;
 type PortTypeGenerator = {
@@ -9,7 +9,7 @@ type PortTypeGenerator = {
 };
 
 var defaultPort: PortTypeGenerator = Object.fromEntries(
-  PortTypeArray.map((portType) => [
+  Object.keys(PortTypeDefinitions).map((portType) => [
     portType,
     (id: string | [string, string], defaultValue?: any, tooltip?: string | ConstrainDeclaration[], constrains?: ConstrainDeclaration[]): PortDefinition => {
       const label = typeof id === "string" ? undefined : id[1];
@@ -22,7 +22,7 @@ var defaultPort: PortTypeGenerator = Object.fromEntries(
         label,
         tooltip: trueTooltip,
         constrains: trueConstrain,
-        defaultValue: defaultValue === undefined ? createDefaultValue(portType as PortType) : defaultValue,
+        defaultValue: defaultValue === undefined ? PortTypeDefinitions[portType as PortType].createDefaultValue() : defaultValue,
       };
     },
   ])

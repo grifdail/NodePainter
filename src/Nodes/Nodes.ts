@@ -16,7 +16,6 @@ import { Lerp } from "./Vector/Lerp";
 import { Magnitude } from "./Vector/Magnitude";
 import { Multiply } from "./Vector/Multiply";
 import { Normalize } from "./Vector/Normalize";
-import { RotateVector } from "./Vector/Rotate2D";
 import { Scale } from "./Vector/Scale";
 import { SquareMagnitude } from "./Vector/SquareMagnitude";
 import { Subtract } from "./Vector/Subtract";
@@ -140,6 +139,10 @@ import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
 import { Step } from "./Math/Step";
+import { TriangleWave } from "./Math/TriangleWave";
+import { AlignRotation } from "./Quaternion/AlignRotation";
+import { AxisAngle } from "./Quaternion/AxisAngle";
+import { EulerAngle } from "./Quaternion/EulerAngle";
 import { RenderWithRotation } from "./RenderWithRotation/ExecuteWithRotation";
 import { RenderWithBlending } from "./RenderWithRotation/RenderWithBlending";
 import { RenderWithMask } from "./RenderWithRotation/RenderWithMask";
@@ -163,6 +166,7 @@ import { CombineLoop } from "./System/CombineLoop";
 import { StartNode } from "./System/StartNode";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
+import { RotateVector } from "./Vector/RotateVector";
 import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
 import { Value } from "./Vector/Value";
@@ -326,6 +330,7 @@ export const Nodes: Array<NodeDefinition> = [
   Cos,
   Sin,
   SawToothWave,
+  TriangleWave,
   Sqrt,
   Abs,
   Acos,
@@ -360,6 +365,11 @@ export const Nodes: Array<NodeDefinition> = [
   createConstant("TAU", Math.PI * 2),
   createConstant("E", Math.E),
   createConstant("SQRT2", Math.SQRT2),
+
+  //Quaternion
+  EulerAngle,
+  AxisAngle,
+  AlignRotation,
 
   //3D
   ...Nodes3D,

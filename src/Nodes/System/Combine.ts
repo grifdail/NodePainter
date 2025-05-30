@@ -2,11 +2,11 @@ import { IconArrowMerge, IconPlus } from "@tabler/icons-react";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createDefaultValue } from "../../Utils/createDefaultValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { StatefullVirtualElement } from "../../Utils/statefullContext";
+import { StatefullVirtualElement } from "../../Utils/StatefullVirtualElement";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const addNewPort = (node: NodeData) => {
@@ -15,7 +15,7 @@ const addNewPort = (node: NodeData) => {
   node.dataInputs[`object-${count}`] = createPortConnection({
     id: `object-${count}`,
     type: type,
-    defaultValue: createDefaultValue(type),
+    defaultValue: PortTypeDefinitions[type].createDefaultValue(),
   });
 };
 

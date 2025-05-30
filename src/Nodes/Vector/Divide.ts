@@ -1,10 +1,9 @@
 import { IconMathXDivideY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorDivision } from "../../Utils/vectorUtils";
 
 export const Divide: NodeDefinition = {
   id: "Divide",
@@ -32,14 +31,19 @@ export const Divide: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithProperty("divisionOperator"),
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
-  hasInput: hasInputGenerator(VectorTypesFull),
-  hasOutput: hasInputGenerator(VectorTypesFull),
+  hasInput: hasInputGenerator(portTypesWithProperty("divisionOperator")),
+  hasOutput: hasInputGenerator(portTypesWithProperty("divisionOperator")),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");
-    return EnforceGoodType(nodeData, VectorDivision(a, b));
+    const operator = PortTypeDefinitions[nodeData.selectedType].divisionOperator;
+    if (operator) {
+      return operator(a, b);
+    } else {
+      return PortTypeDefinitions[nodeData.selectedType].createDefaultValue();
+    }
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} / ${b}`);

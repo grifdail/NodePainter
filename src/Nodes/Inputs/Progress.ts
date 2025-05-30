@@ -1,7 +1,7 @@
 import { IconClock } from "@tabler/icons-react";
+import { convertToShaderNumber } from "../../Types/convertToShaderNumber";
 import { NodeData } from "../../Types/NodeData";
 import { ContextMenuData, NodeDefinition } from "../../Types/NodeDefinition";
-import { convertToShaderValue } from "../../Utils/convertToShaderValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
 
 export const Progress: NodeDefinition = {
@@ -23,9 +23,9 @@ export const Progress: NodeDefinition = {
   getShaderCode(node, context) {
     var value = context.getGlobalSetting<number>("progress") || 1;
     if (node.dataInputs["offset"]) {
-      return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderValue(value, "number")} * 1000.0) + ${context.getShaderVar(node, "offset", "number")}, 1.0) * ${context.getShaderVar(node, "scale", "number")};`;
+      return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderNumber(value)} * 1000.0) + ${context.getShaderVar(node, "offset", "number")}, 1.0) * ${context.getShaderVar(node, "scale", "number")};`;
     }
-    return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderValue(value, "number")} * 1000.0), 1.0);`;
+    return `float ${context.getShaderVar(node, "progress", "number", true)} = mod(time / (${convertToShaderNumber(value)} * 1000.0), 1.0);`;
   },
   contextMenu: (node) => {
     if (node.dataInputs["offset"]) {

@@ -1,10 +1,9 @@
 import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { VectorTypesFull } from "../../Types/PortType";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorMultiplication } from "../../Utils/vectorUtils";
 
 export const Multiply: NodeDefinition = {
   id: "Multiply",
@@ -33,15 +32,15 @@ export const Multiply: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: VectorTypesFull,
+  availableTypes: portTypesWithProperty("multiplicationOperator"),
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
-
-  hasInput: hasInputGenerator(VectorTypesFull),
-  hasOutput: hasInputGenerator(VectorTypesFull),
+  hasInput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),
+  hasOutput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "a");
-    var b = context.getInputValueVector(nodeData, "b");
-    return EnforceGoodType(nodeData, VectorMultiplication(a, b));
+    var a = context.getInputValue(nodeData, "a", nodeData.selectedType);
+    var b = context.getInputValue(nodeData, "b", nodeData.selectedType);
+    const operator = PortTypeDefinitions[nodeData.selectedType].multiplicationOperator;
+    return operator ? operator(a, b) : PortTypeDefinitions[nodeData.selectedType].createDefaultValue();
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `${a} * ${b}`);

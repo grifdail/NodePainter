@@ -1,9 +1,8 @@
 import { Easing, EasingFunctionType, evaluate } from "../libs/easing";
 import { clamp01, map } from "../Utils/colorUtils";
 import { convertTypeValue } from "../Utils/convertTypeValue";
-import { createDefaultValue } from "../Utils/createDefaultValue";
-import { VectorLerp } from "../Utils/vectorUtils";
-import { PortType, VectorTypesFull } from "./PortType";
+import { PortType } from "./PortType";
+import { PortTypeDefinitions } from "./PortTypeDefinitions";
 
 export type AnimationTrack = {
   type: PortType;
@@ -17,8 +16,8 @@ export type AnimationKeyFrame = {
 export const createDefaultAnimationTrack = (type: PortType): AnimationTrack => ({
   type: type,
   keyframes: [
-    { pos: 0, value: createDefaultValue(type), lerp: Easing.Linear },
-    { pos: 1, value: createDefaultValue(type), lerp: Easing.Linear },
+    { pos: 0, value: PortTypeDefinitions[type].createDefaultValue(), lerp: Easing.Linear },
+    { pos: 1, value: PortTypeDefinitions[type].createDefaultValue(), lerp: Easing.Linear },
   ],
 });
 
@@ -32,25 +31,23 @@ export const convertAnimationTrackType = (type: PortType, oldTrack: AnimationTra
 
 export const createDefaultAnimationKeyframe = (type: PortType): AnimationKeyFrame => ({
   pos: 0.5,
-  value: createDefaultValue(type),
+  value: PortTypeDefinitions[type].createDefaultValue(),
   lerp: "Linear",
 });
 
 export function interpolateAnimation(track: AnimationTrack, pos: number): any {
   if (track.keyframes.length === 0) {
-    return createDefaultValue(track.type);
+    return PortTypeDefinitions[track.type].createDefaultValue();
   }
-  var isLerpable = VectorTypesFull.includes(track.type);
   let prev = track.keyframes[0];
   if (pos <= prev.pos) {
     return prev.value;
   }
   for (var stop of track.keyframes) {
     if (pos < stop.pos) {
-      if (isLerpable) {
-        var a = track.type === "number" ? [prev.value] : prev.value;
-        var b = track.type === "number" ? [stop.value] : stop.value;
-        return VectorLerp(a, b, evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))));
+      const lerp = PortTypeDefinitions[track.type].lerpOperator;
+      if (lerp) {
+        return lerp(prev.value, stop.value, evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))));
       } else {
         return prev.value;
       }

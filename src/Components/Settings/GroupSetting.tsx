@@ -1,16 +1,10 @@
-import { SettingComponent, SettingComponents, SettingProps } from "./SettingsComponents";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { SettingComponents } from "./SettingsComponents";
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
 import styled from "styled-components";
-import { IconAdjustments, IconArrowDown, IconArrowUp, IconTrash, IconTriangle } from "@tabler/icons-react";
-import { createColor } from "../../Types/vectorDataType";
-import { PaletteMenu } from "./PaletteMenu";
-import { Button } from "../Generics/Button";
-import { Menu, MenuItem } from "@szhsin/react-menu";
-import { useListManipulator } from "../../Hooks/useListManipulator";
-import { ColorInput } from "../Generics/Inputs/ColorInput";
-import { GroupSettingDefinition, SettingDefinition } from "../../Types/SettingDefinition";
+import { IconTriangle } from "@tabler/icons-react";
+import { GroupSettingDefinition } from "../../Types/SettingDefinition";
 import { SettingControl } from "../Graph/SettingControl";
-import { boolean } from "mathjs";
 
 const MainDiv = styled.div<{ selected?: boolean }>`
   background: ${(props) => (props.selected ? `var(--color-selected);` : `none`)};

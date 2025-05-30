@@ -1,5 +1,10 @@
-import { CodeBlockExpressionGenerator, CodeBlockParameterField, CodeBlockStatement, evaluateExpression, toStringExpression } from "../../Types/CodeBlock";
-import { PortType, VectorLength } from "../../Types/PortType";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
+import { CodeBlockParameterField } from "../../Types/CodeBlockParameterField";
+import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
+import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
 
 export const VectorComposeExpression: CodeBlockExpressionGenerator = {
@@ -13,7 +18,7 @@ export const VectorComposeExpression: CodeBlockExpressionGenerator = {
       expression: null,
     });
     var parameters: CodeBlockStatement["parameters"] = {};
-    const vec = VectorLength[type];
+    const vec = PortTypeDefinitions[type].vectorLength as number;
     for (let index = 0; index < vec; index++) {
       parameters[index.toString()] = createParameters(type === "color" ? "rgba"[index] : "xyzw"[index]);
     }
@@ -29,7 +34,7 @@ export const VectorComposeExpression: CodeBlockExpressionGenerator = {
     var array: number[] = [];
     for (let index = 0; index < 4; index++) {
       if (statement.parameters[index.toString()]) {
-        array.push(evaluateExpression(statement.parameters[index.toString()], state) as number);
+        array.push(evaluateCodeBlockExpression(statement.parameters[index.toString()], state) as number);
       }
     }
 
@@ -39,7 +44,7 @@ export const VectorComposeExpression: CodeBlockExpressionGenerator = {
     var array: string[] = [];
     for (let index = 0; index < 4; index++) {
       if (statement.parameters[index.toString()]) {
-        array.push(toStringExpression(statement.parameters[index.toString()]));
+        array.push(toStringCodeBlockExpression(statement.parameters[index.toString()]));
       }
     }
     return array.toString();

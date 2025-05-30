@@ -1,6 +1,6 @@
 import { IconEqual } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { CommonTypes } from "../../Types/PortType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
@@ -25,10 +25,10 @@ export const Value: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: CommonTypes,
+  availableTypes: portTypesWithTags(["common"]),
   onChangeType: changeTypeGenerator(["value"], ["out"]),
-  hasInput: hasInputGenerator(CommonTypes),
-  hasOutput: hasInputGenerator(CommonTypes),
+  hasInput: hasInputGenerator(portTypesWithTags(["common"])),
+  hasOutput: hasInputGenerator(portTypesWithTags(["common"])),
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, "value", nodeData.selectedType);
   },
