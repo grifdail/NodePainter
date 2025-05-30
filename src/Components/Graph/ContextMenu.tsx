@@ -13,6 +13,7 @@ import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
 import { useSelection } from "../../Hooks/useSelection";
 import { AlignMenu } from "./AlignMenu";
+import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -88,7 +89,11 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
         />
       ))}
       {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
-      <MenuItem onClick={() => useRouter.getState().open(Routes.NodeCreation)}>
+      <MenuItem
+        onClick={() => {
+          useNodeSelectionModal.getState().setTargetPosition(...getClickPositionWorld());
+          useRouter.getState().open(Routes.NodeCreation);
+        }}>
         <IconPlus /> Add a new Node
       </MenuItem>
       <MenuDivider></MenuDivider>

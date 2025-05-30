@@ -36,6 +36,8 @@ export type BaseNodeDefinition = {
 
   //Shader
   shaderRequirement?: string | string[];
+
+  onManualCreation?: (node: NodeData) => void;
 };
 
 export type LogicNodeDefinition = {

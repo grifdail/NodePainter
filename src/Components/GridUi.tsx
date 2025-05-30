@@ -13,6 +13,7 @@ import { MainMenu } from "./MainMenu";
 import { FunctionSubMenu } from "./FunctionSubMenu";
 import { Routes } from "../Types/Routes";
 import { FullScreenDiv } from "./Modal";
+import { useNodeSelectionModal } from "../Hooks/useNodeSelectionModal";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -44,7 +45,10 @@ export function GridUi() {
       {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
       <BottomToolbar reversed>
         <button
-          onClick={() => openModal(Routes.NodeCreation)}
+          onClick={() => {
+            useNodeSelectionModal.getState().clear();
+            openModal(Routes.NodeCreation);
+          }}
           data-tooltip-id="tooltip"
           data-tooltip-content="New node">
           <IconPlus></IconPlus>

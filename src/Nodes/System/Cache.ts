@@ -44,7 +44,9 @@ export const CacheNode: NodeDefinition = {
     });
     return target[`${portId}-in`];
   },
-
+  onManualCreation(node) {
+    addNewPort(node);
+  },
   contextMenu: (node) => {
     return {
       ...Object.fromEntries(

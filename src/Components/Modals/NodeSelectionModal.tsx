@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { IconPlus, IconSearch, IconSortDescending } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { useViewbox } from "../../Hooks/useViewbox";
@@ -18,6 +18,7 @@ import { CategoryButton, TagList } from "./CategoryButton";
 import { SearchForm } from "./SearchForm";
 import { PortType } from "../../Types/PortType";
 import { NodeData } from "../../Types/NodeData";
+import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -138,6 +139,9 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   const onClickNode = useCallback(
     (node: NodeDefinition) => {
       var view = useViewbox.getState();
+      var modalInfo = useNodeSelectionModal.getState().targetPosition;
+      console.log(modalInfo);
+      const target = modalInfo || ([view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale] as const);
       let targetTypeChange: PortType | null = null;
       if (searchTerm.input && node.hasInput) {
         targetTypeChange = node.hasInput(searchTerm.input);
@@ -145,7 +149,12 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
       if (searchTerm.output && node.hasOutput) {
         targetTypeChange = node.hasOutput(searchTerm.output);
       }
-      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale, (n, d) => setTargetType(n, d, targetTypeChange));
+      addNode(node.id, ...target, (n, d) => {
+        setTargetType(n, d, targetTypeChange);
+        if (node.onManualCreation) {
+          node.onManualCreation(n);
+        }
+      });
       nodeFav.markNodeAsUsed(node.id);
       close();
     },
