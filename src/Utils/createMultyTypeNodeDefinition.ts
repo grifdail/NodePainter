@@ -58,15 +58,9 @@ export function createMultiTypeNodeDefinition(
     },
     hasInput(input) {
       const r = Object.entries(types).find(([type, variant]) => {
-        console.log(
-          input,
-          variant,
-          variant.dataInputs.some((port) => port.type === input)
-        );
         return variant.dataInputs.some((port) => port.type === input);
       });
       if (r) {
-        console.log("------------", r);
         return r[0] as PortType;
       } else {
         return null;
