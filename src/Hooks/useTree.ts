@@ -17,7 +17,6 @@ import { NodeCollection } from "../Types/NodeCollection";
 import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
-import { PortType } from "../Types/PortType";
 import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
@@ -56,15 +55,12 @@ export const useTree = create<TreeStore>()((set, get) => {
     getSketchName() {
       return get().nodes[START_NODE].settings["name"] as string;
     },
-    addNode(nodeType: string, posX: number, posY: number, typeChange?: PortType | null) {
+    addNode(nodeType: string, posX: number, posY: number, modifier: ((node: NodeData, def: NodeDefinition) => void) | null = null) {
       const def = get().getNodeTypeDefinition(nodeType);
       const newNodeData = createNodeData(def, posX, posY);
       newNodeData.graph = get().editedGraph;
-      if (typeChange && def.availableTypes && def.availableTypes.includes(typeChange)) {
-        if (def.onChangeType) {
-          def.onChangeType(newNodeData, typeChange, []);
-        }
-        newNodeData.selectedType = typeChange;
+      if (modifier) {
+        modifier(newNodeData, def);
       }
       set(
         produce((state) => {

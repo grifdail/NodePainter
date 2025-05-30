@@ -17,6 +17,7 @@ import { usePortSelection } from "../../Hooks/usePortSelection";
 import { CategoryButton, TagList } from "./CategoryButton";
 import { SearchForm } from "./SearchForm";
 import { PortType } from "../../Types/PortType";
+import { NodeData } from "../../Types/NodeData";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -50,8 +51,8 @@ type SearchTermData = {
 };
 
 const TagRegex = /tag:(\w+)/gi;
-const OutputRegex = new RegExp(`output:(${portTypesWithTags([]).join("|")})`, "gi");
-const InputRegex = new RegExp(`input:(${portTypesWithTags([]).join("|")})`, "gi");
+const OutputRegex = new RegExp(`output:(${portTypesWithTags(["common"]).join("|")})`, "gi");
+const InputRegex = new RegExp(`input:(${portTypesWithTags(["common"]).join("|")})`, "gi");
 
 const parseSearchTerm = (raw: string): SearchTermData => {
   const base = raw.trim().toLowerCase();
@@ -144,7 +145,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
       if (searchTerm.output && node.hasOutput) {
         targetTypeChange = node.hasOutput(searchTerm.output);
       }
-      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale, targetTypeChange);
+      addNode(node.id, view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale, (n, d) => setTargetType(n, d, targetTypeChange));
       nodeFav.markNodeAsUsed(node.id);
       close();
     },
@@ -303,4 +304,12 @@ function sortWithPriority<T>(...comparator: ((a: T, b: T) => number)[]) {
     }
     return 0;
   };
+}
+function setTargetType(node: NodeData, def: NodeDefinition, typeChange: PortType | null): void {
+  if (typeChange !== null && def.availableTypes && def.availableTypes.includes(typeChange)) {
+    if (def.onChangeType) {
+      def.onChangeType(node, typeChange, []);
+    }
+    node.selectedType = typeChange;
+  }
 }
