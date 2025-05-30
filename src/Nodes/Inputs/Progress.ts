@@ -2,6 +2,7 @@ import { IconClock } from "@tabler/icons-react";
 import { convertToShaderNumber } from "../../Types/convertToShaderNumber";
 import { NodeData } from "../../Types/NodeData";
 import { ContextMenuData, NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createPortConnection } from "../../Utils/createPortConnection";
 
 export const Progress: NodeDefinition = {
@@ -11,14 +12,17 @@ export const Progress: NodeDefinition = {
   featureLevel: 100,
   tags: ["Input"],
   dataInputs: [],
-  dataOutputs: [{ id: "progress", type: "number", defaultValue: 0 }],
-
+  dataOutputs: [Port.number("progress")],
   settings: [{ id: "preview-duration", defaultValue: 1, type: "number", globalKey: "progress" }],
   getData: (portId, nodeData, context) => {
     var value = context.getGlobalSetting<number>("progress") || 1;
     const offset = nodeData.dataInputs["offset"] ? context.getInputValueNumber(nodeData, "offset") : 0;
     const scale = nodeData.dataInputs["scale"] ? context.getInputValueNumber(nodeData, "scale") : 1;
-    return ((context.time / (value * 1000) + offset) % 1) * scale;
+    if (portId === "progress") {
+      return ((context.time / (value * 1000) + offset) % 1) * scale;
+    } else {
+      return Math.floor(context.time / (value * 1000) + offset);
+    }
   },
   getShaderCode(node, context) {
     var value = context.getGlobalSetting<number>("progress") || 1;
@@ -43,6 +47,7 @@ export const Progress: NodeDefinition = {
           type: "number",
           defaultValue: 1,
         });
+        node.dataOutputs["loopCount"] = Port.number("loopCount");
       },
     };
   },

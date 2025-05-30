@@ -26,7 +26,7 @@ export const SelectFromArray: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common"]),
+  availableTypes: portTypesWithTags(["common"], ["array"]),
   onChangeType(node, type) {
     node.dataInputs["array"].ownValue = convertTypeValue(node.dataInputs["array"].ownValue, node.dataInputs["array"].type, `array-${type}` as PortType);
     node.dataInputs["array"].type = `array-${type}` as PortType;
