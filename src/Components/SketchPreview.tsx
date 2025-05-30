@@ -9,6 +9,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { START_NODE } from "../Nodes/System/StartNode";
 import { createExecutionContext } from "../Utils/createExecutionContext";
 import Rand from "rand-seed";
+import { useDialog } from "../Hooks/useDialog";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;
@@ -47,7 +48,7 @@ const Preview = styled.div<{ scale: number }>`
   }
 `;
 
-export function SketchPreview() {
+export function SketchPreview({ close }: { close: () => void }) {
   var tree = useTree();
   var dim = useWindowSize();
   var start = tree.getNode(START_NODE);
@@ -69,6 +70,7 @@ export function SketchPreview() {
       <ReactP5Wrapper
         sketch={sketch}
         tree={tree}
+        close={close}
         setCleanup={(cb: any) => (cleanup.current = cb)}
         key={`${start.settings.width} / ${start.settings.height}`}
       />
@@ -78,13 +80,14 @@ export function SketchPreview() {
 type MySketchProps = SketchProps & {
   tree: TreeStore;
   setCleanup: (cleanup: () => void) => void;
+  close: () => {};
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
   var seed = 0;
-
+  var close = () => {};
   p5.setup = () => {};
 
   p5.updateWithProps = (props: MySketchProps) => {
@@ -98,6 +101,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
     context.RNG = new Rand(seed.toString());
     props.setCleanup(context.endOfRunCleanup);
+    close = props.close;
   };
 
   p5.draw = () => {
@@ -106,9 +110,19 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     context.time = p5.millis();
     context.deltaTime = p5.deltaTime;
     if (tree) {
-      var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
-      if (typeof result === "function") {
-        result();
+      try {
+        var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
+        if (typeof result === "function") {
+          result();
+        }
+      } catch (err: any) {
+        useDialog.getState().openError(`There was an error on node **${tree.getNode(context.lastVisitedNode).type}** (\xa0**${context.lastVisitedNode}**\xa0).
+
+\`${err.message}\`
+        
+        `);
+        console.error(err);
+        close();
       }
     }
     context.endOfFrameCleanup();

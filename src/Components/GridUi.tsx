@@ -41,7 +41,7 @@ export function GridUi() {
         </WarningTrack>
       )}
       {selectionActive && <WarningTrackSelection></WarningTrackSelection>}
-      {showPreview && <SketchPreview></SketchPreview>}
+      {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
       <BottomToolbar reversed>
         <button
           onClick={() => openModal(Routes.NodeCreation)}

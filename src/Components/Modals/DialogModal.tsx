@@ -5,6 +5,7 @@ import { DialogData, DialogStore } from "../../Hooks/useDialog";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Button, InvisibleButton } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
+import Markdown from "react-markdown";
 
 const MainDiv = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ export function DialogModal({ dialog, controler }: { dialog: DialogData; control
       icon={IconInfoCircle}
       size="tiny">
       <MainDiv>
-        {dialog.text}
+        <Markdown>{dialog.text}</Markdown>
         <div>
           {dialog.fields.map((field) => (
             <Fieldset

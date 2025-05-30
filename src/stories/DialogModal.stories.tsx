@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { DialogModal } from "../Components/Modals/DialogModel";
+import { DialogModal } from "../Components/Modals/DialogModal";
 import { DropdownInput } from "../Components/Generics/Inputs/DropdownInput";
 import { TextInput } from "../Components/Generics/Inputs/TextInput";
 import { NumberInput } from "../Components/Generics/Inputs/NumberInput";

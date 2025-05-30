@@ -11,7 +11,7 @@ import { SettingsModal } from "./Modals/SettingsModal";
 import { AboutModal } from "./Modals/AboutModal";
 import { PaintModal } from "./Modals/PaintModal";
 import { useDialog } from "../Hooks/useDialog";
-import { DialogModal } from "./Modals/DialogModel";
+import { DialogModal } from "./Modals/DialogModal";
 import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlockModal";
 import { MainMenu } from "./MainMenu";

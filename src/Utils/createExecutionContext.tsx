@@ -31,6 +31,7 @@ export type ExecutionContext = {
   functionStack: Array<FunctionContext>;
   time: number;
   target: Graphics;
+  lastVisitedNode: string;
   blackboard: { [key: string]: any };
   callCounts: { [key: string]: number };
   frameBlackboard: { [key: string]: any };
@@ -69,6 +70,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     frameBlackboard: {},
     functionStack: [],
     callCounts: {},
+    lastVisitedNode: "",
     RNG: new Rand(),
     getNodeOutput(nodeId, portId) {
       return tree?.getPortValue(nodeId, portId, context);
@@ -77,7 +79,10 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       const inputPorts = nodeData.dataInputs[portId];
       let item: [any, PortType] = [null, "unknown"];
       if (inputPorts.hasConnection) {
+        var oldVisited = context.lastVisitedNode;
+        context.lastVisitedNode = inputPorts.connectedNode as string;
         item = context.getNodeOutput(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+        context.lastVisitedNode = oldVisited;
       } else {
         item = [inputPorts.ownValue, inputPorts.type];
       }
