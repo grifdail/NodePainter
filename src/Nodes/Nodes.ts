@@ -153,6 +153,7 @@ import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { ChangeNode } from "./Statefull/ChangeNode";
 import { Counter } from "./Statefull/CounterNode";
 import { DetectChangeNode } from "./Statefull/DetectChangeNode";
+import { DetectThreshold } from "./Statefull/DetectThresholdNode";
 import { EdgeNode } from "./Statefull/EdgeNode";
 import { PreviousNode } from "./Statefull/PreviousNode";
 import { SaveNode } from "./Statefull/SaveNode";
@@ -401,6 +402,7 @@ export const Nodes: Array<NodeDefinition> = [
   SaveNode,
   ToggleSwitchNode,
   ToggleFlipFlopNode,
+  DetectThreshold,
 ];
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));
