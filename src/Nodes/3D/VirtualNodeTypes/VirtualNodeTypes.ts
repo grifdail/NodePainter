@@ -20,4 +20,8 @@ export const VirtualNodes = {
   TransformedObjectModelVirtualNodeType: new TransformedObjectModelVirtualNodeType(),
 };
 
+Object.entries(VirtualNodes).forEach(([name, virtualNode]) => {
+  virtualNode.id = name as VirtualNodeTypes;
+});
+
 export type VirtualNodeTypes = keyof typeof VirtualNodes;

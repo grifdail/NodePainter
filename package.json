@@ -49,6 +49,7 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
+    "build-watch": "vite build --watch",
     "preview": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
