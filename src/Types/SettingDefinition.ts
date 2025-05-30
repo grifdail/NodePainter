@@ -89,7 +89,9 @@ export type GroupSettingDefinition = BaseSettingDefinition & {
   settings: SettingDefinition[];
   label?: string;
 };
-
+export type PathSettingDefinition = BaseSettingDefinition & {
+  type: "path";
+};
 export type SettingDefinition =
   | NumberSettingDefinition
   | DropdownSettingDefinition
@@ -107,6 +109,7 @@ export type SettingDefinition =
   | MeshUploadSettingDefinition
   | EasingPreviewSettingDefinition
   | CodeBlockSettingDefinition
+  | PathSettingDefinition
   | GroupSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];

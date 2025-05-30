@@ -1,0 +1,77 @@
+import { SettingComponent } from "./SettingComponent";
+import { SettingProps } from "./SettingProps";
+import styled from "styled-components";
+import { PathSettingDefinition } from "../../Types/SettingDefinition";
+import { PathData } from "../../Types/PathData";
+import { MouseEvent, useState } from "react";
+import { current } from "immer";
+
+export const PathSetting: SettingComponent<PathSettingDefinition> = function PathSetting({ onChange, value, def }: SettingProps<PathSettingDefinition>) {
+  const list = value as PathData;
+  const [drawingStart, setDrawingStart] = useState<number | null>(null);
+  const [onProgressPath, setOnProgressPath] = useState<PathData>([]);
+
+  function onMouseDown(e: MouseEvent<SVGElement>) {
+    setDrawingStart(Date.now());
+    setOnProgressPath([]);
+  }
+  function onMouseUp(e: MouseEvent<SVGElement>) {
+    if (drawingStart !== null) {
+      var t = Date.now() - drawingStart;
+      onChange(onProgressPath);
+      setDrawingStart(null);
+    }
+    //
+  }
+  function onMouseMouve(e: MouseEvent<SVGElement>) {
+    if (drawingStart !== null) {
+      var t = Date.now() - drawingStart;
+      var rect = e.currentTarget.getBoundingClientRect();
+      var x = (e.clientX - rect.x) / rect.width;
+      var y = (e.clientY - rect.y) / rect.height;
+      setOnProgressPath((oldPath) => [...oldPath, x, y, t]);
+    }
+  }
+  function onMouseLeave(e: MouseEvent<SVGElement>) {
+    setDrawingStart(null);
+  }
+
+  return (
+    <div>
+      <StyledPreview
+        width={272}
+        height={272}
+        onChange={onChange}
+        viewBox="0 0 1 1"
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseLeave={onMouseLeave}
+        onMouseMove={onMouseMouve}>
+        <path
+          fill="none"
+          stroke="black"
+          strokeWidth="0.01"
+          d={drawingStart ? generatePath(onProgressPath) : generatePath(list)}></path>
+      </StyledPreview>
+    </div>
+  );
+};
+PathSetting.getSize = function (value, def): number {
+  return 272;
+};
+
+var StyledPreview = styled.svg`
+  background-color: white;
+  margin-bottom: var(--padding-small);
+`;
+
+function generatePath(path: PathData): string | undefined {
+  if (path.length < 3) {
+    return undefined;
+  }
+  const points = [`M ${path[0]} ${path[1]}`];
+  for (let i = 3; i < path.length; i += 3) {
+    points.push(`L ${path[i]} ${path[i + 1]}`);
+  }
+  return points.join("\n");
+}

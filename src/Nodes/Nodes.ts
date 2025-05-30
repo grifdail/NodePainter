@@ -130,6 +130,7 @@ import { OneMinus } from "./Math/OneMinus";
 import { PingPong } from "./Math/PingPong";
 import { PowNode } from "./Math/PowNode";
 import { RadianToDegree } from "./Math/RadianToDegree";
+import { RecordPath } from "./Math/RecordPath";
 import { Remap } from "./Math/Remap";
 import { Round } from "./Math/Round";
 import { SawToothWave } from "./Math/SawToothWave";
@@ -357,6 +358,7 @@ export const Nodes: Array<NodeDefinition> = [
   EvaluateBezier,
   Step,
   Envelope,
+  RecordPath,
   OneMinus,
   SmoothStep,
   IntegrateVelocity,
