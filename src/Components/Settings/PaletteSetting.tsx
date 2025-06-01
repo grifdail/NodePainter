@@ -92,7 +92,7 @@ export const PaletteSetting: SettingComponent<PaletteSettingDefinition> = functi
       <ButtonGroup>
         <Button
           label="Add"
-          onClick={addNewColor}
+          onClick={() => addNewColor()}
         />
         <PaletteMenu
           onLoaded={(value) => onChange(value)}

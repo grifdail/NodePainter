@@ -63,7 +63,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         removePalette(name: string) {
           set(
             produce((state) => {
-              delete state.palette[name];
+              delete state.palettes[name];
             })
           );
         },

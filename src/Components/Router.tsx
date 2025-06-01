@@ -15,7 +15,7 @@ import { DialogModal } from "./Modals/DialogModal";
 import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlockModal";
 import { MainMenu } from "./MainMenu";
-import { IntroMenuModal } from "./Modals/IntroMenu";
+import { IntroMenuModal } from "./Modals/IntroMenuModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);
