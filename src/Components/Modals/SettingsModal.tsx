@@ -9,6 +9,7 @@ import { useState } from "react";
 import { PalettePreview } from "../Settings/ColorPreview";
 import { Button } from "../Generics/Button";
 import { SavedPaletteEditor } from "./SavedPaletteEditor";
+import { SavedGradientEditor } from "./SavedGradientEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -20,14 +21,17 @@ const MainDiv = styled.div`
   flex: 1 0 100px;
   gap: 10px;
 
-  & textarea {
-    flex: 1 0 100px;
+  & .content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
   }
 `;
 
 enum Section {
   DefaultPalette = "Default Palette",
   SavedPalette = "SavedPalette",
+  SavedGradient = "SavedGradient",
   SavedFunction = "SavedFunction",
   Misc = "Misc",
 }
@@ -52,6 +56,7 @@ const EmptyDiv = () => {
 const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.DefaultPalette]: DefaultPaletteEdition,
   [Section.SavedPalette]: SavedPaletteEditor,
+  [Section.SavedGradient]: SavedGradientEditor,
   [Section.SavedFunction]: EmptyDiv,
   [Section.Misc]: EmptyDiv,
 };
