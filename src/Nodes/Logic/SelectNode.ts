@@ -1,6 +1,6 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { portTypesWith } from "../../Types/PortTypeDefinitions";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createColor } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 
@@ -29,7 +29,7 @@ export const Select: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: createColor(), type: "color" }],
 
   settings: [],
-  availableTypes: portTypesWith((_) => true),
+  availableTypes: portTypesWithTags(["common"]),
   onChangeType: changeTypeGenerator(["when-true", "when-false"], ["out"]),
   getData: (portId, node, context) => {
     const index = context.getInputValueBoolean(node, "test");
