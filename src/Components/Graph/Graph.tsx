@@ -1,6 +1,6 @@
 import { MouseEvent, useCallback, useEffect, useMemo } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
-import { useSpring, animated, useSprings, SpringValue } from "@react-spring/web";
+import { useSpring, animated, useSprings, SpringValue, SpringRef, Interpolation } from "@react-spring/web";
 import { useMeasure, useMediaQuery } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
@@ -16,8 +16,10 @@ import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { PairingLine } from "./PairingLine";
+import { TreeStore } from "../../Types/TreeStore";
+import { number } from "prop-types";
 
-function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<number[]> }) {
+function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
     <animated.rect
       fill="light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))"
@@ -40,37 +42,18 @@ export function Graph() {
   const [xyz, bind] = useSVGMapDrag();
   const { nodes: selectedNode, hasArea, areaStart } = useSelection();
   const contextMenuData = useContextMenu();
-  const [{ mousePosition }, mousePositionApi] = useSpring(() => ({
-    mousePosition: [0, 0],
-  }));
+  const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
   var hasNoCursor = useMediaQuery("(hover: none)");
 
   useGraphHotkey();
 
-  useEffect(() => {
-    var cb = (e: PointerEvent) => {
-      var now = xyz.get();
-      mousePositionApi.start({ mousePosition: [e.clientX * now[2] + now[0], e.clientY * now[2] + now[1]] });
-    };
-    window.addEventListener("pointermove", cb);
-    return () => {
-      window.removeEventListener("pointermove", cb);
-    };
-  }, [mousePositionApi, xyz]);
+  useMousePositionSpring(xyz, mousePositionApi);
 
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
 
   const nodes = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
 
-  const edges = useMemo(
-    () =>
-      nodes.flatMap((node) => {
-        return Object.entries(node.dataInputs)
-          .filter(([key, port]) => port.hasConnection)
-          .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]);
-      }),
-    [nodes]
-  );
+  const edges = useGraphEdge(nodes);
 
   const [nodePositionSpring, nodePositionSpringApi] = useSprings(
     nodes.length,
@@ -89,76 +72,17 @@ export function Graph() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tree.nodeDeletionCount]);
 
-  const ports = useMemo(
-    () =>
-      Object.fromEntries(
-        nodes.map((node, i) => {
-          const outputCount = Object.values(node.dataOutputs).length;
-          var xy = nodePositionSpring[i].xy;
-          return [
-            node.id,
-            {
-              "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
-              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
-              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + NODE_WIDTH, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
-            },
-          ];
-        })
-      ),
-    [nodePositionSpring, nodes]
-  );
-
-  const getNodePort = useCallback(
-    function getNodePort(nodeId: string, portId: string, type = "in") {
-      return (ports[nodeId] as any)?.[`${portId}-${type}`];
-    },
-    [ports]
-  );
-
-  const onTapNode = useCallback(
-    function onTapNode(node: NodeData, e: MouseEvent<Element>): void {
-      var selection = useSelection.getState();
-      if (selection.isInSelectionMode || e.ctrlKey) {
-        selection.toggleNode(node.id);
-      } else {
-        onClickNodeEdgeCreation(node);
-      }
-    },
-    [onClickNodeEdgeCreation]
-  );
-
-  const onMoveNode = useCallback(
-    function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
-      let selectedNode = useSelection.getState().nodes;
-      if (selectedNode.length > 0 && !selectedNode.includes(nodes[i].id)) {
-        selectedNode = [];
-        useSelection.getState().clear();
-      }
-      if (selectedNode.length <= 0) {
-        selectedNode = [nodes[i].id];
-      }
-      if (isDefinitive) {
-        for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {
-          const node = tree.nodes[selectedNode[selectionIndex]];
-          tree.setNodePosition(selectedNode[selectionIndex], node.positionX + x, node.positionY + y);
-        }
-      } else {
-        nodePositionSpringApi.start((i2) => {
-          const node = nodes[i2];
-          if (selectedNode.includes(node.id)) {
-            return { xy: [node.positionX + x, node.positionY + y] };
-          }
-          return {};
-        });
-      }
-    },
-    [nodePositionSpringApi, nodes, tree]
-  );
-
+  const getNodePort = useGetNodePort(nodes, nodePositionSpring);
+  const onTapNode = useNodeTap(onClickNodeEdgeCreation);
+  const onMoveNode = useMoveNode(nodes, tree, nodePositionSpringApi);
   const colorScheme = useColorScheme();
 
   return (
-    <div style={{ width: "100%", height: "100%", position: "absolute" }}>
+    <div
+      style={{ width: "100%", height: "100%", position: "absolute" }}
+      onPaste={(...arg) => console.log("paste", ...arg)}
+      onCut={(...arg) => console.log("cut", ...arg)}
+      onCopy={(...arg) => console.log("copy", ...arg)}>
       <animated.svg
         ref={ref}
         width="100%"
@@ -263,5 +187,104 @@ export function Graph() {
       </animated.svg>
       {contextMenuData.state === "open" && <ContextMenu {...contextMenuData}></ContextMenu>}
     </div>
+  );
+}
+function useMousePositionSpring(xyz: SpringValue<number[]>, mousePositionApi: SpringRef<{ mousePosition: [number, number] }>) {
+  useEffect(() => {
+    var cb = (e: PointerEvent) => {
+      var now = xyz.get();
+      mousePositionApi.start({ mousePosition: [e.clientX * now[2] + now[0], e.clientY * now[2] + now[1]] });
+    };
+    window.addEventListener("pointermove", cb);
+    return () => {
+      window.removeEventListener("pointermove", cb);
+    };
+  }, [mousePositionApi, xyz]);
+}
+
+function useGraphEdge(nodes: NodeData[]) {
+  return useMemo(
+    () =>
+      nodes.flatMap((node) => {
+        return Object.entries(node.dataInputs)
+          .filter(([key, port]) => port.hasConnection)
+          .map(([key, port]) => [port.connectedNode, port.connectedPort, node.id, key, port.type]);
+      }),
+    [nodes]
+  );
+}
+
+function usePortPosition(nodes: NodeData[], nodePositionSpring: { xy: SpringValue<number[]> }[]) {
+  return useMemo(
+    () =>
+      Object.fromEntries(
+        nodes.map((node, i) => {
+          const outputCount = Object.values(node.dataOutputs).length;
+          var xy = nodePositionSpring[i].xy;
+          return [
+            node.id,
+            {
+              "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
+              ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
+              ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + NODE_WIDTH, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
+            },
+          ];
+        })
+      ),
+    [nodePositionSpring, nodes]
+  );
+}
+
+function useGetNodePort(nodes: NodeData[], nodePositionSpring: { xy: SpringValue<number[]> }[]) {
+  const ports = usePortPosition(nodes, nodePositionSpring);
+  return useCallback(
+    function getNodePort(nodeId: string, portId: string, type = "in") {
+      return (ports[nodeId] as any)?.[`${portId}-${type}`];
+    },
+    [ports]
+  );
+}
+
+function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: SpringRef<{ xy: number[] }>) {
+  return useCallback(
+    function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
+      let selectedNode = useSelection.getState().nodes;
+      if (selectedNode.length > 0 && !selectedNode.includes(nodes[i].id)) {
+        selectedNode = [];
+        useSelection.getState().clear();
+      }
+      if (selectedNode.length <= 0) {
+        selectedNode = [nodes[i].id];
+      }
+      if (isDefinitive) {
+        for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {
+          const node = tree.nodes[selectedNode[selectionIndex]];
+          tree.setNodePosition(selectedNode[selectionIndex], node.positionX + x, node.positionY + y);
+        }
+      } else {
+        nodePositionSpringApi.start((i2) => {
+          const node = nodes[i2];
+          if (selectedNode.includes(node.id)) {
+            return { xy: [node.positionX + x, node.positionY + y] };
+          }
+          return {};
+        });
+      }
+    },
+    [nodePositionSpringApi, nodes, tree]
+  );
+}
+
+function useNodeTap(onClickNodeEdgeCreation: (node: NodeData) => void) {
+  return useCallback(
+    function onTapNode(node: NodeData, e: MouseEvent<Element>): void {
+      var selection = useSelection.getState();
+      if (selection.isInSelectionMode || e.ctrlKey) {
+        selection.toggleNode(node.id);
+      } else {
+        onClickNodeEdgeCreation(node);
+      }
+    },
+    [onClickNodeEdgeCreation]
   );
 }
