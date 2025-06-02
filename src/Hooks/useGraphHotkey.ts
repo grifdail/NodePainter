@@ -2,6 +2,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
 import { useRouter } from "./useRouter";
+import { useSelection } from "./useSelection";
 import { useTree } from "./useTree";
 
 export const useGraphHotkey = () => {
@@ -41,5 +42,10 @@ export const useGraphHotkey = () => {
   useHotkeys("shift+n", (e) => {
     e.preventDefault();
     useRouter.getState().open(Routes.NodeCreation);
+  });
+  useHotkeys("delete", (e) => {
+    e.preventDefault();
+    useTree.getState().deleteNodes(useSelection.getState().nodes);
+    useSelection.getState().clear();
   });
 };
