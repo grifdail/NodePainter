@@ -26,11 +26,7 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
         Paste
       </MenuItem>
       <MenuItem
-        onClick={() => {
-          copySelection();
-          useTree.getState().deleteNodes(selectionNodes);
-          useSelection.getState().clear();
-        }}
+        onClick={cutSelection}
         disabled={selectionNodes.length < 1}>
         <IconCut /> Cut selection
       </MenuItem>
@@ -67,6 +63,12 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
     </>
   );
 }
+
+export const cutSelection = () => {
+  copySelection();
+  useTree.getState().deleteNodes(useSelection.getState().nodes);
+  useSelection.getState().clear();
+};
 
 function saveSelectionAsSnippet(): void {
   useDialog.getState().openPrompt((name) => {

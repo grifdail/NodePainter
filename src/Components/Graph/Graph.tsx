@@ -17,6 +17,7 @@ import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACI
 import { PairingLine } from "./PairingLine";
 import { TreeStore } from "../../Types/TreeStore";
 import { SVGGridPattern } from "./SVGGridPattern";
+import { useCopyPasteGraph } from "./useCopyPasteGraph";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -51,15 +52,12 @@ export function Graph() {
   const onTapNode = useNodeTap(onClickNodeEdgeCreation);
   const onMoveNode = useMoveNode(nodes, tree, nodePositionSpringApi);
 
+  useCopyPasteGraph();
   useGraphHotkey();
   useMousePositionSpring(xyz, mousePositionApi);
 
   return (
-    <div
-      style={{ width: "100%", height: "100%", position: "absolute" }}
-      onPaste={(...arg) => console.log("paste", ...arg)}
-      onCut={(...arg) => console.log("cut", ...arg)}
-      onCopy={(...arg) => console.log("copy", ...arg)}>
+    <div style={{ width: "100%", height: "100%", position: "absolute" }}>
       <animated.svg
         ref={ref}
         width="100%"
