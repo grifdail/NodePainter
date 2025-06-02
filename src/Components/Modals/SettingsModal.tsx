@@ -10,6 +10,7 @@ import { PalettePreview } from "../Settings/ColorPreview";
 import { Button } from "../Generics/Button";
 import { SavedPaletteEditor } from "./SavedPaletteEditor";
 import { SavedGradientEditor } from "./SavedGradientEditor";
+import { SavedSnippetEditor } from "./SavedSnippetEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ enum Section {
   DefaultPalette = "Default Palette",
   SavedPalette = "SavedPalette",
   SavedGradient = "SavedGradient",
+  SavedSnippet = "SavedSnippet",
   SavedFunction = "SavedFunction",
   Misc = "Misc",
 }
@@ -57,6 +59,7 @@ const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.DefaultPalette]: DefaultPaletteEdition,
   [Section.SavedPalette]: SavedPaletteEditor,
   [Section.SavedGradient]: SavedGradientEditor,
+  [Section.SavedSnippet]: SavedSnippetEditor,
   [Section.SavedFunction]: EmptyDiv,
   [Section.Misc]: EmptyDiv,
 };
