@@ -1,3 +1,4 @@
+import { Snippet, SnippetCollection } from "../Utils/snippets";
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
 export type PlayerPrefStore = {
@@ -19,5 +20,9 @@ export type PlayerPrefStore = {
   setColorPreset: (palette: ColorPalette) => void;
   setSeenIntro: () => void;
   hasSeenIntroPopup: boolean;
+
+  saveSnippet(name: string, snippet: Snippet): void;
+  removeSnippet(name: string): void;
+  snippets: SnippetCollection;
 };
 export type SortingType = "featured" | "name" | "last" | "most";

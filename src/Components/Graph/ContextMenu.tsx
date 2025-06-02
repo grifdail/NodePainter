@@ -14,7 +14,7 @@ import { Routes } from "../../Types/Routes";
 import { useSelection } from "../../Hooks/useSelection";
 import { AlignMenu } from "./AlignMenu";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
-import { extractSnipet } from "../../Utils/snipets";
+import { extractSnipet } from "../../Utils/snippets";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { SnippetSubMenu } from "./SnippetSubMenu";
 

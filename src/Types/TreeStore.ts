@@ -1,6 +1,6 @@
 import { BlackboardPortData } from "../Nodes/System/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
-import { Snippet } from "../Utils/snipets";
+import { Snippet } from "../Utils/snippets";
 import { BoundingBox } from "./BoundingBox";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { EDirection } from "./EDirection";

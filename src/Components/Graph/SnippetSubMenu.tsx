@@ -1,16 +1,18 @@
-import { MenuItem } from "@szhsin/react-menu";
+import { MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useSelection } from "../../Hooks/useSelection";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import IconCopy from "@tabler/icons-react/dist/esm/icons/IconCopy";
-import { extractSnipet, validateSnipetJson } from "../../Utils/snipets";
+import { extractSnipet, loadSnippet, validateSnipetJson } from "../../Utils/snippets";
 import { useTree } from "../../Hooks/useTree";
-import { IconClipboard, IconCut, IconTrash } from "@tabler/icons-react";
+import { IconClipboard, IconCode, IconCut, IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
 import { copyToClipboard } from "../../Utils/copyToClipboard";
 import { useDialog } from "../../Hooks/useDialog";
 import { useState } from "react";
+import { usePlayerPref } from "../../Hooks/usePlayerPref";
 
 export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, number] }) {
   const selectionNodes = useSelection((state) => state.nodes);
+  const snippets = usePlayerPref((state) => state.snippets);
 
   return (
     <>
@@ -40,8 +42,36 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
         disabled={selectionNodes.length < 1}>
         <IconTrash /> Delete selection
       </MenuItem>
+      <MenuDivider></MenuDivider>
+      <MenuItem
+        disabled={selectionNodes.length < 1}
+        onClick={() => saveSelectionAsSnippet()}>
+        <IconDeviceFloppy></IconDeviceFloppy>
+        Save as snippet
+      </MenuItem>
+      <SubMenu
+        label={
+          <>
+            <IconCode></IconCode> Snippet
+          </>
+        }>
+        {" "}
+        {Object.values(snippets).map((snip) => (
+          <MenuItem
+            key={snip.name}
+            onClick={() => useTree.getState().loadSnipets(snip, ...worldPosition, () => {})}>
+            {snip.name}
+          </MenuItem>
+        ))}
+      </SubMenu>
     </>
   );
+}
+
+function saveSelectionAsSnippet(): void {
+  useDialog.getState().openPrompt((name) => {
+    usePlayerPref.getState().saveSnippet(name, extractSnipet(name, useSelection.getState().nodes, useTree.getState()));
+  });
 }
 
 export const copySelection = () => {

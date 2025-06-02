@@ -30,7 +30,7 @@ import { createSettingObjectForSettingDefinition } from "../Utils/createSettingO
 import { duplicateNode } from "../Utils/duplicateNode";
 import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { resetCamera } from "../Utils/resetCamera";
-import { loadSnippet, Snippet } from "../Utils/snipets";
+import { loadSnippet, Snippet } from "../Utils/snippets";
 import { sortAroundNode } from "../Utils/sortAroundNode";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";

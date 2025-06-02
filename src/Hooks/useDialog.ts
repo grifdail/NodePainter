@@ -3,6 +3,7 @@ import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { InputProps } from "../Components/Generics/Inputs/InputProps";
+import { TextInput } from "../Components/Generics/Inputs/TextInput";
 
 export type DialogueButtonData = {
   key: any;
@@ -19,6 +20,7 @@ export type DialogFieldData = {
   passTrough?: any;
   tooltip?: string;
 };
+
 export type DialogData = {
   header?: string;
   callback: (button: any, fieldResult: { [key: string]: any } | undefined) => void;
@@ -37,6 +39,7 @@ export type DialogStore = {
   clickButton: (dialogId: string, button: any) => void;
   setField: (dialogId: string, field: string, newValue: any) => void;
   openConfirm: (callback: (isConfirmed: boolean) => void, header?: string, text?: string, textConfirm?: string, textCancel?: string) => void;
+  openPrompt: (callback: (name: string) => void, title?: string, message?: DialogData["text"], defaultValue?: string) => void;
 };
 
 export const useDialog = create<DialogStore>()((set, get) => {
@@ -115,6 +118,37 @@ export const useDialog = create<DialogStore>()((set, get) => {
         fields: [],
       };
       get().open(d);
+    },
+    openPrompt(callback, header = "Name ?", text = undefined, defaultValue = "") {
+      useDialog.getState().open({
+        header,
+        text,
+        callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
+          if (button === "confirm" && fieldResult && fieldResult.name !== null && fieldResult.name !== "") {
+            callback(fieldResult.name as string);
+          }
+        },
+        buttons: [
+          {
+            key: "cancel",
+            label: "cancel",
+            style: "invisible",
+          },
+          {
+            key: "confirm",
+            label: "confirm",
+            style: "normal",
+          },
+        ],
+        fields: [
+          {
+            key: "name",
+            label: "name",
+            defaultValue,
+            input: TextInput,
+          },
+        ],
+      });
     },
   };
 });

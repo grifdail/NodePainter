@@ -14,6 +14,10 @@ export type Snippet = {
   name: string;
 };
 
+export type SnippetCollection = {
+  [key: string]: Snippet;
+};
+
 export const validateSnipetJson = ajv.compile(schemaJSON as any as JSONSchemaType<Snippet>);
 
 export function loadSnippet(snippet: Snippet, tree: TreeStore, pos: Vector2) {
