@@ -50,12 +50,12 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
         Save as snippet
       </MenuItem>
       <SubMenu
+        disabled={Object.values(snippets).length === 0}
         label={
           <>
             <IconCode></IconCode> Snippet
           </>
         }>
-        {" "}
         {Object.values(snippets).map((snip) => (
           <MenuItem
             key={snip.name}
