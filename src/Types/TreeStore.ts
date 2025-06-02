@@ -1,5 +1,6 @@
 import { BlackboardPortData } from "../Nodes/System/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
+import { Snippet } from "../Utils/snipets";
 import { BoundingBox } from "./BoundingBox";
 import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { EDirection } from "./EDirection";
@@ -35,6 +36,7 @@ export type TreeStore = {
   setGlobalSetting: (settingId: string, newValue: any) => void;
   resetNode: (node: string) => void;
   deleteNode: (node: string) => void;
+  deleteNodes: (node: string[]) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
   loadTemplate: (temp: SketchTemplate) => boolean;
@@ -60,4 +62,5 @@ export type TreeStore = {
   replaceOutput: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
 
   align: (nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void) => void;
+  loadSnipets: (snipets: Snippet, posX: number, posY: number, callback: (arg: Record<string, string>) => void) => void;
 };

@@ -3,6 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { useTree } from "./useTree";
 import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
+import { StatefullElementType } from "../Utils/statefullContext";
 
 export type SelectionStore = {
   toggleNode(id: string): void;
@@ -14,6 +15,8 @@ export type SelectionStore = {
   clear: () => void;
   hasArea: boolean;
   toggleSetMode: (value: boolean | null) => void;
+
+  setSelection(nodes: string[]): void;
 };
 export const useSelection = create<SelectionStore>()(
   immer((set, get) => {
@@ -79,6 +82,13 @@ export const useSelection = create<SelectionStore>()(
       clear: () => {
         set((state) => {
           state.nodes = [];
+          state.hasArea = false;
+        });
+      },
+      setSelection(nodes) {
+        set((state) => {
+          console.log(nodes);
+          state.nodes = nodes;
           state.hasArea = false;
         });
       },

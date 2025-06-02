@@ -3,8 +3,6 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
-import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
 import { NodeLibrary } from "../Nodes/Nodes";
@@ -20,6 +18,7 @@ import { PortDefinition } from "../Types/PortDefinition";
 import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
+import { buildBoundingBox } from "../Utils/buildBoundingBox";
 import { canConvertCode, convertTypeValue } from "../Utils/convertTypeValue";
 import { createDataOutputData } from "../Utils/createDataOutputData";
 import { createDefaultNodeConnection } from "../Utils/createDefaultNodeConnection";
@@ -28,8 +27,10 @@ import { createNodeData } from "../Utils/createNodeData";
 import { createPortConnection } from "../Utils/createPortConnection";
 import { createPortConnectionsForInputsDefinition } from "../Utils/createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "../Utils/createSettingObjectForSettingDefinition";
+import { duplicateNode } from "../Utils/duplicateNode";
 import { ensureValidGraph } from "../Utils/ensureValidGraph";
 import { resetCamera } from "../Utils/resetCamera";
+import { loadSnippet, Snippet } from "../Utils/snipets";
 import { sortAroundNode } from "../Utils/sortAroundNode";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";
@@ -161,15 +162,10 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     duplicateNode(node) {
       set(
-        produce((state) => {
+        produce((state: TreeStore) => {
           const sourceNode = state.nodes[node] as NodeData;
-          const clone = createNodeData(state.getNodeTypeDefinition(sourceNode), sourceNode.positionX + 200, sourceNode.positionY + 50);
-          clone.dataInputs = structuredClone(current(sourceNode.dataInputs));
-          clone.dataOutputs = structuredClone(current(sourceNode.dataOutputs));
-          clone.settings = structuredClone(current(sourceNode.settings));
-          clone.selectedType = sourceNode.selectedType;
-          clone.graph = sourceNode.graph;
-          state.nodes[clone.id] = clone;
+          const newNode = duplicateNode(state, current(sourceNode), sourceNode.positionX + 200, sourceNode.positionY + 50, sourceNode.graph as string);
+          state.nodes[newNode.id] = newNode;
         })
       );
     },
@@ -213,6 +209,10 @@ export const useTree = create<TreeStore>()((set, get) => {
           delete state.nodes[node];
         })
       );
+    },
+    deleteNodes(nodes) {
+      var deleteNode = get().deleteNode;
+      nodes.forEach(deleteNode);
     },
     resetNode(node) {
       set(
@@ -620,16 +620,16 @@ export const useTree = create<TreeStore>()((set, get) => {
 
       set(
         produce((state) => {
-          var nodes = nodeIds.map((id) => {
-            const n = state.nodes[id];
-            return {
-              node: n,
-              boundingBox: new BoundingBox(n.positionY, n.positionX + NODE_WIDTH, n.positionY + GetNodeHeight(n, state.getNodeTypeDefinition(n)), n.positionX),
-            };
-          });
-          var defaultBB = nodes[0].boundingBox;
-          var bb = nodes.reduce((old, bb) => old.extend(bb.boundingBox), defaultBB);
+          var { bb, nodes } = buildBoundingBox(nodeIds, state);
           callback(bb, nodes);
+        })
+      );
+    },
+    loadSnipets: function (snipets: Snippet, posX: number, posY: number, callback: (arg: Record<string, string>) => void): void {
+      set(
+        produce((state) => {
+          const newNames = loadSnippet(snipets, state, [posX, posY]);
+          callback(newNames);
         })
       );
     },

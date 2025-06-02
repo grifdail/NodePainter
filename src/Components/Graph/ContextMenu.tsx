@@ -1,9 +1,9 @@
 import { ControlledMenu, MenuDivider, MenuItem, MenuState } from "@szhsin/react-menu";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { resetCamera } from "../../Utils/resetCamera";
-import { IconArrowsHorizontal, IconArrowsVertical, IconFocusCentered, IconPlus } from "@tabler/icons-react";
+import { IconArrowsHorizontal, IconArrowsVertical, IconCopy, IconFocusCentered, IconPlus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { EDirection } from "../../Types/EDirection";
@@ -14,6 +14,9 @@ import { Routes } from "../../Types/Routes";
 import { useSelection } from "../../Hooks/useSelection";
 import { AlignMenu } from "./AlignMenu";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
+import { extractSnipet } from "../../Utils/snipets";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { SnippetSubMenu } from "./SnippetSubMenu";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -40,6 +43,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
   const mostRecentSorting = useMemo(() => (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0), [nodesLastUsedDates]);
   const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
   const treeNodeLibrary = useTree(useShallow((state) => state.getNodeLibrary()));
+
   const nodeLibrary = useMemo(
     () =>
       Object.values(treeNodeLibrary).filter((item) => {
@@ -51,25 +55,23 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
     [treeNodeLibrary, isShader]
   );
 
-  const getClickPositionWorld = useCallback((): [number, number] => {
+  const clickWorldPosition = useMemo((): [number, number] => {
     var view = useViewbox.getState();
     return [view.x + anchorPoint.x * view.scale, view.y + anchorPoint.y * view.scale];
   }, [anchorPoint.x, anchorPoint.y]);
 
   const onClick = useCallback(
     (node: NodeDefinition) => {
-      useTree.getState().addNode(node.id, ...getClickPositionWorld());
+      useTree.getState().addNode(node.id, ...clickWorldPosition);
       usePlayerPref.getState().markNodeAsUsed(node.id);
       onClose();
     },
-    [onClose, getClickPositionWorld]
+    [onClose, clickWorldPosition]
   );
 
   const favoritedNode = useMemo(() => {
     return (nodeLibrary.filter((node) => favNodes.includes(node.id)) as any).toSorted(mostRecentSorting).slice(0, 5) as NodeDefinition[];
   }, [nodeLibrary, mostRecentSorting, favNodes]);
-
-  const selectionNodes = useSelection((state) => state.nodes);
 
   var theme = useColorScheme();
 
@@ -91,7 +93,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
       <MenuItem
         onClick={() => {
-          useNodeSelectionModal.getState().setTargetPosition(...getClickPositionWorld());
+          useNodeSelectionModal.getState().setTargetPosition(...clickWorldPosition);
           useRouter.getState().open(Routes.NodeCreation);
         }}>
         <IconPlus /> Add a new Node
@@ -100,13 +102,15 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       <MenuItem onClick={() => resetCamera()}>
         <IconFocusCentered /> Reset Camera
       </MenuItem>
-      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Horizontal, 500, ...getClickPositionWorld())}>
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Horizontal, 500, ...clickWorldPosition)}>
         <IconArrowsHorizontal /> Make room horizontaly
       </MenuItem>
-      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...getClickPositionWorld())}>
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...clickWorldPosition)}>
         <IconArrowsVertical /> Make room verticaly
       </MenuItem>
-      <AlignMenu nodes={selectionNodes}></AlignMenu>
+      <AlignMenu></AlignMenu>
+      <MenuDivider></MenuDivider>
+      <SnippetSubMenu worldPosition={clickWorldPosition}></SnippetSubMenu>
     </ControlledMenu>
   );
 }

@@ -1,0 +1,1516 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "AnimationTrackSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "properties": {
+                                "keyframes": {
+                                    "items": {
+                                        "properties": {
+                                            "lerp": {
+                                                "$ref": "#/definitions/EasingFunctionType"
+                                            },
+                                            "pos": {
+                                                "type": "number"
+                                            },
+                                            "value": {}
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/PortType"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": {
+                            "const": "animation-track",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "BoolSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "type": "boolean"
+                        },
+                        "type": {
+                            "const": "bool",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ButtonSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "buttons": {
+                            "items": {
+                                "properties": {
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "onClick": {
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "buttons",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CodeBlockParameterField": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "constantValue": {},
+                        "expression": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/definitions/CodeBlockStatement"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "targetType": {
+                            "enum": [
+                                "any",
+                                "array-bool",
+                                "array-color",
+                                "array-drawing2d",
+                                "array-gradient",
+                                "array-image",
+                                "array-material",
+                                "array-mesh",
+                                "array-number",
+                                "array-object3d",
+                                "array-quaternion",
+                                "array-string",
+                                "array-struct",
+                                "array-vector",
+                                "array-vector2",
+                                "array-vector3",
+                                "array-vector4",
+                                "bool",
+                                "color",
+                                "drawing2d",
+                                "gradient",
+                                "image",
+                                "material",
+                                "mesh",
+                                "number",
+                                "object3d",
+                                "quaternion",
+                                "string",
+                                "struct",
+                                "unknown",
+                                "vector",
+                                "vector2",
+                                "vector3",
+                                "vector4"
+                            ],
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "expression",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "selectedOption": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "option",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "statements": {
+                            "items": {
+                                "$ref": "#/definitions/CodeBlockStatement"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "statements",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "targetType": {
+                            "$ref": "#/definitions/PortType"
+                        },
+                        "type": {
+                            "const": "value",
+                            "type": "string"
+                        },
+                        "value": {}
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "affectTypes": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "targetType": {
+                            "enum": [
+                                "any",
+                                "array-bool",
+                                "array-color",
+                                "array-drawing2d",
+                                "array-gradient",
+                                "array-image",
+                                "array-material",
+                                "array-mesh",
+                                "array-number",
+                                "array-object3d",
+                                "array-quaternion",
+                                "array-string",
+                                "array-struct",
+                                "array-vector",
+                                "array-vector2",
+                                "array-vector3",
+                                "array-vector4",
+                                "bool",
+                                "color",
+                                "drawing2d",
+                                "gradient",
+                                "image",
+                                "material",
+                                "mesh",
+                                "number",
+                                "object3d",
+                                "quaternion",
+                                "string",
+                                "struct",
+                                "unknown",
+                                "vector",
+                                "vector2",
+                                "vector3",
+                                "vector4"
+                            ],
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "variable",
+                            "type": "string"
+                        },
+                        "variableName": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CodeBlockSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "properties": {
+                                "inputVariables": {
+                                    "items": {
+                                        "properties": {
+                                            "constrains": {
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "$ref": "#/definitions/ConstrainTypes"
+                                                        },
+                                                        "params": {
+                                                            "items": {},
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "defaultValue": {},
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "tooltip": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "$ref": "#/definitions/PortType"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "localVariables": {
+                                    "items": {
+                                        "properties": {
+                                            "constrains": {
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "$ref": "#/definitions/ConstrainTypes"
+                                                        },
+                                                        "params": {
+                                                            "items": {},
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "defaultValue": {},
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "tooltip": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "$ref": "#/definitions/PortType"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "outputVariables": {
+                                    "items": {
+                                        "properties": {
+                                            "constrains": {
+                                                "items": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "$ref": "#/definitions/ConstrainTypes"
+                                                        },
+                                                        "params": {
+                                                            "items": {},
+                                                            "type": "array"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "defaultValue": {},
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "tooltip": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "$ref": "#/definitions/PortType"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "statements": {
+                                    "items": {
+                                        "$ref": "#/definitions/CodeBlockStatement"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": {
+                            "const": "code-block",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "CodeBlockStatement": {
+            "properties": {
+                "parameters": {
+                    "$ref": "#/definitions/{[key:string]:CodeBlockParameterField;}"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "ConstrainTypes": {
+            "enum": [
+                "Clamp",
+                "Clamp01",
+                "GreaterThan",
+                "Integer",
+                "LowerCase",
+                "LowerThan",
+                "Mod",
+                "Mod1",
+                "MultipleOf",
+                "Negative",
+                "NonTransparent",
+                "NonZero",
+                "Positive",
+                "UpperCase",
+                "VecClamp",
+                "VecClamp01",
+                "VecGreaterThan",
+                "VecInteger",
+                "VecLowerThan",
+                "VecMod",
+                "VecMod1",
+                "VecMultipleOf",
+                "VecNegative",
+                "VecNonZero",
+                "VecPositive"
+            ],
+            "type": "string"
+        },
+        "DropdownSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "type": "string"
+                        },
+                        "options": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "dropdown",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "EasingFunctionType": {
+            "enum": [
+                "InBack",
+                "InBounce",
+                "InCirc",
+                "InCubic",
+                "InElastic",
+                "InExpo",
+                "InOutBack",
+                "InOutBounce",
+                "InOutCirc",
+                "InOutCubic",
+                "InOutElastic",
+                "InOutExpo",
+                "InOutQuad",
+                "InOutQuart",
+                "InOutQuint",
+                "InOutSine",
+                "InQuad",
+                "InQuart",
+                "InQuint",
+                "InSine",
+                "Linear",
+                "OutBack",
+                "OutBounce",
+                "OutCirc",
+                "OutCubic",
+                "OutElastic",
+                "OutExpo",
+                "OutQuad",
+                "OutQuart",
+                "OutQuint",
+                "OutSine",
+                "SnapNext",
+                "SnapPrevious",
+                "Toggle"
+            ],
+            "type": "string"
+        },
+        "EasingPreviewSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "$ref": "#/definitions/EasingFunctionType"
+                        },
+                        "type": {
+                            "const": "easing-preview",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "EnvelopeSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "items": {
+                                "properties": {
+                                    "height": {
+                                        "type": "number"
+                                    },
+                                    "lerp": {
+                                        "$ref": "#/definitions/EasingFunctionType"
+                                    },
+                                    "pos": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "envelope",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "GradientSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "items": {
+                                "properties": {
+                                    "color": {
+                                        "items": [
+                                            {
+                                                "type": "number"
+                                            },
+                                            {
+                                                "type": "number"
+                                            },
+                                            {
+                                                "type": "number"
+                                            },
+                                            {
+                                                "type": "number"
+                                            }
+                                        ],
+                                        "maxItems": 4,
+                                        "minItems": 4,
+                                        "type": "array"
+                                    },
+                                    "pos": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "gradient",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "GroupSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "additionalProperties": {},
+                            "type": "object"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "settings": {
+                            "items": {
+                                "$ref": "#/definitions/SettingDefinition"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "group",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "HiddenSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": {},
+                    "properties": {
+                        "defaultValue": {},
+                        "type": {
+                            "const": "hidden",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ImagePaintSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "const": "image-paint",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ImageSelectSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "options": {
+                            "items": {
+                                "properties": {
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "image-select",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "ImageUploadSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "const": "image-upload",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "MeshUploadSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "const": "mesh-upload",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "NodeDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "IsUnique": {
+                            "type": "boolean"
+                        },
+                        "availableTypes": {
+                            "items": {
+                                "$ref": "#/definitions/PortType"
+                            },
+                            "type": "array"
+                        },
+                        "contextMenu": {
+                            "anyOf": [
+                                {
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "type": "object"
+                                }
+                            ]
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "executeAs": {
+                            "type": "string"
+                        },
+                        "featureLevel": {
+                            "type": "number"
+                        },
+                        "hideInLibrary": {
+                            "type": "boolean"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "onChangeType": {
+                            "type": "object"
+                        },
+                        "onManualCreation": {
+                            "type": "object"
+                        },
+                        "settings": {
+                            "items": {
+                                "$ref": "#/definitions/SettingDefinition"
+                            },
+                            "type": "array"
+                        },
+                        "shaderRequirement": {
+                            "anyOf": [
+                                {
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "type": "array"
+                                },
+                                {
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "tags": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "dataInputs": {
+                            "items": {
+                                "properties": {
+                                    "constrains": {
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "$ref": "#/definitions/ConstrainTypes"
+                                                },
+                                                "params": {
+                                                    "items": {},
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "defaultValue": {},
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "tooltip": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "$ref": "#/definitions/PortType"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "dataOutputs": {
+                            "items": {
+                                "properties": {
+                                    "constrains": {
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "$ref": "#/definitions/ConstrainTypes"
+                                                },
+                                                "params": {
+                                                    "items": {},
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "type": "array"
+                                    },
+                                    "defaultValue": {},
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "label": {
+                                        "type": "string"
+                                    },
+                                    "tooltip": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "$ref": "#/definitions/PortType"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "getData": {
+                            "type": "object"
+                        },
+                        "getShaderCode": {
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "NumberSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "constrains": {
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/definitions/ConstrainTypes"
+                                    },
+                                    "params": {
+                                        "items": {},
+                                        "type": "array"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "defaultValue": {
+                            "type": "number"
+                        },
+                        "type": {
+                            "const": "number",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "PaletteSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "defaultValue": {
+                            "items": {
+                                "items": [
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ],
+                                "maxItems": 4,
+                                "minItems": 4,
+                                "type": "array"
+                            },
+                            "type": "array"
+                        },
+                        "type": {
+                            "const": "palette",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "PathSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "type": {
+                            "const": "path",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "PortType": {
+            "enum": [
+                "array-bool",
+                "array-color",
+                "array-drawing2d",
+                "array-gradient",
+                "array-image",
+                "array-material",
+                "array-mesh",
+                "array-number",
+                "array-object3d",
+                "array-quaternion",
+                "array-string",
+                "array-struct",
+                "array-vector",
+                "array-vector2",
+                "array-vector3",
+                "array-vector4",
+                "bool",
+                "color",
+                "drawing2d",
+                "gradient",
+                "image",
+                "material",
+                "mesh",
+                "number",
+                "object3d",
+                "quaternion",
+                "string",
+                "struct",
+                "unknown",
+                "vector",
+                "vector2",
+                "vector3",
+                "vector4"
+            ],
+            "type": "string"
+        },
+        "SettingDefinition": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/NumberSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/DropdownSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/ImageSelectSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/PaletteSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/BoolSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/GradientSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/ImageUploadSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/ImagePaintSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/EnvelopeSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/StringSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/HiddenSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/ButtonSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/AnimationTrackSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/MeshUploadSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/EasingPreviewSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/CodeBlockSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/PathSettingDefinition"
+                },
+                {
+                    "$ref": "#/definitions/GroupSettingDefinition"
+                }
+            ]
+        },
+        "StringSettingDefinition": {
+            "allOf": [
+                {
+                    "properties": {
+                        "globalKey": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "label": {
+                            "type": "string"
+                        },
+                        "tooltip": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                {
+                    "properties": {
+                        "constrains": {
+                            "items": {
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/definitions/ConstrainTypes"
+                                    },
+                                    "params": {
+                                        "items": {},
+                                        "type": "array"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "defaultValue": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "string",
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                }
+            ]
+        },
+        "{[key:string]:CodeBlockParameterField;}": {
+            "additionalProperties": {
+                "$ref": "#/definitions/CodeBlockParameterField"
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "customNodes": {
+            "additionalProperties": {
+                "$ref": "#/definitions/NodeDefinition"
+            },
+            "type": "object"
+        },
+        "editedGraph": {
+            "type": "string"
+        },
+        "globalSettings": {
+            "additionalProperties": {},
+            "type": "object"
+        },
+        "nodes": {
+            "additionalProperties": {
+                "properties": {
+                    "dataInputs": {
+                        "additionalProperties": {
+                            "properties": {
+                                "connectedNode": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "connectedPort": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "constrains": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "$ref": "#/definitions/ConstrainTypes"
+                                            },
+                                            "params": {
+                                                "items": {},
+                                                "type": "array"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "hasConnection": {
+                                    "type": "boolean"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                },
+                                "ownValue": {},
+                                "tooltip": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/PortType"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "dataOutputs": {
+                        "additionalProperties": {
+                            "properties": {
+                                "constrains": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "$ref": "#/definitions/ConstrainTypes"
+                                            },
+                                            "params": {
+                                                "items": {},
+                                                "type": "array"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "defaultValue": {},
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                },
+                                "tooltip": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/PortType"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "graph": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "pairedNode": {
+                        "type": "string"
+                    },
+                    "positionX": {
+                        "type": "number"
+                    },
+                    "positionY": {
+                        "type": "number"
+                    },
+                    "selectedType": {
+                        "$ref": "#/definitions/PortType"
+                    },
+                    "settings": {
+                        "additionalProperties": {},
+                        "type": "object"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
+

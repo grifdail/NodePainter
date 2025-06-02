@@ -261,7 +261,7 @@ export function Graph() {
             mousePosition={mousePosition}></AreaSelectionRect>
         )}
       </animated.svg>
-      <ContextMenu {...contextMenuData}></ContextMenu>
+      {contextMenuData.state === "open" && <ContextMenu {...contextMenuData}></ContextMenu>}
     </div>
   );
 }

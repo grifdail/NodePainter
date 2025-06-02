@@ -26,7 +26,7 @@ export class BoundingBox {
   height() {
     return this.bottom - this.top;
   }
-  center() {
+  center(): [number, number] {
     return [(this.left + this.right) / 2, (this.top + this.bottom) / 2];
   }
 }

@@ -66,7 +66,14 @@ export type HiddenSettingDefinition = BaseSettingDefinition & {
 
 export type ButtonSettingDefinition = BaseSettingDefinition & {
   type: "buttons";
-  buttons: { label: string; icon: Icon; onClick: (node: NodeData) => void }[];
+  buttons: {
+    label: string;
+    /**
+     * @TJS-ignore
+     */
+    icon: Icon;
+    onClick: (node: NodeData) => void;
+  }[];
 };
 export type AnimationTrackSettingDefinition = BaseSettingDefinition & {
   type: "animation-track";

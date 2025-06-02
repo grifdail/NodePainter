@@ -1,12 +1,13 @@
 import { SubMenu, MenuItem, MenuDivider } from "@szhsin/react-menu";
-import { IconAlignBoxBottomCenter, IconAlignBoxCenterMiddle, IconAlignBoxCenterStretch, IconAlignBoxLeftStretch, IconAlignBoxRightStretch, IconAlignBoxTopCenter, IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight } from "@tabler/icons-react";
+import { IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { BoundingBox } from "../../Types/BoundingBox";
-import { NODE_FOOTER_HEIGHT, NODE_WIDTH } from "./NodeVisualConst";
-import { GetNodeHeight } from "./GetNodeHeight";
+import { NODE_WIDTH } from "./NodeVisualConst";
+import { useSelection } from "../../Hooks/useSelection";
 
-export function AlignMenu({ nodes }: { nodes: string[] }) {
+export function AlignMenu({}: {}) {
+  const nodes = useSelection((state) => state.nodes);
   var align = useTree((state) => state.align);
   const alignator = (cb: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void) => {
     return () => align(nodes, cb);

@@ -1,0 +1,215 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ConstrainTypes": {
+            "enum": [
+                "Clamp",
+                "Clamp01",
+                "GreaterThan",
+                "Integer",
+                "LowerCase",
+                "LowerThan",
+                "Mod",
+                "Mod1",
+                "MultipleOf",
+                "Negative",
+                "NonTransparent",
+                "NonZero",
+                "Positive",
+                "UpperCase",
+                "VecClamp",
+                "VecClamp01",
+                "VecGreaterThan",
+                "VecInteger",
+                "VecLowerThan",
+                "VecMod",
+                "VecMod1",
+                "VecMultipleOf",
+                "VecNegative",
+                "VecNonZero",
+                "VecPositive"
+            ],
+            "type": "string"
+        },
+        "PortType": {
+            "enum": [
+                "array-bool",
+                "array-color",
+                "array-drawing2d",
+                "array-gradient",
+                "array-image",
+                "array-material",
+                "array-mesh",
+                "array-number",
+                "array-object3d",
+                "array-quaternion",
+                "array-string",
+                "array-struct",
+                "array-vector",
+                "array-vector2",
+                "array-vector3",
+                "array-vector4",
+                "bool",
+                "color",
+                "drawing2d",
+                "gradient",
+                "image",
+                "material",
+                "mesh",
+                "number",
+                "object3d",
+                "quaternion",
+                "string",
+                "struct",
+                "unknown",
+                "vector",
+                "vector2",
+                "vector3",
+                "vector4"
+            ],
+            "type": "string"
+        }
+    },
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "nodes": {
+            "items": {
+                "properties": {
+                    "dataInputs": {
+                        "additionalProperties": {
+                            "properties": {
+                                "connectedNode": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "connectedPort": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "constrains": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "$ref": "#/definitions/ConstrainTypes"
+                                            },
+                                            "params": {
+                                                "items": {},
+                                                "type": "array"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "hasConnection": {
+                                    "type": "boolean"
+                                },
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                },
+                                "ownValue": {},
+                                "tooltip": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/PortType"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "dataOutputs": {
+                        "additionalProperties": {
+                            "properties": {
+                                "constrains": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "$ref": "#/definitions/ConstrainTypes"
+                                            },
+                                            "params": {
+                                                "items": {},
+                                                "type": "array"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "defaultValue": {},
+                                "id": {
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "type": "string"
+                                },
+                                "tooltip": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "$ref": "#/definitions/PortType"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "object"
+                    },
+                    "graph": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "pairedNode": {
+                        "type": "string"
+                    },
+                    "positionX": {
+                        "type": "number"
+                    },
+                    "positionY": {
+                        "type": "number"
+                    },
+                    "selectedType": {
+                        "$ref": "#/definitions/PortType"
+                    },
+                    "settings": {
+                        "additionalProperties": {},
+                        "type": "object"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "offset": {
+            "items": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "number"
+                }
+            ],
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+        }
+    },
+    "type": "object"
+}

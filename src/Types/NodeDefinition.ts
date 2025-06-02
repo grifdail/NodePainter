@@ -19,6 +19,9 @@ export type BaseNodeDefinition = {
   featureLevel?: number;
   IsUnique?: boolean; //There can only be one of these node per sketch: Start, Custom Function Start & End, ect...
   description?: string;
+  /**
+   * @TJS-ignore
+   */
   icon?: Icon;
   label?: string;
   tags: Array<string>;
