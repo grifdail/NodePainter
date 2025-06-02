@@ -1,6 +1,7 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
+import { extractSnipet } from "../Utils/snippets";
 import { useRouter } from "./useRouter";
 import { useSelection } from "./useSelection";
 import { useTree } from "./useTree";
@@ -47,5 +48,12 @@ export const useGraphHotkey = () => {
     e.preventDefault();
     useTree.getState().deleteNodes(useSelection.getState().nodes);
     useSelection.getState().clear();
+  });
+  useHotkeys("mod+d", (e) => {
+    e.preventDefault();
+    const snippet = extractSnipet("copy", useSelection.getState().nodes, useTree.getState());
+    useTree.getState().loadSnipets(snippet, snippet.offset[0] + 100, snippet.offset[1] + 100, (newNodes) => {
+      useSelection.getState().setSelection(Object.values(newNodes));
+    });
   });
 };
