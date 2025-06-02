@@ -12,12 +12,11 @@ import { useSVGMapDrag } from "../../Hooks/useSVGMapDrag";
 import { PortType } from "../../Types/PortType";
 import { useSelection } from "../../Hooks/useSelection";
 import { ContextMenu, useContextMenu } from "./ContextMenu";
-import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useGraphHotkey } from "../../Hooks/useGraphHotkey";
 import { EDGE_LINE_WIDTH, NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { PairingLine } from "./PairingLine";
 import { TreeStore } from "../../Types/TreeStore";
-import { number } from "prop-types";
+import { SVGGridPattern } from "./SVGGridPattern";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -43,39 +42,17 @@ export function Graph() {
   const { nodes: selectedNode, hasArea, areaStart } = useSelection();
   const contextMenuData = useContextMenu();
   const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
-  var hasNoCursor = useMediaQuery("(hover: none)");
-
-  useGraphHotkey();
-
-  useMousePositionSpring(xyz, mousePositionApi);
-
+  const hasNoCursor = useMediaQuery("(hover: none)");
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
-
   const nodes = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
-
   const edges = useGraphEdge(nodes);
-
-  const [nodePositionSpring, nodePositionSpringApi] = useSprings(
-    nodes.length,
-    (index) => {
-      return {
-        to: { xy: [nodes[index].positionX, nodes[index].positionY] },
-      };
-    },
-    [nodes]
-  );
-  useEffect(() => {
-    nodePositionSpringApi.set((index) => {
-      return { xy: [nodes[index].positionX, nodes[index].positionY] };
-    });
-    //Disabling the warning as we INTENTIONALY want to trigger the imperative api when a node is deleted
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tree.nodeDeletionCount]);
-
+  const [nodePositionSpring, nodePositionSpringApi] = useNodePositionSpring(nodes, tree);
   const getNodePort = useGetNodePort(nodes, nodePositionSpring);
   const onTapNode = useNodeTap(onClickNodeEdgeCreation);
   const onMoveNode = useMoveNode(nodes, tree, nodePositionSpringApi);
-  const colorScheme = useColorScheme();
+
+  useGraphHotkey();
+  useMousePositionSpring(xyz, mousePositionApi);
 
   return (
     <div
@@ -92,38 +69,7 @@ export function Graph() {
         style={{ touchAction: "none" }}
         onContextMenu={contextMenuData.onContextMenu}>
         <defs>
-          <pattern
-            id="grid"
-            x="0"
-            y="0"
-            width="32"
-            height="32"
-            patternUnits="userSpaceOnUse">
-            <line
-              x1="16"
-              y1="0"
-              x2="16"
-              y2="32"
-              stroke={colorScheme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0,0,0,0.1)"}
-              strokeWidth="1"
-            />
-            <line
-              x1="0"
-              y1="16"
-              x2="32"
-              y2="16"
-              stroke={colorScheme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0,0,0,0.1)"}
-              strokeWidth="1"
-            />
-            <rect
-              x="16"
-              y="16"
-              width="1"
-              height="1"
-              stroke={colorScheme === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0,0,0,0.2)"}
-              strokeWidth="1"
-            />
-          </pattern>
+          <SVGGridPattern></SVGGridPattern>
         </defs>
         <animated.rect
           x={xyz.to((x) => x)}
@@ -189,6 +135,7 @@ export function Graph() {
     </div>
   );
 }
+
 function useMousePositionSpring(xyz: SpringValue<number[]>, mousePositionApi: SpringRef<{ mousePosition: [number, number] }>) {
   useEffect(() => {
     var cb = (e: PointerEvent) => {
@@ -287,4 +234,25 @@ function useNodeTap(onClickNodeEdgeCreation: (node: NodeData) => void) {
     },
     [onClickNodeEdgeCreation]
   );
+}
+
+function useNodePositionSpring(nodes: NodeData[], tree: TreeStore) {
+  const [nodePositionSpring, nodePositionSpringApi] = useSprings(
+    nodes.length,
+    (index) => {
+      return {
+        to: { xy: [nodes[index].positionX, nodes[index].positionY] },
+      };
+    },
+    [nodes]
+  );
+
+  useEffect(() => {
+    nodePositionSpringApi.set((index) => {
+      return { xy: [nodes[index].positionX, nodes[index].positionY] };
+    });
+    //Disabling the warning as we INTENTIONALY want to trigger the imperative api when a node is deleted
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tree.nodeDeletionCount]);
+  return [nodePositionSpring, nodePositionSpringApi] as const;
 }
