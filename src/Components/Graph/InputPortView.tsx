@@ -43,6 +43,7 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: {
         x={0}
         y={0}>
         <ImprovedFieldSet
+          onClickLabel={onClick}
           label={portData.label || portData.id}
           input={(!portData.hasConnection && PortSettings) as any}
           onChange={onValueChange}

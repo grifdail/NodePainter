@@ -1,7 +1,6 @@
 import { IconRotate } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 
 export const RenderWithRotation: NodeDefinition = {
   id: "RenderWithRotation",
@@ -13,9 +12,7 @@ export const RenderWithRotation: NodeDefinition = {
   dataInputs: [Port.number("angle"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],
-  availableTypes: ["number"],
-  onChangeType: changeTypeGenerator(["angle"], []),
-  hasInput: hasInputGenerator(["number", "vector3"]),
+
   getData(portId, data, context) {
     const angle = context.getInputValueNumber(data, "angle");
     const drawing = context.getInputValueDrawing(data, "drawing");

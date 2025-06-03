@@ -1,4 +1,4 @@
-import { IconArrowMerge } from "@tabler/icons-react";
+import { IconArrowMerge, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -15,7 +15,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
           id: "index",
         },
       ],
-      "Generate Compose loop index",
+      "Compose loop index",
       positionX - 400,
       positionY,
       id
@@ -41,7 +41,19 @@ export const CombineLoop: NodeDefinition = {
     },
   ],
   tags: ["3D"],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      buttons: [
+        {
+          label: "Create index node",
+          icon: IconPlus,
+          onClick: createIndexNode,
+        },
+      ],
+    },
+  ],
   availableTypes: ["drawing2d", "object3d"],
   onChangeType: changeTypeGenerator(["value"], ["output"]),
   getData(portId, node, context) {

@@ -26,6 +26,7 @@ export function OutputPortView({ x, y, id, label, type, hideLabel, onClick, node
       className={`${type} ${isSelected ? "selected" : ""} `}>
       <StyledPath d="M 0 0 L -80 0 A 16 16 0 0 0 -96 16 A 16 16 0 0 0 -80 32 L 0 32" />
       <text
+        onClick={onClick}
         x="-25"
         y="15"
         textAnchor="end"

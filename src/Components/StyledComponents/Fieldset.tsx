@@ -37,9 +37,10 @@ type FieldsetProps = {
   tooltip?: string;
   valid?: boolean;
   className?: string;
+  onClickLabel?: () => void;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className, style }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className, style, onClickLabel }: FieldsetProps) => {
   var id = useId();
   return (
     <FieldsetStyled
@@ -47,7 +48,13 @@ export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabl
       data-tooltip-content={tooltip}
       className={className}
       style={style}>
-      {label && <FieldsetLabel htmlFor={id}>{label}</FieldsetLabel>}
+      {label && (
+        <FieldsetLabel
+          htmlFor={id}
+          onClick={onClickLabel}>
+          {label}
+        </FieldsetLabel>
+      )}
       {Input && (
         <Input
           name={id}

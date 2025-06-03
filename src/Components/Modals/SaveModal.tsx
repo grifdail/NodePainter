@@ -77,7 +77,7 @@ export function SaveModal({ close }: { close: () => void }) {
         </div>
         <textarea value={json}></textarea>
 
-        <ButtonGroup>
+        <ButtonGroup $responsive>
           <Button
             label={lastValue === decodeUrl ? "Succesfully copied !" : "Copy link"}
             icon={IconLink}
