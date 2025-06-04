@@ -21,34 +21,21 @@ export const PrecomputeImage: NodeDefinition = {
   settings: [
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
-    { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
   ],
   getData(portId, node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
-    const when = node.settings.when;
     const keyCache = `${node.id}-image-cache`;
-    const keyComputed = `${node.id}-is-computed`;
     let img = context.blackboard[keyCache];
     if (!img) {
       img = new ImageData({ p5Graphics: context.p5.createGraphics(width, height) });
       context.blackboard[keyCache] = img;
     }
-    let needRedraw = false;
-    needRedraw ||= when === "Once" && !context.blackboard[keyComputed];
-    needRedraw ||= when === "Per frame" && !context.frameBlackboard[keyComputed];
-    needRedraw ||= when === "Everytime";
-    if (needRedraw) {
-      var oldTarget = context.target;
-      context.target = img.p5Graphics;
-      const drawing = context.getInputValueDrawing(node, "drawing");
-      drawing();
-
-      context.target = oldTarget;
-      context.blackboard[keyComputed] = true;
-      context.frameBlackboard[keyComputed] = true;
-    }
-
+    var oldTarget = context.target;
+    context.target = img.p5Graphics;
+    const drawing = context.getInputValueDrawing(node, "drawing");
+    drawing();
+    context.target = oldTarget;
     return img;
   },
 };
