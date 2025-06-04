@@ -146,8 +146,8 @@ export const BlurEffect: NodeDefinition = {
     let firstPass = getPassBuffer(context, KEY_FIRST_PASS, image);
     let target = getPassBuffer(context, keyCache, image);
 
-    let firstPassImage = firstPass.image as p5.Graphics;
-    let targetPassImage = target.image as p5.Graphics;
+    let firstPassImage = firstPass.getP5(context.p5) as p5.Graphics;
+    let targetPassImage = target.getP5(context.p5) as p5.Graphics;
 
     shaderH.setUniform("tex0", image);
     shaderH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
@@ -158,7 +158,7 @@ export const BlurEffect: NodeDefinition = {
 
     targetPassImage.shader(shaderV);
 
-    shaderV.setUniform("tex0", firstPass.image);
+    shaderV.setUniform("tex0", firstPassImage);
     shaderV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
     shaderV.setUniform("direction", [0.0, 1.0]);
 
@@ -167,7 +167,7 @@ export const BlurEffect: NodeDefinition = {
     return target;
   },
 };
-function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }) {
+function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }): ImageData {
   let target = context.blackboard[key];
   if (!target) {
     target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
