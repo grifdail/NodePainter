@@ -60,11 +60,9 @@ import { Clear } from "./Draw/Clear";
 import { DrawArc } from "./Draw/DrawArc";
 import { DrawBezier } from "./Draw/DrawBezier";
 import { DrawCircle } from "./Draw/DrawCircle";
-import { DrawCircleStroke } from "./Draw/DrawCircleStroke";
 import { DrawGradientRect } from "./Draw/DrawGradientRect";
 import { DrawLine } from "./Draw/DrawLine";
-import { DrawPolygon } from "./Draw/DrawPolygon";
-import { DrawPolygonArray } from "./Draw/DrawPolygonArray";
+import { DrawPolygon } from "./Draw/DrawPolygonArray";
 import { DrawQuad } from "./Draw/DrawQuad";
 import { DrawRect } from "./Draw/DrawRect";
 import { DrawRegularPolygon } from "./Draw/DrawRegularPolygon";
@@ -139,7 +137,9 @@ import { Sin } from "./Math/Sin";
 import { SineWave } from "./Math/SineWave";
 import { SmoothStep } from "./Math/SmoothStep";
 import { Sqrt } from "./Math/Sqrt";
+import { SquareWave } from "./Math/SquareWave";
 import { Step } from "./Math/Step";
+import { TrapezoidWave } from "./Math/TrapezoidWave";
 import { TriangleWave } from "./Math/TriangleWave";
 import { AlignRotation } from "./Quaternion/AlignRotation";
 import { AxisAngle } from "./Quaternion/AxisAngle";
@@ -289,7 +289,6 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Draw
   DrawCircle,
-  DrawCircleStroke,
   DrawArc,
   DrawRegularPolygon,
   DrawLine,
@@ -298,7 +297,6 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTriangle,
   DrawQuad,
   DrawPolygon,
-  DrawPolygonArray,
   DrawText,
   DrawBezier,
 
@@ -333,6 +331,9 @@ export const Nodes: Array<NodeDefinition> = [
   Sin,
   SawToothWave,
   TriangleWave,
+  SquareWave,
+  SineWave,
+  TrapezoidWave,
   Sqrt,
   Abs,
   Acos,
@@ -348,7 +349,6 @@ export const Nodes: Array<NodeDefinition> = [
   DegreeToRadian,
   Clamp01,
   Atan2,
-  SineWave,
   Clamp,
   PingPong,
   Remap,

@@ -9,14 +9,13 @@ export const PrecomputeImage: NodeDefinition = {
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",
 
-  dataInputs: [],
+  dataInputs: [Port.drawing2d("drawing")],
   dataOutputs: [
     {
       id: "image",
       type: "image",
       defaultValue: null,
     },
-    Port.drawing2d("drawing"),
   ],
   tags: ["Image"],
   settings: [

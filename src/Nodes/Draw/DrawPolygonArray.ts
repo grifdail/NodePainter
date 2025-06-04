@@ -4,9 +4,9 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/colorUtils";
 
-export const DrawPolygonArray: NodeDefinition = {
-  id: "DrawPolygonArray",
-  label: "Draw Polygon Array",
+export const DrawPolygon: NodeDefinition = {
+  id: "DrawPolygon",
+  label: "Draw Polygon",
   description: "Draw a polygon based on a array of points",
   icon: IconPolygon,
   tags: ["Draw"],
@@ -21,6 +21,8 @@ export const DrawPolygonArray: NodeDefinition = {
       type: "array-vector2",
       defaultValue: [createVector2(25, 0), createVector2(0, 0), createVector2(0, 25)],
     },
+    Port.number("lineWidth", 0),
+    Port.bool("fill", true),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -28,15 +30,26 @@ export const DrawPolygonArray: NodeDefinition = {
   getData(portId, node, context) {
     const color = context.getInputValueColor(node, "color");
     const points = context.getInputValueVectorArray(node, "points");
+    const fill = context.getInputValueBoolean(node, "fill");
+    const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.fill(toP5Color(color, context.p5));
-      context.target.noStroke();
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
       context.target.beginShape();
       for (let i = 0; i < points.length; i++) {
         const p = points[i];
         context.target.vertex(p[0], p[1]);
       }
       context.target.endShape();
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };

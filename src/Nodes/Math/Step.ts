@@ -1,7 +1,7 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Constraints } from "../../Utils/applyConstraints";
-import { clamp01 } from "../../Utils/colorUtils";
+import { clamp01 } from "../../Utils/clamp01";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const Step: NodeDefinition = {

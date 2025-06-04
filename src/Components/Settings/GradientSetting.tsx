@@ -99,6 +99,11 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = func
     onChange(list.map((stop, i) => ({ pos: i / (list.length - 1), color: stop.color })));
   }
 
+  function makeLoop() {
+    var newList = [...list, { color: list[0].color, pos: 1 }];
+    onChange(newList.map((stop, i) => ({ pos: i / (newList.length - 1), color: stop.color })));
+  }
+
   return (
     <div>
       <EditableGradientPreview
@@ -184,6 +189,7 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = func
           </SubMenu>
           <MenuDivider />
           <MenuItem onClick={spaceEvenly}>Space Evenly</MenuItem>
+          <MenuItem onClick={makeLoop}>Make Loop</MenuItem>
         </Menu>
       </ButtonGroup>
     </div>

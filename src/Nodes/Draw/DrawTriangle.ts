@@ -31,6 +31,8 @@ export const DrawTriangle: NodeDefinition = {
       type: "vector2",
       defaultValue: createVector2(0, 25),
     },
+    Port.number("lineWidth", 0),
+    Port.bool("fill", true),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -40,10 +42,21 @@ export const DrawTriangle: NodeDefinition = {
     var p1 = context.getInputValueVector(node, "corner1") as Vector2;
     var p2 = context.getInputValueVector(node, "corner2") as Vector2;
     var p3 = context.getInputValueVector(node, "corner3") as Vector2;
+    const fill = context.getInputValueBoolean(node, "fill");
+    const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.fill(toP5Color(color, context.p5));
-      context.target.noStroke();
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
       context.target.triangle(...p1, ...p2, ...p3);
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };

@@ -41,6 +41,8 @@ export const DrawArc: NodeDefinition = {
       type: "number",
       defaultValue: 1,
     },
+    Port.bool("fill", true),
+    Port.number("lineWidth", 0),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -52,10 +54,19 @@ export const DrawArc: NodeDefinition = {
     const outerRadius = context.getInputValueNumber(node, "outerRadius");
     const startAngle = context.getInputValueNumber(node, "startAngle");
     const angle = context.getInputValueNumber(node, "angle");
-
+    const fill = context.getInputValueBoolean(node, "fill");
+    const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.noStroke();
-      context.target.fill(toP5Color(color, context.p5));
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
+
       context.target.beginShape();
       const count = Math.ceil((angle * 180) / Math.PI);
       for (let i = 0; i <= count; i++) {
@@ -68,6 +79,8 @@ export const DrawArc: NodeDefinition = {
         context.target.vertex(center[0] + Math.cos(alpha) * innerRadius, center[1] + Math.sin(alpha) * innerRadius);
       }
       context.target.endShape();
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };

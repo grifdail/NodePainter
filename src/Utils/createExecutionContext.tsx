@@ -16,6 +16,7 @@ import { MaterialData, MeshData } from "../Types/MaterialData";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import Rand from "rand-seed";
 import { PortType } from "../Types/PortType";
+import { OutputPortView } from "../Components/Graph/OutputPortView";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -78,6 +79,9 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
       const inputPorts = nodeData.dataInputs[portId];
       let item: [any, PortType] = [null, "unknown"];
+      if (!inputPorts) {
+        return PortTypeDefinitions[outputType].createDefaultValue();
+      }
       if (inputPorts.hasConnection) {
         var oldVisited = context.lastVisitedNode;
         context.lastVisitedNode = inputPorts.connectedNode as string;

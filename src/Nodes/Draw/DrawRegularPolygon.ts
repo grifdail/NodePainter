@@ -38,6 +38,8 @@ export const DrawRegularPolygon: NodeDefinition = {
       type: "number",
       defaultValue: 0,
     },
+    Port.number("lineWidth", 0),
+    Port.bool("fill", true),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -48,15 +50,26 @@ export const DrawRegularPolygon: NodeDefinition = {
     const radius = context.getInputValueNumber(node, "radius");
     const side = context.getInputValueNumber(node, "side");
     const offset = context.getInputValueNumber(node, "offset");
+    const fill = context.getInputValueBoolean(node, "fill");
+    const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.noStroke();
-      context.target.fill(toP5Color(color, context.p5));
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
       context.target.beginShape();
       for (let i = 0; i < side; i++) {
         const alpha = (i / side + offset) * Math.PI * 2;
 
         context.target.vertex(center[0] + Math.cos(alpha) * radius, center[1] + Math.sin(alpha) * radius);
       }
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };

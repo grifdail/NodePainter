@@ -27,6 +27,8 @@ export const DrawCircle: NodeDefinition = {
       type: "number",
       defaultValue: 10,
     },
+    Port.bool("fill", true),
+    Port.number("lineWidth", 0),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -35,10 +37,22 @@ export const DrawCircle: NodeDefinition = {
     var color = context.getInputValueColor(node, "color");
     var position = context.getInputValueVector(node, "position");
     var radius = context.getInputValueNumber(node, "radius");
+    var fill = context.getInputValueBoolean(node, "fill");
+    var lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.noStroke();
-      context.target.fill(toP5Color(color, context.p5));
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
+
       context.target.circle(position[0], position[1], radius * 2);
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };

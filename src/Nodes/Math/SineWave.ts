@@ -1,5 +1,6 @@
 import { IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Constraints } from "../../Utils/applyConstraints";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const SineWave: NodeDefinition = {
@@ -18,6 +19,8 @@ export const SineWave: NodeDefinition = {
       id: "phase",
       type: "number",
       defaultValue: 0,
+
+      constrains: [Constraints.Clamp01()],
     },
     {
       id: "frequency",

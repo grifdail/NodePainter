@@ -1,14 +1,15 @@
-import { IconWaveSine } from "@tabler/icons-react";
+import { IconWaveSquare } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
-export const SawToothWave: NodeDefinition = {
-  id: "SawToothWave",
+export const SquareWave: NodeDefinition = {
+  id: "SquareWave",
   tags: ["Math"],
-  icon: IconWaveSine,
+  icon: IconWaveSquare,
   featureLevel: 5,
-  description: "Return the value of the sawtooth wave with a phase, frequency and amplitude. Easier than using Cos",
+  description: "Return the value of the square wave with a phase, frequency and amplitude. Easier than using Cos",
   dataInputs: [
     {
       id: "time",
@@ -19,7 +20,6 @@ export const SawToothWave: NodeDefinition = {
       id: "phase",
       type: "number",
       defaultValue: 0,
-
       constrains: [Constraints.Clamp01()],
     },
     {
@@ -32,6 +32,7 @@ export const SawToothWave: NodeDefinition = {
       type: "number",
       defaultValue: 1,
     },
+    Port.number("duty", 0.5, "How much of the cycle is 1", [Constraints.Clamp01()]),
   ],
   dataOutputs: [
     {
@@ -47,10 +48,10 @@ export const SawToothWave: NodeDefinition = {
     var phase = context.getInputValueNumber(nodeData, "phase");
     var frequency = context.getInputValueNumber(nodeData, "frequency");
     var amplitude = context.getInputValueNumber(nodeData, "amplitude");
-
-    return ((time * frequency + phase) % 1) * amplitude;
+    var duty = context.getInputValueNumber(nodeData, "duty");
+    return (time * frequency + phase) % 1 < duty ? amplitude : 0;
   },
   getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude"], ({ time, phase, frequency, amplitude }) => `mod(${time} * ${frequency} + ${phase}, 1.0) * ${amplitude}`);
+    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude", "duty"], ({ time, phase, frequency, amplitude, duty }) => `((${time} * ${frequency} + ${phase}) % 1.0) <${duty} ? 0.0 :  ${amplitude}`);
   },
 };

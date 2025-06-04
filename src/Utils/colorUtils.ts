@@ -1,11 +1,9 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { Color as TColor } from "three";
 import { Color, createColor, Gradient } from "../Types/vectorDataType";
+import { clamp01 } from "./clamp01";
 import { VectorLerp } from "./vectorUtils";
 
-export function clamp01(a: number) {
-  return Math.min(1, Math.max(0, a));
-}
 export function map(a: number, b: number, c: number) {
   return (c - a) / (b - a);
 }

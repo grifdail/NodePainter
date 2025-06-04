@@ -1,11 +1,54 @@
-import { IconWaveSawTool } from "@tabler/icons-react";
+import { IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createFunc } from "../createFunc";
+import { Constraints } from "../../Utils/applyConstraints";
+import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
-export const TriangleWave: NodeDefinition = createFunc(
-  "TriangleWave",
-  (a) => Math.abs((a % 1) - 0.5) * 2,
-  "Return a number that alternate between 0 & 1 lineraly in the range [0,1]",
-  IconWaveSawTool,
-  (a) => `${a} % 1.0 >= 0.5 ? 1.0 - (${a} % 1.0) * 2.0 : (${a} % 1.0) * 2.0)`
-);
+export const TriangleWave: NodeDefinition = {
+  id: "TriangleWave",
+  tags: ["Math"],
+  icon: IconWaveSine,
+  featureLevel: 5,
+  description: "Return the value of the triangle wave with a phase, frequency and amplitude. Easier than using Cos",
+  dataInputs: [
+    {
+      id: "time",
+      type: "number",
+      defaultValue: 0,
+    },
+    {
+      id: "phase",
+      type: "number",
+      defaultValue: 0,
+      constrains: [Constraints.Clamp01()],
+    },
+    {
+      id: "frequency",
+      type: "number",
+      defaultValue: 1,
+    },
+    {
+      id: "amplitude",
+      type: "number",
+      defaultValue: 1,
+    },
+  ],
+  dataOutputs: [
+    {
+      id: "output",
+      type: "number",
+      defaultValue: 0,
+    },
+  ],
+
+  settings: [],
+  getData: (portId, nodeData, context) => {
+    var time = context.getInputValueNumber(nodeData, "time");
+    var phase = context.getInputValueNumber(nodeData, "phase");
+    var frequency = context.getInputValueNumber(nodeData, "frequency");
+    var amplitude = context.getInputValueNumber(nodeData, "amplitude");
+    return Math.abs(((time * frequency + phase) % 1) - 0.5) * 2 * amplitude;
+  },
+  getShaderCode(node, context) {
+    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude"], ({ time, phase, frequency, amplitude }) => `abs(((${time} * ${frequency} + ${phase}) % 1.0) - 0.5) * 2.0 * ${amplitude}`);
+  },
+};

@@ -1,5 +1,6 @@
 import { Easing, EasingFunctionType, evaluate } from "../libs/easing";
-import { clamp01, map } from "../Utils/colorUtils";
+import { clamp01 } from "../Utils/clamp01";
+import { map } from "../Utils/colorUtils";
 import { convertTypeValue } from "../Utils/convertTypeValue";
 import { PortType } from "./PortType";
 import { PortTypeDefinitions } from "./PortTypeDefinitions";

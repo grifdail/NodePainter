@@ -1,14 +1,16 @@
-import { IconWaveSine } from "@tabler/icons-react";
+import { IconWaveSquare } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
+import { clamp01 } from "../../Utils/clamp01";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
-export const SawToothWave: NodeDefinition = {
-  id: "SawToothWave",
+export const TrapezoidWave: NodeDefinition = {
+  id: "TrapezoidWave",
   tags: ["Math"],
-  icon: IconWaveSine,
+  icon: IconWaveSquare,
   featureLevel: 5,
-  description: "Return the value of the sawtooth wave with a phase, frequency and amplitude. Easier than using Cos",
+  description: "Return the value of the trapezoid wave with a phase, frequency, amplitude, duty cycle and ratio",
   dataInputs: [
     {
       id: "time",
@@ -19,7 +21,6 @@ export const SawToothWave: NodeDefinition = {
       id: "phase",
       type: "number",
       defaultValue: 0,
-
       constrains: [Constraints.Clamp01()],
     },
     {
@@ -32,6 +33,8 @@ export const SawToothWave: NodeDefinition = {
       type: "number",
       defaultValue: 1,
     },
+    Port.number("duty", 0.5, "How much of the cycle is 1", [Constraints.Clamp01()]),
+    Port.number("transition", 0.5, "How much of the duty cycle is a transition", [Constraints.Clamp01()]),
   ],
   dataOutputs: [
     {
@@ -47,10 +50,12 @@ export const SawToothWave: NodeDefinition = {
     var phase = context.getInputValueNumber(nodeData, "phase");
     var frequency = context.getInputValueNumber(nodeData, "frequency");
     var amplitude = context.getInputValueNumber(nodeData, "amplitude");
-
-    return ((time * frequency + phase) % 1) * amplitude;
+    var duty = context.getInputValueNumber(nodeData, "duty");
+    var transition = context.getInputValueNumber(nodeData, "transition");
+    var a = (time * frequency + phase) % 1;
+    return (a < duty ? clamp01(a / duty / transition) : clamp01(1 - (a - duty) / (1 - duty) / transition)) * amplitude;
   },
   getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude"], ({ time, phase, frequency, amplitude }) => `mod(${time} * ${frequency} + ${phase}, 1.0) * ${amplitude}`);
+    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude", "duty"], ({ time, phase, frequency, amplitude, duty }) => `((${time} * ${frequency} + ${phase}) % 1.0) <${duty} ?  ${amplitude} : 0.0`);
   },
 };

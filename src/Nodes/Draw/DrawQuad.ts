@@ -36,6 +36,9 @@ export const DrawQuad: NodeDefinition = {
       type: "vector2",
       defaultValue: createVector2(25, 25),
     },
+
+    Port.number("lineWidth", 0),
+    Port.bool("fill", true),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -46,10 +49,23 @@ export const DrawQuad: NodeDefinition = {
     var p2 = context.getInputValueVector(node, "corner2");
     var p3 = context.getInputValueVector(node, "corner3");
     var p4 = context.getInputValueVector(node, "corner4");
+    const fill = context.getInputValueBoolean(node, "fill");
+    const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      context.target.fill(toP5Color(color, context.p5));
-      context.target.noStroke();
+      if (fill) {
+        context.target.fill(toP5Color(color, context.p5));
+      }
+      if (lineWidth <= 0) {
+        context.target.noStroke();
+      } else {
+        context.target.stroke(toP5Color(color, context.p5));
+        context.target.strokeWeight(lineWidth);
+      }
+
       context.target.quad(p1[0], p1[1], p2[0], p2[1], p3[0], p3[1], p4[0], p4[1]);
+
+      context.target.noFill();
+      context.target.noStroke();
     };
   },
 };
