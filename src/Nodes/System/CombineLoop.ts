@@ -14,6 +14,11 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
           type: "number",
           id: "index",
         },
+        {
+          key: `${id}-count`,
+          type: "number",
+          id: "count",
+        },
       ],
       "Compose loop index",
       positionX - 400,
@@ -71,6 +76,7 @@ export const CombineLoop: NodeDefinition = {
       const array = [];
       for (var i = 0; i < count; i++) {
         context.blackboard[`${node.id}-index`] = i;
+        context.blackboard[`${node.id}-count`] = count;
         array[i] = context.getInputValue(node, "value", "object3d");
       }
       const id = context.getCallId(node);
