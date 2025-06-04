@@ -12,6 +12,7 @@ import { useViewbox } from "./Hooks/useViewbox";
 import { resetCamera } from "./Utils/resetCamera";
 import { css } from "styled-components";
 import { PortStyle } from "./PortStyle";
+import { loadExample } from "./Utils/loadExample";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);
@@ -62,6 +63,9 @@ function useParseUrl() {
       }
       if (search.has("parse")) {
         return loadJsonDecrypt(search.get("parse"));
+      }
+      if (search.has("loadexample")) {
+        return loadExample(search.get("loadexample"));
       }
     }, 500);
   }, [window.location.search]);

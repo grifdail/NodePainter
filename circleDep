@@ -1,30 +1,16 @@
 {
-	"src\\Components\\Graph\\GetNodeHeight.tsx": [
-		[
-			"src\\Components\\Graph\\GetNodeHeight.tsx",
-			"src\\Components\\Settings\\ButtonsSettings.tsx",
-			"src\\Components\\Settings\\SettingsComponents.tsx",
-			"src\\Hooks\\useTree.ts"
-		],
-		[
-			"src\\Components\\Graph\\GetNodeHeight.tsx",
-			"src\\Components\\Settings\\CodeBlockSetting.tsx",
-			"src\\Components\\Settings\\SettingsComponents.tsx",
-			"src\\Hooks\\useTree.ts"
-		]
-	],
-	"src\\Components\\Settings\\GroupSetting.tsx": [
-		[
-			"src\\Components\\Settings\\GroupSetting.tsx",
-			"src\\Components\\Settings\\SettingsComponents.tsx"
-		]
-	],
 	"src\\Hooks\\createFunction.ts": [
 		[
 			"src\\Hooks\\createFunction.ts",
 			"src\\Hooks\\useTree.ts",
 			"src\\Nodes\\CustomFunction\\CustomFunction.ts",
 			"src\\Utils\\resetCamera.tsx"
+		]
+	],
+	"src\\Components\\Settings\\GroupSetting.tsx": [
+		[
+			"src\\Components\\Settings\\GroupSetting.tsx",
+			"src\\Components\\Settings\\SettingsComponents.tsx"
 		]
 	],
 	"src\\Hooks\\useTree.ts": [
@@ -42,11 +28,6 @@
 			"src\\Hooks\\useTree.ts",
 			"src\\Nodes\\Array\\GenerateArray.ts",
 			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Nodes.ts",
-			"src\\Nodes\\System\\Cache.ts"
 		],
 		[
 			"src\\Hooks\\useTree.ts",

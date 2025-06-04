@@ -293,14 +293,18 @@ function useSketchCollection(): [SketchElement[], string[], (name: string) => vo
           content: () => new Promise<SketchTemplate>((r) => r(JSON.parse(sketch.content))),
         };
       }),
-      ...Object.entries(Templates).flatMap(([folderName, content]) => {
-        tags.add(folderName);
-        return Object.entries(content).map(([fileName, content]) => ({
-          name: fileName,
-          category: folderName,
-          content: content,
-        }));
-      }),
+      ...Object.entries(Templates)
+        .filter(([name]) => name[0] !== "_")
+        .flatMap(([folderName, content]) => {
+          tags.add(folderName);
+          return Object.entries(content)
+            .filter(([name]) => name[0] !== "_")
+            .map(([fileName, content]) => ({
+              name: fileName,
+              category: folderName,
+              content: content,
+            }));
+        }),
     ],
     Array.from(tags),
     deleteSketch,
