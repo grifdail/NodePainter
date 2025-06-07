@@ -11,7 +11,6 @@ export class StatefullInstance<TSave, TProps extends any[]> {
   constructor(virtual: StatefullVirtualElement<TSave, TProps>) {
     this.type = VirtualNodes[virtual.type] as any as StatefullElementType<TSave, TProps>;
     this.virtual = virtual;
-    console.log(VirtualNodes, virtual.type);
     this.instance = this.type.create(...virtual.props);
   }
 

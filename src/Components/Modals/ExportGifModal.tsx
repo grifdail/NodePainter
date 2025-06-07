@@ -18,6 +18,7 @@ import Rand from "rand-seed";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { TextInput } from "../Generics/Inputs/TextInput";
+import { download } from "./download";
 
 const MainDiv = styled.div`
   display: flex;
@@ -126,14 +127,6 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     }
   };
 };
-
-function download(blob: Blob, filename: string = "data.json") {
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.download = filename;
-  link.href = url;
-  link.click();
-}
 
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();

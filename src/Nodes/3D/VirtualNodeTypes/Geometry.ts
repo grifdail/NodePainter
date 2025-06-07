@@ -4,7 +4,7 @@ import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { Constraints } from "../../../Utils/applyConstraints";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
 
-abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> extends SimpleNodeVirtualNodeType<TGeometry, TProps> {
+export abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> extends SimpleNodeVirtualNodeType<TGeometry, TProps> {
   getOutput(): PortDefinition {
     return {
       id: "output",
@@ -260,7 +260,6 @@ export class PlaneGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneG
     return `${Math.floor(detail[0])} - ${Math.floor(detail[1])}`;
   }
 }
-
 export const GeometryVirtualNodeTypes = {
   ConeGeometryVirtualNodeType: new ConeGeometryVirtualNodeType(),
   BoxGeometryVirtualNodeType: new BoxGeometryVirtualNodeType(),

@@ -4,6 +4,7 @@ import { GeometryVirtualNodeTypes } from "./Geometry";
 import { LightVirtualNodeTypes } from "./LightVirtualNodeType";
 import { Line3DVirtualNodeType } from "./Line3DVirtualNodeType";
 import { MaterialsVirtualNodes } from "./MaterialsVirtualNodes";
+import { ParametricGeometryNodeType } from "./ParametricGeometryNodeType";
 import { Render3DType } from "./Render3DType";
 import { TransformedObjectModelVirtualNodeType } from "./TransformedObjectModelVirtualNodeType";
 import { UploadedModelVirtualNodeType } from "./UploadedModelVirtualNodeType";
@@ -18,6 +19,7 @@ export const VirtualNodes = {
   Line3DVirtualNodeType: new Line3DVirtualNodeType(),
   UploadedModelVirtualNodeType: new UploadedModelVirtualNodeType(),
   TransformedObjectModelVirtualNodeType: new TransformedObjectModelVirtualNodeType(),
+  ParametricGeometryNodeType: new ParametricGeometryNodeType(),
 };
 
 Object.entries(VirtualNodes).forEach(([name, virtualNode]) => {

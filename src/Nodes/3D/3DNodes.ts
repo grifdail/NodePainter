@@ -1,5 +1,6 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { generateMaterialNodeFromVirtualNode, generateNodeFromVirtualNode } from "./generateNodeFromVirtualNode";
+import { ParametricGeometry } from "./ParametricGeometry";
 import { Render3D } from "./Render3D";
 import { Render3DLine } from "./Render3DLine";
 import { RenderModel } from "./RenderModel";
@@ -23,4 +24,5 @@ export const Nodes3D = [
   RenderModel,
   Render3DLine,
   Transform3D,
+  ParametricGeometry,
 ];

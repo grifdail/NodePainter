@@ -22,7 +22,7 @@ export function VectorInput({ onChange, value, constrains }: { onChange: (value:
     newVector[property] = newValue;
     onChange(applyConstraint(newVector, constrains));
   };
-  if (value === undefined) {
+  if (value === undefined || value === null) {
     value = [0, 0, 0, 0] as unknown as Vector;
   }
   return (
