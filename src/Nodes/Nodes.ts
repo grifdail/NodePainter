@@ -171,6 +171,7 @@ import { FocalLength } from "./Vector/FocalLength";
 import { RotateVector } from "./Vector/RotateVector";
 import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
+import { Swizzle } from "./Vector/Swizzle";
 import { Value } from "./Vector/Value";
 import { Distance } from "./Vector/VectorDistance";
 
@@ -195,6 +196,7 @@ export const Nodes: Array<NodeDefinition> = [
   Scale,
   Distance,
   ScaleAdd,
+  Swizzle,
 
   //2D specific
   VectorFromAngle,

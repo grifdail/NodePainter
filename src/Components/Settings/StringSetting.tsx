@@ -10,7 +10,8 @@ export const StringSetting: SettingComponent<StringSettingDefinition> = function
       label={def.id}
       input={TextInput}
       value={value}
-      onChange={onChange}></Fieldset>
+      onChange={onChange}
+      passtrough={{ constrains: def.constrains }}></Fieldset>
   );
 };
 StringSetting.getSize = function (value, def): number {

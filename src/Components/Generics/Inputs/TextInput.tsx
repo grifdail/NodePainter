@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../StyledComponents/Input";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
 
-export function TextInput({ onChange, value, disabled = false }: { onChange: (value: string) => void; value: string; disabled?: boolean }) {
+export function TextInput({ onChange, value, disabled = false, constrains }: { onChange: (value: string) => void; value: string; disabled?: boolean; constrains?: ConstrainDeclaration[] }) {
   var [rawField, setRawField] = useState(value);
 
   useEffect(() => {
@@ -9,7 +10,11 @@ export function TextInput({ onChange, value, disabled = false }: { onChange: (va
   }, [value]);
 
   const onBlur = (newValue: string) => {
-    onChange(rawField);
+    if (constrains) {
+      onChange(applyConstraint(rawField, constrains));
+    } else {
+      onChange(rawField);
+    }
   };
 
   return (

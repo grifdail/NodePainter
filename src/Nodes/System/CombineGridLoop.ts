@@ -12,8 +12,13 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
     useTree.getState().createBlackboardNode(
       [
         {
-          key: `${id}-index`,
+          key: `${id}-pos`,
           type: "vector2",
+          id: "pos",
+        },
+        {
+          key: `${id}-index`,
+          type: "number",
           id: "index",
         },
       ],
@@ -43,7 +48,8 @@ export const CombineGridLoop: NodeDefinition = {
     const array: any[] = [];
     for (var y = 0; y < size[1]; y++) {
       for (var x = 0; x < size[0]; x++) {
-        context.blackboard[`${node.id}-index`] = createVector2(x, y);
+        context.blackboard[`${node.id}-index`] = y * size[0] + x;
+        context.blackboard[`${node.id}-pos`] = createVector2(x, y);
         array[x * size[0] + y] = context.getInputValue(node, "value", node.selectedType);
       }
     }

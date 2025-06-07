@@ -33,6 +33,7 @@ export const Multiply: NodeDefinition = {
 
   settings: [],
   availableTypes: portTypesWithProperty("multiplicationOperator"),
+
   onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
   hasInput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),
   hasOutput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),

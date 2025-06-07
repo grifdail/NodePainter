@@ -1,4 +1,5 @@
 import { Color, Vector } from "../Types/vectorDataType";
+import { ValidateSwizzleString } from "./ValidateSwizzleString";
 
 export type ConstrainDeclaration = {
   id: ConstrainTypes;
@@ -72,6 +73,7 @@ const ConstrainDefinition = {
   LowerCase: (text: string) => {
     return text.toLowerCase();
   },
+  SwizzleString: ValidateSwizzleString,
 };
 
 type ConstrainDefinitionType = typeof ConstrainDefinition;

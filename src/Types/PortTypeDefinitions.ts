@@ -21,25 +21,9 @@ import { ArrayPortType, BasePortType, PortType } from "./PortType";
 import { vector2bool } from "./vector2bool";
 import { createColor, createDefaultGradient, createVector2, createVector3, createVector4 } from "./vectorDataType";
 
-type PortTypeTags = "common" | "vector" | "true-vector" | "array" | "utils" | "complex" | "spatial";
+type PortTypeTags = "common" | "vector" | "true-vector" | "array" | "utils" | "complex" | "spatial" | "hidden";
 
 const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
-  string: {
-    tags: ["common"],
-    color: "#ae3ec9",
-    icon: IconQuote,
-    inlineInput: TextInput,
-    smallIcon: IconQuote,
-    createDefaultValue: () => "",
-    convert: {
-      number: (a) => (Number.isNaN(Number.parseFloat(a)) ? 0 : Number.parseFloat(a)),
-      string: (a) => a,
-      unknown: (a) => a,
-    },
-    additionOperator: (a, b) => a + b,
-    equalityOperator: defaultEqual,
-    shaderConvert: {},
-  },
   number: {
     tags: ["common", "vector", "spatial"],
     color: "#29adff",
@@ -80,7 +64,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderP5Uniform: (value) => value,
   },
   vector: {
-    tags: ["vector", "true-vector"],
+    tags: ["vector", "true-vector", "hidden"],
     color: "#7073c3",
     icon: IconArrowUpRightCircle,
     inlineInput: VectorInput,
@@ -284,6 +268,22 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "vec4",
     convertToShaderValue: (value) => `vec4(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])}, ${convertToShaderNumber(value[3])})`,
   },
+  string: {
+    tags: ["common"],
+    color: "#ae3ec9",
+    icon: IconQuote,
+    inlineInput: TextInput,
+    smallIcon: IconQuote,
+    createDefaultValue: () => "",
+    convert: {
+      number: (a) => (Number.isNaN(Number.parseFloat(a)) ? 0 : Number.parseFloat(a)),
+      string: (a) => a,
+      unknown: (a) => a,
+    },
+    additionOperator: (a, b) => a + b,
+    equalityOperator: defaultEqual,
+    shaderConvert: {},
+  },
   bool: {
     tags: ["common"],
     color: "#1d2b53",
@@ -436,11 +436,11 @@ export function portTypesWith(cb: (def: PortTypeDefinition) => boolean): PortTyp
   return Object.keys(PortTypeDefinitions).filter((type) => cb(PortTypeDefinitions[type as PortType])) as PortType[];
 }
 
-export function portTypesWithProperty(property: keyof PortTypeDefinition): PortType[] {
-  return portTypesWith((def) => property in def);
+export function portTypesWithProperty(property: keyof PortTypeDefinition, exclude: PortTypeTags[] = ["hidden"]): PortType[] {
+  return portTypesWith((def) => property in def && (!exclude || exclude.every((tag) => !def.tags.includes(tag))));
 }
 
-export function portTypesWithTags(tags: PortTypeTags[], exclude?: PortTypeTags[]): PortType[] {
+export function portTypesWithTags(tags: PortTypeTags[], exclude: PortTypeTags[] = ["hidden"]): PortType[] {
   return portTypesWith((def) => tags.every((tag) => def.tags.includes(tag)) && (!exclude || exclude.every((tag) => !def.tags.includes(tag))));
 }
 
