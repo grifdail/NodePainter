@@ -100,7 +100,7 @@ import { MouseButton } from "./Inputs/MouseButton";
 import { MousePosition } from "./Inputs/MousePosition";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
-import { Select } from "./Logic/SelectNode";
+import { RecordPath } from "./Inputs/RecordPath";
 import { Abs } from "./Math/Abs";
 import { Acos } from "./Math/Acos";
 import { AnimationCurve } from "./Math/AnimationCurve";
@@ -128,7 +128,6 @@ import { OneMinus } from "./Math/OneMinus";
 import { PingPong } from "./Math/PingPong";
 import { PowNode } from "./Math/PowNode";
 import { RadianToDegree } from "./Math/RadianToDegree";
-import { RecordPath } from "./Math/RecordPath";
 import { Remap } from "./Math/Remap";
 import { Round } from "./Math/Round";
 import { SawToothWave } from "./Math/SawToothWave";
@@ -144,9 +143,9 @@ import { TriangleWave } from "./Math/TriangleWave";
 import { AlignRotation } from "./Quaternion/AlignRotation";
 import { AxisAngle } from "./Quaternion/AxisAngle";
 import { EulerAngle } from "./Quaternion/EulerAngle";
-import { RenderWithRotation } from "./RenderWithRotation/ExecuteWithRotation";
 import { RenderWithBlending } from "./RenderWithRotation/RenderWithBlending";
 import { RenderWithMask } from "./RenderWithRotation/RenderWithMask";
+import { RenderWithRotation } from "./RenderWithRotation/RenderWithRotation";
 import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
 import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
 import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
@@ -236,7 +235,6 @@ export const Nodes: Array<NodeDefinition> = [
   // Logic
   Compare,
   SwitchNode,
-  Select,
 
   // Time
   Time,

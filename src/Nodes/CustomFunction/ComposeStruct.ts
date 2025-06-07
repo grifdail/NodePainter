@@ -10,7 +10,7 @@ export const ComposeStruct: NodeDefinition = {
   tags: [],
   dataInputs: [],
   dataOutputs: [],
-
+  preventSnippet: true,
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = Object.entries(nodeData.dataInputs).reduce((old, [key, value]) => {

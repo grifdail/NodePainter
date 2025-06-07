@@ -9,6 +9,7 @@ export const CustomSimulationStart: NodeDefinition = {
   tags: [],
   hideInLibrary: true,
   dataInputs: [],
+  preventSnippet: true,
   dataOutputs: [],
   settings: [],
   getData: (portId, nodeData, context) => {

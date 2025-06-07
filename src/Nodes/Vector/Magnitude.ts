@@ -9,6 +9,7 @@ import { VectorMagnitude } from "../../Utils/vectorUtils";
 export const Magnitude: NodeDefinition = {
   id: "Magnitude",
   description: "Return the length of a vector",
+  alias: "Length Size Norm",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
   dataInputs: [

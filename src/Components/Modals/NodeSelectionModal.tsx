@@ -120,7 +120,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
           }
         }
 
-        return searchTerm.name.length === 0 || item.id.toLowerCase().includes(searchTerm.name);
+        return searchTerm.name.length === 0 || item.id.toLowerCase().includes(searchTerm.name) || item.alias?.toLowerCase().includes(searchTerm.name);
       }),
     [nodeLibrary, searchTerm]
   );

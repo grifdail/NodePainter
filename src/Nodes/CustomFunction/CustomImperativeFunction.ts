@@ -8,6 +8,7 @@ export const CustomImperativeFunction: NodeDefinition = {
   description: "Custom function",
   icon: IconCodeDots,
   tags: [],
+  preventSnippet: true,
   hideInLibrary: false,
   dataInputs: [],
   dataOutputs: [],

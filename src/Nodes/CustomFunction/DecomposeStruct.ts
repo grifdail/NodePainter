@@ -11,6 +11,7 @@ export const DecomposeStruct: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   settings: [],
+  preventSnippet: true,
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "struct", "struct") as any;
     var port = nodeData.dataOutputs[portId];

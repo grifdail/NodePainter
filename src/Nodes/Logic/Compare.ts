@@ -7,6 +7,7 @@ export const Compare: NodeDefinition = {
   description: "Create a vector from a set of coordinate",
   icon: IconArrowUpRightCircle,
   tags: ["Logic", "Math"],
+  alias: "Equals Lower Greater Different",
   dataInputs: [
     {
       id: "a",

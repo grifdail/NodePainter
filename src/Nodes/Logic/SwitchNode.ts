@@ -8,6 +8,7 @@ export const SwitchNode: NodeDefinition = {
   id: "Switch",
   description: "Return one of the input depending on the condition",
   icon: IconAssembly,
+  alias: "Select If Conditional Ternary ?",
   tags: ["Logic"],
   dataInputs: [
     { id: "condition", type: "bool", defaultValue: false },

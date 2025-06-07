@@ -9,6 +9,7 @@ import { EnforceGoodType, VectorNormalize } from "../../Utils/vectorUtils";
 export const Normalize: NodeDefinition = {
   id: "Normalize",
   description: "Return a vector sharing the same direction but with a length of one",
+  alias: "Unit",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
   dataInputs: [

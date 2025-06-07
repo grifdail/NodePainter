@@ -16,6 +16,7 @@ export const StartNode: NodeDefinition = {
   ],
   hideInLibrary: true,
   dataOutputs: [],
+  preventSnippet: true,
   settings: [
     { id: "name", type: "string", defaultValue: "sketch" },
     { id: "width", type: "number", defaultValue: 400 },

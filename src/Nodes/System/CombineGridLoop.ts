@@ -34,6 +34,7 @@ export const CombineGridLoop: NodeDefinition = {
   id: "CombineGridLoop",
   label: "Combine Grid Loop",
   icon: IconArrowMerge,
+  alias: "for",
   description: "Compose an object from multiple object while looping over a grid",
 
   dataInputs: [Port.vector2("size", [10, 10]), Port.drawing2d("value")],

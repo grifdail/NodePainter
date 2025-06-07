@@ -14,6 +14,7 @@ export const CustomSimulation: NodeDefinition = {
   icon: IconArrowsMove,
   tags: [],
   hideInLibrary: true,
+  preventSnippet: true,
   dataInputs: [Port.CacheId(), Port.bool("reset")],
   dataOutputs: [],
   settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }],

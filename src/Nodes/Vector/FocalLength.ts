@@ -4,7 +4,7 @@ import { createVector2, createVector3 } from "../../Types/vectorDataType";
 
 export const FocalLength: NodeDefinition = {
   id: "FocalLength",
-  description: "Create a 2D vector based on an Angle and a magnitude",
+  description: "Given some 3D coordinate and a focal length, return a 2D coordinate and relative scale.",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
   dataInputs: [

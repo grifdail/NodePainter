@@ -5,6 +5,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 export const RenderWithRotation: NodeDefinition = {
   id: "RenderWithRotation",
   label: "Render with rotation",
+  alias: "Rotate",
   description: "Execute the next instruction as if the canvas was rotated",
   featureLevel: 4,
   icon: IconRotate,

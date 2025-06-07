@@ -32,6 +32,7 @@ export const CombineLoop: NodeDefinition = {
   id: "CombineLoop",
   label: "Combine Loop",
   icon: IconArrowMerge,
+  alias: "for",
   description: "Compose an object from multiple object on a loop",
   featureLevel: 101,
   dataInputs: [

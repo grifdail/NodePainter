@@ -8,6 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 export const Multiply: NodeDefinition = {
   id: "Multiply",
   description: "Scale each component of two vector together",
+  alias: "Times",
   icon: IconMathXy,
   featureLevel: 100,
   tags: ["Math", "Vector"],

@@ -7,6 +7,7 @@ export const Noise: NodeDefinition = {
   id: "Noise",
   tags: ["Math"],
   icon: IconGridDots,
+  alias: "Perlin",
   description: "return a semi random continous value between 0 and 1 for points in 2d. ",
   dataInputs: [
     { id: "pos", type: "vector2", defaultValue: createVector2() },

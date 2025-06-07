@@ -10,6 +10,7 @@ export const CacheNode: NodeDefinition = {
   description: "Precompute and cache the input. The randomness wont change and it may help performance",
   icon: IconAssembly,
   tags: ["Control"],
+  alias: "Precompute",
   dataInputs: [Port.number("value"), Port.CacheId()],
   dataOutputs: [Port.number("cached")],
   settings: [],

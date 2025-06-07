@@ -9,6 +9,7 @@ export const Value: NodeDefinition = {
   description: "Represente a single value",
   icon: IconEqual,
   tags: ["Misc"],
+  alias: "Constant Redirect",
   dataInputs: [
     {
       id: "value",

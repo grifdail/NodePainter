@@ -5,6 +5,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 export const Envelope: NodeDefinition = {
   id: "Envelope",
   label: "Envelope",
+  alias: "Curve",
   description: "Transform the value betwen 0 & 1 passed in to match the shape.",
   icon: IconEaseInOut,
   tags: ["Math"],

@@ -19,12 +19,16 @@ export type BaseNodeDefinition = {
   featureLevel?: number;
   IsUnique?: boolean; //There can only be one of these node per sketch: Start, Custom Function Start & End, ect...
   description?: string;
+  preventSnippet?: boolean;
+
   /**
    * @TJS-ignore
    */
   icon?: Icon;
   label?: string;
   tags: Array<string>;
+  //When looking for a node in the menu, this will also look for this field, not just the label
+  alias?: string;
 
   //Meta
   executeAs?: string;

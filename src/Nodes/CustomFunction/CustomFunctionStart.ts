@@ -10,7 +10,7 @@ export const CustomFunctionStart: NodeDefinition = {
   hideInLibrary: true,
   dataInputs: [],
   dataOutputs: [],
-
+  preventSnippet: true,
   settings: [],
   getData: (portId, nodeData, context) => {
     var contextFn = context.functionStack[context.functionStack.length - 1];

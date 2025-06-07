@@ -9,7 +9,7 @@ export const RecordPath: NodeDefinition = {
   label: "Record Path",
   description: "Replay a handdrawn path",
   icon: IconRoute,
-  tags: ["Math"],
+  tags: ["Input"],
   dataInputs: [Port.number("pos", 0, [Constraints.Clamp01()]), Port.vector2("scale", [400, 400])],
   dataOutputs: [Port.vector2("out")],
 

@@ -10,6 +10,7 @@ export const Add: NodeDefinition = {
   description: "Add two value together",
   icon: IconMathXPlusY,
   featureLevel: 100,
+  alias: "Plus Addition",
   tags: ["Math", "Vector"],
   dataInputs: [
     {

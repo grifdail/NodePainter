@@ -9,6 +9,7 @@ import { VectorSquareMagnitude } from "../../Utils/vectorUtils";
 export const SquareMagnitude: NodeDefinition = {
   id: "SquareMagnitude",
   description: "Return the squared length of a vector",
+  alias: "Square Length",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],
   dataInputs: [

@@ -10,6 +10,7 @@ export const Subtract: NodeDefinition = {
   description: "Subtract two value together",
   icon: IconMathXMinusY,
   tags: ["Math", "Vector"],
+  alias: "Minus",
   featureLevel: 70,
   dataInputs: [
     {

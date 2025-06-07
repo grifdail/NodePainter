@@ -7,6 +7,7 @@ export const Count: NodeDefinition = {
   id: "Count",
   description: "Count the number of element in an array",
   icon: IconList,
+  alias: "Length Size Count",
   tags: ["Array"],
   dataInputs: [
     {

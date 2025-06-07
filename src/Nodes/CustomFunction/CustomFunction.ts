@@ -12,7 +12,7 @@ export const CustomFunction: NodeDefinition = {
   hideInLibrary: true,
   dataInputs: [],
   dataOutputs: [],
-
+  preventSnippet: true,
   settings: [],
   getData: (portId, nodeData, context) => {
     const source = context.findNodeOfType(getCustomFunctionEndId(nodeData.type));

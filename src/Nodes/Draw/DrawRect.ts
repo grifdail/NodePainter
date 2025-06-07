@@ -7,6 +7,7 @@ import { toP5Color } from "../../Utils/colorUtils";
 export const DrawRect: NodeDefinition = {
   id: "DrawRect",
   label: "Draw Rect",
+  alias: "Square",
   description: "Draw a rectangle starting at the top left corner with a width and height",
   icon: IconRectangle,
   tags: ["Draw"],

@@ -8,6 +8,7 @@ import { convertTypeValue } from "../../Utils/convertTypeValue";
 export const SelectFromArray: NodeDefinition = {
   id: "SelectFromArray",
   description: "Select an element of an based on the index",
+  alias: "Get Index",
   icon: IconList,
   tags: ["Array"],
   dataInputs: [
