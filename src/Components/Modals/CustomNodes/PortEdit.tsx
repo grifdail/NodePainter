@@ -7,9 +7,9 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { InvisibleButton } from "../../Generics/Button";
 import styled from "styled-components";
 import { convertTypeValue } from "../../../Utils/convertTypeValue";
-import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { TextInput } from "../../Generics/Inputs/TextInput";
 import { PortType } from "../../../Types/PortType";
+import { PortTypeDropdown } from "./PortTypeDropdown";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;
@@ -67,17 +67,6 @@ export function PortEdit({ port, onChangePort, onDeletePort, index, availableTyp
   const canDelete = onDeletePort !== undefined;
   const canEdit = onChangePort !== undefined;
 
-  const typeTemplate = (option: string) => {
-    const portColor = PortTypeDefinitions[option as PortType];
-    const Icon = portColor.icon;
-    return (
-      <>
-        <Icon />
-        {capitalCase(option)}
-      </>
-    );
-  };
-
   const setPortId = (value: string) => {
     if (onChangePort) {
       onChangePort(index, { ...port, id: value });
@@ -117,12 +106,10 @@ export function PortEdit({ port, onChangePort, onDeletePort, index, availableTyp
             value={port.id}
             disabled={!canEdit}
           />
-          <Fieldset
-            label="Type"
-            input={DropdownInput}
+          <PortTypeDropdown
             onChange={setPortType}
             value={port.type}
-            passtrough={{ options: availableTypes, template: typeTemplate }}
+            availableTypes={availableTypes}
             disabled={!canEdit}
           />
           {PortValueEditor && (

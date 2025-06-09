@@ -71,6 +71,7 @@ import { DrawTriangle } from "./Draw/DrawTriangle";
 import { FillBackground } from "./Draw/FillBackground";
 
 import { Nodes3D } from "./3D/3DNodes";
+import { ArrayMap } from "./Array/ArrayMap";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { FindBest } from "./Array/FindBest";
@@ -386,6 +387,7 @@ export const Nodes: Array<NodeDefinition> = [
   Filter,
   Slice,
   GenerateArray,
+  ArrayMap,
 
   //Misc
   AnimationCurve,
