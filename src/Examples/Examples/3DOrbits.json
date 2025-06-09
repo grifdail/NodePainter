@@ -1344,7 +1344,7 @@
             "selectedType": "object3d"
         },
         "nodefTid9syxHiMTf2Iyceulj": {
-            "type": "Select",
+            "type": "SelectFromArray",
             "id": "nodefTid9syxHiMTf2Iyceulj",
             "dataInputs": {
                 "test": {

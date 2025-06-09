@@ -50,6 +50,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   const inputCount = Object.keys(node.dataInputs).length;
   const outputCount = Object.keys(node.dataOutputs).length;
   const definition = getNodeTypeDefinition(node);
+
   const [dragged, setDragged] = useState(false);
 
   const bind = useGesture(

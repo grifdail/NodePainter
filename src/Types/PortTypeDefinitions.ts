@@ -286,7 +286,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
   },
   bool: {
     tags: ["common"],
-    color: "#1d2b53",
+    color: "#FF77A8",
     icon: IconToggleLeft,
     inlineInput: BoolInput,
     smallIcon: IconToggleLeft,

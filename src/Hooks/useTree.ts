@@ -71,7 +71,9 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     getNodeTypeDefinition(node: string | NodeData) {
       const type = typeof node === "string" ? node : node.type;
-      return NodeLibrary[type] || get().customNodes[type];
+      var result = NodeLibrary[type] || get().customNodes[type];
+      console.assert(result != null, `${type} is not a valid node type.`);
+      return result;
     },
     getNodeLibrary() {
       return { ...NodeLibrary, ...get().customNodes };
@@ -230,6 +232,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       resetCamera();
     },
     loadTemplate(temp) {
+      console.log(JSON.stringify(temp));
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       return true;
