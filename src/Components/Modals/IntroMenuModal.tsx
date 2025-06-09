@@ -216,17 +216,9 @@ export function IntroMenuModal({ close }: { close: () => void }) {
                 autoFocus></Input>
             </span>
           </SearchForm>
-          <TagList>
-            {categories.map((tag) => (
-              <CategoryButton
-                key={tag}
-                selected={searchTerm.tags.includes(tag.toLowerCase())}
-                onClick={() => toggleTag(tag)}
-                title={tag}>
-                {tag}
-              </CategoryButton>
-            ))}
-          </TagList>
+          <TagList
+            options={Object.fromEntries(categories.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))}
+            onClick={toggleTag}></TagList>
 
           <NodeList>
             {filteredList.map((item) => (

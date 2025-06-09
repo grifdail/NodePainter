@@ -231,17 +231,10 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
             </MenuRadioGroup>
           </Menu>
         </SearchForm>
-        <TagList>
-          {tags.map((tag) => (
-            <CategoryButton
-              key={tag}
-              selected={searchTerm.tags.includes(tag.toLowerCase())}
-              onClick={() => toggleTag(tag)}
-              title={tag}>
-              {tag}
-            </CategoryButton>
-          ))}
-        </TagList>
+        <TagList
+          options={Object.fromEntries(tags.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))}
+          onClick={toggleTag}
+          useShrink></TagList>
 
         <NodeList>
           {finalList.map((item) => (

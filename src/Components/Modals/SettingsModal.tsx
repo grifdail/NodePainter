@@ -74,16 +74,9 @@ export function SettingsModal({ close }: { close: () => void }) {
       title="Settings"
       icon={IconSettings}>
       <MainDiv>
-        <TagList>
-          {Object.values(Section).map((tag) => (
-            <CategoryButton
-              key={tag}
-              selected={section === tag}
-              onClick={() => setSection(tag as Section)}>
-              {tag}
-            </CategoryButton>
-          ))}
-        </TagList>
+        <TagList
+          options={Object.fromEntries(Object.values(Section).map((tag) => [tag, section === tag]))}
+          onClick={(tag) => setSection(tag as Section)}></TagList>
         <div className="content">
           <Body />
         </div>
