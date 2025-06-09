@@ -41,6 +41,7 @@ export function SaveModal({ close }: { close: () => void }) {
   const json = JSON.stringify(saveTemplate, null, shortJson ? undefined : 4);
   const [lastValue, clip] = useCopyToClipboard();
   const [{ hasUrl, url: decodeUrl, loading }, setUrlState] = useState({ hasUrl: false, loading: true, url: "" });
+  const sketchName = useTree((state) => state.getSketchName());
 
   useEffect(() => {
     compressSketchJson(saveTemplate).then(
@@ -90,7 +91,7 @@ export function SaveModal({ close }: { close: () => void }) {
           <Button
             label="Download as file"
             icon={IconDownload}
-            onClick={() => download(json, "node_painter_save.json")}></Button>
+            onClick={() => download(json, `${sketchName}_NodePainter.json`)}></Button>
         </ButtonGroup>
       </MainDiv>
     </Modal>
