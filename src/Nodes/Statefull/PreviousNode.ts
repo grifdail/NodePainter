@@ -1,4 +1,5 @@
-import { IconCircuitSwitchOpen } from "@tabler/icons-react";
+import { IconArrowNarrowLeft, IconStatusChange } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
@@ -8,7 +9,7 @@ import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
 export const PreviousNode: NodeDefinition = {
   id: "Previous",
   label: "Previous",
-  icon: IconCircuitSwitchOpen,
+  icon: DoubleIcon(IconStatusChange, IconArrowNarrowLeft),
   description: "Output the value of the input at the previous call",
 
   dataInputs: [Port.bool("in"), Port.CacheId()],

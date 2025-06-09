@@ -1,11 +1,11 @@
-import { IconPhoto } from "@tabler/icons-react";
+import { IconCameraUp } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const UploadImage: NodeDefinition = {
   id: "UploadImage",
   label: "Upload Image",
-  icon: IconPhoto,
+  icon: IconCameraUp,
   description: "Upload an image",
   dataInputs: [],
   dataOutputs: [{ id: "image", type: "image", defaultValue: null }],

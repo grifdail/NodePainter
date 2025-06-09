@@ -1,4 +1,5 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconArrowUpRightCircle, IconMathXy } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -7,8 +8,9 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 
 export const ComposeNode: NodeDefinition = {
   id: "Compose",
+  label: "Compose Vector",
   description: "Create a vector or color from a set of number",
-  icon: IconArrowUpRightCircle,
+  icon: DoubleIcon(IconArrowUpRightCircle, IconMathXy),
   featureLevel: 3,
   tags: ["Vector"],
   dataInputs: [

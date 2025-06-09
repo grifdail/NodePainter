@@ -1,4 +1,4 @@
-import { IconMathXDivideY } from "@tabler/icons-react";
+import { IconDivide } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -8,7 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 export const Divide: NodeDefinition = {
   id: "Divide",
   description: "Scale each component of two vector together",
-  icon: IconMathXDivideY,
+  icon: IconDivide,
   tags: ["Math", "Vector"],
   dataInputs: [
     {

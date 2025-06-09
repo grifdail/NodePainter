@@ -1,4 +1,5 @@
-import { IconArrowMerge, IconPlus } from "@tabler/icons-react";
+import { IconArrowMerge, IconPlus, IconRepeat } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -31,7 +32,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 export const CombineLoop: NodeDefinition = {
   id: "CombineLoop",
   label: "Combine Loop",
-  icon: IconArrowMerge,
+  icon: DoubleIcon(IconArrowMerge, IconRepeat),
   alias: "for",
   description: "Compose an object from multiple object on a loop",
   featureLevel: 101,

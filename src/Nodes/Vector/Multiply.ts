@@ -1,4 +1,4 @@
-import { IconMathXy } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -9,7 +9,7 @@ export const Multiply: NodeDefinition = {
   id: "Multiply",
   description: "Scale each component of two vector together",
   alias: "Times",
-  icon: IconMathXy,
+  icon: IconX,
   featureLevel: 100,
   tags: ["Math", "Vector"],
   dataInputs: [

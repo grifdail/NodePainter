@@ -1,11 +1,11 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconMathEqualGreater } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Comparator, ComparatorOps } from "../../Utils/logicUtils";
 
 export const Compare: NodeDefinition = {
   id: "Compare",
-  description: "Create a vector from a set of coordinate",
-  icon: IconArrowUpRightCircle,
+  description: "Compare two numeric value",
+  icon: IconMathEqualGreater,
   tags: ["Logic", "Math"],
   alias: "Equals Lower Greater Different",
   dataInputs: [

@@ -1,4 +1,5 @@
-import { IconArrowsShuffle } from "@tabler/icons-react";
+import { IconArrowsShuffle, IconSphere } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
@@ -9,7 +10,7 @@ import { createOrSelectFromCache } from "../../Utils/useCache";
 export const RandomOnSphere: NodeDefinition = {
   id: "RandomOnSphere",
   description: "A random value, consistant across frames",
-  icon: IconArrowsShuffle,
+  icon: DoubleIcon(IconArrowsShuffle, IconSphere),
   tags: ["Input"],
   dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
   dataOutputs: [{ id: "value", type: "vector3", defaultValue: createVector3() }],

@@ -6,7 +6,7 @@ import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { SpringValue } from "@react-spring/web";
 import { Remap } from "../Nodes/Math/Remap";
 import { Envelope } from "../Nodes/Math/Envelope";
-import { Palette } from "../Nodes/Color/PickFromPalette";
+import { Palette } from "../Nodes/Color/Palette";
 import { GradientNode } from "../Nodes/Color/GradientNode";
 import { UploadImage } from "../Nodes/Images/UploadImage";
 import { StartNode } from "../Nodes/System/StartNode";

@@ -1,4 +1,5 @@
-import { IconCircuitSwitchOpen } from "@tabler/icons-react";
+import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadFromCache } from "../../Utils/useCache";
@@ -6,7 +7,7 @@ import { updateAndReadFromCache } from "../../Utils/useCache";
 export const Counter: NodeDefinition = {
   id: "Counter",
   label: "Counter",
-  icon: IconCircuitSwitchOpen,
+  icon: DoubleIcon(IconDeviceFloppy, IconPlus),
   description: "Output a number that change by step for every call when the boolean input are true",
 
   dataInputs: [Port.number("step", 1), Port.bool("increase"), Port.bool("decrease"), Port.bool("reset"), Port.number("min", 0), Port.number("max", 100), Port.CacheId()],

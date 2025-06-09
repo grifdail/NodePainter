@@ -1,4 +1,5 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconAngle, IconArrowUpRightCircle } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
@@ -10,7 +11,7 @@ import { VectorDotProduct } from "./DotProduct";
 export const VectorFromAngle: NodeDefinition = {
   id: "VectorFromAngle",
   description: "Create a vector based on an Angle and a magnitude",
-  icon: IconArrowUpRightCircle,
+  icon: DoubleIcon(IconArrowUpRightCircle, IconAngle),
   featureLevel: 4,
   tags: ["Vector"],
   dataInputs: [

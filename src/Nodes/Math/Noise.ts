@@ -1,4 +1,5 @@
-import { IconGridDots } from "@tabler/icons-react";
+import { IconGridDots, IconWaveSine } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
@@ -6,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 export const Noise: NodeDefinition = {
   id: "Noise",
   tags: ["Math"],
-  icon: IconGridDots,
+  icon: DoubleIcon(IconGridDots, IconWaveSine),
   alias: "Perlin",
   description: "return a semi random continous value between 0 and 1 for points in 2d. ",
   dataInputs: [

@@ -1,4 +1,4 @@
-import { IconCircuitSwitchOpen } from "@tabler/icons-react";
+import { IconStatusChange } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
@@ -8,7 +8,7 @@ import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
 export const DetectChangeNode: NodeDefinition = {
   id: "DetectChange",
   label: "DetectChange",
-  icon: IconCircuitSwitchOpen,
+  icon: IconStatusChange,
   description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
 
   dataInputs: [Port.bool("in"), Port.CacheId()],

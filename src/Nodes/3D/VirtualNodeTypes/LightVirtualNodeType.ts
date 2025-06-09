@@ -1,3 +1,4 @@
+import { Icon, IconBulb } from "@tabler/icons-react";
 import { AmbientLight, DirectionalLight, PointLight } from "three";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Color, createVector3, Vector3 } from "../../../Types/vectorDataType";
@@ -13,6 +14,9 @@ export class AmbientLightVirtualNodeType extends Object3DVirtualNodeType<Ambient
   }
   getId(): string {
     return "AmbientLight";
+  }
+  getIcon(): Icon {
+    return IconBulb;
   }
   getDescription(): string {
     return "Light the whole scene uniformely, from all direction";
@@ -38,6 +42,9 @@ export class DirectionalLightVirtualNodeType extends Object3DVirtualNodeType<Dir
       { id: "intensity", type: "number", defaultValue: 0.3 },
       { id: "direction", type: "vector3", defaultValue: createVector3(0, 1, 0) },
     ];
+  }
+  getIcon(): Icon {
+    return IconBulb;
   }
   getId(): string {
     return "DirectionalLight";
@@ -69,6 +76,9 @@ export class PointLightVirtualNodeType extends Object3DVirtualNodeType<PointLigh
       { id: "distance", type: "number", defaultValue: 0 },
       { id: "decay", type: "number", defaultValue: 2 },
     ];
+  }
+  getIcon(): Icon {
+    return IconBulb;
   }
   getId(): string {
     return "PointLight";

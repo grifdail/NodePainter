@@ -1,6 +1,6 @@
-import { IconBulb } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Constraints } from "../../Utils/applyConstraints";
+import { camelCaseToWords } from "../../Utils/camelCaseToWords";
 import { SimpleNodeVirtualNodeType } from "./VirtualNodeTypes/SimpleNodeVirtualNodeType";
 import { createDefaultMaterialGenericData } from "./VirtualNodeTypes/createDefaultMaterialGenericData";
 
@@ -8,9 +8,9 @@ export function generateNodeFromVirtualNode(materialVirtualNodeType: SimpleNodeV
   var inputs = materialVirtualNodeType.getInputs();
   return {
     id: materialVirtualNodeType.getId(),
-    label: materialVirtualNodeType.getLabel(),
+    label: camelCaseToWords(materialVirtualNodeType.getLabel()),
     description: materialVirtualNodeType.getDescription(),
-    icon: IconBulb,
+    icon: materialVirtualNodeType.getIcon(),
     tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],
@@ -27,9 +27,9 @@ export function generateMaterialNodeFromVirtualNode(materialVirtualNodeType: Sim
   var inputs = materialVirtualNodeType.getInputs();
   return {
     id: materialVirtualNodeType.getId(),
-    label: materialVirtualNodeType.getLabel(),
+    label: camelCaseToWords(materialVirtualNodeType.getLabel()),
     description: materialVirtualNodeType.getDescription(),
-    icon: IconBulb,
+    icon: materialVirtualNodeType.getIcon(),
     tags: ["3D", ...materialVirtualNodeType.getTags()],
     dataInputs: inputs,
     dataOutputs: [materialVirtualNodeType.getOutput()],

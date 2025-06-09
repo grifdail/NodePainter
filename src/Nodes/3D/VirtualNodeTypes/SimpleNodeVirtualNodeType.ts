@@ -1,3 +1,4 @@
+import { Icon, IconBadge3d } from "@tabler/icons-react";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { StatefullElementType } from "../../../Utils/statefullContext";
 
@@ -14,5 +15,8 @@ export abstract class SimpleNodeVirtualNodeType<TMat, TProps extends any[]> exte
   }
   getHash(...props: TProps): string {
     return "";
+  }
+  getIcon(): Icon {
+    return IconBadge3d;
   }
 }

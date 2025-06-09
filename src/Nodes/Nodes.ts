@@ -3,7 +3,7 @@ import { GenerateGradient } from "./Color/GenerateGradient";
 import { GradientNode } from "./Color/GradientNode";
 import { HSL } from "./Color/HSL";
 import { HSV } from "./Color/HSV";
-import { Palette } from "./Color/PickFromPalette";
+import { Palette } from "./Color/Palette";
 import { SampleGradient } from "./Color/SampleGradient";
 import { SetAlpha } from "./Color/SetAlpha";
 
@@ -364,10 +364,10 @@ export const Nodes: Array<NodeDefinition> = [
   IntegrateVelocity,
 
   // Constant
-  createConstant("PI", Math.PI),
-  createConstant("TAU", Math.PI * 2),
+  createConstant("Pi", Math.PI),
+  createConstant("Tau", Math.PI * 2),
   createConstant("E", Math.E),
-  createConstant("SQRT2", Math.SQRT2),
+  createConstant("Sqrt2", Math.SQRT2),
 
   //Quaternion
   EulerAngle,

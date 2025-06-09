@@ -1,4 +1,6 @@
+import { Icon, IconCircle, IconCone, IconCube, IconCylinder, IconHexagon, IconRectangle, IconSphere, IconSquare, IconTriangle } from "@tabler/icons-react";
 import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, RingGeometry, SphereGeometry } from "three";
+import { DoubleIcon } from "../../../Components/Generics/DoubleIcon";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { Constraints } from "../../../Utils/applyConstraints";
@@ -14,6 +16,9 @@ export abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> e
   }
   getTags(): string[] {
     return ["Geometry"];
+  }
+  getIcon(): Icon {
+    return IconCube;
   }
 }
 
@@ -50,6 +55,9 @@ export class SphereGeometryVirtualNodeType extends GeometryVirtualNodeType<Spher
   getId(): string {
     return "SphereGeometry";
   }
+  getIcon(): Icon {
+    return IconSphere;
+  }
   getDescription(): string {
     return "The geometry for a sphere";
   }
@@ -77,6 +85,9 @@ export class ConeGeometryVirtualNodeType extends GeometryVirtualNodeType<ConeGeo
   }
   getId(): string {
     return "ConeGeometry";
+  }
+  getIcon(): Icon {
+    return IconCone;
   }
   getDescription(): string {
     return "The geometry for a Cone";
@@ -108,6 +119,9 @@ export class CylinderGeometryVirtualNodeType extends GeometryVirtualNodeType<Cyl
   }
   getId(): string {
     return "CylinderGeometry";
+  }
+  getIcon(): Icon {
+    return IconCylinder;
   }
   getDescription(): string {
     return "The geometry for a cylinder";
@@ -144,6 +158,9 @@ export class DiskGeometryVirtualNodeType extends GeometryVirtualNodeType<RingGeo
   getId(): string {
     return "DiskGeometry";
   }
+  getIcon(): Icon {
+    return IconCircle;
+  }
   getDescription(): string {
     return "The geometry for a cylinder";
   }
@@ -168,6 +185,9 @@ export class IcosahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<
         constrains: [Constraints.Integer(), Constraints.Positive()],
       },
     ];
+  }
+  getIcon(): Icon {
+    return DoubleIcon(IconSphere, IconTriangle);
   }
   getId(): string {
     return "IcosahedronGeometry";
@@ -198,6 +218,9 @@ export class DodecahedronGeometryVirtualNodeType extends GeometryVirtualNodeType
       },
     ];
   }
+  getIcon(): Icon {
+    return DoubleIcon(IconSphere, IconHexagon);
+  }
   getId(): string {
     return "DodecahedronGeometry";
   }
@@ -221,6 +244,9 @@ export class QuadGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneGe
   }
   getId(): string {
     return "QuadGeometry";
+  }
+  getIcon(): Icon {
+    return IconRectangle;
   }
   getDescription(): string {
     return "The geometry for a regular simple 2d quad";
@@ -246,6 +272,9 @@ export class PlaneGeometryVirtualNodeType extends GeometryVirtualNodeType<PlaneG
   }
   getId(): string {
     return "PlaneGeometry";
+  }
+  getIcon(): Icon {
+    return IconSquare;
   }
   getDescription(): string {
     return "The geometry for a regular polyhedron with 20 vertice and 12 face";

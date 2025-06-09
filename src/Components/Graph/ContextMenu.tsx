@@ -17,6 +17,7 @@ import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 import { extractSnipet } from "../../Utils/snippets";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { SnippetSubMenu } from "./SnippetSubMenu";
+import { camelCaseToWords } from "../../Utils/camelCaseToWords";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -32,7 +33,7 @@ export function NodeMenuItem({ node, onClick }: { node: NodeDefinition; onClick:
   return (
     <MenuItem onClick={() => onClick(node)}>
       {Icon != null ? <Icon></Icon> : null}
-      {node.label || node.id}
+      {node.label || camelCaseToWords(node.id)}
     </MenuItem>
   );
 }

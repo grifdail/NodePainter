@@ -1,4 +1,5 @@
-import { IconList } from "@tabler/icons-react";
+import { IconBrackets, IconList } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
@@ -9,7 +10,7 @@ export const SelectFromArray: NodeDefinition = {
   id: "SelectFromArray",
   description: "Select an element of an based on the index",
   alias: "Get Index",
-  icon: IconList,
+  icon: DoubleIcon(IconList, IconBrackets),
   tags: ["Array"],
   dataInputs: [
     {

@@ -1,4 +1,5 @@
-import { IconArrowUpRightCircle } from "@tabler/icons-react";
+import { IconArrowUpRightCircle, IconMathXy } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -8,7 +9,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
   description: "split a vector or a number into its individual components",
-  icon: IconArrowUpRightCircle,
+  icon: DoubleIcon(IconMathXy, IconArrowUpRightCircle),
   tags: ["Vector"],
   dataInputs: [
     {

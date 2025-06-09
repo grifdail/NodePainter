@@ -1,4 +1,5 @@
-import { IconList, IconPlus } from "@tabler/icons-react";
+import { IconFilter, IconList, IconPlus } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -31,7 +32,7 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
 export const Filter: NodeDefinition = {
   id: "Filter",
   description: "Return all the element of the array that evaluate to true",
-  icon: IconList,
+  icon: DoubleIcon(IconList, IconFilter),
   tags: ["Array"],
   dataInputs: [
     {

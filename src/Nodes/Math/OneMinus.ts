@@ -1,11 +1,11 @@
-import { IconMathFunction } from "@tabler/icons-react";
+import { IconNumber1 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 
 export const OneMinus: NodeDefinition = {
   id: "OneMinus",
   description: "Return 1 minus the value",
-  icon: IconMathFunction,
+  icon: IconNumber1,
   tags: ["Math"],
   dataInputs: [
     {

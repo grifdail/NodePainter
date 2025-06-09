@@ -2,6 +2,7 @@ import React, { MouseEvent } from "react";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import styled from "styled-components";
+import { camelCaseToWords } from "../Utils/camelCaseToWords";
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
@@ -52,10 +53,12 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
   return (
     <StyledButton onClick={() => onClick(node)}>
       {Icon != null ? <Icon></Icon> : null}
-      <div>{node.label || node.id}</div>
+      <div>{node.label || camelCaseToWords(node.id)}</div>
       <p title={node.description}>{node.description}</p>
       <span className="spacer"></span>
-      <div className="fav" onClick={onClickFav}>
+      <div
+        className="fav"
+        onClick={onClickFav}>
         {isFav ? <IconStarFilled /> : <IconStar />}
       </div>
     </StyledButton>

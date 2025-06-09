@@ -1,4 +1,4 @@
-import { IconMathXMinusY } from "@tabler/icons-react";
+import { IconMinus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -8,7 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFr
 export const Subtract: NodeDefinition = {
   id: "Subtract",
   description: "Subtract two value together",
-  icon: IconMathXMinusY,
+  icon: IconMinus,
   tags: ["Math", "Vector"],
   alias: "Minus",
   featureLevel: 70,

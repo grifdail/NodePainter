@@ -1,3 +1,4 @@
+import { Icon, IconPaint } from "@tabler/icons-react";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createDefaultMaterial } from "../../../Utils/createDefaultMaterial";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
@@ -12,5 +13,8 @@ export abstract class MaterialVirtualNodeType<TMat, TProps extends any[]> extend
   }
   getTags(): string[] {
     return ["materials"];
+  }
+  getIcon(): Icon {
+    return IconPaint;
   }
 }

@@ -1,11 +1,12 @@
-import { IconPhoto } from "@tabler/icons-react";
+import { IconPhoto, IconRuler } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const ImageDimension: NodeDefinition = {
   id: "ImageDimension",
   label: "Image dimension",
-  icon: IconPhoto,
+  icon: DoubleIcon(IconPhoto, IconRuler),
   description: "Return the dimension of an image",
 
   dataInputs: [{ id: "image", type: "image", defaultValue: null }],

@@ -1,4 +1,4 @@
-import { IconPhoto } from "@tabler/icons-react";
+import { IconPackageExport } from "@tabler/icons-react";
 import { Object3D } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -9,7 +9,7 @@ import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 export const UploadModel: NodeDefinition = {
   id: "UploadModel",
   label: "Upload Model",
-  icon: IconPhoto,
+  icon: IconPackageExport,
   description: "Upload a 3d Model",
   dataInputs: [Port.vector3("position"), Port.vector3("dimension", createVector3(1, 1, 1)), Port.quaternion("rotation")],
   dataOutputs: [Port.object3d("out")],

@@ -1,11 +1,11 @@
-import { IconBucketDroplet } from "@tabler/icons-react";
+import { IconEraser } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
 export const Clear: NodeDefinition = {
   id: "Clear",
   description: "Clear the entire canvas",
-  icon: IconBucketDroplet,
+  icon: IconEraser,
   tags: ["Draw"],
   dataInputs: [],
   dataOutputs: [Port.drawing2d("out")],

@@ -1,4 +1,4 @@
-import { IconAssembly } from "@tabler/icons-react";
+import { IconDeviceFloppy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
@@ -8,7 +8,7 @@ import { createOrSelectFromCache } from "../../Utils/useCache";
 export const CacheNode: NodeDefinition = {
   id: "Cache",
   description: "Precompute and cache the input. The randomness wont change and it may help performance",
-  icon: IconAssembly,
+  icon: IconDeviceFloppy,
   tags: ["Control"],
   alias: "Precompute",
   dataInputs: [Port.number("value"), Port.CacheId()],

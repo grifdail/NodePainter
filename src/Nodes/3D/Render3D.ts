@@ -1,4 +1,4 @@
-import { IconPhoto } from "@tabler/icons-react";
+import { IconBadge3d } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor, createVector3 } from "../../Types/vectorDataType";
 import { StatefullInstance } from "../../Utils/StatefullInstance";
@@ -9,7 +9,7 @@ import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 export const Render3D: NodeDefinition = {
   id: "Render3D",
   label: "Render in 3D",
-  icon: IconPhoto,
+  icon: IconBadge3d,
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
 
   dataInputs: [

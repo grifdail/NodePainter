@@ -1,4 +1,5 @@
-import { IconList, IconPlus } from "@tabler/icons-react";
+import { IconList, IconPlus, IconSearch } from "@tabler/icons-react";
+import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -31,7 +32,7 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
 export const FindBest: NodeDefinition = {
   id: "FindBest",
   description: "Find and return the best element out an array",
-  icon: IconList,
+  icon: DoubleIcon(IconList, IconSearch),
   tags: ["Array"],
   dataInputs: [
     {
