@@ -4,6 +4,7 @@ const identity = (x: any) => x;
 
 export const CustomInitializer: { [key in SettingType]: <T extends SettingDefinition>(clonedValue: any, setting: T) => any } = {
   string: identity,
+  "text-area": identity,
 
   number: identity,
   hidden: identity,

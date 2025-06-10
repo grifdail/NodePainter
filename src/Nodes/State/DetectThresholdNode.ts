@@ -11,7 +11,7 @@ export const DetectThreshold: NodeDefinition = {
 
   dataInputs: [Port.number("in"), Port.number("target"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   settings: [
     {
       id: "direction",

@@ -18,6 +18,7 @@ import { ImageSelectSetting } from "./ImageSelectSetting";
 import { SettingComponent } from "./SettingComponent";
 import { EmptySetting } from "./EmptySetting";
 import { PathSetting } from "./PathSetting";
+import { TextAreaSetting } from "./TextAreaSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
@@ -38,4 +39,5 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   bool: BoolSetting,
   "image-select": ImageSelectSetting,
   path: PathSetting,
+  "text-area": TextAreaSetting,
 };

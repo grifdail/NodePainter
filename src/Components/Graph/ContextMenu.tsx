@@ -103,13 +103,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       <MenuItem onClick={() => resetCamera()}>
         <IconFocusCentered /> Reset Camera
       </MenuItem>
-      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Horizontal, 500, ...clickWorldPosition)}>
-        <IconArrowsHorizontal /> Make room horizontaly
-      </MenuItem>
-      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...clickWorldPosition)}>
-        <IconArrowsVertical /> Make room verticaly
-      </MenuItem>
-      <AlignMenu></AlignMenu>
+      <AlignMenu clickWorldPosition={clickWorldPosition}></AlignMenu>
       <MenuDivider></MenuDivider>
       <SnippetSubMenu worldPosition={clickWorldPosition}></SnippetSubMenu>
     </ControlledMenu>

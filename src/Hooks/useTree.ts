@@ -5,10 +5,10 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
+import { Blackboard } from "../Nodes/Misc/Blackboard";
+import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { Blackboard } from "../Nodes/System/Blackboard";
-import { START_NODE } from "../Nodes/System/StartNode";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";

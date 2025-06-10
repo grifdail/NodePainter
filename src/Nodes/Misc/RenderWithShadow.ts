@@ -5,10 +5,10 @@ import { toHex } from "../../Utils/colorUtils";
 
 export const RenderWithShadow: NodeDefinition = {
   id: "RenderWithShadow",
-  label: "Render with shadow",
+  label: "Apply shadow",
   description: "Execute the next instruction with a blurry shadow below it",
   icon: IconShadow,
-  tags: ["Transform"],
+  tags: ["Misc"],
   dataInputs: [Port.number("blur"), Port.color("color"), Port.vector2("offset"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],

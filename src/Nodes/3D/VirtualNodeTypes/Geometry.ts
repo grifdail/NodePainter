@@ -1,6 +1,7 @@
 import { Icon, IconCircle, IconCone, IconCube, IconCylinder, IconHexagon, IconRectangle, IconSphere, IconSquare, IconTriangle } from "@tabler/icons-react";
 import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, RingGeometry, SphereGeometry } from "three";
 import { DoubleIcon } from "../../../Components/Generics/DoubleIcon";
+import { NodeTags } from "../../../Types/NodeTags";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { Constraints } from "../../../Utils/applyConstraints";
@@ -14,8 +15,8 @@ export abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> e
       defaultValue: null,
     };
   }
-  getTags(): string[] {
-    return ["Geometry"];
+  getTags(): NodeTags[] {
+    return ["Mesh"];
   }
   getIcon(): Icon {
     return IconCube;

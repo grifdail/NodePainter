@@ -1,5 +1,6 @@
 import { Icon, IconBulb } from "@tabler/icons-react";
 import { AmbientLight, DirectionalLight, PointLight } from "three";
+import { NodeTags } from "../../../Types/NodeTags";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Color, createVector3, Vector3 } from "../../../Types/vectorDataType";
 import { toThreeColor, White } from "../../../Utils/colorUtils";
@@ -30,8 +31,8 @@ export class AmbientLightVirtualNodeType extends Object3DVirtualNodeType<Ambient
     element.intensity = intensity;
   }
   remove(element: AmbientLight): void {}
-  getTags(): string[] {
-    return ["light"];
+  getTags(): NodeTags[] {
+    return ["Light"];
   }
 }
 
@@ -62,8 +63,8 @@ export class DirectionalLightVirtualNodeType extends Object3DVirtualNodeType<Dir
     element.position.set(-direction[0], -direction[1], -direction[2]);
   }
   remove(element: DirectionalLight): void {}
-  getTags(): string[] {
-    return ["light"];
+  getTags(): NodeTags[] {
+    return ["Light"];
   }
 }
 
@@ -98,8 +99,8 @@ export class PointLightVirtualNodeType extends Object3DVirtualNodeType<PointLigh
     element.decay = decay;
   }
   remove(element: PointLight): void {}
-  getTags(): string[] {
-    return ["light"];
+  getTags(): NodeTags[] {
+    return ["Light"];
   }
 }
 

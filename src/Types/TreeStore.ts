@@ -1,4 +1,4 @@
-import { BlackboardPortData } from "../Nodes/System/Blackboard";
+import { BlackboardPortData } from "../Nodes/Misc/Blackboard";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { Snippet } from "../Utils/snippets";
 import { BoundingBox } from "./BoundingBox";

@@ -20,6 +20,19 @@ export const FieldsetStyled = styled.fieldset`
     width: 50px;
     height: 100%;
   }
+
+  &:has(> textarea) {
+    flex-direction: column;
+
+    & label {
+      align-self: flex-start;
+    }
+
+    & textarea {
+      min-height: 100px;
+      flex: 1 1 auto;
+    }
+  }
 `;
 
 const FieldsetLabel = styled.label`

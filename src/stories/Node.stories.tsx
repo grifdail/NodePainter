@@ -9,7 +9,7 @@ import { Envelope } from "../Nodes/Math/Envelope";
 import { Palette } from "../Nodes/Color/Palette";
 import { GradientNode } from "../Nodes/Color/GradientNode";
 import { UploadImage } from "../Nodes/Images/UploadImage";
-import { StartNode } from "../Nodes/System/StartNode";
+import { StartNode } from "../Nodes/Misc/StartNode";
 import { DrawText } from "../Nodes/Draw/DrawText";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

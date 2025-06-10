@@ -58,6 +58,11 @@ export type StringSettingDefinition = BaseSettingDefinition & {
   defaultValue: string;
   constrains?: ConstrainDeclaration[];
 };
+export type TextAreaSettingDefinition = BaseSettingDefinition & {
+  type: "text-area";
+  defaultValue: string;
+  constrains?: ConstrainDeclaration[];
+};
 export type HiddenSettingDefinition = BaseSettingDefinition & {
   type: "hidden";
   defaultValue: any;
@@ -110,6 +115,7 @@ export type SettingDefinition =
   | ImagePaintSettingDefinition
   | EnvelopeSettingDefinition
   | StringSettingDefinition
+  | TextAreaSettingDefinition
   | HiddenSettingDefinition
   | ButtonSettingDefinition
   | AnimationTrackSettingDefinition

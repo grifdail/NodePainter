@@ -9,7 +9,7 @@ export const FillBackground: NodeDefinition = {
   label: "Fill Background",
   description: "Fill the entire canvas",
   icon: IconBucketDroplet,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

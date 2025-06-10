@@ -9,7 +9,7 @@ export const DrawBezier: NodeDefinition = {
   label: "Draw Bezier curve",
   description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
   icon: IconVectorBezier2,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

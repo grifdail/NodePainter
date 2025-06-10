@@ -47,7 +47,7 @@ export const CombineLoop: NodeDefinition = {
       defaultValue: null,
     },
   ],
-  tags: ["System"],
+  tags: ["Misc"],
   settings: [
     {
       id: "buttons",

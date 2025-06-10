@@ -10,7 +10,7 @@ export const DrawGradientRect: NodeDefinition = {
   label: "Draw Gradient Rect",
   description: "Draw a rectangle with a gradient",
   icon: DoubleIcon(IconRectangle, IconColorFilter),
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "gradient",

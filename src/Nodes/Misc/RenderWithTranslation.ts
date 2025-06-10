@@ -5,12 +5,12 @@ import { Vector3 } from "../../Types/vectorDataType";
 
 export const RenderWithTranslation: NodeDefinition = {
   id: "RenderWithTranslation",
-  label: "Render with translation",
+  label: "Apply translation",
 
   featureLevel: 4,
   description: "Execute the next instruction as if the canvas was moved",
   icon: IconArrowsMove,
-  tags: ["Transform"],
+  tags: ["Misc"],
   dataInputs: [Port.vector2("translation"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],

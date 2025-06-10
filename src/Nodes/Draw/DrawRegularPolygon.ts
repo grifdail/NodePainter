@@ -10,7 +10,7 @@ export const DrawRegularPolygon: NodeDefinition = {
   label: "Draw Regular Polygon",
   description: "Draw a regular polygon.",
   icon: IconTriangle,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

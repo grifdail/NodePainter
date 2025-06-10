@@ -14,7 +14,7 @@ export const EdgeNode: NodeDefinition = {
 
   dataInputs: [Port.bool("in"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   settings: [{ id: "Edge", type: "dropdown", defaultValue: "Both", options: EdgeTypes.slice() }],
   getData(portId, node, context) {
     const edge = node.settings["Edge"] as EdgeType;

@@ -11,7 +11,7 @@ export const ToggleSwitchNode: NodeDefinition = {
 
   dataInputs: [Port.bool("on"), Port.bool("off"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   settings: [],
   getData(portId, node, context) {
     const on = context.getInputValueBoolean(node, "on");
@@ -38,7 +38,7 @@ export const ToggleFlipFlopNode: NodeDefinition = {
 
   dataInputs: [Port.bool("flip"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   settings: [],
   getData(portId, node, context) {
     const flip = context.getInputValueBoolean(node, "flip");

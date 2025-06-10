@@ -6,7 +6,7 @@ export const Clear: NodeDefinition = {
   id: "Clear",
   description: "Clear the entire canvas",
   icon: IconEraser,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [],
   dataOutputs: [Port.drawing2d("out")],
 

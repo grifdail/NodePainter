@@ -54,7 +54,12 @@ export const TagListContent = styled.div<{ $shrink?: boolean }>`
   align-self: stretch;
 `;
 
-export const TagList = ({ options, onClick, useShrink }: { options: Record<string, boolean>; onClick: (name: string) => void; useShrink?: boolean }) => {
+export const TagList = ({ options, onClick, useShrink, sort }: { options: Record<string, boolean>; onClick: (name: string) => void; useShrink?: boolean; sort?: (a: string, b: string) => number }) => {
+  var sorted = Object.entries(options);
+  if (sort) {
+    sorted = sorted.sort((a, b) => sort(a[0], b[0]));
+    console.log(sorted);
+  }
   return (
     <TagListRoot>
       <TagListContent $shrink={useShrink}>
@@ -77,7 +82,7 @@ export const TagList = ({ options, onClick, useShrink }: { options: Record<strin
               <IconPlus></IconPlus>
             </button>
           }>
-          {Object.entries(options).map(([name, isSelected]) => (
+          {sorted.map(([name, isSelected]) => (
             <MenuItem
               key={name}
               type="checkbox"

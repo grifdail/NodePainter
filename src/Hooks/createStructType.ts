@@ -9,7 +9,7 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
     description: `Compose a structure matching the type ${name} you've created`,
     id: `Compose-${name}`,
     label: `Compose ${name}`,
-    tags: ["Custom", "Struct"],
+    tags: ["Custom"],
     dataInputs: structuredClone(ports),
     dataOutputs: [
       {
@@ -27,7 +27,7 @@ export function createStructType(ports: PortDefinition[], name: string, state: T
     description: `Decompose a structure matching the type ${name} into it's individual component`,
     id: `Decompose-${name}`,
     label: `Decompose ${name}`,
-    tags: ["Custom", "Struct"],
+    tags: ["Custom"],
     dataInputs: [
       {
         id: "struct",

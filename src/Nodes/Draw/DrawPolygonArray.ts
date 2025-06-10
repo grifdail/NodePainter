@@ -9,7 +9,7 @@ export const DrawPolygon: NodeDefinition = {
   label: "Draw Polygon",
   description: "Draw a polygon based on a array of points",
   icon: IconPolygon,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

@@ -13,7 +13,7 @@ export const DetectChangeNode: NodeDefinition = {
 
   dataInputs: [Port.bool("in"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   availableTypes: portTypesWithProperty("equalityOperator"),
   onChangeType: changeTypeGenerator(["in"], []),
   settings: [],

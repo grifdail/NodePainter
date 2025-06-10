@@ -1,12 +1,13 @@
 import { SubMenu, MenuItem, MenuDivider } from "@szhsin/react-menu";
-import { IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight } from "@tabler/icons-react";
+import { IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight, IconArrowMoveRight, IconArrowsHorizontal, IconArrowsVertical } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { BoundingBox } from "../../Types/BoundingBox";
 import { NODE_WIDTH } from "./NodeVisualConst";
 import { useSelection } from "../../Hooks/useSelection";
+import { EDirection } from "../../Types/EDirection";
 
-export function AlignMenu({}: {}) {
+export function AlignMenu({ clickWorldPosition }: { clickWorldPosition: [number, number] }) {
   const nodes = useSelection((state) => state.nodes);
   var align = useTree((state) => state.align);
   const alignator = (cb: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void) => {
@@ -14,18 +15,36 @@ export function AlignMenu({}: {}) {
   };
   return (
     <SubMenu
-      label="Align"
-      disabled={nodes.length <= 0}>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.left)))}>
+      label={
+        <>
+          <IconAlignLeft2></IconAlignLeft2> Move Nodes{" "}
+        </>
+      }
+      overflow="auto">
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Horizontal, 500, ...clickWorldPosition)}>
+        <IconArrowsHorizontal /> Make room horizontaly
+      </MenuItem>
+      <MenuItem onClick={() => useTree.getState().freeSpace(EDirection.Vertical, 250, ...clickWorldPosition)}>
+        <IconArrowsVertical /> Make room verticaly
+      </MenuItem>
+      <MenuDivider></MenuDivider>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.left)))}>
         <IconAlignLeft /> Align Left
       </MenuItem>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.right - NODE_WIDTH)))}>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.right - NODE_WIDTH)))}>
         <IconAlignRight /> Align Right
       </MenuItem>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.center()[0] - NODE_WIDTH / 0.5)))}>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionX = box.center()[0] - NODE_WIDTH / 0.5)))}>
         <IconAlignCenter /> Align Center
       </MenuItem>
       <MenuItem
+        disabled={nodes.length <= 0}
         onClick={alignator((box, nodes) => {
           const nodeSorted = nodes.sort((a, b) => a.boundingBox.left - b.boundingBox.left);
           const totalWidth = nodeSorted.reduce((old, node) => node.boundingBox.width() + old, 0);
@@ -41,13 +60,19 @@ export function AlignMenu({}: {}) {
         Space evenly horizontaly
       </MenuItem>
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.top)))}>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.top)))}>
         <IconAlignLeft style={{ transform: "rotate(90deg)" }} /> Align Top
       </MenuItem>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.bottom - node.boundingBox.height())))}>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.bottom - node.boundingBox.height())))}>
         <IconAlignRight style={{ transform: "rotate(90deg)" }} /> Align Bottom
       </MenuItem>
-      <MenuItem onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.center()[1] - node.boundingBox.height() / 0.5)))}>
+      <MenuItem
+        disabled={nodes.length <= 0}
+        onClick={alignator((box, nodes) => nodes.forEach((node) => (node.node.positionY = box.center()[1] - node.boundingBox.height() / 0.5)))}>
         <IconAlignCenter style={{ transform: "rotate(90deg)" }} /> Align Middle
       </MenuItem>
       <MenuItem

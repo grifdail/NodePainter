@@ -19,6 +19,7 @@ import { SearchForm } from "./SearchForm";
 import { PortType } from "../../Types/PortType";
 import { NodeData } from "../../Types/NodeData";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
+import { NodeTagPriority, NodeTags } from "../../Types/NodeTags";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -120,7 +121,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
           }
         }
 
-        return searchTerm.name.length === 0 || item.id.toLowerCase().includes(searchTerm.name) || item.alias?.toLowerCase().includes(searchTerm.name);
+        return searchTerm.name.length === 0 || item.id.toLowerCase().includes(searchTerm.name) || item.label?.toLowerCase().includes(searchTerm.name) || item.alias?.toLowerCase().includes(searchTerm.name);
       }),
     [nodeLibrary, searchTerm]
   );
@@ -234,8 +235,9 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         <TagList
           options={Object.fromEntries(tags.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))}
           onClick={toggleTag}
-          useShrink></TagList>
-
+          useShrink
+          sort={(a, b) => (NodeTagPriority[a as NodeTags] || 0) - (NodeTagPriority[b as NodeTags] || 0)}
+        />
         <NodeList>
           {finalList.map((item) => (
             <NodePreview

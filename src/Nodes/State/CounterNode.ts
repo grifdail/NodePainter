@@ -12,7 +12,7 @@ export const Counter: NodeDefinition = {
 
   dataInputs: [Port.number("step", 1), Port.bool("increase"), Port.bool("decrease"), Port.bool("reset"), Port.number("min", 0), Port.number("max", 100), Port.CacheId()],
   dataOutputs: [Port.number("count")],
-  tags: ["Statefull"],
+  tags: ["State"],
   settings: [],
   getData(portId, node, context) {
     const step = context.getInputValueNumber(node, "step");

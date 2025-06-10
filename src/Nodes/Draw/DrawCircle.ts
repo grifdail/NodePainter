@@ -10,7 +10,7 @@ export const DrawCircle: NodeDefinition = {
   description: "Draw a circle",
   featureLevel: 101,
   icon: IconCircle,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

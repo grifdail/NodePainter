@@ -9,7 +9,7 @@ export const DrawLine: NodeDefinition = {
   label: "Draw Line",
   description: "Draw a line between two point",
   icon: IconLine,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

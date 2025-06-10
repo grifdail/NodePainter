@@ -141,31 +141,32 @@ import { SquareWave } from "./Math/SquareWave";
 import { Step } from "./Math/Step";
 import { TrapezoidWave } from "./Math/TrapezoidWave";
 import { TriangleWave } from "./Math/TriangleWave";
+import { Blackboard } from "./Misc/Blackboard";
+import { CacheNode } from "./Misc/Cache";
+import { Combine } from "./Misc/Combine";
+import { CombineArray } from "./Misc/CombineArray";
+import { CombineGridLoop } from "./Misc/CombineGridLoop";
+import { CombineLoop } from "./Misc/CombineLoop";
+import { Comment } from "./Misc/Comment";
+import { RenderWithBlending } from "./Misc/RenderWithBlending";
+import { RenderWithMask } from "./Misc/RenderWithMask";
+import { RenderWithRotation } from "./Misc/RenderWithRotation";
+import { RenderWithScale } from "./Misc/RenderWithScale";
+import { RenderWithShadow } from "./Misc/RenderWithShadow";
+import { RenderWithTranslation } from "./Misc/RenderWithTranslation";
+import { StartNode } from "./Misc/StartNode";
 import { AlignRotation } from "./Quaternion/AlignRotation";
 import { AxisAngle } from "./Quaternion/AxisAngle";
 import { EulerAngle } from "./Quaternion/EulerAngle";
-import { RenderWithBlending } from "./RenderWithRotation/RenderWithBlending";
-import { RenderWithMask } from "./RenderWithRotation/RenderWithMask";
-import { RenderWithRotation } from "./RenderWithRotation/RenderWithRotation";
-import { RenderWithScale } from "./RenderWithRotation/RenderWithScale";
-import { RenderWithShadow } from "./RenderWithRotation/RenderWithShadow";
-import { RenderWithTranslation } from "./RenderWithRotation/RenderWithTranslation";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
-import { ChangeNode } from "./Statefull/ChangeNode";
-import { Counter } from "./Statefull/CounterNode";
-import { DetectChangeNode } from "./Statefull/DetectChangeNode";
-import { DetectThreshold } from "./Statefull/DetectThresholdNode";
-import { EdgeNode } from "./Statefull/EdgeNode";
-import { PreviousNode } from "./Statefull/PreviousNode";
-import { SaveNode } from "./Statefull/SaveNode";
-import { ToggleFlipFlopNode, ToggleSwitchNode } from "./Statefull/ToggleSwitch";
-import { Blackboard } from "./System/Blackboard";
-import { CacheNode } from "./System/Cache";
-import { Combine } from "./System/Combine";
-import { CombineArray } from "./System/CombineArray";
-import { CombineGridLoop } from "./System/CombineGridLoop";
-import { CombineLoop } from "./System/CombineLoop";
-import { StartNode } from "./System/StartNode";
+import { ChangeNode } from "./State/ChangeNode";
+import { Counter } from "./State/CounterNode";
+import { DetectChangeNode } from "./State/DetectChangeNode";
+import { DetectThreshold } from "./State/DetectThresholdNode";
+import { EdgeNode } from "./State/EdgeNode";
+import { PreviousNode } from "./State/PreviousNode";
+import { SaveNode } from "./State/SaveNode";
+import { ToggleFlipFlopNode, ToggleSwitchNode } from "./State/ToggleSwitch";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { RotateVector } from "./Vector/RotateVector";
@@ -177,6 +178,7 @@ import { Distance } from "./Vector/VectorDistance";
 
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
+  Comment,
   //Control flow
   Combine,
   CombineLoop,

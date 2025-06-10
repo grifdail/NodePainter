@@ -9,7 +9,7 @@ export const DrawArc: NodeDefinition = {
   label: "Draw Arc",
   description: "Draw the contour of a circle.",
   icon: IconCircle,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

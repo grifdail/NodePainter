@@ -5,10 +5,10 @@ import { Port } from "../../Types/PortTypeGenerator";
 
 export const RenderWithBlending: NodeDefinition = {
   id: "RenderWithBlending",
-  label: "Render With Blending",
+  label: "Apply Blending",
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,
-  tags: ["Transform"],
+  tags: ["Misc"],
   dataInputs: [Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [{ id: "mode", type: "dropdown", defaultValue: "Blend", options: ["Blend", "Add", "Darkest", "Lightest", "Difference", "Exclusion", "Multiply", "Screen", "Replace", "Remove", "Overlay", "Hard_light", "Soft_light", "Dodge", "Burn"] }],

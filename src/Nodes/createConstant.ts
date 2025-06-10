@@ -7,7 +7,7 @@ export function createConstant(id: string, value: number): NodeDefinition {
     id: id,
     icon: IconCalculator,
     description: `Mathematical constant. Approximately ${value.toPrecision(4)}.`,
-    tags: ["Math", "constant"],
+    tags: ["Math"],
     dataInputs: [],
     dataOutputs: [
       {

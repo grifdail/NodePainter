@@ -39,7 +39,7 @@ export const ParametricGeometry: NodeDefinition = {
   featureLevel: 101,
   dataInputs: [Port.vector2("dimension", createVector2(10, 10), [Constraints.VecInteger(), Constraints.VecGreaterThan(1)]), Port.vector3("value"), Port.CacheId()],
   dataOutputs: [Port.mesh("output")],
-  tags: ["3D", "Geometry"],
+  tags: ["3D", "Mesh"],
   settings: [
     {
       id: "buttons",

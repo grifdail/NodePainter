@@ -9,7 +9,7 @@ export const DrawText: NodeDefinition = {
   label: "Draw Text",
   description: "Draw a line of text",
   icon: IconCursorText,
-  tags: ["Draw", "Text"],
+  tags: ["Drawing", "Text"],
   dataInputs: [
     {
       id: "color",

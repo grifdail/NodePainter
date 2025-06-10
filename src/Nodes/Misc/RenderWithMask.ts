@@ -4,10 +4,10 @@ import { Port } from "../../Types/PortTypeGenerator";
 
 export const RenderWithMask: NodeDefinition = {
   id: "RenderWithMask",
-  label: "Render With Mask",
+  label: "Apply Mask",
   description: "Execute the draw instruction masked by the mask.",
   icon: IconArrowsMove,
-  tags: ["Transform"],
+  tags: ["Misc"],
   dataInputs: [Port.bool("inverted"), Port.drawing2d("mask"), Port.drawing2d("drawing")],
   dataOutputs: [Port.drawing2d("out")],
   settings: [],

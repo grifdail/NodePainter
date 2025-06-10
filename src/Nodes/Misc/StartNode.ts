@@ -6,7 +6,7 @@ export const StartNode: NodeDefinition = {
   id: START_NODE,
   description: "The start of the program",
   icon: IconAssembly,
-  tags: ["Control"],
+  tags: ["Misc"],
   dataInputs: [
     {
       id: "drawing",

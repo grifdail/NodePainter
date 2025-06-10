@@ -1,6 +1,7 @@
 import { Icon } from "@tabler/icons-react";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import { NodeData } from "./NodeData";
+import { NodeTags } from "./NodeTags";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 import { SettingDefinition } from "./SettingDefinition";
@@ -26,7 +27,7 @@ export type BaseNodeDefinition = {
    */
   icon?: Icon;
   label?: string;
-  tags: Array<string>;
+  tags: Array<NodeTags>;
   //When looking for a node in the menu, this will also look for this field, not just the label
   alias?: string;
 

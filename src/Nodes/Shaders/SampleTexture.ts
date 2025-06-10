@@ -15,7 +15,7 @@ export const SampleTexture: NodeDefinition = {
   ],
 
   dataOutputs: [{ id: "out", type: "color", defaultValue: createColor() }],
-  tags: ["UV"],
+  tags: ["Shader", "Image"],
 
   settings: [],
   getShaderCode(node, context) {

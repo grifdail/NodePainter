@@ -10,7 +10,7 @@ export const DrawRect: NodeDefinition = {
   alias: "Square",
   description: "Draw a rectangle starting at the top left corner with a width and height",
   icon: IconRectangle,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

@@ -9,7 +9,7 @@ export const DrawQuad: NodeDefinition = {
   label: "Draw Quad",
   description: "Draw a quad defined by 4 points",
   icon: IconPolygon,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

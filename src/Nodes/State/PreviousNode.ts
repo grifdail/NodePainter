@@ -14,7 +14,7 @@ export const PreviousNode: NodeDefinition = {
 
   dataInputs: [Port.bool("in"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
-  tags: ["Statefull"],
+  tags: ["State"],
   availableTypes: portTypesWithTags(["common"]),
   onChangeType: changeTypeGenerator(["in"], ["out"]),
   settings: [],

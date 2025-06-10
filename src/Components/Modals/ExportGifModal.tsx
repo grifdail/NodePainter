@@ -7,7 +7,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
-import { START_NODE } from "../../Nodes/System/StartNode";
+import { START_NODE } from "../../Nodes/Misc/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { WhammyExporter } from "./Exporters/WhammyExporter";
 import { GifExporter } from "./Exporters/GifExporter";

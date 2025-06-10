@@ -9,7 +9,7 @@ export const DrawTriangle: NodeDefinition = {
   label: "Draw Triangle",
   description: "Draw a triangle defined by 3 points",
   icon: IconVectorTriangle,
-  tags: ["Draw"],
+  tags: ["Drawing"],
   dataInputs: [
     {
       id: "color",

@@ -6,7 +6,7 @@ import { NodeData } from "../Types/NodeData";
 import { ExecutionContext } from "../Utils/createExecutionContext";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { START_NODE } from "../Nodes/System/StartNode";
+import { START_NODE } from "../Nodes/Misc/StartNode";
 import { createExecutionContext } from "../Utils/createExecutionContext";
 import Rand from "rand-seed";
 import { useDialog } from "../Hooks/useDialog";
