@@ -28,7 +28,7 @@ export const Combine: NodeDefinition = {
 
   dataInputs: [Port.drawing2d("object-1"), Port.drawing2d("object-2")],
   dataOutputs: [Port.drawing2d("out")],
-  tags: ["3D"],
+  tags: ["Misc"],
   settings: [
     {
       id: "buttons",
