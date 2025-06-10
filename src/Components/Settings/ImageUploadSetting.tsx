@@ -53,7 +53,7 @@ export const ImageUploadSetting: SettingComponent<ImageUploadSettingDefinition> 
 
   return (
     <Body>
-      {value === null && (
+      {value == null && (
         <div
           className="file"
           {...getRootProps()}>
@@ -61,7 +61,7 @@ export const ImageUploadSetting: SettingComponent<ImageUploadSettingDefinition> 
           <IconFileUpload />
         </div>
       )}
-      {value !== null && (
+      {value != null && (
         <img
           src={value}
           alt="loaded"></img>
