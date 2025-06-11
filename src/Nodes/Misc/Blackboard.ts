@@ -1,6 +1,7 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
+import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 
 export type BlackboardPortData = {
   key: string;
@@ -21,6 +22,6 @@ export const Blackboard: NodeDefinition = {
 
   hideInLibrary: true,
   getData: (portId, nodeData, context) => {
-    return context.blackboard[nodeData.settings.blackboardData[portId].key] || 0;
+    return context.blackboard[nodeData.settings.blackboardData[portId].key] || PortTypeDefinitions[nodeData.dataOutputs[portId].type].createDefaultValue();
   },
 };

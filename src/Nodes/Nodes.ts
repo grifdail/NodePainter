@@ -170,6 +170,7 @@ import { ToggleFlipFlopNode, ToggleSwitchNode } from "./State/ToggleSwitch";
 import { InterpolateText } from "./Text/InterpolateText";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
+import { HexGrid } from "./Vector/HexGrid";
 import { RotateVector } from "./Vector/RotateVector";
 import { ScaleAdd } from "./Vector/ScaleAdd";
 import { SeededRandom } from "./Vector/SeededRandom";
@@ -204,6 +205,7 @@ export const Nodes: Array<NodeDefinition> = [
   //2D specific
   VectorFromAngle,
   RotateVector,
+  HexGrid,
 
   // Magnitude
   Magnitude,
