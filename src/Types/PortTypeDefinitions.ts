@@ -408,11 +408,14 @@ export const ArrayPortTypeDefinitions: { [key in ArrayPortType]: PortTypeDefinit
       icon: baseDef.icon,
       smallIcon: baseDef.smallIcon,
       createDefaultValue: () => [],
-      convert: Object.fromEntries(
-        Object.entries(baseDef.convert).map(([target, converter]) => {
-          return [`array-${target}`, (newArray: any[]) => newArray.map(converter)];
-        })
-      ),
+      convert: {
+        ...Object.fromEntries(
+          Object.entries(baseDef.convert).map(([target, converter]) => {
+            return [`array-${target}`, (newArray: any[]) => newArray.map(converter)];
+          })
+        ),
+        string: baseDef.convert.string === undefined ? undefined : (newArray: any[]) => newArray.map((item) => baseDef.convert.string && baseDef.convert.string(item)).join(", "),
+      },
       shaderConvert: {},
     };
     return [`array-${baseType}`, newType];

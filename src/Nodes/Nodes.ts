@@ -167,6 +167,7 @@ import { EdgeNode } from "./State/EdgeNode";
 import { PreviousNode } from "./State/PreviousNode";
 import { SaveNode } from "./State/SaveNode";
 import { ToggleFlipFlopNode, ToggleSwitchNode } from "./State/ToggleSwitch";
+import { InterpolateText } from "./Text/InterpolateText";
 import { CrossProduct } from "./Vector/CrossProduct";
 import { FocalLength } from "./Vector/FocalLength";
 import { RotateVector } from "./Vector/RotateVector";
@@ -289,6 +290,7 @@ export const Nodes: Array<NodeDefinition> = [
   SliceText,
   TextLength,
   TextConcat,
+  InterpolateText,
 
   //Draw
   DrawCircle,

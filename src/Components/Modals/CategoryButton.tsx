@@ -58,7 +58,6 @@ export const TagList = ({ options, onClick, useShrink, sort }: { options: Record
   var sorted = Object.entries(options);
   if (sort) {
     sorted = sorted.sort((a, b) => sort(a[0], b[0]));
-    console.log(sorted);
   }
   return (
     <TagListRoot>

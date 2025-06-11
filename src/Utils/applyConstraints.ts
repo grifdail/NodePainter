@@ -74,6 +74,12 @@ const ConstrainDefinition = {
     return text.toLowerCase();
   },
   SwizzleString: ValidateSwizzleString,
+  NoSpace: (text: string) => {
+    return text.replaceAll(/\s/gm, "");
+  },
+  NoSpecialChar: (text: string) => {
+    return text.replaceAll(/\W/gm, "");
+  },
 };
 
 type ConstrainDefinitionType = typeof ConstrainDefinition;
