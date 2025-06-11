@@ -1,0 +1,649 @@
+{
+    "nodes": {
+        "Start": {
+            "type": "Start",
+            "id": "Start",
+            "dataInputs": {
+                "drawing": {
+                    "id": "drawing",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "Combine",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "name": "HexGridDemo",
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {},
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "Combine": {
+            "type": "Combine",
+            "id": "Combine",
+            "dataInputs": {
+                "object-1": {
+                    "id": "object-1",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "Background",
+                    "connectedPort": "out"
+                },
+                "object-2": {
+                    "id": "object-2",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "object-3": {
+                    "id": "object-3",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeJr2FTuruBN31xSc8iwGJn",
+                    "connectedPort": "output"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -430,
+            "positionY": 0,
+            "selectedType": "drawing2d"
+        },
+        "Background": {
+            "type": "FillBackground",
+            "id": "Background",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0.8392156862745098,
+                        0.9647058823529412,
+                        0.7058823529411765,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -860,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodeJr2FTuruBN31xSc8iwGJn": {
+            "type": "CombineGridLoop",
+            "id": "nodeJr2FTuruBN31xSc8iwGJn",
+            "dataInputs": {
+                "size": {
+                    "id": "size",
+                    "type": "vector2",
+                    "ownValue": [
+                        6,
+                        6
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "value": {
+                    "id": "value",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeOFfoA2BPCrkoUJ-8Jjg8D",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "output": {
+                    "type": "drawing2d",
+                    "id": "output",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -819.6176149824128,
+            "positionY": 398.6195057476503,
+            "selectedType": "drawing2d"
+        },
+        "nodeOFfoA2BPCrkoUJ-8Jjg8D": {
+            "type": "DrawRegularPolygon",
+            "id": "nodeOFfoA2BPCrkoUJ-8Jjg8D",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0.21568627450980393,
+                        0.42745098039215684,
+                        0.42745098039215684,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "center": {
+                    "id": "center",
+                    "type": "vector2",
+                    "ownValue": [
+                        50,
+                        50
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeWoyd76PuFAlpSzawOdwbM",
+                    "connectedPort": "out"
+                },
+                "radius": {
+                    "id": "radius",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": true,
+                    "connectedNode": "node6sH-Sh5lAVQ4Qjd8Zx1UK",
+                    "connectedPort": "result"
+                },
+                "side": {
+                    "id": "side",
+                    "type": "number",
+                    "ownValue": 6,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null,
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        },
+                        {
+                            "id": "GreaterThan",
+                            "params": [
+                                3
+                            ]
+                        }
+                    ]
+                },
+                "offset": {
+                    "id": "offset",
+                    "type": "number",
+                    "ownValue": 0.08333333333333333,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "lineWidth": {
+                    "id": "lineWidth",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "fill": {
+                    "id": "fill",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -1309.8834533691406,
+            "positionY": 433.3596796316376,
+            "selectedType": "unknown"
+        },
+        "nodeUzWlA7oDzqTpJzcbGW5y4": {
+            "type": "Scale",
+            "id": "nodeUzWlA7oDzqTpJzcbGW5y4",
+            "dataInputs": {
+                "vec": {
+                    "id": "vec",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeeJEOBOavMNb841GFlAJMc",
+                    "connectedPort": "result"
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": 100,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -2153.444409535153,
+            "positionY": 543.5179245377282,
+            "selectedType": "vector2"
+        },
+        "nodeXVvI1XyaKsOjfW0WzcVd6": {
+            "type": "Blackboard",
+            "id": "nodeXVvI1XyaKsOjfW0WzcVd6",
+            "dataInputs": {},
+            "settings": {
+                "blackboardData": {
+                    "pos": {
+                        "key": "nodeJr2FTuruBN31xSc8iwGJn-pos",
+                        "type": "vector2",
+                        "id": "pos"
+                    },
+                    "index": {
+                        "key": "nodeJr2FTuruBN31xSc8iwGJn-index",
+                        "type": "number",
+                        "id": "index"
+                    }
+                }
+            },
+            "dataOutputs": {
+                "pos": {
+                    "id": "pos",
+                    "label": "pos",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                },
+                "index": {
+                    "id": "index",
+                    "label": "index",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3899.7331668154557,
+            "positionY": 133.64735061015668,
+            "selectedType": "unknown",
+            "label": "Generate Combine loop index",
+            "pairedNode": "nodeJr2FTuruBN31xSc8iwGJn"
+        },
+        "nodevzbVzWkma7exUcfB21MP8": {
+            "type": "HexGrid",
+            "id": "nodevzbVzWkma7exUcfB21MP8",
+            "dataInputs": {
+                "in": {
+                    "id": "in",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeXVvI1XyaKsOjfW0WzcVd6",
+                    "connectedPort": "pos"
+                }
+            },
+            "settings": {
+                "type": "Pointy Top"
+            },
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -3259.120546984817,
+            "positionY": 237.76361253128613,
+            "selectedType": "unknown"
+        },
+        "nodeWoyd76PuFAlpSzawOdwbM": {
+            "type": "Add",
+            "id": "nodeWoyd76PuFAlpSzawOdwbM",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeUzWlA7oDzqTpJzcbGW5y4",
+                    "connectedPort": "out"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -1745.2008392737462,
+            "positionY": 530.2242996537925,
+            "selectedType": "vector2"
+        },
+        "nodeeJEOBOavMNb841GFlAJMc": {
+            "type": "Lerp",
+            "id": "nodeeJEOBOavMNb841GFlAJMc",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodemyXmtYWEopliepPNPKvGB",
+                    "connectedPort": "out"
+                },
+                "to": {
+                    "id": "to",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodevzbVzWkma7exUcfB21MP8",
+                    "connectedPort": "out"
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeIr1UYiynKyDXoauyydh9d",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -2627.1879809553157,
+            "positionY": 501.3530490098458,
+            "selectedType": "vector2"
+        },
+        "nodemyXmtYWEopliepPNPKvGB": {
+            "type": "HexGrid",
+            "id": "nodemyXmtYWEopliepPNPKvGB",
+            "dataInputs": {
+                "in": {
+                    "id": "in",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeXVvI1XyaKsOjfW0WzcVd6",
+                    "connectedPort": "pos"
+                }
+            },
+            "settings": {
+                "type": "Flat Top"
+            },
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -3259.120546984817,
+            "positionY": -62.546001883217,
+            "selectedType": "unknown"
+        },
+        "nodeymDrff1kQUV1ucauwgwA3": {
+            "type": "Progress",
+            "id": "nodeymDrff1kQUV1ucauwgwA3",
+            "dataInputs": {
+                "offset": {
+                    "id": "offset",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "preview-duration": 1
+            },
+            "dataOutputs": {
+                "progress": {
+                    "type": "number",
+                    "id": "progress",
+                    "defaultValue": 0
+                },
+                "loopCount": {
+                    "type": "number",
+                    "id": "loopCount",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3844.4579324014644,
+            "positionY": 826.0311797809632,
+            "selectedType": "unknown"
+        },
+        "nodeIr1UYiynKyDXoauyydh9d": {
+            "type": "Envelope",
+            "id": "nodeIr1UYiynKyDXoauyydh9d",
+            "dataInputs": {
+                "pos": {
+                    "id": "pos",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeymDrff1kQUV1ucauwgwA3",
+                    "connectedPort": "progress"
+                }
+            },
+            "settings": {
+                "envelope": [
+                    {
+                        "pos": 0.25,
+                        "height": 0.02107253325931177,
+                        "lerp": "QuadInOut"
+                    },
+                    {
+                        "pos": 0.75,
+                        "height": 1,
+                        "lerp": "Linear"
+                    },
+                    {
+                        "pos": 1,
+                        "height": 1,
+                        "lerp": "Linear"
+                    }
+                ]
+            },
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3259.120546984817,
+            "positionY": 538.0732269457892,
+            "selectedType": "unknown"
+        },
+        "node6sH-Sh5lAVQ4Qjd8Zx1UK": {
+            "type": "Lerp",
+            "id": "node6sH-Sh5lAVQ4Qjd8Zx1UK",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "number",
+                    "ownValue": 70,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "node04eetDJ6dv4cUuyxVq6w4",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -1783.0275150153773,
+            "positionY": 881.4870088730821,
+            "selectedType": "number"
+        },
+        "node04eetDJ6dv4cUuyxVq6w4": {
+            "type": "Envelope",
+            "id": "node04eetDJ6dv4cUuyxVq6w4",
+            "dataInputs": {
+                "pos": {
+                    "id": "pos",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeymDrff1kQUV1ucauwgwA3",
+                    "connectedPort": "progress"
+                }
+            },
+            "settings": {
+                "envelope": [
+                    {
+                        "pos": 0.05,
+                        "height": 1,
+                        "lerp": "Linear"
+                    },
+                    {
+                        "pos": 0.25,
+                        "height": 0,
+                        "lerp": "Linear"
+                    },
+                    {
+                        "pos": 0.75,
+                        "height": 0,
+                        "lerp": "Linear"
+                    },
+                    {
+                        "pos": 0.95,
+                        "height": 1,
+                        "lerp": "Linear"
+                    },
+                    {
+                        "pos": 1,
+                        "height": 1,
+                        "lerp": "Linear"
+                    }
+                ]
+            },
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3259.120546984817,
+            "positionY": 1070.3828413602923,
+            "selectedType": "unknown"
+        }
+    },
+    "customNodes": {},
+    "globalSettings": {
+        "progress": 3
+    }
+}
