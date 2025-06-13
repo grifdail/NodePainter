@@ -19,6 +19,7 @@ import { SettingComponent } from "./SettingComponent";
 import { EmptySetting } from "./EmptySetting";
 import { PathSetting } from "./PathSetting";
 import { TextAreaSetting } from "./TextAreaSetting";
+import { BezierPathSetting } from "./BezierPathSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
@@ -40,4 +41,5 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   "image-select": ImageSelectSetting,
   path: PathSetting,
   "text-area": TextAreaSetting,
+  "bezier-path": BezierPathSetting,
 };

@@ -101,6 +101,7 @@ import { MouseButton } from "./Inputs/MouseButton";
 import { MousePosition } from "./Inputs/MousePosition";
 import { RandomInt } from "./Inputs/RandomInt";
 import { RandomOnSphere } from "./Inputs/RandomOnSphere";
+import { RecordBezierPath } from "./Inputs/RecordBezierPath";
 import { RecordPath } from "./Inputs/RecordPath";
 import { Abs } from "./Math/Abs";
 import { Acos } from "./Math/Acos";
@@ -366,6 +367,7 @@ export const Nodes: Array<NodeDefinition> = [
   Step,
   Envelope,
   RecordPath,
+  RecordBezierPath,
   OneMinus,
   SmoothStep,
   IntegrateVelocity,

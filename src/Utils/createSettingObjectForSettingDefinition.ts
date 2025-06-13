@@ -26,6 +26,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   bool: identity,
   "animation-track": identity,
   path: () => [],
+  "bezier-path": () => [],
 };
 
 export function createSettingObjectForSettingDefinition(def: SettingDefinition[]): { [key: string]: any } {

@@ -104,6 +104,9 @@ export type GroupSettingDefinition = BaseSettingDefinition & {
 export type PathSettingDefinition = BaseSettingDefinition & {
   type: "path";
 };
+export type BezierPathSettingDefinition = BaseSettingDefinition & {
+  type: "bezier-path";
+};
 export type SettingDefinition =
   | NumberSettingDefinition
   | DropdownSettingDefinition
@@ -123,6 +126,7 @@ export type SettingDefinition =
   | EasingPreviewSettingDefinition
   | CodeBlockSettingDefinition
   | PathSettingDefinition
+  | BezierPathSettingDefinition
   | GroupSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
