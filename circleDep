@@ -16,6 +16,17 @@
 	"src\\Hooks\\useTree.ts": [
 		[
 			"src\\Hooks\\useTree.ts",
+			"src\\Nodes\\3D\\3DNodes.ts",
+			"src\\Nodes\\3D\\ParametricGeometry.ts",
+			"src\\Nodes\\Nodes.ts"
+		],
+		[
+			"src\\Hooks\\useTree.ts",
+			"src\\Nodes\\Array\\ArrayMap.ts",
+			"src\\Nodes\\Nodes.ts"
+		],
+		[
+			"src\\Hooks\\useTree.ts",
 			"src\\Nodes\\Array\\Filter.ts",
 			"src\\Nodes\\Nodes.ts"
 		],
@@ -31,18 +42,23 @@
 		],
 		[
 			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Nodes.ts",
-			"src\\Nodes\\System\\CombineArray.ts"
+			"src\\Nodes\\Misc\\CombineArray.ts",
+			"src\\Nodes\\Nodes.ts"
+		],
+		[
+			"src\\Hooks\\useTree.ts",
+			"src\\Nodes\\Misc\\CombineGridLoop.ts",
+			"src\\Nodes\\Nodes.ts"
+		],
+		[
+			"src\\Hooks\\useTree.ts",
+			"src\\Nodes\\Misc\\CombineLoop.ts",
+			"src\\Nodes\\Nodes.ts"
 		],
 		[
 			"src\\Hooks\\useTree.ts",
 			"src\\Nodes\\Nodes.ts",
-			"src\\Nodes\\System\\CombineGridLoop.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Nodes.ts",
-			"src\\Nodes\\System\\CombineLoop.ts"
+			"src\\Nodes\\Text\\InterpolateText.ts"
 		]
 	],
 	"src\\Hooks\\useCustomNodeCreationContext.tsx": [

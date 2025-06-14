@@ -77,12 +77,12 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
 
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => openModal(Routes.ExportGif)}>
-        <IconGif></IconGif> Export gif
+        <IconGif></IconGif> Export
       </MenuItem>
       <MenuItem
         onClick={() => exportPng()}
         disabled={!showPreview}>
-        <IconPng></IconPng> Export png
+        <IconPng></IconPng> Export frame
       </MenuItem>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={resetCamera}>

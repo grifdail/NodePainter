@@ -30,6 +30,7 @@
     "h264-mp4-encoder": "^1.0.12",
     "immer": "^10.0.3",
     "json-url": "^3.1.0",
+    "jszip": "^3.10.1",
     "mathjs": "^12.1.0",
     "nanoid": "^5.0.3",
     "normalize.css": "^8.0.1",

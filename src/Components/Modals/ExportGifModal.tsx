@@ -9,8 +9,6 @@ import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapp
 import { ExecutionContext, createExecutionContext } from "../../Utils/createExecutionContext";
 import { START_NODE } from "../../Nodes/Misc/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
-import { WhammyExporter } from "./Exporters/WhammyExporter";
-import { GifExporter } from "./Exporters/GifExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { CUSTOM_SIMULATION } from "../../Nodes/CustomFunction/CustomSimulation";
@@ -19,8 +17,8 @@ import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { TextInput } from "../Generics/Inputs/TextInput";
 import { download } from "./download";
-import { MP4Exporter } from "./Exporters/MP4Exporter";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { Exporters, ExporterType } from "./Exporter";
 
 const MainDiv = styled.div`
   display: flex;
@@ -56,12 +54,6 @@ const MainDiv = styled.div`
     display: none;
   }
 `;
-const Renderers = {
-  webM: WhammyExporter,
-  gif: GifExporter,
-  mp4: MP4Exporter,
-};
-type RendererType = keyof typeof Renderers;
 
 type MySketchProps = SketchProps & {
   tree: TreeStore;
@@ -69,7 +61,7 @@ type MySketchProps = SketchProps & {
   onProgress: (rendering: number, processing: number) => void;
   duration: number;
   fixedFrameRate: number;
-  renderer: RendererType;
+  renderer: ExporterType;
   preloadDuration: number;
 };
 
@@ -96,7 +88,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         p5.pixelDensity(1);
         p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
         const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-        renderer = Renderers[props.renderer]();
+        renderer = Exporters[props.renderer]();
         renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
           rendererIsLoaded = true;
         });
@@ -162,7 +154,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
     }
   };
 
-  const filenameWithExt = `${filename}.${Renderers[format as RendererType].extension}`;
+  const filenameWithExt = `${filename}.${Exporters[format as ExporterType].extension}`;
 
   return (
     <Modal
@@ -224,7 +216,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
             input={DropdownInput}
             value={format}
             onChange={setFormat}
-            passtrough={{ options: Object.keys(Renderers) }}
+            passtrough={{ options: Object.keys(Exporters) }}
           />
         </form>
 
