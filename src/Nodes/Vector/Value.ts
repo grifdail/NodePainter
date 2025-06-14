@@ -25,7 +25,14 @@ export const Value: NodeDefinition = {
     },
   ],
 
-  settings: [],
+  settings: [
+    {
+      type: "string",
+      id: "name",
+      defaultValue: "value",
+      tooltip: "Doesn't have any logic, only used as commentary.",
+    },
+  ],
   availableTypes: portTypesWithTags(["common"]),
   onChangeType: changeTypeGenerator(["value"], ["out"]),
   hasInput: hasInputGenerator(portTypesWithTags(["common"])),

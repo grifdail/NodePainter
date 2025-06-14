@@ -1,0 +1,1824 @@
+{
+    "nodes": {
+        "Start": {
+            "type": "Start",
+            "id": "Start",
+            "dataInputs": {
+                "drawing": {
+                    "id": "drawing",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodefZ4NW8v8BJrGBmfM893tj",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "name": "SpeedTorus",
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {},
+            "positionX": 0,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodegbJooyzLxfXFHgccT7eSS": {
+            "type": "Render3D",
+            "id": "nodegbJooyzLxfXFHgccT7eSS",
+            "dataInputs": {
+                "fov": {
+                    "id": "fov",
+                    "type": "number",
+                    "ownValue": 80,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null,
+                    "tooltip": "Represent the vertical frustrum angle of the camera in degree"
+                },
+                "cameraPosition": {
+                    "id": "cameraPosition",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        10
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cameraRotation": {
+                    "id": "cameraRotation",
+                    "type": "quaternion",
+                    "ownValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clearColor": {
+                    "id": "clearColor",
+                    "type": "color",
+                    "ownValue": [
+                        0.10196078431372549,
+                        0.10196078431372549,
+                        0.16470588235294117,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "scene": {
+                    "id": "scene",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -800,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodefZ4NW8v8BJrGBmfM893tj": {
+            "type": "DrawImage",
+            "id": "nodefZ4NW8v8BJrGBmfM893tj",
+            "dataInputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodegbJooyzLxfXFHgccT7eSS",
+                    "connectedPort": "image"
+                },
+                "pos": {
+                    "id": "pos",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "dim": {
+                    "id": "dim",
+                    "type": "vector2",
+                    "ownValue": [
+                        400,
+                        400
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -400,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodeQJeyzyHDcnwtd9AyvtPSF": {
+            "type": "Combine",
+            "id": "nodeQJeyzyHDcnwtd9AyvtPSF",
+            "dataInputs": {
+                "object-1": {
+                    "id": "object-1",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeiRDQxT18v9hktaE0yDrUg",
+                    "connectedPort": "object"
+                },
+                "object-2": {
+                    "id": "object-2",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "object3d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -1200,
+            "positionY": 0,
+            "selectedType": "object3d"
+        },
+        "nodeiRDQxT18v9hktaE0yDrUg": {
+            "type": "RenderModel",
+            "id": "nodeiRDQxT18v9hktaE0yDrUg",
+            "dataInputs": {
+                "mesh": {
+                    "id": "mesh",
+                    "type": "mesh",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeaO9ngmM9m7scTpBqCYsou",
+                    "connectedPort": "output"
+                },
+                "material": {
+                    "id": "material",
+                    "type": "material",
+                    "ownValue": {
+                        "type": "FlatMaterialType",
+                        "props": [
+                            [
+                                0,
+                                0.5,
+                                1,
+                                1
+                            ],
+                            {
+                                "blendingMode": "NormalBlending",
+                                "transparent": false,
+                                "side": "FrontSide",
+                                "alphaTest": 0,
+                                "flatShading": false,
+                                "wireframe": false
+                            }
+                        ],
+                        "key": "material",
+                        "children": {}
+                    },
+                    "hasConnection": true,
+                    "connectedNode": "nodewBJxmSri0jKWy-BRTtL6I",
+                    "connectedPort": "out"
+                },
+                "position": {
+                    "id": "position",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "dimension": {
+                    "id": "dimension",
+                    "type": "vector3",
+                    "ownValue": [
+                        1.5,
+                        1.5,
+                        1.5
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "rotation": {
+                    "id": "rotation",
+                    "type": "quaternion",
+                    "ownValue": [
+                        0.14943813247359922,
+                        0,
+                        0,
+                        0.9887710779360422
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "object": {
+                    "id": "object",
+                    "type": "object3d",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -1600,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "nodeaO9ngmM9m7scTpBqCYsou": {
+            "type": "ParametricGeometry",
+            "id": "nodeaO9ngmM9m7scTpBqCYsou",
+            "dataInputs": {
+                "dimension": {
+                    "id": "dimension",
+                    "type": "vector2",
+                    "ownValue": [
+                        50,
+                        32
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null,
+                    "constrains": [
+                        {
+                            "id": "VecInteger",
+                            "params": []
+                        },
+                        {
+                            "id": "VecGreaterThan",
+                            "params": [
+                                1
+                            ]
+                        }
+                    ]
+                },
+                "value": {
+                    "id": "value",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeD4YfPhJsOJaVlgikTj9HF",
+                    "connectedPort": "out"
+                },
+                "cache-id": {
+                    "id": "cache-id",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null,
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        }
+                    ],
+                    "tooltip": "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "output": {
+                    "type": "mesh",
+                    "id": "output",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -2027.5833740234375,
+            "positionY": 3.20001220703125,
+            "selectedType": "unknown"
+        },
+        "nodeD4YfPhJsOJaVlgikTj9HF": {
+            "type": "Compose",
+            "id": "nodeD4YfPhJsOJaVlgikTj9HF",
+            "dataInputs": {
+                "0": {
+                    "id": "0",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeCl2xk20ZYdUYFeoJuIFTg",
+                    "connectedPort": "out",
+                    "label": "x"
+                },
+                "1": {
+                    "id": "1",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeaUkgjRnyQdcnLUj7lxBQW",
+                    "connectedPort": "result",
+                    "label": "y"
+                },
+                "2": {
+                    "id": "2",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeceNpfbQ5E3AOFyo7SZaOv",
+                    "connectedPort": "out",
+                    "label": "z"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector3",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -2453.023283976106,
+            "positionY": 9.044053457158128,
+            "selectedType": "vector3"
+        },
+        "nodeaUkgjRnyQdcnLUj7lxBQW": {
+            "type": "Sin",
+            "id": "nodeaUkgjRnyQdcnLUj7lxBQW",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeNkqMXHUWYPd3yVb36xH1w",
+                    "connectedPort": "1"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3010.7587727486716,
+            "positionY": 100.48113583610049,
+            "selectedType": "unknown"
+        },
+        "nodeeWsljyQX-7WWtzZnNbvCO": {
+            "type": "Blackboard",
+            "id": "nodeeWsljyQX-7WWtzZnNbvCO",
+            "dataInputs": {},
+            "settings": {
+                "blackboardData": {
+                    "uv": {
+                        "key": "nodeaO9ngmM9m7scTpBqCYsou-uv",
+                        "type": "vector2",
+                        "id": "uv"
+                    },
+                    "index": {
+                        "key": "nodeaO9ngmM9m7scTpBqCYsou-index",
+                        "type": "number",
+                        "id": "index"
+                    }
+                }
+            },
+            "dataOutputs": {
+                "uv": {
+                    "id": "uv",
+                    "label": "uv",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                },
+                "index": {
+                    "id": "index",
+                    "label": "index",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5368.347202263061,
+            "positionY": 89.66135940683562,
+            "selectedType": "unknown",
+            "label": "Parametric geometry Index",
+            "pairedNode": "nodeaO9ngmM9m7scTpBqCYsou"
+        },
+        "nodevdxuIFyIW-KKsMdWtfQz1": {
+            "type": "ScaleAdd",
+            "id": "nodevdxuIFyIW-KKsMdWtfQz1",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeeWsljyQX-7WWtzZnNbvCO",
+                    "connectedPort": "uv"
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": 6.283185307179586,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "added": {
+                    "id": "added",
+                    "type": "vector2",
+                    "ownValue": [
+                        -1.5707963267948966,
+                        0
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -4990.846299909634,
+            "positionY": 68.71883071439962,
+            "selectedType": "vector2"
+        },
+        "nodeNkqMXHUWYPd3yVb36xH1w": {
+            "type": "Decompose",
+            "id": "nodeNkqMXHUWYPd3yVb36xH1w",
+            "dataInputs": {
+                "vec": {
+                    "id": "vec",
+                    "type": "vector2",
+                    "ownValue": [
+                        0,
+                        0
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodevdxuIFyIW-KKsMdWtfQz1",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "0": {
+                    "id": "0",
+                    "type": "number",
+                    "defaultValue": 0,
+                    "label": "x"
+                },
+                "1": {
+                    "id": "1",
+                    "type": "number",
+                    "defaultValue": 0,
+                    "label": "y"
+                }
+            },
+            "positionX": -4591.810440363861,
+            "positionY": 39.66245564493546,
+            "selectedType": "vector2"
+        },
+        "nodeKwKk5VmgJHc9DsPkbLUwX": {
+            "type": "Cos",
+            "id": "nodeKwKk5VmgJHc9DsPkbLUwX",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeNkqMXHUWYPd3yVb36xH1w",
+                    "connectedPort": "1"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -4035.482797002047,
+            "positionY": 79.69294136365707,
+            "selectedType": "unknown"
+        },
+        "node7ki5WP9aTT6LbIr5TiPN2": {
+            "type": "ScaleAdd",
+            "id": "node7ki5WP9aTT6LbIr5TiPN2",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeKwKk5VmgJHc9DsPkbLUwX",
+                    "connectedPort": "result"
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "nodeU8xNNJBP80K3o3CTO8E1O",
+                    "connectedPort": "out"
+                },
+                "added": {
+                    "id": "added",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeAdajMDL2Sma3iBQKWunkI",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -3560.7095035838856,
+            "positionY": 65.37846324992266,
+            "selectedType": "number"
+        },
+        "nodeAdajMDL2Sma3iBQKWunkI": {
+            "type": "Value",
+            "id": "nodeAdajMDL2Sma3iBQKWunkI",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "ownValue": 3,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "name": "TorusRadius"
+            },
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -4036.6962487237306,
+            "positionY": -262.1662556470309,
+            "selectedType": "number"
+        },
+        "node26uEwX4TZ7TqCkQiUYfvU": {
+            "type": "Cos",
+            "id": "node26uEwX4TZ7TqCkQiUYfvU",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeNkqMXHUWYPd3yVb36xH1w",
+                    "connectedPort": "0"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3452.182264934924,
+            "positionY": -206.42055071825038,
+            "selectedType": "unknown"
+        },
+        "nodeCl2xk20ZYdUYFeoJuIFTg": {
+            "type": "Multiply",
+            "id": "nodeCl2xk20ZYdUYFeoJuIFTg",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "node26uEwX4TZ7TqCkQiUYfvU",
+                    "connectedPort": "result"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "node7ki5WP9aTT6LbIr5TiPN2",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        1,
+                        1
+                    ]
+                }
+            },
+            "positionX": -3003.6829364195005,
+            "positionY": -151.43338988718608,
+            "selectedType": "number"
+        },
+        "nodeU8xNNJBP80K3o3CTO8E1O": {
+            "type": "Value",
+            "id": "nodeU8xNNJBP80K3o3CTO8E1O",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "name": "TorusInerRadius"
+            },
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -4024.2174175484183,
+            "positionY": 435.0305245191228,
+            "selectedType": "number"
+        },
+        "nodeceNpfbQ5E3AOFyo7SZaOv": {
+            "type": "Multiply",
+            "id": "nodeceNpfbQ5E3AOFyo7SZaOv",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "nodeAQvXm-xhPoo9MElcty37H",
+                    "connectedPort": "result"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "node7ki5WP9aTT6LbIr5TiPN2",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        1,
+                        1
+                    ]
+                }
+            },
+            "positionX": -3011.6378089662217,
+            "positionY": 318.935020234179,
+            "selectedType": "number"
+        },
+        "nodeAQvXm-xhPoo9MElcty37H": {
+            "type": "Sin",
+            "id": "nodeAQvXm-xhPoo9MElcty37H",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeNkqMXHUWYPd3yVb36xH1w",
+                    "connectedPort": "0"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -3539.478410980037,
+            "positionY": 422.94661235035,
+            "selectedType": "unknown"
+        },
+        "nodewBJxmSri0jKWy-BRTtL6I": {
+            "type": "FlatTextureMaterial",
+            "id": "nodewBJxmSri0jKWy-BRTtL6I",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "texture": {
+                    "id": "texture",
+                    "type": "image",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeDBhR91HtNxaHsvD5hCIbl",
+                    "connectedPort": "image"
+                }
+            },
+            "settings": {
+                "material": {
+                    "blendingMode": "NormalBlending",
+                    "alphaTest": 0.5,
+                    "transparent": true,
+                    "flatShading": false,
+                    "wireframe": false,
+                    "side": "DoubleSide",
+                    "_open": true
+                }
+            },
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "material",
+                    "defaultValue": {
+                        "type": "FlatMaterialType",
+                        "props": [
+                            [
+                                0,
+                                0.5,
+                                1,
+                                1
+                            ],
+                            {
+                                "blendingMode": "NormalBlending",
+                                "transparent": false,
+                                "side": "FrontSide",
+                                "alphaTest": 0,
+                                "flatShading": false,
+                                "wireframe": false
+                            }
+                        ],
+                        "key": "material",
+                        "children": {}
+                    }
+                }
+            },
+            "positionX": -1991.52506795342,
+            "positionY": 1447.8822716752452,
+            "selectedType": "unknown"
+        },
+        "nodeDBhR91HtNxaHsvD5hCIbl": {
+            "type": "PrecomputeImage",
+            "id": "nodeDBhR91HtNxaHsvD5hCIbl",
+            "dataInputs": {
+                "drawing": {
+                    "id": "drawing",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeXfykbVficPC4X1tDSWAwR",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -2472.914292676996,
+            "positionY": 1547.4800423077093,
+            "selectedType": "unknown"
+        },
+        "nodeXfykbVficPC4X1tDSWAwR": {
+            "type": "Combine",
+            "id": "nodeXfykbVficPC4X1tDSWAwR",
+            "dataInputs": {
+                "object-1": {
+                    "id": "object-1",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeAC6U2TzzBm51bysxhG1gl",
+                    "connectedPort": "out"
+                },
+                "object-2": {
+                    "id": "object-2",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodedXkMzmlgzGMC8jqQuytsv",
+                    "connectedPort": "output"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -2978.280758478758,
+            "positionY": 1604.656540263383,
+            "selectedType": "drawing2d"
+        },
+        "nodeAC6U2TzzBm51bysxhG1gl": {
+            "type": "Clear",
+            "id": "nodeAC6U2TzzBm51bysxhG1gl",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -3390.521257436831,
+            "positionY": 1586.9213077269856,
+            "selectedType": "unknown"
+        },
+        "nodedXkMzmlgzGMC8jqQuytsv": {
+            "type": "CombineLoop",
+            "id": "nodedXkMzmlgzGMC8jqQuytsv",
+            "dataInputs": {
+                "count": {
+                    "id": "count",
+                    "type": "number",
+                    "ownValue": 100,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "value": {
+                    "id": "value",
+                    "type": "drawing2d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "node-3DCIL4ydusKotTcwj4TN",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "output": {
+                    "id": "output",
+                    "type": "drawing2d",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -3390.612867770255,
+            "positionY": 1777.924222719781,
+            "selectedType": "drawing2d"
+        },
+        "nodewlmJ7U0no-ogljKSZQfzt": {
+            "type": "Lerp",
+            "id": "nodewlmJ7U0no-ogljKSZQfzt",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "number",
+                    "ownValue": -25,
+                    "hasConnection": true,
+                    "connectedNode": "nodelE0yD5d0XBtgyIRWjvIT7",
+                    "connectedPort": "value"
+                },
+                "to": {
+                    "id": "to",
+                    "type": "number",
+                    "ownValue": 425,
+                    "hasConnection": true,
+                    "connectedNode": "nodeejCT8TKaIShthC5K-nW3D",
+                    "connectedPort": "value"
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeY6Y5S5ydGMryJN1kshqu1",
+                    "connectedPort": "result"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -5445.843841063381,
+            "positionY": 2138.254591291616,
+            "selectedType": "number"
+        },
+        "nodeuZyYCmScFuuPlIcFeqFb0": {
+            "type": "Compose",
+            "id": "nodeuZyYCmScFuuPlIcFeqFb0",
+            "dataInputs": {
+                "0": {
+                    "id": "0",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeJ6uulJC8Zk3cEwosXdxDA",
+                    "connectedPort": "out",
+                    "label": "x"
+                },
+                "1": {
+                    "id": "1",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeVBHcMCNhyVg6JhGaDElph",
+                    "connectedPort": "out",
+                    "label": "y"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "vector2",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -4411.497754266036,
+            "positionY": 2041.3553678699068,
+            "selectedType": "vector2"
+        },
+        "node-3DCIL4ydusKotTcwj4TN": {
+            "type": "DrawRect",
+            "id": "node-3DCIL4ydusKotTcwj4TN",
+            "dataInputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "ownValue": [
+                        0.9490196078431372,
+                        0.08235294117647059,
+                        0.08235294117647059,
+                        1
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeIZF84vy9xmagZ8iu4hC-U",
+                    "connectedPort": "color"
+                },
+                "corner": {
+                    "id": "corner",
+                    "type": "vector2",
+                    "ownValue": [
+                        10,
+                        10
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeuZyYCmScFuuPlIcFeqFb0",
+                    "connectedPort": "out"
+                },
+                "width": {
+                    "id": "width",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": true,
+                    "connectedNode": "nodejf-V3PSuAdDy-tfOEOWSu",
+                    "connectedPort": "result"
+                },
+                "height": {
+                    "id": "height",
+                    "type": "number",
+                    "ownValue": 10,
+                    "hasConnection": true,
+                    "connectedNode": "nodeN329VUzAW3ZpQ9qvNfAEo",
+                    "connectedPort": "result"
+                },
+                "lineWidth": {
+                    "id": "lineWidth",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "fill": {
+                    "id": "fill",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "drawing2d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -3909.5071418572256,
+            "positionY": 1788.4525123389371,
+            "selectedType": "unknown"
+        },
+        "nodeejBvYjSEOMs4nMxb1WDYN": {
+            "type": "Progress",
+            "id": "nodeejBvYjSEOMs4nMxb1WDYN",
+            "dataInputs": {
+                "offset": {
+                    "id": "offset",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "node0nk4K0oCYqEpg9d0lTv2p",
+                    "connectedPort": "out"
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {
+                "preview-duration": 1
+            },
+            "dataOutputs": {
+                "progress": {
+                    "type": "number",
+                    "id": "progress",
+                    "defaultValue": 0
+                },
+                "loopCount": {
+                    "type": "number",
+                    "id": "loopCount",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -6513.58569869971,
+            "positionY": 1611.7156424159264,
+            "selectedType": "unknown"
+        },
+        "nodeN-b138KaOxChucKXgxpa7": {
+            "type": "Blackboard",
+            "id": "nodeN-b138KaOxChucKXgxpa7",
+            "dataInputs": {},
+            "settings": {
+                "blackboardData": {
+                    "index": {
+                        "key": "nodedXkMzmlgzGMC8jqQuytsv-index",
+                        "type": "number",
+                        "id": "index"
+                    },
+                    "count": {
+                        "key": "nodedXkMzmlgzGMC8jqQuytsv-count",
+                        "type": "number",
+                        "id": "count"
+                    }
+                }
+            },
+            "dataOutputs": {
+                "index": {
+                    "id": "index",
+                    "label": "index",
+                    "type": "number",
+                    "defaultValue": 0
+                },
+                "count": {
+                    "id": "count",
+                    "label": "count",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -7979.777665560009,
+            "positionY": 1797.2884720196935,
+            "selectedType": "unknown",
+            "label": "Compose loop index",
+            "pairedNode": "nodedXkMzmlgzGMC8jqQuytsv"
+        },
+        "nodeRTLVkDsdEXbg3QliEZzCn": {
+            "type": "Random",
+            "id": "nodeRTLVkDsdEXbg3QliEZzCn",
+            "dataInputs": {
+                "cache-id": {
+                    "id": "cache-id",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeN-b138KaOxChucKXgxpa7",
+                    "connectedPort": "index",
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        }
+                    ],
+                    "tooltip": "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "value": {
+                    "type": "number",
+                    "id": "value",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 2863.565812105689,
+            "selectedType": "number"
+        },
+        "nodeVBHcMCNhyVg6JhGaDElph": {
+            "type": "Multiply",
+            "id": "nodeVBHcMCNhyVg6JhGaDElph",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "nodeRTLVkDsdEXbg3QliEZzCn",
+                    "connectedPort": "value"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 400,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        1,
+                        1
+                    ]
+                }
+            },
+            "positionX": -5445.843841063381,
+            "positionY": 2587.202180538088,
+            "selectedType": "number"
+        },
+        "nodeBLpiLLMA8r9iMgWwG2hOK": {
+            "type": "Random",
+            "id": "nodeBLpiLLMA8r9iMgWwG2hOK",
+            "dataInputs": {
+                "cache-id": {
+                    "id": "cache-id",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeN-b138KaOxChucKXgxpa7",
+                    "connectedPort": "index",
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        }
+                    ],
+                    "tooltip": "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "value": {
+                    "type": "number",
+                    "id": "value",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -7469.284386534231,
+            "positionY": 1663.7827800573743,
+            "selectedType": "number"
+        },
+        "nodelE0yD5d0XBtgyIRWjvIT7": {
+            "type": "RandomInt",
+            "id": "nodelE0yD5d0XBtgyIRWjvIT7",
+            "dataInputs": {
+                "min": {
+                    "id": "min",
+                    "type": "number",
+                    "ownValue": -25,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "max": {
+                    "id": "max",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cache-id": {
+                    "id": "cache-id",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeN-b138KaOxChucKXgxpa7",
+                    "connectedPort": "index",
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        }
+                    ],
+                    "tooltip": "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -6505.850644583187,
+            "positionY": 2064.893640652624,
+            "selectedType": "unknown"
+        },
+        "nodeejCT8TKaIShthC5K-nW3D": {
+            "type": "RandomInt",
+            "id": "nodeejCT8TKaIShthC5K-nW3D",
+            "dataInputs": {
+                "min": {
+                    "id": "min",
+                    "type": "number",
+                    "ownValue": 400,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "max": {
+                    "id": "max",
+                    "type": "number",
+                    "ownValue": 425,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "cache-id": {
+                    "id": "cache-id",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeN-b138KaOxChucKXgxpa7",
+                    "connectedPort": "index",
+                    "constrains": [
+                        {
+                            "id": "Integer",
+                            "params": []
+                        }
+                    ],
+                    "tooltip": "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 2526.381890386476,
+            "selectedType": "unknown"
+        },
+        "nodeY6Y5S5ydGMryJN1kshqu1": {
+            "type": "Easing",
+            "id": "nodeY6Y5S5ydGMryJN1kshqu1",
+            "dataInputs": {
+                "input": {
+                    "id": "input",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeejBvYjSEOMs4nMxb1WDYN",
+                    "connectedPort": "progress"
+                }
+            },
+            "settings": {
+                "easing": "SineInOut"
+            },
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 2121.1979686672626,
+            "selectedType": "unknown"
+        },
+        "nodejf-V3PSuAdDy-tfOEOWSu": {
+            "type": "Lerp",
+            "id": "nodejf-V3PSuAdDy-tfOEOWSu",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "number",
+                    "ownValue": 20,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeA0WtkQJhlgRNuhVx-RfPq",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -5445.843841063381,
+            "positionY": 1724.6762510230376,
+            "selectedType": "number"
+        },
+        "nodeIZF84vy9xmagZ8iu4hC-U": {
+            "type": "SampleGradient",
+            "id": "nodeIZF84vy9xmagZ8iu4hC-U",
+            "dataInputs": {
+                "gradient": {
+                    "id": "gradient",
+                    "type": "gradient",
+                    "ownValue": [
+                        {
+                            "pos": 0,
+                            "color": [
+                                0,
+                                0,
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "pos": 1,
+                            "color": [
+                                1,
+                                1,
+                                1,
+                                1
+                            ]
+                        }
+                    ],
+                    "hasConnection": true,
+                    "connectedNode": "nodeKTuvRy0OBOYSbOQdLo9V7",
+                    "connectedPort": "gradient"
+                },
+                "pos": {
+                    "id": "pos",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeehHVxhx1-BvH-mLyBSkSj",
+                    "connectedPort": "result",
+                    "constrains": [
+                        {
+                            "id": "Clamp01",
+                            "params": []
+                        }
+                    ]
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "color": {
+                    "id": "color",
+                    "type": "color",
+                    "defaultValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ]
+                }
+            },
+            "positionX": -5445.843841063381,
+            "positionY": 1100.8846066215217,
+            "selectedType": "unknown"
+        },
+        "nodeKTuvRy0OBOYSbOQdLo9V7": {
+            "type": "Gradient",
+            "id": "nodeKTuvRy0OBOYSbOQdLo9V7",
+            "dataInputs": {},
+            "settings": {
+                "gradient": [
+                    {
+                        "pos": 0,
+                        "color": [
+                            0.10196078431372549,
+                            0.16470588235294117,
+                            0.4235294117647059,
+                            1
+                        ]
+                    },
+                    {
+                        "pos": 0.5,
+                        "color": [
+                            0.6980392156862745,
+                            0.12156862745098039,
+                            0.12156862745098039,
+                            1
+                        ]
+                    },
+                    {
+                        "pos": 1,
+                        "color": [
+                            0.9921568627450981,
+                            0.7333333333333333,
+                            0.17647058823529413,
+                            1
+                        ]
+                    }
+                ]
+            },
+            "dataOutputs": {
+                "gradient": {
+                    "id": "gradient",
+                    "type": "gradient",
+                    "defaultValue": [
+                        {
+                            "pos": 0,
+                            "color": [
+                                0,
+                                0,
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "pos": 1,
+                            "color": [
+                                1,
+                                1,
+                                1,
+                                1
+                            ]
+                        }
+                    ]
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 566.6198191601982,
+            "selectedType": "unknown"
+        },
+        "nodeJ6uulJC8Zk3cEwosXdxDA": {
+            "type": "ScaleAdd",
+            "id": "nodeJ6uulJC8Zk3cEwosXdxDA",
+            "dataInputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodejf-V3PSuAdDy-tfOEOWSu",
+                    "connectedPort": "result"
+                },
+                "scale": {
+                    "id": "scale",
+                    "type": "number",
+                    "ownValue": -0.5,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "added": {
+                    "id": "added",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodewlmJ7U0no-ogljKSZQfzt",
+                    "connectedPort": "result"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -4966.610910147687,
+            "positionY": 1931.4690597939614,
+            "selectedType": "number"
+        },
+        "nodeA0WtkQJhlgRNuhVx-RfPq": {
+            "type": "Envelope",
+            "id": "nodeA0WtkQJhlgRNuhVx-RfPq",
+            "dataInputs": {
+                "pos": {
+                    "id": "pos",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeejBvYjSEOMs4nMxb1WDYN",
+                    "connectedPort": "progress"
+                }
+            },
+            "settings": {
+                "envelope": [
+                    {
+                        "pos": 0.1,
+                        "height": 0,
+                        "lerp": "QuartOut"
+                    },
+                    {
+                        "pos": 0.5,
+                        "height": 1,
+                        "lerp": "QuartIn"
+                    },
+                    {
+                        "pos": 0.9,
+                        "height": 0,
+                        "lerp": "Linear"
+                    }
+                ]
+            },
+            "dataOutputs": {
+                "value": {
+                    "id": "value",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 1602.0140469480493,
+            "selectedType": "unknown"
+        },
+        "node0nk4K0oCYqEpg9d0lTv2p": {
+            "type": "Multiply",
+            "id": "node0nk4K0oCYqEpg9d0lTv2p",
+            "dataInputs": {
+                "a": {
+                    "id": "a",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": true,
+                    "connectedNode": "nodeBLpiLLMA8r9iMgWwG2hOK",
+                    "connectedPort": "value"
+                },
+                "b": {
+                    "id": "b",
+                    "type": "number",
+                    "ownValue": 0.3,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "id": "out",
+                    "type": "number",
+                    "defaultValue": [
+                        1,
+                        1
+                    ]
+                }
+            },
+            "positionX": -6963.320183625665,
+            "positionY": 1633.8719219641869,
+            "selectedType": "number"
+        },
+        "nodeN329VUzAW3ZpQ9qvNfAEo": {
+            "type": "Lerp",
+            "id": "nodeN329VUzAW3ZpQ9qvNfAEo",
+            "dataInputs": {
+                "from": {
+                    "id": "from",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "to": {
+                    "id": "to",
+                    "type": "number",
+                    "ownValue": 5,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": true,
+                    "connectedNode": "nodeA0WtkQJhlgRNuhVx-RfPq",
+                    "connectedPort": "value"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            "positionX": -5445.843841063381,
+            "positionY": 1397.4641942004462,
+            "selectedType": "number"
+        },
+        "nodeehHVxhx1-BvH-mLyBSkSj": {
+            "type": "Remap",
+            "id": "nodeehHVxhx1-BvH-mLyBSkSj",
+            "dataInputs": {
+                "t": {
+                    "id": "t",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodeejBvYjSEOMs4nMxb1WDYN",
+                    "connectedPort": "progress"
+                },
+                "inmin": {
+                    "id": "inmin",
+                    "type": "number",
+                    "ownValue": 0.1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "inmax": {
+                    "id": "inmax",
+                    "type": "number",
+                    "ownValue": 0.9,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmin": {
+                    "id": "outmin",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "outmax": {
+                    "id": "outmax",
+                    "type": "number",
+                    "ownValue": 1,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clamp": {
+                    "id": "clamp",
+                    "type": "bool",
+                    "ownValue": true,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "result": {
+                    "id": "result",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -5993.051715722824,
+            "positionY": 1138.830125228836,
+            "selectedType": "number"
+        }
+    },
+    "customNodes": {},
+    "globalSettings": {
+        "progress": 3
+    }
+}
