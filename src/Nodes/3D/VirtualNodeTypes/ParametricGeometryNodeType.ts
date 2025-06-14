@@ -23,7 +23,15 @@ export class ParametricGeometryNodeType extends SimpleNodeVirtualNodeType<Buffer
   create(dimension: Vector2, positions: Float32Array): BufferGeometry {
     const self = new BufferGeometry();
     var indices = new Array(6 * dimension[0] * dimension[1]);
+    var UV = new Float32Array(2 * (dimension[0] + 1) * (dimension[1] + 1));
     let tri = 0;
+    for (var x = 0; x <= dimension[0]; x++) {
+      for (var y = 0; y <= dimension[1]; y++) {
+        UV[(x * (dimension[1] + 1) + y) * 2 + 0] = x / dimension[0];
+        UV[(x * (dimension[1] + 1) + y) * 2 + 1] = y / dimension[1];
+      }
+    }
+
     for (var x = 1; x <= dimension[0]; x++) {
       for (var y = 1; y <= dimension[1]; y++) {
         var indexTopLeft = (x - 1) * (dimension[1] + 1) + (y - 1);
@@ -50,6 +58,7 @@ export class ParametricGeometryNodeType extends SimpleNodeVirtualNodeType<Buffer
     }
     self.setIndex(indices);
     self.setAttribute("position", new BufferAttribute(positions, 3));
+    self.setAttribute("uv", new BufferAttribute(UV, 2));
     return self;
   }
   update(element: PlaneGeometry): void {}
