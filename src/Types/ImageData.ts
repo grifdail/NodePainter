@@ -56,6 +56,9 @@ export class ImageData {
 
   getThreeJs() {
     if (this.threeTexture) {
+      if ("isCanvasTexture" in this.threeTexture && (this.p5Graphics || this.canvas)) {
+        this.threeTexture.needsUpdate = true;
+      }
       return this.threeTexture;
     }
     if (this.p5Graphics) {
@@ -68,6 +71,7 @@ export class ImageData {
     }
     if (this.canvas) {
       this.threeTexture = new CanvasTexture(this.canvas.elt);
+
       return this.threeTexture;
     }
     if (this.url && !this.loadingThree) {
