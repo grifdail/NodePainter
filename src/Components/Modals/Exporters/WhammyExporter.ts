@@ -10,6 +10,7 @@ export function WhammyExporter(): CanvasExporter {
       frames = [];
       _onFinished = onFinished;
       delay = frameDelay;
+      return Promise.resolve();
     },
     addFrame(canvas) {
       frames.push(canvas.canvas.toDataURL());
@@ -22,3 +23,4 @@ export function WhammyExporter(): CanvasExporter {
     },
   };
 }
+WhammyExporter.extension = "gif";

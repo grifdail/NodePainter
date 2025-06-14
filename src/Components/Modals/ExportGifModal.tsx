@@ -19,6 +19,8 @@ import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { TextInput } from "../Generics/Inputs/TextInput";
 import { download } from "./download";
+import { MP4Exporter } from "./Exporters/MP4Exporter";
+import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 
 const MainDiv = styled.div`
   display: flex;
@@ -54,6 +56,12 @@ const MainDiv = styled.div`
     display: none;
   }
 `;
+const Renderers = {
+  webM: WhammyExporter,
+  gif: GifExporter,
+  mp4: MP4Exporter,
+};
+type RendererType = keyof typeof Renderers;
 
 type MySketchProps = SketchProps & {
   tree: TreeStore;
@@ -61,7 +69,7 @@ type MySketchProps = SketchProps & {
   onProgress: (rendering: number, processing: number) => void;
   duration: number;
   fixedFrameRate: number;
-  isGif: boolean;
+  renderer: RendererType;
   preloadDuration: number;
 };
 
@@ -72,6 +80,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   var renderer: CanvasExporter | null = null;
   var ownProps: MySketchProps | null = null;
   let seed = Date.now();
+  let rendererIsLoaded = false;
 
   p5.setup = () => {};
 
@@ -87,8 +96,11 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         p5.pixelDensity(1);
         p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
         const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-        renderer = props.isGif ? GifExporter() : WhammyExporter();
-        renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress);
+        renderer = Renderers[props.renderer]();
+        renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
+          rendererIsLoaded = true;
+        });
+
         ended = false;
       }
     }
@@ -111,7 +123,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       draw();
     }
 
-    if (Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
+    if (!rendererIsLoaded && Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
     } else if (!ended) {
       time += frameRate;
       if (time - ownProps.preloadDuration * 1000 >= 0) {
@@ -137,7 +149,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
-  const [isGif, setIsGif] = useState(true);
+  const [format, setFormat] = useState("gif");
   const name = tree.getSketchName();
   const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
 
@@ -150,7 +162,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
     }
   };
 
-  const filenameWithExt = `${filename}.${isGif ? "gif" : "webm"}`;
+  const filenameWithExt = `${filename}.${Renderers[format as RendererType].extension}`;
 
   return (
     <Modal
@@ -183,7 +195,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           )}
         </ButtonGroup>
 
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <Fieldset
             label="Filename"
             input={TextInput}
@@ -208,10 +220,11 @@ export function ExportGifModal({ close }: { close: () => void }) {
             onChange={setPreloadDuration}
           />
           <Fieldset
-            label="Output as a gif ?"
-            input={BoolInput}
-            value={isGif}
-            onChange={setIsGif}
+            label="Format ?"
+            input={DropdownInput}
+            value={format}
+            onChange={setFormat}
+            passtrough={{ options: Object.keys(Renderers) }}
           />
         </form>
 
@@ -223,7 +236,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
               tree={tree}
               duration={duration}
               fixedFrameRate={fixedFrameRate}
-              isGif={isGif}
+              renderer={format}
               preloadDuration={preloadDuration}
               onFinished={(blob: Blob) => {
                 setRenderState("waiting");

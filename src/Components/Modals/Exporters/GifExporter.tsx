@@ -21,6 +21,8 @@ export function GifExporter(): CanvasExporter {
         onProgress(1, p);
       });
       delay = frameDelay;
+
+      return Promise.resolve();
     },
     addFrame(canvas) {
       gif.addFrame(canvas, { delay: delay, copy: true });
@@ -30,3 +32,4 @@ export function GifExporter(): CanvasExporter {
     },
   };
 }
+GifExporter.extension = "gif";
