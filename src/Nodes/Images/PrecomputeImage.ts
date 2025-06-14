@@ -9,7 +9,7 @@ export const PrecomputeImage: NodeDefinition = {
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",
 
-  dataInputs: [Port.drawing2d("drawing")],
+  dataInputs: [Port.drawing2d("drawing"), Port.CacheId()],
   dataOutputs: [
     {
       id: "image",
@@ -25,7 +25,8 @@ export const PrecomputeImage: NodeDefinition = {
   getData(portId, node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
-    const keyCache = `${node.id}-image-cache`;
+    const cacheId = context.getInputValueNumber(node, "cache-id");
+    const keyCache = `${node.id}-${cacheId}-image-cache`;
     let img = context.blackboard[keyCache];
     if (!img) {
       img = new ImageData({ p5Graphics: context.p5.createGraphics(width, height) });

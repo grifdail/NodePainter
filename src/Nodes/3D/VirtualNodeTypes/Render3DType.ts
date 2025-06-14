@@ -1,4 +1,4 @@
-import { Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { LinearSRGBColorSpace, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { Color, Quaternion, Vector3 } from "../../../Types/vectorDataType";
 import { toThreeColorWithAlpha } from "../../../Utils/colorUtils";
@@ -18,6 +18,7 @@ export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DP
     var scene = new Scene();
     var camera = new PerspectiveCamera(fov, width / height, 0.1, 100);
     const renderer = new WebGLRenderer();
+    renderer.outputColorSpace = LinearSRGBColorSpace;
     const imageData = new ImageData({ canvas: { width: width, height: height, elt: renderer.domElement } });
     renderer.setSize(width, height);
     return { renderer, scene, camera, imageData, parent: scene };
