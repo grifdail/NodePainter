@@ -13,6 +13,7 @@ export function MP4Exporter(): CanvasExporter {
         // Must be a multiple of 2.
         encoder.width = width;
         encoder.height = height;
+        encoder.quantizationParameter = 10;
         encoder.frameRate = 1000 / frameDelay;
         encoder.initialize();
       });
