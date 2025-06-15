@@ -9,5 +9,7 @@ export function duplicateNode(state: TreeStore, sourceNode: NodeData, x: number,
   clone.settings = structuredClone(sourceNode.settings);
   clone.selectedType = sourceNode.selectedType;
   clone.graph = graph;
+  clone.pairedNode = sourceNode.pairedNode;
+  clone.label = sourceNode.label;
   return clone;
 }
