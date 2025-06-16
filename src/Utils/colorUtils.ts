@@ -31,7 +31,7 @@ export function toRGB255Array(c: Color, floored: boolean = true) {
 export function fromHex(hex: string): Color {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
 
-  return result ? createColor(parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255, result[4] !== undefined ? parseInt(result[4], 16) / 255 : 0) : createColor();
+  return result ? createColor(parseInt(result[1], 16) / 255, parseInt(result[2], 16) / 255, parseInt(result[3], 16) / 255, result[4] !== undefined ? parseInt(result[4], 16) / 255 : 1) : createColor();
 }
 
 export function validateHex(hex: string) {

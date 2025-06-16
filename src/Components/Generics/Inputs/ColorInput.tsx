@@ -41,6 +41,7 @@ export const ColorInputDiv = styled.div<{ $color: string; $opposite: string }>`
     transition: color 0.3s;
     width: 10px;
     background: none;
+    font-family: monospace;
 
     &:focus,
     &:hover {
