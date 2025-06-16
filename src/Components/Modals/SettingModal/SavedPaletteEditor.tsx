@@ -6,7 +6,7 @@ import { ColorPalette } from "../../../Types/vectorDataType";
 import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { NodeData } from "../../../Types/NodeData";
 import { Button } from "../../Generics/Button";
-import { SearchForm } from "../SearchForm";
+import { SearchForm } from "../../Generics/SearchForm";
 import { IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
 

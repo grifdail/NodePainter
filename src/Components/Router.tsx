@@ -12,7 +12,7 @@ import { PaintModal } from "./Modals/PaintModal";
 import { useDialog } from "../Hooks/useDialog";
 import { DialogModal } from "./Modals/DialogModal";
 import { Routes } from "../Types/Routes";
-import { CodeBlockModal } from "./Modals/CodeBlockModal";
+import { CodeBlockModal } from "./Modals/CodeBlock/CodeBlockModal";
 import { MainMenu } from "./MainMenu";
 import { IntroMenuModal } from "./Modals/IntroMenuModal";
 import { SettingsModal } from "./Modals/SettingModal/SettingsModal";

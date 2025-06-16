@@ -9,7 +9,7 @@ import { useTree } from "../../Hooks/useTree";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { SketchTemplate } from "../../Types/SketchTemplate";
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
-import { SearchForm } from "./SearchForm";
+import { SearchForm } from "../Generics/SearchForm";
 import { Input } from "../StyledComponents/Input";
 import { CategoryButton, TagList } from "../Generics/CategoryButton";
 import { useRouter } from "../../Hooks/useRouter";

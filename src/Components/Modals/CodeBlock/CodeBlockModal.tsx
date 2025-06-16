@@ -1,11 +1,11 @@
 import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
-import { Modal } from "../Modal";
-import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
-import { PortEditList } from "./CustomNodes/PortEditList";
-import { CodeBlockStatementList } from "./CodeBlock/CodeBlockStatementList";
-import { CodeBlockContext } from "../../Hooks/CodeBlockContext";
-import { portTypesWithProperty, portTypesWithTags } from "../../Types/PortTypeDefinitions";
+import { Modal } from "../../Modal";
+import { useCodeBlockModal } from "../../../Hooks/useCodeBlockModal";
+import { PortEditList } from "../CustomNodes/PortEditList";
+import { CodeBlockStatementList } from "./CodeBlockStatementList";
+import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
+import { portTypesWithProperty, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 
 const MainDiv = styled.div`
   width: 100%;

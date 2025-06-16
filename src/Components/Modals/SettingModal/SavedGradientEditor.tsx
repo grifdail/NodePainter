@@ -6,7 +6,7 @@ import { Gradient } from "../../../Types/vectorDataType";
 import { NodeData } from "../../../Types/NodeData";
 import { Button } from "../../Generics/Button";
 import { GradientSetting } from "../../Settings/GradientSetting";
-import { SearchForm } from "../SearchForm";
+import { SearchForm } from "../../Generics/SearchForm";
 import { IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
 

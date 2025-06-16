@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal } from "../Modal";
 import { PaintingTool, usePainting } from "../../Hooks/usePainting";
 import { PaintingSketch } from "./Drawing/PaintingSketch";
-import { PaletteColorSelector } from "./PaletteColorSelector";
+import { PaletteColorSelector } from "./Drawing/PaletteColorSelector";
 import { Tools } from "./Drawing/Tools";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 import { Fieldset } from "../StyledComponents/Fieldset";

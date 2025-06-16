@@ -1,12 +1,12 @@
-import { ColorPalette, Color, PaletteCollection } from "../../Types/vectorDataType";
-import { toHex } from "../../Utils/colorUtils";
+import { ColorPalette, Color, PaletteCollection } from "../../../Types/vectorDataType";
+import { toHex } from "../../../Utils/colorUtils";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
-import { Fieldset } from "../StyledComponents/Fieldset";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { MenuItemWithPalettePreview } from "../Settings/ColorPreview";
-import { DefaultPalettes } from "../../Data/Palettes";
-import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { Fieldset } from "../../StyledComponents/Fieldset";
+import { usePlayerPref } from "../../../Hooks/usePlayerPref";
+import { MenuItemWithPalettePreview } from "../../Settings/ColorPreview";
+import { DefaultPalettes } from "../../../Data/Palettes";
+import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 
 const StyledButton = styled.button<{ color: string }>`
   background: none;
