@@ -1,5 +1,5 @@
 import { IconList, IconQuestionMark } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
@@ -7,7 +7,7 @@ import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 export const Count: NodeDefinition = {
   id: "Count",
   description: "Count the number of element in an array",
-  icon: DoubleIcon(IconList, IconQuestionMark),
+  icon: DoubleIconGen(IconList, IconQuestionMark),
   alias: "Length Size Count",
   tags: ["Array"],
   dataInputs: [

@@ -1,5 +1,5 @@
 import { IconArrowMerge, IconList } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -28,7 +28,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 export const CombineArray: NodeDefinition = {
   id: "CombineArray",
   label: "Combine Array",
-  icon: DoubleIcon(IconArrowMerge, IconList),
+  icon: DoubleIconGen(IconArrowMerge, IconList),
   description: "Compose an object from multiple object in an array",
 
   dataInputs: [{ id: "array", type: "array-drawing2d", defaultValue: null }],

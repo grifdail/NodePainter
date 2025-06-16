@@ -1,12 +1,12 @@
 import { IconGridDots, IconWaveSine } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const LoopingNoise: NodeDefinition = {
   id: "LoopingNoise",
   tags: ["Math"],
-  icon: DoubleIcon(IconGridDots, IconWaveSine),
+  icon: DoubleIconGen(IconGridDots, IconWaveSine),
   description: "return a semi random continous value between 0 and 1, looping around when in the interval [0,1] .",
   dataInputs: [
     { id: "pos", type: "number", defaultValue: 0 },

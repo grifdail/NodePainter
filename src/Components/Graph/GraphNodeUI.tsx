@@ -38,7 +38,7 @@ export type GraphNodeProps = {
   node: NodeData;
   xy: SpringValue<number[]>;
   isSelected: boolean;
-  onMove: (x: number, y: number, definitive: boolean) => void;
+  onMove: (x: number, y: number, definitive: boolean, linear: boolean) => void;
   onTap: MouseEventHandler<SVGRectElement>;
   onClickPort: PortNodeCallback;
 };
@@ -55,9 +55,9 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
 
   const bind = useGesture(
     {
-      onDrag: ({ movement: [mx, my], tap, elapsedTime, cancel }) => {
+      onDrag: ({ movement: [mx, my], tap, elapsedTime, cancel, shiftKey }) => {
         if (!tap) {
-          onMove(mx * viewPortScale, my * viewPortScale, false);
+          onMove(mx * viewPortScale, my * viewPortScale, false, shiftKey);
           if (!dragged) {
             setDragged(true);
           }
@@ -69,8 +69,8 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
           }
         }
       },
-      onDragEnd: ({ movement: [mx, my] }) => {
-        onMove(mx * viewPortScale, my * viewPortScale, true);
+      onDragEnd: ({ movement: [mx, my], shiftKey }) => {
+        onMove(mx * viewPortScale, my * viewPortScale, true, shiftKey);
         setDragged(false);
       },
     },

@@ -1,5 +1,5 @@
 import { IconColorFilter, IconRectangle } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType";
@@ -9,7 +9,7 @@ export const DrawGradientRect: NodeDefinition = {
   id: "DrawGradientRect",
   label: "Draw Gradient Rect",
   description: "Draw a rectangle with a gradient",
-  icon: DoubleIcon(IconRectangle, IconColorFilter),
+  icon: DoubleIconGen(IconRectangle, IconColorFilter),
   tags: ["Drawing"],
   dataInputs: [
     {

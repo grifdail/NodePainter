@@ -1,6 +1,6 @@
 import { IconGrid3x3, IconPhoto } from "@tabler/icons-react";
 import { Image } from "p5";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2 } from "../../Types/vectorDataType";
@@ -8,7 +8,7 @@ import { createVector2 } from "../../Types/vectorDataType";
 export const DrawImagePart: NodeDefinition = {
   id: "DrawImagePart",
   label: "Draw Image Part",
-  icon: DoubleIcon(IconPhoto, IconGrid3x3),
+  icon: DoubleIconGen(IconPhoto, IconGrid3x3),
   description: "Draw only a portion of an image",
   dataInputs: [
     { id: "image", type: "image", defaultValue: null },

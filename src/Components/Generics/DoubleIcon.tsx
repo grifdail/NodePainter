@@ -18,17 +18,27 @@ const ParentSpan = styled.svg<{ scaleSubIcon: number }>`
   }
 `;
 
-export function DoubleIcon(Main: Icon, Secondary: Icon, scale: number = 75): Icon {
+export function DoubleIconGen(Main: Icon, Secondary: Icon, scale: number = 75): Icon {
   return (props: IconProps) => {
     return (
-      <ParentSpan
-        width={24}
-        height={24}
-        {...(props as any)}
-        scaleSubIcon={scale}>
-        <Main></Main>
-        <Secondary></Secondary>
-      </ParentSpan>
+      <DoubleIcon
+        Main={Main}
+        Secondary={Secondary}
+        badgeScale={scale}
+        {...props}></DoubleIcon>
     );
   };
+}
+
+export function DoubleIcon({ Main, Secondary, badgeScale = 75, ...props }: { Main: Icon; Secondary: Icon; badgeScale?: number } & IconProps) {
+  return (
+    <ParentSpan
+      width={24}
+      height={24}
+      {...(props as any)}
+      scaleSubIcon={badgeScale}>
+      <Main></Main>
+      <Secondary></Secondary>
+    </ParentSpan>
+  );
 }

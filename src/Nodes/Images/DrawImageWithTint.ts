@@ -1,6 +1,6 @@
 import { IconPaint, IconPhoto } from "@tabler/icons-react";
 import { Image } from "p5";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
@@ -9,7 +9,7 @@ import { toP5Color } from "../../Utils/colorUtils";
 export const DrawImageWithTint: NodeDefinition = {
   id: "DrawImageWithTint",
   label: "Draw tinted image",
-  icon: DoubleIcon(IconPhoto, IconPaint),
+  icon: DoubleIconGen(IconPhoto, IconPaint),
   description: "Draw an image",
   dataInputs: [
     { id: "image", type: "image", defaultValue: null },

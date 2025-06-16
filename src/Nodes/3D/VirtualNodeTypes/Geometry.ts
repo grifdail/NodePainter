@@ -1,6 +1,6 @@
 import { Icon, IconCircle, IconCone, IconCube, IconCylinder, IconHexagon, IconRectangle, IconSphere, IconSquare, IconTriangle } from "@tabler/icons-react";
 import { BoxGeometry, ConeGeometry, CylinderGeometry, DodecahedronGeometry, IcosahedronGeometry, PlaneGeometry, RingGeometry, SphereGeometry } from "three";
-import { DoubleIcon } from "../../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeTags } from "../../../Types/NodeTags";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
@@ -188,7 +188,7 @@ export class IcosahedronGeometryVirtualNodeType extends GeometryVirtualNodeType<
     ];
   }
   getIcon(): Icon {
-    return DoubleIcon(IconSphere, IconTriangle);
+    return DoubleIconGen(IconSphere, IconTriangle);
   }
   getId(): string {
     return "IcosahedronGeometry";
@@ -220,7 +220,7 @@ export class DodecahedronGeometryVirtualNodeType extends GeometryVirtualNodeType
     ];
   }
   getIcon(): Icon {
-    return DoubleIcon(IconSphere, IconHexagon);
+    return DoubleIconGen(IconSphere, IconHexagon);
   }
   getId(): string {
     return "DodecahedronGeometry";

@@ -159,6 +159,7 @@ import { StartNode } from "./Misc/StartNode";
 import { AlignRotation } from "./Quaternion/AlignRotation";
 import { AxisAngle } from "./Quaternion/AxisAngle";
 import { EulerAngle } from "./Quaternion/EulerAngle";
+import { LookAtRotation } from "./Quaternion/LookAt";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { ChangeNode } from "./State/ChangeNode";
 import { Counter } from "./State/CounterNode";
@@ -382,6 +383,7 @@ export const Nodes: Array<NodeDefinition> = [
   EulerAngle,
   AxisAngle,
   AlignRotation,
+  LookAtRotation,
 
   //3D
   ...Nodes3D,

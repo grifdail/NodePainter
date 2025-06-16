@@ -18,6 +18,7 @@ import { PairingLine } from "./PairingLine";
 import { TreeStore } from "../../Types/TreeStore";
 import { SVGGridPattern } from "./SVGGridPattern";
 import { useCopyPasteGraph } from "./useCopyPasteGraph";
+import { abs } from "mathjs";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -114,7 +115,7 @@ export function Graph() {
             xy: nodePositionSpring[i].xy,
             isSelected: selectedNode.some((id) => id === node.id),
             onTap: (e: MouseEvent<Element>) => onTapNode(node, e),
-            onMove: (x: number, y: number, definitive: boolean) => onMoveNode(i, x, y, definitive),
+            onMove: (x: number, y: number, definitive: boolean, linear: boolean) => onMoveNode(i, x, y, definitive, linear),
           };
           return (
             <GraphNodeUI
@@ -192,7 +193,7 @@ function useGetNodePort(nodes: NodeData[], nodePositionSpring: { xy: SpringValue
 
 function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: SpringRef<{ xy: number[] }>) {
   return useCallback(
-    function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false): void {
+    function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false, linear: boolean): void {
       let selectedNode = useSelection.getState().nodes;
       if (selectedNode.length > 0 && !selectedNode.includes(nodes[i].id)) {
         selectedNode = [];
@@ -200,6 +201,13 @@ function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: 
       }
       if (selectedNode.length <= 0) {
         selectedNode = [nodes[i].id];
+      }
+      if (linear) {
+        if (abs(x) > abs(y)) {
+          y = 0;
+        } else {
+          x = 0;
+        }
       }
       if (isDefinitive) {
         for (let selectionIndex = 0; selectionIndex < selectedNode.length; selectionIndex++) {

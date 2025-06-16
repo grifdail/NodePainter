@@ -1,5 +1,5 @@
 import { IconArrowRight, IconList, IconPlus } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { PortTypeDropdown } from "../../Components/Modals/CustomNodes/PortTypeDropdown";
 import { useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
@@ -36,7 +36,7 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
 export const ArrayMap: NodeDefinition = {
   id: "Array Map",
   description: "Return a new array that associate every item in the input array to a new one",
-  icon: DoubleIcon(IconList, IconArrowRight),
+  icon: DoubleIconGen(IconList, IconArrowRight),
   tags: ["Array"],
   dataInputs: [],
   dataOutputs: [],

@@ -1,5 +1,5 @@
 import { IconArrowMerge, IconGridDots } from "@tabler/icons-react";
-import { DoubleIcon } from "../../Components/Generics/DoubleIcon";
+import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -34,7 +34,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 export const CombineGridLoop: NodeDefinition = {
   id: "CombineGridLoop",
   label: "Combine Grid Loop",
-  icon: DoubleIcon(IconArrowMerge, IconGridDots),
+  icon: DoubleIconGen(IconArrowMerge, IconGridDots),
   alias: "for",
   description: "Compose an object from multiple object while looping over a grid",
 
