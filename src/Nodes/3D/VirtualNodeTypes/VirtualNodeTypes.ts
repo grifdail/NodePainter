@@ -1,3 +1,4 @@
+import { CameraVirtualElements } from "./CameraVirtualElements";
 import { ComposeVirtualNodeType } from "./Compose3DVirtualNodeType";
 import { GenericModelVirtualNodeType } from "./GenericModelVirtualNodeType";
 import { GeometryVirtualNodeTypes } from "./Geometry";
@@ -13,6 +14,7 @@ export const VirtualNodes = {
   ...MaterialsVirtualNodes,
   ...LightVirtualNodeTypes,
   ...GeometryVirtualNodeTypes,
+  ...CameraVirtualElements,
   ComposeVirtualNodeType: new ComposeVirtualNodeType(),
   Render3DType: new Render3DType(),
   GenericModelVirtualNodeType: new GenericModelVirtualNodeType(),

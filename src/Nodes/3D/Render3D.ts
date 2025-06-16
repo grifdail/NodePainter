@@ -1,6 +1,7 @@
 import { IconBadge3d } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createColor, createVector3 } from "../../Types/vectorDataType";
+import { Port } from "../../Types/PortTypeGenerator";
+import { createColor } from "../../Types/vectorDataType";
 import { StatefullInstance } from "../../Utils/StatefullInstance";
 import { StatefullVirtualElement } from "../../Utils/StatefullVirtualElement";
 import { Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
@@ -13,22 +14,7 @@ export const Render3D: NodeDefinition = {
   description: "Render the 'draw' port in 3dimension image you can use in the 'execute' port.",
 
   dataInputs: [
-    {
-      id: "fov",
-      type: "number",
-      defaultValue: 60,
-      tooltip: "Represent the vertical frustrum angle of the camera in degree",
-    },
-    {
-      id: "cameraPosition",
-      type: "vector3",
-      defaultValue: createVector3(0, 0, 10),
-    },
-    {
-      id: "cameraRotation",
-      type: "quaternion",
-      defaultValue: [0, 0, 0, 1],
-    },
+    Port.object3d("camera"),
     {
       id: "clearColor",
       type: "color",
@@ -56,14 +42,12 @@ export const Render3D: NodeDefinition = {
     const width = Math.floor(node.settings.width);
     const height = Math.floor(node.settings.height);
     //Inputs
-    const fov = context.getInputValueNumber(node, "fov");
-    const cameraRotation = context.getInputValueQuaternion(node, "cameraRotation");
-    const cameraPosition = context.getInputValueVector3(node, "cameraPosition");
     const clearColor = context.getInputValueColor(node, "clearColor");
     const child = context.getInputValue(node, "scene", "object3d") as StatefullVirtualElement<any, any>;
+    const cameraVirtualElement = context.getInputValue(node, "camera", "object3d") as StatefullVirtualElement<any, any>;
 
     const id = context.getCallId(node, width, height);
-    const virtual = VirtualNodes.Render3DType.generate(id, [child], width, height, fov, cameraPosition, cameraRotation, clearColor);
+    const virtual = VirtualNodes.Render3DType.generate(id, [cameraVirtualElement, child], width, height, clearColor);
 
     const keyCache = `${node.id}-cache`;
     let threeContext = context.blackboard[keyCache] as StatefullInstance<ThreeJSContext, Render3DProps> | undefined;
@@ -76,7 +60,8 @@ export const Render3D: NodeDefinition = {
 
     threeContext.update(virtual, threeContext.instance.scene);
 
-    threeContext.instance.renderer.render(threeContext.instance.scene, threeContext.instance.camera);
+    const camera = threeContext.instance.camera || threeContext.instance.defaultCamera;
+    threeContext.instance.renderer.render(threeContext.instance.scene, camera);
     return threeContext.instance.imageData;
   },
 };

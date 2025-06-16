@@ -14,87 +14,12 @@
                 }
             },
             "settings": {
-                "name": "Pride Cube Vert",
+                "name": "Pride Cube",
                 "width": 200,
                 "height": 400
             },
             "dataOutputs": {},
             "positionX": 1000,
-            "positionY": 0,
-            "selectedType": "unknown"
-        },
-        "nodegbJooyzLxfXFHgccT7eSS": {
-            "type": "Render3D",
-            "id": "nodegbJooyzLxfXFHgccT7eSS",
-            "dataInputs": {
-                "fov": {
-                    "id": "fov",
-                    "type": "number",
-                    "ownValue": 60,
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null,
-                    "tooltip": "Represent the vertical frustrum angle of the camera in degree"
-                },
-                "cameraPosition": {
-                    "id": "cameraPosition",
-                    "type": "vector3",
-                    "ownValue": [
-                        0,
-                        0,
-                        10
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "cameraRotation": {
-                    "id": "cameraRotation",
-                    "type": "quaternion",
-                    "ownValue": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "clearColor": {
-                    "id": "clearColor",
-                    "type": "color",
-                    "ownValue": [
-                        0.6078431372549019,
-                        0.8313725490196079,
-                        0.9215686274509803,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "scene": {
-                    "id": "scene",
-                    "type": "object3d",
-                    "ownValue": null,
-                    "hasConnection": true,
-                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
-                    "connectedPort": "out"
-                }
-            },
-            "settings": {
-                "width": 200,
-                "height": 400
-            },
-            "dataOutputs": {
-                "image": {
-                    "id": "image",
-                    "type": "image",
-                    "defaultValue": null
-                }
-            },
-            "positionX": 200,
             "positionY": 0,
             "selectedType": "unknown"
         },
@@ -107,7 +32,7 @@
                     "type": "image",
                     "ownValue": null,
                     "hasConnection": true,
-                    "connectedNode": "nodegbJooyzLxfXFHgccT7eSS",
+                    "connectedNode": "nodeF0Q0POmxMyw2wxEmRi4fh",
                     "connectedPort": "image"
                 },
                 "pos": {
@@ -157,8 +82,8 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -1987.4746415749892,
-            "positionY": 436.9958383837246,
+            "positionX": -1696.9395811161723,
+            "positionY": 7.1225346436385735,
             "selectedType": "unknown"
         },
         "nodeQJeyzyHDcnwtd9AyvtPSF": {
@@ -280,7 +205,7 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -1476.138122241556,
+            "positionX": -1236.0020008419217,
             "positionY": 353.4934488836499,
             "selectedType": "unknown"
         },
@@ -313,8 +238,8 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -1722.5751072961375,
-            "positionY": -460.2210300429187,
+            "positionX": -855.969631908782,
+            "positionY": -466.5522889660356,
             "selectedType": "object3d"
         },
         "nodeSsTHowW-UzsC7VyHQC2k4": {
@@ -363,8 +288,8 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -3264.050001916106,
-            "positionY": -517.5487021130759,
+            "positionX": -1236.5144427905848,
+            "positionY": -434.38216896590325,
             "selectedType": "unknown"
         },
         "nodeyAcQJscWRb3jO0KDtjZnL": {
@@ -401,8 +326,8 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -3233.8113972506203,
-            "positionY": -230.2819577909601,
+            "positionX": -1232.908049782845,
+            "positionY": -128.28992048869802,
             "selectedType": "unknown"
         },
         "node3HT4LAakqSR-FlPCvLvq3": {
@@ -434,8 +359,8 @@
                     "defaultValue": null
                 }
             },
-            "positionX": -882.3269373930766,
-            "positionY": 43.191045276028376,
+            "positionX": -834.942221416844,
+            "positionY": 90.57594219973868,
             "selectedType": "object3d"
         },
         "nodevVUV3Za33zczzSIho5JYZ": {
@@ -496,8 +421,8 @@
                     ]
                 }
             },
-            "positionX": -5160.184998996959,
-            "positionY": -144.52555354546013,
+            "positionX": -5415.144337766941,
+            "positionY": 433.5799238981038,
             "selectedType": "unknown"
         },
         "nodeHLw9eeaPklgrR8rrN5Wxl": {
@@ -521,8 +446,8 @@
                     "defaultValue": 0
                 }
             },
-            "positionX": -4762.347905545297,
-            "positionY": 354.9332994096409,
+            "positionX": -4418.449262553228,
+            "positionY": 663.256220712875,
             "selectedType": "unknown",
             "label": "Generate Compose loop index",
             "pairedNode": "node3HT4LAakqSR-FlPCvLvq3"
@@ -548,8 +473,8 @@
                     "type": "number"
                 }
             },
-            "positionX": -4749.631583954924,
-            "positionY": -59.631457553717595,
+            "positionX": -5004.590922724907,
+            "positionY": 518.4740198898463,
             "selectedType": "array-color"
         },
         "nodeDrz5wgBcVlTUwcBYafYRI": {
@@ -613,8 +538,8 @@
                     "defaultValue": 0
                 }
             },
-            "positionX": -3986.9764265209083,
-            "positionY": 271.59468746324575,
+            "positionX": -3850.6028267137085,
+            "positionY": 989.0384081880791,
             "selectedType": "number"
         },
         "nodekUiZPiJbRTYwfMeBYDqFV": {
@@ -649,8 +574,8 @@
                     ]
                 }
             },
-            "positionX": -4359.953766287908,
-            "positionY": 118.50697337977527,
+            "positionX": -4410.352705347091,
+            "positionY": 999.0060851784342,
             "selectedType": "number"
         },
         "node5B5H5WjaufpNkkkDvcEal": {
@@ -701,8 +626,8 @@
                     ]
                 }
             },
-            "positionX": -3362.100211762014,
-            "positionY": 243.7605576298874,
+            "positionX": -1695.9705793349221,
+            "positionY": 415.7098791259218,
             "selectedType": "vector3"
         },
         "node5obJetbbJHLCkIMaBPez6": {
@@ -744,8 +669,8 @@
                     "type": "color"
                 }
             },
-            "positionX": -3946.6169382625385,
-            "positionY": 778.1758504303659,
+            "positionX": -2259.7348015169596,
+            "positionY": 232.68145120156714,
             "selectedType": "color"
         },
         "nodeQ3IalA-ZsSXf6Tkj6yuWJ": {
@@ -804,8 +729,8 @@
                     }
                 }
             },
-            "positionX": -2530.496697253832,
-            "positionY": 491.4843131467759,
+            "positionX": -1703.361167988425,
+            "positionY": 171.30281794726355,
             "selectedType": "unknown"
         },
         "nodeHqCrmnFsj5LkpTWY2axtW": {
@@ -844,8 +769,8 @@
                     "defaultValue": 0
                 }
             },
-            "positionX": -2852.5447776149767,
-            "positionY": 1152.5519305506323,
+            "positionX": -2111.383909097587,
+            "positionY": 1178.0954071049448,
             "selectedType": "unknown"
         },
         "nodeH-2O3vnBHqCKmGLZgvoyY": {
@@ -888,8 +813,8 @@
                     ]
                 }
             },
-            "positionX": -3402.082330529166,
-            "positionY": 1092.7015175473146,
+            "positionX": -2551.2296534712027,
+            "positionY": 1214.0954071049448,
             "selectedType": "number"
         },
         "node9KDlGdJEHQSDhypZIbppO": {
@@ -973,7 +898,7 @@
                 }
             },
             "positionX": -3371.8705225126514,
-            "positionY": 701.5305596885862,
+            "positionY": 683.0834165115052,
             "selectedType": "number"
         },
         "nodeNX1ZR-KBhwOydTX3FyAqs": {
@@ -1012,8 +937,8 @@
                     ]
                 }
             },
-            "positionX": -1889.297374086144,
-            "positionY": 572.203289663515,
+            "positionX": -1708.4541221679008,
+            "positionY": 683.0834165115052,
             "selectedType": "vector3"
         },
         "nodeoRS2cEhS2sYAmhK3HTK40": {
@@ -1061,62 +986,8 @@
                 }
             },
             "positionX": -2567.3717853932576,
-            "positionY": 693.8820717506057,
+            "positionY": 683.0834165115052,
             "selectedType": "unknown"
-        },
-        "nodedM8B9DwNjOdJxL1LpL3N0": {
-            "type": "Lerp",
-            "id": "nodedM8B9DwNjOdJxL1LpL3N0",
-            "dataInputs": {
-                "from": {
-                    "id": "from",
-                    "type": "color",
-                    "ownValue": [
-                        0,
-                        0,
-                        3.5,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "to": {
-                    "id": "to",
-                    "type": "color",
-                    "ownValue": [
-                        -3.5,
-                        0,
-                        0,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "t": {
-                    "id": "t",
-                    "type": "number",
-                    "ownValue": 0.5,
-                    "hasConnection": true,
-                    "connectedNode": "nodeDrz5wgBcVlTUwcBYafYRI",
-                    "connectedPort": "result"
-                }
-            },
-            "settings": {},
-            "dataOutputs": {
-                "result": {
-                    "id": "result",
-                    "type": "color",
-                    "defaultValue": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            "positionX": -2931.7187037964845,
-            "positionY": 1533.0541866858396,
-            "selectedType": "color"
         },
         "nodelLNNIGgXQ3vOC7WRSLxOT": {
             "type": "EulerAngle",
@@ -1162,8 +1033,8 @@
                     ]
                 }
             },
-            "positionX": -2330.7115247737797,
-            "positionY": 1162.3075462605275,
+            "positionX": -1719.9949691154507,
+            "positionY": 1165.272189734597,
             "selectedType": "number"
         },
         "nodeDSbjbyI5BtGwW7ytzrwVU": {
@@ -1207,8 +1078,115 @@
                 }
             },
             "positionX": -2112.8137438408644,
-            "positionY": 805.9538836931566,
+            "positionY": 683.0834165115052,
             "selectedType": "number"
+        },
+        "nodeF0Q0POmxMyw2wxEmRi4fh": {
+            "type": "Render3D",
+            "id": "nodeF0Q0POmxMyw2wxEmRi4fh",
+            "dataInputs": {
+                "camera": {
+                    "id": "camera",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodefrfPFLZRFgZ8SyYSym7KT",
+                    "connectedPort": "out"
+                },
+                "clearColor": {
+                    "id": "clearColor",
+                    "type": "color",
+                    "ownValue": [
+                        0.6078431372549019,
+                        0.8313725490196079,
+                        0.9215686274509803,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "scene": {
+                    "id": "scene",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "positionX": 197.58905087670698,
+            "positionY": -1.8581883858099673,
+            "selectedType": "unknown"
+        },
+        "nodefrfPFLZRFgZ8SyYSym7KT": {
+            "type": "PerspectiveCamera",
+            "id": "nodefrfPFLZRFgZ8SyYSym7KT",
+            "dataInputs": {
+                "position": {
+                    "id": "position",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        0,
+                        10
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "rotation": {
+                    "id": "rotation",
+                    "type": "quaternion",
+                    "ownValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "fov": {
+                    "id": "fov",
+                    "type": "number",
+                    "ownValue": 60,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "aspectRatio": {
+                    "id": "aspectRatio",
+                    "type": "number",
+                    "ownValue": 0.5,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "object3d",
+                    "id": "out",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -188.45920004740313,
+            "positionY": -353.18986998221226,
+            "selectedType": "unknown"
         }
     },
     "customNodes": {},

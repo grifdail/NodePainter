@@ -23,81 +23,6 @@
             "positionY": 0,
             "selectedType": "unknown"
         },
-        "nodegbJooyzLxfXFHgccT7eSS": {
-            "type": "Render3D",
-            "id": "nodegbJooyzLxfXFHgccT7eSS",
-            "dataInputs": {
-                "fov": {
-                    "id": "fov",
-                    "type": "number",
-                    "ownValue": 60,
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null,
-                    "tooltip": "Represent the vertical frustrum angle of the camera in degree"
-                },
-                "cameraPosition": {
-                    "id": "cameraPosition",
-                    "type": "vector3",
-                    "ownValue": [
-                        0,
-                        0,
-                        10
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "cameraRotation": {
-                    "id": "cameraRotation",
-                    "type": "quaternion",
-                    "ownValue": [
-                        0,
-                        0,
-                        0,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "clearColor": {
-                    "id": "clearColor",
-                    "type": "color",
-                    "ownValue": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
-                },
-                "scene": {
-                    "id": "scene",
-                    "type": "object3d",
-                    "ownValue": null,
-                    "hasConnection": true,
-                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
-                    "connectedPort": "out"
-                }
-            },
-            "settings": {
-                "width": 400,
-                "height": 400
-            },
-            "dataOutputs": {
-                "image": {
-                    "id": "image",
-                    "type": "image",
-                    "defaultValue": null
-                }
-            },
-            "positionX": -800,
-            "positionY": 0,
-            "selectedType": "unknown"
-        },
         "nodefZ4NW8v8BJrGBmfM893tj": {
             "type": "DrawImage",
             "id": "nodefZ4NW8v8BJrGBmfM893tj",
@@ -107,7 +32,7 @@
                     "type": "image",
                     "ownValue": null,
                     "hasConnection": true,
-                    "connectedNode": "nodegbJooyzLxfXFHgccT7eSS",
+                    "connectedNode": "nodeDQnkPmSzhHringw7ShqUj",
                     "connectedPort": "image"
                 },
                 "pos": {
@@ -267,9 +192,9 @@
                         0,
                         1
                     ],
-                    "hasConnection": false,
-                    "connectedNode": null,
-                    "connectedPort": null
+                    "hasConnection": true,
+                    "connectedNode": "node18BfP45r96MOY4RRNiWkV",
+                    "connectedPort": "out"
                 }
             },
             "settings": {},
@@ -281,6 +206,113 @@
                 }
             },
             "positionX": -1600,
+            "positionY": 0,
+            "selectedType": "unknown"
+        },
+        "node18BfP45r96MOY4RRNiWkV": {
+            "type": "AxisAngle",
+            "id": "node18BfP45r96MOY4RRNiWkV",
+            "dataInputs": {
+                "axis": {
+                    "id": "axis",
+                    "type": "vector3",
+                    "ownValue": [
+                        0,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "angle": {
+                    "id": "angle",
+                    "type": "number",
+                    "ownValue": 0,
+                    "hasConnection": true,
+                    "connectedNode": "nodel7MNxbQjvWwmNkHBwyxQ5",
+                    "connectedPort": "time"
+                }
+            },
+            "settings": {},
+            "dataOutputs": {
+                "out": {
+                    "type": "quaternion",
+                    "id": "out",
+                    "defaultValue": [
+                        0,
+                        0,
+                        0,
+                        1
+                    ]
+                }
+            },
+            "positionX": -2000,
+            "positionY": 239.87762479262554,
+            "selectedType": "unknown"
+        },
+        "nodel7MNxbQjvWwmNkHBwyxQ5": {
+            "type": "Time",
+            "id": "nodel7MNxbQjvWwmNkHBwyxQ5",
+            "dataInputs": {},
+            "settings": {},
+            "dataOutputs": {
+                "time": {
+                    "id": "time",
+                    "type": "number",
+                    "defaultValue": 0
+                }
+            },
+            "positionX": -2411.1247349084674,
+            "positionY": 309.8610620676351,
+            "selectedType": "unknown"
+        },
+        "nodeDQnkPmSzhHringw7ShqUj": {
+            "type": "Render3D",
+            "id": "nodeDQnkPmSzhHringw7ShqUj",
+            "dataInputs": {
+                "camera": {
+                    "id": "camera",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "clearColor": {
+                    "id": "clearColor",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "scene": {
+                    "id": "scene",
+                    "type": "object3d",
+                    "ownValue": null,
+                    "hasConnection": true,
+                    "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
+                    "connectedPort": "out"
+                }
+            },
+            "settings": {
+                "width": 400,
+                "height": 400
+            },
+            "dataOutputs": {
+                "image": {
+                    "id": "image",
+                    "type": "image",
+                    "defaultValue": null
+                }
+            },
+            "positionX": -800,
             "positionY": 0,
             "selectedType": "unknown"
         }
