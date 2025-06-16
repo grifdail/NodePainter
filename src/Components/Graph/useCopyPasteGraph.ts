@@ -40,7 +40,7 @@ function useEffectPaste() {
 
 function useEffectCut() {
   function handler(event: ClipboardEvent) {
-    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "textarea")) {
+    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) {
       return;
     }
     cutSelection();

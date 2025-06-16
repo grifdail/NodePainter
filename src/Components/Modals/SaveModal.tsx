@@ -8,6 +8,7 @@ import { Button } from "../Generics/Button";
 import { useEffect, useState } from "react";
 import { compressSketchJson } from "../../Utils/loadJsonDecrypt";
 import { SketchTemplate } from "../../Types/SketchTemplate";
+import { download } from "../../Utils/download";
 
 const MAX_URL_LENGTH = 2083;
 
@@ -25,15 +26,6 @@ const MainDiv = styled.div`
     flex: 1 0 100px;
   }
 `;
-
-function download(data: string, filename: string = "data.json") {
-  const blob = new Blob([data], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.download = filename;
-  link.href = url;
-  link.click();
-}
 
 export function SaveModal({ close }: { close: () => void }) {
   const [shortJson, toggleShotJson] = useToggle(false);
@@ -91,7 +83,7 @@ export function SaveModal({ close }: { close: () => void }) {
           <Button
             label="Download as file"
             icon={IconDownload}
-            onClick={() => download(json, `${sketchName}_NodePainter.json`)}></Button>
+            onClick={() => download(new Blob([json], { type: "application/json" }), `${sketchName}_NodePainter.json`)}></Button>
         </ButtonGroup>
       </MainDiv>
     </Modal>

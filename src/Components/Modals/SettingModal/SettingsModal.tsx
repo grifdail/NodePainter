@@ -9,6 +9,7 @@ import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { NodeData } from "../../../Types/NodeData";
 import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { SavedSnippetEditor } from "./SavedSnippetEditor";
+import { ExportSettingEditor } from "./ExportSettingEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -54,6 +55,7 @@ const EmptyDiv = () => {
   const savedPalettes = usePlayerPref((pref) => pref.palettes);
   return <div></div>;
 };
+
 const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.DefaultPalette]: DefaultPaletteEdition,
   [Section.SavedPalette]: SavedPaletteEditor,
@@ -61,7 +63,7 @@ const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.SavedSnippet]: SavedSnippetEditor,
   [Section.SavedFunction]: EmptyDiv,
   [Section.Misc]: EmptyDiv,
-  [Section.ExportSetting]: EmptyDiv,
+  [Section.ExportSetting]: ExportSettingEditor,
 };
 
 export function SettingsModal({ close }: { close: () => void }) {

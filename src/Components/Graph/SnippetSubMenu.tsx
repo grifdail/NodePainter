@@ -89,9 +89,9 @@ export const readSnipetFromClipboard = (worldPosition: [number, number]) => {
 
 export function parsePastedValue(text: string, worldPosition: [number, number] = [0, 0]) {
   try {
-    console.log(text);
     const parsedData = JSON.parse(text);
     const item = validateSnipetJson(parsedData);
+    console.log(item, parsedData);
     if (item) {
       useTree.getState().loadSnipets(parsedData, worldPosition[0], worldPosition[1], (newNodes) => {
         console.log(Object.values(newNodes));

@@ -6,7 +6,7 @@ import { Vector2 } from "../Types/vectorDataType";
 import { buildBoundingBox } from "./buildBoundingBox";
 import { duplicateNode } from "./duplicateNode";
 
-const ajv = new Ajv();
+const ajv = new Ajv({ meta: false, validateSchema: false, strictRequired: true, strict: true });
 
 export type Snippet = {
   nodes: NodeData[];

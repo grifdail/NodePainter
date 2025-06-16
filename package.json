@@ -61,7 +61,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "dev": "vite",
-    "regen-validation-json": "npx typescript-json-schema ./tsconfig.json PlayerPrefExport -o ./src/schema/PlayerPrefExport.json  & npx typescript-json-schema ./tsconfig.json PlayerPrefExport -o ./src/schema/PlayerPrefExport.json &  npx typescript-json-schema ./tsconfig.json Snippet -o ./src/schema/Snippet.json"
+    "regen-validation-json": "npx typescript-json-schema ./tsconfig.json PlayerPrefExport -o ./src/schema/PlayerPrefExport.json --required &  npx typescript-json-schema ./tsconfig.json Snippet -o ./src/schema/Snippet.json --required "
   },
   "eslintConfig": {
     "extends": [

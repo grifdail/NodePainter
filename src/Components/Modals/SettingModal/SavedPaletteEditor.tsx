@@ -2,13 +2,14 @@ import { useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { PalettePreview } from "../../Settings/ColorPreview";
 import styled from "styled-components";
-import { ColorPalette } from "../../../Types/vectorDataType";
+import { ColorPalette, createColor } from "../../../Types/vectorDataType";
 import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { NodeData } from "../../../Types/NodeData";
-import { Button } from "../../Generics/Button";
+import { Button, InvisibleButton } from "../../Generics/Button";
 import { SearchForm } from "../../Generics/SearchForm";
-import { IconSearch } from "@tabler/icons-react";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
+import { useDialog } from "../../../Hooks/useDialog";
 
 const NodeList = styled.section`
   display: flex;
@@ -89,7 +90,7 @@ export const SavedPaletteEditor = () => {
   const [searchTermRaw, setSearchTerm] = useState("");
   return (
     <>
-      <SearchForm>
+      <SearchForm onSubmit={(e) => e.preventDefault()}>
         <span>
           <IconSearch> </IconSearch>
           <Input
@@ -98,6 +99,13 @@ export const SavedPaletteEditor = () => {
             placeholder="filter..."
             autoFocus></Input>
         </span>
+        <InvisibleButton
+          icon={IconPlus}
+          onClick={() => {
+            useDialog.getState().openPrompt((data) => {
+              setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
+            });
+          }}></InvisibleButton>
       </SearchForm>
       <NodeList>
         {Object.entries(savedPalettes)

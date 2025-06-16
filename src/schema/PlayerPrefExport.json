@@ -138,6 +138,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "color",
+                        "pos"
+                    ],
                     "type": "object"
                 },
                 "type": "array"
@@ -222,6 +226,10 @@
                                                             "type": "array"
                                                         }
                                                     },
+                                                    "required": [
+                                                        "id",
+                                                        "params"
+                                                    ],
                                                     "type": "object"
                                                 },
                                                 "type": "array"
@@ -243,6 +251,14 @@
                                                 "$ref": "#/definitions/PortType"
                                             }
                                         },
+                                        "required": [
+                                            "connectedNode",
+                                            "connectedPort",
+                                            "hasConnection",
+                                            "id",
+                                            "ownValue",
+                                            "type"
+                                        ],
                                         "type": "object"
                                     },
                                     "type": "object"
@@ -261,6 +277,10 @@
                                                             "type": "array"
                                                         }
                                                     },
+                                                    "required": [
+                                                        "id",
+                                                        "params"
+                                                    ],
                                                     "type": "object"
                                                 },
                                                 "type": "array"
@@ -279,6 +299,11 @@
                                                 "$ref": "#/definitions/PortType"
                                             }
                                         },
+                                        "required": [
+                                            "defaultValue",
+                                            "id",
+                                            "type"
+                                        ],
                                         "type": "object"
                                     },
                                     "type": "object"
@@ -312,6 +337,16 @@
                                     "type": "string"
                                 }
                             },
+                            "required": [
+                                "dataInputs",
+                                "dataOutputs",
+                                "id",
+                                "positionX",
+                                "positionY",
+                                "selectedType",
+                                "settings",
+                                "type"
+                            ],
                             "type": "object"
                         },
                         "type": "array"
@@ -330,11 +365,27 @@
                         "type": "array"
                     }
                 },
+                "required": [
+                    "name",
+                    "nodes",
+                    "offset"
+                ],
                 "type": "object"
             },
             "type": "object"
         }
     },
+    "required": [
+        "colorPreset",
+        "favNodes",
+        "gradient",
+        "hasSeenIntroPopup",
+        "nodeSorting",
+        "nodesLastUsedDates",
+        "nodesUseCount",
+        "palettes",
+        "snippets"
+    ],
     "type": "object"
 }
 

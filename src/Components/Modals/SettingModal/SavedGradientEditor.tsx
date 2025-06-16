@@ -2,13 +2,14 @@ import { useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { GradientPreview } from "../../Settings/ColorPreview";
 import styled from "styled-components";
-import { Gradient } from "../../../Types/vectorDataType";
+import { createDefaultGradient, Gradient } from "../../../Types/vectorDataType";
 import { NodeData } from "../../../Types/NodeData";
-import { Button } from "../../Generics/Button";
+import { Button, InvisibleButton } from "../../Generics/Button";
 import { GradientSetting } from "../../Settings/GradientSetting";
 import { SearchForm } from "../../Generics/SearchForm";
-import { IconSearch } from "@tabler/icons-react";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
+import { useDialog } from "../../../Hooks/useDialog";
 
 const NodeList = styled.section`
   display: flex;
@@ -90,7 +91,7 @@ export const SavedGradientEditor = () => {
 
   return (
     <>
-      <SearchForm>
+      <SearchForm onSubmit={(e) => e.preventDefault()}>
         <span>
           <IconSearch> </IconSearch>
           <Input
@@ -99,6 +100,13 @@ export const SavedGradientEditor = () => {
             placeholder="filter..."
             autoFocus></Input>
         </span>
+        <InvisibleButton
+          icon={IconPlus}
+          onClick={() => {
+            useDialog.getState().openPrompt((data) => {
+              setSavedGradient(data, createDefaultGradient());
+            });
+          }}></InvisibleButton>
       </SearchForm>
       <NodeList>
         {Object.entries(savedGradient)
