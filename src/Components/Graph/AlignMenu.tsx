@@ -171,7 +171,6 @@ export function AlignMenu({ clickWorldPosition }: { clickWorldPosition: [number,
           var start = box.left;
           nodeSorted.forEach((node) => {
             var column = Math.floor(((node.boundingBox.center()[0] - start) / fullWidth) * columnCount);
-            console.log(column);
             node.node.positionX = start + column * columnSize;
           });
         })}>
