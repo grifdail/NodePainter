@@ -1,5 +1,5 @@
 import { SubMenu, MenuItem, MenuDivider } from "@szhsin/react-menu";
-import { IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight, IconArrowLeft, IconArrowMoveRight, IconArrowRight, IconArrowsHorizontal, IconArrowsVertical, IconStack, IconStack2 } from "@tabler/icons-react";
+import { IconAlignCenter, IconAlignLeft, IconAlignLeft2, IconAlignRight, IconArrowDown, IconArrowLeft, IconArrowMoveRight, IconArrowRight, IconArrowsHorizontal, IconArrowsVertical, IconArrowUp, IconStack, IconStack2 } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { BoundingBox } from "../../Types/BoundingBox";
@@ -155,7 +155,7 @@ export function AlignMenu({ clickWorldPosition }: { clickWorldPosition: [number,
         })}>
         <DoubleIcon
           Main={IconStack2}
-          Secondary={IconArrowRight}
+          Secondary={IconArrowUp}
         />
         Stack Down
       </MenuItem>
@@ -176,7 +176,7 @@ export function AlignMenu({ clickWorldPosition }: { clickWorldPosition: [number,
         })}>
         <DoubleIcon
           Main={IconStack2}
-          Secondary={IconArrowRight}
+          Secondary={IconArrowDown}
         />
         Place into column
       </MenuItem>
