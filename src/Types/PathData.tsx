@@ -45,3 +45,17 @@ export function interpolateBezierPath(path: BezierPathData, pos: number): Vector
   var dt = (pos * stopCount) % 1;
   return [p5.prototype.bezierPoint(path[tPrev * 4 + 0], path[tPrev * 4 + 0] + path[tPrev * 4 + 2], path[tPrev * 4 + 4] - path[tPrev * 4 + 6], path[tPrev * 4 + 4], dt), p5.prototype.bezierPoint(path[tPrev * 4 + 1], path[tPrev * 4 + 1] + path[tPrev * 4 + 3], path[tPrev * 4 + 5] - path[tPrev * 4 + 7], path[tPrev * 4 + 5], dt)];
 }
+
+export function interpolateBezierPathDir(path: BezierPathData, pos: number): Vector2 {
+  if (path.length < 4) {
+    return [0, 0];
+  }
+  if (path.length < 8) {
+    return [path[2], path[3]];
+  }
+  pos = pos % 1;
+  var stopCount = Math.floor(path.length / 4) - 1;
+  var tPrev = Math.floor(pos * stopCount);
+  var dt = (pos * stopCount) % 1;
+  return [p5.prototype.bezierTangent(path[tPrev * 4 + 0], path[tPrev * 4 + 0] + path[tPrev * 4 + 2], path[tPrev * 4 + 4] - path[tPrev * 4 + 6], path[tPrev * 4 + 4], dt), p5.prototype.bezierTangent(path[tPrev * 4 + 1], path[tPrev * 4 + 1] + path[tPrev * 4 + 3], path[tPrev * 4 + 5] - path[tPrev * 4 + 7], path[tPrev * 4 + 5], dt)];
+}
