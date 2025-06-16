@@ -56,4 +56,14 @@ export const useGraphHotkey = () => {
       useSelection.getState().setSelection(Object.values(newNodes));
     });
   });
+  useHotkeys("mod+a", (e) => {
+    e.preventDefault();
+    var state = useTree.getState();
+
+    var toSelect = Object.values(state.nodes)
+      .filter((node) => node.graph === state.editedGraph)
+      .map((node) => node.id);
+
+    useSelection.getState().setSelection(toSelect);
+  });
 };
