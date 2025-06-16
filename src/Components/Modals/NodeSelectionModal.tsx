@@ -14,7 +14,7 @@ import { Input } from "../StyledComponents/Input";
 import { InvisibleButton } from "../Generics/Button";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { usePortSelection } from "../../Hooks/usePortSelection";
-import { CategoryButton, TagList } from "./CategoryButton";
+import { CategoryButton, TagList } from "../Generics/CategoryButton";
 import { SearchForm } from "./SearchForm";
 import { PortType } from "../../Types/PortType";
 import { NodeData } from "../../Types/NodeData";

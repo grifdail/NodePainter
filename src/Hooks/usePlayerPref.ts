@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
 import { DefaultPalettes } from "../Data/Palettes";
-import { PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
+import { PlayerPrefExport, PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
 import { Snippet } from "../Utils/snippets";
 
@@ -96,6 +96,34 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         hasSeenIntroPopup: false,
         setSeenIntro() {
           set((state) => ({ hasSeenIntroPopup: true }));
+        },
+        getExportJson() {
+          var s = get();
+          var r: PlayerPrefExport = {
+            favNodes: structuredClone(s.favNodes),
+            nodesLastUsedDates: structuredClone(s.nodesLastUsedDates),
+            nodesUseCount: structuredClone(s.nodesUseCount),
+            nodeSorting: s.nodeSorting,
+            palettes: structuredClone(s.palettes),
+            gradient: structuredClone(s.gradient),
+            colorPreset: structuredClone(s.colorPreset),
+            hasSeenIntroPopup: s.hasSeenIntroPopup,
+            snippets: structuredClone(s.snippets),
+          };
+          return r;
+        },
+        loadJson(saveData) {
+          set((state) => ({
+            favNodes: structuredClone(saveData.favNodes),
+            nodesLastUsedDates: structuredClone(saveData.nodesLastUsedDates),
+            nodesUseCount: structuredClone(saveData.nodesUseCount),
+            nodeSorting: saveData.nodeSorting,
+            palettes: structuredClone(saveData.palettes),
+            gradient: structuredClone(saveData.gradient),
+            colorPreset: structuredClone(saveData.colorPreset),
+            hasSeenIntroPopup: saveData.hasSeenIntroPopup,
+            snippets: structuredClone(saveData.snippets),
+          }));
         },
       } as PlayerPrefStore;
     },

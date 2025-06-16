@@ -1,6 +1,8 @@
 import { Snippet, SnippetCollection } from "../Utils/snippets";
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
+export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsedDates" | "nodesUseCount" | "nodeSorting" | "palettes" | "gradient" | "colorPreset" | "hasSeenIntroPopup" | "snippets">;
+
 export type PlayerPrefStore = {
   favNodes: string[];
   nodesLastUsedDates: { [key: string]: number };
@@ -24,5 +26,7 @@ export type PlayerPrefStore = {
   saveSnippet(name: string, snippet: Snippet): void;
   removeSnippet(name: string): void;
   snippets: SnippetCollection;
+  getExportJson(): PlayerPrefExport;
+  loadJson(saveData: PlayerPrefExport): void;
 };
 export type SortingType = "featured" | "name" | "last" | "most";

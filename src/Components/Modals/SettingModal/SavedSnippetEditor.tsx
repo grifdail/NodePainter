@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { GradientPreview } from "../Settings/ColorPreview";
+import { usePlayerPref } from "../../../Hooks/usePlayerPref";
+import { GradientPreview } from "../../Settings/ColorPreview";
 import styled from "styled-components";
-import { Gradient } from "../../Types/vectorDataType";
-import { NodeData } from "../../Types/NodeData";
-import { Button } from "../Generics/Button";
-import { GradientSetting } from "../Settings/GradientSetting";
-import { SearchForm } from "./SearchForm";
+import { Gradient } from "../../../Types/vectorDataType";
+import { NodeData } from "../../../Types/NodeData";
+import { Button } from "../../Generics/Button";
+import { GradientSetting } from "../../Settings/GradientSetting";
+import { SearchForm } from "../SearchForm";
 import { IconSearch } from "@tabler/icons-react";
-import { Input } from "../StyledComponents/Input";
-import { Snippet } from "../../Utils/snippets";
+import { Input } from "../../StyledComponents/Input";
+import { Snippet } from "../../../Utils/snippets";
 
 const NodeList = styled.section`
   display: flex;

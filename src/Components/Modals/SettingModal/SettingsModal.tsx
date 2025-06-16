@@ -1,15 +1,13 @@
-import { Modal } from "../Modal";
 import styled from "styled-components";
 import { IconSettings } from "@tabler/icons-react";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { PaletteSetting } from "../Settings/PaletteSetting";
-import { NodeData } from "../../Types/NodeData";
-import { CategoryButton, TagList } from "./CategoryButton";
 import { useState } from "react";
-import { PalettePreview } from "../Settings/ColorPreview";
-import { Button } from "../Generics/Button";
+import { TagList } from "../../Generics/CategoryButton";
+import { Modal } from "../../Modal";
 import { SavedPaletteEditor } from "./SavedPaletteEditor";
 import { SavedGradientEditor } from "./SavedGradientEditor";
+import { usePlayerPref } from "../../../Hooks/usePlayerPref";
+import { NodeData } from "../../../Types/NodeData";
+import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { SavedSnippetEditor } from "./SavedSnippetEditor";
 
 const MainDiv = styled.div`
@@ -36,6 +34,7 @@ enum Section {
   SavedSnippet = "SavedSnippet",
   SavedFunction = "SavedFunction",
   Misc = "Misc",
+  ExportSetting = "ExportSetting",
 }
 
 const DefaultPaletteEdition = () => {
@@ -62,6 +61,7 @@ const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.SavedSnippet]: SavedSnippetEditor,
   [Section.SavedFunction]: EmptyDiv,
   [Section.Misc]: EmptyDiv,
+  [Section.ExportSetting]: EmptyDiv,
 };
 
 export function SettingsModal({ close }: { close: () => void }) {

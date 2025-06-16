@@ -16,9 +16,9 @@ import Rand from "rand-seed";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { TextInput } from "../Generics/Inputs/TextInput";
-import { download } from "./download";
+import { download } from "../../Utils/download";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
-import { Exporters, ExporterType } from "./Exporter";
+import { Exporters, ExporterType } from "./Exporters/Exporter";
 
 const MainDiv = styled.div`
   display: flex;

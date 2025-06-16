@@ -11,7 +11,7 @@ import { SketchTemplate } from "../../Types/SketchTemplate";
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { SearchForm } from "./SearchForm";
 import { Input } from "../StyledComponents/Input";
-import { CategoryButton, TagList } from "./CategoryButton";
+import { CategoryButton, TagList } from "../Generics/CategoryButton";
 import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
 import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";

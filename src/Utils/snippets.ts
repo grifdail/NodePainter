@@ -1,10 +1,10 @@
 import Ajv, { JSONSchemaType } from "ajv";
+import schemaJSON from "../schema/Snippet.json";
 import { NodeData } from "../Types/NodeData";
 import { TreeStore } from "../Types/TreeStore";
 import { Vector2 } from "../Types/vectorDataType";
 import { buildBoundingBox } from "./buildBoundingBox";
 import { duplicateNode } from "./duplicateNode";
-import schemaJSON from "./snippetJsonSchema.json";
 
 const ajv = new Ajv();
 

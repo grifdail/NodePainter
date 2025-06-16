@@ -7,7 +7,6 @@ import { ExportGifModal } from "./Modals/ExportGifModal";
 import { CustomNodeModal } from "./Modals/CustomNodes/CustomFunctionModal";
 import { CustomShaderModal } from "./Modals/CustomNodes/CustomShaderModal";
 import { CustomSimulationModal } from "./Modals/CustomNodes/CustomSimulationModal";
-import { SettingsModal } from "./Modals/SettingsModal";
 import { AboutModal } from "./Modals/AboutModal";
 import { PaintModal } from "./Modals/PaintModal";
 import { useDialog } from "../Hooks/useDialog";
@@ -16,6 +15,7 @@ import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlockModal";
 import { MainMenu } from "./MainMenu";
 import { IntroMenuModal } from "./Modals/IntroMenuModal";
+import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
 
 export function Router() {
   const close = useRouter((state) => state.close);

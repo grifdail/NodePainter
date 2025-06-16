@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { GradientPreview } from "../Settings/ColorPreview";
+import { usePlayerPref } from "../../../Hooks/usePlayerPref";
+import { PalettePreview } from "../../Settings/ColorPreview";
 import styled from "styled-components";
-import { Gradient } from "../../Types/vectorDataType";
-import { NodeData } from "../../Types/NodeData";
-import { Button } from "../Generics/Button";
-import { GradientSetting } from "../Settings/GradientSetting";
-import { SearchForm } from "./SearchForm";
+import { ColorPalette } from "../../../Types/vectorDataType";
+import { PaletteSetting } from "../../Settings/PaletteSetting";
+import { NodeData } from "../../../Types/NodeData";
+import { Button } from "../../Generics/Button";
+import { SearchForm } from "../SearchForm";
 import { IconSearch } from "@tabler/icons-react";
-import { Input } from "../StyledComponents/Input";
+import { Input } from "../../StyledComponents/Input";
 
 const NodeList = styled.section`
   display: flex;
@@ -56,12 +56,12 @@ const StyledButton = styled.button`
   }
 `;
 
-function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: { value: Gradient; onClick: () => void; onDelete: () => void; onChange: (value: Gradient) => void; name: string; isSelected: boolean }) {
+function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: { value: ColorPalette; onClick: () => void; onDelete: () => void; onChange: (value: ColorPalette) => void; name: string; isSelected: boolean }) {
   return (
     <>
       <StyledButton>
         <div>{name}</div>
-        <GradientPreview gradient={value}></GradientPreview>
+        <PalettePreview palette={value}></PalettePreview>
         <span className="spacer"></span>
         <Button
           onClick={onClick}
@@ -71,23 +71,22 @@ function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: 
           label="Delete"></Button>
       </StyledButton>
       {isSelected && (
-        <GradientSetting
+        <PaletteSetting
           value={value}
           onChange={onChange}
-          def={{ id: "colorPreset", defaultValue: [], type: "gradient" }}
-          node={null as unknown as NodeData}></GradientSetting>
+          def={{ id: "colorPreset", defaultValue: [], type: "palette" }}
+          node={null as unknown as NodeData}></PaletteSetting>
       )}
     </>
   );
 }
 
-export const SavedGradientEditor = () => {
-  const savedGradient = usePlayerPref((pref) => pref.gradient);
-  const setSavedGradient = usePlayerPref((pref) => pref.saveGradient);
-  const removeGradient = usePlayerPref((pref) => pref.removeGradient);
-  const [openedGradient, setOpenGradient] = useState<null | string>(null);
+export const SavedPaletteEditor = () => {
+  const savedPalettes = usePlayerPref((pref) => pref.palettes);
+  const setSavedPalette = usePlayerPref((pref) => pref.savePalette);
+  const removePalette = usePlayerPref((pref) => pref.removePalette);
+  const [openedPalette, setOpenPalette] = useState<null | string>(null);
   const [searchTermRaw, setSearchTerm] = useState("");
-
   return (
     <>
       <SearchForm>
@@ -101,18 +100,18 @@ export const SavedGradientEditor = () => {
         </span>
       </SearchForm>
       <NodeList>
-        {Object.entries(savedGradient)
+        {Object.entries(savedPalettes)
           .filter(([key]) => searchTermRaw.trim().length === 0 || key.toLowerCase().includes(searchTermRaw.trim().toLowerCase()))
           .map(([key, value]) => (
             <SketchButton
               onDelete={() => {
-                removeGradient(key);
+                removePalette(key);
               }}
               key={key}
               name={key}
-              onChange={(value) => setSavedGradient(key, value)}
-              isSelected={openedGradient === key}
-              onClick={() => setOpenGradient(openedGradient === key ? null : key)}
+              onChange={(value) => setSavedPalette(key, value)}
+              isSelected={openedPalette === key}
+              onClick={() => setOpenPalette(openedPalette === key ? null : key)}
               value={value}
             />
           ))}
