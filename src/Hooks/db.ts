@@ -5,6 +5,7 @@ import { SKETCH_DEFAULT_NAME } from "../Nodes/Misc/StartNode";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
 import { SketchTemplate } from "../Types/SketchTemplate";
 import { useDialog } from "./useDialog";
+import { toastError, toastSuccess } from "./useToast";
 import { useTree } from "./useTree";
 
 export interface Sketch {
@@ -70,7 +71,12 @@ export function saveSketchWithNamePrompt(saveSketch: (name: string, content: Ske
         //Using a timeout because setSketchName is asynchronous and i can't be bothered to wait do it properly. If i don't the exported tree might have the wrong name.
         setTimeout(() => {
           const content = useTree.getState().exportTemplate();
-          saveSketch(name, content);
+          try {
+            saveSketch(name, content);
+            toastSuccess("Sketch saved !");
+          } catch {
+            toastError("Something went wrong with your save");
+          }
         }, 100);
       },
       "Save Sketch",
@@ -79,6 +85,11 @@ export function saveSketchWithNamePrompt(saveSketch: (name: string, content: Ske
     );
   } else {
     const content = tree.exportTemplate();
-    saveSketch(name, content);
+    try {
+      saveSketch(name, content);
+      toastSuccess("Sketch saved !");
+    } catch {
+      toastError("Something went wrong with your save");
+    }
   }
 }

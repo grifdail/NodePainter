@@ -13,6 +13,7 @@ import { resetCamera } from "./Utils/resetCamera";
 import { css } from "styled-components";
 import { PortStyle } from "./PortStyle";
 import { loadExample } from "./Utils/loadExample";
+import { ToastContainer } from "./Components/ToastContainer";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);
@@ -29,6 +30,7 @@ function App() {
       <GraphCache />
       <Router />
       <Tooltip id="tooltip"></Tooltip>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }
