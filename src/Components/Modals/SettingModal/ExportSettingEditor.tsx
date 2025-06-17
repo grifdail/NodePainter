@@ -11,6 +11,7 @@ import schemaJSON from "../../../schema/PlayerPrefExport.json";
 import { PlayerPrefExport } from "../../../Types/PlayerPrefStore";
 import { useDialog } from "../../../Hooks/useDialog";
 import styled from "styled-components";
+import { toastSuccess } from "../../../Hooks/useToast";
 
 const ajv = new Ajv({ meta: false, validateSchema: false, strict: true });
 
@@ -54,6 +55,7 @@ export const ExportSettingEditor = () => {
         (isConfirmed) => {
           if (isConfirmed) {
             loadJson(parsed);
+            toastSuccess("Setting Imported !");
           }
         },
         "Are you sure ?",

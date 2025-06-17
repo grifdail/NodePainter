@@ -19,6 +19,7 @@ import { TextInput } from "../Generics/Inputs/TextInput";
 import { download } from "../../Utils/download";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { Exporters, ExporterType } from "./Exporters/Exporter";
+import { toastSuccess } from "../../Hooks/useToast";
 
 const MainDiv = styled.div`
   display: flex;
@@ -235,6 +236,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
                 setProgress(100);
                 setBlob(blob);
                 download(blob as Blob, filenameWithExt);
+                toastSuccess("Rendering Complete !");
               }}
               onProgress={onProgress}
             />

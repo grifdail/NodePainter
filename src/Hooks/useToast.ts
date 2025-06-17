@@ -55,7 +55,7 @@ export function toastError(message: string) {
     message,
     icon: IconExclamationCircle,
     duration: 5,
-    type: "success",
+    type: "error",
     id: nanoid(),
   });
 }

@@ -10,6 +10,7 @@ import { useDialog } from "../../Hooks/useDialog";
 import { useState } from "react";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { START_NODE } from "../../Nodes/Misc/StartNode";
+import { toastError } from "../../Hooks/useToast";
 
 export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, number] }) {
   const selectionNodes = useSelection((state) => state.nodes);
@@ -129,6 +130,6 @@ export function parsePastedValue(text: string, worldPosition: [number, number] =
     }
   } catch (err: any) {
     console.error(err);
-    useDialog.getState().openError("What you're trying to past is not valid");
+    toastError("What you're trying to past is not valid");
   }
 }

@@ -36,6 +36,7 @@ import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId 
 import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 import { usePortSelection } from "./usePortSelection";
+import { toastSuccess } from "./useToast";
 
 export const useTree = create<TreeStore>()((set, get) => {
   const a: TreeStore = {
@@ -241,6 +242,7 @@ export const useTree = create<TreeStore>()((set, get) => {
     loadTemplate(temp) {
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
+      toastSuccess("Sketch loaded !");
       return true;
     },
     exportTemplate() {
