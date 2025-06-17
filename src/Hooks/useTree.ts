@@ -232,7 +232,6 @@ export const useTree = create<TreeStore>()((set, get) => {
       resetCamera();
     },
     loadTemplate(temp) {
-      console.log(JSON.stringify(temp));
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       return true;

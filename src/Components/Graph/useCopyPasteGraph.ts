@@ -10,7 +10,7 @@ export function useCopyPasteGraph() {
 
 function useEffectCopy() {
   function handler(event: ClipboardEvent) {
-    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "textarea")) {
+    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) {
       return;
     }
     copySelection();
@@ -23,7 +23,7 @@ function useEffectCopy() {
 
 function useEffectPaste() {
   function handler(event: ClipboardEvent) {
-    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "textarea")) {
+    if (event.target && "tagName" in event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) {
       return;
     }
     if (event.clipboardData?.types.includes("text/plain")) {

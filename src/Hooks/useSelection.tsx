@@ -66,6 +66,9 @@ export const useSelection = create<SelectionStore>()(
         const tree = useTree.getState();
         const nodes = Object.values(tree.nodes)
           .filter((node) => {
+            if (node.graph !== tree.editedGraph) {
+              return false;
+            }
             if (node.positionX + NODE_WIDTH < minX || node.positionX > maxX || node.positionY > maxY) {
               return false;
             }

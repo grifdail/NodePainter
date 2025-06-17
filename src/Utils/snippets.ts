@@ -53,3 +53,27 @@ export function extractSnipet(name: string, nodeIds: string[], tree: TreeStore):
     name: name,
   };
 }
+
+export function validateSnipet(nodeIds: string[], tree: TreeStore) {
+  return nodeIds
+    .map((node) => {
+      const n = tree.getNode(node);
+      return [n, tree.getNodeTypeDefinition(n)] as const;
+    })
+    .every(([node, def]) => {
+      console.log(def, def.IsUnique);
+      if (def.IsUnique) {
+        console.log("unique");
+        return false;
+      }
+      if (node.pairedNode && !nodeIds.includes(node.pairedNode)) {
+        console.log("NotPaired");
+        return false;
+      }
+      if (def.executeAs) {
+        console.log("Executeedas");
+        return false;
+      }
+      return true;
+    });
+}

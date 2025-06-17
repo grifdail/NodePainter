@@ -2,24 +2,33 @@ import { MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useSelection } from "../../Hooks/useSelection";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import IconCopy from "@tabler/icons-react/dist/esm/icons/IconCopy";
-import { extractSnipet, loadSnippet, validateSnipetJson } from "../../Utils/snippets";
+import { extractSnipet, loadSnippet, validateSnipet, validateSnipetJson } from "../../Utils/snippets";
 import { useTree } from "../../Hooks/useTree";
 import { IconClipboard, IconCode, IconCut, IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
 import { copyToClipboard } from "../../Utils/copyToClipboard";
 import { useDialog } from "../../Hooks/useDialog";
 import { useState } from "react";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
+import { START_NODE } from "../../Nodes/Misc/StartNode";
 
 export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, number] }) {
   const selectionNodes = useSelection((state) => state.nodes);
   const snippets = usePlayerPref((state) => state.snippets);
-
+  const tree = useTree();
+  const isValid = validateSnipet(selectionNodes, tree);
   return (
     <>
       <MenuItem
         onClick={() => copySelection()}
-        disabled={selectionNodes.length < 1}>
+        disabled={selectionNodes.length < 1 || !isValid}>
         <IconCopy /> Copy selection
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          duplicateSelection(worldPosition);
+        }}
+        disabled={selectionNodes.length < 1 || selectionNodes.includes(START_NODE)}>
+        <IconCopy /> Duplicate selection
       </MenuItem>
       <MenuItem onClick={() => readSnipetFromClipboard(worldPosition)}>
         <IconClipboard />
@@ -27,7 +36,7 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
       </MenuItem>
       <MenuItem
         onClick={cutSelection}
-        disabled={selectionNodes.length < 1}>
+        disabled={selectionNodes.length < 1 || !isValid}>
         <IconCut /> Cut selection
       </MenuItem>
       <MenuItem
@@ -35,12 +44,12 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
           useTree.getState().deleteNodes(selectionNodes);
           useSelection.getState().clear();
         }}
-        disabled={selectionNodes.length < 1}>
+        disabled={selectionNodes.length < 1 || selectionNodes.includes(START_NODE)}>
         <IconTrash /> Delete selection
       </MenuItem>
       <MenuDivider></MenuDivider>
       <MenuItem
-        disabled={selectionNodes.length < 1}
+        disabled={selectionNodes.length < 1 || !isValid}
         onClick={() => saveSelectionAsSnippet()}>
         <IconDeviceFloppy></IconDeviceFloppy>
         Save as snippet
@@ -65,7 +74,10 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
 }
 
 export const cutSelection = () => {
-  copySelection();
+  var result = copySelection();
+  if (!result) {
+    return;
+  }
   useTree.getState().deleteNodes(useSelection.getState().nodes);
   useSelection.getState().clear();
 };
@@ -77,10 +89,27 @@ function saveSelectionAsSnippet(): void {
 }
 
 export const copySelection = () => {
-  var output = JSON.stringify(extractSnipet("test", useSelection.getState().nodes, useTree.getState()));
+  var selection = useSelection.getState().nodes;
+  const tree = useTree.getState();
+  if (!validateSnipet(selection, tree)) {
+    return false;
+  }
+  var output = JSON.stringify(extractSnipet("test", selection, tree));
   copyToClipboard(output);
+  return true;
 };
 
+export const duplicateSelection = (worldPosition: [number, number] = [0, 0]) => {
+  var selection = useSelection.getState().nodes;
+  const tree = useTree.getState();
+  if (selection.includes(START_NODE)) {
+    return;
+  }
+  var snippet = extractSnipet("test", selection, tree);
+  tree.loadSnipets(snippet, worldPosition[0], worldPosition[1], (newNodes) => {
+    useSelection.getState().setSelection(Object.values(newNodes));
+  });
+};
 export const readSnipetFromClipboard = (worldPosition: [number, number]) => {
   navigator.clipboard.readText().then((clipText) => {
     parsePastedValue(clipText, worldPosition);
@@ -91,10 +120,8 @@ export function parsePastedValue(text: string, worldPosition: [number, number] =
   try {
     const parsedData = JSON.parse(text);
     const item = validateSnipetJson(parsedData);
-    console.log(item, parsedData);
     if (item) {
       useTree.getState().loadSnipets(parsedData, worldPosition[0], worldPosition[1], (newNodes) => {
-        console.log(Object.values(newNodes));
         useSelection.getState().setSelection(Object.values(newNodes));
       });
     } else {
