@@ -56,6 +56,13 @@ export const useTree = create<TreeStore>()((set, get) => {
     getSketchName() {
       return get().nodes[START_NODE].settings["name"] as string;
     },
+    setSketchName(name) {
+      set(
+        produce((state) => {
+          state.nodes[START_NODE].settings["name"] = name;
+        })
+      );
+    },
     addNode(nodeType: string, posX: number, posY: number, modifier: ((node: NodeData, def: NodeDefinition) => void) | null = null) {
       const def = get().getNodeTypeDefinition(nodeType);
       const newNodeData = createNodeData(def, posX, posY);

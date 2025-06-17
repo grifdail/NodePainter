@@ -2,11 +2,13 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
 import { extractSnipet } from "../Utils/snippets";
+import { saveSketchWithNamePrompt, useAllSavedSketch } from "./db";
 import { useRouter } from "./useRouter";
 import { useSelection } from "./useSelection";
 import { useTree } from "./useTree";
 
 export const useGraphHotkey = () => {
+  const [_, saveSketch] = useAllSavedSketch();
   useHotkeys("ctrl+alt+d", () => {
     var tree = useTree.getState();
     const nodeLibrary = Object.values(tree.getNodeLibrary()).filter((item) => {
@@ -65,5 +67,9 @@ export const useGraphHotkey = () => {
       .map((node) => node.id);
 
     useSelection.getState().setSelection(toSelect);
+  });
+  useHotkeys("mod+s", (e) => {
+    e.preventDefault();
+    saveSketchWithNamePrompt(saveSketch);
   });
 };

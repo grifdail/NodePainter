@@ -4,7 +4,7 @@ import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
 import { resetCamera } from "../Utils/resetCamera";
 import { Templates } from "../Data/templates";
-import { Sketch, useAllSavedSketch } from "../Hooks/db";
+import { saveSketchWithNamePrompt, Sketch, useAllSavedSketch } from "../Hooks/db";
 import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
@@ -25,16 +25,6 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
     var template: SketchTemplate = JSON.parse(sketch.content);
     useTree.getState().loadTemplate(template);
   }
-
-  const saveCurrentSketch = useCallback(
-    function saveCurrentSketch() {
-      var tree = useTree.getState();
-      const name = tree.getSketchName();
-      const content = tree.exportTemplate();
-      saveSketch(name, content);
-    },
-    [saveSketch]
-  );
 
   const exportPng = useCallback(() => {
     const canvas = document.querySelector("#SketchPreview canvas.p5Canvas") as HTMLCanvasElement;
@@ -71,7 +61,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
       <MenuItem onClick={() => openModal(Routes.Save)}>
         <IconDeviceDesktopDown /> Save to JSON
       </MenuItem>
-      <MenuItem onClick={() => saveCurrentSketch()}>
+      <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
         <IconDeviceFloppy /> Save to browser
       </MenuItem>
 

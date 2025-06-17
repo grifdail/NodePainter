@@ -1,8 +1,11 @@
 import Dexie, { Table } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback } from "react";
+import { SKETCH_DEFAULT_NAME } from "../Nodes/Misc/StartNode";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
 import { SketchTemplate } from "../Types/SketchTemplate";
+import { useDialog } from "./useDialog";
+import { useTree } from "./useTree";
 
 export interface Sketch {
   name: string;
@@ -55,4 +58,27 @@ export function useAllSavedFunction(): [Sketch[] | undefined, (name: string, fun
     });
   }, []);
   return [functions, saveFunction];
+}
+
+export function saveSketchWithNamePrompt(saveSketch: (name: string, content: SketchTemplate) => void) {
+  var tree = useTree.getState();
+  const name = tree.getSketchName();
+  if (name === SKETCH_DEFAULT_NAME) {
+    useDialog.getState().openPrompt(
+      (name) => {
+        tree.setSketchName(name);
+        //Using a timeout because setSketchName is asynchronous and i can't be bothered to wait do it properly. If i don't the exported tree might have the wrong name.
+        setTimeout(() => {
+          const content = useTree.getState().exportTemplate();
+          saveSketch(name, content);
+        }, 100);
+      },
+      "Save Sketch",
+      "What name do you want to give your sketch ?",
+      name
+    );
+  } else {
+    const content = tree.exportTemplate();
+    saveSketch(name, content);
+  }
 }

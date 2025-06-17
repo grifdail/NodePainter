@@ -1,6 +1,7 @@
 import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 export const START_NODE = "Start";
+export const SKETCH_DEFAULT_NAME = "sketch";
 
 export const StartNode: NodeDefinition = {
   id: START_NODE,
@@ -18,7 +19,7 @@ export const StartNode: NodeDefinition = {
   dataOutputs: [],
   preventSnippet: true,
   settings: [
-    { id: "name", type: "string", defaultValue: "sketch" },
+    { id: "name", type: "string", defaultValue: SKETCH_DEFAULT_NAME },
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
   ],

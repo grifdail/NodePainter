@@ -54,6 +54,7 @@ export type TreeStore = {
   exportCustomeFunction: (id: string) => { definitions: NodeDefinition[]; nodes: NodeCollection };
   loadCustomeFunction: (customFunctionData: ExportedCustomFunction) => void;
   getSketchName: () => string;
+  setSketchName: (name: string) => void;
   freeSpace: (direction: EDirection, amount: number, offsetX: number, offsetY: number) => void;
   createBlackboardNode: (port: BlackboardPortData[], name: string, x: number, y: number, pairedNode: string) => void;
   dangerouselyUpdateNode: (nodeId: string, cb: (node: NodeData) => void) => void;
