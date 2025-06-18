@@ -1,5 +1,5 @@
-import { Color, Vector } from "../Types/vectorDataType";
-import { validateSwizzleString } from "./math/swizzle/ValidateSwizzleString";
+import { Color, Vector } from "../../Types/vectorDataType";
+import { validateSwizzleString } from "../math/swizzle/ValidateSwizzleString";
 
 export type ConstrainDeclaration = {
   id: ConstrainTypes;

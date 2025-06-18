@@ -2,7 +2,7 @@ import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
 import { Input } from "../../StyledComponents/Input";
-import { applyConstraintCompose, ConstrainDeclaration } from "../../../Utils/applyConstraints";
+import { applyConstraintCompose, ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
 import { useCallback } from "react";
 
 const math = create(all);

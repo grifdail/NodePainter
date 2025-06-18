@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../StyledComponents/Input";
-import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
 
 export function TextInput({ onChange, value, disabled = false, constrains }: { onChange: (value: string) => void; value: string; disabled?: boolean; constrains?: ConstrainDeclaration[] }) {
   var [rawField, setRawField] = useState(value);

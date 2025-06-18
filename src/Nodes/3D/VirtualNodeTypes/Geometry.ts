@@ -4,7 +4,7 @@ import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeTags } from "../../../Types/NodeTags";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
-import { Constraints } from "../../../Utils/applyConstraints";
+import { Constraints } from "../../../Utils/graph/applyConstraints";
 import { SimpleNodeVirtualNodeType } from "./SimpleNodeVirtualNodeType";
 
 export abstract class GeometryVirtualNodeType<TGeometry, TProps extends any[]> extends SimpleNodeVirtualNodeType<TGeometry, TProps> {

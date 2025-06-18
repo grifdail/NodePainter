@@ -3,8 +3,8 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
-import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { Constraints } from "../../Utils/graph/applyConstraints";
 import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const RandomOnSphere: NodeDefinition = {

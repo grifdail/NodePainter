@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input, InputBackgroundColor } from "../../StyledComponents/Input";
-import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
 import styled from "styled-components";
 
 const StyledTextare = styled.textarea`

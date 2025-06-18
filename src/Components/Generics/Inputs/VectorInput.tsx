@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { NumberInput } from "../Inputs/NumberInput";
 import { Vector2 } from "@use-gesture/react";
-import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
 import { Vector } from "../../../Types/vectorDataType";
 
 const StyledDiv = styled.div`
