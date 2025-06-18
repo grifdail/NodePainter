@@ -69,6 +69,7 @@ export const CombineLoop: NodeDefinition = {
       const array: (() => void)[] = [];
       for (var i = 0; i < count; i++) {
         context.blackboard[`${node.id}-index`] = i;
+        context.blackboard[`${node.id}-count`] = count;
         array[i] = context.getInputValueDrawing(node, "value");
       }
       return () => {
