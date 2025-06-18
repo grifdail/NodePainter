@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/useCache";
+import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ToggleSwitchNode: NodeDefinition = {
   id: "ToggleSwitch",

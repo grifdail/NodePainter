@@ -1,4 +1,4 @@
-import { Snippet, SnippetCollection } from "../Utils/snippets";
+import { Snippet, SnippetCollection } from "../Utils/graph/modification/snippets";
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
 export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsedDates" | "nodesUseCount" | "nodeSorting" | "palettes" | "gradient" | "colorPreset" | "hasSeenIntroPopup" | "snippets">;

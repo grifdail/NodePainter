@@ -2,7 +2,7 @@ import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/useCache";
+import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const Counter: NodeDefinition = {
   id: "Counter",

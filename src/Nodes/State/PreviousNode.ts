@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
+import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const PreviousNode: NodeDefinition = {
   id: "Previous",

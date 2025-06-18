@@ -2,7 +2,7 @@ import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/useCache";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 //const gallery = Object.values(import.meta.glob("@assets/patterns/*.png", { eager: true, query: "?url" })) as string[];
 const gallery = [] as string[];

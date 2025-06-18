@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
 import { ExecutionContext, FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
-import { sanitizeForShader } from "../../Utils/sanitizeForShader";
+import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 const VERTEX_SHADER = `
 IN vec3 aPosition;

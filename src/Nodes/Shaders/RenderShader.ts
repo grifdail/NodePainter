@@ -2,7 +2,7 @@ import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
-import { sanitizeForShader } from "../../Utils/sanitizeForShader";
+import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 export const RenderShader: NodeDefinition = {
   id: "RenderShader",

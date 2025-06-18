@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
+import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const DetectChangeNode: NodeDefinition = {
   id: "DetectChange",

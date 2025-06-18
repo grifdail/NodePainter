@@ -4,8 +4,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
-import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const RandomOnSphere: NodeDefinition = {
   id: "RandomOnSphere",

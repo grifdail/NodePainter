@@ -1,4 +1,4 @@
-import { PathNode } from "../Data/PathNode";
+import { PathNode } from "../../Data/PathNode";
 
 export function buildTreeFromPath<T>(paths: Record<string, T>, modifier: ((s: string) => string) | undefined): PathNode<T> {
   var root: PathNode<T> = { children: {}, value: null };

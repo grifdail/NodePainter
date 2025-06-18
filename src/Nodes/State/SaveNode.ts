@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/useCache";
+import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const SaveNode: NodeDefinition = {
   id: "Save",

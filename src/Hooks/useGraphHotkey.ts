@@ -1,7 +1,7 @@
 import { useHotkeys } from "react-hotkeys-hook";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
-import { extractSnipet } from "../Utils/snippets";
+import { extractSnipet } from "../Utils/graph/modification/snippets";
 import { saveSketchWithNamePrompt, useAllSavedSketch } from "./db";
 import { useRouter } from "./useRouter";
 import { useSelection } from "./useSelection";

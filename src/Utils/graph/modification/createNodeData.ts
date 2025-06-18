@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
 import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
-import { createDataOutputData } from "../../createDataOutputData";
-import { createPortConnectionsForInputsDefinition } from "../../createPortConnectionsForInputsDefinition";
+import { createObjectFromOutputPortDefinition } from "./createObjectFromOutputPortDefinition";
+import { createPortConnectionsForInputsDefinition } from "./createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
@@ -11,7 +11,7 @@ export function createNodeData(def: NodeDefinition, x: number, y: number, id: st
     id: id || "node" + nanoid().replaceAll("_", "y"),
     dataInputs: createPortConnectionsForInputsDefinition(def),
     settings: createSettingObjectForSettingDefinition(def.settings),
-    dataOutputs: createDataOutputData(def),
+    dataOutputs: createObjectFromOutputPortDefinition(def),
     positionX: x,
     positionY: y,
     selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",

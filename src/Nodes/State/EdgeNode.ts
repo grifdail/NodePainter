@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
+import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 const EdgeTypes = ["Both", "Rising", "Falling"] as const;
 type EdgeType = (typeof EdgeTypes)[number];

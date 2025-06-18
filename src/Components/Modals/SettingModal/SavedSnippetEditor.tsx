@@ -9,7 +9,7 @@ import { GradientSetting } from "../../Settings/GradientSetting";
 import { SearchForm } from "../../Generics/SearchForm";
 import { IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
-import { Snippet } from "../../../Utils/snippets";
+import { Snippet } from "../../../Utils/graph/modification/snippets";
 
 const NodeList = styled.section`
   display: flex;

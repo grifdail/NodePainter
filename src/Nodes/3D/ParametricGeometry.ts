@@ -4,8 +4,8 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2 } from "../../Types/vectorDataType";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { applyConstraint, Constraints } from "../../Utils/ui/applyConstraints";
-import { createOrSelectFromCache } from "../../Utils/useCache";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {

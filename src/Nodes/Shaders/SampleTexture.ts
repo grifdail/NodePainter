@@ -2,7 +2,7 @@ import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
-import { sanitizeForShader } from "../../Utils/sanitizeForShader";
+import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 export const SampleTexture: NodeDefinition = {
   id: "Sample Texture",

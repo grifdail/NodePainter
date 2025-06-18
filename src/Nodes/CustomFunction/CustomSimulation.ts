@@ -3,8 +3,8 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortDefinition } from "../../Types/PortDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
+import { getCacheKey, updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { ExecutionContext } from "../../Utils/graph/execution/createExecutionContext";
-import { getCacheKey, updateAndReadFromCache } from "../../Utils/useCache";
 export const CUSTOM_SIMULATION = "CustomSimulation";
 
 export const CustomSimulation: NodeDefinition = {

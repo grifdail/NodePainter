@@ -4,7 +4,7 @@ import { TreeStore } from "../../../Types/TreeStore";
 import { PortConnection } from "../../../Types/PortConnection";
 import { NodeData } from "../../../Types/NodeData";
 import { ExecutionContext } from "./createExecutionContext";
-import { sanitizeForShader } from "../../sanitizeForShader";
+import { sanitizeForShader } from "./sanitizeForShader";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { PortType } from "../../../Types/PortType";
 

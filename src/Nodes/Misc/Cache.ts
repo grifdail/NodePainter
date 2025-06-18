@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/useCache";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const CacheNode: NodeDefinition = {
   id: "Cache",

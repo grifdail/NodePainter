@@ -18,18 +18,18 @@ import { PortDefinition } from "../Types/PortDefinition";
 import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
-import { createDataOutputData } from "../Utils/createDataOutputData";
-import { createPortConnectionsForInputsDefinition } from "../Utils/createPortConnectionsForInputsDefinition";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import { createDefaultNodeConnection } from "../Utils/graph/modification/createDefaultNodeConnection";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
+import { createObjectFromOutputPortDefinition } from "../Utils/graph/modification/createObjectFromOutputPortDefinition";
 import { createPortConnection } from "../Utils/graph/modification/createPortConnection";
+import { createPortConnectionsForInputsDefinition } from "../Utils/graph/modification/createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "../Utils/graph/modification/createSettingObjectForSettingDefinition";
 import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
+import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
-import { loadSnippet, Snippet } from "../Utils/snippets";
 import { buildBoundingBox } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
@@ -230,7 +230,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           const def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
 
           state.nodes[node].inputData = createPortConnectionsForInputsDefinition(def);
-          state.nodes[node].outputData = createDataOutputData(def);
+          state.nodes[node].outputData = createObjectFromOutputPortDefinition(def);
           state.nodes[node].settings = createSettingObjectForSettingDefinition(def.settings);
         })
       );

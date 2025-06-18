@@ -2,7 +2,7 @@ import { MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useSelection } from "../../Hooks/useSelection";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import IconCopy from "@tabler/icons-react/dist/esm/icons/IconCopy";
-import { extractSnipet, loadSnippet, validateSnipet, validateSnipetJson } from "../../Utils/snippets";
+import { extractSnipet, loadSnippet, validateSnipet, validateSnipetJson } from "../../Utils/graph/modification/snippets";
 import { useTree } from "../../Hooks/useTree";
 import { IconClipboard, IconCode, IconCut, IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
 import { copyToClipboard } from "../../Utils/ui/copyToClipboard";

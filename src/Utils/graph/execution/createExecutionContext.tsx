@@ -11,7 +11,7 @@ import { Vector2 } from "@use-gesture/react";
 import { ImageData } from "../../../Types/ImageData";
 import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../../../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
-import { sanitizeForShader } from "../../sanitizeForShader";
+import { sanitizeForShader } from "./sanitizeForShader";
 import { MaterialData, MeshData } from "../../../Types/MaterialData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import Rand from "rand-seed";

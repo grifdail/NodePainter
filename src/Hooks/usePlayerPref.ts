@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 import { DefaultPalettes } from "../Data/Palettes";
 import { PlayerPrefExport, PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
-import { Snippet } from "../Utils/snippets";
+import { Snippet } from "../Utils/graph/modification/snippets";
 
 export const usePlayerPref = create<PlayerPrefStore>()(
   persist(
