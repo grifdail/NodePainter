@@ -34,7 +34,7 @@ export const DotProduct: NodeDefinition = {
   settings: [],
   availableTypes: portTypesWithTags(["common", "true-vector"], ["array"]),
   onChangeType: changeTypeGenerator(["a", "b"], []),
-  hasInput: hasInputGenerator(portTypesWithTags(["common", "true-vector"])),
+  hasInput: hasInputGenerator(portTypesWithTags(["common", "true-vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

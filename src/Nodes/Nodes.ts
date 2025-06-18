@@ -71,10 +71,10 @@ import { DrawTriangle } from "./Draw/DrawTriangle";
 import { FillBackground } from "./Draw/FillBackground";
 
 import { Nodes3D } from "./3D/3DNodes";
+import { ArrayAgreggate } from "./Array/ArrayAggregate";
 import { ArrayMap } from "./Array/ArrayMap";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
-import { FindBest } from "./Array/FindBest";
 import { GenerateArray } from "./Array/GenerateArray";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
@@ -393,7 +393,7 @@ export const Nodes: Array<NodeDefinition> = [
   StaticArray,
   Count,
   Sum,
-  FindBest,
+  ArrayAgreggate,
   Filter,
   Slice,
   GenerateArray,

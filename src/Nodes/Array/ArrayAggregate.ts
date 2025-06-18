@@ -10,7 +10,8 @@ import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefi
 import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): void => {
-  var type = dataInputs["in"].type.slice("array-".length) as PortType;
+  var typeValue = dataInputs["in"].type.slice("array-".length) as PortType;
+  var typeAccumulator = dataInputs["accumulator"].type as PortType;
   setTimeout(() => {
     useTree.getState().createBlackboardNode(
       [
@@ -21,11 +22,16 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
         },
         {
           key: `${id}-value`,
-          type: type,
+          type: typeValue,
           id: "value",
         },
+        {
+          key: `${id}-accumulator`,
+          type: typeAccumulator,
+          id: "accumulator",
+        },
       ],
-      "Array Map index",
+      "Array agregate index",
       positionX - 400,
       positionY,
       id
@@ -33,9 +39,8 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
   }, 10);
 };
 
-export const ArrayMap: NodeDefinition = {
-  id: "Array Map",
-  alias: "Select",
+export const ArrayAgreggate: NodeDefinition = {
+  id: "ArrayAgreggate",
   description: "Return a new array that associate every item in the input array to a new one",
   icon: DoubleIconGen(IconList, IconArrowRight),
   tags: ["Array"],
@@ -63,7 +68,6 @@ export const ArrayMap: NodeDefinition = {
         }
         var input = fieldResult["input"] as PortType;
         var output = fieldResult["output"] as PortType;
-        var outputBase = output.slice("array-".length) as PortType;
         console.log(input, output);
         useTree.getState().dangerouselyUpdateNode(node.id, (node) => {
           node.dataInputs["in"] = createPortConnection({
@@ -71,10 +75,10 @@ export const ArrayMap: NodeDefinition = {
             type: input,
             defaultValue: [],
           });
-          node.dataInputs["evaluate"] = createPortConnection({
-            id: "evaluate",
-            type: outputBase,
-            defaultValue: PortTypeDefinitions[outputBase]?.createDefaultValue(),
+          node.dataInputs["accumulator"] = createPortConnection({
+            id: "accumulator",
+            type: output,
+            defaultValue: PortTypeDefinitions[output]?.createDefaultValue(),
           });
           node.dataOutputs["out"] = { id: "out", defaultValue: [], type: output };
         });
@@ -101,10 +105,10 @@ export const ArrayMap: NodeDefinition = {
         },
         {
           key: "output",
-          label: "Input",
+          label: "Accumulator type",
           input: PortTypeDropdown,
-          defaultValue: "array-number",
-          passTrough: { availableTypes: portTypesWithTags(["common", "array"]) },
+          defaultValue: "number",
+          passTrough: { availableTypes: portTypesWithTags(["common"]) },
         },
       ],
     });
@@ -114,10 +118,11 @@ export const ArrayMap: NodeDefinition = {
     if (array.length === 0) {
       return PortTypeDefinitions[node.dataOutputs["out"].type].createDefaultValue();
     }
-    const result: any[] = array.map((item, i) => {
+    const result: any[] = array.reduce((accumulator, item, i) => {
       context.blackboard[`${node.id}-index`] = i;
       context.blackboard[`${node.id}-value`] = item;
-      return context.getInputValue(node, "evaluate", node.dataInputs["evaluate"].type);
+      context.blackboard[`${node.id}-accumulator`] = accumulator;
+      return context.getInputValue(node, "accumulator", node.dataInputs["accumulator"].type);
     });
     return result;
   },

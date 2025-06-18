@@ -4,6 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 export const TextConcat: NodeDefinition = {
   id: "TextConcat",
   description: "concat two string together",
+  alias: "Join",
   icon: IconFileText,
   tags: ["Text"],
   dataInputs: [
