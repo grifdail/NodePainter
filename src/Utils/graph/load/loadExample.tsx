@@ -1,9 +1,9 @@
 import createClient from "json-url";
-import { useTree } from "../Hooks/useTree";
-import { SketchTemplate } from "../Types/SketchTemplate";
-import { useRouter } from "../Hooks/useRouter";
-import { Templates } from "../Data/templates";
-import { useDialog } from "../Hooks/useDialog";
+import { useTree } from "../../../Hooks/useTree";
+import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { useRouter } from "../../../Hooks/useRouter";
+import { Templates } from "../../../Data/templates";
+import { useDialog } from "../../../Hooks/useDialog";
 
 export async function loadExample(exampleName: any) {
   var id = exampleName.split("/");

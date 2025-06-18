@@ -2,7 +2,7 @@ import { IconPhoto } from "@tabler/icons-react";
 import p5 from "p5";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { ExecutionContext } from "../../Utils/createExecutionContext";
+import { ExecutionContext } from "../../Utils/graph/execution/createExecutionContext";
 
 const KEY_BLUR_SHADER_H = "BLUR_EFFECT_SHADER_H";
 const KEY_BLUR_SHADER_V = "BLUR_EFFECT_SHADER_V";

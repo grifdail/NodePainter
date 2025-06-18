@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { GraphNodeUI } from "../Components/Graph/GraphNodeUI";
-import { createNodeData } from "../Utils/createNodeData";
+import { createNodeData } from "../Utils/graph/modification/createNodeData";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { SpringValue } from "@react-spring/web";
 import { Remap } from "../Nodes/Math/Remap";

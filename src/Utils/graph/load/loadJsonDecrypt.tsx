@@ -1,7 +1,7 @@
 import createClient from "json-url";
-import { useTree } from "../Hooks/useTree";
-import { SketchTemplate } from "../Types/SketchTemplate";
-import { useRouter } from "../Hooks/useRouter";
+import { useTree } from "../../../Hooks/useTree";
+import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { useRouter } from "../../../Hooks/useRouter";
 
 export async function loadJsonDecrypt(parse: any) {
   var codec = createClient("lzma");

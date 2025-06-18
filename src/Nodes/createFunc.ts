@@ -1,6 +1,6 @@
 import { Icon, IconSquareRoot2 } from "@tabler/icons-react";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../Utils/generateShaderCodeFromNodeData";
+import { generateShaderCodeFromNodeData } from "../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export function createFunc(id: string, evalOperation: (input: any) => any, description?: string, icon?: Icon, shaderCode?: (v: string) => string): NodeDefinition {
   return {

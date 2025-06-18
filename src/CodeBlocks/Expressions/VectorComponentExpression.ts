@@ -4,7 +4,7 @@ import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpres
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
-import { FunctionContext } from "../../Utils/createExecutionContext";
+import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 
 const Mapping = {
   X: 0,

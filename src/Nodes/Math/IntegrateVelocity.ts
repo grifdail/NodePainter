@@ -2,7 +2,7 @@ import { IconTrendingDown3 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
-import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { vectorAddition, vectorScale } from "../../Utils/math/vectorUtils";
 
 export const IntegrateVelocity: NodeDefinition = {

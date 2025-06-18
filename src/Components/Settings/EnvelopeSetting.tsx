@@ -8,12 +8,12 @@ import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Button } from "../Generics/Button";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDrag } from "@use-gesture/react";
-import { moveUpArray } from "../../Utils/moveUpArray";
 import { calculatePathForFunction } from "./calculatePathForFunction";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { EnvelopeSettingDefinition } from "../../Types/SettingDefinition";
+import { moveUpArray } from "../../Utils/misc/moveUpArray";
 
 const ColorList = styled.ul`
   display: flex;

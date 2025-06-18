@@ -2,7 +2,7 @@ import { ControlledMenu, MenuDivider, MenuItem, MenuState } from "@szhsin/react-
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
-import { resetCamera } from "../../Utils/resetCamera";
+import { resetCamera } from "../../Utils/ui/resetCamera";
 import { IconArrowsHorizontal, IconArrowsVertical, IconCopy, IconFocusCentered, IconPlus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";

@@ -9,7 +9,7 @@ import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunction
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { Routes } from "../Types/Routes";
-import { createDefaultMaterial } from "../Utils/createDefaultMaterial";
+import { createDefaultMaterial } from "../Utils/graph/definition/createDefaultMaterial";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 
 type CustomNodeCreationSetting = {

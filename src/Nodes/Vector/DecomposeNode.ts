@@ -3,8 +3,8 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
+import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",

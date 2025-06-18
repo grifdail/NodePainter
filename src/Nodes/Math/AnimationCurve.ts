@@ -3,7 +3,7 @@ import { AnimationTrack, convertAnimationTrackType, createDefaultAnimationTrack,
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
-import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 const onChangeType = changeTypeGenerator([], ["value"]);
 

@@ -1,6 +1,6 @@
-import { useRouter } from "../Hooks/useRouter";
-import { useTree } from "../Hooks/useTree";
-import { SketchTemplate } from "../Types/SketchTemplate";
+import { useRouter } from "../../../Hooks/useRouter";
+import { useTree } from "../../../Hooks/useTree";
+import { SketchTemplate } from "../../../Types/SketchTemplate";
 
 export async function loadFromUrl(encodedUrl: string | null) {
   if (!encodedUrl) {

@@ -1,7 +1,7 @@
 import { IconRotate3d } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { createMultiTypeNodeDefinition } from "../../Utils/createMultyTypeNodeDefinition";
+import { createMultiTypeNodeDefinition } from "../../Utils/graph/definition/createMultyTypeNodeDefinition";
 import { eulerToQuat } from "../../Utils/math/quaternionUtils";
 
 export const EulerAngle: NodeDefinition = createMultiTypeNodeDefinition(

@@ -3,8 +3,8 @@ import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
 import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
-import { FunctionContext } from "../../Utils/createExecutionContext";
-import { Comparator, ComparatorOps } from "../../Utils/logicUtils";
+import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
+import { Comparator, ComparatorOps } from "../../Utils/math/logicUtils";
 
 export const CompareNumberExpression: CodeBlockExpressionGenerator = {
   id: "CompareNumber",

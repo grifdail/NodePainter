@@ -1,7 +1,7 @@
-import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
-import { NodeData } from "../Types/NodeData";
-import { NodeDefinition } from "../Types/NodeDefinition";
-import { TreeStore } from "../Types/TreeStore";
+import { GetNodeHeight } from "../../../Components/Graph/GetNodeHeight";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { TreeStore } from "../../../Types/TreeStore";
 
 export const sortAroundNode = (tree: TreeStore, targetId: string) => {
   const rootNode = tree.nodes[targetId];

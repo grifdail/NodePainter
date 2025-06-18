@@ -4,8 +4,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createColor } from "../../Types/vectorDataType";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createPortConnection } from "../../Utils/createPortConnection";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 const addNewPort = (node: NodeData) => {
   var count = Object.entries(node.dataInputs).length;

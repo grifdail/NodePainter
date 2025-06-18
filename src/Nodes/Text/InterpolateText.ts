@@ -7,9 +7,9 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWith } from "../../Types/PortTypeDefinitions";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createPortConnection } from "../../Utils/createPortConnection";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const InterpolateText: NodeDefinition = {
   id: "InterpolateText",

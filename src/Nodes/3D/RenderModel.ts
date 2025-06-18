@@ -2,7 +2,7 @@ import { IconBadge3d } from "@tabler/icons-react";
 import { MaterialData } from "../../Types/MaterialData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector3 } from "../../Types/vectorDataType";
-import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
+import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
 import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 
 export const RenderModel: NodeDefinition = {

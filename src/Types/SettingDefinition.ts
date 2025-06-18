@@ -1,6 +1,6 @@
 import { Icon } from "@tabler/icons-react";
 import { EasingFunctionType } from "../libs/easing";
-import { ConstrainDeclaration } from "../Utils/graph/applyConstraints";
+import { ConstrainDeclaration } from "../Utils/ui/applyConstraints";
 import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock";
 import { EnvelopeData } from "./EnvelopeData";

@@ -1,8 +1,8 @@
 import { nanoid } from "nanoid";
-import { NodeData } from "../Types/NodeData";
-import { NodeDefinition } from "../Types/NodeDefinition";
-import { createDataOutputData } from "./createDataOutputData";
-import { createPortConnectionsForInputsDefinition } from "./createPortConnectionsForInputsDefinition";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { createDataOutputData } from "../../createDataOutputData";
+import { createPortConnectionsForInputsDefinition } from "../../createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {

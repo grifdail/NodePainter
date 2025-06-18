@@ -8,7 +8,7 @@ import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Color } from "../../../Types/vectorDataType";
 import { fromHex, invertColor, toHex, validateHex } from "../../../Utils/math/colorUtils";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
-import { applyConstraint, ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
 
 export const ColorButton = styled.button<{ $color: string }>`
   background: ${(props) => props.$color};

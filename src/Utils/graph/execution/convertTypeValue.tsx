@@ -1,5 +1,5 @@
-import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
-import { PortType } from "../Types/PortType";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
+import { PortType } from "../../../Types/PortType";
 
 export function convertTypeValue(value: any, from: PortType | "any", to: PortType): any {
   if (from === to || from === "unknown" || to === "unknown") {

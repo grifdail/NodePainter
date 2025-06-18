@@ -1,5 +1,5 @@
-import { NodeData } from "../Types/NodeData";
-import { PortType } from "../Types/PortType";
+import { NodeData } from "../../../Types/NodeData";
+import { PortType } from "../../../Types/PortType";
 import { ExecutionContext } from "./createExecutionContext";
 import { getShaderType } from "./getShaderCode";
 

@@ -1,5 +1,5 @@
 import { CodeBlockExpressionTypes } from "../CodeBlocks/CodeBlockTypes";
-import { FunctionContext } from "../Utils/createExecutionContext";
+import { FunctionContext } from "../Utils/graph/execution/createExecutionContext";
 import { CodeBlockParameterField } from "./CodeBlockParameterField";
 
 export const evaluateCodeBlockExpression = (expression: CodeBlockParameterField, context: FunctionContext): any => {

@@ -2,8 +2,8 @@ import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
-import { createDefaultMaterial } from "../../Utils/createDefaultMaterial";
-import { ExecutionContext, FunctionContext } from "../../Utils/createExecutionContext";
+import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
+import { ExecutionContext, FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 import { sanitizeForShader } from "../../Utils/sanitizeForShader";
 
 const VERTEX_SHADER = `

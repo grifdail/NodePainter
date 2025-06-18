@@ -2,7 +2,7 @@ import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { Quaternion, Vector3 } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2, createVector3 } from "../../Types/vectorDataType";
-import { createMultiTypeNodeDefinition } from "../../Utils/createMultyTypeNodeDefinition";
+import { createMultiTypeNodeDefinition } from "../../Utils/graph/definition/createMultyTypeNodeDefinition";
 
 export const RotateVector: NodeDefinition = createMultiTypeNodeDefinition(
   {

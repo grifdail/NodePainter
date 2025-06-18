@@ -1,8 +1,8 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 import { White } from "../../Utils/math/colorUtils";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SetAlpha: NodeDefinition = {
   id: "SetAlpha",

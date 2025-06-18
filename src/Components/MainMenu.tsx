@@ -2,7 +2,7 @@ import { IconDeviceDesktopDown, IconDeviceFloppy, IconFile, IconFocusCentered, I
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
-import { resetCamera } from "../Utils/resetCamera";
+import { resetCamera } from "../Utils/ui/resetCamera";
 import { Templates } from "../Data/templates";
 import { saveSketchWithNamePrompt, Sketch, useAllSavedSketch } from "../Hooks/db";
 import { Routes } from "../Types/Routes";

@@ -6,9 +6,9 @@ import { IconClipboard, IconDeviceFloppy, IconDownload, IconLink } from "@tabler
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Button } from "../Generics/Button";
 import { useEffect, useState } from "react";
-import { compressSketchJson } from "../../Utils/loadJsonDecrypt";
+import { compressSketchJson } from "../../Utils/graph/load/loadJsonDecrypt";
 import { SketchTemplate } from "../../Types/SketchTemplate";
-import { download } from "../../Utils/download";
+import { download } from "../../Utils/ui/download";
 
 const MAX_URL_LENGTH = 2083;
 

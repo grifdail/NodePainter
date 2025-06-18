@@ -1,9 +1,9 @@
 import { original } from "immer";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { TreeStore } from "../Types/TreeStore";
-import { createNodeData } from "../Utils/createNodeData";
-import { createPortConnection } from "../Utils/createPortConnection";
-import { resetCamera } from "../Utils/resetCamera";
+import { createNodeData } from "../Utils/graph/modification/createNodeData";
+import { createPortConnection } from "../Utils/graph/modification/createPortConnection";
+import { resetCamera } from "../Utils/ui/resetCamera";
 
 export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
   const start = getCustomFunctionStartId(def);

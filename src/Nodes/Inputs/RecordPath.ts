@@ -2,7 +2,7 @@ import { IconRoute } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { interpolatePath, PathData } from "../../Types/PathData";
 import { Port } from "../../Types/PortTypeGenerator";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RecordPath: NodeDefinition = {
   id: "RecordPath",

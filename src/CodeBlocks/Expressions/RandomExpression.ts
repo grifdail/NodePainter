@@ -1,7 +1,7 @@
 import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
 import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
 import { PortType } from "../../Types/PortType";
-import { FunctionContext } from "../../Utils/createExecutionContext";
+import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 
 export const RandomExpression: CodeBlockExpressionGenerator = {
   id: "Random",

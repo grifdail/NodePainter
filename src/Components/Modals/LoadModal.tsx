@@ -7,9 +7,9 @@ import { useDropzone } from "react-dropzone";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { useDialog } from "../../Hooks/useDialog";
 import { Button } from "../Generics/Button";
-import { loadFromUrl } from "../../Utils/loadFromUrl";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { TextInput } from "../Generics/Inputs/TextInput";
+import { loadFromUrl } from "../../Utils/graph/load/loadFromUrl";
 
 const MainDiv = styled.div`
   gap: var(--padding-small);

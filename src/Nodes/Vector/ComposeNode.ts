@@ -3,8 +3,8 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { createPortConnection } from "../../Utils/createPortConnection";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 export const ComposeNode: NodeDefinition = {
   id: "Compose",

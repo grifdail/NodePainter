@@ -1,5 +1,5 @@
 import { Icon } from "@tabler/icons-react";
-import { ExecutionContext } from "../Utils/createExecutionContext";
+import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import { NodeData } from "./NodeData";
 import { NodeTags } from "./NodeTags";
 import { PortDefinition } from "./PortDefinition";

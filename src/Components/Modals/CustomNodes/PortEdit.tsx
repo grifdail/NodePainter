@@ -6,7 +6,7 @@ import { Fieldset } from "../../StyledComponents/Fieldset";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { InvisibleButton } from "../../Generics/Button";
 import styled from "styled-components";
-import { convertTypeValue } from "../../../Utils/convertTypeValue";
+import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
 import { TextInput } from "../../Generics/Inputs/TextInput";
 import { PortType } from "../../../Types/PortType";
 import { PortTypeDropdown } from "./PortTypeDropdown";

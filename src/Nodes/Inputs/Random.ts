@@ -3,8 +3,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
-import { Constraints } from "../../Utils/graph/applyConstraints";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/changeTypeGenerator";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const Random: NodeDefinition = {

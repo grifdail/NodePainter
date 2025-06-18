@@ -1,7 +1,7 @@
 import { IconWaveSine } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const TriangleWave: NodeDefinition = {
   id: "TriangleWave",

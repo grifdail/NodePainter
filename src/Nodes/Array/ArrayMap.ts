@@ -7,7 +7,7 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { createPortConnection } from "../../Utils/createPortConnection";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): void => {
   var type = dataInputs["in"].type.slice("array-".length) as PortType;

@@ -1,7 +1,7 @@
 import { NodeData } from "../Types/NodeData";
 import { PortRole } from "../Types/PortRole";
 import { PortType } from "../Types/PortType";
-import { canConvertCode } from "../Utils/convertTypeValue";
+import { canConvertCode } from "../Utils/graph/execution/convertTypeValue";
 import { PortSelection, usePortSelection } from "./usePortSelection";
 import { useTree } from "./useTree";
 

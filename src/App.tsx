@@ -6,14 +6,14 @@ import { useRouter } from "./Hooks/useRouter";
 import { usePlayerPref } from "./Hooks/usePlayerPref";
 import { Routes } from "./Types/Routes";
 import { Tooltip } from "react-tooltip";
-import { loadFromUrl } from "./Utils/loadFromUrl";
-import { loadJsonDecrypt } from "./Utils/loadJsonDecrypt";
+import { loadJsonDecrypt } from "./Utils/graph/load/loadJsonDecrypt";
 import { useViewbox } from "./Hooks/useViewbox";
-import { resetCamera } from "./Utils/resetCamera";
+import { resetCamera } from "./Utils/ui/resetCamera";
 import { css } from "styled-components";
 import { PortStyle } from "./PortStyle";
-import { loadExample } from "./Utils/loadExample";
+import { loadExample } from "./Utils/graph/load/loadExample";
 import { ToastContainer } from "./Components/ToastContainer";
+import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);

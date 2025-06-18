@@ -7,7 +7,7 @@ import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationCont
 import { useSelection } from "../Hooks/useSelection";
 import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { ReactElement, useCallback, useMemo } from "react";
-import { resetCamera } from "../Utils/resetCamera";
+import { resetCamera } from "../Utils/ui/resetCamera";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 import { useAllSavedFunction } from "../Hooks/db";
 import { useShallow } from "zustand/react/shallow";

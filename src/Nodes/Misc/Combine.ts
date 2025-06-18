@@ -4,8 +4,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { createPortConnection } from "../../Utils/createPortConnection";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 import { StatefullVirtualElement } from "../3D/VirtualNodeTypes/StatefullVirtualElement";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 

@@ -1,22 +1,22 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
-import { NodeCollection } from "../Types/NodeCollection";
-import { TreeStore } from "../Types/TreeStore";
-import { PortConnection } from "../Types/PortConnection";
-import { NodeData } from "../Types/NodeData";
+import { NodeCollection } from "../../../Types/NodeCollection";
+import { TreeStore } from "../../../Types/TreeStore";
+import { PortConnection } from "../../../Types/PortConnection";
+import { NodeData } from "../../../Types/NodeData";
 import p5, { Graphics } from "p5";
 import { getShaderCode } from "./getShaderCode";
-import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
-import { ImageData } from "../Types/ImageData";
-import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../Types/vectorDataType";
+import { ImageData } from "../../../Types/ImageData";
+import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../../../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
-import { sanitizeForShader } from "./sanitizeForShader";
-import { MaterialData, MeshData } from "../Types/MaterialData";
-import { NodeDefinition } from "../Types/NodeDefinition";
+import { sanitizeForShader } from "../../sanitizeForShader";
+import { MaterialData, MeshData } from "../../../Types/MaterialData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
 import Rand from "rand-seed";
-import { PortType } from "../Types/PortType";
-import { OutputPortView } from "../Components/Graph/OutputPortView";
+import { PortType } from "../../../Types/PortType";
+import { OutputPortView } from "../../../Components/Graph/OutputPortView";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };

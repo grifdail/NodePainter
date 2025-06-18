@@ -3,11 +3,11 @@ import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapp
 import { useTree } from "../Hooks/useTree";
 import { TreeStore } from "../Types/TreeStore";
 import { NodeData } from "../Types/NodeData";
-import { ExecutionContext } from "../Utils/createExecutionContext";
+import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { START_NODE } from "../Nodes/Misc/StartNode";
-import { createExecutionContext } from "../Utils/createExecutionContext";
+import { createExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import Rand from "rand-seed";
 import { useDialog } from "../Hooks/useDialog";
 

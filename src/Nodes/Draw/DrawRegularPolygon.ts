@@ -2,8 +2,8 @@ import { IconTriangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
-import { Constraints } from "../../Utils/graph/applyConstraints";
 import { toP5Color } from "../../Utils/math/colorUtils";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const DrawRegularPolygon: NodeDefinition = {
   id: "DrawRegularPolygon",

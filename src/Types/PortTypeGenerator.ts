@@ -1,4 +1,4 @@
-import { ConstrainDeclaration, Constraints } from "../Utils/graph/applyConstraints";
+import { ConstrainDeclaration, Constraints } from "../Utils/ui/applyConstraints";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 import { PortTypeDefinitions } from "./PortTypeDefinitions";

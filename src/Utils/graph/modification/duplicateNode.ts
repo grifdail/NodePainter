@@ -1,5 +1,5 @@
-import { NodeData } from "../Types/NodeData";
-import { TreeStore } from "../Types/TreeStore";
+import { NodeData } from "../../../Types/NodeData";
+import { TreeStore } from "../../../Types/TreeStore";
 import { createNodeData } from "./createNodeData";
 
 export function duplicateNode(state: TreeStore, sourceNode: NodeData, x: number, y: number, graph: string) {

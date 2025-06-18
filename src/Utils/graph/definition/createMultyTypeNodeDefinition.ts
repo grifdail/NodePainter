@@ -1,9 +1,9 @@
-import { NodeData } from "../Types/NodeData";
-import { BaseNodeDefinition, LogicNodeDefinition, NodeDefinition } from "../Types/NodeDefinition";
-import { PortType } from "../Types/PortType";
-import { convertPortConnection } from "./convertPortConnection";
-import { ExecutionContext } from "./createExecutionContext";
-import { createPortConnection } from "./createPortConnection";
+import { NodeData } from "../../../Types/NodeData";
+import { BaseNodeDefinition, LogicNodeDefinition, NodeDefinition } from "../../../Types/NodeDefinition";
+import { PortType } from "../../../Types/PortType";
+import { ExecutionContext } from "../execution/createExecutionContext";
+import { convertPortConnection } from "../modification/convertPortConnection";
+import { createPortConnection } from "../modification/createPortConnection";
 
 export function createMultiTypeNodeDefinition(
   base: BaseNodeDefinition,

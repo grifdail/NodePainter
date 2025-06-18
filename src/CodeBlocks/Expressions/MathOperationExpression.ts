@@ -3,8 +3,8 @@ import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
 import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
-import { FunctionContext } from "../../Utils/createExecutionContext";
-import { MathOperationTypes, NumberOperations } from "../../Utils/logicUtils";
+import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
+import { MathOperationTypes, NumberOperations } from "../../Utils/math/logicUtils";
 
 export const MathOperationExpression: CodeBlockExpressionGenerator = {
   id: "MathOperation",

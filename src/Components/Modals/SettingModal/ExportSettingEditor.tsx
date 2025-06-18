@@ -3,7 +3,7 @@ import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Button } from "../../Generics/Button";
 import { TextAreaInput } from "../../Generics/Inputs/TextAreaInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
-import { download } from "../../../Utils/download";
+import { download } from "../../../Utils/ui/download";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import Ajv, { JSONSchemaType } from "ajv";
 

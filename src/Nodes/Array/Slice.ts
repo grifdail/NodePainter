@@ -1,8 +1,8 @@
 import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { Constraints } from "../../Utils/graph/applyConstraints";
-import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const Slice: NodeDefinition = {
   id: "Slice",

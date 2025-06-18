@@ -1,4 +1,4 @@
-import { ConstrainDeclaration } from "../../../Utils/graph/applyConstraints";
+import { ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
 
 export type InputProps<T> = Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> & {
   onChange: (value: T) => void;

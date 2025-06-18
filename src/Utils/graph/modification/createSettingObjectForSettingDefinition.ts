@@ -1,4 +1,4 @@
-import { GroupSettingDefinition, SettingDefinition, SettingType } from "../Types/SettingDefinition";
+import { GroupSettingDefinition, SettingDefinition, SettingType } from "../../../Types/SettingDefinition";
 
 const identity = (x: any) => x;
 

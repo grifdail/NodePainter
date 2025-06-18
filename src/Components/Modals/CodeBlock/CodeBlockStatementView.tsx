@@ -7,7 +7,7 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { CodeBlockBlocksTypes } from "../../../CodeBlocks/CodeBlockTypes";
 import { StatementDiv } from "./StatementDiv";
 import { useToggle } from "@uidotdev/usehooks";
-import { convertTypeValue } from "../../../Utils/convertTypeValue";
+import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
 import { PortType } from "../../../Types/PortType";
 import { useContext } from "react";
 import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";

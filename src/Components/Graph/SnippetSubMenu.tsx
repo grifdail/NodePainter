@@ -5,7 +5,7 @@ import IconCopy from "@tabler/icons-react/dist/esm/icons/IconCopy";
 import { extractSnipet, loadSnippet, validateSnipet, validateSnipetJson } from "../../Utils/snippets";
 import { useTree } from "../../Hooks/useTree";
 import { IconClipboard, IconCode, IconCut, IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
-import { copyToClipboard } from "../../Utils/copyToClipboard";
+import { copyToClipboard } from "../../Utils/ui/copyToClipboard";
 import { useDialog } from "../../Hooks/useDialog";
 import { useState } from "react";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";

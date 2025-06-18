@@ -1,12 +1,12 @@
 import { typeOf } from "mathjs";
-import { NodeCollection } from "../Types/NodeCollection";
-import { TreeStore } from "../Types/TreeStore";
-import { PortConnection } from "../Types/PortConnection";
-import { NodeData } from "../Types/NodeData";
+import { NodeCollection } from "../../../Types/NodeCollection";
+import { TreeStore } from "../../../Types/TreeStore";
+import { PortConnection } from "../../../Types/PortConnection";
+import { NodeData } from "../../../Types/NodeData";
 import { ExecutionContext } from "./createExecutionContext";
-import { sanitizeForShader } from "./sanitizeForShader";
-import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
-import { PortType } from "../Types/PortType";
+import { sanitizeForShader } from "../../sanitizeForShader";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
+import { PortType } from "../../../Types/PortType";
 
 export function getShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);

@@ -1,7 +1,7 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 import { createOrSelectFromCache } from "../../Utils/useCache";
 
 export const RandomInt: NodeDefinition = {

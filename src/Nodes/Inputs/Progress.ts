@@ -3,7 +3,7 @@ import { convertToShaderNumber } from "../../Types/convertToShaderNumber";
 import { NodeData } from "../../Types/NodeData";
 import { ContextMenuData, NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { createPortConnection } from "../../Utils/createPortConnection";
+import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 export const Progress: NodeDefinition = {
   id: "Progress",

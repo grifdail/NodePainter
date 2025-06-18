@@ -1,5 +1,5 @@
 import { CodeBlockStatementTypes } from "../CodeBlocks/CodeBlockTypes";
-import { FunctionContext } from "../Utils/createExecutionContext";
+import { FunctionContext } from "../Utils/graph/execution/createExecutionContext";
 import { CodeBlockStatement } from "./CodeBlockStatement";
 
 export const executeStatementList = (statements: CodeBlockStatement[], context: FunctionContext): void => {

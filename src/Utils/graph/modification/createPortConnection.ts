@@ -1,5 +1,5 @@
-import { PortConnection } from "../Types/PortConnection";
-import { PortDefinition } from "../Types/PortDefinition";
+import { PortConnection } from "../../../Types/PortConnection";
+import { PortDefinition } from "../../../Types/PortDefinition";
 
 export function createPortConnection(def: PortDefinition): PortConnection {
   return {

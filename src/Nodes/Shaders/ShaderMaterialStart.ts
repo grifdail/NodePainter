@@ -1,6 +1,6 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const ShaderMaterialStart: NodeDefinition = {
   id: "ShaderMaterial-start",

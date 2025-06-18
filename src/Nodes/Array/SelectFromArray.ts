@@ -3,8 +3,8 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { convertTypeValue } from "../../Utils/convertTypeValue";
-import { Constraints } from "../../Utils/graph/applyConstraints";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
+import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SelectFromArray: NodeDefinition = {
   id: "SelectFromArray",

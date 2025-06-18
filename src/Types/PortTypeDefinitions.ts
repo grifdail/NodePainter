@@ -8,7 +8,7 @@ import { QuaternionInput } from "../Components/Generics/Inputs/QuaternionInput";
 import { TextInput } from "../Components/Generics/Inputs/TextInput";
 import { VectorInput } from "../Components/Generics/Inputs/VectorInput";
 import { createGradientFromPalette } from "../Data/Palettes";
-import { createDefaultMaterial } from "../Utils/createDefaultMaterial";
+import { createDefaultMaterial } from "../Utils/graph/definition/createDefaultMaterial";
 import { clamp01 } from "../Utils/math/clamp01";
 import { White } from "../Utils/math/colorUtils";
 import { toQuaternion } from "../Utils/math/quaternionUtils";

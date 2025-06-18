@@ -1,6 +1,6 @@
 import { IconMathEqualGreater } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Comparator, ComparatorOps } from "../../Utils/logicUtils";
+import { Comparator, ComparatorOps } from "../../Utils/math/logicUtils";
 
 export const Compare: NodeDefinition = {
   id: "Compare",

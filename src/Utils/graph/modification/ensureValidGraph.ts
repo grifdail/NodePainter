@@ -1,6 +1,6 @@
-import { NodeData } from "../Types/NodeData";
-import { PortConnection } from "../Types/PortConnection";
-import { canConvertCode } from "./convertTypeValue";
+import { NodeData } from "../../../Types/NodeData";
+import { PortConnection } from "../../../Types/PortConnection";
+import { canConvertCode } from "../execution/convertTypeValue";
 
 export function ensureValidGraph(state: any) {
   for (let nodeId in state.nodes) {

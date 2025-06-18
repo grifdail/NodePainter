@@ -1,7 +1,7 @@
-import { PortConnection } from "../Types/PortConnection";
-import { PortDefinition } from "../Types/PortDefinition";
-import { PortType } from "../Types/PortType";
-import { canConvertCode, convertTypeValue } from "./convertTypeValue";
+import { PortConnection } from "../../../Types/PortConnection";
+import { PortDefinition } from "../../../Types/PortDefinition";
+import { PortType } from "../../../Types/PortType";
+import { canConvertCode, convertTypeValue } from "../execution/convertTypeValue";
 
 /**
  * Convert the Port Connection from it's current definition to a new one, converting type if needed
