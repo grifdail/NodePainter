@@ -1,9 +1,9 @@
 import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { CodeBlockStatementGenerator } from "../../Types/CodeBlock/CodeBlockStatementGenerator";
-import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
+import { evaluateCodeBlockExpression } from "../../Utils/codeblock/evaluateCodeBlockExpression";
+import { toStringCodeBlockExpression } from "../../Utils/codeblock/toStringCodeBlockExpression";
 
 export const ArrayPushStatements: CodeBlockStatementGenerator[] = portTypesWithTags(["common"], ["array"]).map((type) => {
   var self: CodeBlockStatementGenerator = {

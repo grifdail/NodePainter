@@ -1,6 +1,6 @@
 import { IconCalculator } from "@tabler/icons-react";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { convertToShaderNumber } from "../Types/convertToShaderNumber";
+import { convertToShaderNumber } from "../Utils/graph/execution/convertToShaderNumber";
 
 export function createConstant(id: string, value: number): NodeDefinition {
   return {

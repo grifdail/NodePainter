@@ -1,7 +1,7 @@
 import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { CodeBlockStatementGenerator } from "../../Types/CodeBlock/CodeBlockStatementGenerator";
-import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
-import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
+import { evaluateCodeBlockExpression } from "../../Utils/codeblock/evaluateCodeBlockExpression";
+import { toStringCodeBlockExpression } from "../../Utils/codeblock/toStringCodeBlockExpression";
 
 export const AssignStatement: CodeBlockStatementGenerator = {
   id: `Assign`,

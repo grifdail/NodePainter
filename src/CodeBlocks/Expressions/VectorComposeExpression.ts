@@ -1,10 +1,10 @@
 import { CodeBlockExpressionGenerator } from "../../Types/CodeBlock/CodeBlockExpressionGenerator";
 import { CodeBlockParameterField } from "../../Types/CodeBlock/CodeBlockParameterField";
 import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
-import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
-import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
+import { evaluateCodeBlockExpression } from "../../Utils/codeblock/evaluateCodeBlockExpression";
+import { toStringCodeBlockExpression } from "../../Utils/codeblock/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 
 export const VectorComposeExpression: CodeBlockExpressionGenerator = {

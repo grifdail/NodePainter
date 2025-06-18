@@ -1,6 +1,6 @@
-import { CodeBlockExpressionTypes } from "../CodeBlocks/CodeBlockTypes";
-import { FunctionContext } from "../Utils/graph/execution/createExecutionContext";
-import { CodeBlockParameterField } from "./CodeBlock/CodeBlockParameterField";
+import { CodeBlockExpressionTypes } from "../../CodeBlocks/CodeBlockTypes";
+import { CodeBlockParameterField } from "../../Types/CodeBlock/CodeBlockParameterField";
+import { FunctionContext } from "../graph/execution/createExecutionContext";
 
 export const evaluateCodeBlockExpression = (expression: CodeBlockParameterField, context: FunctionContext): any => {
   switch (expression.type) {

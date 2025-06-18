@@ -1,8 +1,8 @@
 import { IconClock } from "@tabler/icons-react";
-import { convertToShaderNumber } from "../../Types/convertToShaderNumber";
 import { NodeData } from "../../Types/NodeData";
 import { ContextMenuData, NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
+import { convertToShaderNumber } from "../../Utils/graph/execution/convertToShaderNumber";
 import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 export const Progress: NodeDefinition = {

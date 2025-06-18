@@ -1,5 +1,5 @@
-import { vectorAbsolute, vectorSubstraction } from "../Utils/math/vectorUtils";
-import { Vector } from "./vectorDataType";
+import { Vector } from "../../Types/vectorDataType";
+import { vectorAbsolute, vectorSubstraction } from "./vectorUtils";
 
 export const compareVector = function (a: any, b: any): boolean {
   const av = a as Vector;

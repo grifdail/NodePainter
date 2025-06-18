@@ -1,5 +1,5 @@
-import { FunctionContext } from "../Utils/graph/execution/createExecutionContext";
-import { CodeBlockParameterField } from "./CodeBlock/CodeBlockParameterField";
+import { CodeBlockParameterField } from "../../Types/CodeBlock/CodeBlockParameterField";
+import { FunctionContext } from "../graph/execution/createExecutionContext";
 import { executeStatementList } from "./executeStatementList";
 
 export const executeStatementParameter = (statements: CodeBlockParameterField, context: FunctionContext): void => {

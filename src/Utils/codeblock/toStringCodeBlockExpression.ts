@@ -1,5 +1,5 @@
-import { CodeBlockExpressionTypes } from "../CodeBlocks/CodeBlockTypes";
-import { CodeBlockParameterField } from "./CodeBlock/CodeBlockParameterField";
+import { CodeBlockExpressionTypes } from "../../CodeBlocks/CodeBlockTypes";
+import { CodeBlockParameterField } from "../../Types/CodeBlock/CodeBlockParameterField";
 
 export const toStringCodeBlockExpression = (expression: CodeBlockParameterField): any => {
   switch (expression.type) {

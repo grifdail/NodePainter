@@ -1,4 +1,4 @@
-import { CodeBlock } from "./CodeBlock/CodeBlock";
+import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 
 export const createDefaultCodeBlock = (): CodeBlock => {
   return {
