@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { useTree } from "./useTree";
 import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
-import { StatefullElementType } from "../Utils/statefullContext";
+import { StatefullElementType } from "../Nodes/3D/VirtualNodeTypes/statefullContext";
 
 export type SelectionStore = {
   toggleNode(id: string): void;

@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/applyConstraints";
-import { toP5Color } from "../../Utils/colorUtils";
+import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawRegularPolygon: NodeDefinition = {
   id: "DrawRegularPolygon",

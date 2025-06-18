@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorMagnitude } from "../../Utils/vectorUtils";
+import { vectorMagnitude } from "../../Utils/math/vectorUtils";
 
 export const Magnitude: NodeDefinition = {
   id: "Magnitude",
@@ -33,7 +33,7 @@ export const Magnitude: NodeDefinition = {
   hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
-    return VectorMagnitude(vec);
+    return vectorMagnitude(vec);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "length", ["vec"], ({ vec }) => `length(${vec})`);

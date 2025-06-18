@@ -4,7 +4,7 @@ import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { StatefullElementType } from "../../Utils/statefullContext";
+import { StatefullElementType } from "../3D/VirtualNodeTypes/statefullContext";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {

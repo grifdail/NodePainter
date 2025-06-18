@@ -5,7 +5,7 @@ import { createVector2 } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { PerformSwizzle } from "../../Utils/PerformSwizzle";
+import { performSwizzle } from "../../Utils/math/swizzle/PerformSwizzle";
 
 export const Swizzle: NodeDefinition = {
   id: "Swizzle",
@@ -34,7 +34,7 @@ export const Swizzle: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "vec");
     var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 3;
-    return PerformSwizzle(a, nodeData.settings.swizzle, vectorLength);
+    return performSwizzle(a, nodeData.settings.swizzle, vectorLength);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);

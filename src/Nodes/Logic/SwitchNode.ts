@@ -2,7 +2,7 @@ import { IconAssembly } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
-import { Black, White } from "../../Utils/colorUtils";
+import { Black, White } from "../../Utils/math/colorUtils";
 
 export const SwitchNode: NodeDefinition = {
   id: "Switch",

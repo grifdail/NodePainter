@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Input, InputBackgroundColor } from "../../StyledComponents/Input";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Color } from "../../../Types/vectorDataType";
-import { fromHex, invertColor, toHex, validateHex } from "../../../Utils/colorUtils";
+import { fromHex, invertColor, toHex, validateHex } from "../../../Utils/math/colorUtils";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
 import { applyConstraint, ConstrainDeclaration } from "../../../Utils/applyConstraints";
 

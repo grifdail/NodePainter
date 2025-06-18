@@ -4,7 +4,7 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
-import { toP5Color } from "../../Utils/colorUtils";
+import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawImageWithTint: NodeDefinition = {
   id: "DrawImageWithTint",

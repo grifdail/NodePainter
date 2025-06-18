@@ -1,10 +1,10 @@
 import { IconAngle, IconArrowUpRightCircle } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Vector3, createVector2, createVector3 } from "../../Types/vectorDataType";
+import { createVector2, createVector3, Vector3 } from "../../Types/vectorDataType";
 import { createPortConnection } from "../../Utils/createPortConnection";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorAddition, VectorIsZero, VectorNormalize, VectorScale } from "../../Utils/vectorUtils";
+import { vectorAddition, vectorIsZero, vectorNormalize, vectorScale } from "../../Utils/math/vectorUtils";
 import { VectorCrossProduct } from "./CrossProduct";
 import { VectorDotProduct } from "./DotProduct";
 
@@ -53,17 +53,17 @@ export const VectorFromAngle: NodeDefinition = {
       return createVector2(cos, sin);
     } else {
       const normal = context.getInputValueVector3(nodeData, "normal");
-      if (VectorIsZero(normal)) {
+      if (vectorIsZero(normal)) {
         return createVector3();
       } else {
-        const norm = VectorNormalize(normal) as Vector3;
+        const norm = vectorNormalize(normal) as Vector3;
         const isUp = Math.abs(1 - VectorDotProduct(norm, [0, 1, 0])) < Number.EPSILON;
         if (isUp) {
           return createVector3(cos, 0, sin);
         } else {
-          const alpha = VectorNormalize(VectorCrossProduct(norm, [0, 1, 0])) as Vector3;
-          const beta = VectorNormalize(VectorCrossProduct(norm, alpha)) as Vector3;
-          const vec = VectorAddition(VectorScale(alpha, cos), VectorScale(beta, sin));
+          const alpha = vectorNormalize(VectorCrossProduct(norm, [0, 1, 0])) as Vector3;
+          const beta = vectorNormalize(VectorCrossProduct(norm, alpha)) as Vector3;
+          const vec = vectorAddition(vectorScale(alpha, cos), vectorScale(beta, sin));
           return vec;
         }
       }

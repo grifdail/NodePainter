@@ -2,7 +2,7 @@ import { IconVectorBezier2 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Vector3, createVector2 } from "../../Types/vectorDataType";
-import { toP5Color } from "../../Utils/colorUtils";
+import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawBezier: NodeDefinition = {
   id: "DrawBezier",

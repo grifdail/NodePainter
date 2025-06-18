@@ -2,9 +2,9 @@ import { IconBadge3d } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor } from "../../Types/vectorDataType";
-import { StatefullInstance } from "../../Utils/StatefullInstance";
-import { StatefullVirtualElement } from "../../Utils/StatefullVirtualElement";
 import { Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
+import { StatefullInstance } from "./VirtualNodeTypes/StatefullInstance";
+import { StatefullVirtualElement } from "./VirtualNodeTypes/StatefullVirtualElement";
 import { VirtualNodes } from "./VirtualNodeTypes/VirtualNodeTypes";
 
 export const Render3D: NodeDefinition = {

@@ -1,8 +1,8 @@
 import { Camera, LinearSRGBColorSpace, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { Color } from "../../../Types/vectorDataType";
-import { toThreeColorWithAlpha } from "../../../Utils/colorUtils";
-import { StatefullElementType } from "../../../Utils/statefullContext";
+import { toThreeColorWithAlpha } from "../../../Utils/math/colorUtils";
+import { StatefullElementType } from "./statefullContext";
 
 export type ThreeJSContext = {
   renderer: WebGLRenderer;

@@ -1,5 +1,5 @@
 import { ColorPalette, Color, PaletteCollection } from "../../../Types/vectorDataType";
-import { toHex } from "../../../Utils/colorUtils";
+import { toHex } from "../../../Utils/math/colorUtils";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Fieldset } from "../../StyledComponents/Fieldset";

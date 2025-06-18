@@ -3,7 +3,7 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType";
-import { toHex } from "../../Utils/colorUtils";
+import { toHex } from "../../Utils/math/colorUtils";
 
 export const DrawGradientRect: NodeDefinition = {
   id: "DrawGradientRect",

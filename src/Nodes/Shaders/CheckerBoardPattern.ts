@@ -2,7 +2,7 @@ import { IconGizmo } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorAddition, VectorMultiplication } from "../../Utils/vectorUtils";
+import { vectorAddition, vectorMultiplication } from "../../Utils/math/vectorUtils";
 
 export const CheckerBoardPattern: NodeDefinition = {
   id: "Checkerboard",
@@ -32,7 +32,7 @@ export const CheckerBoardPattern: NodeDefinition = {
   getData(portId, node, context) {
     const uv = context.getInputValueVector2(node, "uv");
     const freq = context.getInputValueVector2(node, "freq");
-    var tuv = VectorMultiplication(VectorAddition(uv, [0.5, 0.5]), freq).map((a) => Math.floor(a));
+    var tuv = vectorMultiplication(vectorAddition(uv, [0.5, 0.5]), freq).map((a) => Math.floor(a));
     return (tuv[0] + (tuv[1] % 2)) % 2;
   },
 };

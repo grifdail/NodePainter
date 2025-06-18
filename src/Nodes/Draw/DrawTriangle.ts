@@ -2,7 +2,7 @@ import { IconVectorTriangle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType";
-import { toP5Color } from "../../Utils/colorUtils";
+import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawTriangle: NodeDefinition = {
   id: "DrawTriangle",

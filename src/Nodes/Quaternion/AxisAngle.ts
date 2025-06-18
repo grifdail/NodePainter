@@ -3,8 +3,8 @@ import { Quaternion, Vector3 } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
-import { toQuaternion } from "../../Utils/quaternionUtils";
-import { VectorNormalize } from "../../Utils/vectorUtils";
+import { toQuaternion } from "../../Utils/math/quaternionUtils";
+import { vectorNormalize } from "../../Utils/math/vectorUtils";
 
 export const AxisAngle: NodeDefinition = {
   id: "AxisAngle",
@@ -19,7 +19,7 @@ export const AxisAngle: NodeDefinition = {
   getData: (portId, node, context) => {
     const axis = context.getInputValueVector3(node, "axis");
     const angle = context.getInputValueNumber(node, "angle");
-    const axisNorm = VectorNormalize(axis);
+    const axisNorm = vectorNormalize(axis);
     var tq = new Quaternion().setFromAxisAngle(new Vector3(...axisNorm), angle);
     return toQuaternion(tq);
   },

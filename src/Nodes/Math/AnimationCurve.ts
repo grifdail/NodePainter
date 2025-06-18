@@ -3,7 +3,7 @@ import { AnimationTrack, convertAnimationTrackType, createDefaultAnimationTrack,
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 
 const onChangeType = changeTypeGenerator([], ["value"]);
 
@@ -31,6 +31,6 @@ export const AnimationCurve: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     const envelope = nodeData.settings["track"] as AnimationTrack;
     const pos = context.getInputValueNumber(nodeData, "pos");
-    return EnforceGoodType(nodeData, interpolateAnimation(envelope, pos));
+    return enforceCorrectVectorTypeForNode(nodeData, interpolateAnimation(envelope, pos));
   },
 };

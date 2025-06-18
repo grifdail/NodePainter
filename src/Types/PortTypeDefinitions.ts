@@ -8,11 +8,11 @@ import { QuaternionInput } from "../Components/Generics/Inputs/QuaternionInput";
 import { TextInput } from "../Components/Generics/Inputs/TextInput";
 import { VectorInput } from "../Components/Generics/Inputs/VectorInput";
 import { createGradientFromPalette } from "../Data/Palettes";
-import { clamp01 } from "../Utils/clamp01";
-import { White } from "../Utils/colorUtils";
 import { createDefaultMaterial } from "../Utils/createDefaultMaterial";
-import { toQuaternion } from "../Utils/quaternionUtils";
-import { VectorAddition, VectorDivision, VectorLerp, VectorMultiplication, VectorSubstraction } from "../Utils/vectorUtils";
+import { clamp01 } from "../Utils/math/clamp01";
+import { White } from "../Utils/math/colorUtils";
+import { toQuaternion } from "../Utils/math/quaternionUtils";
+import { vectorAddition, vectorDivision, vectorLerp, vectorMultiplication, vectorSubstraction } from "../Utils/math/vectorUtils";
 import { compareVector } from "./compareVector";
 import { convertToShaderNumber } from "./convertToShaderNumber";
 import { defaultEqual } from "./defaultEqual";
@@ -81,12 +81,12 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector3: (a) => createVector3(...a),
       vector4: (a) => createVector4(...a),
     },
-    subtractionOperator: VectorSubstraction,
-    additionOperator: VectorAddition,
-    multiplicationOperator: VectorMultiplication,
-    divisionOperator: VectorDivision,
+    subtractionOperator: vectorSubstraction,
+    additionOperator: vectorAddition,
+    multiplicationOperator: vectorMultiplication,
+    divisionOperator: vectorDivision,
     equalityOperator: compareVector,
-    lerpOperator: VectorLerp,
+    lerpOperator: vectorLerp,
     shaderConvert: {},
   },
   vector2: {
@@ -108,12 +108,12 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector3: (a) => createVector3(...a),
       vector4: (a) => createVector4(...a),
     },
-    subtractionOperator: VectorSubstraction,
-    additionOperator: VectorAddition,
-    multiplicationOperator: VectorMultiplication,
-    divisionOperator: VectorDivision,
+    subtractionOperator: vectorSubstraction,
+    additionOperator: vectorAddition,
+    multiplicationOperator: vectorMultiplication,
+    divisionOperator: vectorDivision,
     equalityOperator: compareVector,
-    lerpOperator: VectorLerp,
+    lerpOperator: vectorLerp,
     shaderConvert: {
       number: (v) => `${v}.x`,
       color: (v) => `vec4(${v}.xy, 0.0, 1.0)`,
@@ -147,12 +147,12 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector4: (a) => createVector4(...a),
       quaternion: (a) => toQuaternion(new Quaternion().setFromEuler(new Euler(...a))),
     },
-    subtractionOperator: VectorSubstraction,
-    additionOperator: VectorAddition,
-    multiplicationOperator: VectorMultiplication,
-    divisionOperator: VectorDivision,
+    subtractionOperator: vectorSubstraction,
+    additionOperator: vectorAddition,
+    multiplicationOperator: vectorMultiplication,
+    divisionOperator: vectorDivision,
     equalityOperator: compareVector,
-    lerpOperator: VectorLerp,
+    lerpOperator: vectorLerp,
     vectorLength: 3,
     shaderConvert: {
       number: (v) => `${v}.x`,
@@ -186,12 +186,12 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector4: (a) => a,
       quaternion: (a) => a,
     },
-    subtractionOperator: VectorSubstraction,
-    additionOperator: VectorAddition,
-    multiplicationOperator: VectorMultiplication,
-    divisionOperator: VectorDivision,
+    subtractionOperator: vectorSubstraction,
+    additionOperator: vectorAddition,
+    multiplicationOperator: vectorMultiplication,
+    divisionOperator: vectorDivision,
     equalityOperator: compareVector,
-    lerpOperator: VectorLerp,
+    lerpOperator: vectorLerp,
     vectorLength: 4,
     shaderConvert: {
       number: (v) => `${v}.x`,
@@ -250,13 +250,13 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       unknown: (a) => a,
       material: (a) => createDefaultMaterial(a),
     },
-    subtractionOperator: VectorSubstraction,
-    additionOperator: VectorAddition,
-    multiplicationOperator: VectorMultiplication,
-    divisionOperator: VectorDivision,
+    subtractionOperator: vectorSubstraction,
+    additionOperator: vectorAddition,
+    multiplicationOperator: vectorMultiplication,
+    divisionOperator: vectorDivision,
     equalityOperator: compareVector,
     vectorLength: 4,
-    lerpOperator: VectorLerp,
+    lerpOperator: vectorLerp,
     shaderConvert: {
       number: (v) => `${v}.x`,
       vector: (v) => v,

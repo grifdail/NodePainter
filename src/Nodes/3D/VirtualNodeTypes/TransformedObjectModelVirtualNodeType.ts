@@ -1,6 +1,6 @@
 import { Object3D } from "three";
 import { Quaternion, Vector3 } from "../../../Types/vectorDataType";
-import { StatefullElementType } from "../../../Utils/statefullContext";
+import { StatefullElementType } from "./statefullContext";
 
 export class TransformedObjectModelVirtualNodeType extends StatefullElementType<Object3D, [position: Vector3, rotation: Quaternion, dimension: Vector3]> {
   create(position: Vector3, rotation: Quaternion, dimension: Vector3): Object3D {

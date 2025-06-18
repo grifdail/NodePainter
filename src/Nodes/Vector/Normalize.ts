@@ -3,8 +3,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorNormalize } from "../../Utils/vectorUtils";
+import { vectorNormalize } from "../../Utils/math/vectorUtils";
 
 export const Normalize: NodeDefinition = {
   id: "Normalize",
@@ -34,8 +35,8 @@ export const Normalize: NodeDefinition = {
   hasOutput: hasInputGenerator(portTypesWithTags(["common", "true-vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     const a = context.getInputValueVector(nodeData, "vec");
-    const vec = VectorNormalize(a);
-    return EnforceGoodType(nodeData, vec);
+    const vec = vectorNormalize(a);
+    return enforceCorrectVectorTypeForNode(nodeData, vec);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);

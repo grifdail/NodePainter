@@ -2,7 +2,7 @@ import { IconColorFilter } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor, createDefaultGradient } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/applyConstraints";
-import { evaluateGradient } from "../../Utils/colorUtils";
+import { evaluateGradient } from "../../Utils/math/evaluateGradient";
 
 export const SampleGradient: NodeDefinition = {
   id: "SampleGradient",

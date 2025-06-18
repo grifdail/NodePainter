@@ -1,6 +1,6 @@
-import { VirtualNodes } from "../Nodes/3D/VirtualNodeTypes/VirtualNodeTypes";
-import { StatefullElementType } from "./statefullContext";
 import { StatefullVirtualElement } from "./StatefullVirtualElement";
+import { VirtualNodes } from "./VirtualNodeTypes";
+import { StatefullElementType } from "./statefullContext";
 
 export class StatefullInstance<TSave, TProps extends any[]> {
   instance: TSave;

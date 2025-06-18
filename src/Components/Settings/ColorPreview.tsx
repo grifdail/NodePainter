@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MenuItem } from "@szhsin/react-menu";
 import { ColorPalette, Gradient } from "../../Types/vectorDataType";
-import { toHex } from "../../Utils/colorUtils";
+import { toHex } from "../../Utils/math/colorUtils";
 
 export const GradientDiv = styled.div<{ gradient: string }>`
   display: block;
@@ -40,7 +40,9 @@ export const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
 
 export const MenuItemWithPalettePreview = ({ onClick, id, value }: { onClick?: () => void; id: string; value: ColorPalette }) => {
   return (
-    <MenuItemWithPreview key={id} onClick={onClick}>
+    <MenuItemWithPreview
+      key={id}
+      onClick={onClick}>
       <span>{id}</span>
       <PalettePreview palette={value} />
     </MenuItemWithPreview>
@@ -48,7 +50,9 @@ export const MenuItemWithPalettePreview = ({ onClick, id, value }: { onClick?: (
 };
 export const MenuItemWithGradientPreview = ({ onClick, id, value }: { onClick: () => void; id: string; value: Gradient }) => {
   return (
-    <MenuItemWithPreview key={id} onClick={onClick}>
+    <MenuItemWithPreview
+      key={id}
+      onClick={onClick}>
       <span>{id}</span>
       <GradientPreview gradient={value} />
     </MenuItemWithPreview>

@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorSquareMagnitude } from "../../Utils/vectorUtils";
+import { vectorSquareMagnitude } from "../../Utils/math/vectorUtils";
 
 export const SquareMagnitude: NodeDefinition = {
   id: "SquareMagnitude",
@@ -33,7 +33,7 @@ export const SquareMagnitude: NodeDefinition = {
   hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
-    return VectorSquareMagnitude(vec);
+    return vectorSquareMagnitude(vec);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "length", ["vec"], ({ vec }) => `dot(${vec},${vec})`);

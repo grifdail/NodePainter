@@ -2,8 +2,8 @@ import { IconWaveSquare } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
-import { clamp01 } from "../../Utils/clamp01";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { clamp01 } from "../../Utils/math/clamp01";
 
 export const TrapezoidWave: NodeDefinition = {
   id: "TrapezoidWave",

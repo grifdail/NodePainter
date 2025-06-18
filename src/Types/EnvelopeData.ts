@@ -1,7 +1,7 @@
 import { Easing, EasingFunctionType, evaluate } from "../libs/easing";
-import { clamp01 } from "../Utils/clamp01";
-import { map } from "../Utils/colorUtils";
-import { VectorLerp } from "../Utils/vectorUtils";
+import { clamp01 } from "../Utils/math/clamp01";
+import { map } from "../Utils/math/colorUtils";
+import { vectorLerp } from "../Utils/math/vectorUtils";
 
 export type EnvelopeData = EnvelopeStop[];
 export type EnvelopeStop = {
@@ -29,7 +29,7 @@ export function interpolateEnvelope(envelope: EnvelopeData, pos: number): number
   }
   for (var stop of envelope) {
     if (pos < stop.pos) {
-      return VectorLerp([prev.height], [stop.height], evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))))[0];
+      return vectorLerp([prev.height], [stop.height], evaluate(prev.lerp, clamp01(map(prev.pos, stop.pos, pos))))[0];
     } else {
       prev = stop;
     }

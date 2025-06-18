@@ -1,4 +1,4 @@
-import { VirtualNodeTypes } from "../Nodes/3D/VirtualNodeTypes/VirtualNodeTypes";
+import { VirtualNodeTypes } from "./VirtualNodeTypes";
 
 export type StatefullVirtualElement<TSave, TProps extends any[]> = {
   type: VirtualNodeTypes;

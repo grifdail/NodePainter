@@ -1,7 +1,7 @@
 import { IconColorSwatch } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor } from "../../Types/vectorDataType";
-import { Black, White } from "../../Utils/colorUtils";
+import { Black, White } from "../../Utils/math/colorUtils";
 
 export const Palette: NodeDefinition = {
   id: "Palette",

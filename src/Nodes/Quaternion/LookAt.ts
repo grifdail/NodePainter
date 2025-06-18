@@ -3,7 +3,7 @@ import { Matrix4, Quaternion, Vector3 } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
-import { toQuaternion } from "../../Utils/quaternionUtils";
+import { toQuaternion } from "../../Utils/math/quaternionUtils";
 
 const m = new Matrix4();
 

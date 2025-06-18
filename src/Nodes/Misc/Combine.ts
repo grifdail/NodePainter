@@ -6,7 +6,7 @@ import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { convertTypeValue } from "../../Utils/convertTypeValue";
 import { createPortConnection } from "../../Utils/createPortConnection";
-import { StatefullVirtualElement } from "../../Utils/StatefullVirtualElement";
+import { StatefullVirtualElement } from "../3D/VirtualNodeTypes/StatefullVirtualElement";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const addNewPort = (node: NodeData) => {

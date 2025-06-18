@@ -1,8 +1,8 @@
 import { Graphics } from "p5";
-import { VectorSquareDistance } from "../../../Utils/vectorUtils";
+import { vectorSquareDistance } from "../../../Utils/math/vectorUtils";
 
 function arrayEquals(a: number[], b: number[], sensibility: number = 10) {
-  return VectorSquareDistance(a, b) < sensibility * sensibility;
+  return vectorSquareDistance(a, b) < sensibility * sensibility;
 }
 type vec = { x: number; y: number };
 

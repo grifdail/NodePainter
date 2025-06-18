@@ -1,6 +1,6 @@
 import { BufferGeometry, Material, Mesh, NormalBufferAttributes, Object3DEventMap } from "three";
 import { Quaternion, Vector3 } from "../../../Types/vectorDataType";
-import { StatefullElementType } from "../../../Utils/statefullContext";
+import { StatefullElementType } from "./statefullContext";
 
 export type modelProps = [position: Vector3, rotation: Quaternion, dimension: Vector3];
 export class GenericModelVirtualNodeType extends StatefullElementType<Mesh, modelProps> {

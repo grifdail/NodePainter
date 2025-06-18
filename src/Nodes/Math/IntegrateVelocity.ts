@@ -2,7 +2,8 @@ import { IconTrendingDown3 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { EnforceGoodType, VectorAddition, VectorScale } from "../../Utils/vectorUtils";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
+import { vectorAddition, vectorScale } from "../../Utils/math/vectorUtils";
 
 export const IntegrateVelocity: NodeDefinition = {
   id: "IntegrateVelocity",
@@ -60,9 +61,9 @@ export const IntegrateVelocity: NodeDefinition = {
     const position = context.getInputValueVector(nodeData, "position");
     const velocity = context.getInputValueVector(nodeData, "velocity");
     if (portId === "next-position") {
-      return EnforceGoodType(nodeData, VectorAddition(position, VectorScale(velocity, velocityScale)));
+      return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(position, vectorScale(velocity, velocityScale)));
     } else {
-      return EnforceGoodType(nodeData, VectorScale(VectorAddition(velocity, acceleration), decelerationRate));
+      return enforceCorrectVectorTypeForNode(nodeData, vectorScale(vectorAddition(velocity, acceleration), decelerationRate));
     }
   },
 };

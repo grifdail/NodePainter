@@ -2,8 +2,8 @@ import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
 
 export const Ceil: NodeDefinition = {
   id: "Ceil",
@@ -32,7 +32,7 @@ export const Ceil: NodeDefinition = {
   hasOutput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "input");
-    return EnforceGoodType(
+    return enforceCorrectVectorTypeForNode(
       nodeData,
       a.map((value) => Math.ceil(value))
     );

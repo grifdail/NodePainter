@@ -1,5 +1,5 @@
-import { VirtualNodeTypes } from "../Nodes/3D/VirtualNodeTypes/VirtualNodeTypes";
 import { StatefullVirtualElement } from "./StatefullVirtualElement";
+import { VirtualNodeTypes } from "./VirtualNodeTypes";
 
 export abstract class StatefullElementType<TSave, TProps extends any[]> {
   constructor() {}

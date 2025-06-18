@@ -1,5 +1,5 @@
 import { Object3D } from "three";
-import { StatefullElementType } from "../../../Utils/statefullContext";
+import { StatefullElementType } from "./statefullContext";
 
 type boxProps = [];
 export class ComposeVirtualNodeType extends StatefullElementType<Object3D, boxProps> {

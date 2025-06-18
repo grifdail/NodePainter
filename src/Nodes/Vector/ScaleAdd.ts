@@ -3,8 +3,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorAddition, VectorScale } from "../../Utils/vectorUtils";
+import { vectorAddition, vectorScale } from "../../Utils/math/vectorUtils";
 
 export const ScaleAdd: NodeDefinition = {
   id: "ScaleAdd",
@@ -44,7 +45,7 @@ export const ScaleAdd: NodeDefinition = {
     var value = context.getInputValueVector(nodeData, "value");
     var scale = context.getInputValueNumber(nodeData, "scale");
     var added = context.getInputValueVector(nodeData, "added");
-    return EnforceGoodType(nodeData, VectorAddition(VectorScale(value, scale), added));
+    return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(vectorScale(value, scale), added));
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["value", "scale", "added"], ({ value, scale, added }) => `${value} * ${scale} + ${added}`);

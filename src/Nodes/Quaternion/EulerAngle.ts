@@ -2,7 +2,7 @@ import { IconRotate3d } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createMultiTypeNodeDefinition } from "../../Utils/createMultyTypeNodeDefinition";
-import { EulerToQuat } from "../../Utils/quaternionUtils";
+import { eulerToQuat } from "../../Utils/math/quaternionUtils";
 
 export const EulerAngle: NodeDefinition = createMultiTypeNodeDefinition(
   {
@@ -26,14 +26,14 @@ export const EulerAngle: NodeDefinition = createMultiTypeNodeDefinition(
       dataInputs: [Port.number("x"), Port.number("y"), Port.number("z")],
       dataOutputs: [Port.quaternion("out")],
       getData: (portId, node, context) => {
-        return EulerToQuat([context.getInputValueNumber(node, "x"), context.getInputValueNumber(node, "y"), context.getInputValueNumber(node, "z")], node.settings.order);
+        return eulerToQuat([context.getInputValueNumber(node, "x"), context.getInputValueNumber(node, "y"), context.getInputValueNumber(node, "z")], node.settings.order);
       },
     },
     vector3: {
       dataInputs: [Port.vector3("vec")],
       dataOutputs: [Port.quaternion("out")],
       getData: (portId, node, context) => {
-        return EulerToQuat(context.getInputValueVector3(node, "vec"), node.settings.order);
+        return eulerToQuat(context.getInputValueVector3(node, "vec"), node.settings.order);
       },
     },
   }

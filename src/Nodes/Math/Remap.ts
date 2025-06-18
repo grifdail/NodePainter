@@ -2,8 +2,9 @@ import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { EnforceGoodType, VectorLerp } from "../../Utils/vectorUtils";
+import { vectorLerp } from "../../Utils/math/vectorUtils";
 
 export const Remap: NodeDefinition = {
   id: "Remap",
@@ -62,9 +63,9 @@ export const Remap: NodeDefinition = {
     const outmax = context.getInputValueVector(nodeData, "outmax");
     const clamp = context.getInputValueBoolean(nodeData, "clamp");
     const dt = (t - inmin) / (inmax - inmin);
-    const result = VectorLerp(outmin, outmax, clamp ? Math.max(Math.min(dt, 1), 0) : dt);
+    const result = vectorLerp(outmin, outmax, clamp ? Math.max(Math.min(dt, 1), 0) : dt);
 
-    return EnforceGoodType(nodeData, result);
+    return enforceCorrectVectorTypeForNode(nodeData, result);
   },
   shaderRequirement: `float map(float n, float inmin, float inmax, float outmin, float outmax, bool c) {
       float dt = (n - inmin) / (inmax - inmin);

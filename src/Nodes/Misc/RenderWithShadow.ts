@@ -1,7 +1,7 @@
 import { IconShadow } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { toHex } from "../../Utils/colorUtils";
+import { toHex } from "../../Utils/math/colorUtils";
 
 export const RenderWithShadow: NodeDefinition = {
   id: "RenderWithShadow",

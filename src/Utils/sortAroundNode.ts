@@ -39,10 +39,6 @@ export const sortAroundNode = (tree: TreeStore, targetId: string) => {
   });
 };
 
-/*
-function findNodeUsing(tree: TreeStore, nodeId: string): NodeData[] {
-  return Object.values(tree.nodes).filter((node) => Object.values(node.dataInputs).some((port) => port.hasConnection && port.connectedNode === nodeId));
-}*/
 function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition): NodeData[] {
   var result = [];
 
@@ -54,16 +50,3 @@ function getInputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition)
 
   return result;
 }
-/*
-function getOutputNodes(tree: TreeStore, node: NodeData, nodeDef: NodeDefinition) {
-  var result = [];
-
-  result.push(...findNodeUsing(tree, node.id));
-  result.push(
-    ...Object.values(node.execOutputs)
-      .map((nodeId) => tree.nodes[nodeId as string])
-      .filter((output) => output !== undefined)
-  );
-  return result;
-}
-*/

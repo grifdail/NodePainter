@@ -1,8 +1,6 @@
 import { P5CanvasInstance } from "@p5-wrapper/react";
 import { Color as TColor } from "three";
-import { Color, createColor, Gradient } from "../Types/vectorDataType";
-import { clamp01 } from "./clamp01";
-import { VectorLerp } from "./vectorUtils";
+import { Color, createColor } from "../../Types/vectorDataType";
 
 export function map(a: number, b: number, c: number) {
   return (c - a) / (b - a);
@@ -141,24 +139,6 @@ export function hsvToRgb(h: number, s: number, v: number) {
 
   return createColor(r, g, b);
 }
-export function evaluateGradient(gradient: Gradient, pos: number) {
-  if (gradient.length === 0) {
-    return createColor();
-  }
-  let prev = gradient[0];
-  if (pos <= prev.pos) {
-    return prev.color;
-  }
-  for (var stop of gradient) {
-    if (pos < stop.pos) {
-      return VectorLerp(prev.color, stop.color, clamp01(map(prev.pos, stop.pos, pos)));
-    } else {
-      prev = stop;
-    }
-  }
-  return prev.color;
-}
-
 export function White() {
   return createColor(1, 1, 1, 1);
 }

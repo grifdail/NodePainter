@@ -4,8 +4,8 @@ import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortType
 import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/applyConstraints";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { createOrSelectFromCache } from "../../Utils/useCache";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
 
 export const Random: NodeDefinition = {
   id: "Random",
@@ -20,7 +20,7 @@ export const Random: NodeDefinition = {
   hasOutput: hasInputGenerator(portTypesWithProperty("vectorLength")),
   getData: (portId, nodeData, context) => {
     const value = createOrSelectFromCache(context, nodeData, () =>
-      EnforceGoodType(
+      enforceCorrectVectorTypeForNode(
         nodeData,
         Array.from(Array(PortTypeDefinitions[nodeData.selectedType].vectorLength).keys()).map(() => context.RNG.next())
       )

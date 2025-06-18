@@ -1,9 +1,9 @@
-import { SwizzleOp } from "./SwizzleOp";
+import { SwizzleOperations } from "./SwizzleOperations";
 
-export function ValidateSwizzleString(text: string, count: number = 3) {
+export function validateSwizzleString(text: string, count: number = 3) {
   text = text.trim();
   text = text.toLowerCase();
-  var regex = new RegExp(`[^${Object.keys(SwizzleOp).join()}]`, "gi");
+  var regex = new RegExp(`[^${Object.keys(SwizzleOperations).join()}]`, "gi");
   text = text.replaceAll(regex, "");
   if (text.length > 4) {
     text = text.slice(0, 4);

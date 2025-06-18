@@ -5,7 +5,7 @@ import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
-import { VectorDistance, VectorSquareDistance } from "../../Utils/vectorUtils";
+import { vectorDistance, vectorSquareDistance } from "../../Utils/math/vectorUtils";
 
 export const VectorDistanceExpression: CodeBlockExpressionGenerator = {
   id: "Vector/VectorDistance",
@@ -41,7 +41,7 @@ export const VectorDistanceExpression: CodeBlockExpressionGenerator = {
     var b = evaluateCodeBlockExpression(statement.parameters.B, state) as number[];
 
     var comparator = evaluateCodeBlockExpression(statement.parameters.operation, state) as string;
-    return comparator === "Distance" ? VectorDistance(a, b) : VectorSquareDistance(a, b);
+    return comparator === "Distance" ? vectorDistance(a, b) : vectorSquareDistance(a, b);
   },
   toString(statement) {
     return `${toStringCodeBlockExpression(statement.parameters.operator)} from ${toStringCodeBlockExpression(statement.parameters.A)} to ${toStringCodeBlockExpression(statement.parameters.B)}`;

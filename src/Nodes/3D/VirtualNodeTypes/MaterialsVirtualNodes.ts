@@ -3,7 +3,7 @@ import { ImageData } from "../../../Types/ImageData";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Color } from "../../../Types/vectorDataType";
-import { toThreeColor, White } from "../../../Utils/colorUtils";
+import { toThreeColor, White } from "../../../Utils/math/colorUtils";
 import { MaterialGenericData } from "./MaterialGenericData";
 import { MaterialVirtualNodeType } from "./MaterialVirtualNodeType";
 

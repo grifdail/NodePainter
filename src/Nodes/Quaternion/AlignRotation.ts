@@ -3,8 +3,8 @@ import { Quaternion, Vector3 } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
-import { toQuaternion } from "../../Utils/quaternionUtils";
-import { VectorNormalize } from "../../Utils/vectorUtils";
+import { toQuaternion } from "../../Utils/math/quaternionUtils";
+import { vectorNormalize } from "../../Utils/math/vectorUtils";
 
 export const AlignRotation: NodeDefinition = {
   id: "AlignRotation",
@@ -19,8 +19,8 @@ export const AlignRotation: NodeDefinition = {
   getData: (portId, node, context) => {
     const axis = context.getInputValueVector3(node, "axis");
     const target = context.getInputValueVector3(node, "target");
-    const axisNorm = VectorNormalize(axis);
-    const targetNorm = VectorNormalize(target);
+    const axisNorm = vectorNormalize(axis);
+    const targetNorm = vectorNormalize(target);
     var tq = new Quaternion().setFromUnitVectors(new Vector3(...axisNorm), new Vector3(...targetNorm));
     return toQuaternion(tq);
   },

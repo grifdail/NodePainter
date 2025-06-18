@@ -2,7 +2,7 @@ import { IconList } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
-import { EnforceGoodType } from "../../Utils/vectorUtils";
+import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 
 export const Sum: NodeDefinition = {
   id: "Sum",
@@ -24,6 +24,6 @@ export const Sum: NodeDefinition = {
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");
     var operator = PortTypeDefinitions[node.selectedType].additionOperator || ((a, b) => a + b);
-    return EnforceGoodType(node, array.reduce(operator, PortTypeDefinitions[node.selectedType].createDefaultValue()));
+    return enforceCorrectVectorTypeForNode(node, array.reduce(operator, PortTypeDefinitions[node.selectedType].createDefaultValue()));
   },
 };

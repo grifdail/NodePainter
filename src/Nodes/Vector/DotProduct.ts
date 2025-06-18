@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { zipVector } from "../../Utils/vectorUtils";
+import { zipVector } from "../../Utils/math/vectorUtils";
 
 export const DotProduct: NodeDefinition = {
   id: "DotProduct",

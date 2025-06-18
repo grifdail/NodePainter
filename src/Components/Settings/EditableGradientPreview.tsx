@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Gradient, GradientStop } from "../../Types/vectorDataType";
-import { evaluateGradient, toHex } from "../../Utils/colorUtils";
+import { toHex } from "../../Utils/math/colorUtils";
 import { GradientDiv } from "./ColorPreview";
 import { useDrag } from "@use-gesture/react";
 import styled from "styled-components";
 import { IconArrowUp } from "@tabler/icons-react";
+import { evaluateGradient } from "../../Utils/math/evaluateGradient";
 
 const StyledGradientStop = styled.span<{ pos: number; color: string }>`
   position: absolute;

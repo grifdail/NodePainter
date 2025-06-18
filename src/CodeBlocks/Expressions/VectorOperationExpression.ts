@@ -5,7 +5,7 @@ import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { toStringCodeBlockExpression } from "../../Types/toStringCodeBlockExpression";
 import { FunctionContext } from "../../Utils/createExecutionContext";
-import { VectorOperations, VectorOperationTypes } from "../../Utils/vectorUtils";
+import { VectorOperations, VectorOperationTypes } from "../../Utils/math/vectorUtils";
 
 export const VectorOperationExpression: CodeBlockExpressionGenerator = {
   id: "Vector/VectorOperationExpression",

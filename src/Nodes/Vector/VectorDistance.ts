@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
-import { VectorDistance } from "../../Utils/vectorUtils";
+import { vectorDistance } from "../../Utils/math/vectorUtils";
 
 export const Distance: NodeDefinition = {
   id: "Distance",
@@ -39,7 +39,7 @@ export const Distance: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");
-    return VectorDistance(a, b);
+    return vectorDistance(a, b);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `(${a} - ${b}).length`);

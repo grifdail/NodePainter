@@ -1,6 +1,6 @@
-import { Vector } from "../Types/vectorDataType";
+import { Vector } from "../../../Types/vectorDataType";
 
-export const SwizzleOp: Record<string, (vector: Vector) => number> = {
+export const SwizzleOperations: Record<string, (vector: Vector) => number> = {
   x: (a: Vector) => a[0] || 0,
   y: (a: Vector) => a[1] || 0,
   z: (a: Vector) => a[2] || 0,

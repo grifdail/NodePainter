@@ -1,7 +1,7 @@
 import { Icon, IconBrush, IconBucketDroplet, IconCircle, IconEraser, IconLine, IconRectangle } from "@tabler/icons-react";
 import p5, { Graphics } from "p5";
 import { PaintingStore, PaintingTool } from "../../../Hooks/usePainting";
-import { toHex, toRGB255Array } from "../../../Utils/colorUtils";
+import { toHex, toRGB255Array } from "../../../Utils/math/colorUtils";
 import { floodFill } from "./floodfill";
 
 export type PaintingToolDef = {
