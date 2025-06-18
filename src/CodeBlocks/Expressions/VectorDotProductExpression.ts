@@ -1,6 +1,6 @@
 import { VectorDotProduct } from "../../Nodes/Vector/DotProduct";
-import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
-import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlock/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";

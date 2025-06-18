@@ -1,5 +1,5 @@
 import { CodeBlockExpressionTypes } from "../../../CodeBlocks/CodeBlockTypes";
-import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlockParameterFieldExpression";
+import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlock/CodeBlockParameterFieldExpression";
 import { PortType } from "../../../Types/PortType";
 import { RawValueField } from "../../Generics/RawValueField";
 import { CodeBlockExpressionMenu } from "./CodeBlockExpressionMenu";

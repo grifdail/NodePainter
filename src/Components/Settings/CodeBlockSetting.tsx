@@ -6,7 +6,7 @@ import { IconCode } from "@tabler/icons-react";
 import { Button } from "../Generics/Button";
 import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { useTree } from "../../Hooks/useTree";
-import { CodeBlock } from "../../Types/CodeBlock";
+import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 import { CodeBlockSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`

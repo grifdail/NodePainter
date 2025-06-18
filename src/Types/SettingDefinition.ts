@@ -2,7 +2,7 @@ import { Icon } from "@tabler/icons-react";
 import { EasingFunctionType } from "../libs/easing";
 import { ConstrainDeclaration } from "../Utils/ui/applyConstraints";
 import { AnimationTrack } from "./AnimationTrack";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "./CodeBlock/CodeBlock";
 import { EnvelopeData } from "./EnvelopeData";
 import { NodeData } from "./NodeData";
 import { Color, Gradient } from "./vectorDataType";

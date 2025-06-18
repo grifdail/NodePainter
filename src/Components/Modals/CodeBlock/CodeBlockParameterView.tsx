@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CodeBlockParameterField } from "../../../Types/CodeBlockParameterField";
+import { CodeBlockParameterField } from "../../../Types/CodeBlock/CodeBlockParameterField";
 import { CodeBlockStatementList } from "./CodeBlockStatementList";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { CodeBlockVariableSelector } from "./CodeBlockVariableSelector";

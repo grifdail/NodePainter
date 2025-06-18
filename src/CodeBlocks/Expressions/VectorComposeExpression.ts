@@ -1,6 +1,6 @@
-import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
-import { CodeBlockParameterField } from "../../Types/CodeBlockParameterField";
-import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlock/CodeBlockExpressionGenerator";
+import { CodeBlockParameterField } from "../../Types/CodeBlock/CodeBlockParameterField";
+import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";

@@ -1,4 +1,4 @@
-import { PortType } from "./PortType";
+import { PortType } from "../PortType";
 
 export type CodeBlockParameterFieldValue = {
   label?: string;

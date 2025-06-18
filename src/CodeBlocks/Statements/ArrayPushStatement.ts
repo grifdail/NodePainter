@@ -1,5 +1,5 @@
-import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
-import { CodeBlockStatementGenerator } from "../../Types/CodeBlockStatementGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
+import { CodeBlockStatementGenerator } from "../../Types/CodeBlock/CodeBlockStatementGenerator";
 import { evaluateCodeBlockExpression } from "../../Types/evaluateCodeBlockExpression";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";

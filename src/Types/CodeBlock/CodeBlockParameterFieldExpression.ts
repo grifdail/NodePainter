@@ -1,5 +1,5 @@
+import { PortType } from "../PortType";
 import { CodeBlockStatement } from "./CodeBlockStatement";
-import { PortType } from "./PortType";
 
 export type CodeBlockParameterFieldExpression = {
   label?: string;

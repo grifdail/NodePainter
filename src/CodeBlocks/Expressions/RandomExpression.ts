@@ -1,5 +1,5 @@
-import { CodeBlockExpressionGenerator } from "../../Types/CodeBlockExpressionGenerator";
-import { CodeBlockStatement } from "../../Types/CodeBlockStatement";
+import { CodeBlockExpressionGenerator } from "../../Types/CodeBlock/CodeBlockExpressionGenerator";
+import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { PortType } from "../../Types/PortType";
 import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 

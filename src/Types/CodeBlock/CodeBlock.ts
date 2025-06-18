@@ -1,5 +1,5 @@
+import { PortDefinition } from "../PortDefinition";
 import { CodeBlockStatement } from "./CodeBlockStatement";
-import { PortDefinition } from "./PortDefinition";
 
 export type CodeBlock = {
   statements: CodeBlockStatement[];

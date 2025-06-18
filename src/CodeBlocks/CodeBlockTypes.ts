@@ -1,6 +1,6 @@
-import { CodeBlockExpressionGenerator } from "../Types/CodeBlockExpressionGenerator";
-import { CodeBlockGenerator } from "../Types/CodeBlockGenerator";
-import { CodeBlockStatementGenerator } from "../Types/CodeBlockStatementGenerator";
+import { CodeBlockExpressionGenerator } from "../Types/CodeBlock/CodeBlockExpressionGenerator";
+import { CodeBlockGenerator } from "../Types/CodeBlock/CodeBlockGenerator";
+import { CodeBlockStatementGenerator } from "../Types/CodeBlock/CodeBlockStatementGenerator";
 import { CompareNumberExpression } from "./Expressions/CompareNumberExpression";
 import { MathOperationExpression } from "./Expressions/MathOperationExpression";
 import { RandomExpression } from "./Expressions/RandomExpression";

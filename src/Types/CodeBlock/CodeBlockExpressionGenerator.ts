@@ -1,6 +1,6 @@
-import { FunctionContext } from "../Utils/graph/execution/createExecutionContext";
+import { FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
+import { PortType } from "../PortType";
 import { CodeBlockStatement } from "./CodeBlockStatement";
-import { PortType } from "./PortType";
 
 export type CodeBlockExpressionGenerator = {
   id: string;

@@ -1,5 +1,5 @@
 import { MenuItem, SubMenu } from "@szhsin/react-menu";
-import { CodeBlockGenerator } from "../../../Types/CodeBlockGenerator";
+import { CodeBlockGenerator } from "../../../Types/CodeBlock/CodeBlockGenerator";
 
 type MenuTree = {
   [k: string]: { isGroup: true; values: MenuTree; name: string } | { isGroup: false; name: string; value: CodeBlockGenerator };
