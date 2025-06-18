@@ -3,7 +3,7 @@ import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
 import { updateAndReadPreviousFromCache } from "../../Utils/useCache";
 
 export const PreviousNode: NodeDefinition = {

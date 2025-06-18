@@ -2,9 +2,9 @@ import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
 import { vectorScale } from "../../Utils/math/vectorUtils";
 
 export const Scale: NodeDefinition = {

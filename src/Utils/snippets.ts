@@ -3,8 +3,8 @@ import schemaJSON from "../schema/Snippet.json";
 import { NodeData } from "../Types/NodeData";
 import { TreeStore } from "../Types/TreeStore";
 import { Vector2 } from "../Types/vectorDataType";
-import { buildBoundingBox } from "./buildBoundingBox";
 import { duplicateNode } from "./duplicateNode";
+import { buildBoundingBox } from "./ui/buildBoundingBox";
 
 const ajv = new Ajv({ meta: false, validateSchema: false, strictRequired: true, strict: true });
 

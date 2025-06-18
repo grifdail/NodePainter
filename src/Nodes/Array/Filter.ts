@@ -4,7 +4,7 @@ import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
 
 const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): void => {
   setTimeout(() => {

@@ -2,7 +2,7 @@ import { IconList, IconQuestionMark } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
 
 export const Count: NodeDefinition = {
   id: "Count",

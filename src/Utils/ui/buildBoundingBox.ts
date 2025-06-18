@@ -1,7 +1,7 @@
-import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
-import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
-import { BoundingBox } from "../Types/BoundingBox";
-import { TreeStore } from "../Types/TreeStore";
+import { GetNodeHeight } from "../../Components/Graph/GetNodeHeight";
+import { NODE_WIDTH } from "../../Components/Graph/NodeVisualConst";
+import { BoundingBox } from "../../Types/BoundingBox";
+import { TreeStore } from "../../Types/TreeStore";
 
 export function buildBoundingBox(nodeIds: string[], state: TreeStore) {
   var nodes = nodeIds.map((id) => {

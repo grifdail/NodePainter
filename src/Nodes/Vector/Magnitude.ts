@@ -2,8 +2,8 @@ import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/changeTypeGenerator";
 import { vectorMagnitude } from "../../Utils/math/vectorUtils";
 
 export const Magnitude: NodeDefinition = {

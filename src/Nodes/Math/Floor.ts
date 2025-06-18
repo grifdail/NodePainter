@@ -1,9 +1,9 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/changeTypeGenerator";
 
 export const Floor: NodeDefinition = {
   id: "Floor",

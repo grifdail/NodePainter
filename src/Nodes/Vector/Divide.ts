@@ -2,8 +2,8 @@ import { IconDivide } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/changeTypeGenerator";
 
 export const Divide: NodeDefinition = {
   id: "Divide",

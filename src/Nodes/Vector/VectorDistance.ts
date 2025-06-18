@@ -2,8 +2,8 @@ import { IconMathXPlusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
+import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/changeTypeGenerator";
 import { vectorDistance } from "../../Utils/math/vectorUtils";
 
 export const Distance: NodeDefinition = {

@@ -17,7 +17,7 @@ import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
 import { NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { GetNodeHeight } from "./GetNodeHeight";
-import { camelCaseToWords } from "../../Utils/camelCaseToWords";
+import { camelCaseToWords } from "../../Utils/ui/camelCaseToWords";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);

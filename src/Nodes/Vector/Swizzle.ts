@@ -2,9 +2,9 @@ import { IconMathXy } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator } from "../../Utils/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/generateShaderCodeFromNodeData";
 import { Constraints } from "../../Utils/graph/applyConstraints";
+import { changeTypeGenerator } from "../../Utils/graph/changeTypeGenerator";
 import { performSwizzle } from "../../Utils/math/swizzle/PerformSwizzle";
 
 export const Swizzle: NodeDefinition = {

@@ -1,6 +1,6 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { camelCaseToWords } from "../../Utils/camelCaseToWords";
 import { Constraints } from "../../Utils/graph/applyConstraints";
+import { camelCaseToWords } from "../../Utils/ui/camelCaseToWords";
 import { SimpleNodeVirtualNodeType } from "./VirtualNodeTypes/SimpleNodeVirtualNodeType";
 import { createDefaultMaterialGenericData } from "./VirtualNodeTypes/createDefaultMaterialGenericData";
 

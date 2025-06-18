@@ -1,7 +1,7 @@
-import { NodeData } from "../Types/NodeData";
-import { PortChangeFunction } from "../Types/NodeDefinition";
-import { PortType } from "../Types/PortType";
-import { convertTypeValue } from "./convertTypeValue";
+import { NodeData } from "../../Types/NodeData";
+import { PortChangeFunction } from "../../Types/NodeDefinition";
+import { PortType } from "../../Types/PortType";
+import { convertTypeValue } from "./../convertTypeValue";
 
 export function changeTypeGenerator(inputs: string[], outputs: string[], arrayInput: string[] = [], arrayOutput: string[] = [], blackboardChanger?: PortChangeFunction): PortChangeFunction {
   return (node: NodeData, type: PortType, blackboards: NodeData[]) => {

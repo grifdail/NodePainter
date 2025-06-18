@@ -2,7 +2,7 @@ import React, { MouseEvent } from "react";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import styled from "styled-components";
-import { camelCaseToWords } from "../Utils/camelCaseToWords";
+import { camelCaseToWords } from "../Utils/ui/camelCaseToWords";
 
 const StyledButton = styled.button`
   background: var(--color-background-card);

@@ -17,7 +17,7 @@ import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 import { extractSnipet } from "../../Utils/snippets";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { SnippetSubMenu } from "./SnippetSubMenu";
-import { camelCaseToWords } from "../../Utils/camelCaseToWords";
+import { camelCaseToWords } from "../../Utils/ui/camelCaseToWords";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
