@@ -1,75 +1,70 @@
 import { IconAngle, IconArrowUpRightCircle } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createVector2, createVector3, Vector3 } from "../../Types/vectorDataType";
-import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
-import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
-import { vectorAddition, vectorIsZero, vectorNormalize, vectorScale } from "../../Utils/math/vectorUtils";
-import { VectorCrossProduct } from "./CrossProduct";
-import { VectorDotProduct } from "./DotProduct";
+import { createVector2, createVector3 } from "../../Types/vectorDataType";
+import { createMultiTypeNodeDefinition } from "../../Utils/graph/definition/createMultyTypeNodeDefinition";
 
-export const VectorFromAngle: NodeDefinition = {
-  id: "VectorFromAngle",
-  description: "Create a vector based on an Angle and a magnitude",
-  icon: DoubleIconGen(IconArrowUpRightCircle, IconAngle),
-  featureLevel: 4,
-  tags: ["Vector"],
-  dataInputs: [
-    {
-      id: "angle",
-      type: "number",
-      defaultValue: 0,
+export const VectorFromAngle: NodeDefinition = createMultiTypeNodeDefinition(
+  {
+    id: "VectorFromAngle",
+    alias: "Polar coordinate",
+    description: "Create a vector based on an Angle and a magnitude",
+    icon: DoubleIconGen(IconArrowUpRightCircle, IconAngle),
+    featureLevel: 4,
+    tags: ["Vector", "Math"],
+    settings: [],
+  },
+  {
+    vector2: {
+      dataInputs: [
+        {
+          id: "angle",
+          type: "number",
+          defaultValue: 0,
+        },
+        {
+          id: "length",
+          type: "number",
+          defaultValue: 1,
+        },
+      ],
+      dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector2() }],
+      getData: (portId, nodeData, context) => {
+        const angle = context.getInputValueNumber(nodeData, "angle");
+        const length = context.getInputValueNumber(nodeData, "length");
+        const cos = Math.cos(angle) * length;
+        const sin = Math.sin(angle) * length;
+        return createVector2(cos, sin);
+      },
     },
-    {
-      id: "length",
-      type: "number",
-      defaultValue: 1,
+    vector3: {
+      dataInputs: [
+        {
+          id: "polar",
+          type: "number",
+          defaultValue: 0,
+        },
+        {
+          id: "azimut",
+          type: "number",
+          defaultValue: 0,
+        },
+        {
+          id: "length",
+          type: "number",
+          defaultValue: 1,
+        },
+      ],
+      dataOutputs: [{ id: "vec", type: "vector3", defaultValue: createVector3() }],
+      getData: (portId, nodeData, context) => {
+        const polar = context.getInputValueNumber(nodeData, "polar");
+        const azimut = context.getInputValueNumber(nodeData, "azimut");
+        const length = context.getInputValueNumber(nodeData, "length");
+        const x = Math.sin(polar) * Math.cos(azimut) * length;
+        const y = Math.cos(polar) * length;
+        const z = Math.sin(polar) * Math.sin(azimut) * length;
+        return [x, y, z];
+      },
     },
-  ],
-  dataOutputs: [{ id: "vec", type: "vector2", defaultValue: createVector2() }],
-
-  settings: [],
-  availableTypes: ["vector2", "vector3"],
-  onChangeType(node, type) {
-    if (type === "vector3") {
-      if (node.dataInputs["normal"] === undefined) {
-        node.dataInputs["normal"] = createPortConnection({
-          id: "normal",
-          type: "vector3",
-          defaultValue: createVector3(0, 1, 0),
-        });
-      }
-    } else {
-      delete node.dataInputs["normal"];
-    }
-    node.dataOutputs["vec"].type = type;
-  },
-  getData: (portId, nodeData, context) => {
-    const angle = context.getInputValueNumber(nodeData, "angle");
-    const length = context.getInputValueNumber(nodeData, "length");
-    const cos = Math.cos(angle) * length;
-    const sin = Math.sin(angle) * length;
-    if (nodeData.selectedType === "vector2") {
-      return createVector2(cos, sin);
-    } else {
-      const normal = context.getInputValueVector3(nodeData, "normal");
-      if (vectorIsZero(normal)) {
-        return createVector3();
-      } else {
-        const norm = vectorNormalize(normal) as Vector3;
-        const isUp = Math.abs(1 - VectorDotProduct(norm, [0, 1, 0])) < Number.EPSILON;
-        if (isUp) {
-          return createVector3(cos, 0, sin);
-        } else {
-          const alpha = vectorNormalize(VectorCrossProduct(norm, [0, 1, 0])) as Vector3;
-          const beta = vectorNormalize(VectorCrossProduct(norm, alpha)) as Vector3;
-          const vec = vectorAddition(vectorScale(alpha, cos), vectorScale(beta, sin));
-          return vec;
-        }
-      }
-    }
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "vec", ["angle", "length"], ({ angle, length }) => `vec2(cos(${angle}) * ${length}, sin(${angle}) * ${length})`);
-  },
-};
+  }
+);

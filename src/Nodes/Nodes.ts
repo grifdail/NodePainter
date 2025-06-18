@@ -118,6 +118,7 @@ import { EasingNode } from "./Math/EasingNode";
 import { Envelope } from "./Math/Envelope";
 import { EvaluateBezier } from "./Math/EvaluateBezier";
 import { ExpNode } from "./Math/ExpNode";
+import { ExponantialImpulse } from "./Math/ExponantialImpulse";
 import { Floor } from "./Math/Floor";
 import { IntegrateVelocity } from "./Math/IntegrateVelocity";
 import { LogNode } from "./Math/LogNode";
@@ -372,6 +373,7 @@ export const Nodes: Array<NodeDefinition> = [
   OneMinus,
   SmoothStep,
   IntegrateVelocity,
+  ExponantialImpulse,
 
   // Constant
   createConstant("Pi", Math.PI),
