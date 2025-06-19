@@ -76,6 +76,7 @@ import { ArrayMap } from "./Array/ArrayMap";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { GenerateArray } from "./Array/GenerateArray";
+import { RandomFromArray } from "./Array/RandomFromArray";
 import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
@@ -392,6 +393,7 @@ export const Nodes: Array<NodeDefinition> = [
 
   //Array
   SelectFromArray,
+  RandomFromArray,
   StaticArray,
   Count,
   Sum,
