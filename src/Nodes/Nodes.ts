@@ -134,6 +134,7 @@ import { Modulo, Remainder } from "./Math/Modulo";
 import { Noise } from "./Math/Noise";
 import { OneMinus } from "./Math/OneMinus";
 import { PingPong } from "./Math/PingPong";
+import { PoissonDisk } from "./Math/PoissonDisk";
 import { PowNode } from "./Math/PowNode";
 import { RadianToDegree } from "./Math/RadianToDegree";
 import { Remap } from "./Math/Remap";
@@ -380,6 +381,7 @@ export const Nodes: Array<NodeDefinition> = [
   IntegrateVelocity,
   ExponantialImpulse,
   MathExpression,
+  PoissonDisk,
 
   // Constant
   createConstant("Pi", Math.PI),
