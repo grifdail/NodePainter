@@ -7,10 +7,8 @@ import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardC
 const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })).map((item: any) => item.default) as string[];
 //const gallery = [] as string[];
 function basename(path: string) {
-  console.log(path);
   return path.split("/").reverse()[0];
 }
-console.log(gallery);
 
 export const UseParticleImage: NodeDefinition = {
   id: "UseParticleImage",

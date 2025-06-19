@@ -127,6 +127,7 @@ import { Floor } from "./Math/Floor";
 import { IntegrateVelocity } from "./Math/IntegrateVelocity";
 import { LogNode } from "./Math/LogNode";
 import { LoopingNoise } from "./Math/LoopingNoise";
+import { MathExpression } from "./Math/MathExpression";
 import { Max } from "./Math/Max";
 import { Min } from "./Math/Min";
 import { Modulo, Remainder } from "./Math/Modulo";
@@ -378,6 +379,7 @@ export const Nodes: Array<NodeDefinition> = [
   SmoothStep,
   IntegrateVelocity,
   ExponantialImpulse,
+  MathExpression,
 
   // Constant
   createConstant("Pi", Math.PI),
