@@ -19,7 +19,6 @@ type ToastStore = {
 export const useToast = create<ToastStore>()((set, get) => ({
   toasts: [],
   add(toast: ToastData) {
-    console.log("hllll");
     set((state) => ({
       toasts: [...state.toasts, toast],
     }));

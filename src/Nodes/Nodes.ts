@@ -94,9 +94,12 @@ import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { DecomposeStruct } from "./CustomFunction/DecomposeStruct";
 import { BloomEffect } from "./Effects/BloomEffect";
 import { BlurEffect } from "./Effects/BlurEffect";
+import { FlatColorEffect } from "./Effects/FlatColorEffect";
 import { DrawImagePart } from "./Images/DrawImagePart";
 import { ImageDimension } from "./Images/ImageDimension";
 import { PaintImage } from "./Images/PaintImage";
+import { UseParticleImage } from "./Images/UseParticleImage";
+import { UsePatternImage } from "./Images/UsePatternImage";
 import { KeyPressed } from "./Inputs/KeyPressed";
 import { MouseButton } from "./Inputs/MouseButton";
 import { MousePosition } from "./Inputs/MousePosition";
@@ -277,8 +280,8 @@ export const Nodes: Array<NodeDefinition> = [
   PrecomputeImage,
   ImageDimension,
   PaintImage,
-  // UsePatternImage,
-  //UseParticleImage,
+  UsePatternImage,
+  UseParticleImage,
 
   //Shader
   RenderShaderStart,
@@ -410,6 +413,7 @@ export const Nodes: Array<NodeDefinition> = [
   //Effect
   BlurEffect,
   BloomEffect,
+  FlatColorEffect,
 
   //Statefull
   EdgeNode,

@@ -34,7 +34,6 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
   if (value == null) {
     value = def.options[0];
   }
-
   return (
     <Body>
       <img

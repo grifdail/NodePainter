@@ -4,11 +4,13 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
-//const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })) as string[];
-const gallery = [] as string[];
+const gallery = Object.values(import.meta.glob("@assets/particles/*.png", { eager: true, query: "?url" })).map((item: any) => item.default) as string[];
+//const gallery = [] as string[];
 function basename(path: string) {
+  console.log(path);
   return path.split("/").reverse()[0];
 }
+console.log(gallery);
 
 export const UseParticleImage: NodeDefinition = {
   id: "UseParticleImage",
@@ -35,12 +37,11 @@ export const UseParticleImage: NodeDefinition = {
       context,
       node,
       () => {
-        const img = new ImageData({ url: imgSetting });
+        const img = new ImageData({ url: imgSetting.url });
         return img;
       },
       imgSetting.url
     );
-
     return cachedImage;
   },
 };
