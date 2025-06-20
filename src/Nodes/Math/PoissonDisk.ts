@@ -23,19 +23,21 @@ export const PoissonDisk: NodeDefinition = {
 };
 
 function poissonDisk(minDist: number, rng: Rand, tries: number = 20) {
+  if (minDist <= 0) {
+    return [];
+  }
   const points: Vector2[] = [];
   const candidates: Vector2[] = [];
   const minDistSq = minDist * minDist;
+
   var startPoint: Vector2 = [rng.next(), rng.next()];
   const cellSize = minDist / Math.sqrt(2);
   const grid = new CellGrid(cellSize);
   points.push(startPoint);
   candidates.push(startPoint);
-  if (minDistSq <= 0) {
-    return [];
-  }
-  var t = 40000;
-  while (candidates.length > 0 && t-- > 0) {
+  grid.add(startPoint);
+
+  while (candidates.length > 0) {
     const currentPoint = candidates.pop() as Vector2;
     for (let i = 0; i < tries; i++) {
       const alpha = rng.next() * Math.PI * 2;
