@@ -1,4 +1,4 @@
-import { IconDeviceDesktopDown, IconDeviceFloppy, IconFile, IconFocusCentered, IconFolderOpen, IconGif, IconInfoCircle, IconMenu2, IconPng, IconSettings } from "@tabler/icons-react";
+import { IconDeviceDesktopDown, IconDeviceFloppy, IconFile, IconFocusCentered, IconFolderOpen, IconGif, IconInfoCircle, IconMenu2, IconPng, IconSettings, IconTrashX } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { useRouter } from "../Hooks/useRouter";
@@ -9,6 +9,7 @@ import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
 import { SketchTemplate } from "../Types/SketchTemplate";
+import { listOrphanNode } from "../Utils/graph/modification/listOrphanNode";
 
 function download(url: string, filename: string = "data.json") {
   const link = document.createElement("a");
@@ -69,12 +70,25 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
       <MenuItem onClick={() => openModal(Routes.ExportGif)}>
         <IconGif></IconGif> Export
       </MenuItem>
-      <MenuItem
-        onClick={() => exportPng()}
-        disabled={!showPreview}>
-        <IconPng></IconPng> Export frame
-      </MenuItem>
       <MenuDivider></MenuDivider>
+      <MenuItem
+        onClick={() => {
+          var tree = useTree.getState();
+          var orphan = listOrphanNode(tree.nodes);
+          if (orphan.length > 0) {
+            useDialog.getState().openConfirm(
+              (result) => {
+                if (result) {
+                  tree.deleteNodes(orphan);
+                }
+              },
+              "Delete orphan",
+              `Are you sure you want to delete all orphan node ? This will delete ${orphan.length} nodes and cannot be undone.`
+            );
+          }
+        }}>
+        <IconTrashX /> Remove all orphan
+      </MenuItem>
       <MenuItem onClick={resetCamera}>
         <IconFocusCentered></IconFocusCentered> Reset camera
       </MenuItem>

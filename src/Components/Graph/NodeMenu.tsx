@@ -4,6 +4,8 @@ import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import styled from "styled-components";
+import { listChildOfNode } from "../../Utils/graph/modification/listChildOfNode";
+import { useSelection } from "../../Hooks/useSelection";
 
 var StyledButton = styled(MenuButton)`
   border: none;
@@ -30,7 +32,12 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
   const executeCallback = useTree((state) => state.executeCallback);
   var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
   return (
-    <foreignObject x="260" y="10" height="30" width="30" className="context-menu">
+    <foreignObject
+      x="260"
+      y="10"
+      height="30"
+      width="30"
+      className="context-menu">
       <Menu
         portal
         menuButton={
@@ -38,23 +45,42 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
             <IconMenu2></IconMenu2>
           </StyledButton>
         }>
-        <MenuItem key="delete" onClick={() => deleteNode(node.id)}>
+        <MenuItem
+          key="delete"
+          onClick={() => deleteNode(node.id)}>
           Delete
         </MenuItem>
-        <MenuItem key="duplicate" onClick={() => duplicateNode(node.id)}>
+        <MenuItem
+          key="duplicate"
+          onClick={() => duplicateNode(node.id)}>
           Duplicate
         </MenuItem>
-        <MenuItem key="reset" onClick={() => resetNode(node.id)}>
+        <MenuItem
+          key="reset"
+          onClick={() => resetNode(node.id)}>
           Reset
         </MenuItem>
-        <MenuItem key="sortAround" onClick={() => sortAroundNode(node.id)}>
+        <MenuItem
+          key="sortAround"
+          onClick={() => sortAroundNode(node.id)}>
           Sort Arount
         </MenuItem>
+        <MenuItem
+          key="sortAround"
+          onClick={() => {
+            var child = listChildOfNode(node.id, useTree.getState().nodes);
+            useSelection.getState().setSelection([...Array.from(child), node.id]);
+          }}>
+          Select with all input nodes
+        </MenuItem>
+
         {contextMenu && [
           <MenuDivider key="divider" />,
           ...Object.entries(contextMenu).map(([key, fn]) => {
             return (
-              <MenuItem key={key} onClick={() => executeCallback(node.id, fn)}>
+              <MenuItem
+                key={key}
+                onClick={() => executeCallback(node.id, fn)}>
                 {key}
               </MenuItem>
             );
