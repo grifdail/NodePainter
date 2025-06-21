@@ -2,7 +2,7 @@ import { produce } from "immer";
 import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
-import { DefaultPalettes } from "../Data/Palettes";
+import { DefaultGradient, DefaultPalettes } from "../Data/Palettes";
 import { PlayerPrefExport, PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
 import { Snippet } from "../Utils/graph/modification/snippets";
@@ -15,8 +15,8 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         nodesLastUsedDates: {},
         nodesUseCount: {},
         nodeSorting: "featured",
-        palettes: {},
-        gradient: {},
+        palettes: structuredClone(DefaultPalettes),
+        gradient: structuredClone(DefaultGradient),
         snippets: {},
         colorPreset: DefaultPalettes.Pico8,
         setSorting(sorting: SortingType) {
@@ -123,6 +123,28 @@ export const usePlayerPref = create<PlayerPrefStore>()(
             colorPreset: structuredClone(saveData.colorPreset),
             hasSeenIntroPopup: saveData.hasSeenIntroPopup,
             snippets: structuredClone(saveData.snippets),
+          }));
+        },
+        loadDefaultPaletteCollection() {
+          set((state) => ({
+            palettes: {
+              ...state.palettes,
+              ...structuredClone(DefaultPalettes),
+            },
+            gradient: {
+              ...state.gradient,
+              ...structuredClone(DefaultGradient),
+            },
+          }));
+        },
+        resetNodeUsageInformation() {
+          set(() => ({ nodesLastUsedDates: {}, nodesUseCount: {} }));
+        },
+        removeDefaultPalettes() {
+          console.log(Object.fromEntries(Object.entries(get().palettes).filter(([name]) => !DefaultPalettes[name])));
+          set((state) => ({
+            palettes: Object.fromEntries(Object.entries(state.palettes).filter(([name]) => !DefaultPalettes[name])),
+            gradient: Object.fromEntries(Object.entries(state.gradient).filter(([name]) => !DefaultGradient[name])),
           }));
         },
       } as PlayerPrefStore;

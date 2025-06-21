@@ -10,6 +10,7 @@ import { NodeData } from "../../../Types/NodeData";
 import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { SavedSnippetEditor } from "./SavedSnippetEditor";
 import { ExportSettingEditor } from "./ExportSettingEditor";
+import { MiscSettingEditor } from "./MiscSettingEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -33,7 +34,6 @@ enum Section {
   SavedPalette = "SavedPalette",
   SavedGradient = "SavedGradient",
   SavedSnippet = "SavedSnippet",
-  SavedFunction = "SavedFunction",
   Misc = "Misc",
   ExportSetting = "ExportSetting",
 }
@@ -52,8 +52,7 @@ const DefaultPaletteEdition = () => {
 };
 
 const EmptyDiv = () => {
-  const savedPalettes = usePlayerPref((pref) => pref.palettes);
-  return <div></div>;
+  return <div>Not implemented yet</div>;
 };
 
 const SectionComponent: { [key in Section]: () => JSX.Element } = {
@@ -61,8 +60,7 @@ const SectionComponent: { [key in Section]: () => JSX.Element } = {
   [Section.SavedPalette]: SavedPaletteEditor,
   [Section.SavedGradient]: SavedGradientEditor,
   [Section.SavedSnippet]: SavedSnippetEditor,
-  [Section.SavedFunction]: EmptyDiv,
-  [Section.Misc]: EmptyDiv,
+  [Section.Misc]: MiscSettingEditor,
   [Section.ExportSetting]: ExportSettingEditor,
 };
 

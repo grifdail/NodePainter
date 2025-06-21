@@ -28,5 +28,8 @@ export type PlayerPrefStore = {
   snippets: SnippetCollection;
   getExportJson(): PlayerPrefExport;
   loadJson(saveData: PlayerPrefExport): void;
+  loadDefaultPaletteCollection: () => void;
+  resetNodeUsageInformation: () => void;
+  removeDefaultPalettes: () => void;
 };
 export type SortingType = "featured" | "name" | "last" | "most";

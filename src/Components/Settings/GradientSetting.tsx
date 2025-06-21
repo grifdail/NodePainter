@@ -140,18 +140,6 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = func
           <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
           <MenuDivider></MenuDivider>
           <SubMenu
-            label="Create from a default palette"
-            overflow="auto">
-            {Object.entries(DefaultPalettes).map(([key, value]) => (
-              <MenuItemWithPalettePreview
-                id={key}
-                key={key}
-                value={value}
-                onClick={() => loadFromPalette(value)}
-              />
-            ))}
-          </SubMenu>
-          <SubMenu
             label="Create from a saved palette"
             overflow="auto">
             {Object.entries(ownPalettes).map(([key, value]) => (
@@ -163,18 +151,7 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = func
               />
             ))}
           </SubMenu>
-          <SubMenu
-            label="Create from default Gradient"
-            overflow="auto">
-            {Object.entries(DefaultGradient).map(([key, value]) => (
-              <MenuItemWithGradientPreview
-                id={key}
-                key={key}
-                value={value}
-                onClick={() => loadGradient(value)}
-              />
-            ))}
-          </SubMenu>
+
           <SubMenu
             label="Saved Gradient"
             overflow="auto">

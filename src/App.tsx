@@ -14,6 +14,7 @@ import { PortStyle } from "./PortStyle";
 import { loadExample } from "./Utils/graph/load/loadExample";
 import { ToastContainer } from "./Components/ToastContainer";
 import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
+import { DefaultGradient, DefaultPalettes } from "./Data/Palettes";
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);
@@ -24,6 +25,7 @@ function App() {
   useAboutOnFirstLaunch();
   useParseUrl();
   useResetCamera();
+
   return (
     <div className="app">
       <PortStyle />

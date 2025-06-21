@@ -48,18 +48,7 @@ export function PaletteMenu({ onLoaded, currentPalette, button, children }: { on
       menuButton={button != null ? button : <Button icon={IconMenu2}></Button>}>
       <MenuItem onClick={savePalette}>Save Palette</MenuItem>
       <MenuDivider></MenuDivider>
-      <SubMenu
-        label="Create from default palette"
-        overflow="auto">
-        {Object.entries(DefaultPalettes).map(([key, value]) => (
-          <MenuItemWithPalettePreview
-            key={key}
-            id={key}
-            value={value}
-            onClick={() => onLoaded(value)}
-          />
-        ))}
-      </SubMenu>
+
       <SubMenu
         label="Create from saved palette"
         overflow="auto">
