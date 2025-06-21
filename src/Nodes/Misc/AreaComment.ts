@@ -1,6 +1,5 @@
 import { IconMessage } from "@tabler/icons-react";
-import { GetNodeHeight } from "../../Components/Graph/GetNodeHeight";
-import { NODE_HEADER_HEIGHT, NODE_WIDTH } from "../../Components/Graph/NodeVisualConst";
+import { NODE_WIDTH } from "../../Components/Graph/NodeVisualConst";
 import { useSelection } from "../../Hooks/useSelection";
 import { BoundingBox } from "../../Types/BoundingBox";
 import { GraphArea } from "../../Types/GraphArea";
@@ -24,9 +23,7 @@ export const AreaComment: NodeDefinition = {
     var options: ContextMenuData = {
       ["Select nodes in the area"]: (node: NodeData, tree: TreeStore) => {
         var area = node.settings.grapharea as GraphArea;
-        var areaBoundingBox = new BoundingBox(area.y + node.positionY, area.x + node.positionX + NODE_WIDTH * 0.5 + area.width, area.y + node.positionY + area.height, area.x + node.positionX + NODE_WIDTH * 0.5);
-        var nodes = getNodesInBoundingBox(areaBoundingBox);
-        useSelection.getState().setSelection(nodes);
+        selectNodeInAreas(area, node);
       },
     };
     var selection = useSelection.getState().nodes;
@@ -34,13 +31,15 @@ export const AreaComment: NodeDefinition = {
       options["Build Around Selection"] = (node: NodeData, tree: TreeStore) => {
         var boundingBox = buildBoundingBox([...selection], tree);
         var extended = boundingBox.bb.grow(50, 50, 50, 50);
-        var self = new BoundingBox(node.positionY, node.positionX + NODE_WIDTH, node.positionY + GetNodeHeight(node, tree.getNodeTypeDefinition(node)), node.positionX);
-        var final = extended.extend(self);
-        console.log(node);
-        console.log({ x: final.left - node.positionX, width: final.width(), y: final.top - node.positionY, height: final.height(), color: [0, 0, 1, 1], set: true });
-        node.settings.grapharea = { x: final.left - node.positionX - NODE_WIDTH * 0.5, width: final.width(), y: final.top - node.positionY - NODE_HEADER_HEIGHT * 0.5, height: final.height(), color: node.settings.grapharea.color, set: true };
+
+        node.settings.grapharea = { x: extended.left, width: extended.width(), y: extended.top, height: extended.height(), color: node.settings.grapharea.color, name: node.settings.grapharea.name, relative: false };
       };
     }
     return options;
   },
 };
+export function selectNodeInAreas(area: GraphArea, node: NodeData, includeSelf?: boolean) {
+  var areaBoundingBox = !area.relative ? new BoundingBox(area.y, area.x + area.width, area.y + area.height, area.x) : new BoundingBox(area.y + node.positionY, area.x + node.positionX + NODE_WIDTH * 0.5 + area.width, area.y + node.positionY + area.height, area.x + node.positionX + NODE_WIDTH * 0.5);
+  var nodes = getNodesInBoundingBox(areaBoundingBox);
+  useSelection.getState().setSelection(includeSelf ? [...nodes, node.id] : nodes);
+}

@@ -87,6 +87,7 @@ export function Graph() {
                 key={`${node.id}-pairing`}
                 base={getNodePort(node.id, "self", "in")}
                 area={node.settings?.grapharea}
+                node={node}
               />
             );
           })}

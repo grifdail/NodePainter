@@ -6,6 +6,8 @@ import { Color } from "../../Types/vectorDataType";
 import { styled } from "styled-components";
 import { SetAlpha } from "../../Nodes/Color/SetAlpha";
 import { vectorMultiplication } from "../../Utils/math/vectorUtils";
+import { NodeData } from "../../Types/NodeData";
+import { selectNodeInAreas } from "../../Nodes/Misc/AreaComment";
 
 const Rect = styled.rect<{ $color: Color }>`
   stroke: ${(props) => toHex(props.$color, true)};
@@ -19,7 +21,7 @@ const Text = styled.text`
   fill: var(--color-text);
 `;
 
-export function GraphAreaRect({ base, area }: { base: FrameValue<number[]>; area: GraphArea }) {
+export function GraphAreaRect({ base, area, node }: { base: FrameValue<number[]>; area: GraphArea; node: NodeData }) {
   return (
     <animated.g transform={base.to((x, y) => (area.relative ? `translate(${x + area.x}, ${y + area.y})` : `translate(${area.x}, ${area.y}) scale(1)`))}>
       <Rect
@@ -30,6 +32,7 @@ export function GraphAreaRect({ base, area }: { base: FrameValue<number[]>; area
         height={area.height}
         $color={area.color}></Rect>
       <Text
+        onClick={() => selectNodeInAreas(area, node, true)}
         x="10 "
         y="35">
         {area.name}
