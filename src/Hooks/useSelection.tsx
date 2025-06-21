@@ -1,9 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { useTree } from "./useTree";
-import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
-import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { StatefullElementType } from "../Nodes/3D/VirtualNodeTypes/statefullContext";
+import { BoundingBox } from "../Types/BoundingBox";
+import { getNodesInBoundingBox } from "../Utils/graph/modification/getNodesInBoundingBox";
 
 export type SelectionStore = {
   toggleNode(id: string): void;
@@ -63,19 +62,7 @@ export const useSelection = create<SelectionStore>()(
         var maxX = Math.max(start[0], end[0]);
         var minY = Math.min(start[1], end[1]);
         var maxY = Math.max(start[1], end[1]);
-        const tree = useTree.getState();
-        const nodes = Object.values(tree.nodes)
-          .filter((node) => {
-            if (node.graph !== tree.editedGraph) {
-              return false;
-            }
-            if (node.positionX + NODE_WIDTH < minX || node.positionX > maxX || node.positionY > maxY) {
-              return false;
-            }
-            var nodeHeight = GetNodeHeight(node, tree.getNodeTypeDefinition(node));
-            return !(node.positionY + nodeHeight < minY);
-          })
-          .map((node) => node.id);
+        const nodes = getNodesInBoundingBox(new BoundingBox(minY, maxX, maxY, minX));
 
         set((state) => {
           state.nodes = nodes;

@@ -66,7 +66,7 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
           Sort Arount
         </MenuItem>
         <MenuItem
-          key="sortAround"
+          key="selectInput"
           onClick={() => {
             var child = listChildOfNode(node.id, useTree.getState().nodes);
             useSelection.getState().setSelection([...Array.from(child), node.id]);

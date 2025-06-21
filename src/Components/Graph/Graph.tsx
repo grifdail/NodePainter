@@ -19,6 +19,7 @@ import { TreeStore } from "../../Types/TreeStore";
 import { SVGGridPattern } from "./SVGGridPattern";
 import { useCopyPasteGraph } from "./useCopyPasteGraph";
 import { abs } from "mathjs";
+import { GraphAreaRect } from "./GraphAreaRect";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -78,6 +79,17 @@ export function Graph() {
           height="100%"
           fill="url(#grid)"
           style={{ touchAction: "none" }}></animated.rect>
+        {nodes
+          .filter((node) => node.settings?.grapharea)
+          .map((node) => {
+            return (
+              <GraphAreaRect
+                key={`${node.id}-pairing`}
+                base={getNodePort(node.id, "self", "in")}
+                area={node.settings?.grapharea}
+              />
+            );
+          })}
         {nodes
           .filter((node) => node.pairedNode != undefined)
           .map((node) => {
@@ -170,7 +182,7 @@ function usePortPosition(nodes: NodeData[], nodePositionSpring: { xy: SpringValu
           return [
             node.id,
             {
-              "self-in": xy.to((x, y) => [x + 150, y + NODE_HEADER_HEIGHT / 2]),
+              "self-in": xy.to((x, y) => [x + NODE_WIDTH * 0.5, y + NODE_HEADER_HEIGHT * 0.5]),
               ...Object.fromEntries(Object.entries(node.dataInputs).map(([portId, port], i) => [`${portId}-in`, xy.to((x, y) => [x, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * (i + outputCount)])])),
               ...Object.fromEntries(Object.entries(node.dataOutputs).map(([portId, port], i) => [`${portId}-out`, xy.to((x, y) => [x + NODE_WIDTH, y + NODE_HEADER_HEIGHT - EDGE_LINE_WIDTH * 0.5 + PORT_HEIGHT_WITH_SPACING * 0.5 + PORT_HEIGHT_WITH_SPACING * i])])),
             },

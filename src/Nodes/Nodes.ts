@@ -149,6 +149,7 @@ import { SquareWave } from "./Math/SquareWave";
 import { Step } from "./Math/Step";
 import { TrapezoidWave } from "./Math/TrapezoidWave";
 import { TriangleWave } from "./Math/TriangleWave";
+import { AreaComment } from "./Misc/AreaComment";
 import { Blackboard } from "./Misc/Blackboard";
 import { CacheNode } from "./Misc/Cache";
 import { Combine } from "./Misc/Combine";
@@ -190,6 +191,7 @@ import { Distance } from "./Vector/VectorDistance";
 export const Nodes: Array<NodeDefinition> = [
   StartNode,
   Comment,
+  AreaComment,
   //Control flow
   Combine,
   CombineLoop,
