@@ -73,6 +73,7 @@ import { FillBackground } from "./Draw/FillBackground";
 import { Nodes3D } from "./3D/3DNodes";
 import { ArrayAgreggate } from "./Array/ArrayAggregate";
 import { ArrayMap } from "./Array/ArrayMap";
+import { Shuffle } from "./Array/ArrayShuffle";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
 import { GenerateArray } from "./Array/GenerateArray";
@@ -411,6 +412,7 @@ export const Nodes: Array<NodeDefinition> = [
   Slice,
   GenerateArray,
   ArrayMap,
+  Shuffle,
 
   //Misc
   AnimationCurve,
