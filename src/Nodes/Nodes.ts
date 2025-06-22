@@ -72,7 +72,14 @@ import { FillBackground } from "./Draw/FillBackground";
 
 import { Nodes3D } from "./3D/3DNodes";
 import { ArrayAgreggate } from "./Array/ArrayAggregate";
+import { ArrayAppend } from "./Array/ArrayAppend";
+import { ArrayConcat } from "./Array/ArrayConcat";
+import { ArrayFirst } from "./Array/ArrayFirst";
+import { ArrayInvert } from "./Array/ArrayInvert";
+import { ArrayLast } from "./Array/ArrayLast";
 import { ArrayMap } from "./Array/ArrayMap";
+import { ArrayRemoveAt } from "./Array/ArrayRemoveAt";
+import { ArrayReplace } from "./Array/ArrayReplace";
 import { Shuffle } from "./Array/ArrayShuffle";
 import { Count } from "./Array/Count";
 import { Filter } from "./Array/Filter";
@@ -413,6 +420,13 @@ export const Nodes: Array<NodeDefinition> = [
   GenerateArray,
   ArrayMap,
   Shuffle,
+  ArrayAppend,
+  ArrayConcat,
+  ArrayFirst,
+  ArrayLast,
+  ArrayRemoveAt,
+  ArrayReplace,
+  ArrayInvert,
 
   //Misc
   AnimationCurve,
