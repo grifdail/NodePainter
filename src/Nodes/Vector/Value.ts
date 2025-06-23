@@ -1,7 +1,7 @@
 import { IconEqual } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Value: NodeDefinition = {
@@ -33,10 +33,7 @@ export const Value: NodeDefinition = {
       tooltip: "Doesn't have any logic, only used as commentary.",
     },
   ],
-  availableTypes: portTypesWithTags(["common"]),
-  onChangeType: changeTypeGenerator(["value"], ["out"]),
-  hasInput: hasInputGenerator(portTypesWithTags(["common"])),
-  hasOutput: hasInputGenerator(portTypesWithTags(["common"])),
+  ...changeTypeGenerator(portTypesWithTags(["common"]), ["value"], ["out"]),
   getData: (portId, nodeData, context) => {
     return context.getInputValue(nodeData, "value", nodeData.selectedType);
   },

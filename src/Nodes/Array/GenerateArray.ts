@@ -48,9 +48,7 @@ export const GenerateArray: NodeDefinition = {
       ],
     },
   ],
-
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  onChangeType: changeTypeGenerator(["value"], [], [], ["array"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], [], ["array"]),
   contextMenu: {
     "Create the index node": createIndexNode,
   },

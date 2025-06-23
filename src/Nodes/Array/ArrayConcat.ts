@@ -15,8 +15,7 @@ export const ArrayConcat: NodeDefinition = {
   dataOutputs: [Port["array-number"]("out")],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "array"]),
-  onChangeType: changeTypeGenerator(["start", "end"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "array"]), ["start", "end"], ["out"]),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "start", node.selectedType) as any[];
     const end = context.getInputValue(node, "end", node.selectedType) as any[];

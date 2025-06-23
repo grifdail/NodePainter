@@ -29,8 +29,7 @@ export const Swizzle: NodeDefinition = {
   ],
 
   settings: [{ id: "swizzle", type: "string", defaultValue: "xyz", constrains: [Constraints.SwizzleString()] }],
-  availableTypes: [...portTypesWithTags(["common", "true-vector"], ["array"]), "vector4", "quaternion"],
-  onChangeType: changeTypeGenerator(["vec"], ["out"]),
+  ...changeTypeGenerator([...portTypesWithTags(["common", "true-vector"], ["array"]), "vector4", "quaternion"], ["vec"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "vec");
     var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 3;

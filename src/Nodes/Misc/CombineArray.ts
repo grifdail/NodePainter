@@ -42,7 +42,7 @@ export const CombineArray: NodeDefinition = {
   tags: ["3D"],
   settings: [],
   availableTypes: ["drawing2d", "object3d"],
-  onChangeType: changeTypeGenerator([], ["output"], ["array"]),
+  ...changeTypeGenerator([], ["output"], ["array"]),
   getData(portId, node, context) {
     const count = context.getInputValueNumber(node, "count");
 

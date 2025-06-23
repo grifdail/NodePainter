@@ -22,16 +22,11 @@ export const Shuffle: NodeDefinition = {
     Port.CacheId(),
   ],
   dataOutputs: [Port["array-color"]("out")],
-
   settings: [],
-
-  availableTypes: portTypesWithTags(["array"]),
-  onChangeType: changeTypeGenerator(["array"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["array"]), ["array"], ["out"]),
   getData: (portId, node, context) => {
     const seed = createOrSelectFromCache(context, node, () => context.RNG.next());
-
     const array = context.getInputValue(node, "array", node.selectedType) as any[];
-
     return shuffle(array, new Rand(seed.toString()));
   },
 };

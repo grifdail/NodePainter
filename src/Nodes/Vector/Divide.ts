@@ -2,7 +2,7 @@ import { IconDivide } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Divide: NodeDefinition = {
@@ -31,10 +31,7 @@ export const Divide: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithProperty("divisionOperator"),
-  onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
-  hasInput: hasInputGenerator(portTypesWithProperty("divisionOperator")),
-  hasOutput: hasInputGenerator(portTypesWithProperty("divisionOperator")),
+  ...changeTypeGenerator(portTypesWithProperty("divisionOperator"), ["a", "b"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");

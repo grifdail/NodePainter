@@ -53,8 +53,7 @@ export const Remap: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["outmin", "outmax"], ["result"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["outmin", "outmax"], ["result"]),
   getData: (portId, nodeData, context) => {
     const t = context.getInputValueNumber(nodeData, "t");
     const inmin = context.getInputValueNumber(nodeData, "inmin");

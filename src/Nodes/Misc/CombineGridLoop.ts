@@ -42,8 +42,7 @@ export const CombineGridLoop: NodeDefinition = {
   dataOutputs: [Port.drawing2d("output")],
   tags: ["3D"],
   settings: [],
-  availableTypes: ["drawing2d", "object3d"],
-  onChangeType: changeTypeGenerator(["value"], ["output"]),
+  ...changeTypeGenerator(["drawing2d", "object3d"], ["value"], ["output"]),
   getData(portId, node, context) {
     const size = context.getInputValueVector2(node, "size");
 

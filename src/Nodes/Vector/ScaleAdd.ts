@@ -39,8 +39,7 @@ export const ScaleAdd: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["value", "added"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["value", "added"], ["out"]),
   getData: (portId, nodeData, context) => {
     var value = context.getInputValueVector(nodeData, "value");
     var scale = context.getInputValueNumber(nodeData, "scale");

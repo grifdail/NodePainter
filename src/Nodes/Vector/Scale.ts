@@ -34,8 +34,7 @@ export const Scale: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["vec"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "vec");
     var b = context.getInputValueNumber(nodeData, "scale");

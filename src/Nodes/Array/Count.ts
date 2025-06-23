@@ -18,11 +18,8 @@ export const Count: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-
   settings: [],
-
-  availableTypes: portTypesWithTags(["array"]),
-  onChangeType: changeTypeGenerator(["array"], []),
+  ...changeTypeGenerator(portTypesWithTags(["array"]), ["array"], []),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.selectedType) as any[];
 

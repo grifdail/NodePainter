@@ -20,7 +20,7 @@ export const Sum: NodeDefinition = {
 
   settings: [],
   availableTypes: portTypesWithProperty("additionOperator"),
-  onChangeType: changeTypeGenerator([], ["out"], ["array"]),
+  ...changeTypeGenerator([], ["out"], ["array"]),
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");
     var operator = PortTypeDefinitions[node.selectedType].additionOperator || ((a, b) => a + b);

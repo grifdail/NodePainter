@@ -2,7 +2,7 @@ import { IconMinus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Subtract: NodeDefinition = {
@@ -33,11 +33,7 @@ export const Subtract: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithProperty("subtractionOperator"),
-  onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
-
-  hasInput: hasInputGenerator(portTypesWithProperty("subtractionOperator")),
-  hasOutput: hasInputGenerator(portTypesWithProperty("subtractionOperator")),
+  ...changeTypeGenerator(portTypesWithProperty("subtractionOperator"), ["a", "b"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a", nodeData.selectedType);
     var b = context.getInputValue(nodeData, "b", nodeData.selectedType);

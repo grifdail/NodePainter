@@ -32,7 +32,7 @@ export const Slice: NodeDefinition = {
 
   settings: [],
   availableTypes: portTypesWithTags(["common"], ["array"]),
-  onChangeType: changeTypeGenerator([], [], ["array"], ["out"]),
+  ...changeTypeGenerator([], [], ["array"], ["out"]),
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");
     const start = Math.floor(context.getInputValueNumber(node, "start"));

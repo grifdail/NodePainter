@@ -61,8 +61,7 @@ export const CombineLoop: NodeDefinition = {
       ],
     },
   ],
-  availableTypes: ["drawing2d", "object3d"],
-  onChangeType: changeTypeGenerator(["value"], ["output"]),
+  ...changeTypeGenerator(["drawing2d", "object3d"], ["value"], ["output"]),
   getData(portId, node, context) {
     const count = context.getInputValueNumber(node, "count");
     if (node.selectedType === "drawing2d") {

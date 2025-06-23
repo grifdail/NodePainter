@@ -14,8 +14,7 @@ export const ChangeNode: NodeDefinition = {
   dataInputs: [Port.bool("in"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
   tags: ["State"],
-  availableTypes: portTypesWithProperty("subtractionOperator"),
-  onChangeType: changeTypeGenerator(["in"], ["out"]),
+  ...changeTypeGenerator(portTypesWithProperty("subtractionOperator"), ["in"], ["out"]),
   settings: [],
   getData(portId, node, context) {
     const current = context.getInputValue(node, "in", node.selectedType);

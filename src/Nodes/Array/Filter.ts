@@ -61,8 +61,7 @@ export const Filter: NodeDefinition = {
       ],
     },
   ],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  onChangeType: changeTypeGenerator([], [], ["array"], ["filtered"], changeTypeGenerator([], ["value"])),
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], [], ["array"], ["filtered"]),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", node.dataInputs["array"].type) as any[];
     if (array.length === 0) {

@@ -38,8 +38,7 @@ export const Lerp: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithProperty("lerpOperator"),
-  onChangeType: changeTypeGenerator(["from", "to"], ["result"]),
+  ...changeTypeGenerator(portTypesWithProperty("lerpOperator"), ["from", "to"], ["result"]),
   getData: (portId, nodeData, context) => {
     const t = context.getInputValueNumber(nodeData, "t");
     const a = context.getInputValue(nodeData, "from", nodeData.selectedType);

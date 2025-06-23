@@ -1,7 +1,7 @@
 import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
@@ -26,10 +26,7 @@ export const Floor: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["x"], ["out"]),
-  hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
-  hasOutput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["x"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "x");
     return enforceCorrectVectorTypeForNode(

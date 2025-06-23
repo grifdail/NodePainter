@@ -30,8 +30,7 @@ export const SeededRandom: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["seed"], []),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["seed"], []),
   getData: (portId, nodeData, context) => {
     return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, PortTypeDefinitions[nodeData.selectedType].vectorLength)) * 43758.5453123));
   },

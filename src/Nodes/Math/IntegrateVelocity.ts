@@ -52,8 +52,7 @@ export const IntegrateVelocity: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "spatial"]),
-  onChangeType: changeTypeGenerator(["position", "acceleration", "velocity"], ["next-position", "next-velocity"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "spatial"]), ["position", "acceleration", "velocity"], ["next-position", "next-velocity"]),
   getData: (portId, nodeData, context) => {
     const decelerationRate = context.getInputValueNumber(nodeData, "decelerationRate");
     const velocityScale = context.getInputValueNumber(nodeData, "velocityScale");

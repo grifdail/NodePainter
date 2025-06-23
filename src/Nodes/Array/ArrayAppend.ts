@@ -15,8 +15,7 @@ export const ArrayAppend: NodeDefinition = {
   dataInputs: [Port["array-number"]("array"), Port.number("value")],
   dataOutputs: [Port["array-number"]("out")],
   settings: [],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  onChangeType: changeTypeGenerator(["value"], [], ["array"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], ["array"], ["out"]),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];
     const value = context.getInputValue(node, "value", node.selectedType) as any[];

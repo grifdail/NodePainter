@@ -5,7 +5,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 
-const onChangeType = changeTypeGenerator([], ["value"]);
+const changeTypeData = changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["value"]);
 
 export const AnimationCurve: NodeDefinition = {
   id: "AnimationCurve",
@@ -16,9 +16,9 @@ export const AnimationCurve: NodeDefinition = {
   dataInputs: [{ id: "pos", type: "number", defaultValue: 0 }],
   dataOutputs: [{ id: "value", type: "vector2", defaultValue: 0 }],
 
-  availableTypes: portTypesWithTags(["common"], ["array"]),
+  ...changeTypeData,
   onChangeType(node, type, blackboard) {
-    onChangeType(node, type, blackboard);
+    changeTypeData.onChangeType?.(node, type, blackboard);
     node.settings["track"] = convertAnimationTrackType(type, node.settings["track"]);
   },
   settings: [

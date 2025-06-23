@@ -14,8 +14,7 @@ export const SaveNode: NodeDefinition = {
   dataInputs: [Port.bool("in"), Port.bool("save"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
   tags: ["State"],
-  availableTypes: portTypesWithTags(["common"]),
-  onChangeType: changeTypeGenerator(["in"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"]), ["in"], ["out"]),
   settings: [],
   getData(portId, node, context) {
     const current = context.getInputValue(node, "in", node.selectedType);

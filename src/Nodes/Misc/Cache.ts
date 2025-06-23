@@ -14,8 +14,7 @@ export const CacheNode: NodeDefinition = {
   dataInputs: [Port.number("value"), Port.CacheId()],
   dataOutputs: [Port.number("cached")],
   settings: [],
-  availableTypes: portTypesWithTags(["common"]),
-  onChangeType: changeTypeGenerator(["value"], ["cached"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"]), ["value"], ["cached"]),
   getData: (portId, node, context) => {
     var target = createOrSelectFromCache(context, node, () => context.getInputValue(node, "value", node.selectedType));
     return target;

@@ -20,6 +20,7 @@ import { PortType } from "../../Types/PortType";
 import { NodeData } from "../../Types/NodeData";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 import { NodeTagPriority, NodeTags } from "../../Types/NodeTags";
+import { portListIncludeType } from "./portListIncludeType";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -45,7 +46,7 @@ const NodeList = styled.section`
   gap: var(--padding-small);
 `;
 
-type SearchTermData = {
+export type SearchTermData = {
   tags: string[];
   name: string;
   output: PortType | null;
@@ -100,22 +101,22 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         }
         if (searchTerm.input) {
           if (typeof item.hasInput === "function") {
-            if (!item.hasInput(searchTerm.input)) {
+            if (!item.hasInput(searchTerm.input, item)) {
               return false;
             }
           } else {
-            if (!item.dataInputs.some((port) => port.type === searchTerm.input)) {
+            if (!portListIncludeType(item.dataInputs, searchTerm.input)) {
               return false;
             }
           }
         }
         if (searchTerm.output) {
           if (typeof item.hasOutput === "function") {
-            if (!item.hasOutput(searchTerm.output)) {
+            if (!item.hasOutput(searchTerm.output, item)) {
               return false;
             }
           } else {
-            if (!item.dataOutputs.some((port) => port.type === searchTerm.output)) {
+            if (!portListIncludeType(item.dataOutputs, searchTerm.output)) {
               return false;
             }
           }
@@ -145,10 +146,10 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
       const target = modalInfo || ([view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale] as const);
       let targetTypeChange: PortType | null = null;
       if (searchTerm.input && node.hasInput) {
-        targetTypeChange = node.hasInput(searchTerm.input);
+        targetTypeChange = node.hasInput(searchTerm.input, node);
       }
       if (searchTerm.output && node.hasOutput) {
-        targetTypeChange = node.hasOutput(searchTerm.output);
+        targetTypeChange = node.hasOutput(searchTerm.output, node);
       }
       addNode(node.id, ...target, (n, d) => {
         setTargetType(n, d, targetTypeChange);

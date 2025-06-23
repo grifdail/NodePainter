@@ -2,7 +2,7 @@ import { IconArrowUpRightCircle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 import { vectorSquareMagnitude } from "../../Utils/math/vectorUtils";
 
@@ -28,9 +28,7 @@ export const SquareMagnitude: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common", "vector"], ["array"]),
-  onChangeType: changeTypeGenerator(["vec"], []),
-  hasInput: hasInputGenerator(portTypesWithTags(["common", "vector"], ["array"])),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], []),
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
     return vectorSquareMagnitude(vec);

@@ -2,7 +2,7 @@ import { IconX } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator, hasInputGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Multiply: NodeDefinition = {
@@ -33,11 +33,7 @@ export const Multiply: NodeDefinition = {
   ],
 
   settings: [],
-  availableTypes: portTypesWithProperty("multiplicationOperator"),
-
-  onChangeType: changeTypeGenerator(["a", "b"], ["out"]),
-  hasInput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),
-  hasOutput: hasInputGenerator(portTypesWithProperty("multiplicationOperator")),
+  ...changeTypeGenerator(portTypesWithProperty("multiplicationOperator"), ["a", "b"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValue(nodeData, "a", nodeData.selectedType);
     var b = context.getInputValue(nodeData, "b", nodeData.selectedType);
