@@ -53,9 +53,10 @@ export const DrawRegularPolygon: NodeDefinition = {
     const fill = context.getInputValueBoolean(node, "fill");
     const lineWidth = context.getInputValueNumber(node, "lineWidth");
     return () => {
-      console.log("aaaa");
       if (fill) {
         context.target.fill(toP5Color(color, context.p5));
+      } else {
+        context.target.noFill();
       }
       if (lineWidth <= 0) {
         context.target.noStroke();
@@ -64,13 +65,13 @@ export const DrawRegularPolygon: NodeDefinition = {
         context.target.strokeWeight(lineWidth);
       }
       context.target.beginShape();
-      console.log("side" + side);
-      for (let i = 0; i < side; i++) {
+
+      for (let i = 0; i <= side; i++) {
         const alpha = (i / side + offset) * Math.PI * 2;
 
         context.target.vertex(center[0] + Math.cos(alpha) * radius, center[1] + Math.sin(alpha) * radius);
       }
-      context.target.endShape();
+      context.target.endShape(context.target.CLOSE);
       context.target.noFill();
       context.target.noStroke();
     };

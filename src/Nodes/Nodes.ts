@@ -100,6 +100,7 @@ import { CustomSimulation } from "./CustomFunction/CustomSimulation";
 import { CustomSimulationEnd } from "./CustomFunction/CustomSimulationEnd";
 import { CustomSimulationStart } from "./CustomFunction/CustomSimulationStart";
 import { DecomposeStruct } from "./CustomFunction/DecomposeStruct";
+import { DrawPolyline } from "./Draw/DrawPolyline";
 import { BloomEffect } from "./Effects/BloomEffect";
 import { BlurEffect } from "./Effects/BlurEffect";
 import { FlatColorEffect } from "./Effects/FlatColorEffect";
@@ -324,6 +325,7 @@ export const Nodes: Array<NodeDefinition> = [
   DrawTriangle,
   DrawQuad,
   DrawPolygon,
+  DrawPolyline,
   DrawText,
   DrawBezier,
 

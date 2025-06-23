@@ -54,6 +54,8 @@ export const DrawQuad: NodeDefinition = {
     return () => {
       if (fill) {
         context.target.fill(toP5Color(color, context.p5));
+      } else {
+        context.target.noFill();
       }
       if (lineWidth <= 0) {
         context.target.noStroke();
