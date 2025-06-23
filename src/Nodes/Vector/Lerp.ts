@@ -7,6 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 
 export const Lerp: NodeDefinition = {
   id: "Lerp",
+  alias: "Mix",
   description: "interpolate between 2 vector",
   icon: IconMathFunction,
   featureLevel: 50,
