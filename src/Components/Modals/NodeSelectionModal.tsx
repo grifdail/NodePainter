@@ -142,7 +142,6 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
     (node: NodeDefinition) => {
       var view = useViewbox.getState();
       var modalInfo = useNodeSelectionModal.getState().targetPosition;
-      console.log(modalInfo);
       const target = modalInfo || ([view.x + window.innerWidth * 0.5 * view.scale, view.y + window.innerHeight * 0.5 * view.scale] as const);
       let targetTypeChange: PortType | null = null;
       if (searchTerm.input && node.hasInput) {

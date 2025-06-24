@@ -37,7 +37,6 @@ export const PathSetting: SettingComponent<PathSettingDefinition> = function Pat
           const previousPoint = oldPath.length >= 3 ? [oldPath[oldPath.length - 3], oldPath[oldPath.length - 2], oldPath[oldPath.length - 1]] : [x, y, 0];
           const dt = Math.sqrt((x - previousPoint[0]) * (x - previousPoint[0]) + (y - previousPoint[1]) * (y - previousPoint[1]));
           t = previousPoint[2] + dt;
-          console.log(x, y, previousPoint, (x - previousPoint[0]) * (x - previousPoint[0]) + (y - previousPoint[1]) + (y - previousPoint[1]));
         }
 
         return [...oldPath, x, y, t];

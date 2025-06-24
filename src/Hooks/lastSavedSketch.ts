@@ -24,7 +24,5 @@ if (import.meta.hot) {
     if (data.updates.some((item) => item.path.includes("useTree") || item.path.includes("App.tsx") || item.path.includes("Graph"))) {
       useTree.getState().loadTemplate(JSON.parse(localStorage.getItem(SAVE_ID) || ""));
     }
-    //console.log(data);
-    // cleanup side effect
   });
 }

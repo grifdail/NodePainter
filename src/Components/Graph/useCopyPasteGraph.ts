@@ -29,7 +29,6 @@ function useEffectPaste() {
     if (event.clipboardData?.types.includes("text/plain")) {
       const data = event.clipboardData?.getData("text/plain");
       parsePastedValue(data, useViewbox.getState().center());
-      console.log(data);
     }
   }
   useEffect(() => {

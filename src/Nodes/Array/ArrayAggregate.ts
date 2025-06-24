@@ -68,7 +68,6 @@ export const ArrayAgreggate: NodeDefinition = {
         }
         var input = fieldResult["input"] as PortType;
         var output = fieldResult["output"] as PortType;
-        console.log(input, output);
         useTree.getState().dangerouselyUpdateNode(node.id, (node) => {
           node.dataInputs["in"] = createPortConnection({
             id: "in",

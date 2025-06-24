@@ -53,7 +53,6 @@ export const Render3D: NodeDefinition = {
     let threeContext = context.blackboard[keyCache] as StatefullInstance<ThreeJSContext, Render3DProps> | undefined;
 
     if (!threeContext) {
-      console.log(virtual);
       threeContext = new StatefullInstance<ThreeJSContext, Render3DProps>(virtual);
       context.blackboard[keyCache] = threeContext;
     }

@@ -23,7 +23,6 @@ export function convertTypeValue(value: any, from: PortType | "any", to: PortTyp
   } else if (to.startsWith("array-") && from.startsWith("array-") && canConvertCode(from.slice(6) as PortType, to.slice(6) as PortType)) {
     return value.map((item: any) => convertTypeValue(item, from.slice(6) as PortType, to.slice(6) as PortType));
   } else {
-    console.log(to);
     return PortTypeDefinitions[to].createDefaultValue();
   }
 }

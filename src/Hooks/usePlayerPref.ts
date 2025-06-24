@@ -141,7 +141,6 @@ export const usePlayerPref = create<PlayerPrefStore>()(
           set(() => ({ nodesLastUsedDates: {}, nodesUseCount: {} }));
         },
         removeDefaultPalettes() {
-          console.log(Object.fromEntries(Object.entries(get().palettes).filter(([name]) => !DefaultPalettes[name])));
           set((state) => ({
             palettes: Object.fromEntries(Object.entries(state.palettes).filter(([name]) => !DefaultPalettes[name])),
             gradient: Object.fromEntries(Object.entries(state.gradient).filter(([name]) => !DefaultGradient[name])),

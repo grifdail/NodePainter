@@ -53,7 +53,6 @@ function poissonDisk(minDist: number, rng: Rand, tries: number = 20) {
       }
     }
   }
-  console.log(points);
   return points;
 }
 

@@ -34,6 +34,7 @@ export const DrawRect: NodeDefinition = {
     },
     Port.number("lineWidth", 0),
     Port.bool("fill", true),
+    Port.number("cornerRadius", 0),
   ],
   dataOutputs: [Port.drawing2d("out")],
 
@@ -45,6 +46,7 @@ export const DrawRect: NodeDefinition = {
     var height = context.getInputValueNumber(node, "height");
     const fill = context.getInputValueBoolean(node, "fill");
     const lineWidth = context.getInputValueNumber(node, "lineWidth");
+    const cornerRadius = context.getInputValueNumber(node, "cornerRadius");
     return () => {
       if (fill) {
         context.target.fill(toP5Color(color, context.p5));
@@ -57,7 +59,7 @@ export const DrawRect: NodeDefinition = {
         context.target.stroke(toP5Color(color, context.p5));
         context.target.strokeWeight(lineWidth);
       }
-      context.target.rect(p1[0], p1[1], width, height);
+      context.target.rect(p1[0], p1[1], width, height, cornerRadius, cornerRadius, cornerRadius, cornerRadius);
       context.target.noFill();
       context.target.noStroke();
     };

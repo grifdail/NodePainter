@@ -77,7 +77,6 @@ export const useSelection = create<SelectionStore>()(
       },
       setSelection(nodes) {
         set((state) => {
-          console.log(nodes);
           state.nodes = nodes;
           state.hasArea = false;
         });

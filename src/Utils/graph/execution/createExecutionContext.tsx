@@ -80,6 +80,11 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       const inputPorts = nodeData.dataInputs[portId];
       let item: [any, PortType] = [null, "unknown"];
       if (!inputPorts) {
+        var def = context.getNodeDefinition(nodeData.type);
+        var port = def?.dataInputs.find((port) => port.id === portId);
+        if (port) {
+          return port.defaultValue;
+        }
         return PortTypeDefinitions[outputType].createDefaultValue();
       }
       if (inputPorts.hasConnection) {
@@ -155,11 +160,9 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       context.callCounts = {};
     },
     endOfRunCleanup: function (): void {
-      console.log("cleanup");
       Object.keys(context.blackboard).forEach((key) => {
-        console.log("cleaning " + key);
         if (context.blackboard[key] && typeof context.blackboard[key].dispose === "function") {
-          console.log("disposing ");
+          console.log(`Disposing of ${key}`);
           context.blackboard[key].dispose();
         }
       });

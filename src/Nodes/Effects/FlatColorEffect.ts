@@ -7,8 +7,6 @@ import { ExecutionContext } from "../../Utils/graph/execution/createExecutionCon
 import { Black, White } from "../../Utils/math/colorUtils";
 
 const KEY_BLUR_SHADER_H = "BLUR_EFFECT_SHADER_H";
-const KEY_BLUR_SHADER_V = "BLUR_EFFECT_SHADER_V";
-const KEY_FIRST_PASS = "BLUR_EFFECT_FIRST_PASS";
 
 export const EFFECT_VERTEX_SHADER = `
 // our vertex data
@@ -109,5 +107,3 @@ function getPassBuffer(context: ExecutionContext, key: string, image: { width: n
   }
   return target;
 }
-
-console.log(FlatColorEffect);
