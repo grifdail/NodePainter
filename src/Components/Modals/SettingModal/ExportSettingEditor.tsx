@@ -45,12 +45,10 @@ export const ExportSettingEditor = () => {
   const tryLoadJson = useCallback(() => {
     try {
       const parsed = JSON.parse(rawField);
-      console.log(rawField);
 
       if (!validateSnipetJson(parsed)) {
         throw new Error(`The json you pasted is not valid`);
       }
-      console.log(validateSnipetJson);
       useDialog.getState().openConfirm(
         (isConfirmed) => {
           if (isConfirmed) {
@@ -62,7 +60,6 @@ export const ExportSettingEditor = () => {
         "This will completly replace your current setting"
       );
     } catch {
-      console.log("aaaa");
       useDialog.getState().openError(`The json you pasted is not a valid Player Pref json`);
       return;
     }

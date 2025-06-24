@@ -47,7 +47,6 @@ export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> =
         reader.onerror = () => console.log("file reading has failed");
 
         reader.onload = () => {
-          console.log(reader.result, file.name);
           onChange({ source: reader.result, ext: file.name.split(".").pop(), name: file.name });
         };
         reader.readAsArrayBuffer(file);

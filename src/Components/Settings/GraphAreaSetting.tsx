@@ -41,7 +41,6 @@ export const GraphAreaSetting: SettingComponent<GraphAreaSettingDefinition> = fu
   const setRelative = useCallback(
     (value: any) => {
       const n = useTree.getState().getNode(node.id);
-      console.log(area.x, n.positionX);
       if (value) {
         onChange({ ...area, relative: value, x: area.x - (n.positionX + NODE_WIDTH * 0.5), y: area.y - (n.positionY + NODE_HEADER_HEIGHT * 0.5) });
       } else {
