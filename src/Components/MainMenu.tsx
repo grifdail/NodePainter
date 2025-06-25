@@ -57,14 +57,21 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
       </MenuItem>
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => openModal(Routes.IntroMenu)}>
-        <IconFolderOpen /> New or Open
+        <IconFolderOpen /> Sketches
       </MenuItem>
-      <MenuItem onClick={() => openModal(Routes.Save)}>
-        <IconDeviceDesktopDown /> Save to JSON
-      </MenuItem>
-      <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
-        <IconDeviceFloppy /> Save to browser
-      </MenuItem>
+      <SubMenu
+        label={
+          <>
+            <IconDeviceFloppy></IconDeviceFloppy>Save
+          </>
+        }>
+        <MenuItem onClick={() => openModal(Routes.Save)}>
+          <IconDeviceDesktopDown /> Save to JSON
+        </MenuItem>
+        <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
+          <IconDeviceFloppy /> Save to browser
+        </MenuItem>
+      </SubMenu>
 
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => openModal(Routes.ExportGif)}>
@@ -87,7 +94,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
             );
           }
         }}>
-        <IconTrashX /> Remove all orphan
+        <IconTrashX /> Remove all orphan nodes
       </MenuItem>
       <MenuItem onClick={resetCamera}>
         <IconFocusCentered></IconFocusCentered> Reset camera

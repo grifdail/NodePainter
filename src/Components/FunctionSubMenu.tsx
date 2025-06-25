@@ -1,4 +1,4 @@
-import { IconFunction, IconFunctionFilled, IconPackage, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
+import { IconCube, IconFunction, IconFunctionFilled, IconPackage, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
@@ -16,14 +16,14 @@ import { createStructTypeModal } from "../Hooks/createStructTypeModal";
 const openCreateModal = () => {
   useCustomNodeCreationContext.getState().openCreate("function");
 };
-const openCreateShaderModal = () => {
+const openCreateShaderImageEffectModal = () => {
   useCustomNodeCreationContext.getState().openCreate("shader");
 };
-/*
+
 const openCreateShaderMaterialModal = () => {
   useCustomNodeCreationContext.getState().openCreate("shaderMaterial", "shader");
 };
-*/
+
 const opencreateSimulation = () => {
   useCustomNodeCreationContext.getState().openCreate("simulation");
 };
@@ -106,17 +106,20 @@ export function FunctionSubMenu() {
         Edit the current {editingType} settings
       </MenuItem>
       <MenuItem onClick={openCreateModal}>
-        <IconFunction /> Create New Function
+        <IconFunction /> Create new Function
       </MenuItem>
-      <MenuItem onClick={openCreateShaderModal}>
-        <IconPhotoScan /> Create New Shader
+      <MenuItem onClick={openCreateShaderImageEffectModal}>
+        <IconPhotoScan /> Create new Image Effect Shader
+      </MenuItem>
+      <MenuItem onClick={openCreateShaderMaterialModal}>
+        <IconCube /> Create new Material Shader
       </MenuItem>
 
       <MenuItem onClick={opencreateSimulation}>
-        <IconRepeat /> Create New Simulation
+        <IconRepeat /> Create new Simulation
       </MenuItem>
       <MenuItem onClick={() => createStructTypeModal("struct-1", [])}>
-        <IconPackage /> Create Structure type
+        <IconPackage /> Create new Structure type
       </MenuItem>
       {hasSelection && <MenuItem onClick={createFunctionFromSelection}>Create New Function from selection</MenuItem>}
       {customFunctionNodes.length > 0 && (
@@ -136,20 +139,6 @@ export function FunctionSubMenu() {
           list={customSimulationNode}
           setGraph={setGraph}
           name="Simulations"></GraphSelector>
-      )}
-
-      <MenuDivider></MenuDivider>
-      {graph !== "main" && <MenuItem onClick={() => saveFunction(graph, useTree.getState().exportCustomeFunction(graph))}>Save function globaly</MenuItem>}
-      {savedFunction && savedFunction.length > 0 && (
-        <SubMenu label="Import from a saved function">
-          {savedFunction.map((data) => (
-            <MenuItem
-              onClick={() => useTree.getState().loadCustomeFunction(JSON.parse(data.content))}
-              key={data.name}>
-              {data.name}
-            </MenuItem>
-          ))}
-        </SubMenu>
       )}
     </Menu>
   );

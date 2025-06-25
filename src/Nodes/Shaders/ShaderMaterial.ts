@@ -36,8 +36,9 @@ void main(void) {
   OUT_COLOR = vec4(vVertexNormal, 1.0);
 }`;
 
+export const SHADER_MATERIAL = "ShaderMaterial";
 export const ShaderMaterial: NodeDefinition = {
-  id: "ShaderMaterial",
+  id: SHADER_MATERIAL,
   hideInLibrary: true,
   icon: IconPhoto,
   description: "[WIP] Use a shader to render the material",
@@ -53,7 +54,7 @@ export const ShaderMaterial: NodeDefinition = {
     if (!shader) {
       try {
         //const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
-        shader = context.target.createShader(VERTEX_SHADER, FRAG_SHADER);
+        var math = (shader = context.target.createShader(VERTEX_SHADER, FRAG_SHADER));
         context.blackboard[keyShader] = shader;
       } catch (error) {
         console.error(error);
@@ -63,7 +64,6 @@ export const ShaderMaterial: NodeDefinition = {
     return null;
   },
 };
-export const SHADER_MATERIAL = "ShaderMaterial";
 
 function ApplyUniformFromData(shader: any, context: ExecutionContext, data: FunctionContext) {
   shader.setUniform("time", context.time);

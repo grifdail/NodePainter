@@ -1,9 +1,9 @@
-import { AdditiveBlending, BackSide, Blending, DoubleSide, FrontSide, Material, MeshBasicMaterial, MeshDepthMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshStandardMaterial, MultiplyBlending, NoBlending, NormalBlending, RGBDepthPacking, SubtractiveBlending, Texture } from "three";
+import { AdditiveBlending, BackSide, Blending, DoubleSide, FrontSide, Material, MeshBasicMaterial, MeshDepthMaterial, MeshLambertMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshStandardMaterial, MultiplyBlending, NoBlending, NormalBlending, RGBDepthPacking, SubtractiveBlending, Texture } from "three";
 import { ImageData } from "../../../Types/ImageData";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Color } from "../../../Types/vectorDataType";
-import { toThreeColor, White } from "../../../Utils/math/colorUtils";
+import { Black, toThreeColor, White } from "../../../Utils/math/colorUtils";
 import { MaterialGenericData } from "./MaterialGenericData";
 import { MaterialVirtualNodeType } from "./MaterialVirtualNodeType";
 
@@ -88,6 +88,82 @@ export class FlatMaterialType extends MaterialVirtualNodeType<MeshBasicMaterial,
         type: "color",
         defaultValue: White(),
       },
+    ];
+  }
+}
+
+export class LambertMaterialType extends MaterialVirtualNodeType<MeshLambertMaterial, [color: Color, emissive: Color, mat: MaterialGenericData]> {
+  getId(): string {
+    return "LambertMaterial";
+  }
+  getDescription(): string {
+    return "Render an object with a very basic light model";
+  }
+  create(color: Color, emissive: Color, mat: MaterialGenericData): MeshLambertMaterial {
+    return new MeshLambertMaterial({ color: toThreeColor(color), emissive: toThreeColor(emissive), ...toThreeSetting(mat) });
+  }
+  remove(element: MeshLambertMaterial): void {
+    element.dispose();
+  }
+  update(element: MeshLambertMaterial, color: Color, emissive: Color, mat: MaterialGenericData): void {
+    element.color.set(toThreeColor(color));
+    element.emissive.set(toThreeColor(emissive));
+    updateTreeMaterial(element, mat);
+  }
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "color",
+        type: "color",
+        defaultValue: White(),
+      },
+      {
+        id: "emissive",
+        type: "color",
+        defaultValue: Black(),
+      },
+    ];
+  }
+}
+
+export class PhongMaterialType extends MaterialVirtualNodeType<MeshPhongMaterial, [color: Color, emissive: Color, specular: Color, shininess: number, mat: MaterialGenericData]> {
+  getId(): string {
+    return "PhongMaterial";
+  }
+  getDescription(): string {
+    return "Render an object with a very basic light model and specular reflection";
+  }
+  create(color: Color, emissive: Color, specular: Color, shininess: number, mat: MaterialGenericData): MeshPhongMaterial {
+    return new MeshPhongMaterial({ color: toThreeColor(color), emissive: toThreeColor(emissive), specular: toThreeColor(specular), shininess, ...toThreeSetting(mat) });
+  }
+  remove(element: MeshPhongMaterial): void {
+    element.dispose();
+  }
+  update(element: MeshPhongMaterial, color: Color, emissive: Color, specular: Color, shininess: number, mat: MaterialGenericData): void {
+    element.color.set(toThreeColor(color));
+    element.emissive.set(toThreeColor(emissive));
+    element.specular.set(toThreeColor(specular));
+    element.shininess = shininess;
+    updateTreeMaterial(element, mat);
+  }
+  getInputs(): PortDefinition[] {
+    return [
+      {
+        id: "color",
+        type: "color",
+        defaultValue: White(),
+      },
+      {
+        id: "emissive",
+        type: "color",
+        defaultValue: Black(),
+      },
+      {
+        id: "specular",
+        type: "color",
+        defaultValue: White(),
+      },
+      Port.number("shininess", 30),
     ];
   }
 }
@@ -292,6 +368,8 @@ export const MaterialsVirtualNodes = {
   NormalMaterialVirtualNodeType: new NormalMaterialVirtualNodeType(),
   DepthMaterialVirtualNodeType: new DepthMaterialVirtualNodeType(),
   MatcapMaterialType: new MatcapMaterialType(),
+  LambertMaterialType: new LambertMaterialType(),
+  PhongMaterialType: new PhongMaterialType(),
 };
 
 function setMaterial<T extends Material>(mat: T, props: keyof T, value: Texture | null) {

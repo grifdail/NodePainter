@@ -59,6 +59,7 @@ export class ParametricGeometryNodeType extends SimpleNodeVirtualNodeType<Buffer
     self.setIndex(indices);
     self.setAttribute("position", new BufferAttribute(positions, 3));
     self.setAttribute("uv", new BufferAttribute(UV, 2));
+    self.computeVertexNormals();
     return self;
   }
   update(element: PlaneGeometry): void {}
