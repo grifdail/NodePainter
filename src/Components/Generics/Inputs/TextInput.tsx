@@ -11,7 +11,7 @@ export function TextInput({ onChange, value, disabled = false, constrains }: { o
 
   const onBlur = (newValue: string) => {
     if (constrains) {
-      onChange(applyConstraint(rawField, constrains));
+      onChange(applyConstraint(rawField, value, constrains));
     } else {
       onChange(rawField);
     }

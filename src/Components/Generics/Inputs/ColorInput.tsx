@@ -75,7 +75,7 @@ function ColorPicker({ disabled, value, onChange, constrains }: { disabled?: boo
         color={toHex(value, true)}
         presetColors={paletteHex}
         onChange={(color) => {
-          onChange(applyConstraint(fromHex(color.hexa), constrains));
+          onChange(applyConstraint(fromHex(color.hexa), value, constrains));
         }}
       />
     </Menu>

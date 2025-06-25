@@ -7,55 +7,55 @@ export type ConstrainDeclaration = {
 };
 
 const NumberConstraint = {
-  Clamp(value: number, min: number, max: number) {
+  Clamp(value: number, previousValue: number, min: number, max: number) {
     return Math.min(Math.max(min, value), max);
   },
-  Clamp01(value: number) {
-    return ConstrainDefinition.Clamp(value, 0, 1);
+  Clamp01(value: number, previousValue: number) {
+    return ConstrainDefinition.Clamp(value, previousValue, 0, 1);
   },
-  GreaterThan(value: number, min: number) {
+  GreaterThan(value: number, previousValue: number, min: number) {
     return Math.max(value, min);
   },
-  LowerThan(value: number, max: number) {
+  LowerThan(value: number, previousValue: number, max: number) {
     return Math.min(value, max);
   },
-  Integer(value: number) {
+  Integer(value: number, previousValue: number) {
     return Math.floor(value);
   },
-  NonZero(value: number) {
+  NonZero(value: number, previousValue: number) {
     if (Math.abs(value) < Number.EPSILON) {
       return 1;
     } else {
       return value;
     }
   },
-  MultipleOf(value: number, target: number) {
+  MultipleOf(value: number, previousValue: number, target: number) {
     return Math.round(value / target) * target;
   },
-  Positive(value: number) {
+  Positive(value: number, previousValue: number) {
     return Math.max(value, 0);
   },
-  Negative(value: number) {
+  Negative(value: number, previousValue: number) {
     return Math.min(value, 0);
   },
-  Mod(value: number, divisor: number) {
+  Mod(value: number, previousValue: number, divisor: number) {
     return value % divisor;
   },
-  Mod1(value: number) {
+  Mod1(value: number, previousValue: number) {
     return value % 1;
   },
 };
 
 type NumberConstrainType = typeof NumberConstraint;
 type NumberConstrainTypes = keyof NumberConstrainType;
-type VectorConstrainType = { [key in NumberConstrainTypes as `Vec${key}`]: (v: Vector, ...params: Tail<Parameters<NumberConstrainType[key]>>) => Vector };
+type VectorConstrainType = { [key in NumberConstrainTypes as `Vec${key}`]: (v: Vector, previousValue: Vector, ...params: Tail<Parameters<NumberConstrainType[key]>>) => Vector };
 
 const VectorConstrains: VectorConstrainType = Object.fromEntries(
   Object.entries(NumberConstraint).map(([key, method]) => {
     return [
       `Vec${key}`,
-      (value: Vector, ...params: any[]) => {
-        return value.map((v) => (method as any)(v, ...params));
+      (value: Vector, previousValue: Vector, ...params: any[]) => {
+        return value.map((v) => (method as any)(v, previousValue, ...params));
       },
     ];
   })
@@ -64,21 +64,21 @@ const VectorConstrains: VectorConstrainType = Object.fromEntries(
 const ConstrainDefinition = {
   ...NumberConstraint,
   ...VectorConstrains,
-  NonTransparent: (color: Color) => {
+  NonTransparent: (color: Color, previousValue: string) => {
     return [color[0], color[1], color[2], 1];
   },
-  UpperCase: (text: string) => {
+  UpperCase: (text: string, previousValue: string) => {
     return text.toUpperCase();
   },
-  LowerCase: (text: string) => {
+  LowerCase: (text: string, previousValue: string) => {
     return text.toLowerCase();
   },
   SwizzleString: validateSwizzleString,
-  NoSpace: (text: string) => {
+  NoSpace: (text: string, previousValue: string) => {
     return text.replaceAll(/\s/gm, "");
   },
-  NoSpecialChar: (text: string) => {
-    return text.replaceAll(/\W/gm, "");
+  NoSpecialChar: (text: string, previousValue: string) => {
+    return text.replaceAll("b", "p");
   },
 };
 
@@ -86,7 +86,7 @@ type ConstrainDefinitionType = typeof ConstrainDefinition;
 type ConstrainTypes = keyof ConstrainDefinitionType;
 type ConstrainGenerator = { [key in ConstrainTypes]: (...params: Tail<Parameters<ConstrainDefinitionType[key]>>) => ConstrainDeclaration };
 
-type Tail<T extends any[]> = T extends [infer A, ...infer R] ? R : never;
+type Tail<T extends any[]> = T extends [infer A, infer B, ...infer R] ? R : never;
 
 export const Constraints: ConstrainGenerator = Object.fromEntries(
   Object.keys(ConstrainDefinition).map((key) => {
@@ -99,18 +99,12 @@ export const Constraints: ConstrainGenerator = Object.fromEntries(
   })
 ) as ConstrainGenerator;
 
-export function applyConstraint<T>(value: T, constraints: ConstrainDeclaration[] | undefined): T {
+export function applyConstraint<T>(value: T, previousValue: T, constraints: ConstrainDeclaration[] | undefined): T {
   if (!constraints) {
     return value;
   }
   constraints.forEach((constraint) => {
-    value = (ConstrainDefinition[constraint.id] as (value: T, ...params: any[]) => T)(value, ...constraint.params) as T;
+    value = (ConstrainDefinition[constraint.id] as (value: T, previousValue: T, ...params: any[]) => T)(value, previousValue, ...constraint.params) as T;
   });
   return value;
-}
-
-export function applyConstraintCompose<TParams, TResult>(setValue: (x: TParams) => TResult, constraints: ConstrainDeclaration[]) {
-  return (x: TParams) => {
-    return setValue(applyConstraint(x, constraints));
-  };
 }

@@ -20,7 +20,7 @@ export function VectorInput({ onChange, value, constrains }: { onChange: (value:
   const onInputChange = (newValue: number, property: number) => {
     var newVector = value.slice();
     newVector[property] = newValue;
-    onChange(applyConstraint(newVector, constrains));
+    onChange(applyConstraint(newVector, value, constrains));
   };
   if (value === undefined || value === null) {
     value = [0, 0, 0, 0] as unknown as Vector;

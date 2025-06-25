@@ -2,7 +2,7 @@ import { create, all } from "mathjs";
 import { InputProps } from "./InputProps";
 import { useSubmitOnBlur } from "../../../Hooks/useSubmitOnBlur";
 import { Input } from "../../StyledComponents/Input";
-import { applyConstraintCompose, ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
 import { useCallback } from "react";
 
 const math = create(all);
@@ -39,12 +39,12 @@ export function NumberInput({ onChange, value, className, constrains = [] }: Inp
   var { rawField, setRawField, onBlur } = useSubmitOnBlur(
     value || 0,
     (a) => a.toString(),
-    applyConstraintCompose(onChange, constrains),
+    onChange,
     (newValue: string): undefined | number => {
       try {
         const parsed = limitedEvaluate(rawField);
         if (rawField !== "" && !Number.isNaN(parsed)) {
-          return parsed;
+          return applyConstraint(parsed, value, constrains);
         }
         return undefined;
       } catch (err) {

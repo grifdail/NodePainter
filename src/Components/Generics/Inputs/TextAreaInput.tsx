@@ -34,7 +34,7 @@ export function TextAreaInput({ onChange, value, disabled = false, constrains }:
 
   const onBlur = (newValue: string) => {
     if (constrains) {
-      onChange(applyConstraint(rawField, constrains));
+      onChange(applyConstraint(rawField, value, constrains));
     } else {
       onChange(rawField);
     }

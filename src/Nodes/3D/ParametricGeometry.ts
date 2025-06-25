@@ -55,7 +55,7 @@ export const ParametricGeometry: NodeDefinition = {
   ],
   getData(portId, node, context) {
     let dimension = context.getInputValueVector2(node, "dimension");
-    dimension = applyConstraint(dimension, [Constraints.VecInteger(), Constraints.VecGreaterThan(1)]);
+    dimension = applyConstraint(dimension, dimension, [Constraints.VecInteger(), Constraints.VecGreaterThan(1)]);
     var id = `${node.id}_${context.getInputValueNumber(node, "cache-id")}_${dimension[0]}_${dimension[1]}`;
     const positions = createOrSelectFromCache(context, node, () => {
       const posArray = new Float32Array((dimension[0] + 1) * (dimension[1] + 1) * 3);
