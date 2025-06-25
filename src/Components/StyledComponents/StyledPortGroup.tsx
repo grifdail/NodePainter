@@ -16,6 +16,7 @@ export const StyledPortGroup = styled.g`
     stroke: var(--color-property);
     fill: var(--color-background);
     stroke-width: 2px;
+    cursor: pointer;
   }
 
   &[class^="array-"] circle,

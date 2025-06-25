@@ -21,6 +21,8 @@ const ImprovedFieldSet = styled(Fieldset)`
   & label {
     width: 80px;
     flex: 0 0 80px;
+
+    cursor: pointer;
   }
 `;
 
