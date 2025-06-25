@@ -47,8 +47,7 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
       settings: [
         { id: "width", type: "number", defaultValue: 400 },
-        { id: "height", type: "number", defaultValue: 400 },
-        { id: "when", type: "dropdown", defaultValue: "Once", options: ["Once", "Per frame", "Everytime"] },
+          { id: "height", type: "number", defaultValue: 400 },
       ],
       executeAs: CUSTOM_SHADER,
     },

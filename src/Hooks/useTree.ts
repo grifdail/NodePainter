@@ -16,6 +16,7 @@ import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
 import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
+import { Port } from "../Types/PortTypeGenerator";
 import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
@@ -271,7 +272,11 @@ export const useTree = create<TreeStore>()((set, get) => {
         produce((state) => {
           const start = `${def.id}-start`;
           const end = `${def.id}-end`;
-          state.customNodes[def.id] = def;
+          const callNodDef: NodeDefinition = {
+            ...def,
+            dataInputs: [...def.dataInputs, Port.CacheId()],
+          };
+          state.customNodes[def.id] = callNodDef;
           const startNodeDef: NodeDefinition = {
             IsUnique: true,
             hideInLibrary: true,
