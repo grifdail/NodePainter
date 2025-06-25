@@ -53,7 +53,7 @@ type FieldsetProps = {
   onClickLabel?: () => void;
 } & InputProps<any>;
 
-export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className, style, onClickLabel }: FieldsetProps) => {
+export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabled, passtrough, className, style, onClickLabel, ...other }: FieldsetProps) => {
   var id = useId();
   return (
     <FieldsetStyled
@@ -74,6 +74,7 @@ export const Fieldset = ({ label, input: Input, onChange, value, tooltip, disabl
           onChange={onChange}
           value={value}
           disabled={disabled}
+          {...other}
           {...passtrough}
         />
       )}

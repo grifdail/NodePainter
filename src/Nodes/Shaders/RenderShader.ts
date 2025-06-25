@@ -22,26 +22,35 @@ export const RenderShader: NodeDefinition = {
   getData(portId, node, context) {
     const width = node.settings.width;
     const height = node.settings.height;
-    const keyCache = `${node.id}-image-cache`;
-    const keyShader = `${node.id}-shader`;
+    const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
+    const keyCache = `${node.id}-${cacheId}-img`;
+    const keyShader = `${node.id}-${cacheId}-shader`;
 
-    let img = createOrSelectFromCache(context, node, () => {
-      return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
-    });
+    let img = createOrSelectFromCache(
+      context,
+      node,
+      () => {
+        return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
+      },
+      keyCache
+    );
     var p5img = img.p5Graphics;
     if (p5img === null) {
       return;
     }
-    let shader = context.blackboard[keyShader];
-    if (!shader) {
-      try {
-        const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
-        shader = (p5img as any).createFilterShader(shaderCode);
-        context.blackboard[keyShader] = shader;
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    let shader = createOrSelectFromCache(
+      context,
+      node,
+      () => {
+        try {
+          const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
+          return (p5img as any).createFilterShader(shaderCode);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      keyShader
+    );
 
     shader.setUniform("time", context.time);
     Object.values(node.dataInputs).forEach((port) => {
@@ -61,7 +70,7 @@ export const RenderShader: NodeDefinition = {
     p5img.clear(0, 0, 0, 0);
     p5img.filter(shader);
 
-    return context.blackboard[keyCache];
+    return img;
   },
 };
 export const CUSTOM_SHADER = "RenderShader";

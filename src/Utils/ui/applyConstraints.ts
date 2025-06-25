@@ -78,7 +78,11 @@ const ConstrainDefinition = {
     return text.replaceAll(/\s/gm, "");
   },
   NoSpecialChar: (text: string, previousValue: string) => {
-    return text.replaceAll("b", "p");
+    return text.replaceAll(/\W/gm, "");
+  },
+  NonDigitStart: (text: string, previousValue: string) => {
+    console.log(text, text.replaceAll(/^\d+/gm, ""));
+    return text.replaceAll(/^\d+/gm, "");
   },
 };
 
@@ -104,7 +108,9 @@ export function applyConstraint<T>(value: T, previousValue: T, constraints: Cons
     return value;
   }
   constraints.forEach((constraint) => {
+    var oldValue = value;
     value = (ConstrainDefinition[constraint.id] as (value: T, previousValue: T, ...params: any[]) => T)(value, previousValue, ...constraint.params) as T;
+    previousValue = oldValue;
   });
   return value;
 }

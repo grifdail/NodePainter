@@ -54,11 +54,20 @@ export const PortEditList = ({ ports, label, prefix, tooltip, onChange, availabl
     [selected]
   );
 
-  const { change, remove, addNew } = useListManipulator(ports, onChange as any, () => ({
-    id: `${prefix}-${ports.length}`,
+  const {
+    change,
+    remove,
+    addNew: addNewRaw,
+  } = useListManipulator(ports, onChange as any, () => ({
+    id: `${prefix}_${ports.length}`,
     type: availableTypes[0],
     defaultValue: PortTypeDefinitions[availableTypes[0]].createDefaultValue(),
   }));
+
+  const addNew = () => {
+    setSelected(ports.length);
+    addNewRaw();
+  };
 
   return (
     <SectionStyled>

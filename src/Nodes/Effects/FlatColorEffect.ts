@@ -93,7 +93,8 @@ export const FlatColorEffect: NodeDefinition = {
     shaderV.setUniform("threshold", threshold);
     shaderV.setUniform("colorPositive", color1);
     shaderV.setUniform("colorNegative", color2);
-
+    targetPassImage.fill("transparent");
+    targetPassImage.noStroke();
     targetPassImage.rect(0, 0, image.width, image.height);
 
     return target;

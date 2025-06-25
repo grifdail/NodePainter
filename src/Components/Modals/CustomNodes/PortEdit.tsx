@@ -10,6 +10,8 @@ import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValu
 import { TextInput } from "../../Generics/Inputs/TextInput";
 import { PortType } from "../../../Types/PortType";
 import { PortTypeDropdown } from "./PortTypeDropdown";
+import { Constraints } from "../../../Utils/ui/applyConstraints";
+import { cp } from "fs";
 
 const InputPortDiv = styled.div<{ selected?: boolean }>`
   display: flex;
@@ -105,6 +107,7 @@ export function PortEdit({ port, onChangePort, onDeletePort, index, availableTyp
             onChange={setPortId}
             value={port.id}
             disabled={!canEdit}
+            constrains={[Constraints.NoSpecialChar(), Constraints.NonDigitStart()]}
           />
           <PortTypeDropdown
             onChange={setPortType}
