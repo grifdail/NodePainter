@@ -10,6 +10,7 @@ import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
+import { VARYING } from "../Nodes/Shaders/ShaderMaterialStart";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -357,7 +358,16 @@ export const useTree = create<TreeStore>()((set, get) => {
             id: start,
             tags: [],
             dataInputs: [],
-            dataOutputs: [...structuredClone(def.dataInputs)],
+            dataOutputs: [
+              ...Object.entries(VARYING).map(([id, data]): PortDefinition => {
+                return {
+                  id,
+                  type: data.type,
+                  defaultValue: PortTypeDefinitions[data.type].createDefaultValue(),
+                };
+              }),
+              ...structuredClone(def.dataInputs),
+            ],
 
             settings: [],
             executeAs: "ShaderMaterial-start",
