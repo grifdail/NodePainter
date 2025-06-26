@@ -7,6 +7,7 @@ import { Line3DVirtualNodeType } from "./Line3DVirtualNodeType";
 import { MaterialsVirtualNodes } from "./MaterialsVirtualNodes";
 import { ParametricGeometryNodeType } from "./ParametricGeometryNodeType";
 import { Render3DType } from "./Render3DType";
+import { ShaderMaterialType } from "./ShaderMaterialType";
 import { TransformedObjectModelVirtualNodeType } from "./TransformedObjectModelVirtualNodeType";
 import { UploadedModelVirtualNodeType } from "./UploadedModelVirtualNodeType";
 
@@ -15,6 +16,7 @@ export const VirtualNodes = {
   ...LightVirtualNodeTypes,
   ...GeometryVirtualNodeTypes,
   ...CameraVirtualElements,
+  ShaderMaterialType: new ShaderMaterialType(),
   ComposeVirtualNodeType: new ComposeVirtualNodeType(),
   Render3DType: new Render3DType(),
   GenericModelVirtualNodeType: new GenericModelVirtualNodeType(),

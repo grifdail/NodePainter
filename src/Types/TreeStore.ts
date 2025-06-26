@@ -13,7 +13,6 @@ import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
 import { SketchTemplate } from "./SketchTemplate";
 
-
 export type TreeStore = {
   key: number;
   nodes: NodeCollection;
@@ -45,6 +44,7 @@ export type TreeStore = {
   createStructType: (ports: PortDefinition[], name: string) => void;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;
+  createShaderMaterial: (def: NodeDefinition) => void;
   createSimulation: (def: NodeDefinition) => void;
   setEditedGraph: (graph: string | undefined) => void;
   enforceValidGraph: () => void;

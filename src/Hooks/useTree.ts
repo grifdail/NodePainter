@@ -33,6 +33,7 @@ import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
 import { buildBoundingBox } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
+import { copyInputPortsValues } from "./copyInputPortsValues";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
@@ -318,8 +319,74 @@ export const useTree = create<TreeStore>()((set, get) => {
           state.customNodes[end] = endNodeDef;
           const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
           const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+          copyInputPortsValues(state.nodes[end], newEndNode);
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
+          for (let nodeId in original(state.nodes)) {
+            let node = state.nodes[nodeId];
+            if (node.type === def.id) {
+              def.dataInputs.forEach((port) => {
+                if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
+                  node.dataInputs[port.id] = createPortConnection(port);
+                }
+              });
+            }
+          }
+          state.editedGraph = def.id;
+
+          resetCamera();
+        })
+      );
+      get().enforceValidGraph();
+    },
+    createShaderMaterial(def) {
+      set(
+        produce((state) => {
+          const start = `${def.id}-start`;
+          const end = `${def.id}-end`;
+          const callNodDef: NodeDefinition = {
+            ...def,
+            dataInputs: [...def.dataInputs, Port.CacheId()],
+          };
+          state.customNodes[def.id] = callNodDef;
+          const startNodeDef: NodeDefinition = {
+            IsUnique: true,
+            hideInLibrary: true,
+            description: "",
+            id: start,
+            tags: [],
+            dataInputs: [],
+            dataOutputs: [...structuredClone(def.dataInputs)],
+
+            settings: [],
+            executeAs: "ShaderMaterial-start",
+          };
+          const endNodeDef: NodeDefinition = {
+            IsUnique: true,
+            description: "",
+            hideInLibrary: true,
+            id: end,
+            tags: [],
+            dataInputs: [
+              {
+                id: "color",
+                type: "color",
+                defaultValue: createColor(),
+              },
+            ],
+            dataOutputs: [],
+
+            settings: [],
+            executeAs: "ShaderMaterial-end",
+          };
+          state.customNodes[start] = startNodeDef;
+          state.customNodes[end] = endNodeDef;
+          const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
+          const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+          copyInputPortsValues(state.nodes[end], newEndNode);
+          state.nodes[start] = newStartNode;
+          state.nodes[end] = newEndNode;
+
           for (let nodeId in original(state.nodes)) {
             let node = state.nodes[nodeId];
             if (node.type === def.id) {
@@ -376,6 +443,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           state.customNodes[end] = endNodeDef;
           const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
           const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+          copyInputPortsValues(state.nodes[end], newEndNode);
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
           for (let nodeId in original(state.nodes)) {

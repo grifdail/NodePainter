@@ -43,7 +43,7 @@ export const RenderShader: NodeDefinition = {
       node,
       () => {
         try {
-          const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
+          const shaderCode: string = context.getImageEffectShaderCode(node.type, Object.values(node.dataInputs));
           return (p5img as any).createFilterShader(shaderCode);
         } catch (error) {
           console.error(error);

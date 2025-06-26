@@ -179,6 +179,8 @@ import { EulerAngle } from "./Quaternion/EulerAngle";
 import { LookAtRotation } from "./Quaternion/LookAt";
 import { QuaternionInverse } from "./Quaternion/QuaternionInverse";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
+import { ShaderMaterialEnd } from "./Shaders/ShaderMaterialEnd";
+import { ShaderMaterialStart } from "./Shaders/ShaderMaterialStart";
 import { ChangeNode } from "./State/ChangeNode";
 import { Counter } from "./State/CounterNode";
 import { DetectChangeNode } from "./State/DetectChangeNode";
@@ -302,6 +304,8 @@ export const Nodes: Array<NodeDefinition> = [
   RenderShaderEnd,
   RenderShader,
   ShaderMaterial,
+  ShaderMaterialStart,
+  ShaderMaterialEnd,
 
   //Shader specific
   Twirl,

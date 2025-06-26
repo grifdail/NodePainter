@@ -4,7 +4,8 @@ import { TreeStore } from "../../../Types/TreeStore";
 import { PortConnection } from "../../../Types/PortConnection";
 import { NodeData } from "../../../Types/NodeData";
 import p5, { Graphics } from "p5";
-import { getShaderCode } from "./getShaderCode";
+import { getImageEffectShaderCode } from "./getShaderCode";
+import { getMaterialShaderCode } from "./getMaterialShaderCode";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { convertTypeValue } from "./convertTypeValue";
 import { Vector2 } from "@use-gesture/react";
@@ -25,7 +26,8 @@ export type FunctionContext = {
 export type ExecutionContext = {
   deltaTime: number;
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
-  getShaderCode(shader: string, uniforms: PortConnection[]): string;
+  getImageEffectShaderCode(shader: string, uniforms: PortConnection[]): string;
+  getMaterialShaderCode(shader: string, uniforms: PortConnection[]): { vertex: string; frag: string };
   findNodeOfType(type: string): NodeData | null;
   getNodeDefinition: (type: string) => NodeDefinition | undefined;
   createFunctionContext(node: NodeData): FunctionContext;
@@ -148,8 +150,11 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getNodeDefinition(type) {
       return tree?.getNodeTypeDefinition(type);
     },
-    getShaderCode(shader, ports) {
-      return getShaderCode(shader, ports, tree, context);
+    getImageEffectShaderCode(shader, ports) {
+      return getImageEffectShaderCode(shader, ports, tree, context);
+    },
+    getMaterialShaderCode(shader, ports) {
+      return getMaterialShaderCode(shader, ports, tree, context);
     },
     getCallId: function (node: NodeData, ...args: any[]): string {
       var result = `${node.id} - ${context.callCounts[node.id] || 0} - ${args.join(" - ")}`;

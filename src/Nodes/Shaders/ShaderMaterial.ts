@@ -5,36 +5,9 @@ import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
 import { ExecutionContext, FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
 import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
-
-const VERTEX_SHADER = `
-IN vec3 aPosition;
-IN vec3 aNormal;
-IN vec2 aTexCoord;
-IN vec4 aVertexColor;
-
-uniform mat4 uModelViewMatrix;
-uniform mat4 uProjectionMatrix;
-uniform mat3 uNormalMatrix;
-
-uniform vec4 uMaterialColor;
-uniform bool uUseVertexColor;
-
-OUT vec3 vVertexNormal;
-OUT highp vec2 vVertTexCoord;
-OUT vec4 vColor;
-
-void main(void) {
-  vec4 positionVec4 = vec4(aPosition, 1.0);
-  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;
-  vVertexNormal = normalize(vec3( uNormalMatrix * aNormal ));
-  vVertTexCoord = aTexCoord;
-  vColor = (uUseVertexColor ? aVertexColor : uMaterialColor);
-}`;
-
-const FRAG_SHADER = `IN vec3 vVertexNormal;
-void main(void) {
-  OUT_COLOR = vec4(vVertexNormal, 1.0);
-}`;
+import { Constraints } from "../../Utils/ui/applyConstraints";
+import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { createDefaultMaterialGenericData } from "../3D/VirtualNodeTypes/createDefaultMaterialGenericData";
 
 export const SHADER_MATERIAL = "ShaderMaterial";
 export const ShaderMaterial: NodeDefinition = {
@@ -46,22 +19,27 @@ export const ShaderMaterial: NodeDefinition = {
   dataOutputs: [{ id: "material", type: "material", defaultValue: createDefaultMaterial() }],
   tags: ["Shader", "Material"],
 
-  settings: [],
+  settings: [
+    {
+      type: "group",
+      id: "material",
+      defaultValue: createDefaultMaterialGenericData(),
+      settings: [
+        { id: "blendingMode", type: "dropdown", defaultValue: "NormalBlending", options: ["NoBlending", "NormalBlending", "AdditiveBlending", "SubtractiveBlending", "MultiplyBlending"] },
+        { id: "alphaTest", type: "number", defaultValue: 0, constrains: [Constraints.Clamp01()] },
+        { id: "transparent", type: "bool", defaultValue: false },
+        { id: "flatShading", type: "bool", defaultValue: false },
+        { id: "wireframe", type: "bool", defaultValue: false },
+        { id: "side", type: "dropdown", defaultValue: "FrontSide", options: ["FrontSide", "BackSide", "DoubleSide"] },
+      ],
+    },
+  ],
 
   getData(portId, node, context) {
-    const keyShader = `${node.id}-shader`;
-    let shader = context.blackboard[keyShader];
-    if (!shader) {
-      try {
-        //const shaderCode: string = context.getShaderCode(node.type, Object.values(node.dataInputs));
-        var math = (shader = context.target.createShader(VERTEX_SHADER, FRAG_SHADER));
-        context.blackboard[keyShader] = shader;
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    return null;
+    const callId = context.getCallId(node);
+    const setting = node.settings.material;
+    const code = context.getMaterialShaderCode(node.type, Object.values(node.dataInputs));
+    return VirtualNodes.ShaderMaterialType.generate(callId, [], code.frag, code.vertex, {}, setting);
   },
 };
 

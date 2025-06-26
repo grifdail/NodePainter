@@ -7,7 +7,7 @@ import { Black, toThreeColor, White } from "../../../Utils/math/colorUtils";
 import { MaterialGenericData } from "./MaterialGenericData";
 import { MaterialVirtualNodeType } from "./MaterialVirtualNodeType";
 
-function toThreeSetting({ blendingMode, side, ...rest }: MaterialGenericData) {
+export function toThreeSetting({ blendingMode, side, ...rest }: MaterialGenericData) {
   return { ...rest, blending: convertToThreeBlending(blendingMode), side: convertToThreeSide(side) };
 }
 function convertToThreeBlending(blendingMode: "NoBlending" | "NormalBlending" | "AdditiveBlending" | "SubtractiveBlending" | "MultiplyBlending"): Blending {
@@ -35,7 +35,7 @@ function convertToThreeSide(side: "FrontSide" | "BackSide" | "DoubleSide") {
   }
 }
 
-function updateTreeMaterial(mat: Material, changeRaw: MaterialGenericData) {
+export function updateTreeMaterial(mat: Material, changeRaw: MaterialGenericData) {
   const change = toThreeSetting(changeRaw);
   if (mat.alphaTest !== change.alphaTest) {
     mat.alphaTest = change.alphaTest;

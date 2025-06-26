@@ -8,39 +8,10 @@ import { sanitizeForShader } from "./sanitizeForShader";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { PortType } from "../../../Types/PortType";
 
-export function getShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
+export function getImageEffectShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
-
-  const requirement = Array.from(
-    new Set(
-      flattenNode
-        .flatMap((nodeId: string) => {
-          const node = tree?.nodes[nodeId] as NodeData;
-          let type = tree?.getNodeTypeDefinition(node);
-          while (type?.executeAs != null) {
-            type = tree?.getNodeTypeDefinition(type.executeAs);
-          }
-          var requirement = type?.shaderRequirement;
-          if (requirement === undefined || requirement === null) {
-            return [];
-          }
-          if (typeOf(requirement) === "string") {
-            return [requirement];
-          }
-          return requirement;
-        })
-        .filter((item: string) => item != null)
-    )
-  );
-
-  const code = flattenNode.map((nodeId: string) => {
-    const node = tree?.nodes[nodeId] as NodeData;
-    let type = tree?.getNodeTypeDefinition(node);
-    while (type?.executeAs != null) {
-      type = tree?.getNodeTypeDefinition(type.executeAs);
-    }
-    return type?.getShaderCode && type.getShaderCode(node, context);
-  });
+  const requirement = buildRequirement(flattenNode, tree);
+  const code = buildCode(flattenNode, tree, context);
   return `precision highp float;
 
   // x,y coordinates, given from the vertex shader
@@ -62,7 +33,43 @@ export function getShaderCode(shader: string, ports: PortConnection[], tree: Tre
     ${code.join("\n")}
   }`;
 }
-function buildDependencyList(start: string, nodes: NodeCollection) {
+
+export function buildRequirement(flattenNode: any, tree: TreeStore | null) {
+  return Array.from(
+    new Set(
+      flattenNode
+        .flatMap((nodeId: string) => {
+          const node = tree?.nodes[nodeId] as NodeData;
+          let type = tree?.getNodeTypeDefinition(node);
+          while (type?.executeAs != null) {
+            type = tree?.getNodeTypeDefinition(type.executeAs);
+          }
+          var requirement = type?.shaderRequirement;
+          if (requirement === undefined || requirement === null) {
+            return [];
+          }
+          if (typeOf(requirement) === "string") {
+            return [requirement];
+          }
+          return requirement;
+        })
+        .filter((item: string) => item != null)
+    )
+  );
+}
+
+export function buildCode(flattenNode: any, tree: TreeStore | null, context: ExecutionContext) {
+  return flattenNode.map((nodeId: string) => {
+    const node = tree?.nodes[nodeId] as NodeData;
+    let type = tree?.getNodeTypeDefinition(node);
+    while (type?.executeAs != null) {
+      type = tree?.getNodeTypeDefinition(type.executeAs);
+    }
+    return type?.getShaderCode && type.getShaderCode(node, context);
+  });
+}
+
+export function buildDependencyList(start: string, nodes: NodeCollection) {
   const distances: { [key: string]: number } = { [start]: 0 };
   const walk = (nodeId: string, distance: number) => {
     const node = nodes[nodeId];

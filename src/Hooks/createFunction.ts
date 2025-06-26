@@ -4,6 +4,7 @@ import { TreeStore } from "../Types/TreeStore";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
 import { createPortConnection } from "../Utils/graph/modification/createPortConnection";
 import { resetCamera } from "../Utils/ui/resetCamera";
+import { copyInputPortsValues } from "./copyInputPortsValues";
 
 export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
   const start = getCustomFunctionStartId(def);
@@ -36,6 +37,7 @@ export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
   state.customNodes[end] = endNodeDef;
   const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
   const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
+  copyInputPortsValues(state.nodes[end], newEndNode);
   state.nodes[start] = newStartNode;
   state.nodes[end] = newEndNode;
   for (let nodeId in original(state.nodes)) {
