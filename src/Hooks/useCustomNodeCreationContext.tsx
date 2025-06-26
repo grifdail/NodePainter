@@ -54,6 +54,11 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
     create: function (node: NodeDefinition): void {
       useTree.getState().createShader(node);
     },
+    prepareNodeForEdit(node) {
+      node.dataInputs = node.dataInputs.filter((item) => item.id !== "cache-id");
+      node.dataOutputs = [];
+      return node;
+    },
   },
   shaderMaterial: {
     baseNode: {

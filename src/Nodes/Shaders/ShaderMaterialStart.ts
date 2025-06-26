@@ -1,6 +1,7 @@
 import { IconPhoto } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
+import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 export const ShaderMaterialStart: NodeDefinition = {
   id: "ShaderMaterial-start",
@@ -14,12 +15,9 @@ export const ShaderMaterialStart: NodeDefinition = {
   settings: [],
   getShaderCode(node, context) {
     return [
-      generateShaderCodeFromNodeData(node, context, "uv", [], (_) => `vTexCoord.xy`),
-      ...Object.values(node.dataOutputs)
-        .filter((port) => port.id !== "uv" && port.type !== "image")
-        .map((port) => {
-          return generateShaderCodeFromNodeData(node, context, port.id, {}, () => `uniform_${port.id}`);
-        }),
+      ...Object.values(node.dataOutputs).map((port) => {
+        return generateShaderCodeFromNodeData(node, context, port.id, {}, () => sanitizeForShader(`uniform_${port.id}`) as string);
+      }),
     ].join("\n");
   },
 };

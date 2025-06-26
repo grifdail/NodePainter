@@ -21,7 +21,9 @@ export class ShaderMaterialType extends MaterialVirtualNodeType<ShaderMaterial, 
     element.dispose();
   }
   update(element: ShaderMaterial, fragmentShader: string, vertexShader: string, uniforms: any, mat: MaterialGenericData): void {
-    element.uniforms = uniforms;
+    Object.entries(uniforms).forEach(([id, obj]) => {
+      element.uniforms[id].value = (obj as any).value;
+    });
     updateTreeMaterial(element, mat);
   }
 }

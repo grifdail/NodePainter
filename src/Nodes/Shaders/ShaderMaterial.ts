@@ -1,9 +1,10 @@
 import { IconPhoto } from "@tabler/icons-react";
-import { ImageData } from "../../Types/ImageData";
+import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
-import { ExecutionContext, FunctionContext } from "../../Utils/graph/execution/createExecutionContext";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { ExecutionContext } from "../../Utils/graph/execution/createExecutionContext";
 import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
@@ -38,24 +39,28 @@ export const ShaderMaterial: NodeDefinition = {
   getData(portId, node, context) {
     const callId = context.getCallId(node);
     const setting = node.settings.material;
-    const code = context.getMaterialShaderCode(node.type, Object.values(node.dataInputs));
-    return VirtualNodes.ShaderMaterialType.generate(callId, [], code.frag, code.vertex, {}, setting);
+    const code = createOrSelectFromCache(
+      context,
+      node,
+      () => {
+        return context.getMaterialShaderCode(node.type, Object.values(node.dataInputs));
+      },
+      "shader"
+    );
+    const uniforms = getUniformObject(node.type, context, node);
+    return VirtualNodes.ShaderMaterialType.generate(callId, [], code.frag, code.vertex, uniforms, setting);
   },
 };
 
-function ApplyUniformFromData(shader: any, context: ExecutionContext, data: FunctionContext) {
-  shader.setUniform("time", context.time);
-  //Todo: passe the extra data for lights
-  Object.entries(data).forEach(([id, { value, type }]) => {
-    if (type === "image") {
-      const image = value as ImageData;
-      if (!image || !image.getP5(context.p5)) {
-        return;
-      }
-      shader.setUniform(sanitizeForShader(`uniform_${id}`), image.getP5(context.p5));
-    } else {
-      const converter = PortTypeDefinitions[type].convertToShaderP5Uniform;
-      shader.setUniform(sanitizeForShader(`uniform_${id}`), converter ? converter(value) : value);
-    }
-  });
+function getUniformObject(shader: any, context: ExecutionContext, node: NodeData) {
+  return {
+    time: { value: context.time },
+    ...Object.fromEntries(
+      Object.values(node.dataInputs).map((port) => {
+        const converter = PortTypeDefinitions[port.type].convertToThreeType;
+        const value = context.getInputValue(node, port.id, port.type);
+        return [sanitizeForShader(`uniform_${port.id}`), { value: converter ? converter(value) : value }];
+      })
+    ),
+  };
 }

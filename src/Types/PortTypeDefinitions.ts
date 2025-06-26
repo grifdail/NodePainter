@@ -1,5 +1,5 @@
 import { Icon, IconArrowUpRightCircle, IconBadge3d, IconBrush, IconColorSwatch, IconCube, IconNumber2, IconNumber3, IconNumber4, IconNumbers, IconPackage, IconPaint, IconPalette, IconPhoto, IconQuote, IconRotate3d, IconToggleLeft } from "@tabler/icons-react";
-import { Euler, Quaternion } from "three";
+import { Euler, Quaternion, Vector2, Vector3, Vector4 } from "three";
 import { BoolInput } from "../Components/Generics/Inputs/BoolInput";
 import { ColorInput } from "../Components/Generics/Inputs/ColorInput";
 import { MaterialInput } from "../Components/Generics/Inputs/MaterialInput";
@@ -62,6 +62,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderValue: convertToShaderNumber,
     convertToShaderType: "float",
     convertToShaderP5Uniform: (value) => value,
+    convertToThreeType: (value) => value,
   },
   vector: {
     tags: ["vector", "true-vector", "hidden"],
@@ -125,6 +126,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     },
     convertToShaderValue: (value) => `vec2(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])})`,
     convertToShaderType: "vec2",
+    convertToThreeType: (value) => new Vector2(...value),
     componentNames: ["x", "y"],
   },
   vector3: {
@@ -164,6 +166,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector4: (v) => `vec4(${v}.xyz, 0.0)`,
     },
     convertToShaderType: "vec3",
+    convertToThreeType: (value) => new Vector3(...value),
     convertToShaderValue: (value) => `vec3(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])})`,
   },
   vector4: {
@@ -204,6 +207,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       vector4: (v) => v,
     },
     convertToShaderType: "vec4",
+    convertToThreeType: (value) => new Vector4(...value),
     convertToShaderValue: (value) => `vec4(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])}, ${convertToShaderNumber(value[3])})`,
   },
   quaternion: {
@@ -228,6 +232,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     },
     equalityOperator: compareVector,
     shaderConvert: {},
+    convertToThreeType: (value) => new Vector4(...value),
   },
   color: {
     tags: ["common", "vector", "true-vector"],
@@ -266,6 +271,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       color: (v) => v,
     },
     convertToShaderType: "vec4",
+    convertToThreeType: (value) => new Vector4(...value),
     convertToShaderValue: (value) => `vec4(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])}, ${convertToShaderNumber(value[3])})`,
   },
   string: {
@@ -317,6 +323,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     },
     convertToShaderType: "bool",
     convertToShaderValue: (value) => value.toString(),
+    convertToThreeType: (value) => value,
   },
   image: {
     tags: ["common"],
@@ -335,6 +342,9 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     },
     convertToShaderP5Uniform: (value) => value.getP5(),
     convertToShaderType: "sampler2D",
+    convertToThreeType(value) {
+      return value.getThreeJs();
+    },
   },
   gradient: {
     tags: ["common"],
@@ -466,5 +476,6 @@ type PortTypeDefinition = {
   convertToShaderValue?: (value: any) => string;
   convertToShaderType?: string;
   convertToShaderP5Uniform?: (value: any) => any;
+  convertToThreeType?: (value: any) => any;
   componentNames?: string[];
 };
