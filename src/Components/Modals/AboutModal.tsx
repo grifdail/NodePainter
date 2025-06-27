@@ -1,6 +1,8 @@
 import { IconInfoCircle } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
+import { useRouter } from "../../Hooks/useRouter";
+import { Routes } from "../../Types/Routes";
 
 const MainDiv = styled.div`
   max-width: 100%;
@@ -27,7 +29,7 @@ const MainDiv = styled.div`
 export function AboutModal({ close }: { close: () => void }) {
   return (
     <Modal
-      onClose={close}
+      onClose={() => useRouter.getState().open(Routes.IntroMenu)}
       title="About"
       icon={IconInfoCircle}>
       <MainDiv>
