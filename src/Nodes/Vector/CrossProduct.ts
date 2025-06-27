@@ -11,12 +11,12 @@ export const CrossProduct: NodeDefinition = {
   dataInputs: [
     {
       id: "a",
-      type: "vector2",
+      type: "vector3",
       defaultValue: createVector3(),
     },
     {
       id: "b",
-      type: "vector2",
+      type: "vector3",
       defaultValue: createVector3(),
     },
   ],
