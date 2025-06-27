@@ -14,19 +14,27 @@ export function getMaterialShaderCode(shader: string, ports: PortConnection[], t
   #include <common>
   
   varying vec2 vUv;
-  varying vec4 vWorldPosition;
-  varying vec3 vNormal;
+
   varying vec3 vViewPosition;
+  varying vec3 vWorldPosition;
+  varying vec3 vLocalPosition;
+
+  varying vec3 vWorldNormal;
+  varying vec3 vNormal;
 
   uniform float time;
 
   void main() {
       vUv =  uv;
-      vWorldPosition = modelMatrix * vec4( position, 1.0 );
-      vec4 mvPosition = viewMatrix * vWorldPosition;
-      vec3 worldNormal = normalize ( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );
-      vNormal = normalize( normalMatrix * normal );
+      vLocalPosition = position;
+      vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+      vWorldPosition = worldPosition.xyz;
+      vec4 mvPosition = viewMatrix * worldPosition;
       vViewPosition = mvPosition.xyz;
+
+      vWorldNormal = normalize ( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );
+      vNormal = normalize( normalMatrix * normal );
+
       gl_Position = projectionMatrix * mvPosition;
   }`;
 
@@ -34,11 +42,16 @@ export function getMaterialShaderCode(shader: string, ports: PortConnection[], t
   #include <common>
   
   varying vec2 vUv;
-  varying vec4 vWorldPosition;
-  varying vec3 vNormal;
+
   varying vec3 vViewPosition;
+  varying vec3 vWorldPosition;
+  varying vec3 vLocalPosition;
+
+  varying vec3 vWorldNormal;
+  varying vec3 vNormal;
 
   uniform float time;
+
   
   ${ports.map((port) => `uniform ${getShaderType(port.type)} ${sanitizeForShader(`uniform_${port.id}`)};`).join("\n")}
 

@@ -1,5 +1,6 @@
 import { Icon } from "@tabler/icons-react";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
+import { CustomNodeEditingType } from "./CustomFunctionCreationContextStore";
 import { NodeData } from "./NodeData";
 import { NodeTags } from "./NodeTags";
 import { PortDefinition } from "./PortDefinition";
@@ -44,8 +45,9 @@ export type BaseNodeDefinition = {
 
   //Shader
   shaderRequirement?: string | string[];
-
   onManualCreation?: (node: NodeData) => void;
+
+  onlyAvailableIn?: CustomNodeEditingType[];
 };
 
 export type LogicNodeDefinition = {

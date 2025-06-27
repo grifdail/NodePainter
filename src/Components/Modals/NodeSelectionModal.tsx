@@ -75,7 +75,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
   const [searchTermRaw, setSearchTerm] = useState(a);
   const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
   const nodeFav = usePlayerPref();
-  const isShader = useTree((state) => state.getCustomNodeEditingType() === "shader");
+  const editingType = useTree((state) => state.getCustomNodeEditingType());
   const treeShaderLib = useTree(useShallow((state) => state.getNodeLibrary()));
   const nodeLibrary = useMemo(
     () =>
@@ -83,9 +83,20 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
         if (item.hideInLibrary) {
           return false;
         }
-        return isShader ? item.getShaderCode !== undefined : item.getData !== undefined || item.executeAs != null;
+        const isShader = editingType === "shader" || editingType === "shaderMaterial";
+        console.log(isShader);
+        if (isShader && item.getShaderCode === undefined) {
+          return false;
+        }
+        if (!isShader && item.getData === undefined && item.executeAs == null) {
+          return false;
+        }
+        if (item.onlyAvailableIn && !item.onlyAvailableIn.includes(editingType)) {
+          return false;
+        }
+        return true;
       }),
-    [isShader, treeShaderLib]
+    [editingType, treeShaderLib]
   );
 
   const filteredList = useMemo(

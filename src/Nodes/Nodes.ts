@@ -181,6 +181,7 @@ import { QuaternionInverse } from "./Quaternion/QuaternionInverse";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { ShaderMaterialEnd } from "./Shaders/ShaderMaterialEnd";
 import { ShaderMaterialStart } from "./Shaders/ShaderMaterialStart";
+import { VaryingNodes } from "./Shaders/VaryingNode";
 import { ChangeNode } from "./State/ChangeNode";
 import { Counter } from "./State/CounterNode";
 import { DetectChangeNode } from "./State/DetectChangeNode";
@@ -306,6 +307,8 @@ export const Nodes: Array<NodeDefinition> = [
   ShaderMaterial,
   ShaderMaterialStart,
   ShaderMaterialEnd,
+
+  ...VaryingNodes,
 
   //Shader specific
   Twirl,
