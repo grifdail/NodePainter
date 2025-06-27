@@ -1,4 +1,4 @@
-import { GroupSettingDefinition, SettingDefinition, SettingType } from "../../../Types/SettingDefinition";
+import { GroupSettingDefinition, ImageSelectSettingDefinition, SettingDefinition, SettingType } from "../../../Types/SettingDefinition";
 
 const identity = (x: any) => x;
 
@@ -19,7 +19,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   "mesh-upload": identity,
   "easing-preview": identity,
   "code-block": identity,
-  "image-select": identity,
+  "image-select": ((_: any, setting: ImageSelectSettingDefinition) => setting.options[0]) as any,
   group: function (clonedValue: any, setting: GroupSettingDefinition) {
     return { ...createSettingObjectForSettingDefinition(setting.settings), _open: false };
   } as any,

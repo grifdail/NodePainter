@@ -3,7 +3,8 @@ import { SettingProps } from "./SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { DropdownSettingDefinition, ImageSelectSettingDefinition } from "../../Types/SettingDefinition";
-import styled from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
+import { MenuItem } from "@szhsin/react-menu";
 
 const Body = styled.div`
   width: 100%;
@@ -17,7 +18,7 @@ const Body = styled.div`
   gap: var(--padding-tiny);
 
   & > div.file,
-  & img {
+  & > img {
     flex-grow: 1;
     display: block flex;
     object-fit: contain;
@@ -30,6 +31,15 @@ const Body = styled.div`
   }
 `;
 
+const ImprovedMenuItem = styled.span`
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--padding-small);
+  align-items: center;
+`;
+
+console.log(ImprovedMenuItem);
+
 export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> = function ImageSelectSetting({ onChange, value, def }: SettingProps<ImageSelectSettingDefinition>) {
   if (value == null) {
     value = def.options[0];
@@ -41,9 +51,28 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
         alt="loaded"></img>
       <Fieldset
         input={DropdownInput}
-        passtrough={{ options: def.options.map((item) => item.label) }}
-        value={value.label}
-        onChange={(value) => onChange(def.options.find((item) => item.label === value))}
+        passtrough={{
+          options: def.options,
+          useTemplateForField: true,
+          template: (item: any) => item.label,
+          templateRaw: (item: any, arg: any) => {
+            return (
+              <MenuItem
+                onClick={arg.onClick}
+                key={arg.key}>
+                <ImprovedMenuItem>
+                  <img
+                    width="32"
+                    height="32"
+                    src={item.url}></img>{" "}
+                  {item.label}
+                </ImprovedMenuItem>
+              </MenuItem>
+            );
+          },
+        }}
+        value={value}
+        onChange={onChange}
         label={def.id}
       />
     </Body>
