@@ -21,6 +21,7 @@ export function getMaterialShaderCode(shader: string, ports: PortConnection[], t
 
   varying vec3 vWorldNormal;
   varying vec3 vNormal;
+  varying vec3 vViewNormal;
 
   uniform float time;
 
@@ -33,7 +34,8 @@ export function getMaterialShaderCode(shader: string, ports: PortConnection[], t
       vViewPosition = mvPosition.xyz;
 
       vWorldNormal = normalize ( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * normal );
-      vNormal = normalize( normalMatrix * normal );
+      vViewNormal = normalize( normalMatrix * normal );
+      vNormal = normal;
 
       gl_Position = projectionMatrix * mvPosition;
   }`;
@@ -49,6 +51,7 @@ export function getMaterialShaderCode(shader: string, ports: PortConnection[], t
 
   varying vec3 vWorldNormal;
   varying vec3 vNormal;
+  varying vec3 vViewNormal;
 
   uniform float time;
 

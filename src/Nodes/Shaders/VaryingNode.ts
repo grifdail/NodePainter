@@ -79,6 +79,21 @@ export const ShaderLocalNormal: NodeDefinition = {
     return generateShaderCodeFromNodeData(node, context, "value", [], () => `vNormal`);
   },
 };
+export const ShaderViewNormal: NodeDefinition = {
+  id: "Shader/ViewNormal",
+  label: "View Normal",
+  hideInLibrary: false,
+  icon: DoubleIconGen(IconCube, IconMatrix),
+  description: "Return the normal of the texel in view space",
+  dataInputs: [],
+  dataOutputs: [Port.vector3("value")],
+  tags: ["Shader", "Input"],
+  settings: [],
+  onlyAvailableIn: ["shaderMaterial"],
+  getShaderCode(node, context) {
+    return generateShaderCodeFromNodeData(node, context, "value", [], () => `vViewNormal`);
+  },
+};
 export const ShaderUV: NodeDefinition = {
   id: "Shader/UV",
   label: "UV",
@@ -95,4 +110,67 @@ export const ShaderUV: NodeDefinition = {
   },
 };
 
-export const VaryingNodes = [ShaderLocalNormal, ShaderLocalPosition, ShaderViewPosition, ShaderWorldPosition, ShaderWorldNormal, ShaderUV];
+export const ShaderCameraPosition: NodeDefinition = {
+  id: "Shader/CameraPosition",
+  label: "Camera Position",
+  hideInLibrary: false,
+  icon: DoubleIconGen(IconCube, IconMatrix),
+  description: "Return the position of the camera",
+  dataInputs: [],
+  dataOutputs: [Port.vector3("value")],
+  tags: ["Shader", "Input"],
+  settings: [],
+  onlyAvailableIn: ["shaderMaterial"],
+  getShaderCode(node, context) {
+    return generateShaderCodeFromNodeData(node, context, "value", [], () => `cameraPosition`);
+  },
+};
+
+export const ShaderCameraDirection: NodeDefinition = {
+  id: "Shader/CameraDirection",
+  label: "Camera Direction",
+  hideInLibrary: false,
+  icon: DoubleIconGen(IconCube, IconMatrix),
+  description: "Return the direction of the camera",
+  dataInputs: [],
+  dataOutputs: [Port.vector3("value")],
+  tags: ["Shader", "Input"],
+  settings: [],
+  onlyAvailableIn: ["shaderMaterial"],
+  getShaderCode(node, context) {
+    return generateShaderCodeFromNodeData(node, context, "value", [], () => `viewMatrix * vec3(0.0, 0.0, 1.0)`);
+  },
+};
+
+export const ShaderViewDirection: NodeDefinition = {
+  id: "Shader/ViewDirection",
+  label: "View Direction",
+  hideInLibrary: false,
+  icon: DoubleIconGen(IconCube, IconMatrix),
+  description: "Return the direction from the camera to the fragment",
+  dataInputs: [],
+  dataOutputs: [Port.vector3("value")],
+  tags: ["Shader", "Input"],
+  settings: [],
+  onlyAvailableIn: ["shaderMaterial"],
+  getShaderCode(node, context) {
+    return generateShaderCodeFromNodeData(node, context, "value", [], () => `normalize(vWorldPosition - cameraPosition)`);
+  },
+};
+
+export const VaryingNodes = [
+  // All nodes
+  ShaderLocalNormal,
+  ShaderViewNormal,
+  ShaderWorldNormal,
+
+  ShaderLocalPosition,
+  ShaderViewPosition,
+  ShaderWorldPosition,
+
+  ShaderUV,
+
+  ShaderCameraPosition,
+  ShaderCameraDirection,
+  ShaderViewDirection,
+];
