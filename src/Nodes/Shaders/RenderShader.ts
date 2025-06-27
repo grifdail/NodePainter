@@ -56,10 +56,10 @@ export const RenderShader: NodeDefinition = {
     Object.values(node.dataInputs).forEach((port) => {
       if (port.type === "image") {
         const data = context.getInputValueImage(node, port.id);
-        if (!data || !data.getP5(context.p5)) {
+        if (!data || !data.getP5Uniform(context.p5)) {
           return;
         }
-        shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5(context.p5));
+        shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5Uniform(context.p5));
       } else {
         const data = context.getInputValue(node, port.id, port.type);
         const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;

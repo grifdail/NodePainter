@@ -175,7 +175,7 @@ export const BloomEffect: NodeDefinition = {
     if (!imageData || !imageData.getP5(context.p5)) {
       return null;
     }
-    let image = imageData.getP5(context.p5) as p5.Graphics;
+    let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
     let shaderBlurH = createShaderFromCache(context, KEY_BLUR_SHADER_H, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
     let shaderBlurV = createShaderFromCache(context, KEY_BLUR_SHADER_V, EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
     let shaderBloom = createShaderFromCache(context, KEY_BLOOM_SHADER, EFFECT_VERTEX_SHADER, BLOOM_FRAGMENT_SHADER);

@@ -128,10 +128,10 @@ export const BlurEffect: NodeDefinition = {
   getData(portId, node, context) {
     var imageData = context.getInputValueImage(node, "image");
     var blurAmount = context.getInputValueNumber(node, "amount");
-    if (!imageData || !imageData.getP5(context.p5)) {
+    if (!imageData || !imageData.getP5Uniform(context.p5)) {
       return null;
     }
-    let image = imageData.getP5(context.p5) as p5.Graphics;
+    let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
     let shaderH = context.blackboard[KEY_BLUR_SHADER_H] as p5.Shader;
     if (!shaderH) {
       shaderH = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);

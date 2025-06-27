@@ -36,6 +36,33 @@ export class ImageData {
       return this.p5Images;
     }
     if (this.canvas) {
+      return this.canvas;
+    }
+
+    if (this.url && !this.loadingP5) {
+      this.loadingP5 = true;
+      p5.loadImage(
+        this.url,
+        (img) => {
+          this.p5Images = img;
+          this.loadingP5 = false;
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    }
+    return null;
+  }
+
+  getP5Uniform(p5: P5CanvasInstance) {
+    if (this.p5Graphics) {
+      return this.p5Graphics;
+    }
+    if (this.p5Images) {
+      return this.p5Images;
+    }
+    if (this.canvas) {
       this.p5Graphics = p5.createGraphics(this.canvas.width, this.canvas.height);
       this.p5Graphics.elt = this.canvas.elt;
       return this.p5Graphics;

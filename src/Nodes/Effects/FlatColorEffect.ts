@@ -71,11 +71,11 @@ export const FlatColorEffect: NodeDefinition = {
     var threshold = context.getInputValueNumber(node, "threshold");
     var color1 = context.getInputValueColor(node, "color1");
     var color2 = context.getInputValueColor(node, "color2");
-    if (!imageData || !imageData.getP5(context.p5)) {
+    if (!imageData || !imageData.getP5Uniform(context.p5)) {
       return null;
     }
     const keyCache = `${node.id}-image-cache`;
-    let image = imageData.getP5(context.p5) as p5.Graphics;
+    let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
     let shaderV = context.blackboard[keyCache + KEY_BLUR_SHADER_H] as p5.Shader;
     if (!shaderV) {
       shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);

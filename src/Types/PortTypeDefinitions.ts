@@ -340,7 +340,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       image: (v) => v,
       unknown: (v) => v,
     },
-    convertToShaderP5Uniform: (value) => value.getP5(),
+    convertToShaderP5Uniform: (value) => value.getP5Uniform(),
     convertToShaderType: "sampler2D",
     convertToThreeType(value) {
       return value.getThreeJs();
