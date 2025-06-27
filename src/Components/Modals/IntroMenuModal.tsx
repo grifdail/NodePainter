@@ -118,7 +118,7 @@ function toCategoryId(cat: string) {
   return cat.toLowerCase().replaceAll(" ", "_");
 }
 
-export const DeleteButton = styled.button`
+export const DeleteButton = styled.a`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -158,6 +158,8 @@ function SketchButton({ onClick, item, onDelete }: { onClick: MouseEventHandler<
   );
 }
 
+const sketchCategory = { Templates: 3, [MY_SAVED_SKETCH]: 2, Examples: 1 };
+
 export function IntroMenuModal({ close }: { close: () => void }) {
   const loadSketch = useLoadSketch(close);
   const withConfirm = useWithConfirm();
@@ -168,14 +170,19 @@ export function IntroMenuModal({ close }: { close: () => void }) {
   const lastSavedSketch = getLastSavedSketch();
   const toggleTag = useToggleTag(searchTermRaw, setSearchTerm);
   const filteredList = useMemo(() => {
-    return allItem.filter((sketch) => {
-      if (searchTerm.tags && searchTerm.tags.length > 0) {
-        if (!searchTerm.tags.includes(toCategoryId(sketch.category))) {
-          return false;
+    return allItem
+      .filter((sketch) => {
+        if (searchTerm.tags && searchTerm.tags.length > 0) {
+          if (!searchTerm.tags.includes(toCategoryId(sketch.category))) {
+            return false;
+          }
         }
-      }
-      return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
-    });
+        return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
+      })
+      .sort((a, b) => {
+        const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
+        return r;
+      });
   }, [allItem, searchTerm]);
 
   return (
@@ -278,13 +285,6 @@ function useSketchCollection(): [SketchElement[], string[], (name: string) => vo
   const tags = new Set([MY_SAVED_SKETCH]);
   return [
     [
-      ...(sketches || []).map((sketch) => {
-        return {
-          name: sketch.name,
-          category: MY_SAVED_SKETCH,
-          content: () => new Promise<SketchTemplate>((r) => r(JSON.parse(sketch.content))),
-        };
-      }),
       ...Object.entries(Templates)
         .filter(([name]) => name[0] !== "_")
         .flatMap(([folderName, content]) => {
@@ -297,6 +297,13 @@ function useSketchCollection(): [SketchElement[], string[], (name: string) => vo
               content: content,
             }));
         }),
+      ...(sketches || []).map((sketch) => {
+        return {
+          name: sketch.name,
+          category: MY_SAVED_SKETCH,
+          content: () => new Promise<SketchTemplate>((r) => r(JSON.parse(sketch.content))),
+        };
+      }),
     ],
     Array.from(tags),
     deleteSketch,
