@@ -343,7 +343,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderP5Uniform: (value) => value.getP5Uniform(),
     convertToShaderType: "sampler2D",
     convertToThreeType(value) {
-      return value.getThreeJs();
+      return value ? value.getThreeJs() : null;
     },
   },
   gradient: {

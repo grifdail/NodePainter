@@ -347,7 +347,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           const end = `${def.id}-end`;
           const callNodDef: NodeDefinition = {
             ...def,
-            dataInputs: [...def.dataInputs, Port.CacheId()],
+            dataInputs: [...def.dataInputs],
           };
           state.customNodes[def.id] = callNodDef;
           const startNodeDef: NodeDefinition = {

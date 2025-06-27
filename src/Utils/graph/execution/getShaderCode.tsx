@@ -12,7 +12,7 @@ export function getImageEffectShaderCode(shader: string, ports: PortConnection[]
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
   const requirement = buildRequirement(flattenNode, tree);
   const code = buildCode(flattenNode, tree, context);
-  return `precision highp float;
+  const result = `precision highp float;
 
   // x,y coordinates, given from the vertex shader
   varying vec2 vTexCoord;
@@ -32,6 +32,9 @@ export function getImageEffectShaderCode(shader: string, ports: PortConnection[]
   void main() {
     ${code.join("\n")}
   }`;
+
+  console.log(result);
+  return result;
 }
 
 export function buildRequirement(flattenNode: any, tree: TreeStore | null) {

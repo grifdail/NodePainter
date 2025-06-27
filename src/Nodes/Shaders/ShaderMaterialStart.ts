@@ -15,9 +15,11 @@ export const ShaderMaterialStart: NodeDefinition = {
   settings: [],
   getShaderCode(node, context) {
     return [
-      ...Object.values(node.dataOutputs).map((port) => {
-        return generateShaderCodeFromNodeData(node, context, port.id, {}, () => sanitizeForShader(`uniform_${port.id}`) as string);
-      }),
+      ...Object.values(node.dataOutputs)
+        .filter((port) => port.type !== "image")
+        .map((port) => {
+          return generateShaderCodeFromNodeData(node, context, port.id, {}, () => sanitizeForShader(`uniform_${port.id}`) as string);
+        }),
     ].join("\n");
   },
 };
