@@ -143,11 +143,12 @@ void main() {
 
   // calculate an average color for the blurred image
   // this is essentially the same as saying (blur.r + blur.g + blur.b) / 3.0;
-  float avg = dot(blur.rgb, vec3(0.33333));
+  float avgBlur = dot(blur.rgb, vec3(0.33333));
+  float avgCam = dot(cam.rgb, vec3(0.33333));
 
   // mix the blur and camera together according to how bright the blurred image is
   // use the mouse to control the bloom
-  vec4 bloom = mix(cam, blur, clamp(invLerp(1.0, amount, avg), 0.0, 1.0));
+  vec4 bloom = avgBlur>avgCam ? mix(cam, blur, clamp(avgBlur*amount, 0.0, 1.0)) : cam;
 
   gl_FragColor = bloom;
 }
@@ -183,9 +184,12 @@ export const BloomEffect: NodeDefinition = {
     let secondPass = getPassBuffer(context, KEY_SECOND_PASS, image);
     let target = getPassBuffer(context, keyCache, image);
 
-    let firstPassImage = firstPass.image as p5.Graphics;
-    let secondPassImage = secondPass.image as p5.Graphics;
-    let targetPassImage = target.image as p5.Graphics;
+    let firstPassImage = firstPass.getP5() as p5.Graphics;
+    let secondPassImage = secondPass.getP5() as p5.Graphics;
+    let targetPassImage = target.getP5() as p5.Graphics;
+    if (firstPassImage == null || secondPassImage == null || targetPassImage == null || image == null) {
+      return;
+    }
 
     shaderBlurH.setUniform("tex0", image);
     shaderBlurH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
@@ -194,7 +198,7 @@ export const BloomEffect: NodeDefinition = {
     firstPassImage.shader(shaderBlurH);
     firstPassImage.rect(0, 0, image.width, image.height);
 
-    shaderBlurV.setUniform("tex0", firstPass.image);
+    shaderBlurV.setUniform("tex0", firstPassImage);
     shaderBlurV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
     shaderBlurV.setUniform("direction", [0.0, 1.0]);
 
@@ -206,8 +210,8 @@ export const BloomEffect: NodeDefinition = {
     shaderBloom.setUniform("amount", amount);
 
     targetPassImage.shader(shaderBloom);
-    targetPassImage.rect(0, 0, image.width, image.height);
-
+    targetPassImage.rect(0, 0, image.width / 5, image.height / 5);
+    console.log(blurAmount, amount, blurAmount / image.width);
     return target;
   },
 };

@@ -84,7 +84,6 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
           return false;
         }
         const isShader = editingType === "shader" || editingType === "shaderMaterial";
-        console.log(isShader);
         if (isShader && item.getShaderCode === undefined) {
           return false;
         }

@@ -36,8 +36,11 @@ export class ImageData {
       return this.p5Images;
     }
     if (this.canvas) {
-      return this.canvas;
+      this.p5Graphics = p5.createGraphics(this.canvas.width, this.canvas.height);
+      this.p5Graphics.elt = this.canvas.elt;
+      return this.p5Graphics;
     }
+
     if (this.url && !this.loadingP5) {
       this.loadingP5 = true;
       p5.loadImage(
