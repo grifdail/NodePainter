@@ -56,7 +56,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
         <IconSettings /> Settings
       </MenuItem>
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={() => openModal(Routes.IntroMenu)}>
+      <MenuItem onClick={() => openModal(Routes.SketchMenu)}>
         <IconFolderOpen /> Sketches
       </MenuItem>
       <SubMenu

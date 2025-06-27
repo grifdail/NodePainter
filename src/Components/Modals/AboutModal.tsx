@@ -29,7 +29,7 @@ const MainDiv = styled.div`
 export function AboutModal({ close }: { close: () => void }) {
   return (
     <Modal
-      onClose={() => useRouter.getState().open(Routes.IntroMenu)}
+      onClose={() => useRouter.getState().open(Routes.SketchMenu)}
       title="About"
       icon={IconInfoCircle}>
       <MainDiv>

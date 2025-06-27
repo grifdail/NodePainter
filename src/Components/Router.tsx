@@ -14,7 +14,7 @@ import { DialogModal } from "./Modals/DialogModal";
 import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlock/CodeBlockModal";
 import { MainMenu } from "./MainMenu";
-import { IntroMenuModal } from "./Modals/IntroMenuModal";
+import { SketchModal } from "./Modals/SketchModal";
 import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
 
 export function Router() {
@@ -35,7 +35,7 @@ export function Router() {
       {route === Routes.About && <AboutModal close={close} />}
       {route === Routes.Paint && <PaintModal />}
       {route === Routes.CodeBlock && <CodeBlockModal />}
-      {route === Routes.IntroMenu && <IntroMenuModal close={close} />}
+      {route === Routes.SketchMenu && <SketchModal close={close} />}
       {dialog.dialogs.map((d) => (
         <DialogModal
           key={d.id}

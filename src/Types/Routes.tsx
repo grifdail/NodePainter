@@ -11,5 +11,5 @@ export enum Routes {
   Settings = "settings",
   Paint = "paint",
   CodeBlock = "code_block",
-  IntroMenu = "intro_menu",
+  SketchMenu = "sketch_menu",
 }
