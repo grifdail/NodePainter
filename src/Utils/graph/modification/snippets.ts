@@ -41,6 +41,9 @@ export function loadSnippet(snippet: Snippet, tree: TreeStore, pos: Vector2) {
           }
         }
       });
+      if (newNode.pairedNode && nodeMapping[newNode.pairedNode]) {
+        newNode.pairedNode = nodeMapping[newNode.pairedNode];
+      }
     });
   return nodeMapping;
 }

@@ -65,7 +65,11 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
         {Object.values(snippets).map((snip) => (
           <MenuItem
             key={snip.name}
-            onClick={() => useTree.getState().loadSnipets(snip, ...worldPosition, () => {})}>
+            onClick={() =>
+              useTree.getState().loadSnipets(snip, ...worldPosition, (newNodes) => {
+                useSelection.getState().setSelection(Object.values(newNodes));
+              })
+            }>
             {snip.name}
           </MenuItem>
         ))}
