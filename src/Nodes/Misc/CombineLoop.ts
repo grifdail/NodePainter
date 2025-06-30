@@ -64,11 +64,12 @@ export const CombineLoop: NodeDefinition = {
   ...changeTypeGenerator(["drawing2d", "object3d"], ["value"], ["output"]),
   getData(portId, node, context) {
     const count = context.getInputValueNumber(node, "count");
+    context.blackboard[`${node.id}-count`] = count;
     if (node.selectedType === "drawing2d") {
       const array: (() => void)[] = [];
       for (var i = 0; i < count; i++) {
         context.blackboard[`${node.id}-index`] = i;
-        context.blackboard[`${node.id}-count`] = count;
+
         array[i] = context.getInputValueDrawing(node, "value");
       }
       return () => {

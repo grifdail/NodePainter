@@ -14,6 +14,11 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
           type: "number",
           id: "index",
         },
+        {
+          key: `${id}-count`,
+          type: "number",
+          id: "count",
+        },
       ],
       "Generate Array index",
       positionX - 400,
@@ -54,6 +59,7 @@ export const GenerateArray: NodeDefinition = {
   },
   getData: (portId, nodeData, context) => {
     var count = context.getInputValueNumber(nodeData, "count");
+    context.blackboard[`${nodeData.id}-count`] = count;
     const array = [];
     for (var i = 0; i < count; i++) {
       context.blackboard[`${nodeData.id}-index`] = i;

@@ -8,6 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 
 export const DecomposeNode: NodeDefinition = {
   id: "Decompose",
+  label: "Decompose Vector",
   description: "split a vector or a number into its individual components",
   icon: DoubleIconGen(IconMathXy, IconArrowUpRightCircle),
   tags: ["Vector"],
@@ -59,6 +60,10 @@ export const DecomposeNode: NodeDefinition = {
     node.dataInputs["vec"].ownValue = convertTypeValue(node.dataInputs["vec"].ownValue, node.dataInputs["vec"].type, type);
     node.dataInputs["vec"].type = type;
   },
+  hasInput(input, def) {
+    return def.availableTypes?.includes(input) ? input : null;
+  },
+
   getData: (portId, nodeData, context) => {
     var vec = context.getInputValueVector(nodeData, "vec");
     if (portId === "0") {

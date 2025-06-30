@@ -55,6 +55,9 @@ export const ComposeNode: NodeDefinition = {
     }
     node.dataOutputs["out"].type = type;
   },
+  hasOutput(output, def) {
+    return def.availableTypes?.includes(output) ? output : null;
+  },
   getData: (portId, nodeData, context) => {
     var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 2;
     return new Array(vectorLength).fill(null).map((_, i) => context.getInputValueNumber(nodeData, i.toString()));

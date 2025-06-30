@@ -4,8 +4,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
+import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
-import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
 
 export const RandomFromArray: NodeDefinition = {
   id: "RandomFromArray",
@@ -24,12 +24,7 @@ export const RandomFromArray: NodeDefinition = {
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
 
   settings: [],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  onChangeType(node, type) {
-    node.dataInputs["array"].ownValue = convertTypeValue(node.dataInputs["array"].ownValue, node.dataInputs["array"].type, `array-${type}` as PortType);
-    node.dataInputs["array"].type = `array-${type}` as PortType;
-    node.dataOutputs["out"].type = type;
-  },
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["out"], ["array"]),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];
     if (array.length < 1) {

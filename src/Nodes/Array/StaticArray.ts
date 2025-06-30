@@ -60,6 +60,16 @@ export const StaticArray: NodeDefinition = {
     var entries = Object.keys(node.dataInputs);
     return entries.map((key) => context.getInputValue(node, key, node.selectedType));
   },
+  hasOutput(output, def) {
+    const arrayType = output.startsWith("array-") ? (output.slice(6) as PortType) : null;
+    if (arrayType === null) {
+      return null;
+    }
+    return def.availableTypes?.includes(arrayType) ? arrayType : null;
+  },
+  hasInput(input, def) {
+    return def.availableTypes?.includes(input) ? input : null;
+  },
   contextMenu: {
     "Add a port": addNewPort,
     "Remove last port": (node) => {

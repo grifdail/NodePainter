@@ -21,7 +21,7 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
           id: "value",
         },
       ],
-      "Find best index",
+      "Filter index",
       positionX - 400,
       positionY,
       id

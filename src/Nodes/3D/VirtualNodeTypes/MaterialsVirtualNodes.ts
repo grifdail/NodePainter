@@ -185,6 +185,7 @@ export class FlatTextureMaterialType extends MaterialVirtualNodeType<MeshBasicMa
     element.color.set(toThreeColor(color));
     const oldMap = element.map;
     element.map = texture?.getThreeJs();
+    element.wireframeLinewidth = 5;
     if (element.map != oldMap) {
       element.needsUpdate = true;
     }

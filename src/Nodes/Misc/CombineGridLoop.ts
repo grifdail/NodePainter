@@ -1,4 +1,4 @@
-import { IconArrowMerge, IconGridDots } from "@tabler/icons-react";
+import { IconArrowMerge, IconGridDots, IconPlus } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
@@ -22,6 +22,11 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
           type: "number",
           id: "index",
         },
+        {
+          key: `${id}-count`,
+          type: "vector2",
+          id: "size",
+        },
       ],
       "Generate Combine loop index",
       positionX - 400,
@@ -41,11 +46,24 @@ export const CombineGridLoop: NodeDefinition = {
   dataInputs: [Port.vector2("size", [10, 10]), Port.drawing2d("value")],
   dataOutputs: [Port.drawing2d("output")],
   tags: ["3D"],
-  settings: [],
+  settings: [
+    {
+      id: "buttons",
+      type: "buttons",
+      buttons: [
+        {
+          label: "Create index node",
+          icon: IconPlus,
+          onClick: createIndexNode,
+        },
+      ],
+    },
+  ],
   ...changeTypeGenerator(["drawing2d", "object3d"], ["value"], ["output"]),
   getData(portId, node, context) {
     const size = context.getInputValueVector2(node, "size");
 
+    context.blackboard[`${node.id}-count`] = size;
     const array: any[] = [];
     for (var y = 0; y < size[1]; y++) {
       for (var x = 0; x < size[0]; x++) {

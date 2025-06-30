@@ -52,6 +52,12 @@ export const Combine: NodeDefinition = {
       node.dataOutputs[key].type = type;
     });
   },
+  hasOutput(output, def) {
+    return def.availableTypes?.includes(output) ? output : null;
+  },
+  hasInput(input, def) {
+    return def.availableTypes?.includes(input) ? input : null;
+  },
   getData(portId, node, context) {
     if (node.selectedType === "drawing2d") {
       const entries = Object.keys(node.dataInputs).map((item) => context.getInputValueDrawing(node, item));
