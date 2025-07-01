@@ -31,7 +31,25 @@ export function buildMenuItems<T extends CodeBlockGenerator>(CodeBlockStatementT
   });
 
   function drawSubGroup(obj: MenuTree) {
-    return <>{Object.values(obj).map((info) => (info.isGroup ? <SubMenu label={info.name}>{drawSubGroup(info.values)}</SubMenu> : <MenuItem onClick={() => addStatement(info.value.id)}>{info.name}</MenuItem>))}</>;
+    return (
+      <>
+        {Object.values(obj).map((info, key) =>
+          info.isGroup ? (
+            <SubMenu
+              key={key}
+              label={info.name}>
+              {drawSubGroup(info.values)}
+            </SubMenu>
+          ) : (
+            <MenuItem
+              key={key}
+              onClick={() => addStatement(info.value.id)}>
+              {info.name}
+            </MenuItem>
+          )
+        )}
+      </>
+    );
   }
   return drawSubGroup(build);
 }

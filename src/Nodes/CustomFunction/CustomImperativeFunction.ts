@@ -1,6 +1,8 @@
 import { IconCodeDots } from "@tabler/icons-react";
+import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createDefaultCodeBlock } from "../../Utils/codeblock/createDefaultCodeBlock";
+import { executeStatementList } from "../../Utils/codeblock/executeStatementList";
 export const CUSTOM_IMPERATIVE_FUNCTION = "CustomImperativeFunction";
 
 export const CustomImperativeFunction: NodeDefinition = {
@@ -21,18 +23,6 @@ export const CustomImperativeFunction: NodeDefinition = {
   ],
   getData: (portId, data, context) => {
     const stateId = `${data.id}-state`;
-    let state: { [k: string]: any } = {};
-    if (context.blackboard[stateId] === undefined) {
-      state = {};
-    } else {
-      state = context.blackboard[stateId];
-    }
-
-    return state[portId].value;
-  },
-  /*
-  execute: (data, context) => {
-    const stateId = `${data.id}-state`;
     let state = context.createFunctionContext(data);
     Object.entries(data.dataOutputs).forEach(([key, value]) => {
       state[key] = { type: value.type, value: structuredClone(value.defaultValue) };
@@ -42,10 +32,9 @@ export const CustomImperativeFunction: NodeDefinition = {
     codeBlock.localVariables.forEach((port) => (state[port.id] = { type: port.type, value: port.defaultValue }));
     executeStatementList(codeBlock.statements, state);
     context.blackboard[stateId] = state;
-
-    var execute = data.execOutputs["execute"];
-    if (execute != null) {
-      context.execute(execute);
+    if (!state[portId]) {
+      throw new Error(`There's no variable named "${portId}" in the Custom Imperative Function.`);
     }
-  },*/
+    return state[portId].value;
+  },
 };

@@ -17,6 +17,7 @@ export const Count: NodeDefinition = {
       defaultValue: [],
     },
   ],
+  codeBlockType: "expression",
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["array"]), ["array"], []),

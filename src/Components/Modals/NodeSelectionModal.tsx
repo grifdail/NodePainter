@@ -322,7 +322,7 @@ function sortWithPriority<T>(...comparator: ((a: T, b: T) => number)[]) {
 function setTargetType(node: NodeData, def: NodeDefinition, typeChange: PortType | null): void {
   if (typeChange !== null && def.availableTypes && def.availableTypes.includes(typeChange)) {
     if (def.onChangeType) {
-      def.onChangeType(node, typeChange, []);
+      def.onChangeType(node, typeChange);
     }
     node.selectedType = typeChange;
   }

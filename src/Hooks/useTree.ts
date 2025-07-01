@@ -5,7 +5,6 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 
 import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
 import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
-import { Blackboard } from "../Nodes/Misc/Blackboard";
 import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
@@ -189,8 +188,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
           if (def.availableTypes && def.availableTypes.includes(type)) {
             if (def.onChangeType) {
-              var blackboards = (Object.values(state.nodes) as NodeData[]).filter((n) => n.type === Blackboard.id && n.pairedNode === nodeId);
-              def.onChangeType(sourceNode, type, blackboards);
+              def.onChangeType(sourceNode, type);
             }
             sourceNode.selectedType = type;
             ensureValidGraph(state);
@@ -684,6 +682,7 @@ export const useTree = create<TreeStore>()((set, get) => {
                 if (typeChange) {
                   removeAllConnections(newPort.id, (targetPort) => !canConvertCode(targetPort.type, newPort.type));
                   oldPort.type = newPort.type;
+                  oldPort.defaultValue = newPort.defaultValue;
                 }
               } else {
                 node.dataOutputs[newPort.id] = structuredClone(newPort);

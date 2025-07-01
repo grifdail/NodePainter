@@ -18,7 +18,7 @@ export function createNodeData(def: NodeDefinition, x: number, y: number, id: st
     graph: graph,
   };
   if (def.onChangeType && def.availableTypes !== undefined) {
-    def.onChangeType(node, def.availableTypes[0], []);
+    def.onChangeType(node, def.availableTypes[0]);
   }
   return node;
 }

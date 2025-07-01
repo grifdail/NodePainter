@@ -37,4 +37,5 @@ export const Ceil: NodeDefinition = {
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
   },
+  codeBlockType: "expression",
 };

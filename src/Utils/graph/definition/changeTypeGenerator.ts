@@ -1,12 +1,12 @@
 import { portListIncludeType } from "../../../Components/Modals/portListIncludeType";
 import { NodeData } from "../../../Types/NodeData";
-import { NodeDefinition, PortChangeFunction } from "../../../Types/NodeDefinition";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 import { convertTypeValue } from "../execution/convertTypeValue";
 
-export function changeTypeGenerator(availableTypes: PortType[], inputs: string[], outputs: string[], arrayInput: string[] = [], arrayOutput: string[] = [], blackboardChanger?: PortChangeFunction): Pick<NodeDefinition, "onChangeType" | "hasInput" | "hasOutput" | "availableTypes"> {
+export function changeTypeGenerator(availableTypes: PortType[], inputs: string[], outputs: string[], arrayInput: string[] = [], arrayOutput: string[] = []): Pick<NodeDefinition, "onChangeType" | "hasInput" | "hasOutput" | "availableTypes"> {
   return {
-    onChangeType(node: NodeData, type: PortType, blackboards: NodeData[]) {
+    onChangeType(node: NodeData, type: PortType) {
       inputs.forEach((key) => {
         node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);
         node.dataInputs[key].type = type;
@@ -21,9 +21,6 @@ export function changeTypeGenerator(availableTypes: PortType[], inputs: string[]
       arrayOutput.forEach((key) => {
         node.dataOutputs[key].type = `array-${type}` as PortType;
       });
-      if (blackboardChanger && blackboards) {
-        blackboards.forEach((bbnode) => blackboardChanger(bbnode, type, []));
-      }
     },
     availableTypes,
     hasOutput(output, def) {

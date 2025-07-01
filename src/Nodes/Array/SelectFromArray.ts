@@ -26,7 +26,7 @@ export const SelectFromArray: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-
+  codeBlockType: "expression",
   settings: [],
   availableTypes: portTypesWithTags(["common"], ["array"]),
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["out"], ["array"]),
@@ -37,6 +37,9 @@ export const SelectFromArray: NodeDefinition = {
       return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
     const index = Math.floor(context.getInputValueNumber(node, "index"));
+    if (index < 0) {
+      return array[(array.length + (index % array.length)) % array.length];
+    }
     return array[index % array.length];
   },
 };

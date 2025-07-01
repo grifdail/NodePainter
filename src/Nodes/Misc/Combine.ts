@@ -43,7 +43,7 @@ export const Combine: NodeDefinition = {
     },
   ],
   availableTypes: ["drawing2d", "object3d"],
-  onChangeType(node: NodeData, type: PortType, blackboards: NodeData[]) {
+  onChangeType(node: NodeData, type: PortType) {
     Object.keys(node.dataInputs).forEach((key) => {
       node.dataInputs[key].ownValue = convertTypeValue(node.dataInputs[key].ownValue, node.dataInputs[key].type, type);
       node.dataInputs[key].type = type;

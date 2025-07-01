@@ -17,8 +17,8 @@ export const AnimationCurve: NodeDefinition = {
   dataOutputs: [{ id: "value", type: "vector2", defaultValue: 0 }],
 
   ...changeTypeData,
-  onChangeType(node, type, blackboard) {
-    changeTypeData.onChangeType?.(node, type, blackboard);
+  onChangeType(node, type) {
+    changeTypeData.onChangeType?.(node, type);
     node.settings["track"] = convertAnimationTrackType(type, node.settings["track"]);
   },
   settings: [

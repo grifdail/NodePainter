@@ -6,5 +6,12 @@ import { InvisibleButton } from "../../Generics/Button";
 import { buildMenuItems } from "./buildMenuItems";
 
 export const CodeBlockExpressionMenu = ({ type, onChange }: { type: PortType | "any"; onChange: (expressionType: string) => void }) => {
-  return <Menu menuButton={<InvisibleButton icon={IconMenu2} />}>{buildMenuItems(CodeBlockExpressionTypes, onChange, type === "any" ? undefined : (gen) => gen.canEvaluateTo(type))}</Menu>;
+  return (
+    <Menu
+      portal
+      overflow="auto"
+      menuButton={<InvisibleButton icon={IconMenu2} />}>
+      {buildMenuItems(CodeBlockExpressionTypes, onChange, type === "any" ? undefined : (gen) => gen.canEvaluateTo(type))}
+    </Menu>
+  );
 };
