@@ -18,6 +18,7 @@ import { useSelection } from "../../Hooks/useSelection";
 import { NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./NodeVisualConst";
 import { GetNodeHeight } from "./GetNodeHeight";
 import { camelCaseToWords } from "../../Utils/ui/camelCaseToWords";
+import { idToNodeName } from "../../Utils/ui/idToNodeName";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
@@ -156,7 +157,7 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
             touchAction: "none",
             pointerEvents: "none",
           }}>
-          {node.label || definition.label || camelCaseToWords(definition.id)}
+          {node.label || definition.label || idToNodeName(definition.id)}
         </text>
 
         {!definition.IsUnique && (

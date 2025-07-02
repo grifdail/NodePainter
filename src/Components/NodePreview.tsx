@@ -3,6 +3,7 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import styled from "styled-components";
 import { camelCaseToWords } from "../Utils/ui/camelCaseToWords";
+import { idToNodeName } from "../Utils/ui/idToNodeName";
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
@@ -53,7 +54,7 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
   return (
     <StyledButton onClick={() => onClick(node)}>
       {Icon != null ? <Icon></Icon> : null}
-      <div>{node.label || camelCaseToWords(node.id)}</div>
+      <div>{node.label || idToNodeName(node.id)}</div>
       <p title={node.description}>{node.description}</p>
       <span className="spacer"></span>
       <div
