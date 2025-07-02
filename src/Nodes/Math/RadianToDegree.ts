@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createFunc } from "../createFunc";
 
 export const RadianToDegree: NodeDefinition = createFunc(
-  "RadianToDegree",
+  "Math/RadianToDegree",
   (a) => (a / 180) * Math.PI,
   "Convert an angle in radian into degree.",
   IconAngle,

@@ -5,7 +5,7 @@ import { createVector2 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Noise: NodeDefinition = {
-  id: "Noise",
+  id: "Math/Noise",
   tags: ["Math"],
   icon: DoubleIconGen(IconGridDots, IconWaveSine),
   alias: "Perlin",

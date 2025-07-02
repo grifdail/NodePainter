@@ -5,7 +5,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SquareWave: NodeDefinition = {
-  id: "SquareWave",
+  id: "Math/SquareWave",
   tags: ["Math"],
   icon: IconWaveSquare,
   featureLevel: 5,

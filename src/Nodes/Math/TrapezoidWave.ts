@@ -6,7 +6,7 @@ import { clamp01 } from "../../Utils/math/clamp01";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const TrapezoidWave: NodeDefinition = {
-  id: "TrapezoidWave",
+  id: "Math/TrapezoidWave",
   tags: ["Math"],
   icon: IconWaveSquare,
   featureLevel: 5,

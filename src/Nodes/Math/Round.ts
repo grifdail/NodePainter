@@ -6,7 +6,7 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Round: NodeDefinition = {
-  id: "Round",
+  id: "Math/Round",
   description: "Round down a number to the nearest interger.",
   icon: IconMathFunction,
   tags: ["Math", "Vector"],

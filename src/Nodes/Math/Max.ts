@@ -2,7 +2,7 @@ import { IconMathMax } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Max: NodeDefinition = {
-  id: "Max",
+  id: "Math/Max",
   tags: ["Math"],
   icon: IconMathMax,
   description: "Returne the biggest of two number.",

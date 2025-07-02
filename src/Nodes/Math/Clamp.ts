@@ -5,7 +5,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Clamp: NodeDefinition = {
-  id: "Clamp",
+  id: "Math/Clamp",
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number to be between two other number",

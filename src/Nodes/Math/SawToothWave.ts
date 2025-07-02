@@ -4,7 +4,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SawToothWave: NodeDefinition = {
-  id: "SawToothWave",
+  id: "Math/SawToothWave",
   tags: ["Math"],
   icon: IconWaveSine,
   featureLevel: 5,

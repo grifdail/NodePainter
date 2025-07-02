@@ -6,7 +6,7 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Ceil: NodeDefinition = {
-  id: "Ceil",
+  id: "Math/Ceil",
   description: "Round up a number to the smallest interger larger or equal to itself.",
   icon: IconMathFunction,
   tags: ["Math", "Vector"],

@@ -31,7 +31,7 @@ math.import(
 const limitedEvaluate = math.evaluate;
 
 export const MathExpression: NodeDefinition = {
-  id: "MathExpression",
+  id: "Math/Expression",
   description: "Evaluate the math expression",
   icon: IconFileText,
   tags: ["Text"],

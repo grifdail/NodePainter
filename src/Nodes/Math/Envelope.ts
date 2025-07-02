@@ -3,7 +3,7 @@ import { createDefaultEnvelope, EnvelopeData, interpolateEnvelope } from "../../
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Envelope: NodeDefinition = {
-  id: "Envelope",
+  id: "Math/Envelope",
   label: "Envelope",
   alias: "Curve",
   description: "Transform the value betwen 0 & 1 passed in to match the shape.",

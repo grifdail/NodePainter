@@ -4,7 +4,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SineWave: NodeDefinition = {
-  id: "SineWave",
+  id: "Math/SineWave",
   tags: ["Math"],
   icon: IconWaveSine,
   featureLevel: 5,

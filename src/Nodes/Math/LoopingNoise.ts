@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const LoopingNoise: NodeDefinition = {
-  id: "LoopingNoise",
+  id: "Math/LoopingNoise",
   tags: ["Math"],
   icon: DoubleIconGen(IconGridDots, IconWaveSine),
   description: "return a semi random continous value between 0 and 1, looping around when in the interval [0,1] .",

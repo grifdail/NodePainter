@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { vectorLerp } from "../../Utils/math/vectorUtils";
 
 export const Remap: NodeDefinition = {
-  id: "Remap",
+  id: "Math/Remap",
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Remap a number from one interval to the other",

@@ -6,7 +6,7 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Floor: NodeDefinition = {
-  id: "Floor",
+  id: "Math/Floor",
   description: "Round down a number to the largest interger smaller or equal to itself.",
   icon: IconMathFunction,
   tags: ["Math", "Vector"],

@@ -7,7 +7,7 @@ import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardC
 import { vectorSquareDistance } from "../../Utils/math/vectorUtils";
 
 export const PoissonDisk: NodeDefinition = {
-  id: "PoissonDisk",
+  id: "Math/PoissonDisk",
   tags: ["Math", "Vector", "Array"],
   icon: IconMathFunction,
   description: "Generate an number of 2d points uniformely distributed on the unit square.",

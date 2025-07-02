@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const OneMinus: NodeDefinition = {
-  id: "OneMinus",
+  id: "Math/OneMinus",
   description: "Return 1 minus the value",
   icon: IconNumber1,
   tags: ["Math"],

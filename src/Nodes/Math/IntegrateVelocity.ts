@@ -6,7 +6,7 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { vectorAddition, vectorScale } from "../../Utils/math/vectorUtils";
 
 export const IntegrateVelocity: NodeDefinition = {
-  id: "IntegrateVelocity",
+  id: "Math/IntegrateVelocity",
   tags: ["Math"],
   icon: IconTrendingDown3,
   description: "Simulate the application of a force and return the next position and velocity",

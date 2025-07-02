@@ -4,7 +4,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const TriangleWave: NodeDefinition = {
-  id: "TriangleWave",
+  id: "Math/TriangleWave",
   tags: ["Math"],
   icon: IconWaveSine,
   featureLevel: 5,
