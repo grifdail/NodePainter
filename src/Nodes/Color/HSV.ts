@@ -14,6 +14,7 @@ export const HSV: NodeDefinition = {
     { id: "hue", type: "number", defaultValue: 0, constrains: [Constraints.Mod1()] },
     { id: "saturation", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
     { id: "value", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
+    { id: "alpha", type: "number", defaultValue: 1, constrains: [Constraints.Clamp01()] },
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
 
@@ -23,7 +24,8 @@ export const HSV: NodeDefinition = {
     const hue = context.getInputValueNumber(nodeData, "hue");
     const saturation = context.getInputValueNumber(nodeData, "saturation");
     const value = context.getInputValueNumber(nodeData, "value");
-    return hsvToRgb(hue % 1, clamp01(saturation), clamp01(value));
+    const alpha = context.getInputValueNumber(nodeData, "alpha");
+    return hsvToRgb(hue % 1, clamp01(saturation), clamp01(value), alpha);
   },
   shaderRequirement: `vec3 hsv2rgb(vec3 c)
 {
@@ -32,6 +34,6 @@ export const HSV: NodeDefinition = {
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }`,
   getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "color", ["hue", "saturation", "value"], ({ hue, saturation, value }) => `vec4(hsv2rgb(vec3(${hue},${saturation},${value})),1.0)`);
+    return generateShaderCodeFromNodeData(node, context, "color", ["hue", "saturation", "value", "alpha"], ({ hue, saturation, value, alpha }) => `vec4(hsv2rgb(vec3(${hue},${saturation},${value})),${alpha})`);
   },
 };

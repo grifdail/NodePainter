@@ -68,7 +68,7 @@ function padZero(str: string) {
   var zeros = new Array(len).join("0");
   return (zeros + str).slice(-len);
 }
-export function hslToRgb(h: number, s: number, l: number) {
+export function hslToRgb(h: number, s: number, l: number, alpha: number = 1) {
   let r: number, g: number, b: number;
 
   function hue2rgb(p: number, q: number, t: number) {
@@ -91,9 +91,9 @@ export function hslToRgb(h: number, s: number, l: number) {
     b = hue2rgb(p, q, h - 1 / 3);
   }
 
-  return createColor(r, g, b);
+  return createColor(r, g, b, alpha);
 }
-export function hsvToRgb(h: number, s: number, v: number) {
+export function hsvToRgb(h: number, s: number, v: number, alpha: number = 1) {
   let r: number = 0,
     g: number = 0,
     b: number = 0;
@@ -137,7 +137,7 @@ export function hsvToRgb(h: number, s: number, v: number) {
       break;
   }
 
-  return createColor(r, g, b);
+  return createColor(r, g, b, alpha);
 }
 export function White() {
   return createColor(1, 1, 1, 1);

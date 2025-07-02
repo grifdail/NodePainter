@@ -1,4 +1,6 @@
+import { NodeLibrary } from "../../../Nodes/Nodes";
 import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { createPortConnection } from "./createPortConnection";
 
 type UpgradeFunction = (sketch: SketchTemplate) => SketchTemplate;
 
@@ -239,6 +241,7 @@ const UPGRADES: UpgradeFunction[] = [
       sketch
     );
   },
+  (sketch) => addMissingNodePort(["Color/HSV", "Color/HSL"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
@@ -261,6 +264,20 @@ function redefineNodes(newIds: { [key: string]: string }, sketch: SketchTemplate
   Object.values(sketch.nodes).forEach((node) => {
     if (newIds[node.type]) {
       node.type = newIds[node.type];
+    }
+  });
+  return sketch;
+}
+
+function addMissingNodePort(list: string[], sketch: SketchTemplate): SketchTemplate {
+  Object.values(sketch.nodes).forEach((node) => {
+    if (list.includes(node.type)) {
+      var def = NodeLibrary[node.type];
+      def.dataInputs.forEach((port) => {
+        if (!node.dataInputs[port.id]) {
+          node.dataInputs[port.id] = createPortConnection(port);
+        }
+      });
     }
   });
   return sketch;

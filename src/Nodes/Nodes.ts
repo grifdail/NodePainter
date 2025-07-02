@@ -85,6 +85,7 @@ import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
 import { GradientFromArray } from "./Color/Gradient/GradientFromArray";
+import { OKLCH } from "./Color/OKLCH";
 import { createConstant } from "./createConstant";
 import { DrawPolyline } from "./Draw/DrawPolyline";
 import { BloomEffect } from "./Effects/BloomEffect";
@@ -249,6 +250,7 @@ export const Nodes: Array<NodeDefinition> = [
   // Color
   HSL,
   HSV,
+  OKLCH,
   SetAlpha,
 
   // Color Gradients
