@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createVector2 } from "../../../Types/vectorDataType";
 
 export const EvaluateBezier: NodeDefinition = {
-  id: "Math/EvaluateBezier",
+  id: "Math/Interpolation/EvaluateBezier",
   description: "Evaluate a position on a bezier curve",
   icon: IconVectorBezier2,
   tags: ["Math"],

@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { createPortConnection } from "../../../Utils/graph/modification/createPortConnection";
 
 export const ComposeNode: NodeDefinition = {
-  id: "Compose",
+  id: "Math/Vector/Compose",
   label: "Compose Vector",
   description: "Create a vector or color from a set of number",
   icon: DoubleIconGen(IconArrowUpRightCircle, IconMathXy),

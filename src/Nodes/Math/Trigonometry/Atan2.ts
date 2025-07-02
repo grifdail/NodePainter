@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Atan2: NodeDefinition = {
-  id: "Math/Trigonometry/ATan2",
+  id: "Math/Trigonometry/Atan2",
   tags: ["Math"],
   icon: IconAngle,
   description: "Return the angle formed by the given coordinate and the horizontal axis.",

@@ -7,11 +7,9 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { useState } from "react";
 import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import { ExecutionContext, createExecutionContext } from "../../Utils/graph/execution/createExecutionContext";
-import { START_NODE } from "../../Nodes/Misc/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { CUSTOM_SIMULATION } from "../../Nodes/Technical/Simulation/CustomSimulation";
 import Rand from "rand-seed";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
@@ -20,6 +18,8 @@ import { download } from "../../Utils/ui/download";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { Exporters, ExporterType } from "./Exporters/Exporter";
 import { toastSuccess } from "../../Hooks/useToast";
+import { CustomSimulation } from "../../Nodes/Technical/Simulation/CustomSimulation";
+import { START_NODE } from "../../Nodes/StartNode";
 
 const MainDiv = styled.div`
   display: flex;
@@ -136,7 +136,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 export function ExportGifModal({ close }: { close: () => void }) {
   const tree = useTree();
   const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
-  const hasPreload = Object.values(tree.nodes).some((node) => tree.getNodeTypeDefinition(node).executeAs === CUSTOM_SIMULATION);
+  const hasPreload = Object.values(tree.nodes).some((node) => tree.getNodeTypeDefinition(node).executeAs === CustomSimulation.id);
   const [fixedFrameRate, setFixedFrameRate] = useState(32);
   const [preloadDuration, setPreloadDuration] = useState(hasPreload ? tree.globalSettings.progress || 0 : 0);
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");

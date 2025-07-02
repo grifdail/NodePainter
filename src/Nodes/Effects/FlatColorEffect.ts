@@ -58,7 +58,7 @@ void main() {
 `;
 
 export const FlatColorEffect: NodeDefinition = {
-  id: "Effect/FlatColorEffect",
+  id: "Effect/FlatColor",
   description: "Apply the same color to all pixel above or below a treshold",
   icon: IconPhoto,
   dataInputs: [{ id: "image", type: "image", defaultValue: null }, Port.number("threshold", 0.5), Port.color("color1", White()), Port.color("color2", Black())],

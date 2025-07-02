@@ -5,14 +5,14 @@ import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeG
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const Floor: NodeDefinition = {
-  id: "Math/Floor",
-  description: "Round down a number to the largest interger smaller or equal to itself.",
+export const Ceil: NodeDefinition = {
+  id: "Math/Advanced/Ceil",
+  description: "Round up a number to the smallest interger larger or equal to itself.",
   icon: IconMathFunction,
   tags: ["Math", "Vector"],
   dataInputs: [
     {
-      id: "x",
+      id: "input",
       type: "number",
       defaultValue: 0,
     },
@@ -24,18 +24,17 @@ export const Floor: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-
-  codeBlockType: "expression",
   settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["x"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
   getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "x");
+    var a = context.getInputValueVector(nodeData, "input");
     return enforceCorrectVectorTypeForNode(
       nodeData,
-      a.map((value) => Math.floor(value))
+      a.map((value) => Math.ceil(value))
     );
   },
   getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["x"], ({ x }) => `floor(${x})`);
+    return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
   },
+  codeBlockType: "expression",
 };

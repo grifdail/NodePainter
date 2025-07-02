@@ -6,7 +6,7 @@ import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeG
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Lerp: NodeDefinition = {
-  id: "Lerp",
+  id: "Math/Interpolation/Lerp",
   alias: "Mix",
   description: "interpolate between 2 vector",
   icon: IconMathFunction,

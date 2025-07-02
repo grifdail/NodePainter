@@ -4,7 +4,7 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const ExponantialImpulse: NodeDefinition = {
-  id: "Math/ExponantialImpulse",
+  id: "Math/Interpolation/ExponantialImpulse",
   description: "Round up a number to the smallest interger larger or equal to itself.",
   icon: IconMathFunction,
   tags: ["Math", "Vector"],

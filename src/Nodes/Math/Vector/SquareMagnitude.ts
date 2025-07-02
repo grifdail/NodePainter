@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorSquareMagnitude } from "../../../Utils/math/vectorUtils";
 
 export const SquareMagnitude: NodeDefinition = {
-  id: "SquareMagnitude",
+  id: "Math/Vector/SquareMagnitude",
   description: "Return the squared length of a vector",
   alias: "Square Length",
   icon: IconArrowUpRightCircle,

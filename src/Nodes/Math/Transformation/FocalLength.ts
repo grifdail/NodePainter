@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createVector2, createVector3 } from "../../../Types/vectorDataType";
 
 export const FocalLength: NodeDefinition = {
-  id: "FocalLength",
+  id: "Math/Transformation/FocalLength",
   description: "Given some 3D coordinate and a focal length, return a 2D coordinate and relative scale.",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],

@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { zipVector } from "../../../Utils/math/vectorUtils";
 
 export const DotProduct: NodeDefinition = {
-  id: "DotProduct",
+  id: "Math/Vector/DotProduct",
   description: "Return the dot product of two vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],

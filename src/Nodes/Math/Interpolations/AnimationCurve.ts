@@ -8,7 +8,7 @@ import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/
 const changeTypeData = changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["value"]);
 
 export const AnimationCurve: NodeDefinition = {
-  id: "AnimationCurve",
+  id: "Math/Interpolation/AnimationCurve",
   label: "Animation Curve",
   description: "Transform the value betwen 0 & 1 passed in to match the shape.",
   icon: IconEaseInOut,

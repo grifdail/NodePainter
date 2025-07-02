@@ -30,7 +30,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 };
 
 export const CombineLoop: NodeDefinition = {
-  id: "Misc/Combine/CombineLoop",
+  id: "Misc/Combine/Loop",
   label: "Combine Loop",
   icon: DoubleIconGen(IconArrowMerge, IconRepeat),
   alias: "for",

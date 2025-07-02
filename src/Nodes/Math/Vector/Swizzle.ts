@@ -8,7 +8,7 @@ import { performSwizzle } from "../../../Utils/math/swizzle/PerformSwizzle";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const Swizzle: NodeDefinition = {
-  id: "Swizzle",
+  id: "Math/Vector/Swizzle",
   description: "Reorder vector components",
   icon: IconMathXy,
   featureLevel: 80,

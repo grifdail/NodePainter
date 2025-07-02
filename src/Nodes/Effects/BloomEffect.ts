@@ -155,7 +155,7 @@ void main() {
 `;
 
 export const BloomEffect: NodeDefinition = {
-  id: "Effect/BloomEffect",
+  id: "Effect/Bloom",
   label: "Apply Bloom Effect",
   icon: IconPhoto,
   description: "Make the bright spot appear brighter",

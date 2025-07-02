@@ -10,7 +10,7 @@ enum HexType {
 const SQRT3_2 = Math.sqrt(3) / 2;
 
 export const HexGrid: NodeDefinition = {
-  id: "HexGrid",
+  id: "Math/Transformation/HexGrid",
   description: "Convert positition on a square grid to position on a hex grid",
   icon: IconHexagons,
   tags: ["Vector"],

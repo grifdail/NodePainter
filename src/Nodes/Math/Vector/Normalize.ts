@@ -8,7 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorNormalize } from "../../../Utils/math/vectorUtils";
 
 export const Normalize: NodeDefinition = {
-  id: "Normalize",
+  id: "Math/Vector/Normalize",
   description: "Return a vector sharing the same direction but with a length of one",
   alias: "Unit",
   icon: IconArrowUpRightCircle,

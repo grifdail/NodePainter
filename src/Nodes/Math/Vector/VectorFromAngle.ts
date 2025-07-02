@@ -6,7 +6,7 @@ import { createMultiTypeNodeDefinition } from "../../../Utils/graph/definition/c
 
 export const VectorFromAngle: NodeDefinition = createMultiTypeNodeDefinition(
   {
-    id: "VectorFromAngle",
+    id: "Math/Vector/VectorFromAngle",
     alias: "Polar coordinate",
     description: "Create a vector based on an Angle and a magnitude",
     icon: DoubleIconGen(IconArrowUpRightCircle, IconAngle),

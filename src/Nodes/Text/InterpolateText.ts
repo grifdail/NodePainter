@@ -12,7 +12,7 @@ import { createPortConnection } from "../../Utils/graph/modification/createPortC
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const InterpolateText: NodeDefinition = {
-  id: "Text/InterpolateText",
+  id: "Text/Interpolate",
   label: "Interpolate Text",
   description: "Return the text with each $input replaced with the value of the corresponding port",
   icon: IconFileText,

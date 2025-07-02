@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createOperation } from "../../createOperation";
 
 export const Modulo: NodeDefinition = createOperation(
-  "Math/Modulo",
+  "Math/Basic/Modulo",
   (a, b) => ((a % b) + b) % b,
   "Give the remainder of the division of A by B.",
   IconPercentage,

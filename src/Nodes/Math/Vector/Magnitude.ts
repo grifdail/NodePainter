@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorMagnitude } from "../../../Utils/math/vectorUtils";
 
 export const Magnitude: NodeDefinition = {
-  id: "Magnitude",
+  id: "Math/Vector/Magnitude",
   description: "Return the length of a vector",
   alias: "Length Size Norm",
   icon: IconArrowUpRightCircle,

@@ -7,7 +7,7 @@ import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValu
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const DecomposeNode: NodeDefinition = {
-  id: "Decompose",
+  id: "Math/Vector/Decompose",
   label: "Decompose Vector",
   description: "split a vector or a number into its individual components",
   icon: DoubleIconGen(IconMathXy, IconArrowUpRightCircle),

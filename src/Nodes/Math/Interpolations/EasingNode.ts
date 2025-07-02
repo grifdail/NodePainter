@@ -3,7 +3,7 @@ import { EasingFunctionType, evaluate } from "../../../libs/easing";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 
 export const EasingNode: NodeDefinition = {
-  id: "Math/Easing",
+  id: "Math/Interpolation/Easing",
   tags: ["Math"],
   icon: IconEaseInOut,
   description: "Apply one of the standard easing function to a number .",

@@ -3,8 +3,8 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
+import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";

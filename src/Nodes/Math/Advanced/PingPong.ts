@@ -2,7 +2,7 @@ import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 
 export const PingPong: NodeDefinition = {
-  id: "Math/PingPong",
+  id: "Math/Advanced/PingPong",
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Return a number alternating betwen min and max",

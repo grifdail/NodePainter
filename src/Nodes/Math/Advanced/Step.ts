@@ -5,7 +5,7 @@ import { clamp01 } from "../../../Utils/math/clamp01";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const Step: NodeDefinition = {
-  id: "Math/Step",
+  id: "Math/Advanced/Step",
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number between 0 and 1 to a specific number of discreet step.",

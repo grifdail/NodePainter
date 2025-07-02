@@ -7,7 +7,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorDistance } from "../../../Utils/math/vectorUtils";
 
 export const Distance: NodeDefinition = {
-  id: "Distance",
+  id: "Math/Vector/Distance",
   description: "Return the distance between two value",
   icon: IconMathXPlusY,
   featureLevel: 90,

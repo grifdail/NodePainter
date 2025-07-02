@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createOperation } from "../../createOperation";
 
 export const PowNode: NodeDefinition = createOperation(
-  "Math/Pow",
+  "Math/Advanced/Pow",
   (a, b) => Math.pow(a, b),
   "Raise A to the power of B.",
   IconXPowerY,

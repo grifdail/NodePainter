@@ -6,7 +6,8 @@ import { createMultiTypeNodeDefinition } from "../../../Utils/graph/definition/c
 
 export const RotateVector: NodeDefinition = createMultiTypeNodeDefinition(
   {
-    id: "RotateVector",
+    id: "Math/Vector/Rotate",
+    label: "Rotate Vector",
     description: "Rotate a Vector by a specific radiant",
     icon: IconArrowUpRightCircle,
     tags: ["Vector"],

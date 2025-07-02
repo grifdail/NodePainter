@@ -1,4 +1,4 @@
-import { START_NODE, StartNode } from "../../../Nodes/Misc/StartNode";
+import { START_NODE, StartNode } from "../../../Nodes/StartNode";
 import { NodeCollection } from "../../../Types/NodeCollection";
 import { createNodeData } from "./createNodeData";
 

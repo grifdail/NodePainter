@@ -4,7 +4,7 @@ import { Vector3, createVector3 } from "../../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const CrossProduct: NodeDefinition = {
-  id: "CrossProduct",
+  id: "Math/Vector/CrossProduct",
   description: "Return the dot product of two vector",
   icon: IconArrowUpRightCircle,
   tags: ["Vector"],

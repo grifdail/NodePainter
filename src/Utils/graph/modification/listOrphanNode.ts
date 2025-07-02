@@ -1,4 +1,4 @@
-import { START_NODE } from "../../../Nodes/Misc/StartNode";
+import { START_NODE } from "../../../Nodes/StartNode";
 import { NodeCollection } from "../../../Types/NodeCollection";
 import { listChildOfNode } from "./listChildOfNode";
 

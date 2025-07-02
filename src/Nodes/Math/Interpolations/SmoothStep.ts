@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const SmoothStep: NodeDefinition = {
-  id: "Math/SmoothStep",
+  id: "Math/Interpolation/SmoothStep",
   description: "Smoothly interpolate between 0 and 1",
   icon: IconMathFunction,
   tags: ["Math"],

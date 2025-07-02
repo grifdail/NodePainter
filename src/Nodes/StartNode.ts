@@ -1,5 +1,5 @@
 import { IconAssembly } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
+import { NodeDefinition } from "../Types/NodeDefinition";
 export const START_NODE = "Start";
 export const SKETCH_DEFAULT_NAME = "sketch";
 
