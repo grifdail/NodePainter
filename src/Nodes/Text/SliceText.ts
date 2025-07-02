@@ -13,6 +13,7 @@ export const SliceText: NodeDefinition = {
   ],
   dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const text = context.getInputValueString(nodeData, "text");

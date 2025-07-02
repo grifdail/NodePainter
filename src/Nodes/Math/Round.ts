@@ -25,6 +25,7 @@ export const Round: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
   getData: (portId, nodeData, context) => {

@@ -26,6 +26,7 @@ export const Max: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const a = context.getInputValueNumber(nodeData, "a");

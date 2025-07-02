@@ -16,6 +16,7 @@ export const AlignRotation: NodeDefinition = {
   settings: [],
   dataInputs: [Port.vector3("axis", createVector3(0, 0, 1)), Port.vector3("target", createVector3(0, 0, 1))],
   dataOutputs: [Port.quaternion("out")],
+  codeBlockType: "expression",
   getData: (portId, node, context) => {
     const axis = context.getInputValueVector3(node, "axis");
     const target = context.getInputValueVector3(node, "target");

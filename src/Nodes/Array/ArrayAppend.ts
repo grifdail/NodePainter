@@ -14,6 +14,7 @@ export const ArrayAppend: NodeDefinition = {
   tags: ["Array"],
   dataInputs: [Port["array-number"]("array"), Port.number("value")],
   dataOutputs: [Port["array-number"]("out")],
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], ["array"], ["out"]),
   getData: (portId, node, context) => {

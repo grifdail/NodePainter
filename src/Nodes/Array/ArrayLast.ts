@@ -14,8 +14,8 @@ export const ArrayLast: NodeDefinition = {
   dataInputs: [Port["array-number"]("array")],
   dataOutputs: [Port["number"]("last")],
   settings: [],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  ...changeTypeGenerator([], ["last"], ["array"], []),
+  codeBlockType: "expression",
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["last"], ["array"], []),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];
     return start.length === 0 ? PortTypeDefinitions[node.selectedType].createDefaultValue() : start[start.length - 1];

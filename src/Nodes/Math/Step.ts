@@ -30,6 +30,7 @@ export const Step: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

@@ -11,6 +11,7 @@ export const RotateVector: NodeDefinition = createMultiTypeNodeDefinition(
     icon: IconArrowUpRightCircle,
     tags: ["Vector"],
 
+    codeBlockType: "expression",
     settings: [],
   },
   {

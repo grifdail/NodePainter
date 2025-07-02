@@ -17,6 +17,7 @@ export const HSL: NodeDefinition = {
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     var hue = context.getInputValueNumber(nodeData, "hue");

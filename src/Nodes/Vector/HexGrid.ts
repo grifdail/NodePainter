@@ -29,6 +29,7 @@ export const HexGrid: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [{ type: "dropdown", id: "type", defaultValue: HexType.FlatTop, options: Object.values(HexType) }],
   getData: (portId, nodeData, context) => {
     const a = context.getInputValueVector(nodeData, "in");

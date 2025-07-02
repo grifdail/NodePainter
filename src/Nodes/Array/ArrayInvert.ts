@@ -14,6 +14,7 @@ export const ArrayInvert: NodeDefinition = {
   dataInputs: [Port["array-number"]("array")],
   dataOutputs: [Port["array-number"]("reversed")],
   settings: [],
+  codeBlockType: "expression",
   ...changeTypeGenerator(portTypesWithTags(["common", "array"]), ["array"], ["reversed"]),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "array", node.selectedType) as any[];

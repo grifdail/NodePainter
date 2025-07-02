@@ -14,6 +14,7 @@ export const PoissonDisk: NodeDefinition = {
   dataInputs: [Port.number("min-dist", 0.01), Port.CacheId()],
   dataOutputs: [Port["array-vector2"]("points")],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const minDist = context.getInputValueNumber(nodeData, "min-dist");

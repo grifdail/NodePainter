@@ -27,6 +27,7 @@ export const Magnitude: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], []),
   getData: (portId, nodeData, context) => {

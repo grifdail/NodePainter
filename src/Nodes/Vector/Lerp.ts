@@ -37,6 +37,7 @@ export const Lerp: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithProperty("lerpOperator"), ["from", "to"], ["result"]),
   getData: (portId, nodeData, context) => {

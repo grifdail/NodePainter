@@ -28,6 +28,7 @@ export const CrossProduct: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector3(nodeData, "a");

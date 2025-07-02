@@ -52,6 +52,7 @@ export const Remap: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["outmin", "outmax"], ["result"]),
   getData: (portId, nodeData, context) => {

@@ -37,7 +37,6 @@ export const Clamp: NodeDefinition = {
   ],
 
   settings: [],
-
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["value"], ["result"]),
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

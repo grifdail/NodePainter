@@ -28,6 +28,7 @@ export const Normalize: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["vec"], ["out"]),
   getData: (portId, nodeData, context) => {

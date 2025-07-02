@@ -39,6 +39,7 @@ export const EvaluateBezier: NodeDefinition = {
     { id: "tangent", type: "vector2", defaultValue: createVector2() },
   ],
 
+  codeBlockType: "expression",
   settings: [],
 
   getData: (portId, data, context) => {

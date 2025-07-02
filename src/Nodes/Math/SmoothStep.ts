@@ -32,6 +32,7 @@ export const SmoothStep: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const min = context.getInputValueNumber(nodeData, "min");

@@ -40,6 +40,7 @@ export const TriangleWave: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     var time = context.getInputValueNumber(nodeData, "time");

@@ -12,6 +12,7 @@ export const EulerAngle: NodeDefinition = createMultiTypeNodeDefinition(
     icon: IconRotate3d,
     featureLevel: 3,
     tags: ["Vector"],
+    codeBlockType: "expression",
     settings: [
       {
         id: "order",

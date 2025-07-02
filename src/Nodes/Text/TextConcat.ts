@@ -13,6 +13,7 @@ export const TextConcat: NodeDefinition = {
   ],
   dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     return context.getInputValueString(nodeData, "start") + context.getInputValueString(nodeData, "end");

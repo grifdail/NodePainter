@@ -38,6 +38,7 @@ export const ScaleAdd: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["value", "added"], ["out"]),
   getData: (portId, nodeData, context) => {

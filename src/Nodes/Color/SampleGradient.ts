@@ -16,6 +16,7 @@ export const SampleGradient: NodeDefinition = {
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: createColor() }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const gradient = context.getInputValueGradient(nodeData, "gradient") || createDefaultGradient();

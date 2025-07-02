@@ -24,7 +24,6 @@ export const Ceil: NodeDefinition = {
       defaultValue: 0,
     },
   ],
-
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
   getData: (portId, nodeData, context) => {

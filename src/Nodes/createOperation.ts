@@ -28,6 +28,7 @@ export function createOperation(id: string, evalOperation: (a: number, b: number
       },
     ],
 
+    codeBlockType: "expression",
     settings: [],
     getData: (portId, nodeData, context) => {
       const a = context.getInputValueNumber(nodeData, "a");

@@ -17,6 +17,7 @@ export const CheckerBoardPattern: NodeDefinition = {
   dataOutputs: [{ id: "out", type: "number", defaultValue: 0 }],
   tags: ["Shader", "Vector"],
 
+  codeBlockType: "expression",
   settings: [],
   shaderRequirement: `  float Checkerboard(vec2 UV, vec2 Frequency)
 {

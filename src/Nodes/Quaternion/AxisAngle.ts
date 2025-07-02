@@ -16,6 +16,7 @@ export const AxisAngle: NodeDefinition = {
   settings: [],
   dataInputs: [Port.vector3("axis", createVector3(0, 1, 0)), Port.number("angle")],
   dataOutputs: [Port.quaternion("out")],
+  codeBlockType: "expression",
   getData: (portId, node, context) => {
     const axis = context.getInputValueVector3(node, "axis");
     const angle = context.getInputValueNumber(node, "angle");

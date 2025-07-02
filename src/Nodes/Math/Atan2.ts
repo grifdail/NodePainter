@@ -27,6 +27,7 @@ export const Atan2: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

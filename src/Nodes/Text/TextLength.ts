@@ -9,6 +9,7 @@ export const TextLength: NodeDefinition = {
   dataInputs: [{ id: "text", type: "string", defaultValue: "hello" }],
   dataOutputs: [{ id: "length", type: "number", defaultValue: 0 }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const text = context.getInputValueString(nodeData, "text");

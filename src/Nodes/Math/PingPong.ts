@@ -31,6 +31,7 @@ export const PingPong: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     if (portId === "result") {

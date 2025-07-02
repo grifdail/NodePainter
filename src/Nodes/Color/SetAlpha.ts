@@ -16,6 +16,7 @@ export const SetAlpha: NodeDefinition = {
   ],
   dataOutputs: [{ id: "out", type: "color", defaultValue: 1 }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const color = context.getInputValueColor(nodeData, "color");

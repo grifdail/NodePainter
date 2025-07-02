@@ -22,6 +22,7 @@ export const OneMinus: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueNumber(nodeData, "input");

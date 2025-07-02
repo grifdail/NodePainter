@@ -27,6 +27,7 @@ export const SquareMagnitude: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], []),
   getData: (portId, nodeData, context) => {

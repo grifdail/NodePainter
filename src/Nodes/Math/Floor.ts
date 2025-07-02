@@ -25,6 +25,7 @@ export const Floor: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["x"], ["out"]),
   getData: (portId, nodeData, context) => {

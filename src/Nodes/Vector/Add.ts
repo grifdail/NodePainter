@@ -32,6 +32,7 @@ export const Add: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithProperty("additionOperator"), ["a", "b"], ["out"]),
   getData: (portId, nodeData, context) => {

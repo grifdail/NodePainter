@@ -31,6 +31,7 @@ export const DotProduct: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], []),
   getData: (portId, nodeData, context) => {

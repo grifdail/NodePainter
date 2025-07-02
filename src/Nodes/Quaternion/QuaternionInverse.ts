@@ -12,6 +12,7 @@ export const QuaternionInverse: NodeDefinition = {
   settings: [],
   dataInputs: [Port.quaternion("in")],
   dataOutputs: [Port.quaternion("out")],
+  codeBlockType: "expression",
   getData: (portId, node, context) => {
     return toQuaternion(new Quaternion(...context.getInputValueQuaternion(node, "in")).invert());
   },

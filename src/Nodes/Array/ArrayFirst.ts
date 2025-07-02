@@ -14,8 +14,8 @@ export const ArrayFirst: NodeDefinition = {
   dataInputs: [Port["array-number"]("array")],
   dataOutputs: [Port["number"]("first")],
   settings: [],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  ...changeTypeGenerator([], ["first"], ["array"], []),
+  codeBlockType: "expression",
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["first"], ["array"], []),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];
     return start.length < 1 ? PortTypeDefinitions[node.selectedType].createDefaultValue() : start[0];

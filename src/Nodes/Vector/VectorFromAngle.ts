@@ -13,6 +13,7 @@ export const VectorFromAngle: NodeDefinition = createMultiTypeNodeDefinition(
     featureLevel: 4,
     tags: ["Vector", "Math"],
     settings: [],
+    codeBlockType: "expression",
   },
   {
     vector2: {

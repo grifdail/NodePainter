@@ -17,6 +17,7 @@ export const ExponantialImpulse: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const x = context.getInputValueNumber(nodeData, "input");

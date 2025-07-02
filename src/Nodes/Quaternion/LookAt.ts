@@ -16,6 +16,7 @@ export const LookAtRotation: NodeDefinition = {
   settings: [],
   dataInputs: [Port.vector3("eye", createVector3(0, 0, 1)), Port.vector3("target", createVector3(0, 0, 1)), Port.vector3("up", [0, 1, 0])],
   dataOutputs: [Port.quaternion("out")],
+  codeBlockType: "expression",
   getData: (portId, node, context) => {
     const eye = context.getInputValueVector3(node, "eye");
     const target = context.getInputValueVector3(node, "target");

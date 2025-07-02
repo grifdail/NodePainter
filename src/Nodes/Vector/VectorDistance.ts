@@ -32,6 +32,7 @@ export const Distance: NodeDefinition = {
     },
   ],
 
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["a", "b"], []),
   getData: (portId, nodeData, context) => {
