@@ -136,6 +136,7 @@ const UPGRADES: UpgradeFunction[] = [
         Atan: "Math/Trigonometry/Atan",
         Atan2: "Math/Trigonometry/Atan2",
         Cos: "Math/Trigonometry/Cos",
+        Acos: "Math/Trigonometry/Acos",
         DegreeToRadian: "Math/Trigonometry/DegreeToRadian",
         RadianToDegree: "Math/Trigonometry/RadianToDegree",
         Sin: "Math/Trigonometry/Sin",
