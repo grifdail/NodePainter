@@ -1,11 +1,11 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Gradient, createColor, createDefaultGradient } from "../../Types/vectorDataType";
-import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Gradient, createColor, createDefaultGradient } from "../../../Types/vectorDataType";
+import { createPortConnection } from "../../../Utils/graph/modification/createPortConnection";
 
 export const GenerateGradient: NodeDefinition = {
-  id: "GenerateGradient",
-  label: "Generate Gradient",
+  id: "Color/Gradient/Dynamic",
+  label: "Generate Dynamic Gradient",
   description: "Create a gradient from dynamics color",
   icon: IconColorFilter,
   tags: ["Color"],

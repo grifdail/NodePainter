@@ -1,12 +1,12 @@
 import { IconArrowMerge, IconGridDots, IconPlus } from "@tabler/icons-react";
-import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
-import { useTree } from "../../Hooks/useTree";
-import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { createVector2 } from "../../Types/vectorDataType";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
+import { useTree } from "../../../Hooks/useTree";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { createVector2 } from "../../../Types/vectorDataType";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
@@ -37,7 +37,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 };
 
 export const CombineGridLoop: NodeDefinition = {
-  id: "CombineGridLoop",
+  id: "Misc/Combine/GridLoop",
   label: "Combine Grid Loop",
   icon: DoubleIconGen(IconArrowMerge, IconGridDots),
   alias: "for",

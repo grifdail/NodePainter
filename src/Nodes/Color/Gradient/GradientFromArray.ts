@@ -1,9 +1,9 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Color, createColor, createDefaultGradient } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Color, createColor, createDefaultGradient } from "../../../Types/vectorDataType";
 
 export const GradientFromArray: NodeDefinition = {
-  id: "GradientFromArray",
+  id: "Color/Gradient/FromArray",
   label: "Gradient from Array",
   description: "Generate Gradient from the color in a array, spaced evenly",
   icon: IconColorFilter,

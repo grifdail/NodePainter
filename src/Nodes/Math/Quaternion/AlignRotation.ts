@@ -1,10 +1,10 @@
 import { IconRotate3d } from "@tabler/icons-react";
 import { Quaternion, Vector3 } from "three";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { createVector3 } from "../../Types/vectorDataType";
-import { toQuaternion } from "../../Utils/math/quaternionUtils";
-import { vectorNormalize } from "../../Utils/math/vectorUtils";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { createVector3 } from "../../../Types/vectorDataType";
+import { toQuaternion } from "../../../Utils/math/quaternionUtils";
+import { vectorNormalize } from "../../../Utils/math/vectorUtils";
 
 export const AlignRotation: NodeDefinition = {
   id: "Math/Quaternion/AlignRotation",

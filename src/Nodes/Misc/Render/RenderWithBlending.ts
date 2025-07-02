@@ -1,10 +1,10 @@
 import { IconColorFilter } from "@tabler/icons-react";
 import { BLEND_MODE } from "p5";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
 
 export const RenderWithBlending: NodeDefinition = {
-  id: "RenderWithBlending",
+  id: "Misc/Render/Blending",
   label: "Apply Blending",
   description: "Execute the next instruction with a blend mode applied",
   icon: IconColorFilter,

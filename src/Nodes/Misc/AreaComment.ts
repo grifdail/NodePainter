@@ -10,7 +10,7 @@ import { getNodesInBoundingBox } from "../../Utils/graph/modification/getNodesIn
 import { buildBoundingBox } from "../../Utils/ui/buildBoundingBox";
 
 export const AreaComment: NodeDefinition = {
-  id: "AreaComment",
+  id: "Misc/AreaComment",
   featureLevel: 10,
   description: "Leave a comment associated with a specific area of your graph.",
   icon: IconMessage,

@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawRect: NodeDefinition = {
-  id: "DrawRect",
+  id: "Draw/Rect",
   label: "Draw Rect",
   alias: "Square",
   description: "Draw a rectangle starting at the top left corner with a width and height",

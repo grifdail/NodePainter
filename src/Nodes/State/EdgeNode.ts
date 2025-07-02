@@ -7,7 +7,7 @@ const EdgeTypes = ["Both", "Rising", "Falling"] as const;
 type EdgeType = (typeof EdgeTypes)[number];
 
 export const EdgeNode: NodeDefinition = {
-  id: "EdgeNode",
+  id: "State/EdgeNode",
   label: "Edge",
   icon: IconCircuitSwitchOpen,
   description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",

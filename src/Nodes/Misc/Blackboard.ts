@@ -11,7 +11,7 @@ export type BlackboardPortData = {
 };
 
 export const Blackboard: NodeDefinition = {
-  id: "Blackboard",
+  id: "Misc/Blackboard",
   description: "Execute an instruction multiple time",
   featureLevel: 100,
   icon: IconAssembly,

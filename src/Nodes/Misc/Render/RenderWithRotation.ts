@@ -1,9 +1,9 @@
 import { IconRotate } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
 
 export const RenderWithRotation: NodeDefinition = {
-  id: "RenderWithRotation",
+  id: "Misc/Render/Rotation",
   label: "Apply rotation",
   alias: "Rotate",
   description: "Execute the next instruction as if the canvas was rotated",

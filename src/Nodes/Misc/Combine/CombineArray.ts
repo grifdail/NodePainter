@@ -1,11 +1,11 @@
 import { IconArrowMerge, IconList } from "@tabler/icons-react";
-import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
-import { useTree } from "../../Hooks/useTree";
-import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { StatefullElementType } from "../3D/VirtualNodeTypes/statefullContext";
-import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
+import { useTree } from "../../../Hooks/useTree";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { StatefullElementType } from "../../3D/VirtualNodeTypes/statefullContext";
+import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
@@ -26,7 +26,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 };
 
 export const CombineArray: NodeDefinition = {
-  id: "CombineArray",
+  id: "Misc/Combine/Array",
   label: "Combine Array",
   icon: DoubleIconGen(IconArrowMerge, IconList),
   description: "Compose an object from multiple object in an array",

@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawQuad: NodeDefinition = {
-  id: "DrawQuad",
+  id: "Draw/Quad",
   label: "Draw Quad",
   description: "Draw a quad defined by 4 points",
   icon: IconPolygon,

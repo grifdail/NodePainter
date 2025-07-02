@@ -1,13 +1,13 @@
 import { IconArrowMerge, IconPlus } from "@tabler/icons-react";
-import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortType } from "../../Types/PortType";
-import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
-import { Port } from "../../Types/PortTypeGenerator";
-import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
-import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
-import { StatefullVirtualElement } from "../3D/VirtualNodeTypes/StatefullVirtualElement";
-import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { PortType } from "../../../Types/PortType";
+import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
+import { createPortConnection } from "../../../Utils/graph/modification/createPortConnection";
+import { StatefullVirtualElement } from "../../3D/VirtualNodeTypes/StatefullVirtualElement";
+import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const addNewPort = (node: NodeData) => {
   var type = node.selectedType;
@@ -20,7 +20,7 @@ const addNewPort = (node: NodeData) => {
 };
 
 export const Combine: NodeDefinition = {
-  id: "Combine",
+  id: "Misc/Combine/Static",
   label: "Combine",
   icon: IconArrowMerge,
   featureLevel: 101,

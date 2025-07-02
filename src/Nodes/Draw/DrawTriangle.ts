@@ -5,7 +5,7 @@ import { Vector2, createColor, createVector2 } from "../../Types/vectorDataType"
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawTriangle: NodeDefinition = {
-  id: "DrawTriangle",
+  id: "Draw/Triangle",
   label: "Draw Triangle",
   description: "Draw a triangle defined by 3 points",
   icon: IconVectorTriangle,

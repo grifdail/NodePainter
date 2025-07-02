@@ -1,10 +1,10 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { Vector3 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { Vector3 } from "../../../Types/vectorDataType";
 
 export const RenderWithTranslation: NodeDefinition = {
-  id: "RenderWithTranslation",
+  id: "Misc/Render/Translation",
   label: "Apply translation",
 
   featureLevel: 4,

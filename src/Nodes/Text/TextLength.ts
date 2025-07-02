@@ -2,7 +2,8 @@ import { IconFileText } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const TextLength: NodeDefinition = {
-  id: "TextLength",
+  id: "Text/Length",
+  label: "Text Lenght",
   description: "Return the lenght of the text",
   icon: IconFileText,
   tags: ["Text"],

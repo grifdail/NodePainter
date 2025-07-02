@@ -6,7 +6,7 @@ import { createDefaultGradient, createVector2 } from "../../Types/vectorDataType
 import { toHex } from "../../Utils/math/colorUtils";
 
 export const DrawGradientRect: NodeDefinition = {
-  id: "DrawGradientRect",
+  id: "Draw/GradientRect",
   label: "Draw Gradient Rect",
   description: "Draw a rectangle with a gradient",
   icon: DoubleIconGen(IconRectangle, IconColorFilter),

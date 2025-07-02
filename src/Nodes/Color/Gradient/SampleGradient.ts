@@ -1,11 +1,11 @@
 import { IconColorFilter } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { createColor, createDefaultGradient } from "../../Types/vectorDataType";
-import { evaluateGradient } from "../../Utils/math/evaluateGradient";
-import { Constraints } from "../../Utils/ui/applyConstraints";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { createColor, createDefaultGradient } from "../../../Types/vectorDataType";
+import { evaluateGradient } from "../../../Utils/math/evaluateGradient";
+import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const SampleGradient: NodeDefinition = {
-  id: "SampleGradient",
+  id: "Color/Gradient/Sample",
   label: "Sample Gradient",
   description: "Sample a gradient",
   icon: IconColorFilter,

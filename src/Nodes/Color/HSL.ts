@@ -6,7 +6,7 @@ import { hslToRgb } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const HSL: NodeDefinition = {
-  id: "HSL",
+  id: "Color/HSL",
   description: "create a color from hue, saturation and lightness",
   icon: IconColorFilter,
   tags: ["Color"],

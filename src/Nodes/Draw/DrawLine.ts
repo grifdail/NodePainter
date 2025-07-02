@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawLine: NodeDefinition = {
-  id: "DrawLine",
+  id: "Draw/Line",
   label: "Draw Line",
   description: "Draw a line between two point",
   icon: IconLine,

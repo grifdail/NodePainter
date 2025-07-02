@@ -1,10 +1,10 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { createVector2, Vector2 } from "../../Types/vectorDataType";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 
 export const RenderWithScale: NodeDefinition = {
-  id: "RenderWithScale",
+  id: "Misc/Render/Scale",
   label: "Apply scale",
   description: "Execute the next instruction as if the canvas was scaled",
   icon: IconArrowsMove,

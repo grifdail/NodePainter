@@ -4,7 +4,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ToggleSwitchNode: NodeDefinition = {
-  id: "ToggleSwitch",
+  id: "State/ToggleSwitch",
   label: "Toggle Switch",
   icon: IconCircuitSwitchOpen,
   description: "Toggle between true and false when its inputs are true",

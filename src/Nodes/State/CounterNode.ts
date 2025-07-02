@@ -5,7 +5,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const Counter: NodeDefinition = {
-  id: "Counter",
+  id: "State/Counter",
   label: "Counter",
   icon: DoubleIconGen(IconDeviceFloppy, IconPlus),
   description: "Output a number that change by step for every call when the boolean input are true",

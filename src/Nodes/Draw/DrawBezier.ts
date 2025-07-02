@@ -5,7 +5,7 @@ import { Vector3, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawBezier: NodeDefinition = {
-  id: "DrawBezier",
+  id: "Draw/Bezier",
   label: "Draw Bezier curve",
   description: "Draw a bezier curve, from start to end, with control point cp1 and cp2",
   icon: IconVectorBezier2,

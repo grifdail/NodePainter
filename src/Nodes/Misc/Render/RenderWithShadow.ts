@@ -1,10 +1,10 @@
 import { IconShadow } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { toHex } from "../../Utils/math/colorUtils";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { toHex } from "../../../Utils/math/colorUtils";
 
 export const RenderWithShadow: NodeDefinition = {
-  id: "RenderWithShadow",
+  id: "Misc/Render/Shadow",
   label: "Apply shadow",
   description: "Execute the next instruction with a blurry shadow below it",
   icon: IconShadow,

@@ -1,10 +1,10 @@
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { GenerateGradient } from "./Color/GenerateGradient";
-import { GradientNode } from "./Color/GradientNode";
+import { GenerateGradient } from "./Color/Gradient/GenerateGradient";
+import { GradientNode } from "./Color/Gradient/GradientNode";
+import { SampleGradient } from "./Color/Gradient/SampleGradient";
 import { HSL } from "./Color/HSL";
 import { HSV } from "./Color/HSV";
 import { Palette } from "./Color/Palette";
-import { SampleGradient } from "./Color/SampleGradient";
 import { SetAlpha } from "./Color/SetAlpha";
 
 import { Add } from "./Vector/Add";
@@ -89,7 +89,7 @@ import { SelectFromArray } from "./Array/SelectFromArray";
 import { Slice } from "./Array/Slice";
 import { StaticArray } from "./Array/StaticArray";
 import { Sum } from "./Array/Sum";
-import { GradientFromArray } from "./Color/GradientFromArray";
+import { GradientFromArray } from "./Color/Gradient/GradientFromArray";
 import { createConstant } from "./createConstant";
 import { ComposeStruct } from "./CustomFunction/ComposeStruct";
 import { CustomFunction } from "./CustomFunction/CustomFunction";
@@ -141,6 +141,11 @@ import { OneMinus } from "./Math/OneMinus";
 import { PingPong } from "./Math/PingPong";
 import { PoissonDisk } from "./Math/PoissonDisk";
 import { PowNode } from "./Math/PowNode";
+import { AlignRotation } from "./Math/Quaternion/AlignRotation";
+import { AxisAngle } from "./Math/Quaternion/AxisAngle";
+import { EulerAngle } from "./Math/Quaternion/EulerAngle";
+import { LookAtRotation } from "./Math/Quaternion/LookAt";
+import { QuaternionInverse } from "./Math/Quaternion/QuaternionInverse";
 import { RadianToDegree } from "./Math/RadianToDegree";
 import { Round } from "./Math/Round";
 import { SignNode } from "./Math/SignNode";
@@ -161,23 +166,18 @@ import { TriangleWave } from "./Math/Waves/TriangleWave";
 import { AreaComment } from "./Misc/AreaComment";
 import { Blackboard } from "./Misc/Blackboard";
 import { CacheNode } from "./Misc/Cache";
-import { Combine } from "./Misc/Combine";
-import { CombineArray } from "./Misc/CombineArray";
-import { CombineGridLoop } from "./Misc/CombineGridLoop";
-import { CombineLoop } from "./Misc/CombineLoop";
+import { Combine } from "./Misc/Combine/Combine";
+import { CombineArray } from "./Misc/Combine/CombineArray";
+import { CombineGridLoop } from "./Misc/Combine/CombineGridLoop";
+import { CombineLoop } from "./Misc/Combine/CombineLoop";
 import { Comment } from "./Misc/Comment";
-import { RenderWithBlending } from "./Misc/RenderWithBlending";
-import { RenderWithMask } from "./Misc/RenderWithMask";
-import { RenderWithRotation } from "./Misc/RenderWithRotation";
-import { RenderWithScale } from "./Misc/RenderWithScale";
-import { RenderWithShadow } from "./Misc/RenderWithShadow";
-import { RenderWithTranslation } from "./Misc/RenderWithTranslation";
+import { RenderWithBlending } from "./Misc/Render/RenderWithBlending";
+import { RenderWithMask } from "./Misc/Render/RenderWithMask";
+import { RenderWithRotation } from "./Misc/Render/RenderWithRotation";
+import { RenderWithScale } from "./Misc/Render/RenderWithScale";
+import { RenderWithShadow } from "./Misc/Render/RenderWithShadow";
+import { RenderWithTranslation } from "./Misc/Render/RenderWithTranslation";
 import { StartNode } from "./Misc/StartNode";
-import { AlignRotation } from "./Quaternion/AlignRotation";
-import { AxisAngle } from "./Quaternion/AxisAngle";
-import { EulerAngle } from "./Quaternion/EulerAngle";
-import { LookAtRotation } from "./Quaternion/LookAt";
-import { QuaternionInverse } from "./Quaternion/QuaternionInverse";
 import { ShaderMaterial } from "./Shaders/ShaderMaterial";
 import { ShaderMaterialEnd } from "./Shaders/ShaderMaterialEnd";
 import { ShaderMaterialStart } from "./Shaders/ShaderMaterialStart";
@@ -459,5 +459,7 @@ export const Nodes: Array<NodeDefinition> = [
   ToggleFlipFlopNode,
   DetectThreshold,
 ];
+
+console.log(Nodes.length);
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

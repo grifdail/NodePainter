@@ -1,10 +1,10 @@
 import { IconArrowMerge, IconPlus, IconRepeat } from "@tabler/icons-react";
-import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
-import { useTree } from "../../Hooks/useTree";
-import { NodeData } from "../../Types/NodeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
+import { useTree } from "../../../Hooks/useTree";
+import { NodeData } from "../../../Types/NodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   setTimeout(() => {
@@ -30,7 +30,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 };
 
 export const CombineLoop: NodeDefinition = {
-  id: "CombineLoop",
+  id: "Misc/Combine/CombineLoop",
   label: "Combine Loop",
   icon: DoubleIconGen(IconArrowMerge, IconRepeat),
   alias: "for",

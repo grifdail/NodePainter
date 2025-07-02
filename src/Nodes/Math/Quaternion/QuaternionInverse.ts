@@ -1,8 +1,8 @@
 import { IconRotate3d } from "@tabler/icons-react";
 import { Quaternion } from "three";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { toQuaternion } from "../../Utils/math/quaternionUtils";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { toQuaternion } from "../../../Utils/math/quaternionUtils";
 
 export const QuaternionInverse: NodeDefinition = {
   id: "Math/Quaternion/Inverse",

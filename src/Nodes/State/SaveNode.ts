@@ -6,7 +6,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const SaveNode: NodeDefinition = {
-  id: "Save",
+  id: "State/Save",
   label: "Save",
   icon: IconDeviceFloppy,
   description: "Save the input when the save boolean is on",

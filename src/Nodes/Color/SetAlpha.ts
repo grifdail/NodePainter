@@ -5,7 +5,7 @@ import { White } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SetAlpha: NodeDefinition = {
-  id: "SetAlpha",
+  id: "Color/SetAlpha",
   label: "Set Alpha",
   description: "Set the transparency of a color",
   icon: IconColorFilter,

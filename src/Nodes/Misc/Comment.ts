@@ -2,7 +2,7 @@ import { IconMessage } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Comment: NodeDefinition = {
-  id: "Comment",
+  id: "Misc/Comment",
   featureLevel: 10,
   description: "Leave a comment on your sketch. Doesnt have any logic.",
   icon: IconMessage,

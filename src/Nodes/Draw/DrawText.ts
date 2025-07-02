@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawText: NodeDefinition = {
-  id: "DrawText",
+  id: "Draw/Text",
   label: "Draw Text",
   description: "Draw a line of text",
   icon: IconCursorText,

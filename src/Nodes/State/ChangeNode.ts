@@ -6,7 +6,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ChangeNode: NodeDefinition = {
-  id: "Change",
+  id: "State/Change",
   label: "Change",
   icon: IconStatusChange,
   description: "Output the difference between the input value from this frame and the previous call",
