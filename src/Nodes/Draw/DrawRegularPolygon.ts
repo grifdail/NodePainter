@@ -6,7 +6,7 @@ import { toP5Color } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const DrawRegularPolygon: NodeDefinition = {
-  id: "DrawRegularPolygon",
+  id: "Draw/RegularPolygon",
   label: "Draw Regular Polygon",
   description: "Draw a regular polygon.",
   icon: IconTriangle,

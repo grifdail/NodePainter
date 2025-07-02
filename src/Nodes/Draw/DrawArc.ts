@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawArc: NodeDefinition = {
-  id: "DrawArc",
+  id: "Draw/Arc",
   label: "Draw Arc",
   description: "Draw the contour of a circle.",
   icon: IconCircle,

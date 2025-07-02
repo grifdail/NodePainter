@@ -2,7 +2,7 @@ import { IconPhone } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const DeviceRotation: NodeDefinition = {
-  id: "DeviceRotation",
+  id: "Input/DeviceRotation",
   label: "Device Rotation",
   description: "The rotation of the phisical device you're using",
   icon: IconPhone,

@@ -5,7 +5,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 export const SampleTexture: NodeDefinition = {
-  id: "Sample Texture",
+  id: "Shader/SampleTexture",
   hideInLibrary: false,
   icon: IconGizmo,
   description: "Sample a pixel from a UV",

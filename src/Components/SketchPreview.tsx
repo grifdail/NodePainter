@@ -6,10 +6,10 @@ import { NodeData } from "../Types/NodeData";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import styled from "styled-components";
 import { useWindowSize } from "@uidotdev/usehooks";
-import { START_NODE } from "../Nodes/Misc/StartNode";
 import { createExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import Rand from "rand-seed";
 import { useDialog } from "../Hooks/useDialog";
+import { START_NODE } from "../Nodes/StartNode";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;

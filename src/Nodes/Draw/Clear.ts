@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
 export const Clear: NodeDefinition = {
-  id: "Clear",
+  id: "Draw/Clear",
   description: "Clear the entire canvas",
   icon: IconEraser,
   tags: ["Drawing"],

@@ -7,7 +7,8 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SelectFromArray: NodeDefinition = {
-  id: "SelectFromArray",
+  id: "Array/Select",
+  label: "Select From Array",
   description: "Select an element of an based on the index",
   alias: "Get Index",
   icon: DoubleIconGen(IconList, IconBrackets),
@@ -26,7 +27,7 @@ export const SelectFromArray: NodeDefinition = {
     },
   ],
   dataOutputs: [{ id: "out", defaultValue: 0, type: "number" }],
-
+  codeBlockType: "expression",
   settings: [],
   availableTypes: portTypesWithTags(["common"], ["array"]),
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["out"], ["array"]),
@@ -37,6 +38,9 @@ export const SelectFromArray: NodeDefinition = {
       return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
     const index = Math.floor(context.getInputValueNumber(node, "index"));
+    if (index < 0) {
+      return array[(array.length + (index % array.length)) % array.length];
+    }
     return array[index % array.length];
   },
 };

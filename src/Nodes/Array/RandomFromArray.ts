@@ -8,7 +8,8 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const RandomFromArray: NodeDefinition = {
-  id: "RandomFromArray",
+  id: "Array/Random",
+  label: "Random From Array",
   description: "Select a random element from an array",
   alias: "Pick",
   icon: DoubleIconGen(IconList, IconBrackets),

@@ -4,7 +4,7 @@ import { createColor } from "../../Types/vectorDataType";
 import { Black, White } from "../../Utils/math/colorUtils";
 
 export const Palette: NodeDefinition = {
-  id: "Palette",
+  id: "Color/Palette",
   label: "Palette",
   description: "Pick a color from a palette",
   icon: IconColorSwatch,

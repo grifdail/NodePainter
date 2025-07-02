@@ -77,7 +77,8 @@ export function PortEdit({ port, onChangePort, onDeletePort, index, availableTyp
 
   const setPortType = (value: string) => {
     if (onChangePort) {
-      onChangePort(index, { ...port, type: value as PortType, defaultValue: convertTypeValue(port.defaultValue, port.type, value as PortType) });
+      var newNode = { ...port, type: value as PortType, defaultValue: PortTypeDefinitions[value as PortType].createDefaultValue() };
+      onChangePort(index, newNode);
     }
   };
   const setPortDefaultValue = (value: any) => {

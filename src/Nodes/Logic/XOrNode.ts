@@ -2,7 +2,7 @@ import { IconLogicXor } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const XOrNode: NodeDefinition = {
-  id: "xOr",
+  id: "Logic/xOr",
   description: "Return true only if exactly one input is true",
   icon: IconLogicXor,
   tags: ["Logic"],

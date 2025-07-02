@@ -15,6 +15,9 @@ import { loadExample } from "./Utils/graph/load/loadExample";
 import { ToastContainer } from "./Components/ToastContainer";
 import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
 import { DefaultGradient, DefaultPalettes } from "./Data/Palettes";
+import { initCodeBlockType } from "./CodeBlocks/CodeBlockTypes";
+
+initCodeBlockType();
 
 function GraphCache() {
   var key = 0; //;useTree((state) => state.key);

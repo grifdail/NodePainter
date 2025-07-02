@@ -6,4 +6,5 @@ export type SketchTemplate = {
   customNodes: { [key: string]: NodeDefinition };
   editedGraph?: string;
   globalSettings?: { [key: string]: any };
+  version?: number;
 };

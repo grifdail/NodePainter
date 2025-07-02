@@ -12,7 +12,7 @@ export type ContextMenuData = {
   [key: string]: (node: NodeData, tree: TreeStore) => void;
 };
 
-export type PortChangeFunction = (node: NodeData, type: PortType, blackboards: NodeData[]) => void;
+export type PortChangeFunction = (node: NodeData, type: PortType) => void;
 
 export type BaseNodeDefinition = {
   id: string;
@@ -48,6 +48,9 @@ export type BaseNodeDefinition = {
   onManualCreation?: (node: NodeData) => void;
 
   onlyAvailableIn?: CustomNodeEditingType[];
+  //Code Block
+  toCodeblockString?: (node: NodeData, parameterNames: Record<string, any>) => string;
+  codeBlockType?: "expression" | "statement";
 };
 
 export type LogicNodeDefinition = {

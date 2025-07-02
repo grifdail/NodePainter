@@ -11,7 +11,7 @@ function basename(path: string) {
 }
 
 export const UsePatternImage: NodeDefinition = {
-  id: "UsePatternImage",
+  id: "Image/UsePatternImage",
   label: "Use Pattern Image",
   icon: IconPhoto,
   description: "Use one of the provided standard Pattern",

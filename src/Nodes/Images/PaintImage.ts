@@ -3,7 +3,7 @@ import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const PaintImage: NodeDefinition = {
-  id: "PaintImage",
+  id: "Image/PaintImage",
   label: "Paint Image",
   icon: IconBrush,
   description: "Paint an image directly",

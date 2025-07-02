@@ -6,8 +6,8 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const DetectChangeNode: NodeDefinition = {
-  id: "DetectChange",
-  label: "DetectChange",
+  id: "State/DetectChange",
+  label: "Detect Change",
   icon: IconStatusChange,
   description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
 

@@ -38,8 +38,6 @@ const ImprovedMenuItem = styled.span`
   align-items: center;
 `;
 
-console.log(ImprovedMenuItem);
-
 export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> = function ImageSelectSetting({ onChange, value, def }: SettingProps<ImageSelectSettingDefinition>) {
   if (value == null) {
     value = def.options[0];

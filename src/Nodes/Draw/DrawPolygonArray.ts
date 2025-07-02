@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawPolygon: NodeDefinition = {
-  id: "DrawPolygon",
+  id: "Draw/Polygon",
   label: "Draw Polygon",
   description: "Draw a polygon based on a array of points",
   icon: IconPolygon,

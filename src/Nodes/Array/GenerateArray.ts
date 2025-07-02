@@ -29,7 +29,8 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
 };
 
 export const GenerateArray: NodeDefinition = {
-  id: "GenerateArray",
+  id: "Array/Generate",
+  label: "Generate Array",
   description: "Execute an instruction multiple time",
   featureLevel: 80,
   icon: IconList,

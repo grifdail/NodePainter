@@ -6,7 +6,7 @@ import { hsvToRgb } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const HSV: NodeDefinition = {
-  id: "HSV",
+  id: "Color/HSV",
   description: "create a color from hue, saturation and value",
   icon: IconColorFilter,
   tags: ["Color"],
@@ -17,6 +17,7 @@ export const HSV: NodeDefinition = {
   ],
   dataOutputs: [{ id: "color", type: "color", defaultValue: 1 }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const hue = context.getInputValueNumber(nodeData, "hue");

@@ -35,7 +35,7 @@ export function createMultiTypeNodeDefinition(
         return node.dataOutputs[portId].defaultValue;
       }
     },
-    onChangeType(node, type, blackboard) {
+    onChangeType(node, type) {
       const typeData = types[type];
       if (typeData == undefined) {
         return;

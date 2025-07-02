@@ -2,7 +2,7 @@ import { IconLogicAnd } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const AndNode: NodeDefinition = {
-  id: "And",
+  id: "Logic/And",
   description: "Return true only if both input are true",
   icon: IconLogicAnd,
   tags: ["Logic"],

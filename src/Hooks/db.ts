@@ -1,7 +1,7 @@
 import Dexie, { Table } from "dexie";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback } from "react";
-import { SKETCH_DEFAULT_NAME } from "../Nodes/Misc/StartNode";
+import { SKETCH_DEFAULT_NAME } from "../Nodes/StartNode";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
 import { SketchTemplate } from "../Types/SketchTemplate";
 import { useDialog } from "./useDialog";

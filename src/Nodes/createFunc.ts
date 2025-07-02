@@ -23,6 +23,7 @@ export function createFunc(id: string, evalOperation: (input: any) => any, descr
       },
     ],
 
+    codeBlockType: "expression",
     settings: [],
     getData: (portId, nodeData, context) => {
       if (portId === "result") {

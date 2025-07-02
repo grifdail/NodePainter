@@ -2,7 +2,7 @@ import { IconClock } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const DeltatTime: NodeDefinition = {
-  id: "DeltaTime",
+  id: "Input/DeltaTime",
   description: "The time since the last frame, in second",
   icon: IconClock,
   tags: ["Input"],

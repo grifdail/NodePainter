@@ -9,8 +9,8 @@ import { copyToClipboard } from "../../Utils/ui/copyToClipboard";
 import { useDialog } from "../../Hooks/useDialog";
 import { useState } from "react";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { START_NODE } from "../../Nodes/Misc/StartNode";
 import { toastError } from "../../Hooks/useToast";
+import { START_NODE } from "../../Nodes/StartNode";
 
 export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, number] }) {
   const selectionNodes = useSelection((state) => state.nodes);

@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
 export const MouseButton: NodeDefinition = {
-  id: "MouseButton",
+  id: "Input/MouseButton",
   label: "Mouse Button",
   description: "Whether one of the mouse button is pressed",
   icon: IconMouse,

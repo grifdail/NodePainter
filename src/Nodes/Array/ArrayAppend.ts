@@ -7,13 +7,14 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayAppend: NodeDefinition = {
-  id: "ArrayAppend",
+  id: "Array/Append",
   alias: "Push Add",
   description: "Return a copy of the array with the new elements added at the end",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],
   dataInputs: [Port["array-number"]("array"), Port.number("value")],
   dataOutputs: [Port["array-number"]("out")],
+  codeBlockType: "expression",
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], ["array"], ["out"]),
   getData: (portId, node, context) => {

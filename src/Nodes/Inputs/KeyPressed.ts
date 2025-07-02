@@ -106,7 +106,7 @@ const KeyCodes: { [key: string]: number } = {
 };
 
 export const KeyPressed: NodeDefinition = {
-  id: "KeyPressed",
+  id: "Input/KeyPressed",
   label: "Key Pressed",
   description: "Whether one a specific key is pressed",
   icon: IconKeyboard,

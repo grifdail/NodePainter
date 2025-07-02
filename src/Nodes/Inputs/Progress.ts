@@ -6,7 +6,7 @@ import { convertToShaderNumber } from "../../Utils/graph/execution/convertToShad
 import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 
 export const Progress: NodeDefinition = {
-  id: "Progress",
+  id: "Input/Progress",
   description: "Repressent the progress of the animation as a value between 0 and 1.",
   icon: IconClock,
   featureLevel: 100,

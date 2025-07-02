@@ -5,7 +5,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const Slice: NodeDefinition = {
-  id: "Slice",
+  id: "Array/Slice",
   description: "Return a portion of the value",
   icon: IconList,
   tags: ["Array"],
@@ -30,9 +30,9 @@ export const Slice: NodeDefinition = {
   ],
   dataOutputs: [{ id: "out", defaultValue: [0], type: "array-number" }],
 
+  codeBlockType: "expression",
   settings: [],
-  availableTypes: portTypesWithTags(["common"], ["array"]),
-  ...changeTypeGenerator([], [], ["array"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["array"], ["out"]),
   getData: (portId, node, context) => {
     const array = context.getInputValueVectorArray(node, "array");
     const start = Math.floor(context.getInputValueNumber(node, "start"));

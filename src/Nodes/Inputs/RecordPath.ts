@@ -5,7 +5,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RecordPath: NodeDefinition = {
-  id: "RecordPath",
+  id: "Input/RecordPath",
   label: "Record Path",
   description: "Replay a handdrawn path",
   icon: IconRoute,

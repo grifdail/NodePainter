@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawPolyline: NodeDefinition = {
-  id: "DrawPolyline",
+  id: "Draw/Polyline",
   description: "Draw a line made of multiple point",
   icon: IconLine,
   tags: ["Drawing"],

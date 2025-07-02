@@ -6,7 +6,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayConcat: NodeDefinition = {
-  id: "ArrayConcat",
+  id: "Array/Concat",
   description: "Merge two array together by appending the second one at the end of the first.",
   alias: "Merge combine mix",
   icon: DoubleIconGen(IconList, IconBrackets),

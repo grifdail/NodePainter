@@ -7,7 +7,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const PreviousNode: NodeDefinition = {
-  id: "Previous",
+  id: "State/Previous",
   label: "Previous",
   icon: DoubleIconGen(IconStatusChange, IconArrowNarrowLeft),
   description: "Output the value of the input at the previous call",

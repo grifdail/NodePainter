@@ -3,13 +3,12 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
-import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
-import { Blackboard } from "../Nodes/Misc/Blackboard";
-import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
+import { START_NODE } from "../Nodes/StartNode";
+import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
+import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
+import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -32,6 +31,7 @@ import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
+import { SAVE_VERSION, upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
 import { buildBoundingBox } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { copyInputPortsValues } from "./copyInputPortsValues";
@@ -189,8 +189,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
           if (def.availableTypes && def.availableTypes.includes(type)) {
             if (def.onChangeType) {
-              var blackboards = (Object.values(state.nodes) as NodeData[]).filter((n) => n.type === Blackboard.id && n.pairedNode === nodeId);
-              def.onChangeType(sourceNode, type, blackboards);
+              def.onChangeType(sourceNode, type);
             }
             sourceNode.selectedType = type;
             ensureValidGraph(state);
@@ -243,6 +242,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       resetCamera();
     },
     loadTemplate(temp) {
+      temp = upgradeTemplate(temp);
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       toastSuccess("Sketch loaded !");
@@ -250,7 +250,7 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     exportTemplate() {
       var t = get();
-      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined });
+      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined, version: SAVE_VERSION });
     },
     createStructType(ports: PortDefinition[], name: string) {
       set(
@@ -480,13 +480,13 @@ export const useTree = create<TreeStore>()((set, get) => {
       }
       var executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
       switch (executeAs) {
-        case CUSTOM_SHADER:
+        case RenderShader.id:
           return "shader";
-        case SHADER_MATERIAL:
+        case ShaderMaterial.id:
           return "shaderMaterial";
-        case CUSTOM_SIMULATION:
+        case CustomSimulation.id:
           return "simulation";
-        case CUSTOM_FUNCTION:
+        case CustomFunction.id:
           return "function";
         default:
           return "function";
@@ -684,6 +684,7 @@ export const useTree = create<TreeStore>()((set, get) => {
                 if (typeChange) {
                   removeAllConnections(newPort.id, (targetPort) => !canConvertCode(targetPort.type, newPort.type));
                   oldPort.type = newPort.type;
+                  oldPort.defaultValue = newPort.defaultValue;
                 }
               } else {
                 node.dataOutputs[newPort.id] = structuredClone(newPort);

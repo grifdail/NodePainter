@@ -6,7 +6,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayInvert: NodeDefinition = {
-  id: "ArrayInvert",
+  id: "Array/Invert",
   description: "Reorder the element of the array so that the last element become the first",
   alias: "Inverse",
   icon: DoubleIconGen(IconList, IconBrackets),
@@ -14,6 +14,7 @@ export const ArrayInvert: NodeDefinition = {
   dataInputs: [Port["array-number"]("array")],
   dataOutputs: [Port["array-number"]("reversed")],
   settings: [],
+  codeBlockType: "expression",
   ...changeTypeGenerator(portTypesWithTags(["common", "array"]), ["array"], ["reversed"]),
   getData: (portId, node, context) => {
     const start = context.getInputValue(node, "array", node.selectedType) as any[];

@@ -1,17 +1,17 @@
 import { IconCube, IconFunction, IconFunctionFilled, IconPackage, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
+import { CUSTOM_SHADER } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { useSelection } from "../Hooks/useSelection";
-import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { ReactElement, useCallback, useMemo } from "react";
 import { resetCamera } from "../Utils/ui/resetCamera";
-import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 import { useAllSavedFunction } from "../Hooks/db";
 import { useShallow } from "zustand/react/shallow";
 import { createStructTypeModal } from "../Hooks/createStructTypeModal";
+import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
+import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 
 const openCreateModal = () => {
   useCustomNodeCreationContext.getState().openCreate("function");
@@ -44,7 +44,7 @@ export function FunctionSubMenu() {
     () => [
       "main",
       ...Object.values(rawCustomNodes)
-        .filter((item) => item.executeAs === CUSTOM_FUNCTION)
+        .filter((item) => item.executeAs === CustomFunction.id)
         .map((node) => node.id),
     ],
     [rawCustomNodes]
@@ -52,7 +52,7 @@ export function FunctionSubMenu() {
   const customShaderNode = useMemo(
     () => [
       ...Object.values(rawCustomNodes)
-        .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === SHADER_MATERIAL)
+        .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === ShaderMaterial.id)
         .map((node) => node.id),
     ],
     [rawCustomNodes]
@@ -60,7 +60,7 @@ export function FunctionSubMenu() {
   const customSimulationNode = useMemo(
     () => [
       ...Object.values(rawCustomNodes)
-        .filter((item) => item.executeAs === CUSTOM_SIMULATION)
+        .filter((item) => item.executeAs === CustomSimulation.id)
         .map((node) => node.id),
     ],
     [rawCustomNodes]

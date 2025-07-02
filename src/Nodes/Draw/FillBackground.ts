@@ -5,7 +5,7 @@ import { createColor } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const FillBackground: NodeDefinition = {
-  id: "FillBackground",
+  id: "Draw/FillBackground",
   label: "Fill Background",
   description: "Fill the entire canvas",
   icon: IconBucketDroplet,

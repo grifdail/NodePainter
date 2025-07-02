@@ -5,7 +5,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawCircle: NodeDefinition = {
-  id: "DrawCircle",
+  id: "Draw/Circle",
   label: "Draw circle",
   description: "Draw a circle",
   featureLevel: 101,

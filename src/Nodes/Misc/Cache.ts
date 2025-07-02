@@ -6,7 +6,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const CacheNode: NodeDefinition = {
-  id: "Cache",
+  id: "Misc/Cache",
   description: "Precompute and cache the input. The randomness wont change and it may help performance",
   icon: IconDeviceFloppy,
   tags: ["State"],

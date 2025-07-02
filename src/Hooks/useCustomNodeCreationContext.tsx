@@ -3,14 +3,14 @@ import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
 import { useRouter } from "./useRouter";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
 import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreationContextStore";
 import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunctionCreationContextStore";
-import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
-import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
 import { Routes } from "../Types/Routes";
 import { createDefaultMaterial } from "../Utils/graph/definition/createDefaultMaterial";
-import { SHADER_MATERIAL, ShaderMaterial } from "../Nodes/Shaders/ShaderMaterial";
+import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
+import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
+import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -30,7 +30,7 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       dataOutputs: [],
 
       settings: [],
-      executeAs: CUSTOM_FUNCTION,
+      executeAs: CustomFunction.id,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createFunction(node);
@@ -49,7 +49,7 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
         { id: "width", type: "number", defaultValue: 400 },
         { id: "height", type: "number", defaultValue: 400 },
       ],
-      executeAs: CUSTOM_SHADER,
+      executeAs: RenderShader.id,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createShader(node);
@@ -71,7 +71,7 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       dataOutputs: [{ id: "mat", type: "material", defaultValue: createDefaultMaterial() }],
 
       settings: ShaderMaterial.settings,
-      executeAs: SHADER_MATERIAL,
+      executeAs: ShaderMaterial.id,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createShaderMaterial(node);
@@ -92,7 +92,7 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
       dataInputs: [],
       dataOutputs: [],
       settings: [],
-      executeAs: CUSTOM_SIMULATION,
+      executeAs: CustomSimulation.id,
     },
     create: function (node: NodeDefinition): void {
       useTree.getState().createSimulation(node);

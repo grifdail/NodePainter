@@ -7,7 +7,7 @@ import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const DrawImageWithTint: NodeDefinition = {
-  id: "DrawImageWithTint",
+  id: "Image/DrawImageWithTint",
   label: "Draw tinted image",
   icon: DoubleIconGen(IconPhoto, IconPaint),
   description: "Draw an image",

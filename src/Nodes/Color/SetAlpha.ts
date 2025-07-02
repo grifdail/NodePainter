@@ -5,7 +5,7 @@ import { White } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SetAlpha: NodeDefinition = {
-  id: "SetAlpha",
+  id: "Color/SetAlpha",
   label: "Set Alpha",
   description: "Set the transparency of a color",
   icon: IconColorFilter,
@@ -16,6 +16,7 @@ export const SetAlpha: NodeDefinition = {
   ],
   dataOutputs: [{ id: "out", type: "color", defaultValue: 1 }],
 
+  codeBlockType: "expression",
   settings: [],
   getData: (portId, nodeData, context) => {
     const color = context.getInputValueColor(nodeData, "color");

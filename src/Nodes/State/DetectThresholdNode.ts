@@ -4,7 +4,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const DetectThreshold: NodeDefinition = {
-  id: "DetectThreshold",
+  id: "State/DetectThreshold",
   label: "Detect Threshold",
   icon: IconCircuitSwitchOpen,
   description: "Output true only on when the input number cross the target",

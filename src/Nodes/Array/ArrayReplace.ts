@@ -7,13 +7,14 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayReplace: NodeDefinition = {
-  id: "ArrayReplace",
+  id: "Array/Replace",
   description: "Return a copy of the array the element at a specific position replaced",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],
   dataInputs: [Port["array-number"]("array"), Port.number("position"), Port.number("value")],
   dataOutputs: [Port["array-number"]("out")],
   settings: [],
+  codeBlockType: "expression",
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], ["array"], ["out"]),
   getData: (portId, node, context) => {
     const array = context.getInputValue(node, "array", `array-${node.selectedType}` as PortType) as any[];

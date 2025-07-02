@@ -8,7 +8,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const Shuffle: NodeDefinition = {
-  id: "Shuffle",
+  id: "Array/Shuffle",
   description: "Count the number of element in an array",
   icon: DoubleIconGen(IconList, IconQuestionMark),
   alias: "",
