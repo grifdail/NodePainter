@@ -11,7 +11,7 @@ import { START_NODE } from "../../Nodes/Misc/StartNode";
 import { CanvasExporter } from "./Exporters/CanvasExporter";
 import { Button } from "../Generics/Button";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { CUSTOM_SIMULATION } from "../../Nodes/CustomFunction/CustomSimulation";
+import { CUSTOM_SIMULATION } from "../../Nodes/Technical/Simulation/CustomSimulation";
 import Rand from "rand-seed";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { BoolInput } from "../Generics/Inputs/BoolInput";

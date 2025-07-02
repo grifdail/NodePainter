@@ -3,12 +3,12 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
-import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
-import { CUSTOM_SIMULATION, CustomSimulation } from "../Nodes/CustomFunction/CustomSimulation";
 import { START_NODE } from "../Nodes/Misc/StartNode";
 import { NodeLibrary } from "../Nodes/Nodes";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
+import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
+import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
+import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -480,13 +480,13 @@ export const useTree = create<TreeStore>()((set, get) => {
       }
       var executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
       switch (executeAs) {
-        case CUSTOM_SHADER:
+        case RenderShader.id:
           return "shader";
-        case SHADER_MATERIAL:
+        case ShaderMaterial.id:
           return "shaderMaterial";
-        case CUSTOM_SIMULATION:
+        case CustomSimulation.id:
           return "simulation";
-        case CUSTOM_FUNCTION:
+        case CustomFunction.id:
           return "function";
         default:
           return "function";

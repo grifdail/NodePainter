@@ -1,17 +1,17 @@
 import { IconCube, IconFunction, IconFunctionFilled, IconPackage, IconPencil, IconPhotoScan, IconRepeat } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuHeader, MenuItem, SubMenu } from "@szhsin/react-menu";
-import { CUSTOM_SHADER } from "../Nodes/Shaders/RenderShader";
-import { CUSTOM_FUNCTION } from "../Nodes/CustomFunction/CustomFunction";
+import { CUSTOM_SHADER } from "../Nodes/Technical/ImageEffectShader/RenderShader";
+import { CUSTOM_FUNCTION } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationContext";
 import { useSelection } from "../Hooks/useSelection";
-import { CUSTOM_SIMULATION } from "../Nodes/CustomFunction/CustomSimulation";
+import { CUSTOM_SIMULATION } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { ReactElement, useCallback, useMemo } from "react";
 import { resetCamera } from "../Utils/ui/resetCamera";
-import { SHADER_MATERIAL } from "../Nodes/Shaders/ShaderMaterial";
 import { useAllSavedFunction } from "../Hooks/db";
 import { useShallow } from "zustand/react/shallow";
 import { createStructTypeModal } from "../Hooks/createStructTypeModal";
+import { SHADER_MATERIAL } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 
 const openCreateModal = () => {
   useCustomNodeCreationContext.getState().openCreate("function");
