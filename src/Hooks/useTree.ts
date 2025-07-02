@@ -31,7 +31,7 @@ import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
-import { upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
+import { SAVE_VERSION, upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
 import { buildBoundingBox } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { copyInputPortsValues } from "./copyInputPortsValues";
@@ -250,7 +250,7 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     exportTemplate() {
       var t = get();
-      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined });
+      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined, version: SAVE_VERSION });
     },
     createStructType(ports: PortDefinition[], name: string) {
       set(
