@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { Remap } from "../Nodes/Math/Remap";
+import { Remap } from "../Nodes/Math/Interpolations/Remap";
 import { DrawRect } from "../Nodes/Draw/DrawRect";
 import { CustomFunctionModalNoLogic } from "../Components/Modals/CustomNodes/CustomFunctionModalNoLogic";
 import { CustomFunctionModalSettings } from "../Components/Modals/CustomNodes/CustomFunctionModal";

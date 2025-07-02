@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
 export const PrecomputeImage: NodeDefinition = {
-  id: "PrecomputeImage",
+  id: "Image/PrecomputeImage",
   label: "Render image",
   icon: IconPhoto,
   description: "Render the 'image' port first to an image you can use in the 'execute' port.",

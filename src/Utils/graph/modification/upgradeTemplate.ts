@@ -92,6 +92,18 @@ const UPGRADES: UpgradeFunction[] = [
         EulerAngle: "Math/Quaternion/EulerAngle",
         LookAtRotation: "Math/Quaternion/LookAtRotation",
         QuaternionInverse: "Math/Quaternion/Inverse",
+        UsePatternImage: "Image/UsePatternImage",
+        UseParticleImage: "Image/UseParticleImage",
+        UploadImage: "Image/UploadImage",
+        PrecomputeImage: "Image/PrecomputeImage",
+        PaintImage: "Image/PaintImage",
+        ImageDimension: "Image/Dimension",
+        DrawImageWithTint: "Image/DrawImageWithTint",
+        DrawImagePart: "Image/DrawImagePart",
+        DrawImage: "Image/DrawImage",
+        BlurEffect: "Effect/BlurEffect",
+        FlatColorEffect: "Effect/FlatColorEffect",
+        BloomEffect: "Effect/BloomEffect",
       },
       sketch
     );

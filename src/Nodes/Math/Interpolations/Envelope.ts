@@ -1,6 +1,6 @@
 import { IconEaseInOut } from "@tabler/icons-react";
-import { createDefaultEnvelope, EnvelopeData, interpolateEnvelope } from "../../Types/EnvelopeData";
-import { NodeDefinition } from "../../Types/NodeDefinition";
+import { createDefaultEnvelope, EnvelopeData, interpolateEnvelope } from "../../../Types/EnvelopeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
 
 export const Envelope: NodeDefinition = {
   id: "Math/Envelope",

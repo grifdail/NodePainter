@@ -1,9 +1,9 @@
 import { IconEaseInOut } from "@tabler/icons-react";
-import { AnimationTrack, convertAnimationTrackType, createDefaultAnimationTrack, interpolateAnimation } from "../../Types/AnimationTrack";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
+import { AnimationTrack, convertAnimationTrackType, createDefaultAnimationTrack, interpolateAnimation } from "../../../Types/AnimationTrack";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 
 const changeTypeData = changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], ["value"]);
 

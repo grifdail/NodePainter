@@ -1,11 +1,11 @@
 import { IconArrowsShuffle, IconSphere } from "@tabler/icons-react";
-import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
-import { createVector3 } from "../../Types/vectorDataType";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
-import { Constraints } from "../../Utils/ui/applyConstraints";
+import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { createVector3 } from "../../../Types/vectorDataType";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { createOrSelectFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const RandomOnSphere: NodeDefinition = {
   id: "Input/Random/RandomOnSphere",

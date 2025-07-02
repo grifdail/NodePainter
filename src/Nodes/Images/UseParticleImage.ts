@@ -11,7 +11,7 @@ function basename(path: string) {
 }
 
 export const UseParticleImage: NodeDefinition = {
-  id: "UseParticleImage",
+  id: "Image/UseParticleImage",
   label: "Use Particle Image",
   icon: IconPhoto,
   description: "Use one of the provided standard particle",

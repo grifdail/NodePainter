@@ -3,7 +3,7 @@ import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const UploadImage: NodeDefinition = {
-  id: "UploadImage",
+  id: "Image/UploadImage",
   label: "Upload Image",
   icon: IconCameraUp,
   description: "Upload an image",

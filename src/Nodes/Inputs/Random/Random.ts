@@ -1,11 +1,11 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
-import { Port } from "../../Types/PortTypeGenerator";
-import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
-import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
-import { Constraints } from "../../Utils/ui/applyConstraints";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { PortTypeDefinitions, portTypesWithProperty } from "../../../Types/PortTypeDefinitions";
+import { Port } from "../../../Types/PortTypeGenerator";
+import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { createOrSelectFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
+import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const Random: NodeDefinition = {
   id: "Input/Random/Random",

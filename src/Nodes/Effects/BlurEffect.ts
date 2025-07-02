@@ -113,7 +113,7 @@ void main() {
 `;
 
 export const BlurEffect: NodeDefinition = {
-  id: "BlurEffect",
+  id: "Effect/BlurEffect",
   label: "Apply Blur Effect",
   icon: IconPhoto,
   description: "Blur an image",

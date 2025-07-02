@@ -1,6 +1,6 @@
 import { IconAngle } from "@tabler/icons-react";
-import { NodeDefinition } from "../../Types/NodeDefinition";
-import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
+import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const Atan2: NodeDefinition = {
   id: "Math/Atan2",

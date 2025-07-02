@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const ImageDimension: NodeDefinition = {
-  id: "ImageDimension",
+  id: "Image/Dimension",
   label: "Image dimension",
   icon: DoubleIconGen(IconPhoto, IconRuler),
   description: "Return the dimension of an image",

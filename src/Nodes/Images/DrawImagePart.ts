@@ -6,7 +6,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const DrawImagePart: NodeDefinition = {
-  id: "DrawImagePart",
+  id: "Image/DrawImagePart",
   label: "Draw Image Part",
   icon: DoubleIconGen(IconPhoto, IconGrid3x3),
   description: "Draw only a portion of an image",
