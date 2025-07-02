@@ -5,7 +5,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { Black, White } from "../../Utils/math/colorUtils";
 
 export const SwitchNode: NodeDefinition = {
-  id: "Switch",
+  id: "Logic/Switch",
   description: "Return one of the input depending on the condition",
   icon: IconAssembly,
   alias: "Select If Conditional Ternary ?",

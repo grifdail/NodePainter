@@ -2,7 +2,7 @@ import { IconCalendar } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Calendar: NodeDefinition = {
-  id: "Calendar",
+  id: "Input/Calendar",
   description: "The current date.",
   icon: IconCalendar,
   tags: ["Input"],

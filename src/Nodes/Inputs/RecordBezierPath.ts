@@ -5,7 +5,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RecordBezierPath: NodeDefinition = {
-  id: "RecordBezierPath",
+  id: "Input/RecordBezierPath",
   label: "Record Bezier Path",
   description: "Replay a handdrawn bezier path",
   icon: IconRoute,

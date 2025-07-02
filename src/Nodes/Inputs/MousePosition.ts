@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const MousePosition: NodeDefinition = {
-  id: "MousePosition",
+  id: "Input/MousePosition",
   label: "Mouse Position",
   description: "The position of the cursor relative to the canvas",
   icon: IconMouse,

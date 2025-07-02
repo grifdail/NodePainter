@@ -2,7 +2,7 @@ import { IconMovie } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Frame: NodeDefinition = {
-  id: "Frame",
+  id: "Input/Frame",
   description: "The current frame index relative to the execution of the preview",
   icon: IconMovie,
   tags: ["Input"],

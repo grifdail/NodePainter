@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const Dimension: NodeDefinition = {
-  id: "Dimension",
+  id: "Input/Dimension",
   description: "The dimension of the canvas",
   icon: IconArrowsHorizontal,
   tags: ["Input"],

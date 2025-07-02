@@ -7,7 +7,7 @@ import { toQuaternion } from "../../Utils/math/quaternionUtils";
 import { vectorNormalize } from "../../Utils/math/vectorUtils";
 
 export const AxisAngle: NodeDefinition = {
-  id: "AxisAngle",
+  id: "Math/Quaternion/AxisAngle",
   label: "Axis Angle",
   description: "Create a rotation from rotation around the specified axis",
   icon: IconRotate3d,

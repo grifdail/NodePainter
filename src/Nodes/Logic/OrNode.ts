@@ -2,7 +2,7 @@ import { IconLogicOr } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const OrNode: NodeDefinition = {
-  id: "Or",
+  id: "Logic/Or",
   description: "Return true only if one of the input is true",
   icon: IconLogicOr,
   tags: ["Logic"],

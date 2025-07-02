@@ -2,7 +2,7 @@ import { IconClock } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const Clock: NodeDefinition = {
-  id: "Clock",
+  id: "Input/Clock",
   description: "The current system time.",
   icon: IconClock,
   tags: ["Input"],

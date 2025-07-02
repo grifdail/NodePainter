@@ -8,7 +8,7 @@ import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardC
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RandomOnSphere: NodeDefinition = {
-  id: "RandomOnSphere",
+  id: "Input/Random/RandomOnSphere",
   description: "A random value, consistant across frames",
   icon: DoubleIconGen(IconArrowsShuffle, IconSphere),
   tags: ["Input"],

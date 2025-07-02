@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Comparator, ComparatorOps } from "../../Utils/math/logicUtils";
 
 export const Compare: NodeDefinition = {
-  id: "Compare",
+  id: "Logic/Compare",
   description: "Compare two numeric value",
   icon: IconMathEqualGreater,
   tags: ["Logic", "Math"],

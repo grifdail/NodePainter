@@ -7,7 +7,7 @@ import { toQuaternion } from "../../Utils/math/quaternionUtils";
 import { vectorNormalize } from "../../Utils/math/vectorUtils";
 
 export const AlignRotation: NodeDefinition = {
-  id: "AlignRotation",
+  id: "Math/Quaternion/AlignRotation",
   label: "Align Rotation",
   description: "Create a rotation that align vector axis to vector target",
   icon: IconRotate3d,

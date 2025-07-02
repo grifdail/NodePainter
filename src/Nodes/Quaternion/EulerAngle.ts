@@ -6,7 +6,7 @@ import { eulerToQuat } from "../../Utils/math/quaternionUtils";
 
 export const EulerAngle: NodeDefinition = createMultiTypeNodeDefinition(
   {
-    id: "EulerAngle",
+    id: "Math/Quaternion/EulerAngle",
     label: "Euler Angle",
     description: "Create a rotation from rotation around the main axis",
     icon: IconRotate3d,

@@ -2,7 +2,7 @@ import { IconLogicNot } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const NotNode: NodeDefinition = {
-  id: "Not",
+  id: "Logic/Not",
   description: "Return the oposite of the input",
   icon: IconLogicNot,
   tags: ["Logic"],

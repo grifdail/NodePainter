@@ -5,7 +5,8 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { toQuaternion } from "../../Utils/math/quaternionUtils";
 
 export const QuaternionInverse: NodeDefinition = {
-  id: "QuaternionInverse",
+  id: "Math/Quaternion/Inverse",
+  label: "Quaternion Inverse",
   description: "Return the inverse of the input rotation",
   icon: IconRotate3d,
   tags: ["Vector"],

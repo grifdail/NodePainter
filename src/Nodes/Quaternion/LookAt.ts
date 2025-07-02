@@ -8,7 +8,7 @@ import { toQuaternion } from "../../Utils/math/quaternionUtils";
 const m = new Matrix4();
 
 export const LookAtRotation: NodeDefinition = {
-  id: "LookAtRotation",
+  id: "Math/Quaternion/LookAtRotation",
   description: "Create a rotation that align vector axis to vector target",
   icon: IconRotate3d,
   featureLevel: 3,

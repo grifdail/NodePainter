@@ -8,7 +8,7 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const Random: NodeDefinition = {
-  id: "Random",
+  id: "Input/Random/Random",
   description: "A random value, consistant across frames",
   icon: IconArrowsShuffle,
   tags: ["Input"],

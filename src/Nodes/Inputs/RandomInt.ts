@@ -5,7 +5,7 @@ import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardC
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RandomInt: NodeDefinition = {
-  id: "RandomInt",
+  id: "Input/Random/RandomInt",
   description: "A random value between to integer, consistant across frames",
   icon: IconArrowsShuffle,
   tags: ["Input"],
