@@ -5,7 +5,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const Slice: NodeDefinition = {
-  id: "Slice",
+  id: "Array/Slice",
   description: "Return a portion of the value",
   icon: IconList,
   tags: ["Array"],

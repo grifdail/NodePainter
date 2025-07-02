@@ -7,7 +7,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayFirst: NodeDefinition = {
-  id: "ArrayFirst",
+  id: "Array/First",
   description: "Return the first element of an array",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],

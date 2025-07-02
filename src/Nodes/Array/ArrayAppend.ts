@@ -7,7 +7,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayAppend: NodeDefinition = {
-  id: "ArrayAppend",
+  id: "Array/Append",
   alias: "Push Add",
   description: "Return a copy of the array with the new elements added at the end",
   icon: DoubleIconGen(IconList, IconBrackets),

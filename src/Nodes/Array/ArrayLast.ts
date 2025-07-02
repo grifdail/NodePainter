@@ -7,7 +7,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayLast: NodeDefinition = {
-  id: "ArrayLast",
+  id: "Array/Last",
   description: "Return the last element of an array",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],

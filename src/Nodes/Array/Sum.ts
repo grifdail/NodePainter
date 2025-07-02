@@ -5,7 +5,7 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 
 export const Sum: NodeDefinition = {
-  id: "Sum",
+  id: "Array/Sum",
   description: "Sum up all the value in the array",
   icon: IconList,
   tags: ["Array"],

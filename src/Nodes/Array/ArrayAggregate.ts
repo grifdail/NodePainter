@@ -40,7 +40,7 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
 };
 
 export const ArrayAgreggate: NodeDefinition = {
-  id: "ArrayAgreggate",
+  id: "Array/Agreggate",
   description: "Return a new array that associate every item in the input array to a new one",
   icon: DoubleIconGen(IconList, IconArrowRight),
   tags: ["Array"],

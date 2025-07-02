@@ -6,7 +6,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayRemoveAt: NodeDefinition = {
-  id: "ArrayRemoveAt",
+  id: "Array/RemoveAt",
   description: "Return a copy of the array the element at a specific position removed",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],

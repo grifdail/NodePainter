@@ -7,7 +7,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayReplace: NodeDefinition = {
-  id: "ArrayReplace",
+  id: "Array/Replace",
   description: "Return a copy of the array the element at a specific position replaced",
   icon: DoubleIconGen(IconList, IconBrackets),
   tags: ["Array"],

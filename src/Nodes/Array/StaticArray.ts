@@ -17,7 +17,7 @@ const addNewPort = (node: NodeData) => {
 };
 
 export const StaticArray: NodeDefinition = {
-  id: "StaticArray",
+  id: "Array/Static",
   description: "Create an array from multiple static value",
   icon: IconList,
   tags: ["Array"],

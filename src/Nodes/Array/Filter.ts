@@ -30,7 +30,7 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
 };
 
 export const Filter: NodeDefinition = {
-  id: "Filter",
+  id: "Array/Filter",
   description: "Return all the element of the array that evaluate to true",
   icon: DoubleIconGen(IconList, IconFilter),
   tags: ["Array"],

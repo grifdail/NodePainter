@@ -7,7 +7,8 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const SelectFromArray: NodeDefinition = {
-  id: "SelectFromArray",
+  id: "Array/Select",
+  label: "Select From Array",
   description: "Select an element of an based on the index",
   alias: "Get Index",
   icon: DoubleIconGen(IconList, IconBrackets),

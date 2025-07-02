@@ -5,7 +5,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const Count: NodeDefinition = {
-  id: "Count",
+  id: "Array/Count",
   description: "Count the number of element in an array",
   icon: DoubleIconGen(IconList, IconQuestionMark),
   alias: "Length Size Count",

@@ -31,6 +31,7 @@ import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
+import { upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
 import { buildBoundingBox } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { copyInputPortsValues } from "./copyInputPortsValues";
@@ -241,6 +242,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       resetCamera();
     },
     loadTemplate(temp) {
+      temp = upgradeTemplate(temp);
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       toastSuccess("Sketch loaded !");

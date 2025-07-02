@@ -6,7 +6,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 export const ArrayInvert: NodeDefinition = {
-  id: "ArrayInvert",
+  id: "Array/Invert",
   description: "Reorder the element of the array so that the last element become the first",
   alias: "Inverse",
   icon: DoubleIconGen(IconList, IconBrackets),
