@@ -11,7 +11,7 @@ import { createGradientFromPalette } from "../Data/Palettes";
 import { createDefaultMaterial } from "../Utils/graph/definition/createDefaultMaterial";
 import { convertToShaderNumber } from "../Utils/graph/execution/convertToShaderNumber";
 import { clamp01 } from "../Utils/math/clamp01";
-import { White } from "../Utils/math/colorUtils";
+import { fromHex, White } from "../Utils/math/colorUtils";
 import { compareVector } from "../Utils/math/compareVector";
 import { toQuaternion } from "../Utils/math/quaternionUtils";
 import { vectorAddition, vectorDivision, vectorLerp, vectorMultiplication, vectorSubstraction } from "../Utils/math/vectorUtils";
@@ -283,6 +283,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => "",
     convert: {
       number: (a) => (Number.isNaN(Number.parseFloat(a)) ? 0 : Number.parseFloat(a)),
+      color: (a) => fromHex(a),
       string: (a) => a,
       unknown: (a) => a,
     },

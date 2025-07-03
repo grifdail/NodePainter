@@ -11,7 +11,7 @@ import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
 import { createPortConnection } from "../../Utils/graph/modification/createPortConnection";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const InterpolateText: NodeDefinition = {
+export const InterpolateNode: NodeDefinition = {
   id: "Text/Interpolate",
   label: "Interpolate Text",
   description: "Return the text with each $input replaced with the value of the corresponding port",
@@ -19,7 +19,6 @@ export const InterpolateText: NodeDefinition = {
   tags: ["Text"],
   dataInputs: [],
   dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
-
   settings: [
     { type: "text-area", id: "text", defaultValue: "The value is $input" },
     {

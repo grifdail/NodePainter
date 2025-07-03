@@ -1,7 +1,7 @@
 import { IconFileText } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
-export const SliceText: NodeDefinition = {
+export const SliceNode: NodeDefinition = {
   id: "Text/Slice",
   label: "Text Slice",
   description: "Return a portion of text from start to end",

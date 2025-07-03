@@ -1,12 +1,18 @@
-import { InterpolateText } from "./InterpolateText";
-import { SliceText } from "./SliceText";
-import { TextConcat } from "./TextConcat";
-import { TextLength } from "./TextLength";
+import { ChangeCaseNode } from "./ChangeCase";
+import { ConcatNode } from "./ConcatNode";
+import { InterpolateNode } from "./InterpolateNode";
+import { LengthNode } from "./LengthNode";
+import { ReplaceNode } from "./ReplaceNode";
+import { SliceNode } from "./SliceNode";
+import { SplitNode } from "./SplitNode";
 
 export const TextNodes = [
   //
-  InterpolateText,
-  SliceText,
-  TextConcat,
-  TextLength,
+  ChangeCaseNode,
+  ConcatNode,
+  InterpolateNode,
+  LengthNode,
+  ReplaceNode,
+  SliceNode,
+  SplitNode,
 ];

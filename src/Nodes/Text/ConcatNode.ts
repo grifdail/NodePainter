@@ -1,7 +1,7 @@
 import { IconFileText } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
-export const TextConcat: NodeDefinition = {
+export const ConcatNode: NodeDefinition = {
   id: "Text/Concat",
   label: "Text Concatenation",
   description: "concat two string together",
