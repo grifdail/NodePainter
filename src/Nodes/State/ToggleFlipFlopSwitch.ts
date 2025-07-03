@@ -3,25 +3,24 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
-export const ToggleSwitchNode: NodeDefinition = {
-  id: "State/ToggleSwitch",
-  label: "Toggle Switch",
+export const ToggleFlipFlopNode: NodeDefinition = {
+  id: "State/ToggleFlipFlopSwitch",
+  label: "Toggle Flip-Flop",
   icon: IconCircuitSwitchOpen,
-  description: "Toggle between true and false when its inputs are true",
+  description: "Toggle between true and false everytime it's input is true",
 
-  dataInputs: [Port.bool("on"), Port.bool("off"), Port.CacheId()],
+  dataInputs: [Port.bool("flip"), Port.CacheId()],
   dataOutputs: [Port.bool("out")],
   tags: ["State"],
   settings: [],
   getData(portId, node, context) {
-    const on = context.getInputValueBoolean(node, "on");
-    const off = context.getInputValueBoolean(node, "off");
+    const flip = context.getInputValueBoolean(node, "flip");
     const previous = updateAndReadFromCache(context, node, (oldValue) => {
-      if (off || oldValue === undefined) {
+      if (oldValue === undefined) {
         oldValue = false;
       }
-      if (on) {
-        oldValue = true;
+      if (flip) {
+        oldValue = !oldValue;
       }
       return oldValue;
     });

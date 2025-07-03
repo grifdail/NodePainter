@@ -242,6 +242,7 @@ const UPGRADES: UpgradeFunction[] = [
     );
   },
   (sketch) => addMissingNodePort(["Color/HSV", "Color/HSL"], sketch),
+  (sketch) => redefineNodes({ ToggleFlipFlopSwitch: "State/ToggleFlipFlopSwitch" }, sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
