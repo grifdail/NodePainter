@@ -13,7 +13,7 @@ import { RegularPolygonNode } from "./RegularPolygonNode";
 import { TextNode } from "./TextNode";
 import { TriangleNode } from "./TriangleNode";
 
-export const NodesNode = [
+export const DrawNodes = [
   //
   ArcNode,
   BezierNode,
