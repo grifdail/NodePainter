@@ -20,6 +20,9 @@ export class BoundingBox {
   grow(top: number = 0, right: number = 0, bottom: number = 0, left: number = 0) {
     return new BoundingBox(this.top - top, this.right + right, this.bottom + bottom, this.left - left);
   }
+  growAllSide(amount: number) {
+    return this.grow(amount, amount, amount, amount);
+  }
   width() {
     return this.right - this.left;
   }
@@ -28,5 +31,14 @@ export class BoundingBox {
   }
   center(): [number, number] {
     return [(this.left + this.right) / 2, (this.top + this.bottom) / 2];
+  }
+  intersect(screenBox: BoundingBox): boolean {
+    return !(this.right < screenBox.left || this.left > screenBox.right || this.bottom < screenBox.top || this.top > screenBox.bottom);
+  }
+  scale(scale: number) {
+    var w = this.width() * scale * 0.5;
+    var h = this.height() * scale * 0.5;
+    var [x, y] = this.center();
+    return new BoundingBox(y - h, x + w, y + h, x - w);
   }
 }

@@ -40,13 +40,15 @@ export const useGraphHotkey = () => {
         var nodeData = tree.addNode(node.id, x, y);
         height = Math.max(GetNodeHeight(nodeData, node) + 100, height);
         x += 400;
-        if (x > 5000) {
+        if (x > 10000) {
           x = 0;
           y += height;
           height = 400;
         }
       }
-      y += height;
+      if (x > 0) {
+        y += height + 200;
+      }
     }
   });
   useHotkeys("shift+n", (e) => {

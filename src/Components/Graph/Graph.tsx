@@ -20,6 +20,7 @@ import { SVGGridPattern } from "./SVGGridPattern";
 import { useCopyPasteGraph } from "./useCopyPasteGraph";
 import { abs } from "mathjs";
 import { GraphAreaRect } from "./GraphAreaRect";
+import { buildBoundingBoxAroundNode } from "../../Utils/ui/buildBoundingBox";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -41,18 +42,19 @@ export function Graph() {
   const portSelection = usePortSelection();
   const { onClickPort, onClickNode: onClickNodeEdgeCreation } = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
-  const [xyz, bind] = useSVGMapDrag();
+  const [xyz, bind, screenBox] = useSVGMapDrag();
   const { nodes: selectedNode, hasArea, areaStart } = useSelection();
   const contextMenuData = useContextMenu();
   const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
   const hasNoCursor = useMediaQuery("(hover: none)");
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
-  const nodes = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
-  const edges = useGraphEdge(nodes);
-  const [nodePositionSpring, nodePositionSpringApi] = useNodePositionSpring(nodes, tree);
-  const getNodePort = useGetNodePort(nodes, nodePositionSpring);
+  const nodesOnThisGraph = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
+  const nodesToDraw = useMemo(() => nodesOnThisGraph.map((node, index) => [node, index] as const).filter(([node]) => buildBoundingBoxAroundNode(node, tree).growAllSide(100).intersect(screenBox)), [screenBox, nodesOnThisGraph]);
+  const edges = useGraphEdge(nodesOnThisGraph);
+  const [nodePositionSpring, nodePositionSpringApi] = useNodePositionSpring(nodesOnThisGraph, tree);
+  const getNodePort = useGetNodePort(nodesOnThisGraph, nodePositionSpring);
   const onTapNode = useNodeTap(onClickNodeEdgeCreation);
-  const onMoveNode = useMoveNode(nodes, tree, nodePositionSpringApi);
+  const onMoveNode = useMoveNode(nodesOnThisGraph, tree, nodePositionSpringApi);
 
   useCopyPasteGraph();
   useGraphHotkey();
@@ -79,8 +81,9 @@ export function Graph() {
           height="100%"
           fill="url(#grid)"
           style={{ touchAction: "none" }}></animated.rect>
-        {nodes
+        {nodesOnThisGraph
           .filter((node) => node.settings?.grapharea)
+
           .map((node) => {
             return (
               <GraphAreaRect
@@ -91,7 +94,7 @@ export function Graph() {
               />
             );
           })}
-        {nodes
+        {nodesOnThisGraph
           .filter((node) => node.pairedNode != undefined)
           .map((node) => {
             return (
@@ -121,7 +124,7 @@ export function Graph() {
             reverse={portSelection.location === "input"}
           />
         )}
-        {nodes.map((node, i) => {
+        {nodesToDraw.map(([node, i]) => {
           const nodeProps = {
             node,
             onClickPort,

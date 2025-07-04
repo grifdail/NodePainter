@@ -4,9 +4,14 @@ import { useViewbox } from "./useViewbox";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import { useEffect, useState } from "react";
 import { useSelection } from "./useSelection";
+import { BoundingBox } from "../Types/BoundingBox";
+import { useWindowSize } from "@uidotdev/usehooks";
 
-export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes] {
+export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes, BoundingBox] {
   var viewBox = useViewbox();
+  const screenResolution = useWindowSize();
+  const viewBoxBoundingBox = new BoundingBox(viewBox.y, viewBox.x + (screenResolution.width || 1024) * viewBox.scale, viewBox.y + (screenResolution.height || 1024) * viewBox.scale, viewBox.x).scale(2);
+
   var selection = useSelection();
   var [isSelection, setIsSelection] = useState(false);
 
@@ -62,7 +67,7 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
     }
   );
 
-  return [xyz, bind];
+  return [xyz, bind, viewBoxBoundingBox];
 }
 export function computeNewScale(viewbox: { x: number; y: number; scale: number }, scale: number, origin: Vector2): number[] {
   var scaleDiff = viewbox.scale - viewbox.scale / scale;

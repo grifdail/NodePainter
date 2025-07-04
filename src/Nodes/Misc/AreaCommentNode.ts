@@ -7,7 +7,7 @@ import { NodeData } from "../../Types/NodeData";
 import { ContextMenuData, NodeDefinition } from "../../Types/NodeDefinition";
 import { TreeStore } from "../../Types/TreeStore";
 import { getNodesInBoundingBox } from "../../Utils/graph/modification/getNodesInBoundingBox";
-import { buildBoundingBox } from "../../Utils/ui/buildBoundingBox";
+import { buildBoundingBoxAroundNodes } from "../../Utils/ui/buildBoundingBox";
 
 export const AreaCommentNode: NodeDefinition = {
   id: "Misc/AreaComment",
@@ -29,7 +29,7 @@ export const AreaCommentNode: NodeDefinition = {
     var selection = useSelection.getState().nodes;
     if (selection.length >= 1) {
       options["Build Around Selection"] = (node: NodeData, tree: TreeStore) => {
-        var boundingBox = buildBoundingBox([...selection], tree);
+        var boundingBox = buildBoundingBoxAroundNodes([...selection], tree);
         var extended = boundingBox.bb.grow(50, 50, 50, 50);
 
         node.settings.grapharea = { x: extended.left, width: extended.width(), y: extended.top, height: extended.height(), color: node.settings.grapharea.color, name: node.settings.grapharea.name, relative: false };
