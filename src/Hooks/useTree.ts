@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
+import { BlackboardNode } from "../Nodes/Misc/BlackboardNode";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
@@ -594,7 +595,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     createBlackboardNode(ports, name, x, y, pairedNode) {
-      const newNodeData = createNodeData(get().getNodeTypeDefinition("Blackboard"), x, y);
+      const newNodeData = createNodeData(get().getNodeTypeDefinition(BlackboardNode.id), x, y);
       newNodeData.graph = get().editedGraph;
       newNodeData.label = name;
       ports.forEach((element, index) => {
