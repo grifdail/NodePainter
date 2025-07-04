@@ -26,7 +26,7 @@ export type TreeStore = {
   getInputPort: (id: string, portId: string) => PortConnection;
   getOutputPort: (id: string, portId: string) => PortDefinition;
   setNodePosition: (id: string, x: number, y: number) => void;
-  addNode: (nodeType: string, posX: number, posY: number, modifier?: ((node: NodeData, def: NodeDefinition) => void) | null) => void;
+  addNode: (nodeType: string, posX: number, posY: number, modifier?: ((node: NodeData, def: NodeDefinition) => void) | null) => NodeData;
   addEdge: (sourceId: string, sourcePort: string, targetId: string, targetPort: string) => void;
   getPortValue: (nodeId: string, portId: string, context: ExecutionContext) => [any, PortType];
   removeDataConnection: (node: string, port: string) => void;

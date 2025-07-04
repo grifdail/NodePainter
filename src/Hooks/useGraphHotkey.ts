@@ -1,4 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
+import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { Routes } from "../Types/Routes";
 import { extractSnipet } from "../Utils/graph/modification/snippets";
@@ -19,28 +20,33 @@ export const useGraphHotkey = () => {
       return true;
     });
     const categories = nodeLibrary.reduce((old, value) => {
-      value.tags.forEach((tag) => {
-        if (old[tag] === undefined) {
-          old[tag] = [value];
-        } else {
-          old[tag].push(value);
-        }
-      });
+      var cat = /(?:([\w\/]+)\/)?\w+$/gi.exec(value.id)?.[1];
+      if (!cat) {
+        cat = "noCat";
+      }
+      if (old[cat] === undefined) {
+        old[cat] = [value];
+      } else {
+        old[cat].push(value);
+      }
       return old;
     }, {} as { [key: string]: NodeDefinition[] });
 
     let y = 400;
     for (let cat in categories) {
       let x = 0;
+      let height = 400;
       for (var node of categories[cat]) {
-        tree.addNode(node.id, x, y);
+        var nodeData = tree.addNode(node.id, x, y);
+        height = Math.max(GetNodeHeight(nodeData, node) + 100, height);
         x += 400;
         if (x > 5000) {
           x = 0;
-          y += 400;
+          y += height;
+          height = 400;
         }
       }
-      y += 400;
+      y += height;
     }
   });
   useHotkeys("shift+n", (e) => {

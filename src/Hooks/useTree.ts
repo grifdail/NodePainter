@@ -80,6 +80,7 @@ export const useTree = create<TreeStore>()((set, get) => {
           state.nodes[newNodeData.id] = newNodeData;
         })
       );
+      return newNodeData;
     },
     getNodeTypeDefinition(node: string | NodeData) {
       const type = typeof node === "string" ? node : node.type;
