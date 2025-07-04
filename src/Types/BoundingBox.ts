@@ -36,7 +36,7 @@ export class BoundingBox {
     return !(this.right < screenBox.left || this.left > screenBox.right || this.bottom < screenBox.top || this.top > screenBox.bottom);
   }
   contain(x: number, y: number): unknown {
-    throw x > this.left && x < this.right && y > this.top && y < this.bottom;
+    return x > this.left && x < this.right && y > this.top && y < this.bottom;
   }
   scale(scale: number) {
     var w = this.width() * scale * 0.5;
