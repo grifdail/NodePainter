@@ -1,5 +1,7 @@
 import { NodeLibrary } from "../../../Nodes/Nodes";
+import { Port } from "../../../Types/PortTypeGenerator";
 import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { White } from "../../math/colorUtils";
 import { createPortConnection } from "./createPortConnection";
 
 type UpgradeFunction = (sketch: SketchTemplate) => SketchTemplate;
@@ -243,6 +245,23 @@ const UPGRADES: UpgradeFunction[] = [
   },
   (sketch) => addMissingNodePort(["Color/HSV", "Color/HSL"], sketch),
   (sketch) => redefineNodes({ ToggleFlipFlopSwitch: "State/ToggleFlipFlopSwitch" }, sketch),
+  (sketch) => {
+    sketch = redefineNodes({ ["Image/DrawImage"]: "Draw/Image" }, sketch);
+
+    Object.values(sketch.nodes).forEach((node) => {
+      if (node.type === "Image/DrawImageWithTint") {
+        node.dataInputs.tint = createPortConnection(Port.color("tint", White()));
+        node.dataInputs.tint.ownValue = node.dataInputs.color.ownValue;
+        delete node.dataInputs.color;
+        node.type = "Draw/Image";
+      }
+      if (node.type === "Image/DrawImagePart") {
+        node.type = "Draw/Image";
+      }
+    });
+    sketch = addMissingNodePort(["Draw/Image"], sketch);
+    return sketch;
+  },
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

@@ -1,6 +1,3 @@
-import { DrawImage } from "./DrawImage";
-import { DrawImagePart } from "./DrawImagePart";
-import { DrawImageWithTint } from "./DrawImageWithTint";
 import { ImageDimension } from "./ImageDimension";
 import { PaintImage } from "./PaintImage";
 import { PrecomputeImage } from "./PrecomputeImage";
@@ -10,9 +7,6 @@ import { UsePatternImage } from "./UsePatternImage";
 
 export const ImageNodes = [
   //
-  DrawImage,
-  DrawImagePart,
-  DrawImageWithTint,
   ImageDimension,
   PaintImage,
   PrecomputeImage,

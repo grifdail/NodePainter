@@ -4,6 +4,7 @@ import { CircleNode } from "./CircleNode";
 import { ClearNode } from "./ClearNode";
 import { FillBackgroundNode } from "./FillBackgroundNode";
 import { GradientRectNode } from "./GradientRectNode";
+import { ImageNode } from "./ImageNode";
 import { LineNode } from "./LineNode";
 import { PolygonNode } from "./PolygonNode";
 import { PolylineNode } from "./PolylineNode";
@@ -21,6 +22,7 @@ export const DrawNodes = [
   ClearNode,
   FillBackgroundNode,
   GradientRectNode,
+  ImageNode,
   LineNode,
   PolygonNode,
   PolylineNode,
