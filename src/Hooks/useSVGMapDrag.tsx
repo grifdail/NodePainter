@@ -10,7 +10,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes, BoundingBox] {
   var viewBox = useViewbox();
   const screenResolution = useWindowSize();
-  const viewBoxBoundingBox = new BoundingBox(viewBox.y, viewBox.x + (screenResolution.width || 1024) * viewBox.scale, viewBox.y + (screenResolution.height || 1024) * viewBox.scale, viewBox.x).scale(2);
+  const viewBoxBoundingBox = new BoundingBox(viewBox.y, viewBox.x + (screenResolution.width || 1024) * viewBox.scale, viewBox.y + (screenResolution.height || 1024) * viewBox.scale, viewBox.x).scale(2).grow(500);
 
   var selection = useSelection();
   var [isSelection, setIsSelection] = useState(false);

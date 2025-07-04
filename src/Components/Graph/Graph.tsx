@@ -49,7 +49,7 @@ export function Graph() {
   const hasNoCursor = useMediaQuery("(hover: none)");
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
   const nodesOnThisGraph = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
-  const nodesToDraw = useMemo(() => nodesOnThisGraph.map((node, index) => [node, index] as const).filter(([node]) => buildBoundingBoxAroundNode(node, tree).growAllSide(100).intersect(screenBox)), [screenBox, nodesOnThisGraph]);
+  const nodesToDraw = useMemo(() => nodesOnThisGraph.map((node, index) => [node, index] as const).filter(([node]) => screenBox.contain(node.positionX, node.positionY)), [screenBox, nodesOnThisGraph]);
   const edges = useGraphEdge(nodesOnThisGraph);
   const [nodePositionSpring, nodePositionSpringApi] = useNodePositionSpring(nodesOnThisGraph, tree);
   const getNodePort = useGetNodePort(nodesOnThisGraph, nodePositionSpring);
