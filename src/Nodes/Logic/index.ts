@@ -1,5 +1,5 @@
 import { AndNode } from "./AndNode";
-import { Compare } from "./Compare";
+import { CompareNode } from "./CompareNode";
 import { NotNode } from "./NotNode";
 import { OrNode } from "./OrNode";
 import { SwitchNode } from "./SwitchNode";
@@ -8,7 +8,7 @@ import { XOrNode } from "./XOrNode";
 export const LogicNodes = [
   //
   AndNode,
-  Compare,
+  CompareNode,
   NotNode,
   OrNode,
   SwitchNode,

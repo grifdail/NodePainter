@@ -1,38 +1,38 @@
-import { Abs } from "./Abs";
-import { Ceil } from "./Ceil";
-import { Clamp } from "./Clamp";
-import { Clamp01 } from "./Clamp01";
+import { AbsNode } from "./AbsNode";
+import { CeilNode } from "./CeilNode";
+import { Clamp01Node } from "./Clamp01Node";
+import { ClampNode } from "./ClampNode";
 import { ExpNode } from "./ExpNode";
-import { Floor } from "./Floor";
+import { FloorNode } from "./FloorNode";
 import { LogNode } from "./LogNode";
-import { MathExpression } from "./MathExpression";
-import { Max } from "./Max";
-import { Min } from "./Min";
-import { OneMinus } from "./OneMinus";
-import { PingPong } from "./PingPong";
-import { PowNode } from "./PowNode";
-import { Round } from "./Round";
+import { MathExpressionNode } from "./MathExpressionNode";
+import { MaxNode } from "./MaxNode";
+import { MinNode } from "./MinNode";
+import { OneMinusNode } from "./OneMinusNode";
+import { PingPongNode } from "./PingPongNode";
+import { PowNodeNode } from "./PowNodeNode";
+import { RoundNode } from "./RoundNode";
 import { SignNode } from "./SignNode";
-import { Sqrt } from "./Sqrt";
-import { Step } from "./Step";
+import { SqrtNode } from "./SqrtNode";
+import { StepNode } from "./StepNode";
 
 export const MathAdvancedNodes = [
   //
-  Abs,
-  Ceil,
-  Clamp,
-  Clamp01,
+  AbsNode,
+  CeilNode,
+  ClampNode,
+  Clamp01Node,
   ExpNode,
-  Floor,
+  FloorNode,
   LogNode,
-  MathExpression,
-  Max,
-  Min,
-  OneMinus,
-  PingPong,
-  PowNode,
-  Round,
+  MathExpressionNode,
+  MaxNode,
+  MinNode,
+  OneMinusNode,
+  PingPongNode,
+  PowNodeNode,
+  RoundNode,
   SignNode,
-  Sqrt,
-  Step,
+  SqrtNode,
+  StepNode,
 ];

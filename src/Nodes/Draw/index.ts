@@ -1,32 +1,32 @@
-import { Clear } from "./Clear";
-import { DrawArc } from "./DrawArc";
-import { DrawBezier } from "./DrawBezier";
-import { DrawCircle } from "./DrawCircle";
-import { DrawGradientRect } from "./DrawGradientRect";
-import { DrawLine } from "./DrawLine";
-import { DrawPolygon } from "./DrawPolygonArray";
-import { DrawPolyline } from "./DrawPolyline";
-import { DrawQuad } from "./DrawQuad";
-import { DrawRect } from "./DrawRect";
-import { DrawRegularPolygon } from "./DrawRegularPolygon";
-import { DrawText } from "./DrawText";
-import { DrawTriangle } from "./DrawTriangle";
-import { FillBackground } from "./FillBackground";
+import { ArcNode } from "./ArcNode";
+import { BezierNode } from "./BezierNode";
+import { CircleNode } from "./CircleNode";
+import { ClearNode } from "./ClearNode";
+import { FillBackgroundNode } from "./FillBackgroundNode";
+import { GradientRectNode } from "./GradientRectNode";
+import { LineNode } from "./LineNode";
+import { PolygonNode } from "./PolygonNode";
+import { PolylineNode } from "./PolylineNode";
+import { QuadNode } from "./QuadNode";
+import { RectNode } from "./RectNode";
+import { RegularPolygonNode } from "./RegularPolygonNode";
+import { TextNode } from "./TextNode";
+import { TriangleNode } from "./TriangleNode";
 
-export const DrawNodes = [
+export const NodesNode = [
   //
-  Clear,
-  DrawArc,
-  DrawBezier,
-  DrawCircle,
-  DrawGradientRect,
-  DrawLine,
-  DrawPolygon,
-  DrawPolyline,
-  DrawQuad,
-  DrawRect,
-  DrawRegularPolygon,
-  DrawText,
-  DrawTriangle,
-  FillBackground,
+  ArcNode,
+  BezierNode,
+  CircleNode,
+  ClearNode,
+  FillBackgroundNode,
+  GradientRectNode,
+  LineNode,
+  PolygonNode,
+  PolylineNode,
+  QuadNode,
+  RectNode,
+  RegularPolygonNode,
+  TextNode,
+  TriangleNode,
 ];

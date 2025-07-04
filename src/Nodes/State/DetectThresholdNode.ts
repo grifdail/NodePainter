@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
 
-export const DetectThreshold: NodeDefinition = {
+export const DetectThresholdNode: NodeDefinition = {
   id: "State/DetectThreshold",
   label: "Detect Threshold",
   icon: IconCircuitSwitchOpen,

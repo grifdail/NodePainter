@@ -1,27 +1,27 @@
-import { ShaderCameraDirection } from "./ShaderCameraDirection";
-import { ShaderCameraPosition } from "./ShaderCameraPosition";
-import { ShaderLocalNormal } from "./ShaderLocalNormal";
-import { ShaderLocalPosition } from "./ShaderLocalPosition";
-import { ShaderUV } from "./ShaderUV";
-import { ShaderViewDirection } from "./ShaderViewDirection";
-import { ShaderViewNormal } from "./ShaderViewNormal";
-import { ShaderViewPosition } from "./ShaderViewPosition";
-import { ShaderWorldNormal } from "./ShaderWorldNormal";
-import { ShaderWorldPosition } from "./ShaderWorldPosition";
+import { CameraDirectionNode } from "./ShaderCameraDirection";
+import { CameraPositionNode } from "./ShaderCameraPosition";
+import { LocalNormalNode } from "./ShaderLocalNormal";
+import { LocalPositionNode } from "./ShaderLocalPosition";
+import { UVNode } from "./ShaderUV";
+import { ViewDirectionNode } from "./ShaderViewDirection";
+import { ViewNormalNode } from "./ShaderViewNormal";
+import { ViewPositionNode } from "./ShaderViewPosition";
+import { WorldNormalNode } from "./ShaderWorldNormal";
+import { WorldPositionNode } from "./WorldPositionNode";
 
 export const ShaderVaryingNodes = [
   // All nodes
-  ShaderLocalNormal,
-  ShaderViewNormal,
-  ShaderWorldNormal,
+  LocalNormalNode,
+  ViewNormalNode,
+  WorldNormalNode,
 
-  ShaderLocalPosition,
-  ShaderViewPosition,
-  ShaderWorldPosition,
+  LocalPositionNode,
+  ViewPositionNode,
+  WorldPositionNode,
 
-  ShaderUV,
+  UVNode,
 
-  ShaderCameraPosition,
-  ShaderCameraDirection,
-  ShaderViewDirection,
+  CameraPositionNode,
+  CameraDirectionNode,
+  ViewDirectionNode,
 ];

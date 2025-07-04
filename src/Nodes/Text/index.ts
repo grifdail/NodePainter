@@ -1,4 +1,4 @@
-import { ChangeCaseNode } from "./ChangeCase";
+import { ChangeCaseNode } from "./ChangeCaseNode";
 import { ConcatNode } from "./ConcatNode";
 import { InterpolateNode } from "./InterpolateNode";
 import { LengthNode } from "./LengthNode";

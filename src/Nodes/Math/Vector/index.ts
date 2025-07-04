@@ -1,26 +1,26 @@
 import { ComposeNode } from "./ComposeNode";
-import { CrossProduct } from "./CrossProduct";
+import { CrossProductNode } from "./CrossProductNode";
 import { DecomposeNode } from "./DecomposeNode";
-import { DotProduct } from "./DotProduct";
-import { Magnitude } from "./Magnitude";
-import { Normalize } from "./Normalize";
-import { RotateVector } from "./RotateVector";
-import { SquareMagnitude } from "./SquareMagnitude";
-import { Swizzle } from "./Swizzle";
-import { Distance } from "./VectorDistance";
-import { VectorFromAngle } from "./VectorFromAngle";
+import { DistanceNode } from "./DistanceNode";
+import { DotProductNode } from "./DotProductNode";
+import { MagnitudeNode } from "./MagnitudeNode";
+import { NormalizeNode } from "./NormalizeNode";
+import { RotateNode } from "./RotateNode";
+import { SquareMagnitudeNode } from "./SquareMagnitudeNode";
+import { SwizzleNode } from "./SwizzleNode";
+import { VectorFromAngleNode } from "./VectorFromAngleNode";
 
 export const MathVectorNodes = [
   //
   ComposeNode,
-  CrossProduct,
+  CrossProductNode,
   DecomposeNode,
-  DotProduct,
-  Magnitude,
-  Normalize,
-  RotateVector,
-  SquareMagnitude,
-  Swizzle,
-  Distance,
-  VectorFromAngle,
+  DotProductNode,
+  MagnitudeNode,
+  NormalizeNode,
+  RotateNode,
+  SquareMagnitudeNode,
+  SwizzleNode,
+  DistanceNode,
+  VectorFromAngleNode,
 ];

@@ -1,22 +1,22 @@
-import { AnimationCurve } from "./AnimationCurve";
+import { AnimationCurveNode } from "./AnimationCurveNode";
 import { EasingNode } from "./EasingNode";
-import { Envelope } from "./Envelope";
-import { EvaluateBezier } from "./EvaluateBezier";
-import { ExponantialImpulse } from "./ExponantialImpulse";
-import { IntegrateVelocity } from "./IntegrateVelocity";
-import { Lerp } from "./Lerp";
-import { Remap } from "./Remap";
-import { SmoothStep } from "./SmoothStep";
+import { EnvelopeNode } from "./EnvelopeNode";
+import { EvaluateBezierNode } from "./EvaluateBezierNode";
+import { ExponantialImpulseNode } from "./ExponantialImpulseNode";
+import { IntegrateVelocityNode } from "./IntegrateVelocityNode";
+import { LerpNode } from "./LerpNode";
+import { RemapNode } from "./RemapNode";
+import { SmoothStepNode } from "./SmoothStepNode";
 
 export const MathInterpolationNodes = [
   //
-  AnimationCurve,
+  AnimationCurveNode,
   EasingNode,
-  Envelope,
-  EvaluateBezier,
-  ExponantialImpulse,
-  IntegrateVelocity,
-  Lerp,
-  Remap,
-  SmoothStep,
+  EnvelopeNode,
+  EvaluateBezierNode,
+  ExponantialImpulseNode,
+  IntegrateVelocityNode,
+  LerpNode,
+  RemapNode,
+  SmoothStepNode,
 ];

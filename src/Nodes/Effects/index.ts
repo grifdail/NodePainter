@@ -1,10 +1,10 @@
-import { BloomEffect } from "./BloomEffect";
-import { BlurEffect } from "./BlurEffect";
-import { FlatColorEffect } from "./FlatColorEffect";
+import { BloomNode } from "./BloomNode";
+import { BlurNode } from "./BlurNode";
+import { FlatColorNode } from "./FlatColorNode";
 
 export const EffectNodes = [
   //
-  BloomEffect,
-  BlurEffect,
-  FlatColorEffect,
+  BloomNode,
+  BlurNode,
+  FlatColorNode,
 ];

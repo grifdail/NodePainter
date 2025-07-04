@@ -1,10 +1,10 @@
-import { CheckerBoardPattern } from "./CheckerBoardPattern";
-import { Twirl } from "./Twirl";
-import { WorleyNoise } from "./WorleyNoise";
+import { CheckerBoardPatternNode } from "./CheckerBoardPatternNode";
+import { TwirlNode } from "./TwirlNode";
+import { WorleyNoiseNode } from "./WorleyNoiseNode";
 
 export const ProceduralNodes = [
   //
-  CheckerBoardPattern,
-  Twirl,
-  WorleyNoise,
+  CheckerBoardPatternNode,
+  TwirlNode,
+  WorleyNoiseNode,
 ];

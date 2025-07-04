@@ -1,8 +1,8 @@
-import { SampleTexture } from "./SampleTexture";
+import { SampleTextureNode } from "./SampleTextureNode";
 import { ShaderVaryingNodes } from "./Varying";
 
 export const ShaderNodes = [
   //
   ...ShaderVaryingNodes,
-  SampleTexture,
+  SampleTextureNode,
 ];

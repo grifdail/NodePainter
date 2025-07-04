@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const ShaderWorldNormal: NodeDefinition = {
+export const WorldNormalNode: NodeDefinition = {
   id: "Shader/Varying/WorldNormal",
   label: "World Normal",
   hideInLibrary: false,

@@ -1,4 +1,4 @@
-import { VectorDotProduct } from "../../Nodes/Math/Vector/DotProduct";
+import { VectorDotProduct } from "../../Nodes/Math/Vector/DotProductNode";
 import { CodeBlockExpressionGenerator } from "../../Types/CodeBlock/CodeBlockExpressionGenerator";
 import { CodeBlockStatement } from "../../Types/CodeBlock/CodeBlockStatement";
 import { PortType } from "../../Types/PortType";

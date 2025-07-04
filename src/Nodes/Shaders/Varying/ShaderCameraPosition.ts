@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const ShaderCameraPosition: NodeDefinition = {
+export const CameraPositionNode: NodeDefinition = {
   id: "Shader/Varying/CameraPosition",
   label: "Camera Position",
   hideInLibrary: false,

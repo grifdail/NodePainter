@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
 
-export const Counter: NodeDefinition = {
+export const CounterNode: NodeDefinition = {
   id: "State/Counter",
   label: "Counter",
   icon: DoubleIconGen(IconDeviceFloppy, IconPlus),

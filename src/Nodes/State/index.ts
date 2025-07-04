@@ -1,19 +1,19 @@
 import { ChangeNode } from "./ChangeNode";
-import { Counter } from "./CounterNode";
+import { CounterNode } from "./CounterNode";
 import { DetectChangeNode } from "./DetectChangeNode";
-import { DetectThreshold } from "./DetectThresholdNode";
+import { DetectThresholdNode } from "./DetectThresholdNode";
 import { EdgeNode } from "./EdgeNode";
 import { PreviousNode } from "./PreviousNode";
 import { SaveNode } from "./SaveNode";
-import { ToggleFlipFlopNode } from "./ToggleFlipFlopSwitch";
-import { ToggleSwitchNode } from "./ToggleSwitch";
+import { ToggleFlipFlopNode } from "./ToggleFlipFlopNode";
+import { ToggleSwitchNode } from "./ToggleSwitchNode";
 
 export const StateNodes = [
   //
   ChangeNode,
-  Counter,
+  CounterNode,
   DetectChangeNode,
-  DetectThreshold,
+  DetectThresholdNode,
   EdgeNode,
   PreviousNode,
   SaveNode,

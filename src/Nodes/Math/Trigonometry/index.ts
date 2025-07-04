@@ -1,22 +1,22 @@
-import { Acos } from "./Acos";
-import { Asin } from "./Asin";
-import { Atan } from "./Atan";
-import { Atan2 } from "./Atan2";
-import { Cos } from "./Cos";
-import { DegreeToRadian } from "./DegreeToRadian";
-import { RadianToDegree } from "./RadianToDegree";
-import { Sin } from "./Sin";
-import { Tan } from "./Tan";
+import { AcosNode } from "./AcosNode";
+import { AsinNode } from "./AsinNode";
+import { Atan2Node } from "./Atan2Node";
+import { AtanNode } from "./AtanNode";
+import { CosNode } from "./CosNode";
+import { DegreeToRadianNode } from "./DegreeToRadianNode";
+import { RadianToDegreeNode } from "./RadianToDegreeNode";
+import { SinNode } from "./SinNode";
+import { TanNode } from "./TanNode";
 
 export const MathTrigonometryNodes = [
   //
-  Acos,
-  Asin,
-  Atan,
-  Atan2,
-  Cos,
-  DegreeToRadian,
-  RadianToDegree,
-  Sin,
-  Tan,
+  AcosNode,
+  AsinNode,
+  AtanNode,
+  Atan2Node,
+  CosNode,
+  DegreeToRadianNode,
+  RadianToDegreeNode,
+  SinNode,
+  TanNode,
 ];

@@ -1,14 +1,14 @@
-import { SawToothWave } from "./SawToothWave";
-import { SineWave } from "./SineWave";
-import { SquareWave } from "./SquareWave";
-import { TrapezoidWave } from "./TrapezoidWave";
-import { TriangleWave } from "./TriangleWave";
+import { SawToothWaveNode } from "./SawToothWaveNode";
+import { SineWaveNode } from "./SineWaveNode";
+import { SquareWaveNode } from "./SquareWaveNode";
+import { TrapezoidWaveNode } from "./TrapezoidWaveNode";
+import { TriangleWaveNode } from "./TriangleWaveNode";
 
 export const MathWaveNodes = [
   //
-  SawToothWave,
-  SineWave,
-  SquareWave,
-  TrapezoidWave,
-  TriangleWave,
+  SawToothWaveNode,
+  SineWaveNode,
+  SquareWaveNode,
+  TrapezoidWaveNode,
+  TriangleWaveNode,
 ];

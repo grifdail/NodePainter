@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const ShaderUV: NodeDefinition = {
+export const UVNode: NodeDefinition = {
   id: "Shader/Varying/Varying/UV",
   label: "UV",
   hideInLibrary: false,

@@ -1,14 +1,14 @@
-import { AlignRotation } from "./AlignRotation";
-import { AxisAngle } from "./AxisAngle";
-import { EulerAngle } from "./EulerAngle";
-import { LookAtRotation } from "./LookAt";
-import { QuaternionInverse } from "./QuaternionInverse";
+import { AlignRotationNode } from "./AlignRotationNode";
+import { AxisAngleNode } from "./AxisAngleNode";
+import { EulerAngleNode } from "./EulerAngleNode";
+import { InverseNode } from "./InverseNode";
+import { LookAtRotation } from "./LookAtRotationNode";
 
 export const MathQuaternionNodes = [
   //
-  AlignRotation,
-  AxisAngle,
-  EulerAngle,
+  AlignRotationNode,
+  AxisAngleNode,
+  EulerAngleNode,
   LookAtRotation,
-  QuaternionInverse,
+  InverseNode,
 ];

@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const ShaderViewPosition: NodeDefinition = {
+export const ViewPositionNode: NodeDefinition = {
   id: "Shader/Varying/ViewPosition",
   label: "View Position",
   hideInLibrary: false,

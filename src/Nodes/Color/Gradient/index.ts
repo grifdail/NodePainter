@@ -1,12 +1,12 @@
-import { GenerateGradient } from "./GenerateGradient";
-import { GradientFromArray } from "./GradientFromArray";
+import { GenerateGradientNode } from "./GenerateGradientNode";
+import { GradientFromArrayNode } from "./GradientFromArrayNode";
 import { GradientNode } from "./GradientNode";
-import { SampleGradient } from "./SampleGradient";
+import { SampleGradientNode } from "./SampleGradientNode";
 
 export const ColorGradientNodes = [
   //
-  GenerateGradient,
-  GradientFromArray,
+  GenerateGradientNode,
+  GradientFromArrayNode,
   GradientNode,
-  SampleGradient,
+  SampleGradientNode,
 ];

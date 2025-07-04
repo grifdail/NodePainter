@@ -1,8 +1,8 @@
-import { FocalLength } from "./FocalLength";
-import { HexGrid } from "./HexGrid";
+import { FocalLengthNode } from "./FocalLengthNode";
+import { HexGridNode } from "./HexGridNode";
 
 export const MathTransformNodes = [
   //
-  FocalLength,
-  HexGrid,
+  FocalLengthNode,
+  HexGridNode,
 ];
