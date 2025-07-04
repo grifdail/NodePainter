@@ -1,20 +1,20 @@
-import { AreaComment } from "./AreaComment";
-import { Blackboard } from "./Blackboard";
-import { CacheNode } from "./Cache";
+import { AreaCommentNode } from "./AreaCommentNode";
+import { BlackboardNode } from "./BlackboardNode";
+import { CacheNode } from "./CacheNode";
 import { MiscCombineNodes } from "./Combine";
-import { Comment } from "./Comment";
-import { CustomImperativeFunction } from "./CustomImperativeFunction";
+import { CommentNode } from "./CommentNode";
+import { ImperativeFunctionNode } from "./ImperativeFunctionNode";
 import { MiscRenderNodes } from "./Render";
-import { Value } from "./Value";
+import { ValueNode } from "./ValueNode";
 
 export const MiscNodes = [
   //
   ...MiscCombineNodes,
   ...MiscRenderNodes,
-  AreaComment,
-  Blackboard,
+  AreaCommentNode,
+  BlackboardNode,
   CacheNode,
-  Comment,
-  CustomImperativeFunction,
-  Value,
+  CommentNode,
+  ImperativeFunctionNode,
+  ValueNode,
 ];

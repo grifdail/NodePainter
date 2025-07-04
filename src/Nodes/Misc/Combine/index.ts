@@ -1,12 +1,12 @@
-import { Combine } from "./Combine";
-import { CombineArray } from "./CombineArray";
-import { CombineGridLoop } from "./CombineGridLoop";
-import { CombineLoop } from "./CombineLoop";
+import { ArrayNode } from "./ArrayNode";
+import { GridLoopNode } from "./GridLoopNode";
+import { LoopNode } from "./LoopNode";
+import { StaticNode } from "./StaticNode";
 
 export const MiscCombineNodes = [
   //
-  Combine,
-  CombineArray,
-  CombineGridLoop,
-  CombineLoop,
+  StaticNode,
+  ArrayNode,
+  GridLoopNode,
+  LoopNode,
 ];

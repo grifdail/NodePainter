@@ -19,13 +19,12 @@ const addNewPort = (node: NodeData) => {
   });
 };
 
-export const Combine: NodeDefinition = {
+export const StaticNode: NodeDefinition = {
   id: "Misc/Combine/Static",
   label: "Combine",
   icon: IconArrowMerge,
   featureLevel: 101,
   description: "Compose an object from multiple object",
-
   dataInputs: [Port.drawing2d("object-1"), Port.drawing2d("object-2")],
   dataOutputs: [Port.drawing2d("out")],
   tags: ["Misc"],

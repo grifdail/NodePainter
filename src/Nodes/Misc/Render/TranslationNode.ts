@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Vector3 } from "../../../Types/vectorDataType";
 
-export const RenderWithTranslation: NodeDefinition = {
+export const TranslationNode: NodeDefinition = {
   id: "Misc/Render/Translation",
   label: "Apply translation",
 

@@ -25,7 +25,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   }, 10);
 };
 
-export const CombineArray: NodeDefinition = {
+export const ArrayNode: NodeDefinition = {
   id: "Misc/Combine/Array",
   label: "Combine Array",
   icon: DoubleIconGen(IconArrowMerge, IconList),

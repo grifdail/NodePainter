@@ -2,7 +2,7 @@ import { IconArrowsMove } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 
-export const RenderWithMask: NodeDefinition = {
+export const MaskNode: NodeDefinition = {
   id: "Misc/Render/Mask",
   label: "Apply Mask",
   description: "Execute the draw instruction masked by the mask.",

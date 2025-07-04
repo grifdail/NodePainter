@@ -9,7 +9,7 @@ import { TreeStore } from "../../Types/TreeStore";
 import { getNodesInBoundingBox } from "../../Utils/graph/modification/getNodesInBoundingBox";
 import { buildBoundingBox } from "../../Utils/ui/buildBoundingBox";
 
-export const AreaComment: NodeDefinition = {
+export const AreaCommentNode: NodeDefinition = {
   id: "Misc/AreaComment",
   featureLevel: 10,
   description: "Leave a comment associated with a specific area of your graph.",

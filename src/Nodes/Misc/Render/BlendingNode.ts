@@ -3,7 +3,7 @@ import { BLEND_MODE } from "p5";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 
-export const RenderWithBlending: NodeDefinition = {
+export const BlendingNode: NodeDefinition = {
   id: "Misc/Render/Blending",
   label: "Apply Blending",
   description: "Execute the next instruction with a blend mode applied",

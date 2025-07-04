@@ -2,7 +2,7 @@ import { IconRotate } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 
-export const RenderWithRotation: NodeDefinition = {
+export const RotationNode: NodeDefinition = {
   id: "Misc/Render/Rotation",
   label: "Apply rotation",
   alias: "Rotate",

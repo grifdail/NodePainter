@@ -36,7 +36,7 @@ const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
   }, 10);
 };
 
-export const CombineGridLoop: NodeDefinition = {
+export const GridLoopNode: NodeDefinition = {
   id: "Misc/Combine/GridLoop",
   label: "Combine Grid Loop",
   icon: DoubleIconGen(IconArrowMerge, IconGridDots),

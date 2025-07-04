@@ -7,7 +7,7 @@ import { styled } from "styled-components";
 import { SetAlpha } from "../../Nodes/Color/SetAlpha";
 import { vectorMultiplication } from "../../Utils/math/vectorUtils";
 import { NodeData } from "../../Types/NodeData";
-import { selectNodeInAreas } from "../../Nodes/Misc/AreaComment";
+import { selectNodeInAreas } from "../../Nodes/Misc/AreaCommentNode";
 
 const Rect = styled.rect<{ $color: Color }>`
   stroke: ${(props) => toHex(props.$color, true)};

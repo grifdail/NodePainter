@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createDefaultCodeBlock } from "../../Utils/codeblock/createDefaultCodeBlock";
 import { executeStatementList } from "../../Utils/codeblock/executeStatementList";
 
-export const CustomImperativeFunction: NodeDefinition = {
+export const ImperativeFunctionNode: NodeDefinition = {
   id: "Misc/ImperativeFunction",
   description: "Custom function",
   icon: IconCodeDots,

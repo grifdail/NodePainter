@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { toHex } from "../../../Utils/math/colorUtils";
 
-export const RenderWithShadow: NodeDefinition = {
+export const ShadowNode: NodeDefinition = {
   id: "Misc/Render/Shadow",
   label: "Apply shadow",
   description: "Execute the next instruction with a blurry shadow below it",

@@ -1,4 +1,4 @@
-import { BlackboardPortData } from "../Nodes/Misc/Blackboard";
+import { BlackboardPortData } from "../Nodes/Misc/BlackboardNode";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import { Snippet } from "../Utils/graph/modification/snippets";
 import { BoundingBox } from "./BoundingBox";

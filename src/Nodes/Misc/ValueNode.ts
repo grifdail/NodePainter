@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
-export const Value: NodeDefinition = {
+export const ValueNode: NodeDefinition = {
   id: "Misc/Value",
   description: "Represente a single value",
   icon: IconEqual,
