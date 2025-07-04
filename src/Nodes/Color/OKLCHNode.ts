@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor } from "../../Types/vectorDataType";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const OKLCH: NodeDefinition = {
+export const OKLCHNode: NodeDefinition = {
   id: "Color/OKLCH",
   description: "create a color from perception based Lightness, chroma and hue",
   icon: IconColorFilter,

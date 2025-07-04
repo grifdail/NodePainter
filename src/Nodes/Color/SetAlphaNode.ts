@@ -4,7 +4,7 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { White } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const SetAlpha: NodeDefinition = {
+export const SetAlphaNode: NodeDefinition = {
   id: "Color/SetAlpha",
   label: "Set Alpha",
   description: "Set the transparency of a color",

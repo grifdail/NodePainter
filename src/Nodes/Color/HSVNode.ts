@@ -5,7 +5,7 @@ import { clamp01 } from "../../Utils/math/clamp01";
 import { hsvToRgb } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const HSV: NodeDefinition = {
+export const HSVNode: NodeDefinition = {
   id: "Color/HSV",
   description: "create a color from hue, saturation and value",
   icon: IconColorFilter,

@@ -1,10 +1,8 @@
 import { animated, FrameValue, to } from "@react-spring/web";
-import { PortType } from "../../Types/PortType";
 import { GraphArea } from "../../Types/GraphArea";
 import { toHex } from "../../Utils/math/colorUtils";
 import { Color } from "../../Types/vectorDataType";
 import { styled } from "styled-components";
-import { SetAlpha } from "../../Nodes/Color/SetAlpha";
 import { vectorMultiplication } from "../../Utils/math/vectorUtils";
 import { NodeData } from "../../Types/NodeData";
 import { selectNodeInAreas } from "../../Nodes/Misc/AreaCommentNode";

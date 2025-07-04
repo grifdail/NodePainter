@@ -5,7 +5,7 @@ import { clamp01 } from "../../Utils/math/clamp01";
 import { hslToRgb } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const HSL: NodeDefinition = {
+export const HSLNode: NodeDefinition = {
   id: "Color/HSL",
   description: "create a color from hue, saturation and lightness",
   icon: IconColorFilter,

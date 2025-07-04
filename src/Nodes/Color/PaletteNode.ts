@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createColor } from "../../Types/vectorDataType";
 import { Black, White } from "../../Utils/math/colorUtils";
 
-export const Palette: NodeDefinition = {
+export const PaletteNode: NodeDefinition = {
   id: "Color/Palette",
   label: "Palette",
   description: "Pick a color from a palette",

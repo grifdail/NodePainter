@@ -1,16 +1,26 @@
+import { CMYKNode } from "./CMYKNode";
 import { ColorGradientNodes } from "./Gradient";
-import { HSL } from "./HSL";
-import { HSV } from "./HSV";
-import { OKLCH } from "./OKLCH";
-import { Palette } from "./Palette";
-import { SetAlpha } from "./SetAlpha";
+import { HSLNode } from "./HSLNode";
+import { HSVNode } from "./HSVNode";
+import { MixNode } from "./MixNode";
+import { OKLCHNode } from "./OKLCHNode";
+import { PaletteNode } from "./PaletteNode";
+import { SetAlphaNode } from "./SetAlphaNode";
+import { ToCMYWNode } from "./toCMYKNode";
+import { ToHSLNode } from "./toHSLNode";
+import { ToHSVNode } from "./toHSVNode";
 
 export const ColorNodes = [
   //
   ...ColorGradientNodes,
-  HSL,
-  HSV,
-  OKLCH,
-  Palette,
-  SetAlpha,
+  CMYKNode,
+  HSLNode,
+  HSVNode,
+  MixNode,
+  OKLCHNode,
+  PaletteNode,
+  SetAlphaNode,
+  ToCMYWNode,
+  ToHSLNode,
+  ToHSVNode,
 ];
