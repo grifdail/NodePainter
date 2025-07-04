@@ -15,7 +15,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   "image-upload": identity,
   "image-paint": identity,
   envelope: identity,
-  buttons: identity,
+  button: identity,
   "mesh-upload": identity,
   "easing-preview": identity,
   "code-block": identity,

@@ -38,14 +38,12 @@ export const StaticNode: NodeDefinition = {
   settings: [
     {
       id: "buttons",
-      type: "buttons",
-      buttons: [
-        {
-          label: "Add a new Port",
-          icon: IconPlus,
-          onClick: addNewPort,
-        },
-      ],
+      type: "button",
+      button: {
+        label: "Add a new Port",
+        icon: IconPlus,
+        onClick: addNewPort,
+      },
     },
   ],
   availableTypes: portTypesWithTags(["common"], ["array"]),

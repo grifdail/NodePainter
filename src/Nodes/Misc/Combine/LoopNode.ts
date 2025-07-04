@@ -51,14 +51,12 @@ export const LoopNode: NodeDefinition = {
   settings: [
     {
       id: "buttons",
-      type: "buttons",
-      buttons: [
-        {
-          label: "Create index node",
-          icon: IconPlus,
-          onClick: createIndexNode,
-        },
-      ],
+      type: "button",
+      button: {
+        label: "Create index node",
+        icon: IconPlus,
+        onClick: createIndexNode,
+      },
     },
   ],
   ...changeTypeGenerator(["drawing2d", "object3d"], ["value"], ["output"]),

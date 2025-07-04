@@ -22,64 +22,62 @@ export const InterpolateNode: NodeDefinition = {
   settings: [
     { type: "text-area", id: "text", defaultValue: "The value is $input" },
     {
-      type: "buttons",
+      type: "button",
       id: "button",
-      buttons: [
-        {
-          label: "Add new input",
-          icon: IconPlus,
-          onClick: function (node: NodeData): void {
-            var nodeId = node.id;
-            useDialog.getState().open({
-              callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
-                if (button === "cancel" || fieldResult === undefined) {
-                  return;
-                }
-                if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
-                  return;
-                }
-                useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
-                  node.dataInputs[fieldResult.name] = createPortConnection({
-                    id: fieldResult.name,
-                    type: fieldResult.type,
-                    defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
-                    tooltip: `Interpolate to $${fieldResult.name}`,
-                  });
+      button: {
+        label: "Add new input",
+        icon: IconPlus,
+        onClick: function (node: NodeData): void {
+          var nodeId = node.id;
+          useDialog.getState().open({
+            callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
+              if (button === "cancel" || fieldResult === undefined) {
+                return;
+              }
+              if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
+                return;
+              }
+              useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
+                node.dataInputs[fieldResult.name] = createPortConnection({
+                  id: fieldResult.name,
+                  type: fieldResult.type,
+                  defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
+                  tooltip: `Interpolate to $${fieldResult.name}`,
                 });
+              });
+            },
+            buttons: [
+              {
+                key: "cancel",
+                label: "Cancel",
+                style: "invisible",
               },
-              buttons: [
-                {
-                  key: "cancel",
-                  label: "Cancel",
-                  style: "invisible",
-                },
-                {
-                  key: "confirm",
-                  label: "Confirm",
-                  style: "normal",
-                },
-              ],
-              fields: [
-                {
-                  key: "name",
-                  label: "Name",
-                  defaultValue: "input",
-                  input: TextInput,
-                  passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
-                },
-                {
-                  key: "type",
-                  label: "",
-                  input: PortTypeDropdown,
-                  defaultValue: "number",
-                  passTrough: { availableTypes: portTypesWith((def) => def.convert.string !== undefined) },
-                },
-              ],
-              header: "Add a new input",
-            });
-          },
+              {
+                key: "confirm",
+                label: "Confirm",
+                style: "normal",
+              },
+            ],
+            fields: [
+              {
+                key: "name",
+                label: "Name",
+                defaultValue: "input",
+                input: TextInput,
+                passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
+              },
+              {
+                key: "type",
+                label: "",
+                input: PortTypeDropdown,
+                defaultValue: "number",
+                passTrough: { availableTypes: portTypesWith((def) => def.convert.string !== undefined) },
+              },
+            ],
+            header: "Add a new input",
+          });
         },
-      ],
+      },
     },
   ],
   getData: (portId, nodeData, context) => {

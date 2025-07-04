@@ -44,14 +44,12 @@ export const GenerateNode: NodeDefinition = {
   settings: [
     {
       id: "buttons",
-      type: "buttons",
-      buttons: [
-        {
-          label: "Create index node",
-          icon: IconPlus,
-          onClick: createIndexNode,
-        },
-      ],
+      type: "button",
+      button: {
+        label: "Create index node",
+        icon: IconPlus,
+        onClick: createIndexNode,
+      },
     },
   ],
   ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], [], ["array"]),

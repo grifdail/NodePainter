@@ -41,57 +41,55 @@ export const MathExpressionNode: NodeDefinition = {
   settings: [
     { type: "text-area", id: "expression", defaultValue: "$input * 2" },
     {
-      type: "buttons",
+      type: "button",
       id: "button",
-      buttons: [
-        {
-          label: "Add new input",
-          icon: IconPlus,
-          onClick: function (node: NodeData): void {
-            var nodeId = node.id;
-            useDialog.getState().open({
-              callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
-                if (button === "cancel" || fieldResult === undefined) {
-                  return;
-                }
-                if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
-                  return;
-                }
-                useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
-                  node.dataInputs[fieldResult.name] = createPortConnection({
-                    id: fieldResult.name,
-                    type: "number",
-                    defaultValue: 1,
-                    tooltip: `Interpolate to $${fieldResult.name}`,
-                  });
+      button: {
+        label: "Add new input",
+        icon: IconPlus,
+        onClick: function (node: NodeData): void {
+          var nodeId = node.id;
+          useDialog.getState().open({
+            callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
+              if (button === "cancel" || fieldResult === undefined) {
+                return;
+              }
+              if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
+                return;
+              }
+              useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
+                node.dataInputs[fieldResult.name] = createPortConnection({
+                  id: fieldResult.name,
+                  type: "number",
+                  defaultValue: 1,
+                  tooltip: `Interpolate to $${fieldResult.name}`,
                 });
+              });
+            },
+            buttons: [
+              {
+                key: "cancel",
+                label: "Cancel",
+                style: "invisible",
               },
-              buttons: [
-                {
-                  key: "cancel",
-                  label: "Cancel",
-                  style: "invisible",
-                },
-                {
-                  key: "confirm",
-                  label: "Confirm",
-                  style: "normal",
-                },
-              ],
-              fields: [
-                {
-                  key: "name",
-                  label: "Name",
-                  defaultValue: "input",
-                  input: TextInput,
-                  passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
-                },
-              ],
-              header: "Add a new input",
-            });
-          },
+              {
+                key: "confirm",
+                label: "Confirm",
+                style: "normal",
+              },
+            ],
+            fields: [
+              {
+                key: "name",
+                label: "Name",
+                defaultValue: "input",
+                input: TextInput,
+                passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
+              },
+            ],
+            header: "Add a new input",
+          });
         },
-      ],
+      },
     },
   ],
   getData: (portId, nodeData, context) => {

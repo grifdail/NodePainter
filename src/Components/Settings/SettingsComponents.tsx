@@ -32,7 +32,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   "image-paint": ImagePaintSetting,
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
-  buttons: ButtonsSettings,
+  button: ButtonsSettings,
   "animation-track": AnimationTrackSettings,
   "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,

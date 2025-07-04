@@ -31,14 +31,12 @@ export const StaticNode: NodeDefinition = {
   settings: [
     {
       id: "buttons",
-      type: "buttons",
-      buttons: [
-        {
-          label: "Add new port",
-          icon: IconPlus,
-          onClick: addNewPort,
-        },
-      ],
+      type: "button",
+      button: {
+        label: "Add new port",
+        icon: IconPlus,
+        onClick: addNewPort,
+      },
     },
   ],
   availableTypes: ["drawing2d", "object3d"],

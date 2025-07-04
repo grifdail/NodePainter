@@ -39,19 +39,21 @@ export const ImageNode: NodeDefinition = {
     },
     {
       id: "button",
-      type: "buttons",
-      buttons: [
-        {
-          label: "Use Advanced Option",
-          icon: IconAdjustmentsPlus,
-          onClick: function (node: NodeData): void {
-            if (!node.dataInputs.sourcePos) {
-              node.dataInputs.sourcePos = createPortConnection(Port.vector2("sourcePos", createVector2(0, 0)));
-              node.dataInputs.sourceDim = createPortConnection(Port.vector2("sourceDim", createVector2(100, 100)));
-            }
-          },
+      type: "button",
+      button: {
+        label: "Use Advanced Option",
+        icon: IconAdjustmentsPlus,
+        onClick: function (node: NodeData): void {
+          console.log(node.dataInputs.sourcePos);
+          if (!node.dataInputs.sourcePos) {
+            node.dataInputs.sourcePos = createPortConnection(Port.vector2("sourcePos", createVector2(0, 0)));
+            node.dataInputs.sourceDim = createPortConnection(Port.vector2("sourceDim", createVector2(100, 100)));
+          }
         },
-      ],
+        hide(node) {
+          return !!node.dataInputs.sourcePos;
+        },
+      },
     },
   ],
   getData(portId, node, context) {
