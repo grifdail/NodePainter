@@ -262,6 +262,18 @@ const UPGRADES: UpgradeFunction[] = [
     sketch = addMissingNodePort(["Draw/Image"], sketch);
     return sketch;
   },
+  (sketch) => {
+    Object.values(sketch.nodes).forEach((node) => {
+      if (node.type === "Math/Vector/VectorFromAngle") {
+        if (node.selectedType === "vector3") {
+          node.type = "Math/Vector/SphericalCoordinate";
+        } else {
+          node.type = "Math/Vector/PolarCoordinate";
+        }
+      }
+    });
+    return sketch;
+  },
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

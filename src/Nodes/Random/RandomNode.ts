@@ -9,6 +9,7 @@ import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RandomNode: NodeDefinition = {
   id: "Random/Value",
+  label: "Random Value",
   description: "A random value, consistant across frames",
   icon: IconArrowsShuffle,
   tags: ["Input"],

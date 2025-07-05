@@ -5,10 +5,11 @@ import { DistanceNode } from "./DistanceNode";
 import { DotProductNode } from "./DotProductNode";
 import { MagnitudeNode } from "./MagnitudeNode";
 import { NormalizeNode } from "./NormalizeNode";
+import { PolarCoordinateNode } from "./PolarCoordinateNode";
 import { RotateNode } from "./RotateNode";
+import { SphericalCoordinateNode } from "./SphericalCoordinateNode";
 import { SquareMagnitudeNode } from "./SquareMagnitudeNode";
 import { SwizzleNode } from "./SwizzleNode";
-import { VectorFromAngleNode } from "./VectorFromAngleNode";
 
 export const MathVectorNodes = [
   //
@@ -18,9 +19,10 @@ export const MathVectorNodes = [
   DotProductNode,
   MagnitudeNode,
   NormalizeNode,
+  PolarCoordinateNode,
   RotateNode,
+  SphericalCoordinateNode,
   SquareMagnitudeNode,
   SwizzleNode,
   DistanceNode,
-  VectorFromAngleNode,
 ];

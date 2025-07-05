@@ -54,8 +54,16 @@ export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinit
   return (
     <StyledButton onClick={() => onClick(node)}>
       {Icon != null ? <Icon></Icon> : null}
-      <div>{node.label || idToNodeName(node.id)}</div>
-      <p title={node.description}>{node.description}</p>
+      <div
+        data-tooltip-id="tooltip"
+        data-tooltip-content={node.id}>
+        {node.label || idToNodeName(node.id)}
+      </div>
+      <p
+        data-tooltip-id="tooltip"
+        data-tooltip-content={node.description}>
+        {node.description}
+      </p>
       <span className="spacer"></span>
       <div
         className="fav"
