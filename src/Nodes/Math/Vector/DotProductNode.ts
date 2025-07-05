@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
-import { zipVector } from "../../../Utils/math/vectorUtils";
+import { vectorDotProduct } from "../../../Utils/math/vectorUtils";
 
 export const DotProductNode: NodeDefinition = {
   id: "Math/Vector/DotProduct",
@@ -37,12 +37,9 @@ export const DotProductNode: NodeDefinition = {
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector(nodeData, "a");
     var b = context.getInputValueVector(nodeData, "b");
-    return VectorDotProduct(a, b);
+    return vectorDotProduct(a, b);
   },
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
   },
 };
-export function VectorDotProduct(a: number[], b: number[]): number {
-  return zipVector(a, b).reduce((sum, comp) => sum + comp[0] * comp[1], 0);
-}

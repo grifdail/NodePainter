@@ -4,14 +4,10 @@ import { CodeBlockGenerator } from "../Types/CodeBlock/CodeBlockGenerator";
 import { CodeBlockStatementGenerator } from "../Types/CodeBlock/CodeBlockStatementGenerator";
 import { CompareNumberExpression } from "./Expressions/CompareNumberExpression";
 import { generateExpressionFromNode } from "./Expressions/generateExpressionFromNode";
-import { MathOperationExpression } from "./Expressions/MathOperationExpression";
 import { RandomExpression } from "./Expressions/RandomExpression";
 import { ReadVariableExpression } from "./Expressions/ReadVariable";
 import { VectorComponentExpressions } from "./Expressions/VectorComponentExpression";
 import { VectorComposeExpression } from "./Expressions/VectorComposeExpression";
-import { VectorDistanceExpression } from "./Expressions/VectorDistanceExpression";
-import { VectorDotProductExpression } from "./Expressions/VectorDotProductExpression";
-import { VectorOperationExpression } from "./Expressions/VectorOperationExpression";
 import { ArrayPushStatements } from "./Statements/ArrayPushStatement";
 import { AssignStatement } from "./Statements/AssignStatement";
 import { IfStatement } from "./Statements/IfStatement";
@@ -34,10 +30,6 @@ export function initCodeBlockType() {
     //Expression
     ReadVariableExpression,
     CompareNumberExpression,
-    MathOperationExpression,
-    VectorOperationExpression,
-    VectorDistanceExpression,
-    VectorDotProductExpression,
     VectorComposeExpression,
     ...VectorComponentExpressions,
     RandomExpression,

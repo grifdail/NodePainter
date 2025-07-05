@@ -284,6 +284,7 @@ const UPGRADES: UpgradeFunction[] = [
     });
     return sketch;
   },
+  (sketch) => redefineNodes({ ["Procedural/Twirl"]: "Math/Transformation/Twirl" }, sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

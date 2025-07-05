@@ -21,6 +21,25 @@ export function vectorAbsolute(a: number[]): number[] {
 export function vectorLerp(a: number[], b: number[], t: number): number[] {
   return zipVector(a, b).map(([a, b]) => lerp(a, b, t));
 }
+export function vectorDotProduct(a: number[], b: number[]): number {
+  return zipVector(a, b).reduce((sum, comp) => sum + comp[0] * comp[1], 0);
+}
+export function vectorCrossProduct(a: [number, number, number], b: [number, number, number]): [number, number, number] {
+  const x = a[1] * b[2] - a[2] * b[1];
+  const y = a[2] * b[0] - a[0] * b[2];
+  const z = a[0] * b[1] - a[1] * b[0];
+  return [x, y, z];
+}
+export function vectorProject(a: number[], b: number[]): number[] {
+  return vectorScale(b, vectorDotProduct(a, b) / vectorDotProduct(b, b));
+}
+export function vectorReject(a: number[], b: number[]): number[] {
+  return vectorSubstraction(a, vectorProject(a, b));
+}
+export function vectorReflect(d: number[], b: number[]): number[] {
+  var n = vectorNormalize(b);
+  return vectorSubstraction(d, vectorScale(n, 2 * vectorDotProduct(d, n)));
+}
 
 export function vectorMagnitude(vec: number[]): any {
   return Math.sqrt(vectorSquareMagnitude(vec));

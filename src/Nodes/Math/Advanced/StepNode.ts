@@ -6,6 +6,7 @@ import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const StepNode: NodeDefinition = {
   id: "Math/Advanced/Step",
+  alias: "Posterize",
   tags: ["Math"],
   icon: IconMathFunction,
   description: "Constrain a number between 0 and 1 to a specific number of discreet step.",

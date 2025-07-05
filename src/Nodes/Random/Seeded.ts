@@ -5,7 +5,7 @@ import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefi
 import { createVector2 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
-import { VectorDotProduct } from "../Math/Vector/DotProductNode";
+import { vectorDotProduct } from "../../Utils/math/vectorUtils";
 
 const randomVect = [12.9898, 78.233, 56.128, 48.411];
 
@@ -32,7 +32,7 @@ export const SeededNode: NodeDefinition = {
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["seed"], []),
   getData: (portId, nodeData, context) => {
-    return fraction(Math.sin(VectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, PortTypeDefinitions[nodeData.selectedType].vectorLength)) * 43758.5453123));
+    return fraction(Math.sin(vectorDotProduct(context.getInputValueVector(nodeData, "seed"), randomVect.slice(0, PortTypeDefinitions[nodeData.selectedType].vectorLength)) * 43758.5453123));
   },
   shaderRequirement: `
   float rand(float n){return fract(sin(n) * 43758.5453123);}

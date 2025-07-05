@@ -8,9 +8,11 @@ import { LogNode } from "./LogNode";
 import { MathExpressionNode } from "./MathExpressionNode";
 import { MaxNode } from "./MaxNode";
 import { MinNode } from "./MinNode";
+import { NegateNode } from "./NegateNode";
 import { OneMinusNode } from "./OneMinusNode";
 import { PingPongNode } from "./PingPongNode";
 import { PowNodeNode } from "./PowNodeNode";
+import { ReciprocalNode } from "./ReciprocalNode";
 import { RoundNode } from "./RoundNode";
 import { SignNode } from "./SignNode";
 import { SqrtNode } from "./SqrtNode";
@@ -28,9 +30,11 @@ export const MathAdvancedNodes = [
   MathExpressionNode,
   MaxNode,
   MinNode,
+  NegateNode,
   OneMinusNode,
   PingPongNode,
   PowNodeNode,
+  ReciprocalNode,
   RoundNode,
   SignNode,
   SqrtNode,

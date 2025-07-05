@@ -4,7 +4,8 @@ import { createVector2 } from "../../Types/vectorDataType";
 
 export const WorleyNoiseNode: NodeDefinition = {
   id: "Procedural/WorleyNoise",
-  label: "Voronoi",
+  label: "Voronoi noise",
+  alias: "Worley Noise",
   hideInLibrary: false,
   icon: IconGizmo,
   description: "Generate a Voronoi pattern",

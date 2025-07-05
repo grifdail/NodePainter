@@ -6,6 +6,9 @@ import { DotProductNode } from "./DotProductNode";
 import { MagnitudeNode } from "./MagnitudeNode";
 import { NormalizeNode } from "./NormalizeNode";
 import { PolarCoordinateNode } from "./PolarCoordinateNode";
+import { ProjectNode } from "./ProjectNode";
+import { ReflectNode } from "./ReflectNode";
+import { RejectNode } from "./RejectNode";
 import { RotateNode } from "./RotateNode";
 import { SphericalCoordinateNode } from "./SphericalCoordinateNode";
 import { SquareMagnitudeNode } from "./SquareMagnitudeNode";
@@ -20,6 +23,10 @@ export const MathVectorNodes = [
   MagnitudeNode,
   NormalizeNode,
   PolarCoordinateNode,
+  ProjectNode,
+  ProjectNode,
+  ReflectNode,
+  RejectNode,
   RotateNode,
   SphericalCoordinateNode,
   SquareMagnitudeNode,
