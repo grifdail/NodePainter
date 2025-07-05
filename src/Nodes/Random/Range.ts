@@ -2,14 +2,13 @@ import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
-import { Constraints } from "../../Utils/ui/applyConstraints";
 
-export const RandomIntNode: NodeDefinition = {
-  id: "Random/Int",
-  label: "Random Integer",
-  description: "A random value between to integer, consistant across frames",
+export const RangeNode: NodeDefinition = {
+  id: "Random/Range",
+  label: "Random Range",
+  description: "A random value between two number",
   icon: IconArrowsShuffle,
-  tags: ["Input"],
+  tags: ["Random"],
   dataInputs: [
     {
       id: "min",
@@ -19,9 +18,9 @@ export const RandomIntNode: NodeDefinition = {
     {
       id: "max",
       type: "number",
-      defaultValue: 6,
+      defaultValue: 10,
     },
-    Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()]),
+    Port.CacheId(),
   ],
   dataOutputs: [{ id: "value", type: "number", defaultValue: 0 }],
 
@@ -30,6 +29,6 @@ export const RandomIntNode: NodeDefinition = {
     var min = context.getInputValueNumber(nodeData, "min");
     var max = context.getInputValueNumber(nodeData, "max");
     const r = createOrSelectFromCache(context, nodeData, () => context.RNG.next());
-    return Math.floor(r * (max - min) + min);
+    return r * (max - min) + min;
   },
 };

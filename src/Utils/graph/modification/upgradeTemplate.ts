@@ -274,6 +274,16 @@ const UPGRADES: UpgradeFunction[] = [
     });
     return sketch;
   },
+  (sketch) => {
+    Object.values(sketch.nodes).forEach((node) => {
+      if (node.type === "Random/OnSphere") {
+        if (node.selectedType === "vector2") {
+          node.type = "Random/OnCircle";
+        }
+      }
+    });
+    return sketch;
+  },
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

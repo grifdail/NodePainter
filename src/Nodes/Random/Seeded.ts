@@ -9,7 +9,7 @@ import { VectorDotProduct } from "../Math/Vector/DotProductNode";
 
 const randomVect = [12.9898, 78.233, 56.128, 48.411];
 
-export const SeededRandomNode: NodeDefinition = {
+export const SeededNode: NodeDefinition = {
   id: "Random/Seeded",
   description: "Generate a random value from a seed",
   icon: IconMathXPlusY,

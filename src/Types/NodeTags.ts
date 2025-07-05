@@ -1,4 +1,4 @@
-export type NodeTags = "Math" | "Vector" | "Logic" | "Input" | "Drawing" | "Color" | "Image" | "Array" | "Text" | "State" | "3D" | "Material" | "Mesh" | "Light" | "Misc" | "Shader" | "Custom";
+export type NodeTags = "Math" | "Vector" | "Logic" | "Input" | "Drawing" | "Color" | "Image" | "Array" | "Text" | "State" | "3D" | "Material" | "Mesh" | "Light" | "Misc" | "Shader" | "Custom" | "Random" | "Noise";
 
 export const NodeTagPriority: { [key in NodeTags]?: number } = {
   Misc: 100,
