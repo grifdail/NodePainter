@@ -61,6 +61,7 @@ export type StringSettingDefinition = BaseSettingDefinition & {
 export type TextAreaSettingDefinition = BaseSettingDefinition & {
   type: "text-area";
   defaultValue: string;
+  validation?: (value: string, node: NodeData) => null | string;
   constrains?: ConstrainDeclaration[];
 };
 export type HiddenSettingDefinition = BaseSettingDefinition & {
