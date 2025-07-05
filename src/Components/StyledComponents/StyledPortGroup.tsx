@@ -12,6 +12,8 @@ const scaleLoop = keyframes`
 `;
 
 export const StyledPortGroup = styled.g`
+  transition: filter 0.5s;
+
   & circle {
     stroke: var(--color-property);
     fill: var(--color-background);
@@ -42,5 +44,8 @@ export const StyledPortGroup = styled.g`
   &.selected circle {
     //transform: scale(1.2);
     animation: ${scaleLoop} 0.5s ease-in-out infinite alternate;
+  }
+  &.hidden:hover:not(.selected) {
+    filter: grayscale(90%);
   }
 `;

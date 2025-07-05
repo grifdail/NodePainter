@@ -32,13 +32,16 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: {
   var PortSettings = portDescription.inlineInput;
 
   var portSelection = usePortSelection();
-  var isSelected = portSelection.hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
+  const hasSelection = portSelection.hasSelection;
+  var isSelected = hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
+
+  const canBeSelected = !isSelected && hasSelection && portSelection.location === "output" && (portData.type == portSelection.type || PortTypeDefinitions[portSelection.type].convert[portData.type]);
   return (
     <StyledPortGroup
       transform={`translate(0, ${y})`}
       width={NODE_WIDTH}
       height="30"
-      className={`${portData.type} ${isSelected ? "selected" : ""} `}>
+      className={`${portData.type} ${isSelected ? "selected" : ""}  ${hasSelection && !canBeSelected ? "hidden" : ""} `}>
       <PortForeignObject
         height={PORT_HEIGHT}
         width={NODE_WIDTH}
