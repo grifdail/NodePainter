@@ -47,5 +47,10 @@ export const StyledPortGroup = styled.g`
   }
   &.hidden:hover:not(.selected) {
     filter: grayscale(90%);
+    cursor: not-allowed;
+
+    & circle {
+      cursor: not-allowed;
+    }
   }
 `;
