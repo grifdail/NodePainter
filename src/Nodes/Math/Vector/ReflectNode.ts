@@ -34,7 +34,7 @@ export const ReflectNode: NodeDefinition = {
 
   codeBlockType: "expression",
   settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], []),
+  ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], ["out"]),
   getData: (portId, nodeData, context) => {
     var a = context.getInputValueVector3(nodeData, "a");
     var b = context.getInputValueVector3(nodeData, "b");

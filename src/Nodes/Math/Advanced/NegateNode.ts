@@ -29,7 +29,7 @@ export const NegateNode: NodeDefinition = {
 
   codeBlockType: "expression",
   settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["x"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
   getData: (portId, nodeData, context) => {
     var input = context.getInputValueVector(nodeData, "input");
     return enforceCorrectVectorTypeForNode(nodeData, vectorScale(input, -1));
