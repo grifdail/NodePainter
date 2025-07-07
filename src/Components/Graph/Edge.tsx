@@ -1,6 +1,7 @@
 import { animated, FrameValue, to } from "@react-spring/web";
 import { PortType } from "../../Types/PortType";
 import styled from "styled-components";
+import { memo } from "react";
 
 export const EdgePath = styled(animated.path)`
   stroke: var(--color-property);
@@ -13,7 +14,7 @@ export const EdgePath = styled(animated.path)`
   }
 `;
 
-export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
+export const Edge = memo(function Edge({ start, end, type, reverse }: { start: FrameValue<number[]>; end: FrameValue<number[]>; type: PortType; reverse?: boolean }) {
   if (reverse) {
     [start, end] = [end, start];
   }
@@ -31,4 +32,4 @@ export function Edge({ start, end, type, reverse }: { start: FrameValue<number[]
         return "";
       })}></EdgePath>
   );
-}
+});

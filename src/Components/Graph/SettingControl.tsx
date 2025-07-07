@@ -2,9 +2,11 @@ import { SettingDefinition } from "../../Types/SettingDefinition";
 import { NodeData } from "../../Types/NodeData";
 import { SettingComponents } from "../Settings/SettingsComponents";
 import { SettingComponent } from "../Settings/SettingComponent";
+import { memo } from "react";
 
-export const SettingControl = ({ y, value, def, onChange, nodeData, useHTML }: { y: number; useHTML?: boolean; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
+export const SettingControl = memo(({ y, value, def, onChange, nodeData, useHTML }: { y: number; useHTML?: boolean; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
   var DefinedComponent = SettingComponents[def.type] as SettingComponent<any>;
+  console.log("redraw");
   var height = DefinedComponent.getSize(value, def, nodeData);
   if (useHTML) {
     return (
@@ -31,7 +33,7 @@ export const SettingControl = ({ y, value, def, onChange, nodeData, useHTML }: {
       </foreignObject>
     </g>
   );
-};
+});
 export const getSettingHeight = (value: any, def: SettingDefinition, nodeData: NodeData) => {
   var DefinedComponent = SettingComponents[def.type];
   return DefinedComponent.getSize(value, def as any, nodeData);

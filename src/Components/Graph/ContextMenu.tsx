@@ -1,23 +1,18 @@
 import { ControlledMenu, MenuDivider, MenuItem, MenuState } from "@szhsin/react-menu";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { resetCamera } from "../../Utils/ui/resetCamera";
-import { IconArrowsHorizontal, IconArrowsVertical, IconCopy, IconFocusCentered, IconPlus } from "@tabler/icons-react";
+import { IconFocusCentered, IconPlus } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
-import { EDirection } from "../../Types/EDirection";
 import { useShallow } from "zustand/react/shallow";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
-import { useSelection } from "../../Hooks/useSelection";
 import { AlignMenu } from "./AlignMenu";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
-import { extractSnipet } from "../../Utils/graph/modification/snippets";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { SnippetSubMenu } from "./SnippetSubMenu";
-import { camelCaseToWords } from "../../Utils/ui/camelCaseToWords";
 import { idToNodeName } from "../../Utils/ui/idToNodeName";
 
 export type ContextMenuProps = {

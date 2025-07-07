@@ -1,6 +1,7 @@
 import { useColorScheme } from "@uiw/react-use-colorscheme";
+import { memo } from "react";
 
-export function SVGGridPattern() {
+export const SVGGridPattern = memo(function SVGGridPattern() {
   const colorScheme = useColorScheme();
   return (
     <pattern
@@ -36,4 +37,4 @@ export function SVGGridPattern() {
       />
     </pattern>
   );
-}
+});

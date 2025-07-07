@@ -11,7 +11,7 @@ import { PortType } from "../../Types/PortType";
 import { useViewbox } from "../../Hooks/useViewbox";
 import { OutputPortView } from "./OutputPortView";
 import { SettingControl, getSettingHeight } from "./SettingControl";
-import { MouseEventHandler, useState } from "react";
+import { memo, MouseEventHandler, useState } from "react";
 import styled from "styled-components";
 import { TypeSelectorUI } from "./TypeSelectorUI";
 import { useSelection } from "../../Hooks/useSelection";
@@ -44,7 +44,7 @@ export type GraphNodeProps = {
   onClickPort: PortNodeCallback;
 };
 
-export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
+export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap }: GraphNodeProps) {
   const viewPortScale = useViewbox((state) => state.scale);
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const globalSettings = useTree((state) => state.globalSettings);
@@ -53,7 +53,6 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
   const definition = getNodeTypeDefinition(node);
 
   const [dragged, setDragged] = useState(false);
-
   const bind = useGesture(
     {
       onDrag: ({ movement: [mx, my], tap, elapsedTime, cancel, shiftKey }) => {
@@ -211,4 +210,4 @@ export const GraphNodeUI = function GraphNode({ node, onClickPort, xy, onMove, i
       </animated.g>
     </AnimatedG>
   );
-};
+});
