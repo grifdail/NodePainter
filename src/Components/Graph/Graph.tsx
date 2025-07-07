@@ -20,6 +20,7 @@ import { SVGGridPattern } from "./SVGGridPattern";
 import { useCopyPasteGraph } from "./useCopyPasteGraph";
 import { abs } from "mathjs";
 import { GraphAreaRect } from "./GraphAreaRect";
+import { useViewbox } from "../../Hooks/useViewbox";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -48,7 +49,7 @@ export function Graph() {
   const hasNoCursor = useMediaQuery("(hover: none)");
   const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
   const nodesOnThisGraph = useMemo(() => Object.values(tree.nodes).filter((node) => node.graph === tree.editedGraph), [tree.editedGraph, tree.nodes]);
-  const nodesToDraw = useMemo(() => nodesOnThisGraph.map((node, index) => [node, index] as const).filter(([node]) => screenBox.contain(node.positionX, node.positionY)), [screenBox, nodesOnThisGraph]);
+  const nodesToDraw = nodesOnThisGraph.map((node, index) => [node, index] as const); //useMemo(() => nodesOnThisGraph.map((node, index) => [node, index] as const).filter(([node]) => screenBox.contain(node.positionX, node.positionY)), [screenBox, nodesOnThisGraph]);
   const edges = useGraphEdge(nodesOnThisGraph);
   const [nodePositionSpring, nodePositionSpringApi] = useNodePositionSpring(nodesOnThisGraph, tree);
   const getNodePort = useGetNodePort(nodesOnThisGraph, nodePositionSpring);
@@ -132,7 +133,6 @@ export function Graph() {
             isSelected: selectedNode.some((id) => id === node.id),
             onTap: onTapNode,
             onMove: onMoveNode,
-            viewPortScale: viewportScale,
           };
           return (
             <GraphNodeUI
@@ -212,6 +212,9 @@ function useMoveNode(displayedNode: NodeData[], tree: TreeStore, nodePositionSpr
   return useCallback(
     function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false, linear: boolean): void {
       const tree = useTree.getState();
+      const viewPortscale = useViewbox.getState().scale;
+      x *= viewPortscale;
+      y *= viewPortscale;
       const allNodes = tree.nodes;
       let selectedNode = useSelection.getState().nodes;
       if (selectedNode.length > 0 && !selectedNode.includes(displayedNode[i].id)) {

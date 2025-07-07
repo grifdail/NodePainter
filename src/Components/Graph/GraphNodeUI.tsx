@@ -43,10 +43,9 @@ export type GraphNodeProps = {
   onMove: (nodeId: number, x: number, y: number, definitive: boolean, linear: boolean) => void;
   onTap: (node: NodeData, e: MouseEvent<SVGRectElement>) => void;
   onClickPort: PortNodeCallback;
-  viewPortScale: number;
 };
 
-export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap, viewPortScale, index }: GraphNodeProps) {
+export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMove, isSelected, onTap, index }: GraphNodeProps) {
   const getNodeTypeDefinition = useTree((state) => state.getNodeTypeDefinition);
   const globalSettings = useTree((state) => state.globalSettings);
   const inputCount = Object.keys(node.dataInputs).length;
@@ -58,7 +57,7 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
     {
       onDrag: ({ movement: [mx, my], tap, elapsedTime, cancel, shiftKey }) => {
         if (!tap) {
-          onMove(index, mx * viewPortScale, my * viewPortScale, false, shiftKey);
+          onMove(index, mx, my, false, shiftKey);
           if (!dragged) {
             setDragged(true);
           }
@@ -71,7 +70,7 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
         }
       },
       onDragEnd: ({ movement: [mx, my], shiftKey }) => {
-        onMove(index, mx * viewPortScale, my * viewPortScale, true, shiftKey);
+        onMove(index, mx, my, true, shiftKey);
         setDragged(false);
       },
     },
