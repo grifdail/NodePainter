@@ -6,6 +6,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import styled from "styled-components";
 import { listChildOfNode } from "../../Utils/graph/modification/listChildOfNode";
 import { useSelection } from "../../Hooks/useSelection";
+import { memo } from "react";
 
 var StyledButton = styled(MenuButton)`
   border: none;
@@ -24,13 +25,14 @@ var StyledButton = styled(MenuButton)`
   }
 `;
 
-export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition }) {
+export const NodeMenu = memo(function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition }) {
   const duplicateNode = useTree((state) => state.duplicateNode);
   const deleteNode = useTree((state) => state.deleteNode);
   const resetNode = useTree((state) => state.resetNode);
   const sortAroundNode = useTree((state) => state.sortAroundNode);
   const executeCallback = useTree((state) => state.executeCallback);
   var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
+  console.log("redraw node menu");
   return (
     <foreignObject
       x="260"
@@ -89,4 +91,4 @@ export function NodeMenu({ node, def }: { node: NodeData; def: NodeDefinition })
       </Menu>
     </foreignObject>
   );
-}
+});

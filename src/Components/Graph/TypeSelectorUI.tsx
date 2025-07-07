@@ -7,6 +7,7 @@ import { Icon, IconPlus } from "@tabler/icons-react";
 import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
 import { NODE_WIDTH } from "./NodeVisualConst";
 import { PortType } from "../../Types/PortType";
+import { memo } from "react";
 
 const MAX_TYPE_SINGLE_LINE = NODE_WIDTH / (30 + 2) - 1;
 
@@ -84,7 +85,7 @@ function TypeMenuItem({ type, onClick, selectedtype }: { type: PortType; selecte
   );
 }
 
-export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinition }) {
+export const TypeSelectorUI = memo(function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinition }) {
   const types = def.availableTypes as PortType[];
   const onClick = (type: PortType) => useTree.getState().changeNodeType(node.id, type);
   return (
@@ -127,7 +128,7 @@ export function TypeSelectorUI({ node, def }: { node: NodeData; def: NodeDefinit
       </StyledDiv>
     </foreignObject>
   );
-}
+});
 
 export function TypeButton({ type, onClick, selectedtype }: { type: PortType; selectedtype: PortType; onClick: (type: PortType) => void }) {
   const portDescription = PortTypeDefinitions[type];

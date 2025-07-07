@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useEffect, useMemo } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
 import { useSpring, animated, useSprings, SpringValue, SpringRef, Interpolation } from "@react-spring/web";
-import { useMeasure, useMediaQuery } from "@uidotdev/usehooks";
+import { useMeasure, useMediaQuery, usePrevious } from "@uidotdev/usehooks";
 import { Edge } from "./Edge";
 import { useGesturePrevention } from "../../Hooks/useGesturePrevention";
 import { useTree } from "../../Hooks/useTree";
@@ -20,7 +20,6 @@ import { SVGGridPattern } from "./SVGGridPattern";
 import { useCopyPasteGraph } from "./useCopyPasteGraph";
 import { abs } from "mathjs";
 import { GraphAreaRect } from "./GraphAreaRect";
-import { buildBoundingBoxAroundNode } from "../../Utils/ui/buildBoundingBox";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
@@ -42,7 +41,7 @@ export function Graph() {
   const portSelection = usePortSelection();
   const { onClickPort, onClickNode: onClickNodeEdgeCreation } = useEdgeCreation();
   const [ref, elementSize] = useMeasure();
-  const [xyz, bind, screenBox] = useSVGMapDrag();
+  const [xyz, bind, screenBox, viewportScale] = useSVGMapDrag();
   const { nodes: selectedNode, hasArea, areaStart } = useSelection();
   const contextMenuData = useContextMenu();
   const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
@@ -127,12 +126,15 @@ export function Graph() {
         {nodesToDraw.map(([node, i]) => {
           const nodeProps = {
             node,
+            index: i,
             onClickPort,
             xy: nodePositionSpring[i].xy,
             isSelected: selectedNode.some((id) => id === node.id),
-            onTap: (e: MouseEvent<Element>) => onTapNode(node, e),
-            onMove: (x: number, y: number, definitive: boolean, linear: boolean) => onMoveNode(i, x, y, definitive, linear),
+            onTap: onTapNode,
+            onMove: onMoveNode,
+            viewPortScale: viewportScale,
           };
+          console.log(nodeProps);
           return (
             <GraphNodeUI
               key={node.id}

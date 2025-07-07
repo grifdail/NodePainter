@@ -6,7 +6,6 @@ import { memo } from "react";
 
 export const SettingControl = memo(({ y, value, def, onChange, nodeData, useHTML }: { y: number; useHTML?: boolean; value: any; nodeData: NodeData; def: SettingDefinition; onChange: (params: any) => void }) => {
   var DefinedComponent = SettingComponents[def.type] as SettingComponent<any>;
-  console.log("redraw");
   var height = DefinedComponent.getSize(value, def, nodeData);
   if (useHTML) {
     return (

@@ -7,10 +7,11 @@ import { useSelection } from "./useSelection";
 import { BoundingBox } from "../Types/BoundingBox";
 import { useWindowSize } from "@uidotdev/usehooks";
 
-export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes, BoundingBox] {
+export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes, BoundingBox, number] {
   var viewBox = useViewbox();
   const screenResolution = useWindowSize();
-  const viewBoxBoundingBox = new BoundingBox(viewBox.y, viewBox.x + (screenResolution.width || 1024) * viewBox.scale, viewBox.y + (screenResolution.height || 1024) * viewBox.scale, viewBox.x).scale(2).grow(500);
+  const baseScreenResolution = { x: screenResolution.width || 1024, y: screenResolution.height || 700 };
+  const viewBoxBoundingBox = new BoundingBox(viewBox.y, viewBox.x + baseScreenResolution.x * viewBox.scale, viewBox.y + baseScreenResolution.y * viewBox.scale, viewBox.x).scale(3).grow(500);
 
   var selection = useSelection();
   var [isSelection, setIsSelection] = useState(false);
@@ -67,7 +68,7 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
     }
   );
 
-  return [xyz, bind, viewBoxBoundingBox];
+  return [xyz, bind, viewBoxBoundingBox, viewBox.scale];
 }
 export function computeNewScale(viewbox: { x: number; y: number; scale: number }, scale: number, origin: Vector2): number[] {
   var scaleDiff = viewbox.scale - viewbox.scale / scale;
