@@ -52,7 +52,7 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
   const inputCount = Object.keys(node.dataInputs).length;
   const outputCount = Object.keys(node.dataOutputs).length;
   const definition = getNodeTypeDefinition(node);
-  console.log("redraw node");
+  console.log(`Redrawing node ${definition.id} : ${node.id}`);
   const [dragged, setDragged] = useState(false);
   const bind = useGesture(
     {

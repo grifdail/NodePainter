@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useMemo } from "react";
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { GraphNodeUI } from "./GraphNodeUI";
 import { useSpring, animated, useSprings, SpringValue, SpringRef, Interpolation } from "@react-spring/web";
 import { useMeasure, useMediaQuery, usePrevious } from "@uidotdev/usehooks";
@@ -134,7 +134,6 @@ export function Graph() {
             onMove: onMoveNode,
             viewPortScale: viewportScale,
           };
-          console.log(nodeProps);
           return (
             <GraphNodeUI
               key={node.id}
@@ -209,16 +208,18 @@ function useGetNodePort(nodes: NodeData[], nodePositionSpring: { xy: SpringValue
   );
 }
 
-function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: SpringRef<{ xy: number[] }>) {
+function useMoveNode(displayedNode: NodeData[], tree: TreeStore, nodePositionSpringApi: SpringRef<{ xy: number[] }>) {
   return useCallback(
     function onMoveNode(i: number, x: number, y: number, isDefinitive: boolean = false, linear: boolean): void {
+      const tree = useTree.getState();
+      const allNodes = tree.nodes;
       let selectedNode = useSelection.getState().nodes;
-      if (selectedNode.length > 0 && !selectedNode.includes(nodes[i].id)) {
+      if (selectedNode.length > 0 && !selectedNode.includes(displayedNode[i].id)) {
         selectedNode = [];
         useSelection.getState().clear();
       }
       if (selectedNode.length <= 0) {
-        selectedNode = [nodes[i].id];
+        selectedNode = [displayedNode[i].id];
       }
       if (linear) {
         if (abs(x) > abs(y)) {
@@ -234,7 +235,7 @@ function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: 
         }
       } else {
         nodePositionSpringApi.start((i2) => {
-          const node = nodes[i2];
+          const node = allNodes[displayedNode[i2].id];
           if (selectedNode.includes(node.id)) {
             return { xy: [node.positionX + x, node.positionY + y] };
           }
@@ -242,7 +243,7 @@ function useMoveNode(nodes: NodeData[], tree: TreeStore, nodePositionSpringApi: 
         });
       }
     },
-    [nodePositionSpringApi, nodes, tree]
+    [nodePositionSpringApi, Object.keys(displayedNode).join("-")]
   );
 }
 

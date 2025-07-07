@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { NodeData } from "../Types/NodeData";
 import { PortRole } from "../Types/PortRole";
 import { PortType } from "../Types/PortType";
@@ -7,27 +7,26 @@ import { PortSelection, usePortSelection } from "./usePortSelection";
 import { useTree } from "./useTree";
 
 export function useEdgeCreation() {
-  const tree = useTree();
-
+  const [getNode, addEdge, removeDataConnection] = useTree((state) => [state.getNode, state.addEdge, state.removeDataConnection]);
   const createEdge = useCallback(
     function createEdge(left: PortSelection, right: PortSelection) {
-      var leftType = tree.getNode(left.node).dataOutputs[left.port]?.type;
+      var leftType = getNode(left.node).dataOutputs[left.port]?.type;
 
-      var rightType = tree.getNode(right.node).dataInputs[right.port].type;
+      var rightType = getNode(right.node).dataInputs[right.port].type;
 
       if (canConvertCode(leftType, rightType)) {
-        tree.addEdge(left.node, left.port, right.node, right.port);
+        addEdge(left.node, left.port, right.node, right.port);
       }
     },
-    [tree]
+    [getNode, addEdge]
   );
 
   const onClickPort = useCallback(
     function (node: string, port: string, location: PortRole, type: PortType) {
       const portSelection = usePortSelection.getState();
       var right: PortSelection = { node, port, location, type };
-      if (!portSelection.hasSelection && location === "input" && tree.getNode(node).dataInputs[port].hasConnection) {
-        tree.removeDataConnection(node, port);
+      if (!portSelection.hasSelection && location === "input" && getNode(node).dataInputs[port].hasConnection) {
+        removeDataConnection(node, port);
         return;
       }
       if (portSelection.hasSelection) {
@@ -47,7 +46,7 @@ export function useEdgeCreation() {
         portSelection.select(node, port, location, type);
       }
     },
-    [usePortSelection, tree, createEdge]
+    [usePortSelection, createEdge]
   );
 
   const onClickNode = useCallback(
@@ -80,7 +79,7 @@ export function useEdgeCreation() {
         }
       }
     },
-    [onClickPort, tree, onClickPort]
+    [onClickPort, onClickPort]
   );
 
   return { onClickPort, onClickNode };
