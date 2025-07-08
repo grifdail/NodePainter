@@ -14,6 +14,7 @@ import { FunctionSubMenu } from "./FunctionSubMenu";
 import { Routes } from "../Types/Routes";
 import { FullScreenDiv } from "./Modal";
 import { useNodeSelectionModal } from "../Hooks/useNodeSelectionModal";
+import { Minimap } from "./Graph/Minimap";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -43,6 +44,7 @@ export function GridUi() {
       )}
       {selectionActive && <WarningTrackSelection></WarningTrackSelection>}
       {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
+      <Minimap></Minimap>
       <BottomToolbar reversed>
         <button
           onClick={() => {

@@ -33,7 +33,7 @@ import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
 import { SAVE_VERSION, upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
-import { buildBoundingBoxAroundNodes } from "../Utils/ui/buildBoundingBox";
+import { buildBoundingBoxAroundTreeNodes } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { copyInputPortsValues } from "./copyInputPortsValues";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
@@ -710,7 +710,7 @@ export const useTree = create<TreeStore>()((set, get) => {
 
       set(
         produce((state) => {
-          var { bb, nodes } = buildBoundingBoxAroundNodes(nodeIds, state);
+          var { bb, nodes } = buildBoundingBoxAroundTreeNodes(nodeIds, state);
           callback(bb, nodes);
         })
       );

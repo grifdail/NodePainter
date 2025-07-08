@@ -3,7 +3,7 @@ import schemaJSON from "../../../schema/Snippet.json";
 import { NodeData } from "../../../Types/NodeData";
 import { TreeStore } from "../../../Types/TreeStore";
 import { Vector2 } from "../../../Types/vectorDataType";
-import { buildBoundingBoxAroundNodes } from "../../ui/buildBoundingBox";
+import { buildBoundingBoxAroundTreeNodes } from "../../ui/buildBoundingBox";
 import { duplicateNode } from "./duplicateNode";
 
 const ajv = new Ajv({ meta: false, validateSchema: false, strictRequired: true, strict: true });
@@ -49,7 +49,7 @@ export function loadSnippet(snippet: Snippet, tree: TreeStore, pos: Vector2) {
 }
 
 export function extractSnipet(name: string, nodeIds: string[], tree: TreeStore): Snippet {
-  var { bb, nodes } = buildBoundingBoxAroundNodes(nodeIds, tree);
+  var { bb, nodes } = buildBoundingBoxAroundTreeNodes(nodeIds, tree);
   return {
     nodes: nodes.map((node) => structuredClone(node.node)),
     offset: bb.center(),

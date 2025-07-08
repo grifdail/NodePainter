@@ -4,7 +4,7 @@ import { BoundingBox } from "../../Types/BoundingBox";
 import { NodeData } from "../../Types/NodeData";
 import { TreeStore } from "../../Types/TreeStore";
 
-export function buildBoundingBoxAroundNodes(nodeIds: string[], state: TreeStore) {
+export function buildBoundingBoxAroundTreeNodes(nodeIds: string[], state: TreeStore) {
   var nodes = nodeIds.map((id) => {
     const n = state.nodes[id];
     return {
