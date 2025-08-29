@@ -10,6 +10,8 @@ import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
+import { CustomSimulationEnd } from "../Nodes/Technical/Simulation/CustomSimulationEnd";
+import { CustomSimulationStart } from "../Nodes/Technical/Simulation/CustomSimulationStart";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -428,7 +430,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             dataOutputs: [...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
 
             settings: [],
-            executeAs: "CustomSimulation-start",
+            executeAs: CustomSimulationStart.id,
           };
           const endNodeDef: NodeDefinition = {
             IsUnique: true,
@@ -440,7 +442,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             dataOutputs: [],
 
             settings: [],
-            executeAs: "CustomSimulation-end",
+            executeAs: CustomSimulationEnd.id,
           };
           state.customNodes[start] = startNodeDef;
           state.customNodes[end] = endNodeDef;

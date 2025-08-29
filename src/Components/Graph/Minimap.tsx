@@ -19,12 +19,16 @@ const MinimapDiv = styled.div`
   top: 90px;
   right: 0px;
   width: 200px;
-  height: 200px;
+  aspect-ratio: 1;
   pointer-events: auto;
   background-color: var(--color-background-card);
   padding: var(--padding-small);
   border-radius: 10px;
   transition: transform 0.5s ease;
+
+  @media (max-width: 840px) {
+    width: 150px;
+  }
 
   &.closed {
     transform: translateX(100%);
@@ -85,7 +89,6 @@ export const MinimapContent = memo(() => {
   const { width: screenX, height: screenY } = useWindowSize();
   const nodesBB = useMemo(() => nodesOnThisGraph.map((node) => [buildApproximateBoundingBox(node), Object.values(node.dataOutputs)[0]?.type || "drawing2d"] as const), [nodesOnThisGraph]);
   const boundingBox = useMemo(() => makeSquare(nodesBB.reduce((oldbb, [node, type]) => oldbb.extend(node), nodesBB[0][0]).growAllSide(100)), [nodesBB]);
-  console.log(nodesBB);
   const onClick = useCallback(
     (e: MouseEvent<SVGElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();

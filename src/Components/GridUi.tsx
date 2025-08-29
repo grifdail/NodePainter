@@ -43,8 +43,9 @@ export function GridUi() {
         </WarningTrack>
       )}
       {selectionActive && <WarningTrackSelection></WarningTrackSelection>}
-      {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
       <Minimap></Minimap>
+      {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
+
       <BottomToolbar reversed>
         <button
           onClick={() => {
