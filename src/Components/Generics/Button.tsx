@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 export const ButtonStyled = styled.button<{ $invisible?: boolean; $selected?: boolean; $iconOnly?: boolean }>`
   background: var(--color-background-button);
   border: var(--border-size) solid var(--color-border);
-
+  color: var(--color-text);
   transition: background 0.3s;
   cursor: pointer;
   color: var(--color-text);
@@ -51,7 +51,7 @@ export const ToolbarButtonStyled = styled(InvisibleButtonStyled)`
       ? css`
           background: rgba(0, 0, 0, 0.5);
           border-color: color-mix(in rgba, var(--color-text), transparent 50%);
-          box-shadow: inset 0 0 2px light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 1));
+          box-shadow: inset 0 0 2px var(--color-shadow);
         `
       : ""}
 `;
@@ -66,15 +66,7 @@ export type ButtonProps = {
 
 export const Button = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled, ...other }: ButtonProps, ref) => {
   return (
-    <ButtonStyled
-      ref={ref as any}
-      onClick={onClick}
-      disabled={disabled}
-      data-tooltip-id="tooltip"
-      data-tooltip-content={tooltip}
-      $iconOnly={label === undefined && Icon != null}
-      data-icon={label === undefined && Icon != null}
-      {...other}>
+    <ButtonStyled ref={ref as any} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} $iconOnly={label === undefined && Icon != null} data-icon={label === undefined && Icon != null} {...other}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </ButtonStyled>
@@ -83,14 +75,7 @@ export const Button = forwardRef(({ label, icon: Icon, onClick, tooltip, disable
 
 export const InvisibleButton = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled, ...other }: ButtonProps, ref) => {
   return (
-    <InvisibleButtonStyled
-      ref={ref as any}
-      onClick={onClick}
-      disabled={disabled}
-      data-tooltip-id="tooltip"
-      data-tooltip-content={tooltip}
-      $iconOnly={label === undefined && Icon != null}
-      {...other}>
+    <InvisibleButtonStyled ref={ref as any} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} $iconOnly={label === undefined && Icon != null} {...other}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </InvisibleButtonStyled>
@@ -99,15 +84,7 @@ export const InvisibleButton = forwardRef(({ label, icon: Icon, onClick, tooltip
 
 export const ToolbarButton = forwardRef(({ label, icon: Icon, onClick, tooltip, disabled, selected, ...other }: ButtonProps & { selected?: boolean }, ref) => {
   return (
-    <ToolbarButtonStyled
-      ref={ref as any}
-      $selected={selected}
-      onClick={onClick}
-      disabled={disabled}
-      data-tooltip-id="tooltip"
-      data-tooltip-content={tooltip}
-      $iconOnly={label === undefined && Icon != null}
-      {...other}>
+    <ToolbarButtonStyled ref={ref as any} $selected={selected} onClick={onClick} disabled={disabled} data-tooltip-id="tooltip" data-tooltip-content={tooltip} $iconOnly={label === undefined && Icon != null} {...other}>
       {Icon !== undefined && <Icon></Icon>}
       {label}
     </ToolbarButtonStyled>

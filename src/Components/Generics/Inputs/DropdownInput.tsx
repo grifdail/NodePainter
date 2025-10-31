@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const StyledButton = styled.button`
+  color: var(--color-text);
   flex: 1 1 content;
   display: flex;
   justify-content: end;
@@ -37,7 +38,8 @@ export const DropdownInput = function DropdownInput({ onChange, value, options, 
           {useTemplateForField && template ? template(value) : value}
           <IconTriangleInverted size={14} />
         </StyledButton>
-      }>
+      }
+    >
       {options?.map((option: string) => {
         var args = { key: option, onClick: () => onChange(option), value: option };
 
@@ -45,10 +47,7 @@ export const DropdownInput = function DropdownInput({ onChange, value, options, 
           return templateRaw(option, args);
         } else {
           return (
-            <MenuItem
-              key={args.key}
-              onClick={args.onClick}
-              value={args.value}>
+            <MenuItem key={args.key} onClick={args.onClick} value={args.value}>
               {template ? template(option, args) : option}
             </MenuItem>
           );

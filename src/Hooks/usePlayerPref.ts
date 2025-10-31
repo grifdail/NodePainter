@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 import { persist } from "zustand/middleware";
 import { DefaultGradient, DefaultPalettes } from "../Data/Palettes";
-import { PlayerPrefExport, PlayerPrefStore, SortingType } from "../Types/PlayerPrefStore";
+import { PlayerPrefExport, PlayerPrefStore, SortingType, UITheme } from "../Types/PlayerPrefStore";
 import { ColorPalette, Gradient } from "../Types/vectorDataType";
 import { Snippet } from "../Utils/graph/modification/snippets";
 
@@ -12,6 +12,8 @@ export const usePlayerPref = create<PlayerPrefStore>()(
     (set, get) => {
       return {
         favNodes: [],
+        theme: "auto",
+        css: "",
         nodesLastUsedDates: {},
         nodesUseCount: {},
         nodeSorting: "featured",
@@ -92,6 +94,9 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         },
         setColorPreset(palette) {
           set((state) => ({ colorPreset: palette }));
+        },
+        setTheme(theme: UITheme) {
+          set((state) => ({ theme }));
         },
         hasSeenIntroPopup: false,
         setSeenIntro() {

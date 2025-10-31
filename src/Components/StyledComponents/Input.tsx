@@ -5,7 +5,7 @@ export const InputBackgroundColor = "color-mix(in srgb, var(--color-input), tran
 export const Input = styled.input`
   background: ${InputBackgroundColor};
   border: none;
-
+  color: var(--color-text);
   border-radius: 25px;
 
   transition: background-color 0.3s;

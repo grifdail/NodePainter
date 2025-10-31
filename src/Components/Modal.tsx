@@ -88,6 +88,7 @@ export const CloseButton = styled.button`
   aspect-ratio: 1;
   padding: 0px;
   border: none;
+  color: var(--color-text);
 
   border-radius: var(--border-radius-large);
 
@@ -158,18 +159,12 @@ export function Modal({ children, title, icon: Icon, onClose, stretch, size = "m
   });
   return (
     <FullScreenDiv $modal>
-      <ModalBody
-        size={size}
-        style={styles}
-        stretch={stretch}>
+      <ModalBody size={size} style={styles} stretch={stretch}>
         <ModalHeader>
           {Icon && <Icon />}
           <h2>{title}</h2>
           {onClose && (
-            <CloseButton
-              onClick={onClose}
-              data-tooltip-id="tooltip"
-              data-tooltip-content={`Close`}>
+            <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
               <IconX />
             </CloseButton>
           )}

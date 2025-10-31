@@ -21,7 +21,7 @@ const NodeList = styled.section`
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
-
+  color: var(--color-text);
   border: none;
   border-radius: var(--border-radius-small);
   padding: 10px;
@@ -64,20 +64,10 @@ function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: 
         <div>{name}</div>
         <PalettePreview palette={value}></PalettePreview>
         <span className="spacer"></span>
-        <Button
-          onClick={onClick}
-          label="Edit"></Button>
-        <Button
-          onClick={onDelete}
-          label="Delete"></Button>
+        <Button onClick={onClick} label="Edit"></Button>
+        <Button onClick={onDelete} label="Delete"></Button>
       </StyledButton>
-      {isSelected && (
-        <PaletteSetting
-          value={value}
-          onChange={onChange}
-          def={{ id: "colorPreset", defaultValue: [], type: "palette" }}
-          node={null as unknown as NodeData}></PaletteSetting>
-      )}
+      {isSelected && <PaletteSetting value={value} onChange={onChange} def={{ id: "colorPreset", defaultValue: [], type: "palette" }} node={null as unknown as NodeData}></PaletteSetting>}
     </>
   );
 }
@@ -93,11 +83,7 @@ export const SavedPaletteEditor = () => {
       <SearchForm onSubmit={(e) => e.preventDefault()}>
         <span>
           <IconSearch> </IconSearch>
-          <Input
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTermRaw}
-            placeholder="filter..."
-            autoFocus></Input>
+          <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
         </span>
         <InvisibleButton
           icon={IconPlus}
@@ -105,7 +91,8 @@ export const SavedPaletteEditor = () => {
             useDialog.getState().openPrompt((data) => {
               setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
             });
-          }}></InvisibleButton>
+          }}
+        ></InvisibleButton>
       </SearchForm>
       <NodeList>
         {Object.entries(savedPalettes)

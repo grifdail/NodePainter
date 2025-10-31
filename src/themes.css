@@ -1,0 +1,145 @@
+﻿body.theme-auto {
+  --color-pairing: light-dark(#88888855, #88888855);
+
+  --color-background: light-dark(#ffffff, #0d1117);
+  --color-background-card: light-dark(#fcfcfc, #22262c);
+  --color-background-button: light-dark(#ffffff, #151b23);
+  --color-text: light-dark(#000000, #cad1d8);
+  --color-text-minor: light-dark(#00000088, #cad1d888);
+  --color-background-highghlight: light-dark(#eeeeee, #282828);
+  --color-border: light-dark(#222, #dee4ea);
+  --color-border-input: light-dark(#22222288, #dee4ea7e);
+  --color-screen: light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)); /*The color of the screen behing a modal*/
+  --color-selected: light-dark(rgba(0, 0, 0, 0.1), rgba(1, 1, 1, 1));
+  --color-input: light-dark(#888, #888);
+  --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
+  --color-slider-track: light-dark(#eeeeee, #282828);
+  --color-slider-output: light-dark(#00000088, #cad1d888);
+  --color-disabled: light-dark(#aaa, #666)
+
+  --border-size: 0.2px;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+  --padding-tiny: 4px;
+
+  --size-text: 14px;
+
+  --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+  @media (prefers-color-scheme: dark) {
+    --card-shadow: none;
+  }
+}
+
+body.theme-rose-pine-moon {
+  --color-pairing: #88888855;
+
+  --color-background: #232136;
+  --color-background-card: #2a273f;
+  --color-background-button: #393552;
+  --color-text: #e0def4;
+  --color-text-minor: #908caa;
+  --color-background-highghlight: #56526e;
+  --color-border: #56526e;
+  --color-border-input: #56526e;
+  --color-screen: rgba(0, 0, 0, 0.5); /*The color of the screen behing a modal*/
+  --color-selected: #44415a;
+  --color-input: #44415a;
+  --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
+  --color-slider-track: #ea9a97;
+  --color-slider-output: #eb6f92;
+  --color-disabled: #6e6a86;
+
+  --border-size: 1px;
+  --card-shadow: 0 1px 4px rgba(255, 255, 255, 0);
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+  --padding-tiny: 4px;
+
+  --size-text: 14px;
+
+  --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+}
+
+body.theme-light {
+  --color-pairing: #88888855;
+
+  --color-background: #ffffff;
+  --color-background-card: #fcfcfc;
+  --color-background-button: #ffffff;
+  --color-text: #000000;
+  --color-text-minor: #00000088;
+  --color-background-highghlight: #eeeeee;
+  --color-border: #222;
+  --color-border-input: #22222288;
+  --color-screen: rgba(0, 0, 0, 0.2); /*The color of the screen behing a modal*/
+  --color-selected: rgba(0, 0, 0, 0.1);
+  --color-input: #888;
+  --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
+  --color-slider-track: #eeeeee;
+  --color-slider-output: #00000088;
+  --color-disabled: #aaa;
+
+  --border-size: 0.2px;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+  --padding-tiny: 4px;
+
+  --size-text: 14px;
+
+  --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+}
+
+body.theme-dark {
+  --color-pairing: #88888855;
+
+  --color-background: #0d1117;
+  --color-background-card: #22262c;
+  --color-background-button: #151b23;
+  --color-text: #cad1d8;
+  --color-text-minor: #cad1d888;
+  --color-background-highghlight: #282828;
+  --color-border: #dee4ea;
+  --color-border-input: #dee4ea7e;
+  --color-screen: rgba(0, 0, 0, 0.5); /*The color of the screen behing a modal*/
+  --color-selected: rgba(1, 1, 1, 1);
+  --color-input: #888;
+  --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
+  --color-slider-track: #282828;
+  --color-slider-output: #cad1d888;
+  --color-disabled: #666;
+
+  --border-size: 0.2px;
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+  --padding-tiny: 4px;
+
+  --size-text: 14px;
+
+  --card-shadow: none;
+}

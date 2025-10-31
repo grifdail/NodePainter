@@ -5,6 +5,7 @@ import { ContextMenu } from "../Graph/ContextMenu";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 
 export const CategoryButton = styled.button<{ selected?: boolean }>`
+  color: var(--color-text);
   padding: 10px;
   background: ${(props) => (props.selected ? "var(--color-selected)" : "none")};
   border: none;
@@ -63,11 +64,7 @@ export const TagList = ({ options, onClick, useShrink, sort }: { options: Record
     <TagListRoot>
       <TagListContent $shrink={useShrink}>
         {Object.entries(options).map(([name, isSelected]) => (
-          <CategoryButton
-            key={name}
-            selected={isSelected}
-            onClick={() => onClick(name)}
-            title={name}>
+          <CategoryButton key={name} selected={isSelected} onClick={() => onClick(name)} title={name}>
             {name}
           </CategoryButton>
         ))}
@@ -80,14 +77,10 @@ export const TagList = ({ options, onClick, useShrink, sort }: { options: Record
             <button>
               <IconPlus></IconPlus>
             </button>
-          }>
+          }
+        >
           {sorted.map(([name, isSelected]) => (
-            <MenuItem
-              key={name}
-              type="checkbox"
-              checked={isSelected}
-              onClick={() => onClick(name)}
-              title={name}>
+            <MenuItem key={name} type="checkbox" checked={isSelected} onClick={() => onClick(name)} title={name}>
               {name}
             </MenuItem>
           ))}

@@ -18,6 +18,10 @@
   --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
   --color-slider-track: light-dark(#eeeeee, #282828);
   --color-slider-output: light-dark(#00000088, #cad1d888);
+  --color-disabled: #6e6a86;
+  --color-shadow: light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 1));
+  --color-box-selection: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  --color-warning-track: light-dark(#5c5c5c, #a8a8a8):
 
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -34,9 +38,6 @@
   --size-text: 14px;
 
   --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
-  @media (prefers-color-scheme: dark) {
-    --card-shadow: none;
-  }
 }
 
 * {
@@ -76,29 +77,29 @@ body {
 }
 
 body .szh-menu {
-  color: light-dark(#212529, #cad1d8);
-  background-color: light-dark(#fff, #22262c);
+  color: var(--color-text);
+  background-color: var(--color-background-button);
   border: 1px solid light-dark(rgba(0, 0, 0, 0.1), #333);
   box-shadow: 0 2px 9px 3px rgba(0, 0, 0, 0.25);
 
   .szh-menu__arrow {
-    background-color: light-dark(#fff, #22262c);
+    background-color: var(--color-text);
     border-left-color: light-dark(rgba(0, 0, 0, 0.1), #333);
     border-top-color: light-dark(rgba(0, 0, 0, 0.1), #333);
   }
 }
 body .szh-menu__item--hover {
-  background-color: light-dark(#ebebeb, #31363c);
+  background-color: var(--color-selected);
 }
 body .szh-menu__item--focusable {
   background-color: inherit;
 }
 body .szh-menu__item--disabled {
-  color: light-dark(#aaa, #666);
+  color: var(--color-disabled);
 }
 
 body .szh-menu__divider {
-  background-color: light-dark(rgba(0, 0, 0, 0.12), #3a3a3a);
+  background-color: color-mix(in srgb, var(--color-text), transparent 90%);
 }
 
 iframe {

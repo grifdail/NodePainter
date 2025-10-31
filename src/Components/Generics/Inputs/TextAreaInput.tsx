@@ -4,6 +4,7 @@ import { applyConstraint, ConstrainDeclaration } from "../../../Utils/ui/applyCo
 import styled from "styled-components";
 
 const StyledTextare = styled.textarea`
+  color: var(--color-text);
   resize: none;
   background: ${InputBackgroundColor};
   border: none;
@@ -40,12 +41,5 @@ export function TextAreaInput({ onChange, value, disabled = false, constrains }:
     }
   };
 
-  return (
-    <StyledTextare
-      disabled={disabled}
-      value={rawField}
-      onChange={(e) => setRawField(e.target.value)}
-      onBlur={(e) => onBlur(e.target.value)}
-    />
-  );
+  return <StyledTextare disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
 }

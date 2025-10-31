@@ -2,6 +2,7 @@ import { Snippet, SnippetCollection } from "../Utils/graph/modification/snippets
 import { ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
 export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsedDates" | "nodesUseCount" | "nodeSorting" | "palettes" | "gradient" | "colorPreset" | "hasSeenIntroPopup" | "snippets">;
+export type UITheme = "auto" | "light" | "dark" | "rose-pine-moon" | "rose-pine-dawn" | "css";
 
 export type PlayerPrefStore = {
   favNodes: string[];
@@ -22,6 +23,9 @@ export type PlayerPrefStore = {
   setColorPreset: (palette: ColorPalette) => void;
   setSeenIntro: () => void;
   hasSeenIntroPopup: boolean;
+  theme: UITheme;
+  setTheme: (theme: UITheme) => void;
+  css: string;
 
   saveSnippet(name: string, snippet: Snippet): void;
   removeSnippet(name: string): void;

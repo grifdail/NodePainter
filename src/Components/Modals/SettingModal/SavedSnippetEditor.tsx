@@ -21,7 +21,7 @@ const NodeList = styled.section`
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
-
+  color: var(--color-text);
   border: none;
   border-radius: var(--border-radius-small);
   padding: 10px;
@@ -69,9 +69,7 @@ function SketchButton({ value, onDelete }: { value: Snippet; onDelete: () => voi
         <p>{snippetToText(value)}</p>
         <span className="spacer"></span>
 
-        <Button
-          onClick={onDelete}
-          label="Delete"></Button>
+        <Button onClick={onDelete} label="Delete"></Button>
       </StyledButton>
     </>
   );
@@ -88,11 +86,7 @@ export const SavedSnippetEditor = () => {
       <SearchForm>
         <span>
           <IconSearch> </IconSearch>
-          <Input
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTermRaw}
-            placeholder="filter..."
-            autoFocus></Input>
+          <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
         </span>
       </SearchForm>
       <NodeList>

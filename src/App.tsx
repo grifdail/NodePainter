@@ -28,9 +28,10 @@ function App() {
   useAboutOnFirstLaunch();
   useParseUrl();
   useResetCamera();
+  useTheme();
 
   return (
-    <div className="app">
+    <div className={`app`}>
       <PortStyle />
       <GraphCache />
       <Router />
@@ -51,6 +52,17 @@ function useAboutOnFirstLaunch() {
       }
     }, 1000);
   }, []);
+}
+
+function useTheme() {
+  const theme = usePlayerPref((state) => state.theme);
+  const themeClass = `theme-${theme}`;
+  useEffect(() => {
+    document.body.classList.add(themeClass);
+    return () => {
+      document.body.classList.remove(themeClass);
+    };
+  }, [theme]);
 }
 
 function useResetCamera() {

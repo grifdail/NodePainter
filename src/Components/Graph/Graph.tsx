@@ -24,15 +24,7 @@ import { useViewbox } from "../../Hooks/useViewbox";
 
 function AreaSelectionRect({ areaSelection, mousePosition }: { areaSelection: [number, number]; mousePosition: SpringValue<[number, number]> }) {
   return (
-    <animated.rect
-      fill="light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))"
-      stroke="var(--color-border)"
-      strokeDasharray="4 10"
-      strokeWidth={5}
-      x={mousePosition.to((x, y) => Math.min(x, areaSelection[0]))}
-      y={mousePosition.to((x, y) => Math.min(y, areaSelection[1]))}
-      width={mousePosition.to((x, y) => Math.abs(x - areaSelection[0]))}
-      height={mousePosition.to((x, y) => Math.abs(y - areaSelection[1]))}></animated.rect>
+    <animated.rect fill="var(--color-box-selection)" stroke="var(--color-border)" strokeDasharray="4 10" strokeWidth={5} x={mousePosition.to((x, y) => Math.min(x, areaSelection[0]))} y={mousePosition.to((x, y) => Math.min(y, areaSelection[1]))} width={mousePosition.to((x, y) => Math.abs(x - areaSelection[0]))} height={mousePosition.to((x, y) => Math.abs(y - areaSelection[1]))}></animated.rect>
   );
 }
 
@@ -62,68 +54,26 @@ export function Graph() {
 
   return (
     <div style={{ width: "100%", height: "100%", position: "absolute" }}>
-      <animated.svg
-        ref={ref}
-        width="100%"
-        height="100%"
-        viewBox={viewBoxStr}
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ touchAction: "none" }}
-        onContextMenu={contextMenuData.onContextMenu}>
+      <animated.svg ref={ref} width="100%" height="100%" viewBox={viewBoxStr} xmlns="http://www.w3.org/2000/svg" style={{ touchAction: "none" }} onContextMenu={contextMenuData.onContextMenu}>
         <defs>
           <SVGGridPattern></SVGGridPattern>
         </defs>
-        <animated.rect
-          x={xyz.to((x) => x)}
-          y={xyz.to((x, y) => y)}
-          {...bind()}
-          width="100%"
-          height="100%"
-          fill="url(#grid)"
-          style={{ touchAction: "none" }}></animated.rect>
+        <animated.rect x={xyz.to((x) => x)} y={xyz.to((x, y) => y)} {...bind()} width="100%" height="100%" fill="url(#grid)" style={{ touchAction: "none" }}></animated.rect>
         {nodesOnThisGraph
           .filter((node) => node.settings?.grapharea)
 
           .map((node) => {
-            return (
-              <GraphAreaRect
-                key={`${node.id}-pairing`}
-                base={getNodePort(node.id, "self", "in")}
-                area={node.settings?.grapharea}
-                node={node}
-              />
-            );
+            return <GraphAreaRect key={`${node.id}-pairing`} base={getNodePort(node.id, "self", "in")} area={node.settings?.grapharea} node={node} />;
           })}
         {nodesOnThisGraph
           .filter((node) => node.pairedNode != undefined)
           .map((node) => {
-            return (
-              <PairingLine
-                key={`${node.id}-pairing`}
-                start={getNodePort(node.id, "self", "in")}
-                end={getNodePort(node.pairedNode as string, "self", "in")}
-              />
-            );
+            return <PairingLine key={`${node.id}-pairing`} start={getNodePort(node.id, "self", "in")} end={getNodePort(node.pairedNode as string, "self", "in")} />;
           })}
         {edges.map((edge) => {
-          return (
-            <Edge
-              key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`}
-              start={getNodePort(edge[0] as string, edge[1] as string, "out")}
-              end={getNodePort(edge[2] as string, edge[3] as string, "in")}
-              type={edge[4] as PortType}
-            />
-          );
+          return <Edge key={`${edge[0]}#${edge[1]} to ${edge[2]}#${edge[3]}`} start={getNodePort(edge[0] as string, edge[1] as string, "out")} end={getNodePort(edge[2] as string, edge[3] as string, "in")} type={edge[4] as PortType} />;
         })}
-        {portSelection.hasSelection && !hasNoCursor && (
-          <Edge
-            key="edge-creation"
-            start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "input" ? "in" : "out")}
-            end={mousePosition}
-            type={portSelection.type}
-            reverse={portSelection.location === "input"}
-          />
-        )}
+        {portSelection.hasSelection && !hasNoCursor && <Edge key="edge-creation" start={getNodePort(portSelection.node, portSelection.port, portSelection.location === "input" ? "in" : "out")} end={mousePosition} type={portSelection.type} reverse={portSelection.location === "input"} />}
         {nodesToDraw.map(([node, i]) => {
           const nodeProps = {
             node,
@@ -134,18 +84,9 @@ export function Graph() {
             onTap: onTapNode,
             onMove: onMoveNode,
           };
-          return (
-            <GraphNodeUI
-              key={node.id}
-              {...nodeProps}
-            />
-          );
+          return <GraphNodeUI key={node.id} {...nodeProps} />;
         })}
-        {hasArea && (
-          <AreaSelectionRect
-            areaSelection={areaStart as [number, number]}
-            mousePosition={mousePosition}></AreaSelectionRect>
-        )}
+        {hasArea && <AreaSelectionRect areaSelection={areaStart as [number, number]} mousePosition={mousePosition}></AreaSelectionRect>}
       </animated.svg>
       {contextMenuData.state === "open" && <ContextMenu {...contextMenuData}></ContextMenu>}
     </div>

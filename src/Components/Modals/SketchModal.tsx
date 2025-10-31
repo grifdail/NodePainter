@@ -53,7 +53,7 @@ const NodeList = styled.section`
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
-
+  color: var(--color-text);
   border: none;
   border-radius: var(--border-radius-small);
   padding: 10px;
@@ -127,6 +127,7 @@ export const DeleteButton = styled.a`
   border: none;
   background: none;
   cursor: pointer;
+  color: var(--color-text);
 
   transition: opacity 0.3s;
 
@@ -186,46 +187,28 @@ export function SketchModal({ close }: { close: () => void }) {
   }, [allItem, searchTerm]);
 
   return (
-    <Modal
-      onClose={close}
-      title="Open or create a new sketch"
-      icon={IconInfoCircle}>
+    <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
       <MainDiv>
-        <ButtonGroup
-          align="stretch"
-          $forceStretch
-          $responsive>
-          <Button
-            onClick={withConfirm(() => loadSketch(new Promise<SketchTemplate>((r) => r(lastSavedSketch as SketchTemplate))))}
-            disabled={lastSavedSketch === null}
-            icon={IconReload}
-            label="Last opened sketch"></Button>
+        <ButtonGroup align="stretch" $forceStretch $responsive>
+          <Button onClick={withConfirm(() => loadSketch(new Promise<SketchTemplate>((r) => r(lastSavedSketch as SketchTemplate))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
           <Button
             icon={IconFilePlus}
             label="New"
             onClick={() => {
               useTree.getState().reset();
               close();
-            }}></Button>
-          <Button
-            onClick={() => openModal(Routes.Load)}
-            icon={IconUpload}
-            label="Load from JSON"></Button>
+            }}
+          ></Button>
+          <Button onClick={() => openModal(Routes.Load)} icon={IconUpload} label="Load from JSON"></Button>
         </ButtonGroup>
         <div className="files">
           <SearchForm>
             <span>
               <IconSearch> </IconSearch>
-              <Input
-                onChange={(e) => setSearchTerm(e.target.value)}
-                value={searchTermRaw}
-                placeholder="filter..."
-                autoFocus></Input>
+              <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
             </span>
           </SearchForm>
-          <TagList
-            options={Object.fromEntries(categories.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))}
-            onClick={toggleTag}></TagList>
+          <TagList options={Object.fromEntries(categories.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag}></TagList>
 
           <NodeList>
             {filteredList.map((item) => (

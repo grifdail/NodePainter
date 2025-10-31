@@ -21,7 +21,7 @@ const NodeList = styled.section`
 
 const StyledButton = styled.button`
   background: var(--color-background-card);
-
+  color: var(--color-text);
   border: none;
   border-radius: var(--border-radius-small);
   padding: 10px;
@@ -64,20 +64,10 @@ function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: 
         <div>{name}</div>
         <GradientPreview gradient={value}></GradientPreview>
         <span className="spacer"></span>
-        <Button
-          onClick={onClick}
-          label="Edit"></Button>
-        <Button
-          onClick={onDelete}
-          label="Delete"></Button>
+        <Button onClick={onClick} label="Edit"></Button>
+        <Button onClick={onDelete} label="Delete"></Button>
       </StyledButton>
-      {isSelected && (
-        <GradientSetting
-          value={value}
-          onChange={onChange}
-          def={{ id: "colorPreset", defaultValue: [], type: "gradient" }}
-          node={null as unknown as NodeData}></GradientSetting>
-      )}
+      {isSelected && <GradientSetting value={value} onChange={onChange} def={{ id: "colorPreset", defaultValue: [], type: "gradient" }} node={null as unknown as NodeData}></GradientSetting>}
     </>
   );
 }
@@ -94,11 +84,7 @@ export const SavedGradientEditor = () => {
       <SearchForm onSubmit={(e) => e.preventDefault()}>
         <span>
           <IconSearch> </IconSearch>
-          <Input
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTermRaw}
-            placeholder="filter..."
-            autoFocus></Input>
+          <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
         </span>
         <InvisibleButton
           icon={IconPlus}
@@ -106,7 +92,8 @@ export const SavedGradientEditor = () => {
             useDialog.getState().openPrompt((data) => {
               setSavedGradient(data, createDefaultGradient());
             });
-          }}></InvisibleButton>
+          }}
+        ></InvisibleButton>
       </SearchForm>
       <NodeList>
         {Object.entries(savedGradient)

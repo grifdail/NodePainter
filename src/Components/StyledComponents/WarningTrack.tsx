@@ -8,7 +8,7 @@ export const WarningTrack = styled.div`
   top: 0;
   left: 0;
   box-sizing: border-box;
-  border-color: var(--color-property, light-dark(#5c5c5c, #a8a8a8));
+  border-color: var(--color-property, var(--color-warning-track));
   pointer-events: none;
 
   & div {
@@ -24,7 +24,7 @@ export const WarningTrackSelection = styled.div`
   top: 0;
   left: 0;
   box-sizing: border-box;
-  border-color: light-dark(#5c5c5c, #a8a8a8);
+  border-color: var(--color-warning-track);
   pointer-events: none;
 
   & div {
