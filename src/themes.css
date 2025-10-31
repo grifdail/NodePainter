@@ -73,6 +73,42 @@ body.theme-rose-pine-moon {
   --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
 }
 
+body.theme-rose-pine-dawn {
+  --color-pairing: #88888855;
+
+  --color-background: #faf4ed;
+  --color-background-card: #fffaf3;
+  --color-background-button: #f2e9e1;
+  --color-text: #575279;
+  --color-text-minor: #797593;
+  --color-background-highghlight: #cecacd;
+  --color-border: #cecacd;
+  --color-border-input: #cecacd;
+  --color-screen: rgba(0, 0, 0, 0.5); /*The color of the screen behing a modal*/
+  --color-selected: #dfdad9;
+  --color-input: #dfdad9;
+  --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
+  --color-slider-track: #d7827e;
+  --color-slider-output: #b4637a;
+  --color-disabled: #9893a5;
+
+  --border-size: 1px;
+  --card-shadow: 0 1px 4px rgba(255, 255, 255, 0.1);
+
+  --border-radius-large: 14px;
+  --border-radius-medium: 12px;
+  --border-radius-small: 8px;
+
+  --padding-large: 14px;
+  --padding-medium: 12px;
+  --padding-small: 8px;
+  --padding-tiny: 4px;
+
+  --size-text: 14px;
+
+  --gradient-transparent: repeating-conic-gradient(rgba(128, 128, 128, 0.2) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+}
+
 body.theme-light {
   --color-pairing: #88888855;
 

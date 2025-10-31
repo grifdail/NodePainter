@@ -17,7 +17,7 @@ export const MiscSettingEditor = () => {
           onChange={setTheme}
           label="Theme"
           passtrough={{
-            options: ["auto", "dark", "light", "rose-pine-moon"],
+            options: ["auto", "dark", "light", "rose-pine-moon", "rose-pine-dawn"],
           }}
         />
       </div>
