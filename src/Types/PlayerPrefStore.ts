@@ -26,6 +26,8 @@ export type PlayerPrefStore = {
   theme: UITheme;
   setTheme: (theme: UITheme) => void;
   css: string;
+  shortcutVisible: boolean;
+  setShortcutVisible: (value: boolean) => void;
 
   saveSnippet(name: string, snippet: Snippet): void;
   removeSnippet(name: string): void;

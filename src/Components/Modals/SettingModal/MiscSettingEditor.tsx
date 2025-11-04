@@ -1,12 +1,15 @@
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { toastInfo } from "../../../Hooks/useToast";
 import { Button } from "../../Generics/Button";
+import { BoolInput } from "../../Generics/Inputs/BoolInput";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 
 export const MiscSettingEditor = () => {
   const theme = usePlayerPref((state) => state.theme);
+  const shortcutVisible = usePlayerPref((state) => state.shortcutVisible);
+  const setShortcutVisible = usePlayerPref((state) => state.setShortcutVisible);
   const setTheme = usePlayerPref((state) => state.setTheme);
   return (
     <div>
@@ -20,6 +23,7 @@ export const MiscSettingEditor = () => {
             options: ["auto", "dark", "light", "rose-pine-moon", "rose-pine-dawn"],
           }}
         />
+        <Fieldset input={BoolInput} value={shortcutVisible} onChange={setShortcutVisible} label="Use shortcut mobile" />
       </div>
       <ButtonGroup>
         <Button

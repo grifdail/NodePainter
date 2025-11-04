@@ -73,26 +73,17 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
   var theme = useColorScheme();
 
   return (
-    <ControlledMenu
-      theming={theme}
-      anchorPoint={anchorPoint}
-      state={state}
-      direction="right"
-      onClose={onClose}
-      overflow="auto">
+    <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
       {favoritedNode.map((item) => (
-        <NodeMenuItem
-          onClick={onClick}
-          node={item}
-          key={item.id}
-        />
+        <NodeMenuItem onClick={onClick} node={item} key={item.id} />
       ))}
       {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
       <MenuItem
         onClick={() => {
           useNodeSelectionModal.getState().setTargetPosition(...clickWorldPosition);
           useRouter.getState().open(Routes.NodeCreation);
-        }}>
+        }}
+      >
         <IconPlus /> Add a new Node
       </MenuItem>
       <MenuDivider></MenuDivider>

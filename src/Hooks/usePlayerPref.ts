@@ -21,6 +21,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         gradient: structuredClone(DefaultGradient),
         snippets: {},
         colorPreset: DefaultPalettes.Pico8,
+        shortcutVisible: window.matchMedia("(orientation: portrait)").matches,
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
         },
@@ -97,6 +98,9 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         },
         setTheme(theme: UITheme) {
           set((state) => ({ theme }));
+        },
+        setShortcutVisible(value: boolean) {
+          set((state) => ({ shortcutVisible: value }));
         },
         hasSeenIntroPopup: false,
         setSeenIntro() {

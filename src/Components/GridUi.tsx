@@ -15,6 +15,7 @@ import { Routes } from "../Types/Routes";
 import { FullScreenDiv } from "./Modal";
 import { useNodeSelectionModal } from "../Hooks/useNodeSelectionModal";
 import { Minimap } from "./Graph/Minimap";
+import { NodeShortcutMenu } from "./Graph/NodeShortcutMenu";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -44,6 +45,7 @@ export function GridUi() {
       )}
       {selectionActive && <WarningTrackSelection></WarningTrackSelection>}
       <Minimap></Minimap>
+      <NodeShortcutMenu></NodeShortcutMenu>
       {showPreview && <SketchPreview close={togglePreview}></SketchPreview>}
 
       <BottomToolbar reversed>
@@ -53,19 +55,14 @@ export function GridUi() {
             openModal(Routes.NodeCreation);
           }}
           data-tooltip-id="tooltip"
-          data-tooltip-content="New node">
+          data-tooltip-content="New node"
+        >
           <IconPlus></IconPlus>
         </button>
-        <button
-          onClick={() => togglePreview()}
-          data-tooltip-id="tooltip"
-          data-tooltip-content={showPreview ? "Preview" : "Stop Preview"}>
+        <button onClick={() => togglePreview()} data-tooltip-id="tooltip" data-tooltip-content={showPreview ? "Preview" : "Stop Preview"}>
           {showPreview ? <IconPlayerStopFilled /> : <IconPlayerPlayFilled />}
         </button>
-        <button
-          onClick={() => toggleSelection()}
-          data-tooltip-id="tooltip"
-          data-tooltip-content={selectionActive ? "Cancel the selection" : "Start a selection"}>
+        <button onClick={() => toggleSelection()} data-tooltip-id="tooltip" data-tooltip-content={selectionActive ? "Cancel the selection" : "Start a selection"}>
           {selectionActive ? <IconSquareLetterX /> : <IconSelectAll />}
         </button>
         <FunctionSubMenu></FunctionSubMenu>
