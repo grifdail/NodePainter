@@ -106,7 +106,7 @@ export const MenuContent = memo(() => {
   );
 
   const favoritedNode = useMemo(() => {
-    return (nodeLibrary.filter((node) => favNodes.includes(node.id)) as any).toSorted(sorting).slice(0, 5) as NodeDefinition[];
+    return (nodeLibrary.filter((node) => favNodes.includes(node.id)) as any).toSorted(sorting) as NodeDefinition[];
   }, [nodeLibrary, sorting, favNodes]);
 
   if (favoritedNode.length === 0) {
