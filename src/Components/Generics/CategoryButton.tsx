@@ -51,7 +51,7 @@ export const TagListContent = styled.div<{ $shrink?: boolean }>`
   gap: var(--padding-small);
   overflow-y: ${(props) => (props.$shrink ? "hidden" : "visible")};
   flex: 1 1 auto;
-  height: 32px;
+  min-height: 32px;
   align-self: stretch;
 `;
 
