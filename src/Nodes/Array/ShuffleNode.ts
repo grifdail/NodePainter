@@ -19,6 +19,7 @@ export const ShuffleNode: NodeDefinition = {
       type: "array-color",
       defaultValue: [],
     },
+    Port.bool("cycle", false, "If this is on, all item are guaranted to move"),
     Port.CacheId(),
   ],
   dataOutputs: [Port["array-color"]("out")],
@@ -27,7 +28,9 @@ export const ShuffleNode: NodeDefinition = {
   getData: (portId, node, context) => {
     const seed = createOrSelectFromCache(context, node, () => context.RNG.next());
     const array = context.getInputValue(node, "array", node.selectedType) as any[];
-    return shuffle(array, new Rand(seed.toString()));
+    const cycle = context.getInputValueBoolean(node, "cycle");
+    const rand = new Rand(seed.toString())
+    return cycle ? shuffleOneCycle(array, rand) : shuffle(array, rand);
   },
 };
 
@@ -35,6 +38,15 @@ function shuffle<T>(array: T[], rng: Rand) {
   var r = [...array];
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(rng.next() * (i + 1));
+    [r[i], r[j]] = [r[j], r[i]];
+  }
+  return r;
+}
+
+function shuffleOneCycle<T>(array: T[], rng: Rand) {
+  var r = [...array];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(rng.next() * (i));
     [r[i], r[j]] = [r[j], r[i]];
   }
   return r;

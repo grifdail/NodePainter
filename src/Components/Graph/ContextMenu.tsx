@@ -74,10 +74,6 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
 
   return (
     <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto">
-      {favoritedNode.map((item) => (
-        <NodeMenuItem onClick={onClick} node={item} key={item.id} />
-      ))}
-      {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
       <MenuItem
         onClick={() => {
           useNodeSelectionModal.getState().setTargetPosition(...clickWorldPosition);
@@ -86,6 +82,11 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       >
         <IconPlus /> Add a new Node
       </MenuItem>
+      {favoritedNode.length > 0 && <MenuDivider></MenuDivider>}
+      {favoritedNode.map((item) => (
+        <NodeMenuItem onClick={onClick} node={item} key={item.id} />
+      ))}
+
       <MenuDivider></MenuDivider>
       <MenuItem onClick={() => resetCamera()}>
         <IconFocusCentered /> Reset Camera

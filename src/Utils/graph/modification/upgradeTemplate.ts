@@ -285,6 +285,7 @@ const UPGRADES: UpgradeFunction[] = [
     return sketch;
   },
   (sketch) => redefineNodes({ ["Procedural/Twirl"]: "Math/Transformation/Twirl" }, sketch),
+  (sketch) => addMissingNodePort(["Array/Shuffle"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
