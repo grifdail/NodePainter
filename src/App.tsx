@@ -16,7 +16,7 @@ import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
 import { DefaultGradient, DefaultPalettes } from "./Data/Palettes";
 import { initCodeBlockType } from "./CodeBlocks/CodeBlockTypes";
 import { navigate } from "wouter/use-browser-location";
-import { openAboutModal } from "./Actions/navigationAction";
+import { closeAllPopup, openAboutModal, openSketchMenu } from "./Actions/navigationAction";
 
 initCodeBlockType();
 
@@ -50,6 +50,8 @@ function useAboutOnFirstLaunch() {
       if (!usePlayerPref.getState().hasSeenIntroPopup) {
         openAboutModal();
         usePlayerPref.getState().setSeenIntro();
+      } else {
+        openSketchMenu();
       }
     }, 1000);
   }, []);

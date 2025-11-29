@@ -11,7 +11,7 @@ import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { navigate } from "wouter/use-browser-location";
-import { navigateToIndex } from "../Actions/navigationAction";
+import { closeAllPopup } from "../Actions/navigationAction";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -148,10 +148,10 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
     create() {
       BaseNodeForModel[get().type].create(get().model as NodeDefinition);
 
-      navigateToIndex();
+      closeAllPopup();
     },
     cancel() {
-      navigateToIndex();
+      closeAllPopup();
     },
     addOutput(prefix: string = "output") {
       set(

@@ -1,7 +1,7 @@
 ﻿import { navigate } from "wouter/use-browser-location";
 import { Routes } from "../Types/Routes";
 
-export const navigateToIndex = () => {
+export const closeAllPopup = () => {
     navigate(Routes.Default);
 }
 

@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import { create } from "zustand";
-import { navigateToIndex, openCodeblockModal } from "../Actions/navigationAction";
+import { closeAllPopup, openCodeblockModal } from "../Actions/navigationAction";
 import { CodeBlock } from "../Types/CodeBlock/CodeBlock";
 import { CodeBlockStatement } from "../Types/CodeBlock/CodeBlockStatement";
 import { PortDefinition } from "../Types/PortDefinition";
@@ -30,7 +30,7 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
       if (cb) {
         cb(get().current);
       }
-      navigateToIndex();
+      closeAllPopup();
     },
     setVariables(newList, type) {
       set(

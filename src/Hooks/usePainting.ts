@@ -1,6 +1,6 @@
 import { Graphics } from "p5";
 import { create } from "zustand";
-import { navigateToIndex, openPaintModal } from "../Actions/navigationAction";
+import { closeAllPopup, openPaintModal } from "../Actions/navigationAction";
 import { DefaultPalettes } from "../Data/Palettes";
 import { Color, ColorPalette, createColor } from "../Types/vectorDataType";
 import { usePlayerPref } from "./usePlayerPref";
@@ -57,7 +57,7 @@ export const usePainting = create<PaintingStore>()((set, get) => {
     },
     close: () => {
       //save the image to the node
-      navigateToIndex()
+      closeAllPopup()
     },
     setLineWidth(size) {
       size = Math.round(Math.max(size, 1));

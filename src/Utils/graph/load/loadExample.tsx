@@ -5,7 +5,7 @@ import { Templates } from "../../../Data/templates";
 import { useDialog } from "../../../Hooks/useDialog";
 import { navigate } from "wouter/use-browser-location";
 import { Routes } from "../../../Types/Routes";
-import { navigateToIndex } from "../../../Actions/navigationAction";
+import { closeAllPopup } from "../../../Actions/navigationAction";
 
 export async function loadExample(exampleName: any) {
   var id = exampleName.split("/");
@@ -18,7 +18,7 @@ export async function loadExample(exampleName: any) {
   if (item) {
     item().then((code) => useTree.getState().loadTemplate(code));
     window.history.replaceState(null, "", "/");
-    navigateToIndex();
+    closeAllPopup();
   } else {
     useDialog.getState().openError(`${exampleName} is not a valid example to load`, () => {
       window.history.replaceState(null, "", "/");

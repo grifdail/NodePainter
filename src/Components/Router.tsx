@@ -17,11 +17,11 @@ import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
 import { Route, Switch, useLocation } from "wouter";
 import { ReactComponentLike } from "prop-types";
 import { useCallback } from "react";
-import { navigateToIndex } from "../Actions/navigationAction";
+import { closeAllPopup } from "../Actions/navigationAction";
 
 const LocalRoute = ({ path, component: Component }: { path?: string, component: ReactComponentLike }) => {
   const [location, navigate] = useLocation();
-  return <Route path={path} component={() => <Component close={navigateToIndex} />} />;
+  return <Route path={path} component={() => <Component close={closeAllPopup} />} />;
 }
 
 export function Router() {
