@@ -7,6 +7,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   "text-area": identity,
 
   number: identity,
+  vector2: identity,
   hidden: identity,
 
   dropdown: identity,
@@ -14,6 +15,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   gradient: identity,
   "image-upload": identity,
   "image-paint": identity,
+  "image-preview": identity,
   envelope: identity,
   button: identity,
   "mesh-upload": identity,

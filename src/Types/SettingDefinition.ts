@@ -5,7 +5,7 @@ import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock/CodeBlock";
 import { EnvelopeData } from "./EnvelopeData";
 import { NodeData } from "./NodeData";
-import { Color, Gradient } from "./vectorDataType";
+import { Color, Gradient, Vector2 } from "./vectorDataType";
 
 type BaseSettingDefinition = {
   id: string;
@@ -17,6 +17,11 @@ type BaseSettingDefinition = {
 export type NumberSettingDefinition = BaseSettingDefinition & {
   type: "number";
   defaultValue: number;
+  constrains?: ConstrainDeclaration[];
+};
+export type Vector2SettingDefinition = BaseSettingDefinition & {
+  type: "vector2";
+  defaultValue: Vector2;
   constrains?: ConstrainDeclaration[];
 };
 export type DropdownSettingDefinition = BaseSettingDefinition & {
@@ -45,6 +50,9 @@ export type GradientSettingDefinition = BaseSettingDefinition & {
 };
 export type ImageUploadSettingDefinition = BaseSettingDefinition & {
   type: "image-upload";
+};
+export type ImagePreviewSettingDefinition = BaseSettingDefinition & {
+  type: "image-preview";
 };
 export type ImagePaintSettingDefinition = BaseSettingDefinition & {
   type: "image-paint";
@@ -120,6 +128,7 @@ export type GraphAreaSettingDefinition = BaseSettingDefinition & {
 };
 export type SettingDefinition =
   | NumberSettingDefinition
+  | Vector2SettingDefinition
   | DropdownSettingDefinition
   | ImageSelectSettingDefinition
   | PaletteSettingDefinition
@@ -127,6 +136,7 @@ export type SettingDefinition =
   | GradientSettingDefinition
   | ImageUploadSettingDefinition
   | ImagePaintSettingDefinition
+  | ImagePreviewSettingDefinition
   | EnvelopeSettingDefinition
   | StringSettingDefinition
   | TextAreaSettingDefinition

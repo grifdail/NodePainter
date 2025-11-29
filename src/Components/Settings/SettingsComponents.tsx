@@ -21,11 +21,15 @@ import { PathSetting } from "./PathSetting";
 import { TextAreaSetting } from "./TextAreaSetting";
 import { BezierPathSetting } from "./BezierPathSetting";
 import { GraphAreaSetting } from "./GraphAreaSetting";
+import { Vector2Setting } from "./Vector2Setting";
+import { ImagePreviewSetting } from "./ImagePreviewSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
   palette: PaletteSetting,
   number: NumberSetting,
+  vector2: Vector2Setting,
+  "image-preview": ImagePreviewSetting,
   string: StringSetting,
   gradient: GradientSetting,
   "image-upload": ImageUploadSetting,
