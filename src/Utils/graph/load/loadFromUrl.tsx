@@ -1,6 +1,8 @@
-import { useRouter } from "../../../Hooks/useRouter";
+import { navigate } from "wouter/use-browser-location";
 import { useTree } from "../../../Hooks/useTree";
 import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { Routes } from "../../../Types/Routes";
+import { navigateToIndex } from "../../../Actions/navigationAction";
 
 export async function loadFromUrl(encodedUrl: string | null) {
   if (!encodedUrl) {
@@ -11,6 +13,6 @@ export async function loadFromUrl(encodedUrl: string | null) {
     var data = (await request.json()) as SketchTemplate;
     useTree.getState().loadTemplate(data);
     window.history.replaceState(null, "", "/");
-    useRouter.getState().close();
+    navigateToIndex();
   }
 }

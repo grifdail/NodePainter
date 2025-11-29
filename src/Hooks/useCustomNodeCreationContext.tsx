@@ -2,7 +2,6 @@ import { NodeDefinition } from "../Types/NodeDefinition";
 import { create } from "zustand";
 import { produce } from "immer";
 import { useTree } from "./useTree";
-import { useRouter } from "./useRouter";
 import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreationContextStore";
 import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunctionCreationContextStore";
 import { Routes } from "../Types/Routes";
@@ -11,6 +10,8 @@ import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
+import { navigate } from "wouter/use-browser-location";
+import { navigateToIndex } from "../Actions/navigationAction";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -117,7 +118,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         model: model,
         type: type,
       });
-      useRouter.getState().open(`custom-${type}` as Routes);
+      navigate(`/custom-${model || type}`);
     },
     openCreate(type: CustomNodeType = "function", modal?: string) {
       var base: NodeDefinition = createNewFunctionDefinition(type);
@@ -126,7 +127,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         type: type,
         model: base,
       });
-      useRouter.getState().open(`custom-${modal || type}` as Routes);
+      navigate(`/custom-${modal || type}`);
     },
     setId: (id: string) => {
       set(
@@ -147,10 +148,10 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
     create() {
       BaseNodeForModel[get().type].create(get().model as NodeDefinition);
 
-      useRouter.getState().close();
+      navigateToIndex();
     },
     cancel() {
-      useRouter.getState().close();
+      navigateToIndex();
     },
     addOutput(prefix: string = "output") {
       set(

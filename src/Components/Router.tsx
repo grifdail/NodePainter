@@ -1,6 +1,5 @@
 import { GridUi } from "./GridUi";
 import { NodeSelectionModal } from "./Modals/NodeSelectionModal";
-import { useRouter } from "../Hooks/useRouter";
 import { SaveModal } from "./Modals/SaveModal";
 import { LoadModal } from "./Modals/LoadModal";
 import { ExportGifModal } from "./Modals/ExportGifModal";
@@ -13,29 +12,39 @@ import { useDialog } from "../Hooks/useDialog";
 import { DialogModal } from "./Modals/DialogModal";
 import { Routes } from "../Types/Routes";
 import { CodeBlockModal } from "./Modals/CodeBlock/CodeBlockModal";
-import { MainMenu } from "./MainMenu";
 import { SketchModal } from "./Modals/SketchModal";
 import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
+import { Route, Switch, useLocation } from "wouter";
+import { ReactComponentLike } from "prop-types";
+import { useCallback } from "react";
+import { navigateToIndex } from "../Actions/navigationAction";
+
+const LocalRoute = ({ path, component: Component }: { path?: string, component: ReactComponentLike }) => {
+  const [location, navigate] = useLocation();
+  return <Route path={path} component={() => <Component close={navigateToIndex} />} />;
+}
 
 export function Router() {
-  const close = useRouter((state) => state.close);
-  const route = useRouter((state) => state.current);
   const dialog = useDialog();
   return (
     <div>
-      {route === Routes.Default && <GridUi />}
-      {route === Routes.NodeCreation && <NodeSelectionModal close={close} />}
-      {route === Routes.Save && <SaveModal close={close} />}
-      {route === Routes.Load && <LoadModal close={close} />}
-      {route === Routes.ExportGif && <ExportGifModal close={close} />}
-      {route === Routes.CustomFunction && <CustomNodeModal close={close} />}
-      {route === Routes.CustomShader && <CustomShaderModal close={close} />}
-      {route === Routes.CustomSimulation && <CustomSimulationModal close={close} />}
-      {route === Routes.Settings && <SettingsModal close={close} />}
-      {route === Routes.About && <AboutModal close={close} />}
-      {route === Routes.Paint && <PaintModal />}
-      {route === Routes.CodeBlock && <CodeBlockModal />}
-      {route === Routes.SketchMenu && <SketchModal close={close} />}
+
+      <Switch>
+        <LocalRoute path={Routes.NodeCreation} component={NodeSelectionModal} />
+        <LocalRoute path={Routes.Save} component={SaveModal} />
+        <LocalRoute path={Routes.Load} component={LoadModal} />
+        <LocalRoute path={Routes.ExportGif} component={ExportGifModal} />
+        <LocalRoute path={Routes.CustomFunction} component={CustomSimulationModal} />
+        <LocalRoute path={Routes.CustomShader} component={CustomShaderModal} />
+        <LocalRoute path={Routes.CustomSimulation} component={CustomNodeModal} />
+        <LocalRoute path={Routes.Settings} component={SettingsModal} />
+        <LocalRoute path={Routes.About} component={AboutModal} />
+        <LocalRoute path={Routes.Paint} component={PaintModal} />
+        <LocalRoute path={Routes.CodeBlock} component={CodeBlockModal} />
+        <LocalRoute path={Routes.SketchMenu} component={SketchModal} />
+        <LocalRoute component={GridUi} />
+
+      </Switch>
       {dialog.dialogs.map((d) => (
         <DialogModal
           key={d.id}

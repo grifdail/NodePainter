@@ -1,9 +1,11 @@
 import createClient from "json-url";
 import { useTree } from "../../../Hooks/useTree";
 import { SketchTemplate } from "../../../Types/SketchTemplate";
-import { useRouter } from "../../../Hooks/useRouter";
 import { Templates } from "../../../Data/templates";
 import { useDialog } from "../../../Hooks/useDialog";
+import { navigate } from "wouter/use-browser-location";
+import { Routes } from "../../../Types/Routes";
+import { navigateToIndex } from "../../../Actions/navigationAction";
 
 export async function loadExample(exampleName: any) {
   var id = exampleName.split("/");
@@ -16,7 +18,7 @@ export async function loadExample(exampleName: any) {
   if (item) {
     item().then((code) => useTree.getState().loadTemplate(code));
     window.history.replaceState(null, "", "/");
-    useRouter.getState().close();
+    navigateToIndex();
   } else {
     useDialog.getState().openError(`${exampleName} is not a valid example to load`, () => {
       window.history.replaceState(null, "", "/");

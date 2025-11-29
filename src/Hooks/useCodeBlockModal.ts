@@ -1,11 +1,10 @@
 import { produce } from "immer";
 import { create } from "zustand";
+import { navigateToIndex, openCodeblockModal } from "../Actions/navigationAction";
 import { CodeBlock } from "../Types/CodeBlock/CodeBlock";
 import { CodeBlockStatement } from "../Types/CodeBlock/CodeBlockStatement";
 import { PortDefinition } from "../Types/PortDefinition";
-import { Routes } from "../Types/Routes";
 import { createDefaultCodeBlock } from "../Utils/codeblock/createDefaultCodeBlock";
-import { useRouter } from "./useRouter";
 
 export type CodeBlockModalStore = {
   setStatements: (statements: CodeBlockStatement[]) => void;
@@ -23,7 +22,7 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
     open(current, callback) {
       set({ callback: callback, current });
 
-      useRouter.getState().open(Routes.CodeBlock);
+      openCodeblockModal();
     },
     close: () => {
       //save the image to the node
@@ -31,7 +30,7 @@ export const useCodeBlockModal = create<CodeBlockModalStore>()((set, get) => {
       if (cb) {
         cb(get().current);
       }
-      useRouter.getState().close();
+      navigateToIndex();
     },
     setVariables(newList, type) {
       set(

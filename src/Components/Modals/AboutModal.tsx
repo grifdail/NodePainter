@@ -1,8 +1,9 @@
 import { IconInfoCircle } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../Modal";
-import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
+import { navigate } from "wouter/use-browser-location";
+import { openSketchMenu } from "../../Actions/navigationAction";
 
 const MainDiv = styled.div`
   max-width: 100%;
@@ -29,9 +30,9 @@ const MainDiv = styled.div`
 export function AboutModal({ close }: { close: () => void }) {
   return (
     <Modal
-      onClose={() => useRouter.getState().open(Routes.SketchMenu)}
+      onClose={() => openSketchMenu()}
       title="About"
-      icon={IconInfoCircle}>
+      icon={IconInfoCircle} >
       <MainDiv>
         <img
           src="/demo_avatar.gif"
@@ -51,6 +52,6 @@ export function AboutModal({ close }: { close: () => void }) {
           <p>PS: This app obviously use localStorage (aka cookie) to store your data but that's it. No data is collected. No third party is involved. To delete your data, juste erase your browser history. Consider this warning my official cookie policy.</p>
         </div>
       </MainDiv>
-    </Modal>
+    </Modal >
   );
 }

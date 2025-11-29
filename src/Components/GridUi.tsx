@@ -6,7 +6,6 @@ import { usePortSelection } from "../Hooks/usePortSelection";
 import { useTree } from "../Hooks/useTree";
 import { Toolbar } from "./StyledComponents/Toolbar";
 import styled from "styled-components";
-import { useRouter } from "../Hooks/useRouter";
 import { WarningTrack, WarningTrackSelection } from "./StyledComponents/WarningTrack";
 import { useSelection } from "../Hooks/useSelection";
 import { MainMenu } from "./MainMenu";
@@ -16,6 +15,8 @@ import { FullScreenDiv } from "./Modal";
 import { useNodeSelectionModal } from "../Hooks/useNodeSelectionModal";
 import { Minimap } from "./Graph/Minimap";
 import { NodeShortcutMenu } from "./Graph/NodeShortcutMenu";
+import { navigate } from "wouter/use-browser-location";
+import { openNodeCreationModal } from "../Actions/navigationAction";
 
 const BottomToolbar = styled(Toolbar)`
   position: absolute;
@@ -34,8 +35,6 @@ export function GridUi() {
   const nodes = useTree((state) => state.nodes);
   const selectionActive = useSelection((state) => state.isInSelectionMode);
 
-  const openModal = useRouter((state) => state.open);
-
   return (
     <FullScreenDiv $modal={false}>
       {portSelection.hasSelection && (
@@ -52,7 +51,7 @@ export function GridUi() {
         <button
           onClick={() => {
             useNodeSelectionModal.getState().clear();
-            openModal(Routes.NodeCreation);
+            openNodeCreationModal();
           }}
           data-tooltip-id="tooltip"
           data-tooltip-content="New node"

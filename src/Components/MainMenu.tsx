@@ -1,7 +1,6 @@
 import { IconDeviceDesktopDown, IconDeviceFloppy, IconFile, IconFocusCentered, IconFolderOpen, IconGif, IconInfoCircle, IconMenu2, IconPng, IconSettings, IconTrashX } from "@tabler/icons-react";
 import { useTree } from "../Hooks/useTree";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
-import { useRouter } from "../Hooks/useRouter";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { Templates } from "../Data/templates";
 import { saveSketchWithNamePrompt, Sketch, useAllSavedSketch } from "../Hooks/db";
@@ -10,6 +9,8 @@ import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
 import { SketchTemplate } from "../Types/SketchTemplate";
 import { listOrphanNode } from "../Utils/graph/modification/listOrphanNode";
+import { navigate } from "wouter/use-browser-location";
+import { openAboutModal, openGifExportModal, openSaveModal, openSettingModal, openSketchMenu } from "../Actions/navigationAction";
 
 function download(url: string, filename: string = "data.json") {
   const link = document.createElement("a");
@@ -19,7 +20,6 @@ function download(url: string, filename: string = "data.json") {
 }
 
 export function MainMenu({ showPreview }: { showPreview: boolean }) {
-  const openModal = useRouter((state) => state.open);
   const [_, saveSketch] = useAllSavedSketch();
 
   function loadSketch(sketch: Sketch): void {
@@ -48,15 +48,15 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
           <IconMenu2></IconMenu2>
         </button>
       }>
-      <MenuItem onClick={() => openModal(Routes.About)}>
+      <MenuItem onClick={openAboutModal}>
         <IconInfoCircle />
         About
       </MenuItem>
-      <MenuItem onClick={() => openModal(Routes.Settings)}>
+      <MenuItem onClick={openSettingModal}>
         <IconSettings /> Settings
       </MenuItem>
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={() => openModal(Routes.SketchMenu)}>
+      <MenuItem onClick={openSketchMenu}>
         <IconFolderOpen /> Sketches
       </MenuItem>
       <SubMenu
@@ -65,7 +65,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
             <IconDeviceFloppy></IconDeviceFloppy>Save
           </>
         }>
-        <MenuItem onClick={() => openModal(Routes.Save)}>
+        <MenuItem onClick={openSaveModal}>
           <IconDeviceDesktopDown /> Save to JSON
         </MenuItem>
         <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
@@ -74,7 +74,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
       </SubMenu>
 
       <MenuDivider></MenuDivider>
-      <MenuItem onClick={() => openModal(Routes.ExportGif)}>
+      <MenuItem onClick={openGifExportModal}>
         <IconGif></IconGif> Export
       </MenuItem>
       <MenuDivider></MenuDivider>

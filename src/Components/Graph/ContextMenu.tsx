@@ -8,12 +8,13 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { useShallow } from "zustand/react/shallow";
 import { useColorScheme } from "@uiw/react-use-colorscheme";
-import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
 import { AlignMenu } from "./AlignMenu";
 import { useNodeSelectionModal } from "../../Hooks/useNodeSelectionModal";
 import { SnippetSubMenu } from "./SnippetSubMenu";
 import { idToNodeName } from "../../Utils/ui/idToNodeName";
+import { navigate } from "wouter/use-browser-location";
+import { openNodeCreationModal } from "../../Actions/navigationAction";
 
 export type ContextMenuProps = {
   onContextMenu: (e: any) => void;
@@ -77,7 +78,7 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
       <MenuItem
         onClick={() => {
           useNodeSelectionModal.getState().setTargetPosition(...clickWorldPosition);
-          useRouter.getState().open(Routes.NodeCreation);
+          openNodeCreationModal()
         }}
       >
         <IconPlus /> Add a new Node

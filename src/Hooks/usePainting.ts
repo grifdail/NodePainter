@@ -1,10 +1,9 @@
 import { Graphics } from "p5";
 import { create } from "zustand";
+import { navigateToIndex, openPaintModal } from "../Actions/navigationAction";
 import { DefaultPalettes } from "../Data/Palettes";
-import { Routes } from "../Types/Routes";
 import { Color, ColorPalette, createColor } from "../Types/vectorDataType";
 import { usePlayerPref } from "./usePlayerPref";
-import { useRouter } from "./useRouter";
 
 export type PaintingTool = "pen" | "eraser" | "fill" | "line" | "circle" | "rectangle";
 
@@ -54,11 +53,11 @@ export const usePainting = create<PaintingStore>()((set, get) => {
         img.src = current;
       }
 
-      useRouter.getState().open(Routes.Paint);
+      openPaintModal();
     },
     close: () => {
       //save the image to the node
-      useRouter.getState().close();
+      navigateToIndex()
     },
     setLineWidth(size) {
       size = Math.round(Math.max(size, 1));

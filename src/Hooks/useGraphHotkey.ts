@@ -1,10 +1,9 @@
 import { useHotkeys } from "react-hotkeys-hook";
+import { openNodeCreationModal } from "../Actions/navigationAction";
 import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NodeDefinition } from "../Types/NodeDefinition";
-import { Routes } from "../Types/Routes";
 import { extractSnipet } from "../Utils/graph/modification/snippets";
 import { saveSketchWithNamePrompt, useAllSavedSketch } from "./db";
-import { useRouter } from "./useRouter";
 import { useSelection } from "./useSelection";
 import { toastSuccess } from "./useToast";
 import { useTree } from "./useTree";
@@ -53,7 +52,7 @@ export const useGraphHotkey = () => {
   });
   useHotkeys("shift+n", (e) => {
     e.preventDefault();
-    useRouter.getState().open(Routes.NodeCreation);
+    openNodeCreationModal();
   });
   useHotkeys("delete", (e) => {
     e.preventDefault();

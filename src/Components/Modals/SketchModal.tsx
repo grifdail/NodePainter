@@ -12,9 +12,10 @@ import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { SearchForm } from "../Generics/SearchForm";
 import { Input } from "../StyledComponents/Input";
 import { CategoryButton, TagList } from "../Generics/CategoryButton";
-import { useRouter } from "../../Hooks/useRouter";
 import { Routes } from "../../Types/Routes";
 import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
+import { navigate } from "wouter/use-browser-location";
+import { openLoadModal } from "../../Actions/navigationAction";
 
 const MY_SAVED_SKETCH = "My Saved Sketch";
 
@@ -167,7 +168,6 @@ export function SketchModal({ close }: { close: () => void }) {
   const [allItem, categories, deleteSavedSketch] = useSketchCollection();
   const [searchTermRaw, setSearchTerm] = useState("");
   const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
-  const openModal = useRouter((state) => state.open);
   const lastSavedSketch = getLastSavedSketch();
   const toggleTag = useToggleTag(searchTermRaw, setSearchTerm);
   const filteredList = useMemo(() => {
@@ -199,7 +199,7 @@ export function SketchModal({ close }: { close: () => void }) {
               close();
             }}
           ></Button>
-          <Button onClick={() => openModal(Routes.Load)} icon={IconUpload} label="Load from JSON"></Button>
+          <Button onClick={openLoadModal} icon={IconUpload} label="Load from JSON"></Button>
         </ButtonGroup>
         <div className="files">
           <SearchForm>
@@ -216,10 +216,10 @@ export function SketchModal({ close }: { close: () => void }) {
                 onDelete={
                   item.category === MY_SAVED_SKETCH
                     ? (e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        withConfirm(() => deleteSavedSketch(item.name))();
-                      }
+                      e.stopPropagation();
+                      e.preventDefault();
+                      withConfirm(() => deleteSavedSketch(item.name))();
+                    }
                     : undefined
                 }
                 key={`${item.category}/${item.name}`}

@@ -1,7 +1,8 @@
 import createClient from "json-url";
 import { useTree } from "../../../Hooks/useTree";
 import { SketchTemplate } from "../../../Types/SketchTemplate";
-import { useRouter } from "../../../Hooks/useRouter";
+import { navigate } from "wouter/use-browser-location";
+import { navigateToIndex } from "../../../Actions/navigationAction";
 
 export async function loadJsonDecrypt(parse: any) {
   var codec = createClient("lzma");
@@ -9,7 +10,7 @@ export async function loadJsonDecrypt(parse: any) {
   if (result) {
     useTree.getState().loadTemplate(result as SketchTemplate);
     window.history.replaceState(null, "", "/");
-    useRouter.getState().close();
+    navigateToIndex();
   }
 }
 
