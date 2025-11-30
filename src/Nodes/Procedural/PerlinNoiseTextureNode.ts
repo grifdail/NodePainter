@@ -1,16 +1,17 @@
 ﻿import { IconArrowsShuffle, IconGridDots, IconWaveSine } from "@tabler/icons-react";
-import Rand from "rand-seed";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2, Vector2 } from "../../Types/vectorDataType";
+import { Constraints } from "../../Utils/ui/applyConstraints";
+import Perlin from "../../libs/perlin";
 
 
-export const NoiseTextureNode: NodeDefinition = {
-    id: "Procedural/NoiseTexture",
-    label: "Noise Texture",
+export const PerlinNoiseTextureNode: NodeDefinition = {
+    id: "Procedural/PerlinNoiseTexture",
+    label: "Perlin Noise Texture",
     icon: DoubleIconGen(IconGridDots, IconWaveSine),
-    description: "Generate a static random noise texture",
+    description: "Generate a static perlin noise image",
     dataInputs: [],
     dataOutputs: [
         { id: "image", type: "image", defaultValue: null }],
@@ -18,9 +19,12 @@ export const NoiseTextureNode: NodeDefinition = {
 
     settings: [
         { type: "vector2", id: "dimension", defaultValue: createVector2(400, 400) },
-        { type: "bool", id: "alphaOnly", "label": "Alpha only", defaultValue: true },
-        { type: "number", id: "clip", tooltip: "Pixel bellow this value will be discarded", defaultValue: 0 },
-        { type: "number", id: "seed", tooltip: "use -1 to generate a new seed everytime", defaultValue: -1 },
+        { type: "vector2", id: "offset", defaultValue: createVector2(0, 0) },
+        { type: "vector2", id: "scale", defaultValue: createVector2(1, 1) },
+        { type: "number", id: "octave", defaultValue: 1, constrains: [Constraints.Integer(), Constraints.GreaterThan(1)] },
+        { type: "number", id: "influence", defaultValue: 2 },
+        { type: "bool", id: "useAlpha", tooltip: "If this is enabled, a transparent texture will be used, otherwise a black and white texture will be generated", defaultValue: true },
+        { type: "number", id: "seed", defaultValue: 0 },
         { type: "image-preview", id: "image" },
         {
             type: "button", id: "generate", button: {
@@ -29,8 +33,11 @@ export const NoiseTextureNode: NodeDefinition = {
                 onClick: (node) => {
                     node.settings.image = generateNoiseTexture( //
                         node.settings.dimension,
-                        node.settings.alphaOnly,
-                        node.settings.clip,
+                        node.settings.offset,
+                        node.settings.scale,
+                        node.settings.octave,
+                        node.settings.influence,
+                        node.settings.useAlpha,
                         node.settings.seed)
 
                 }
@@ -54,7 +61,7 @@ export const NoiseTextureNode: NodeDefinition = {
 };
 
 
-function generateNoiseTexture(dim: Vector2, alphaOnly: boolean, clip: number, seed: number) {
+function generateNoiseTexture(dim: Vector2, offset: Vector2, scale: Vector2, octave: number, influence: number, useAlpha: boolean, seed: number) {
     if (seed < 0) {
         seed = Math.random();
     }
@@ -66,7 +73,7 @@ function generateNoiseTexture(dim: Vector2, alphaOnly: boolean, clip: number, se
         return null;
     }
     const imageData = ctx.createImageData(width, height);
-    const rand = new Rand(seed.toString());
+    const perlin = new Perlin(seed);
 
 
     // Iterate through every pixel
@@ -76,16 +83,24 @@ function generateNoiseTexture(dim: Vector2, alphaOnly: boolean, clip: number, se
             const i = (x * height + y) * 4;
 
 
-            if (alphaOnly) {
+            let value = 0
+            let total = 0
+            for (let o = 0; o < octave; o++) {
+                value += perlin.perlin2(x / width * scale[0] * (o + 1) + offset[0], y / height * scale[1] * (o + 1) + offset[1]) / Math.pow(influence, o);
+                total += 1 / Math.pow(influence, o)
+            }
+            value /= total;
+
+            if (useAlpha) {
                 imageData.data[i + 0] = 255; // R value
                 imageData.data[i + 1] = 255; // G value
                 imageData.data[i + 2] = 255; // B value
-                imageData.data[i + 3] = useClip(clip, rand); // A value
+                imageData.data[i + 3] = Math.round(value * 255); // A value
             } else {
-                imageData.data[i + 0] = useClip(clip, rand); // A value
-                imageData.data[i + 1] = useClip(clip, rand); // A value
-                imageData.data[i + 2] = useClip(clip, rand) // A value
-                imageData.data[i + 3] = 255
+                imageData.data[i + 0] = Math.round(value * 255); // R value
+                imageData.data[i + 1] = Math.round(value * 255); // G value
+                imageData.data[i + 2] = Math.round(value * 255); // B value
+                imageData.data[i + 3] = 255 // A value
             }
 
         }
@@ -94,13 +109,4 @@ function generateNoiseTexture(dim: Vector2, alphaOnly: boolean, clip: number, se
     // Draw image data to the canvas
     ctx.putImageData(imageData, 0, 0);
     return canvas.toDataURL("image/png");
-}
-
-function useClip(clip: number, rand: Rand) {
-    var v = rand.next();
-    if (v < clip) {
-        return 0;
-    } else {
-        return Math.round(v * 255); // A value
-    }
 }
