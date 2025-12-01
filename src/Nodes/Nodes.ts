@@ -47,6 +47,6 @@ export const Nodes: Array<NodeDefinition> = [
   ...Nodes3D,
 ];
 
-console.log(Nodes.length);
+console.log(`Loading ${Nodes.length} nodes.`);
 
 export const NodeLibrary = Object.fromEntries(Nodes.map((node) => [node.id, node]));

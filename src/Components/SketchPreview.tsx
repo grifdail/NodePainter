@@ -52,7 +52,7 @@ export function SketchPreview({ close }: { close: () => void }) {
   var tree = useTree();
   var dim = useWindowSize();
   var start = tree.getNode(START_NODE);
-  var cleanup = useRef(() => {});
+  var cleanup = useRef(() => { });
 
   useEffect(() => {
     return () => {
@@ -87,8 +87,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
   var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
   var seed = 0;
-  var close = () => {};
-  p5.setup = () => {};
+  var close = () => { };
+  p5.setup = () => { };
 
   p5.updateWithProps = (props: MySketchProps) => {
     tree = props.tree;
@@ -116,12 +116,13 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
           result();
         }
       } catch (err: any) {
+
+        console.error(err);
         useDialog.getState().openError(`There was an error on node **${tree.getNode(context.lastVisitedNode).type}** (\xa0**${context.lastVisitedNode}**\xa0).
 
 \`${err.message}\`
         
         `);
-        console.error(err);
         close();
       }
     }

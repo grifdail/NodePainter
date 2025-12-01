@@ -87,7 +87,7 @@ export const MinimapContent = memo(() => {
   }
   const [viewboxX, viewboxY, viewBoxScale, set] = useViewbox((state) => [state.x, state.y, state.scale, state.set]);
   const { width: screenX, height: screenY } = useWindowSize();
-  const nodesBB = useMemo(() => nodesOnThisGraph.map((node) => [buildApproximateBoundingBox(node), Object.values(node.dataOutputs)[0]?.type || "drawing2d"] as const), [nodesOnThisGraph]);
+  const nodesBB = useMemo(() => nodesOnThisGraph.map((node) => [buildApproximateBoundingBox(node), Object.values(node.dataOutputs)[0]?.type || "drawing2d", node.id] as const), [nodesOnThisGraph]);
   const boundingBox = useMemo(() => makeSquare(nodesBB.reduce((oldbb, [node, type]) => oldbb.extend(node), nodesBB[0][0]).growAllSide(100)), [nodesBB]);
   const onClick = useCallback(
     (e: MouseEvent<SVGElement>) => {
@@ -114,8 +114,9 @@ export const MinimapContent = memo(() => {
       />
       {useMemo(
         () =>
-          nodesBB.map(([bb, type]) => (
+          nodesBB.map(([bb, type, id]) => (
             <rect
+              key={id}
               className="node"
               x={bb.left}
               y={bb.top}

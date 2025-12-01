@@ -44,7 +44,6 @@ export const ImageNode: NodeDefinition = {
         label: "Use Advanced Option",
         icon: IconAdjustmentsPlus,
         onClick: function (node: NodeData): void {
-          console.log(node.dataInputs.sourcePos);
           if (!node.dataInputs.sourcePos) {
             node.dataInputs.sourcePos = createPortConnection(Port.vector2("sourcePos", createVector2(0, 0)));
             node.dataInputs.sourceDim = createPortConnection(Port.vector2("sourceDim", createVector2(100, 100)));
@@ -63,11 +62,11 @@ export const ImageNode: NodeDefinition = {
     var tint = context.getInputValueColor(node, "tint");
     const source: SourceData = node.dataInputs.sourcePos
       ? {
-          //
-          has: true,
-          pos: context.getInputValueVector2(node, "sourcePos"),
-          dim: context.getInputValueVector2(node, "sourceDim"),
-        }
+        //
+        has: true,
+        pos: context.getInputValueVector2(node, "sourcePos"),
+        dim: context.getInputValueVector2(node, "sourceDim"),
+      }
       : { has: false };
     const offset = node.settings.centered ? [-dim[0] * 0.5, -dim[1] * 0.5] : [0, 0];
     return () => {

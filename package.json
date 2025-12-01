@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@monaco-editor/react": "^4.8.0-rc.3",
     "@p5-wrapper/react": "^4.3.0",
     "@phosphor-icons/react": "github:phosphor-icons/react",
     "@react-spring/web": "^9.7.3",
@@ -33,6 +34,7 @@
     "json-url": "^3.1.0",
     "jszip": "^3.10.1",
     "mathjs": "^12.1.0",
+    "monaco-editor": "^0.55.1",
     "nanoid": "^5.0.3",
     "normalize.css": "^8.0.1",
     "p5": "^1.8.0",

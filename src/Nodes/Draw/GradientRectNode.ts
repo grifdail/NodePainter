@@ -61,6 +61,7 @@ export const GradientRectNode: NodeDefinition = {
       });
       ctx.fillStyle = ctxGrad;
       ctx.fillRect(p1[0], p1[1], width, height);
+      ctx.fillStyle = "";
     };
   },
 };

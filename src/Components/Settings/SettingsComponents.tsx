@@ -23,6 +23,7 @@ import { BezierPathSetting } from "./BezierPathSetting";
 import { GraphAreaSetting } from "./GraphAreaSetting";
 import { Vector2Setting } from "./Vector2Setting";
 import { ImagePreviewSetting } from "./ImagePreviewSetting";
+import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
@@ -41,6 +42,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   "mesh-upload": ModelUploadSetting,
   "easing-preview": EasingSetting,
   "code-block": CodeBlockSetting,
+  "js-function": JavascriptFunctionSetting,
   group: GroupSetting,
   bool: BoolSetting,
   "image-select": ImageSelectSetting,

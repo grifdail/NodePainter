@@ -21,6 +21,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   "mesh-upload": identity,
   "easing-preview": identity,
   "code-block": identity,
+  "js-function": identity,
   "image-select": ((_: any, setting: ImageSelectSettingDefinition) => setting.options[0]) as any,
   group: function (clonedValue: any, setting: GroupSettingDefinition) {
     return { ...createSettingObjectForSettingDefinition(setting.settings), _open: false };

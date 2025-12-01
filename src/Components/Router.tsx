@@ -18,6 +18,7 @@ import { Route, Switch, useLocation } from "wouter";
 import { ReactComponentLike } from "prop-types";
 import { useCallback } from "react";
 import { closeAllPopup } from "../Actions/navigationAction";
+import { JavascriptFunctionModal } from "./Modals/CodeBlock/JavascriptFunctionModal";
 
 const LocalRoute = ({ path, component: Component }: { path?: string, component: ReactComponentLike }) => {
   const [location, navigate] = useLocation();
@@ -42,6 +43,7 @@ export function Router() {
         <LocalRoute path={Routes.Paint} component={PaintModal} />
         <LocalRoute path={Routes.CodeBlock} component={CodeBlockModal} />
         <LocalRoute path={Routes.SketchMenu} component={SketchModal} />
+        <LocalRoute path={Routes.JavascriptFunction} component={JavascriptFunctionModal} />
         <LocalRoute component={GridUi} />
 
       </Switch>

@@ -3,6 +3,7 @@ import { EasingFunctionType } from "../libs/easing";
 import { ConstrainDeclaration } from "../Utils/ui/applyConstraints";
 import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock/CodeBlock";
+import { JavascriptFunction } from "./CodeBlock/JavascriptFunction";
 import { EnvelopeData } from "./EnvelopeData";
 import { NodeData } from "./NodeData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
@@ -111,6 +112,11 @@ export type CodeBlockSettingDefinition = BaseSettingDefinition & {
   type: "code-block";
   defaultValue: CodeBlock;
 };
+
+export type JavascriptFunctionSettingDefinition = BaseSettingDefinition & {
+  type: "js-function";
+  defaultValue: JavascriptFunction;
+};
 export type GroupSettingDefinition = BaseSettingDefinition & {
   type: "group";
   defaultValue: { [key: string]: any };
@@ -146,6 +152,7 @@ export type SettingDefinition =
   | MeshUploadSettingDefinition
   | EasingPreviewSettingDefinition
   | CodeBlockSettingDefinition
+  | JavascriptFunctionSettingDefinition
   | PathSettingDefinition
   | BezierPathSettingDefinition
   | GroupSettingDefinition

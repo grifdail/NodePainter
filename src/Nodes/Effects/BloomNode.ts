@@ -211,7 +211,6 @@ export const BloomNode: NodeDefinition = {
 
     targetPassImage.shader(shaderBloom);
     targetPassImage.rect(0, 0, image.width / 5, image.height / 5);
-    console.log(blurAmount, amount, blurAmount / image.width);
     return target;
   },
 };

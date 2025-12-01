@@ -63,6 +63,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "float",
     convertToShaderP5Uniform: (value) => value,
     convertToThreeType: (value) => value,
+    convertToJs: JSON.stringify
   },
   vector: {
     tags: ["vector", "true-vector", "hidden"],
@@ -89,6 +90,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     equalityOperator: compareVector,
     lerpOperator: vectorLerp,
     shaderConvert: {},
+    convertToJs: JSON.stringify
   },
   vector2: {
     tags: ["common", "spatial", "vector", "true-vector"],
@@ -128,6 +130,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "vec2",
     convertToThreeType: (value) => new Vector2(...value),
     componentNames: ["x", "y"],
+    convertToJs: JSON.stringify
   },
   vector3: {
     tags: ["common", "spatial", "vector", "true-vector"],
@@ -168,6 +171,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "vec3",
     convertToThreeType: (value) => new Vector3(...value),
     convertToShaderValue: (value) => `vec3(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])})`,
+    convertToJs: JSON.stringify
   },
   vector4: {
     tags: ["spatial", "vector", "true-vector"],
@@ -209,6 +213,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "vec4",
     convertToThreeType: (value) => new Vector4(...value),
     convertToShaderValue: (value) => `vec4(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])}, ${convertToShaderNumber(value[3])})`,
+    convertToJs: JSON.stringify
   },
   quaternion: {
     tags: ["common"],
@@ -233,6 +238,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     equalityOperator: compareVector,
     shaderConvert: {},
     convertToThreeType: (value) => new Vector4(...value),
+    convertToJs: JSON.stringify
   },
   color: {
     tags: ["common", "vector", "true-vector"],
@@ -273,6 +279,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "vec4",
     convertToThreeType: (value) => new Vector4(...value),
     convertToShaderValue: (value) => `vec4(${convertToShaderNumber(value[0])}, ${convertToShaderNumber(value[1])}, ${convertToShaderNumber(value[2])}, ${convertToShaderNumber(value[3])})`,
+    convertToJs: JSON.stringify
   },
   string: {
     tags: ["common"],
@@ -290,6 +297,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     additionOperator: (a, b) => a + b,
     equalityOperator: defaultEqual,
     shaderConvert: {},
+    convertToJs: JSON.stringify
   },
   bool: {
     tags: ["common"],
@@ -325,6 +333,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToShaderType: "bool",
     convertToShaderValue: (value) => value.toString(),
     convertToThreeType: (value) => value,
+    convertToJs: JSON.stringify
   },
   image: {
     tags: ["common"],
@@ -346,6 +355,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     convertToThreeType(value) {
       return value ? value.getThreeJs() : null;
     },
+    convertToJs: (value) => `null`
   },
   gradient: {
     tags: ["common"],
@@ -360,6 +370,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       unknown: (a) => a,
     },
     shaderConvert: {},
+    convertToJs: JSON.stringify
   },
   material: {
     tags: ["common"],
@@ -370,6 +381,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => createDefaultMaterial(),
     convert: {},
     shaderConvert: {},
+    convertToJs: () => "null",
   },
   mesh: {
     tags: ["common"],
@@ -379,6 +391,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => null,
     convert: {},
     shaderConvert: {},
+    convertToJs: () => "null",
   },
   struct: {
     tags: ["common"],
@@ -390,6 +403,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
       string: (a) => JSON.stringify(a),
     },
     shaderConvert: {},
+    convertToJs: JSON.stringify
   },
   object3d: {
     tags: ["common"],
@@ -399,6 +413,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => null,
     convert: {},
     shaderConvert: {},
+    convertToJs: () => "null",
   },
   drawing2d: {
     tags: ["common"],
@@ -408,6 +423,7 @@ const BasePortTypeDefinitions: { [key in BasePortType]: PortTypeDefinition } = {
     createDefaultValue: () => null,
     convert: {},
     shaderConvert: {},
+    convertToJs: () => "null",
   },
 };
 
@@ -428,6 +444,7 @@ export const ArrayPortTypeDefinitions: { [key in ArrayPortType]: PortTypeDefinit
         string: baseDef.convert.string === undefined ? undefined : (newArray: any[]) => newArray.map((item) => baseDef.convert.string && baseDef.convert.string(item)).join(", "),
       },
       shaderConvert: {},
+      convertToJs: baseDef.convertToJs === JSON.stringify ? JSON.stringify : () => `null`,
     };
     return [`array-${baseType}`, newType];
   })
@@ -479,4 +496,5 @@ type PortTypeDefinition = {
   convertToShaderP5Uniform?: (value: any) => any;
   convertToThreeType?: (value: any) => any;
   componentNames?: string[];
+  convertToJs?: (value: any) => string
 };

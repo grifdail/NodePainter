@@ -32,7 +32,6 @@ export const NodeMenu = memo(function NodeMenu({ node, def }: { node: NodeData; 
   const sortAroundNode = useTree((state) => state.sortAroundNode);
   const executeCallback = useTree((state) => state.executeCallback);
   var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
-  console.log("redraw node menu");
   return (
     <foreignObject
       x="260"

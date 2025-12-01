@@ -12,6 +12,9 @@ export const openAboutModal = () => {
 export const openCodeblockModal = () => {
     navigate(Routes.CodeBlock);
 }
+export const openJSFunctionModal = () => {
+    navigate(Routes.JavascriptFunction);
+}
 export const openCustomFunctionModal = () => {
     navigate(Routes.CustomFunction);
 }

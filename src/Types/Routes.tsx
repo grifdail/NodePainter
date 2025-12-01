@@ -12,4 +12,5 @@ export enum Routes {
   Paint = "/paint",
   CodeBlock = "/code_block",
   SketchMenu = "/sketch_menu",
+  JavascriptFunction = "/js_function",
 }

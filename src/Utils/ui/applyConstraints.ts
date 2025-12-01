@@ -81,7 +81,6 @@ const ConstrainDefinition = {
     return text.replaceAll(/\W/gm, "");
   },
   NonDigitStart: (text: string, previousValue: string) => {
-    console.log(text, text.replaceAll(/^\d+/gm, ""));
     return text.replaceAll(/^\d+/gm, "");
   },
 };
