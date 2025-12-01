@@ -1,5 +1,6 @@
 import { MathAdvancedNodes } from "./Advanced";
 import { MathBasicNodes } from "./Basic";
+import { MathGeometryNodes } from "./Geometry";
 import { MathInterpolationNodes } from "./Interpolations";
 import { MathQuaternionNodes } from "./Quaternion";
 import { MathTransformNodes } from "./Transformation";
@@ -11,6 +12,7 @@ export const MathNodes = [
   //
   ...MathAdvancedNodes,
   ...MathBasicNodes,
+  ...MathGeometryNodes,
   ...MathInterpolationNodes,
   ...MathQuaternionNodes,
   ...MathTransformNodes,

@@ -35,9 +35,9 @@ export function Router() {
         <LocalRoute path={Routes.Save} component={SaveModal} />
         <LocalRoute path={Routes.Load} component={LoadModal} />
         <LocalRoute path={Routes.ExportGif} component={ExportGifModal} />
-        <LocalRoute path={Routes.CustomFunction} component={CustomSimulationModal} />
+        <LocalRoute path={Routes.CustomFunction} component={CustomNodeModal} />
         <LocalRoute path={Routes.CustomShader} component={CustomShaderModal} />
-        <LocalRoute path={Routes.CustomSimulation} component={CustomNodeModal} />
+        <LocalRoute path={Routes.CustomSimulation} component={CustomSimulationModal} />
         <LocalRoute path={Routes.Settings} component={SettingsModal} />
         <LocalRoute path={Routes.About} component={AboutModal} />
         <LocalRoute path={Routes.Paint} component={PaintModal} />

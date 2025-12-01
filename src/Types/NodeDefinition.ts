@@ -60,6 +60,7 @@ export type LogicNodeDefinition = {
   getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
   hasInput?(input: PortType, def: NodeDefinition): PortType | null;
   hasOutput?(output: PortType, def: NodeDefinition): PortType | null;
+  fn?: (...params: any) => any;
   //Shader
   getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
 };

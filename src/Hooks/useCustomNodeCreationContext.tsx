@@ -118,7 +118,7 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         model: model,
         type: type,
       });
-      navigate(`/custom-${model || type}`);
+      navigate(`/custom-${type}`);
     },
     openCreate(type: CustomNodeType = "function", modal?: string) {
       var base: NodeDefinition = createNewFunctionDefinition(type);

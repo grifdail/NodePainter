@@ -1,4 +1,6 @@
 import { original } from "immer";
+import { CustomFunctionEnd } from "../Nodes/Technical/CustomFunction/CustomFunctionEnd";
+import { CustomFunctionStart } from "../Nodes/Technical/CustomFunction/CustomFunctionStart";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { TreeStore } from "../Types/TreeStore";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
@@ -19,7 +21,7 @@ export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
     dataInputs: [],
     dataOutputs: structuredClone(def.dataInputs),
     settings: [],
-    executeAs: "CustomFunction-start",
+    executeAs: CustomFunctionStart.id,
   };
   const endNodeDef: NodeDefinition = {
     IsUnique: true,
@@ -31,7 +33,7 @@ export function createCustomFunction(def: NodeDefinition, state: TreeStore) {
     dataOutputs: [],
 
     settings: [],
-    executeAs: "CustomFunction-end",
+    executeAs: CustomFunctionEnd.id
   };
   state.customNodes[start] = startNodeDef;
   state.customNodes[end] = endNodeDef;

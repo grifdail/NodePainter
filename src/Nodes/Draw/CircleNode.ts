@@ -34,6 +34,7 @@ export const CircleNode: NodeDefinition = {
 
   settings: [],
   getData(portId, node, context) {
+
     var color = context.getInputValueColor(node, "color");
     var position = context.getInputValueVector(node, "position");
     var radius = context.getInputValueNumber(node, "radius");
