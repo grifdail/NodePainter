@@ -1,7 +1,9 @@
 ﻿import { Monaco } from "@monaco-editor/react";
+import { Delaunay } from "d3-delaunay";
 import { createColor, createVector2, createVector3, createVector4 } from "../../Types/vectorDataType";
 import { hsvToRgb, invertColor } from "../math/colorUtils";
 import { vectorAbsolute, vectorAddition, vectorCrossProduct, vectorDistance, vectorDivision, vectorDotProduct, vectorLerp, vectorMagnitude, vectorNormalize, vectorProject, vectorReflect, vectorReject, vectorScale, vectorSquareDistance, vectorSquareMagnitude, vectorSubstraction } from "../math/vectorUtils";
+
 
 const GlobalScope = {
     createVector2,
@@ -28,6 +30,8 @@ const GlobalScope = {
 
     invertColor,
     hsvToRgb,
+
+    Delaunay
 }
 
 export function createDependencyProposals(range: { startLineNumber: number; endLineNumber: number; startColumn: number; endColumn: number; }, monaco: Monaco) {

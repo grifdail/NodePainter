@@ -1,10 +1,12 @@
-﻿import { IconArrowsShuffle, IconGridDots, IconWaveSine } from "@tabler/icons-react";
+﻿import { IconGridDots, IconWaveSine } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
+import Perlin from "../../libs/perlin";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2, Vector2 } from "../../Types/vectorDataType";
+import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
-import Perlin from "../../libs/perlin";
 
 
 export const PerlinNoiseTextureNode: NodeDefinition = {
@@ -12,51 +14,39 @@ export const PerlinNoiseTextureNode: NodeDefinition = {
     label: "Perlin Noise Texture",
     icon: DoubleIconGen(IconGridDots, IconWaveSine),
     description: "Generate a static perlin noise image",
-    dataInputs: [],
+    dataInputs: [
+        Port.vector2("offset"),
+        Port.vector2("scale", createVector2(2, 2)),
+        Port.number("octave", 1, "How many layer of noise to add", [Constraints.Integer(), Constraints.GreaterThan(1)]),
+        Port.number("influence", 2),
+        Port.bool("useAlpha", true, "If this is enabled, a transparent texture will be used, otherwise a black and white texture will be generated"),
+        Port.CacheId()
+    ],
     dataOutputs: [
         { id: "image", type: "image", defaultValue: null }],
     tags: ["Image", "Noise"],
 
     settings: [
         { type: "vector2", id: "dimension", defaultValue: createVector2(400, 400) },
-        { type: "vector2", id: "offset", defaultValue: createVector2(0, 0) },
-        { type: "vector2", id: "scale", defaultValue: createVector2(1, 1) },
-        { type: "number", id: "octave", defaultValue: 1, constrains: [Constraints.Integer(), Constraints.GreaterThan(1)] },
-        { type: "number", id: "influence", defaultValue: 2 },
-        { type: "bool", id: "useAlpha", tooltip: "If this is enabled, a transparent texture will be used, otherwise a black and white texture will be generated", defaultValue: true },
-        { type: "number", id: "seed", defaultValue: 0 },
-        { type: "image-preview", id: "image" },
-        {
-            type: "button", id: "generate", button: {
-                label: "generate",
-                icon: IconArrowsShuffle,
-                onClick: (node) => {
-                    node.settings.image = generateNoiseTexture( //
-                        node.settings.dimension,
-                        node.settings.offset,
-                        node.settings.scale,
-                        node.settings.octave,
-                        node.settings.influence,
-                        node.settings.useAlpha,
-                        node.settings.seed)
 
-                }
-            }
-        }
     ],
     getData(portId, data, context) {
-        if (data.settings.image != null) {
-            var key = `${data.id}-image-cache`;
-            if (!context.blackboard[key]) {
-                const img = new ImageData({ url: data.settings.image });
-                context.blackboard[key] = img;
-                return img;
-            } else {
-                return context.blackboard[key];
-            }
-        }
+        var img = createOrSelectFromCache(context, data, () => {
+            const str = generateNoiseTexture( //
+                data.settings.dimension,
+                context.getInputValueVector2(data, "offset"),
+                context.getInputValueVector2(data, "scale"),
+                context.getInputValueNumber(data, "octave"),
+                context.getInputValueNumber(data, "influence"),
+                context.getInputValueBoolean(data, "useAlpha"),
+                context.RNG.next()) || ""
 
-        return;
+            const img = new ImageData({ url: str });
+            return img;
+        })
+
+
+        return img;
     },
 };
 

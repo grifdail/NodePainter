@@ -32,14 +32,15 @@ export const SliceNode: NodeDefinition = {
 
   codeBlockType: "expression",
   settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["array"], ["out"]),
+  ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), [], [], ["array"], ["out"]),
   getData: (portId, node, context) => {
-    const array = context.getInputValueVectorArray(node, "array");
+    const array = context.getInputValue(node, "array", node.dataInputs.array.type) as Array<any>;
     const start = Math.floor(context.getInputValueNumber(node, "start"));
     const count = Math.floor(context.getInputValueNumber(node, "count"));
+
     if (start >= array.length) {
       return [];
     }
-    return array.slice(start, Math.max(array.length, start + count));
+    return array.slice(start, Math.min(array.length, start + count));
   },
 };

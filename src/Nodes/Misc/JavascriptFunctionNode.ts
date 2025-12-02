@@ -28,11 +28,9 @@ export const JavascriptFunctionNode: NodeDefinition = {
 
         const output = createOrSelectFromCache(context, node, () => {
             let state = context.createFunctionContext(node);
-            Object.entries(node.dataOutputs).forEach(([key, value]) => {
-                state[key] = { type: value.type, value: structuredClone(value.defaultValue) };
-            });
 
-            var output = fn(state);
+
+            var output = fn(Object.entries(state).reduce((old, [key, value]) => ({ ...old, [key]: value.value })));
             return output;
         });
 
