@@ -16,7 +16,7 @@ import { SketchModal } from "./Modals/SketchModal";
 import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
 import { Route, Switch, useLocation } from "wouter";
 import { ReactComponentLike } from "prop-types";
-import { useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { closeAllPopup } from "../Actions/navigationAction";
 import { JavascriptFunctionModal } from "./Modals/CodeBlock/JavascriptFunctionModal";
 
@@ -26,33 +26,46 @@ const LocalRoute = ({ path, component: Component }: { path?: string, component: 
 }
 
 export function Router() {
-  const dialog = useDialog();
+
   return (
     <div>
+      <RouterSwitch />
 
-      <Switch>
-        <LocalRoute path={Routes.NodeCreation} component={NodeSelectionModal} />
-        <LocalRoute path={Routes.Save} component={SaveModal} />
-        <LocalRoute path={Routes.Load} component={LoadModal} />
-        <LocalRoute path={Routes.ExportGif} component={ExportGifModal} />
-        <LocalRoute path={Routes.CustomFunction} component={CustomNodeModal} />
-        <LocalRoute path={Routes.CustomShader} component={CustomShaderModal} />
-        <LocalRoute path={Routes.CustomSimulation} component={CustomSimulationModal} />
-        <LocalRoute path={Routes.Settings} component={SettingsModal} />
-        <LocalRoute path={Routes.About} component={AboutModal} />
-        <LocalRoute path={Routes.Paint} component={PaintModal} />
-        <LocalRoute path={Routes.CodeBlock} component={CodeBlockModal} />
-        <LocalRoute path={Routes.SketchMenu} component={SketchModal} />
-        <LocalRoute path={Routes.JavascriptFunction} component={JavascriptFunctionModal} />
-        <LocalRoute component={GridUi} />
-
-      </Switch>
-      {dialog.dialogs.map((d) => (
-        <DialogModal
-          key={d.id}
-          dialog={d}
-          controler={dialog}></DialogModal>
-      ))}
+      <DialogControl />
     </div>
   );
+}
+
+const DialogControl = memo(() => {
+  const dialog = useDialog();
+
+  return <>
+    {dialog.dialogs.map((d) => (
+      <DialogModal
+        key={d.id}
+        dialog={d}
+        controler={dialog}></DialogModal>
+    ))}
+  </>
+})
+
+
+const RouterSwitch = () => {
+  return <Switch>
+    <LocalRoute path={Routes.NodeCreation} component={NodeSelectionModal} />
+    <LocalRoute path={Routes.Save} component={SaveModal} />
+    <LocalRoute path={Routes.Load} component={LoadModal} />
+    <LocalRoute path={Routes.ExportGif} component={ExportGifModal} />
+    <LocalRoute path={Routes.CustomFunction} component={CustomNodeModal} />
+    <LocalRoute path={Routes.CustomShader} component={CustomShaderModal} />
+    <LocalRoute path={Routes.CustomSimulation} component={CustomSimulationModal} />
+    <LocalRoute path={Routes.Settings} component={SettingsModal} />
+    <LocalRoute path={Routes.About} component={AboutModal} />
+    <LocalRoute path={Routes.Paint} component={PaintModal} />
+    <LocalRoute path={Routes.CodeBlock} component={CodeBlockModal} />
+    <LocalRoute path={Routes.SketchMenu} component={SketchModal} />
+    <LocalRoute path={Routes.JavascriptFunction} component={JavascriptFunctionModal} />
+    <LocalRoute component={GridUi} />
+
+  </Switch>
 }
