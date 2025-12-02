@@ -2,6 +2,7 @@ import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
+import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const ClampNode: NodeDefinition = {
@@ -43,7 +44,7 @@ export const ClampNode: NodeDefinition = {
       var value = context.getInputValueVector(nodeData, "value");
       var min = context.getInputValueNumber(nodeData, "min");
       var max = context.getInputValueNumber(nodeData, "max");
-      return value.map((v) => Math.max(Math.min(v, max), min));
+      return enforceCorrectVectorTypeForNode(nodeData, value.map((v) => Math.max(Math.min(v, max), min)))
     }
   },
   getShaderCode(node, context) {

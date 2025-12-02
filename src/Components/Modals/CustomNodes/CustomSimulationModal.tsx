@@ -3,9 +3,10 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 import { useCustomNodeCreationContext } from "../../../Hooks/useCustomNodeCreationContext";
 import { CustomFunctionModalNoLogic } from "./CustomFunctionModalNoLogic";
+import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 
-const AvailableTypesInput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "image", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string", "struct", "array-struct"];
-const AvailableTypesOutput: Array<PortType> = ["number", "vector2", "vector3", "vector4", "color", "bool", "gradient", "string", "array-number", "array-vector2", "array-vector3", "array-color", "array-bool", "array-string", "struct", "array-struct"];
+const AvailableTypesInput: Array<PortType> = portTypesWithTags(["common"]);
+const AvailableTypesOutput: Array<PortType> = portTypesWithTags(["common"]);;
 
 export const CustomSimulationModalSettings = {
   creationTitle: "Create a simulation node",
