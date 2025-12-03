@@ -3,9 +3,40 @@ import Rand from "rand-seed";
 import { SketchSave } from "./Types/SketchTemplate";
 import { createExecutionContext, ExecutionContext } from "./Utils/graph/execution/createExecutionContext";
 import { getNodeStart } from "./Utils/graph/execution/getNode";
+import { upgradeTemplate } from "./Utils/graph/modification/upgradeTemplate";
 
 console.log("helloWorld");
 
+
+window.addEventListener("load", async () => {
+
+
+    try {
+        var search = new URLSearchParams(window.location.search);
+        if (search.has("load")) {
+            return await loadFromUrl(search.get("load"));
+        }
+        document.body.textContent = "There was no sketch to load";
+    } catch (err) {
+        document.body.textContent = "There was no sketch to load";
+    }
+
+})
+
+
+async function loadFromUrl(encodedUrl: string | null) {
+    if (!encodedUrl) {
+        return null;
+    }
+    var request = await fetch(encodedUrl);
+    if (request.ok) {
+        var data = (await request.json()) as SketchSave;
+        const upgradedData = upgradeTemplate(data);
+        initGame(upgradedData);
+    } else {
+        throw new Error("No sketch to load")
+    }
+}
 
 function initGame(tree: SketchSave) {
     var game = new p5((p5) => {

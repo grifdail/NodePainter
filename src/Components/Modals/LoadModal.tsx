@@ -105,13 +105,14 @@ export function LoadModal({ close }: { close: () => void }) {
     maxFiles: 1,
   });
 
-  function createShareUrl(toBeLoaded: string): string {
-    var url = new URL(window.location.href);
+  function createShareUrl(toBeLoaded: string, prefix: string): string {
+    var url = new URL(`${window.location.protocol}//${window.location.host}${prefix}`);
     url.searchParams.append("load", toBeLoaded);
     return url.toString();
   }
 
-  var shareUrl = createShareUrl(url);
+  var editUrl = createShareUrl(url, "/");
+  var shareUrl = createShareUrl(url, "/preview.html");
 
   return (
     <Modal
@@ -149,7 +150,10 @@ export function LoadModal({ close }: { close: () => void }) {
               label="Load from URL"
               onClick={() => loadFromUrl(url)}></Button>
             <Button
-              label={lastValue === shareUrl ? "Succesfully copied !" : "Create share link"}
+              label={lastValue === editUrl ? "Succesfully copied !" : "Create edit link"}
+              onClick={() => clip(editUrl)}></Button>
+            <Button
+              label={lastValue === shareUrl ? "Succesfully copied !" : "Create preview link"}
               onClick={() => clip(shareUrl)}></Button>
           </ButtonGroup>
         </div>

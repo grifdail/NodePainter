@@ -32,6 +32,14 @@ export default defineConfig(({ mode }) => {
         "@assets": path.resolve(__dirname, "public/assets"),
       },
     },
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          nested: resolve(__dirname, 'preview.html'),
+        },
+      },
+    }
   };
 });
 
@@ -76,11 +84,11 @@ function devServerPlugin(): Plugin {
           ...(https &&
             SSL_CRT_FILE &&
             SSL_KEY_FILE && {
-              https: {
-                cert: readFileSync(resolve(SSL_CRT_FILE)),
-                key: readFileSync(resolve(SSL_KEY_FILE)),
-              },
-            }),
+            https: {
+              cert: readFileSync(resolve(SSL_CRT_FILE)),
+              key: readFileSync(resolve(SSL_KEY_FILE)),
+            },
+          }),
         },
       };
     },

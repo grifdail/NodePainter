@@ -1,95 +1,173 @@
 {
-	"src\\Hooks\\createFunction.ts": [
+	"src/Hooks/useTree.ts": [
 		[
-			"src\\Hooks\\createFunction.ts",
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\CustomFunction\\CustomFunction.ts",
-			"src\\Utils\\resetCamera.tsx"
+			"src/Hooks/useTree.ts",
+			"src/Nodes/3D/3DNodes.ts",
+			"src/Nodes/3D/ParametricGeometry.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/AgreggateNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/FilterNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/GenerateNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/MapNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Math/Advanced/MathExpressionNode.ts",
+			"src/Nodes/Math/Advanced/index.ts",
+			"src/Nodes/Math/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/Combine/ArrayNode.ts",
+			"src/Nodes/Misc/Combine/index.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/Combine/GridLoopNode.ts",
+			"src/Nodes/Misc/Combine/index.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/Combine/LoopNode.ts",
+			"src/Nodes/Misc/Combine/index.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Nodes/Text/InterpolateNode.ts",
+			"src/Nodes/Text/index.ts"
 		]
 	],
-	"src\\Components\\Settings\\GroupSetting.tsx": [
+	"src/Nodes/Color/HSLNode.ts": [
 		[
-			"src\\Components\\Settings\\GroupSetting.tsx",
-			"src\\Components\\Settings\\SettingsComponents.tsx"
+			"src/Nodes/Color/HSLNode.ts",
+			"src/Nodes/Color/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/execution/generateShaderCodeFromNodeData.ts",
+			"src/Utils/graph/execution/getNode.ts",
+			"src/Utils/graph/execution/getShaderCode.tsx"
 		]
 	],
-	"src\\Hooks\\useTree.ts": [
+	"src/Components/Graph/GetNodeHeight.tsx": [
 		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\3D\\3DNodes.ts",
-			"src\\Nodes\\3D\\ParametricGeometry.ts",
-			"src\\Nodes\\Nodes.ts"
+			"src/Components/Graph/GetNodeHeight.tsx",
+			"src/Components/Settings/ButtonsSettings.tsx",
+			"src/Components/Settings/SettingsComponents.tsx",
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		],
 		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Array\\ArrayMap.ts",
-			"src\\Nodes\\Nodes.ts"
+			"src/Components/Graph/GetNodeHeight.tsx",
+			"src/Components/Settings/CodeBlockSetting.tsx",
+			"src/Components/Settings/SettingsComponents.tsx",
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		],
 		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Array\\Filter.ts",
-			"src\\Nodes\\Nodes.ts"
+			"src/Components/Graph/GetNodeHeight.tsx",
+			"src/Components/Settings/GraphAreaSetting.tsx",
+			"src/Components/Settings/SettingsComponents.tsx",
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		],
 		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Array\\FindBest.ts",
-			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Array\\GenerateArray.ts",
-			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Misc\\CombineArray.ts",
-			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Misc\\CombineGridLoop.ts",
-			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Misc\\CombineLoop.ts",
-			"src\\Nodes\\Nodes.ts"
-		],
-		[
-			"src\\Hooks\\useTree.ts",
-			"src\\Nodes\\Nodes.ts",
-			"src\\Nodes\\Text\\InterpolateText.ts"
+			"src/Components/Graph/GetNodeHeight.tsx",
+			"src/Components/Settings/JavascriptFunctionSetting.tsx",
+			"src/Components/Settings/SettingsComponents.tsx",
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		]
 	],
-	"src\\Hooks\\useCustomNodeCreationContext.tsx": [
+	"src/Components/Settings/GroupSetting.tsx": [
 		[
-			"src\\Hooks\\useCustomNodeCreationContext.tsx",
-			"src\\Hooks\\useTree.ts"
+			"src/Components/Settings/GroupSetting.tsx",
+			"src/Components/Settings/SettingsComponents.tsx"
 		]
 	],
-	"src\\Components\\Modals\\CodeBlock\\CodeBlockParameterView.tsx": [
+	"src/Hooks/useSelection.tsx": [
 		[
-			"src\\Components\\Modals\\CodeBlock\\CodeBlockParameterView.tsx",
-			"src\\Components\\Modals\\CodeBlock\\CodeBlockStatementList.tsx",
-			"src\\Components\\Modals\\CodeBlock\\CodeBlockStatementView.tsx"
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		]
 	],
-	"src\\CodeBlocks\\CodeBlockTypes.ts": [
+	"src/CodeBlocks/CodeBlockTypes.ts": [
 		[
-			"src\\CodeBlocks\\CodeBlockTypes.ts",
-			"src\\CodeBlocks\\Expressions\\CompareNumberExpression.ts",
-			"src\\Types\\evaluateCodeBlockExpression.ts"
-		],
+			"src/CodeBlocks/CodeBlockTypes.ts",
+			"src/Nodes/Misc/ImperativeFunctionNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/codeblock/executeStatementList.ts"
+		]
+	],
+	"src/Hooks/createFunction.ts": [
 		[
-			"src\\CodeBlocks\\CodeBlockTypes.ts",
-			"src\\CodeBlocks\\Expressions\\CompareNumberExpression.ts",
-			"src\\Types\\toStringCodeBlockExpression.ts"
-		],
+			"src/Hooks/createFunction.ts",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Nodes/Technical/CustomFunction/CustomFunction.ts",
+			"src/Nodes/Technical/CustomFunction/index.ts",
+			"src/Nodes/Technical/index.ts",
+			"src/Utils/ui/resetCamera.tsx"
+		]
+	],
+	"src/Hooks/useCustomNodeCreationContext.tsx": [
 		[
-			"src\\CodeBlocks\\CodeBlockTypes.ts",
-			"src\\CodeBlocks\\Statements\\IfStatement.ts",
-			"src\\Types\\executeStatementList.ts",
-			"src\\Types\\executeStatementParameter.ts"
+			"src/Hooks/useCustomNodeCreationContext.tsx",
+			"src/Hooks/useTree.ts"
+		]
+	],
+	"src/Components/Modals/CodeBlock/CodeBlockParameterView.tsx": [
+		[
+			"src/Components/Modals/CodeBlock/CodeBlockParameterView.tsx",
+			"src/Components/Modals/CodeBlock/CodeBlockStatementList.tsx",
+			"src/Components/Modals/CodeBlock/CodeBlockStatementView.tsx"
 		]
 	]
 }
