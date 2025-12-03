@@ -20,6 +20,7 @@ import { Exporters, ExporterType } from "./Exporters/Exporter";
 import { toastSuccess } from "../../Hooks/useToast";
 import { CustomSimulation } from "../../Nodes/Technical/Simulation/CustomSimulation";
 import { START_NODE } from "../../Nodes/StartNode";
+import { SketchData } from "../../Types/SketchData";
 
 const MainDiv = styled.div`
   display: flex;
@@ -68,14 +69,14 @@ type MySketchProps = SketchProps & {
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
-  var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
+  var context: ExecutionContext = createExecutionContext(tree as unknown as SketchData, p5 as P5CanvasInstance);
   var ended = false;
   var renderer: CanvasExporter | null = null;
   var ownProps: MySketchProps | null = null;
   let seed = Date.now();
   let rendererIsLoaded = false;
 
-  p5.setup = () => {};
+  p5.setup = () => { };
 
   p5.updateWithProps = (props: MySketchProps) => {
     if (tree !== props.tree || ended) {

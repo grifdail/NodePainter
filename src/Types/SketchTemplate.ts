@@ -1,10 +1,8 @@
-import { NodeCollection } from "../Types/NodeCollection";
-import { NodeDefinition } from "../Types/NodeDefinition";
+import { SketchData } from "./SketchData";
 
-export type SketchTemplate = {
-  nodes: NodeCollection;
-  customNodes: { [key: string]: NodeDefinition };
-  editedGraph?: string;
-  globalSettings?: { [key: string]: any };
+export type SketchSave = SketchData & {
+  editedGraph: string;
   version?: number;
 };
+
+

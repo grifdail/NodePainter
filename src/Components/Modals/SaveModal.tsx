@@ -7,7 +7,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Button } from "../Generics/Button";
 import { useEffect, useState } from "react";
 import { compressSketchJson } from "../../Utils/graph/load/loadJsonDecrypt";
-import { SketchTemplate } from "../../Types/SketchTemplate";
+import { SketchSave } from "../../Types/SketchTemplate";
 import { download } from "../../Utils/ui/download";
 
 const MAX_URL_LENGTH = 2083;
@@ -29,7 +29,7 @@ const MainDiv = styled.div`
 
 export function SaveModal({ close }: { close: () => void }) {
   const [shortJson, toggleShotJson] = useToggle(false);
-  var saveTemplate: SketchTemplate = useTree((state) => state.exportTemplate)();
+  var saveTemplate: SketchSave = useTree((state) => state.exportTemplate)();
   const json = JSON.stringify(saveTemplate, null, shortJson ? undefined : 4);
   const [lastValue, clip] = useCopyToClipboard();
   const [{ hasUrl, url: decodeUrl, loading }, setUrlState] = useState({ hasUrl: false, loading: true, url: "" });

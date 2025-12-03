@@ -7,7 +7,7 @@ import { saveSketchWithNamePrompt, Sketch, useAllSavedSketch } from "../Hooks/db
 import { Routes } from "../Types/Routes";
 import { useCallback } from "react";
 import { useDialog } from "../Hooks/useDialog";
-import { SketchTemplate } from "../Types/SketchTemplate";
+import { SketchSave } from "../Types/SketchTemplate";
 import { listOrphanNode } from "../Utils/graph/modification/listOrphanNode";
 import { navigate } from "wouter/use-browser-location";
 import { openAboutModal, openGifExportModal, openSaveModal, openSettingModal, openSketchMenu } from "../Actions/navigationAction";
@@ -23,7 +23,7 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
   const [_, saveSketch] = useAllSavedSketch();
 
   function loadSketch(sketch: Sketch): void {
-    var template: SketchTemplate = JSON.parse(sketch.content);
+    var template: SketchSave = JSON.parse(sketch.content);
     useTree.getState().loadTemplate(template);
   }
 

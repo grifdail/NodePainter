@@ -11,7 +11,7 @@ import { NodeDefinition } from "./NodeDefinition";
 import { PortConnection } from "./PortConnection";
 import { PortDefinition } from "./PortDefinition";
 import { PortType } from "./PortType";
-import { SketchTemplate } from "./SketchTemplate";
+import { SketchSave } from "./SketchTemplate";
 
 export type TreeStore = {
   key: number;
@@ -39,8 +39,8 @@ export type TreeStore = {
   deleteNodes: (node: string[]) => void;
   duplicateNode: (node: string) => void;
   reset: () => void;
-  loadTemplate: (temp: SketchTemplate) => boolean;
-  exportTemplate: () => SketchTemplate;
+  loadTemplate: (temp: SketchSave) => boolean;
+  exportTemplate: () => SketchSave;
   createStructType: (ports: PortDefinition[], name: string) => void;
   createFunction: (def: NodeDefinition) => void;
   createShader: (def: NodeDefinition) => void;

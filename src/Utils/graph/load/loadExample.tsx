@@ -1,6 +1,6 @@
 import createClient from "json-url";
 import { useTree } from "../../../Hooks/useTree";
-import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { SketchSave } from "../../../Types/SketchTemplate";
 import { Templates } from "../../../Data/templates";
 import { useDialog } from "../../../Hooks/useDialog";
 import { navigate } from "wouter/use-browser-location";

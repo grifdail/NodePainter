@@ -24,6 +24,8 @@ import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
+import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort } from "../Utils/graph/execution/getNode";
+import { getPortValue } from "../Utils/graph/execution/getPortValue";
 import { createDefaultNodeConnection } from "../Utils/graph/modification/createDefaultNodeConnection";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
 import { createObjectFromOutputPortDefinition } from "../Utils/graph/modification/createObjectFromOutputPortDefinition";
@@ -52,13 +54,13 @@ export const useTree = create<TreeStore>()((set, get) => {
     key: 0,
     nodeDeletionCount: 0,
     getNode(id: string) {
-      return get().nodes[id];
+      return getNode(get(), id);
     },
     getInputPort(id: string, portId: string) {
-      return get().nodes[id].dataInputs[portId];
+      return getInputPort(get(), id, portId)
     },
     getOutputPort(id: string, portId: string) {
-      return get().nodes[id].dataOutputs[portId];
+      return getOutputPort(get(), id, portId);
     },
     getSketchName() {
       return get().nodes[START_NODE].settings["name"] as string;
@@ -85,10 +87,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       return newNodeData;
     },
     getNodeTypeDefinition(node: string | NodeData) {
-      const type = typeof node === "string" ? node : node.type;
-      var result = NodeLibrary[type] || get().customNodes[type];
-      console.assert(result != null, `${type} is not a valid node type.`);
-      return result;
+      return getNodeTypeDefinition(get(), node);
     },
     getNodeLibrary() {
       return { ...NodeLibrary, ...get().customNodes };
@@ -121,17 +120,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     getPortValue(nodeId: string, portId: string, context: ExecutionContext) {
-      const nodes = get().nodes;
-      const node = nodes[nodeId];
-      let def = get().getNodeTypeDefinition(node);
-      if (def.executeAs) {
-        def = get().getNodeTypeDefinition(def.executeAs);
-      }
-      var port = node.dataOutputs[portId];
-      if (def.getData) {
-        return [def.getData(portId, node, context), port.type];
-      }
-      return [undefined, "unknown"];
+      return getPortValue(get(), nodeId, portId, context)
     },
     removeDataConnection(nodeId, portId) {
       set(
@@ -254,7 +243,7 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     exportTemplate() {
       var t = get();
-      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined, version: SAVE_VERSION });
+      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: "main", version: SAVE_VERSION });
     },
     createStructType(ports: PortDefinition[], name: string) {
       set(

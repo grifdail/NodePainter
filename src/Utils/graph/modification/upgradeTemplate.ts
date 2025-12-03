@@ -1,10 +1,10 @@
 import { NodeLibrary } from "../../../Nodes/Nodes";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { SketchTemplate } from "../../../Types/SketchTemplate";
+import { SketchSave } from "../../../Types/SketchTemplate";
 import { White } from "../../math/colorUtils";
 import { createPortConnection } from "./createPortConnection";
 
-type UpgradeFunction = (sketch: SketchTemplate) => SketchTemplate;
+type UpgradeFunction = (sketch: SketchSave) => SketchSave;
 
 const UPGRADES: UpgradeFunction[] = [
   (sketch) => {
@@ -292,7 +292,7 @@ const UPGRADES: UpgradeFunction[] = [
 
 export const SAVE_VERSION = UPGRADES.length;
 
-export function upgradeTemplate(sketch: SketchTemplate) {
+export function upgradeTemplate(sketch: SketchSave) {
   var templateVersion = sketch.version || 0;
   if (templateVersion === SAVE_VERSION) {
     return sketch;
@@ -306,7 +306,7 @@ export function upgradeTemplate(sketch: SketchTemplate) {
   return sketch;
 }
 
-function redefineNodes(newIds: { [key: string]: string }, sketch: SketchTemplate): SketchTemplate {
+function redefineNodes(newIds: { [key: string]: string }, sketch: SketchSave): SketchSave {
   Object.values(sketch.nodes).forEach((node) => {
     if (newIds[node.type]) {
       node.type = newIds[node.type];
@@ -315,7 +315,7 @@ function redefineNodes(newIds: { [key: string]: string }, sketch: SketchTemplate
   return sketch;
 }
 
-function addMissingNodePort(list: string[], sketch: SketchTemplate): SketchTemplate {
+function addMissingNodePort(list: string[], sketch: SketchSave): SketchSave {
   Object.values(sketch.nodes).forEach((node) => {
     if (list.includes(node.type)) {
       var def = NodeLibrary[node.type];

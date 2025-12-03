@@ -10,6 +10,7 @@ import { createExecutionContext } from "../Utils/graph/execution/createExecution
 import Rand from "rand-seed";
 import { useDialog } from "../Hooks/useDialog";
 import { START_NODE } from "../Nodes/StartNode";
+import { SketchData } from "../Types/SketchData";
 
 const Preview = styled.div<{ scale: number }>`
   position: absolute;
@@ -85,7 +86,7 @@ type MySketchProps = SketchProps & {
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
   let tree: TreeStore | null = null;
-  var context: ExecutionContext = createExecutionContext(tree, p5 as P5CanvasInstance);
+  var context: ExecutionContext = createExecutionContext(tree as unknown as SketchData, p5 as P5CanvasInstance);
   var seed = 0;
   var close = () => { };
   p5.setup = () => { };
@@ -112,6 +113,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
     if (tree) {
       try {
         var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
+
         if (typeof result === "function") {
           result();
         }

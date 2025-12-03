@@ -7,8 +7,11 @@ import { ExecutionContext } from "./createExecutionContext";
 import { sanitizeForShader } from "./sanitizeForShader";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { PortType } from "../../../Types/PortType";
+import { SketchSave } from "../../../Types/SketchTemplate";
+import { getNodeTypeDefinition } from "./getNode";
+import { SketchData } from "../../../Types/SketchData";
 
-export function getImageEffectShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
+export function getImageEffectShaderCode(shader: string, ports: PortConnection[], tree: SketchData, context: ExecutionContext) {
   const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
   const requirement = buildRequirement(flattenNode, tree);
   const code = buildCode(flattenNode, tree, context);
@@ -37,15 +40,15 @@ export function getImageEffectShaderCode(shader: string, ports: PortConnection[]
   return result;
 }
 
-export function buildRequirement(flattenNode: any, tree: TreeStore | null) {
+export function buildRequirement(flattenNode: any, tree: SketchData) {
   return Array.from(
     new Set(
       flattenNode
         .flatMap((nodeId: string) => {
           const node = tree?.nodes[nodeId] as NodeData;
-          let type = tree?.getNodeTypeDefinition(node);
+          let type = getNodeTypeDefinition(tree, node);
           while (type?.executeAs != null) {
-            type = tree?.getNodeTypeDefinition(type.executeAs);
+            type = getNodeTypeDefinition(tree, type.executeAs);
           }
           var requirement = type?.shaderRequirement;
           if (requirement === undefined || requirement === null) {
@@ -61,12 +64,12 @@ export function buildRequirement(flattenNode: any, tree: TreeStore | null) {
   );
 }
 
-export function buildCode(flattenNode: any, tree: TreeStore | null, context: ExecutionContext) {
+export function buildCode(flattenNode: any, tree: SketchData, context: ExecutionContext) {
   return flattenNode.map((nodeId: string) => {
     const node = tree?.nodes[nodeId] as NodeData;
-    let type = tree?.getNodeTypeDefinition(node);
+    let type = getNodeTypeDefinition(tree, node);
     while (type?.executeAs != null) {
-      type = tree?.getNodeTypeDefinition(type.executeAs);
+      type = getNodeTypeDefinition(tree, type.executeAs);
     }
     return type?.getShaderCode && type.getShaderCode(node, context);
   });

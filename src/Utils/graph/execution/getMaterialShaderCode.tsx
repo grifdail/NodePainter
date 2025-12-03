@@ -1,12 +1,11 @@
-import { NodeCollection } from "../../../Types/NodeCollection";
 import { PortConnection } from "../../../Types/PortConnection";
-import { TreeStore } from "../../../Types/TreeStore";
+import { SketchData } from "../../../Types/SketchData";
 import { ExecutionContext } from "./createExecutionContext";
 import { buildDependencyList, buildRequirement, buildCode, getShaderType } from "./getShaderCode";
 import { sanitizeForShader } from "./sanitizeForShader";
 
-export function getMaterialShaderCode(shader: string, ports: PortConnection[], tree: TreeStore | null, context: ExecutionContext) {
-  const flattenNode = buildDependencyList(`${shader}-end`, tree?.nodes as NodeCollection);
+export function getMaterialShaderCode(shader: string, ports: PortConnection[], tree: SketchData, context: ExecutionContext) {
+  const flattenNode = buildDependencyList(`${shader}-end`, tree.nodes);
   const requirement = buildRequirement(flattenNode, tree);
   const code = buildCode(flattenNode, tree, context);
 

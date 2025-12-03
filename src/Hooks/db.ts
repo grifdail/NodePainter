@@ -3,7 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useCallback } from "react";
 import { SKETCH_DEFAULT_NAME } from "../Nodes/StartNode";
 import { ExportedCustomFunction } from "../Types/ExportedCustomFunction";
-import { SketchTemplate } from "../Types/SketchTemplate";
+import { SketchSave } from "../Types/SketchTemplate";
 import { useDialog } from "./useDialog";
 import { toastError, toastSuccess } from "./useToast";
 import { useTree } from "./useTree";
@@ -34,9 +34,9 @@ export class NodepainterDexie extends Dexie {
 
 export const db = new NodepainterDexie();
 
-export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketchData: SketchTemplate) => void, (name: string) => void] {
+export function useAllSavedSketch(): [Sketch[] | undefined, (name: string, sketchData: SketchSave) => void, (name: string) => void] {
   const sketchs = useLiveQuery(() => db.sketchs.toArray());
-  const saveSketch = useCallback((name: string, sketchData: SketchTemplate) => {
+  const saveSketch = useCallback((name: string, sketchData: SketchSave) => {
     db.sketchs.put({
       name,
       content: JSON.stringify(sketchData),
@@ -61,7 +61,7 @@ export function useAllSavedFunction(): [Sketch[] | undefined, (name: string, fun
   return [functions, saveFunction];
 }
 
-export function saveSketchWithNamePrompt(saveSketch: (name: string, content: SketchTemplate) => void) {
+export function saveSketchWithNamePrompt(saveSketch: (name: string, content: SketchSave) => void) {
   var tree = useTree.getState();
   const name = tree.getSketchName();
   if (name === SKETCH_DEFAULT_NAME) {

@@ -7,7 +7,7 @@ import { useDialog } from "../../Hooks/useDialog";
 import { Templates } from "../../Data/templates";
 import { useTree } from "../../Hooks/useTree";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { SketchTemplate } from "../../Types/SketchTemplate";
+import { SketchSave } from "../../Types/SketchTemplate";
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import { SearchForm } from "../Generics/SearchForm";
 import { Input } from "../StyledComponents/Input";
@@ -97,7 +97,7 @@ const IconPerTypes: Record<string, Icon> = {
   Examples: IconPlayerPlay,
 };
 
-type SketchElement = { content: () => Promise<SketchTemplate>; name: string; category: string };
+type SketchElement = { content: () => Promise<SketchSave>; name: string; category: string };
 
 const TagRegex = /tag:(\w+)/gi;
 
@@ -190,7 +190,7 @@ export function SketchModal({ close }: { close: () => void }) {
     <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
       <MainDiv>
         <ButtonGroup align="stretch" $forceStretch $responsive>
-          <Button onClick={withConfirm(() => loadSketch(new Promise<SketchTemplate>((r) => r(lastSavedSketch as SketchTemplate))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
+          <Button onClick={withConfirm(() => loadSketch(new Promise<SketchSave>((r) => r(lastSavedSketch as SketchSave))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
           <Button
             icon={IconFilePlus}
             label="New"
@@ -234,7 +234,7 @@ export function SketchModal({ close }: { close: () => void }) {
   );
 
   function useLoadSketch(close: () => void) {
-    return (promise: Promise<SketchTemplate>) => {
+    return (promise: Promise<SketchSave>) => {
       promise.then(
         (sketch) => {
           useTree.getState().loadTemplate(sketch);
@@ -284,7 +284,7 @@ function useSketchCollection(): [SketchElement[], string[], (name: string) => vo
         return {
           name: sketch.name,
           category: MY_SAVED_SKETCH,
-          content: () => new Promise<SketchTemplate>((r) => r(JSON.parse(sketch.content))),
+          content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
         };
       }),
     ],

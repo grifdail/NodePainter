@@ -18,6 +18,10 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import Rand from "rand-seed";
 import { PortType } from "../../../Types/PortType";
 import { OutputPortView } from "../../../Components/Graph/OutputPortView";
+import { SketchSave } from "../../../Types/SketchTemplate";
+import { getNodeTypeDefinition, getOutputPort } from "./getNode";
+import { getPortValue } from "./getPortValue";
+import { SketchData } from "../../../Types/SketchData";
 
 export type FunctionContext = {
   [key: string]: { type: PortType; value: any };
@@ -63,7 +67,7 @@ export type ExecutionContext = {
   endOfRunCleanup(): void;
 };
 
-export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInstance): ExecutionContext {
+export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): ExecutionContext {
   var context: ExecutionContext = {
     p5: p5 as P5CanvasInstance,
     time: 0,
@@ -76,7 +80,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     lastVisitedNode: "",
     RNG: new Rand(),
     getNodeOutput(nodeId, portId) {
-      return tree?.getPortValue(nodeId, portId, context);
+      return getPortValue(tree, nodeId, portId, context);
     },
     getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
       const inputPorts = nodeData.dataInputs[portId];
@@ -113,14 +117,14 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
     getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
     getInputValueMesh: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh"),
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
-    getInputValueDrawing: (nodeData: NodeData, portId: string) => (context.getInputValue(nodeData, portId, "drawing2d") || (() => {})) as () => void,
+    getInputValueDrawing: (nodeData: NodeData, portId: string) => (context.getInputValue(nodeData, portId, "drawing2d") || (() => { })) as () => void,
     getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
       const inputPorts = nodeData.dataInputs[portId];
       if (!inputPorts || isOutput) {
         return `${sanitizeForShader(nodeData.id)}_${sanitizeForShader(portId)}`;
       }
       if (inputPorts.hasConnection) {
-        var outPort = tree?.getOutputPort(inputPorts.connectedNode as string, inputPorts.connectedPort as string);
+        var outPort = getOutputPort(tree, inputPorts.connectedNode as string, inputPorts.connectedPort as string);
         return convertShaderType(`${sanitizeForShader(inputPorts.connectedNode)}_${sanitizeForShader(inputPorts.connectedPort)}`, outPort?.type as PortType, inputPorts.type);
       } else {
         var converter = PortTypeDefinitions[inputPorts.type].convertToShaderValue;
@@ -128,7 +132,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       }
     },
     getGlobalSetting<T>(arg0: string) {
-      return tree?.globalSettings[arg0] as T;
+      return tree.globalSettings[arg0] as T;
     },
     createFunctionContext(node: NodeData) {
       return Object.fromEntries(
@@ -148,7 +152,7 @@ export function createExecutionContext(tree: TreeStore | null, p5: P5CanvasInsta
       return null;
     },
     getNodeDefinition(type) {
-      return tree?.getNodeTypeDefinition(type);
+      return getNodeTypeDefinition(tree, type);
     },
     getImageEffectShaderCode(shader, ports) {
       return getImageEffectShaderCode(shader, ports, tree, context);
