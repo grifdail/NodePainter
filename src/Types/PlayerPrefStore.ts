@@ -5,6 +5,7 @@ export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsed
 export type UITheme = "auto" | "light" | "dark" | "rose-pine-moon" | "rose-pine-dawn" | "css";
 
 export type PlayerPrefStore = {
+  authorName: string;
   favNodes: string[];
   nodesLastUsedDates: { [key: string]: number };
   nodesUseCount: { [key: string]: number };
@@ -28,6 +29,7 @@ export type PlayerPrefStore = {
   css: string;
   shortcutVisible: boolean;
   setShortcutVisible: (value: boolean) => void;
+  setAuthorName: (name: string) => void;
 
   saveSnippet(name: string, snippet: Snippet): void;
   removeSnippet(name: string): void;

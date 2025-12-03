@@ -3,6 +3,7 @@ import { toastInfo } from "../../../Hooks/useToast";
 import { Button } from "../../Generics/Button";
 import { BoolInput } from "../../Generics/Inputs/BoolInput";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
+import { TextInput } from "../../Generics/Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 
@@ -11,9 +12,20 @@ export const MiscSettingEditor = () => {
   const shortcutVisible = usePlayerPref((state) => state.shortcutVisible);
   const setShortcutVisible = usePlayerPref((state) => state.setShortcutVisible);
   const setTheme = usePlayerPref((state) => state.setTheme);
+  const authorName = usePlayerPref((state) => state.authorName);
+  const setAuthorName = usePlayerPref((state) => state.setAuthorName);
   return (
     <div>
+
       <div>
+        <Fieldset
+          input={TextInput}
+          value={authorName}
+          onChange={setAuthorName}
+          label="Author Name"
+          tooltip="Your name will be autofilled on every sketch you create"
+
+        />
         <Fieldset
           input={DropdownInput}
           value={theme}
@@ -23,7 +35,7 @@ export const MiscSettingEditor = () => {
             options: ["auto", "dark", "light", "rose-pine-moon", "rose-pine-dawn"],
           }}
         />
-        <Fieldset input={BoolInput} value={shortcutVisible} onChange={setShortcutVisible} label="Use shortcut mobile" />
+        <Fieldset input={BoolInput} value={shortcutVisible} onChange={setShortcutVisible} label="Use shortcut preview" />
       </div>
       <ButtonGroup>
         <Button

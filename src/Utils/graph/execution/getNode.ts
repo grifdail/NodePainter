@@ -20,6 +20,13 @@ export function getOutputPort(tree: { nodes: NodeCollection }, id: string, portI
     return tree.nodes[id].dataOutputs[portId];
 }
 
+export function getSketchName(tree: { nodes: NodeCollection }) {
+    return tree.nodes[START_NODE]?.settings["name"] as string || "sketch";
+}
+export function getSketchAuthor(tree: { nodes: NodeCollection }) {
+    return tree.nodes[START_NODE]?.settings["author"] as string || "unknown";
+}
+
 export function getNodeTypeDefinition(tree: { nodes: NodeCollection, customNodes: { [key: string]: NodeDefinition } }, node: string | NodeData) {
     const type = typeof node === "string" ? node : node.type;
     var result = NodeLibrary[type] || tree.customNodes[type];

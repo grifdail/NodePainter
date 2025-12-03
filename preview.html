@@ -22,10 +22,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" />
-    <script type="module" src="src/preview_index.ts"></script></head>
+    <script type="module" src="src/preview/preview_index.ts"></script></head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root">Hello</div>
+    <div id="root">
+      <header hidden>
+        <h1 class="#sketch-name"></h1>
+        <p>by <span id="author-name">author</span></p>
+      </header>
+      <div id="loading">loading</div>
+      <div id="canvas-parent" hidden></div>
+      <div id="error" hidden>The sketch couldn't be loaded</div>
+      <footer>
+        <p>Made with <a href="/">NodePainter</a></p>
+      </footer>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

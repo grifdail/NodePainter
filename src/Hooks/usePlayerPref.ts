@@ -11,6 +11,7 @@ export const usePlayerPref = create<PlayerPrefStore>()(
   persist(
     (set, get) => {
       return {
+        authorName: "unknown",
         favNodes: [],
         theme: "auto",
         css: "",
@@ -24,6 +25,9 @@ export const usePlayerPref = create<PlayerPrefStore>()(
         shortcutVisible: window.matchMedia("(orientation: portrait)").matches,
         setSorting(sorting: SortingType) {
           set({ nodeSorting: sorting });
+        },
+        setAuthorName(name: string) {
+          set({ authorName: name });
         },
         markNodeAsUsed(node) {
           set(

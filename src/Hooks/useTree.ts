@@ -24,7 +24,7 @@ import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
-import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort } from "../Utils/graph/execution/getNode";
+import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort, getSketchAuthor } from "../Utils/graph/execution/getNode";
 import { getPortValue } from "../Utils/graph/execution/getPortValue";
 import { createDefaultNodeConnection } from "../Utils/graph/modification/createDefaultNodeConnection";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
@@ -43,6 +43,7 @@ import { copyInputPortsValues } from "./copyInputPortsValues";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
+import { usePlayerPref } from "./usePlayerPref";
 import { usePortSelection } from "./usePortSelection";
 import { toastSuccess } from "./useToast";
 
@@ -236,6 +237,9 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     loadTemplate(temp) {
       temp = upgradeTemplate(temp);
+      if (getSketchAuthor(temp) === "unknown") {
+        temp.nodes[START_NODE].settings.author === usePlayerPref.getState().authorName;
+      }
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       toastSuccess("Sketch loaded !");
