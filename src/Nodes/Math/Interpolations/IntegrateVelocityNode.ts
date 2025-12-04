@@ -1,6 +1,7 @@
 import { IconTrendingDown3 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
+import { Port } from "../../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
@@ -37,6 +38,7 @@ export const IntegrateVelocityNode: NodeDefinition = {
       type: "number",
       defaultValue: 1,
     },
+    Port.number("deltaTime", 1)
   ],
   dataOutputs: [
     {
@@ -49,9 +51,12 @@ export const IntegrateVelocityNode: NodeDefinition = {
       type: "number",
       defaultValue: 0,
     },
+
   ],
 
-  settings: [],
+  settings: [
+
+  ],
   ...changeTypeGenerator(portTypesWithTags(["common", "spatial"]), ["position", "acceleration", "velocity"], ["next-position", "next-velocity"]),
   getData: (portId, nodeData, context) => {
     const decelerationRate = context.getInputValueNumber(nodeData, "decelerationRate");
@@ -59,10 +64,12 @@ export const IntegrateVelocityNode: NodeDefinition = {
     const acceleration = context.getInputValueVector(nodeData, "acceleration");
     const position = context.getInputValueVector(nodeData, "position");
     const velocity = context.getInputValueVector(nodeData, "velocity");
+    const deltaTime = context.getInputValueNumber(nodeData, "deltaTime");
+
     if (portId === "next-position") {
-      return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(position, vectorScale(velocity, velocityScale)));
+      return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(position, vectorScale(velocity, velocityScale * deltaTime)));
     } else {
-      return enforceCorrectVectorTypeForNode(nodeData, vectorScale(vectorAddition(velocity, acceleration), decelerationRate));
+      return enforceCorrectVectorTypeForNode(nodeData, vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(decelerationRate, deltaTime)));
     }
   },
 };

@@ -288,6 +288,7 @@ const UPGRADES: UpgradeFunction[] = [
   (sketch) => addMissingNodePort(["Array/Shuffle"], sketch),
   (sketch) => redefineNodes({ ["Procedural/NoiseTexture"]: "Procedural/PerlinNoiseTexture" }, sketch),
   (sketch) => addMissingNodePort(["Procedural/PerlinNoiseTexture"], sketch),
+  (sketch) => addMissingNodePort(["Math/Interpolation/IntegrateVelocity"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

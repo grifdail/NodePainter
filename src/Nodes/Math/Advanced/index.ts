@@ -1,6 +1,7 @@
 import { AbsNode } from "./AbsNode";
 import { CeilNode } from "./CeilNode";
 import { Clamp01Node } from "./Clamp01Node";
+import { ClampAroundNode } from "./ClampAroundNode";
 import { ClampNode } from "./ClampNode";
 import { ExpNode } from "./ExpNode";
 import { FloorNode } from "./FloorNode";
@@ -24,6 +25,7 @@ export const MathAdvancedNodes = [
   CeilNode,
   ClampNode,
   Clamp01Node,
+  ClampAroundNode,
   ExpNode,
   FloorNode,
   LogNode,

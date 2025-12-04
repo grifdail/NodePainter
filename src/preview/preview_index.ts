@@ -36,6 +36,7 @@ window.addEventListener("load", async () => {
             setError()
         }
     } catch (err) {
+        console.error(err)
         setError()
     }
 

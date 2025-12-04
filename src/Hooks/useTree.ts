@@ -40,6 +40,7 @@ import { SAVE_VERSION, upgradeTemplate } from "../Utils/graph/modification/upgra
 import { buildBoundingBoxAroundTreeNodes } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { copyInputPortsValues } from "./copyInputPortsValues";
+import { copyNodePosition } from "./copyNodePosition";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
@@ -240,14 +241,17 @@ export const useTree = create<TreeStore>()((set, get) => {
       if (getSketchAuthor(temp) === "unknown") {
         temp.nodes[START_NODE].settings.author === usePlayerPref.getState().authorName;
       }
+
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
+      console.log(useTree.getState)
+      console.log(temp.nodes)
       resetCamera();
       toastSuccess("Sketch loaded !");
       return true;
     },
     exportTemplate() {
       var t = get();
-      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: "main", version: SAVE_VERSION });
+      return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined, version: SAVE_VERSION });
     },
     createStructType(ports: PortDefinition[], name: string) {
       set(
@@ -442,6 +446,8 @@ export const useTree = create<TreeStore>()((set, get) => {
           const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
           const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
           copyInputPortsValues(state.nodes[end], newEndNode);
+          copyNodePosition(state.nodes[end], newEndNode)
+          copyNodePosition(state.nodes[start], newStartNode)
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
           for (let nodeId in original(state.nodes)) {

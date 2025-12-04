@@ -13,7 +13,7 @@ export const RandomNode: NodeDefinition = {
   description: "Select a random element from an array",
   alias: "Pick",
   icon: DoubleIconGen(IconList, IconBrackets),
-  tags: ["Array"],
+  tags: ["Array", "Random"],
   dataInputs: [
     {
       id: "array",
