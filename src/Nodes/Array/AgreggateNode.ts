@@ -41,7 +41,8 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
 
 export const AgreggateNode: NodeDefinition = {
   id: "Array/Agreggate",
-  description: "Return a new array that associate every item in the input array to a new one",
+  alias: "Reduce",
+  description: "Combine every element of the array into a single value",
   icon: DoubleIconGen(IconList, IconArrowRight),
   tags: ["Array"],
   dataInputs: [],
