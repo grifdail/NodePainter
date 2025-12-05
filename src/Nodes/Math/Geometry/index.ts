@@ -2,6 +2,7 @@ import { CircumcircleNode } from "./CircumcircleNode";
 import { ClosestPointOnLineNode } from "./ClosestPointOnLineNode";
 import { DistanceToLineNode } from "./DistanceToLineNode";
 import { LineIntersectionNode } from "./LineIntersectionNode";
+import { PointInRectNode } from "./PointInRect";
 import { TriangleCentroidNode } from "./TriangleCentroidNode";
 
 export const MathGeometryNodes = [
@@ -10,5 +11,6 @@ export const MathGeometryNodes = [
   ClosestPointOnLineNode,
   DistanceToLineNode,
   LineIntersectionNode,
+  PointInRectNode,
   TriangleCentroidNode,
 ];

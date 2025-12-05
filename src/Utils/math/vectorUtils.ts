@@ -55,6 +55,14 @@ export function vectorDistance(a: number[], b: number[]): any {
 export function vectorScale(a: number[], b: number): number[] {
   return a.map((value) => value * b);
 }
+export function vectorClampMagnitude(a: number[], magnitude: number): number[] {
+  var sqrtMag = vectorSquareMagnitude(a);
+  if (sqrtMag > magnitude * magnitude) {
+    return vectorScale(a, magnitude / Math.sqrt(sqrtMag))
+  } else {
+    return a;
+  }
+}
 
 export function vectorClosestPoint<T extends Vector>(start: T, end: T, target: T, bound: boolean): T {
   let v1 = vectorSubstraction(end, start) as T;

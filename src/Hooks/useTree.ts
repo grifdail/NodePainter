@@ -243,8 +243,6 @@ export const useTree = create<TreeStore>()((set, get) => {
       }
 
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
-      console.log(useTree.getState)
-      console.log(temp.nodes)
       resetCamera();
       toastSuccess("Sketch loaded !");
       return true;

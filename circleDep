@@ -14,7 +14,37 @@
 		],
 		[
 			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/AllNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/AnyNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
 			"src/Nodes/Array/FilterNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/FindBestNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/FindFirstNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/FindLast.ts",
 			"src/Nodes/Array/index.ts",
 			"src/Nodes/Nodes.ts"
 		],
@@ -27,6 +57,12 @@
 		[
 			"src/Hooks/useTree.ts",
 			"src/Nodes/Array/MapNode.ts",
+			"src/Nodes/Array/index.ts",
+			"src/Nodes/Nodes.ts"
+		],
+		[
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Array/SortByNode.ts",
 			"src/Nodes/Array/index.ts",
 			"src/Nodes/Nodes.ts"
 		],

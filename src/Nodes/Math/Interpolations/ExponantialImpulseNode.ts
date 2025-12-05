@@ -7,7 +7,7 @@ export const ExponantialImpulseNode: NodeDefinition = {
   id: "Math/Interpolation/ExponantialImpulse",
   description: "Round up a number to the smallest interger larger or equal to itself.",
   icon: IconMathFunction,
-  tags: ["Math", "Vector"],
+  tags: ["Math"],
   dataInputs: [Port.number("input"), Port.number("scale", 8, "Scale the impulse. Higher means denser. 8 approximately map 1 to 1")],
   dataOutputs: [
     {
