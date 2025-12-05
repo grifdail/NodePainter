@@ -7,6 +7,13 @@ export function eulerToQuat(vec: Vector3, order: EulerOrder = "XYZ") {
   return [qt.x, qt.y, qt.z, qt.w];
 }
 
+export function eulerToTQuat(vec: Vector3, order: EulerOrder = "XYZ") {
+  var euler = new Euler(vec[0], vec[1], vec[2], order);
+  var qt = new TQuaternion().setFromEuler(euler);
+  return qt;
+}
+
 export function toQuaternion(qt: TQuaternion): Quaternion {
   return [qt.x, qt.y, qt.z, qt.w];
 }
+

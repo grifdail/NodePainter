@@ -4,6 +4,11 @@ import { Color } from "../../../Types/vectorDataType";
 import { toThreeColorWithAlpha } from "../../../Utils/math/colorUtils";
 import { StatefullElementType } from "./statefullContext";
 
+export const DEFAULT_CAMERA_TRANSFORM = {
+  position: [0, 0, 10] as const,
+  rotation: [0, 0, 0, 1] as const
+}
+
 export type ThreeJSContext = {
   renderer: WebGLRenderer;
   scene: Scene;
@@ -18,9 +23,9 @@ export class Render3DType extends StatefullElementType<ThreeJSContext, Render3DP
   create(width: number, height: number): ThreeJSContext {
     var scene = new Scene();
     var camera = new PerspectiveCamera(60, width / height, 0.1, 100);
-    camera.position.set(0, 0, 10);
+    camera.position.set(...DEFAULT_CAMERA_TRANSFORM.position);
     camera.fov = 60;
-    camera.quaternion.set(0, 0, 0, 1);
+    camera.quaternion.set(...DEFAULT_CAMERA_TRANSFORM.rotation);
     const renderer = new WebGLRenderer();
     renderer.outputColorSpace = LinearSRGBColorSpace;
     const imageData = new ImageData({ canvas: { width: width, height: height, elt: renderer.domElement } });

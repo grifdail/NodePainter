@@ -35,6 +35,7 @@ const Preview = styled.div<{ scale: number }>`
     & canvas {
       padding: 0;
       margin: 0;
+      pointer-events: auto;
     }
   }
 

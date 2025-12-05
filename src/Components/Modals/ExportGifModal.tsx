@@ -54,6 +54,8 @@ const MainDiv = styled.div`
   & .rendering {
     text-align: center;
     display: none;
+    width: 400px;
+    height: 400px;
   }
 `;
 
@@ -143,9 +145,11 @@ export function ExportGifModal({ close }: { close: () => void }) {
   const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
   const [blob, setBlob] = useState<Blob | null>(null);
   const [progress, setProgress] = useState(0);
+  const [usePreview, setUsePreview] = useState(false);
   const [format, setFormat] = useState("gif");
   const name = tree.getSketchName();
   const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
+  const isWaiting = renderState === "waiting" || renderState === "done"
 
   const start = tree.getNode(START_NODE);
 
@@ -189,7 +193,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
           )}
         </ButtonGroup>
 
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()} style={{ display: isWaiting ? "block" : "none" }}>
           <Fieldset
             label="Filename"
             input={TextInput}
@@ -220,9 +224,16 @@ export function ExportGifModal({ close }: { close: () => void }) {
             onChange={setFormat}
             passtrough={{ options: Object.keys(Exporters) }}
           />
+          <Fieldset
+            label="Use preview ?"
+            input={BoolInput}
+            value={usePreview}
+            onChange={setUsePreview}
+            tooltip="If this is true, you get to see what's exported but the export may be much slower"
+          />
         </form>
 
-        <div className="rendering">
+        <div className="rendering" style={{ display: usePreview && !isWaiting ? "block" : "none" }}>
           {renderState === "rendering" && (
             <ReactP5Wrapper
               key={`${start.settings.width} / ${start.settings.height}`}

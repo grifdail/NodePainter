@@ -1,4 +1,5 @@
 import { ChangeNode } from "./ChangeNode";
+import { ControllerNodes } from "./Controllers";
 import { CounterNode } from "./CounterNode";
 import { DetectChangeNode } from "./DetectChangeNode";
 import { DetectThresholdNode } from "./DetectThresholdNode";
@@ -19,4 +20,5 @@ export const StateNodes = [
   SaveNode,
   ToggleSwitchNode,
   ToggleFlipFlopNode,
+  ...ControllerNodes,
 ];
