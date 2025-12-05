@@ -31,7 +31,7 @@ export const NodeMenu = memo(function NodeMenu({ node, def }: { node: NodeData; 
   const resetNode = useTree((state) => state.resetNode);
   const sortAroundNode = useTree((state) => state.sortAroundNode);
   const executeCallback = useTree((state) => state.executeCallback);
-  var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
+
   return (
     <foreignObject
       x="260"
@@ -46,47 +46,50 @@ export const NodeMenu = memo(function NodeMenu({ node, def }: { node: NodeData; 
             <IconMenu2></IconMenu2>
           </StyledButton>
         }>
-        <MenuItem
-          key="delete"
-          onClick={() => deleteNode(node.id)}>
-          Delete
-        </MenuItem>
-        <MenuItem
-          key="duplicate"
-          onClick={() => duplicateNode(node.id)}>
-          Duplicate
-        </MenuItem>
-        <MenuItem
-          key="reset"
-          onClick={() => resetNode(node.id)}>
-          Reset
-        </MenuItem>
-        <MenuItem
-          key="sortAround"
-          onClick={() => sortAroundNode(node.id)}>
-          Sort Arount
-        </MenuItem>
-        <MenuItem
-          key="selectInput"
-          onClick={() => {
-            var child = listChildOfNode(node.id, useTree.getState().nodes);
-            useSelection.getState().setSelection([...Array.from(child), node.id]);
-          }}>
-          Select with all input nodes
-        </MenuItem>
+        {() => {
+          var contextMenu = def.contextMenu && (typeof def.contextMenu === "function" ? def.contextMenu(node) : def.contextMenu);
+          return <><MenuItem
+            key="delete"
+            onClick={() => deleteNode(node.id)}>
+            Delete
+          </MenuItem>
+            <MenuItem
+              key="duplicate"
+              onClick={() => duplicateNode(node.id)}>
+              Duplicate
+            </MenuItem>
+            <MenuItem
+              key="reset"
+              onClick={() => resetNode(node.id)}>
+              Reset
+            </MenuItem>
+            <MenuItem
+              key="sortAround"
+              onClick={() => sortAroundNode(node.id)}>
+              Sort Arount
+            </MenuItem>
+            <MenuItem
+              key="selectInput"
+              onClick={() => {
+                var child = listChildOfNode(node.id, useTree.getState().nodes);
+                useSelection.getState().setSelection([...Array.from(child), node.id]);
+              }}>
+              Select with all input nodes
+            </MenuItem>
 
-        {contextMenu && [
-          <MenuDivider key="divider" />,
-          ...Object.entries(contextMenu).map(([key, fn]) => {
-            return (
-              <MenuItem
-                key={key}
-                onClick={() => executeCallback(node.id, fn)}>
-                {key}
-              </MenuItem>
-            );
-          }),
-        ]}
+            {contextMenu && [
+              <MenuDivider key="divider" />,
+              ...Object.entries(contextMenu).map(([key, fn]) => {
+                return (
+                  <MenuItem
+                    key={key}
+                    onClick={() => executeCallback(node.id, fn)}>
+                    {key}
+                  </MenuItem>
+                );
+              }),
+            ]}</>
+        }}
       </Menu>
     </foreignObject>
   );
