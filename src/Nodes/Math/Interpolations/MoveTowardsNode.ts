@@ -5,7 +5,7 @@ import { createVector2 } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
-import { vectorAddition, vectorClampMagnitude, vectorSubstraction } from "../../../Utils/math/vectorUtils";
+import { vectorAddition, vectorLimitMagnitude, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
 export const MoveTowardsNode: NodeDefinition = {
     id: "Math/Interpolation/MoveTowards",
@@ -46,7 +46,7 @@ export const MoveTowardsNode: NodeDefinition = {
         const current = context.getInputValueVector(nodeData, "current");
         const target = context.getInputValueVector(nodeData, "target");
         const delta = vectorSubstraction(target, current);
-        const displacement = vectorClampMagnitude(delta, speed);
+        const displacement = vectorLimitMagnitude(delta, speed);
         return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(current, displacement))
     },
     getShaderCode(node, context) {

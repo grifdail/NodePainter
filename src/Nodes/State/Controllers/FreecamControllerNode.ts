@@ -18,7 +18,7 @@ export const FreecamControllerNode: NodeDefinition = {
         Port.vector2("cameraAxis"),
         Port.vector3("movementAxis"),
         Port.vector3("startPosition", [0, 0, 0]),
-        Port.vector("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
+        Port.vector2("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
         Port.vector2("cameraSensibility", [1, 1]),
         Port.number("movementSpeed", 1),
         Port.bool("reset", false),

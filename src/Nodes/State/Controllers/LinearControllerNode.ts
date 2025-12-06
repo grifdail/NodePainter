@@ -6,7 +6,7 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { createOrSelectFromFrameCache, processAndUpdateCache } from "../../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
-import { vectorAddition, vectorClampMagnitude, vectorSubstraction } from "../../../Utils/math/vectorUtils";
+import { vectorAddition, vectorLimitMagnitude, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
 export const LinearControllerNode: NodeDefinition = {
     id: "State/Controller/LinearController",
@@ -32,7 +32,7 @@ export const LinearControllerNode: NodeDefinition = {
                 const speed = context.getInputValueNumber(node, "speed");
 
                 const delta = vectorSubstraction(target, current);
-                const displacement = vectorClampMagnitude(delta, speed * deltaTime);
+                const displacement = vectorLimitMagnitude(delta, speed * deltaTime);
                 return {
                     position: enforceCorrectVectorTypeForNode(node, vectorAddition(current, displacement))
                 }

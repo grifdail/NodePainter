@@ -3,6 +3,7 @@ import { CrossProductNode } from "./CrossProductNode";
 import { DecomposeNode } from "./DecomposeNode";
 import { DistanceNode } from "./DistanceNode";
 import { DotProductNode } from "./DotProductNode";
+import { LimitVectorNode } from "./LimiteVectorNode";
 import { MagnitudeNode } from "./MagnitudeNode";
 import { NormalizeNode } from "./NormalizeNode";
 import { PolarCoordinateNode } from "./PolarCoordinateNode";
@@ -20,6 +21,7 @@ export const MathVectorNodes = [
   CrossProductNode,
   DecomposeNode,
   DotProductNode,
+  LimitVectorNode,
   MagnitudeNode,
   NormalizeNode,
   PolarCoordinateNode,

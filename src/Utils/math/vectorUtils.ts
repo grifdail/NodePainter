@@ -55,7 +55,7 @@ export function vectorDistance(a: number[], b: number[]): any {
 export function vectorScale(a: number[], b: number): number[] {
   return a.map((value) => value * b);
 }
-export function vectorClampMagnitude(a: number[], magnitude: number): number[] {
+export function vectorLimitMagnitude(a: number[], magnitude: number): number[] {
   var sqrtMag = vectorSquareMagnitude(a);
   if (sqrtMag > magnitude * magnitude) {
     return vectorScale(a, magnitude / Math.sqrt(sqrtMag))

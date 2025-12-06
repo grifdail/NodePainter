@@ -4,7 +4,7 @@ import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
-import { vectorAddition, vectorClampMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
+import { vectorAddition, vectorLimitMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
 export const IntegrateSpringNode: NodeDefinition = {
     id: "Math/Interpolation/IntegrateSpring",
@@ -53,7 +53,7 @@ export const IntegrateSpringNode: NodeDefinition = {
 
         var delta = vectorSubstraction(target, position);
         var acceleration = vectorScale(delta, stiffness * deltaTime);
-        var nextVelocity = vectorClampMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
+        var nextVelocity = vectorLimitMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
         var nextPosition = vectorAddition(position, vectorScale(nextVelocity, velocityScale * deltaTime))
         if (portId === "next-position") {
             return enforceCorrectVectorTypeForNode(nodeData, nextPosition);

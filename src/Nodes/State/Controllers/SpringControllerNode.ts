@@ -7,7 +7,7 @@ import { Vector } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
 import { createOrSelectFromFrameCache, processAndUpdateCache } from "../../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
-import { vectorAddition, vectorClampMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
+import { vectorAddition, vectorLimitMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
 export const SpringController: NodeDefinition = {
     id: "State/Controller/SpringController",
@@ -40,7 +40,7 @@ export const SpringController: NodeDefinition = {
 
                 const delta = vectorSubstraction(target, position);
                 const acceleration = vectorScale(delta, stiffness * deltaTime);
-                const nextVelocity = vectorClampMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
+                const nextVelocity = vectorLimitMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
                 const nextPosition = vectorAddition(position, vectorScale(nextVelocity, velocityScale * deltaTime))
 
                 return {
