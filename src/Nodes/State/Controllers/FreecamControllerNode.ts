@@ -15,8 +15,8 @@ export const FreecamControllerNode: NodeDefinition = {
     description: "Simulate a free movement camera",
 
     dataInputs: [//
-        Port.vector2("cameraAxis"),
-        Port.vector3("movementAxis"),
+        Port.vector2("cameraInput"),
+        Port.vector3("movementInput"),
         Port.vector3("startPosition", [0, 0, 0]),
         Port.vector2("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
         Port.vector2("cameraSensibility", [1, 1]),
@@ -29,8 +29,8 @@ export const FreecamControllerNode: NodeDefinition = {
     getData(portId, node, context) {
         return createOrSelectFromFrameCache(context, node, () => {
             let previousValue = createOrSelectFromCache(context, node, getDefaultTransform)
-            const cameraAxis = context.getInputValueVector2(node, "cameraAxis");
-            const movementAxis = context.getInputValueVector3(node, "movementAxis");
+            const cameraInput = context.getInputValueVector2(node, "cameraInput");
+            const movementInput = context.getInputValueVector3(node, "movementInput");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
             const reset = context.getInputValueBoolean(node, "reset");
@@ -40,13 +40,13 @@ export const FreecamControllerNode: NodeDefinition = {
 
             //Update rotation
             var newEuler = [
-                trueMod(previousValue.euler[0] - cameraAxis[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
-                clamp(previousValue.euler[1] - cameraAxis[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
+                trueMod(previousValue.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
+                clamp(previousValue.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
             ]
             var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 
             //Update movement
-            var forward = new TVector3(movementAxis[0], movementAxis[1], -movementAxis[2]).applyQuaternion(newQuat)
+            var forward = new TVector3(movementInput[0], movementInput[1], -movementInput[2]).applyQuaternion(newQuat)
             var newPosition = vectorAddition(
                 previousValue.position,
                 vectorScale(

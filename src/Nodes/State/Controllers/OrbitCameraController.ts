@@ -16,7 +16,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     description: "Simulate the movement of a camera orbiting around a point",
 
     dataInputs: [//
-        Port.vector2("cameraAxis"),
+        Port.vector2("cameraInput"),
         Port.vector3("target", createVector3(0, 0, 0)),
         Port.number("radius", 10),
         Port.vector2("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
@@ -31,7 +31,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     getData(portId, node, context) {
         return createOrSelectFromFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
-            const cameraAxis = context.getInputValueVector2(node, "cameraAxis");
+            const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const target = context.getInputValueVector3(node, "target");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const radius = context.getInputValueNumber(node, "radius");
@@ -41,8 +41,8 @@ export const OrbitCameraControllerNode: NodeDefinition = {
             return processAndUpdateCache(context, node, getDefaultTransform, ({ euler }) => {
                 //Update rotation
                 var newEuler = [
-                    trueMod(euler[0] - cameraAxis[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
-                    clamp(euler[1] - cameraAxis[1] * cameraSensibility[1] * context.deltaTime, -maxAltitude, -minAltitude),
+                    trueMod(euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
+                    clamp(euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -maxAltitude, -minAltitude),
                 ]
                 var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 

@@ -15,8 +15,8 @@ export const FirstPersonControllerNode: NodeDefinition = {
     description: "Simulate a first person camera controller",
 
     dataInputs: [//
-        Port.vector2("cameraAxis"),
-        Port.vector2("movementAxis"),
+        Port.vector2("cameraInput"),
+        Port.vector2("movementInput"),
         Port.vector3("startPosition", [0, 0, 0]),
         Port.vector2("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
         Port.vector2("cameraSensibility", [1, 1]),
@@ -30,15 +30,15 @@ export const FirstPersonControllerNode: NodeDefinition = {
         return createOrSelectFromFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             let previousValue = createOrSelectFromCache(context, node, getDefaultTransform, undefined, reset)
-            const cameraAxis = context.getInputValueVector2(node, "cameraAxis");
-            const movementAxis = context.getInputValueVector2(node, "movementAxis");
+            const cameraInput = context.getInputValueVector2(node, "cameraInput");
+            const movementInput = context.getInputValueVector2(node, "movementInput");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
 
             //Update rotation
             var newEuler = [
-                trueMod(previousValue.euler[0] - cameraAxis[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
-                clamp(previousValue.euler[1] - cameraAxis[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
+                trueMod(previousValue.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
+                clamp(previousValue.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
             ]
             var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 
@@ -47,8 +47,8 @@ export const FirstPersonControllerNode: NodeDefinition = {
             var right = vector2Perpendicular(forward)
             var sum =
                 vectorAddition(
-                    vectorScale(forward, movementAxis[1]),
-                    vectorScale(right, movementAxis[0])
+                    vectorScale(forward, movementInput[1]),
+                    vectorScale(right, movementInput[0])
                 )
 
             var newPosition = vectorAddition(
