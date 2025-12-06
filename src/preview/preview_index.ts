@@ -69,7 +69,17 @@ function updateHeader(name: string, author: string | undefined) {
     var header = document.querySelector("header") as HTMLElement;
     (header.querySelector("h1") as HTMLElement).textContent = name;
     (header.querySelector("span") as HTMLElement).textContent = author || "unknown";
-    (header.querySelector("p") as HTMLElement).hidden = author === undefined || author?.trim() === "unknown" || author?.trim() === ""
+    (header.querySelector("p") as HTMLElement).hidden = author === undefined || author?.trim() === "unknown" || author?.trim() === "";
+    var search = new URLSearchParams(window.location.search);
+    (document.querySelector("a#link-app") as HTMLLinkElement).href = "/?load=" + search.get("load");
+    setTitle(name)
+}
+
+function setTitle(name: string) {
+    const title = document.querySelector("title");
+    if (title) {
+        title.text = `${name} - ${title.text}`
+    }
 }
 
 async function loadFromUrl(encodedUrl: string | null) {
