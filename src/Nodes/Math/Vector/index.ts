@@ -1,4 +1,5 @@
 import { ComposeNode } from "./ComposeNode";
+import { ComposeBidirectionalNode } from "./ComposeVectorBidirectional";
 import { CrossProductNode } from "./CrossProductNode";
 import { DecomposeNode } from "./DecomposeNode";
 import { DistanceNode } from "./DistanceNode";
@@ -18,6 +19,7 @@ import { SwizzleNode } from "./SwizzleNode";
 export const MathVectorNodes = [
   //
   ComposeNode,
+  ComposeBidirectionalNode,
   CrossProductNode,
   DecomposeNode,
   DotProductNode,
