@@ -1,4 +1,5 @@
 import { NodeDefinition } from "../../Types/NodeDefinition";
+import { BillBoardNode } from "./BillboardNode";
 import { generateMaterialNodeFromVirtualNode, generateNodeFromVirtualNode } from "./generateNodeFromVirtualNode";
 import { ParametricGeometry } from "./ParametricGeometry";
 import { Render3D } from "./Render3D";
@@ -28,4 +29,5 @@ export const Nodes3D = [
   Render3DLine,
   Transform3D,
   ParametricGeometry,
+  BillBoardNode
 ];
