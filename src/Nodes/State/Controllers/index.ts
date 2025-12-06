@@ -1,5 +1,7 @@
-﻿import { FreecamControllerNode } from "./FreecamControllerNode";
+﻿import { FirstPersonControllerNode } from "./FirstPersonControllerNode";
+import { FreecamControllerNode } from "./FreecamControllerNode";
 
 export const ControllerNodes = [
+    FirstPersonControllerNode,
     FreecamControllerNode
 ]

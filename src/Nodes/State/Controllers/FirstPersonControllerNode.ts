@@ -1,22 +1,22 @@
 ﻿import { IconDeviceGamepad2, IconVideo } from "@tabler/icons-react";
-import { Vector3 as TVector3 } from "three";
 import { clamp } from "three/src/math/MathUtils";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
+import { createVector2 } from "../../../Types/vectorDataType";
 import { createOrSelectFromCache, getCacheKey, updateCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
-import { vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
+import { vector2Perpendicular, vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
-export const FreecamControllerNode: NodeDefinition = {
-    id: "State/Controller/FreecamController",
-    label: "Freecam Controller",
+export const FirstPersonControllerNode: NodeDefinition = {
+    id: "State/Controller/FirstPersonController",
+    label: "First Person Controller",
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
-    description: "Simulate a free movement camera",
+    description: "Simulate a first person camera controller",
 
     dataInputs: [//
         Port.vector2("cameraAxis"),
-        Port.vector3("movementAxis"),
+        Port.vector2("movementAxis"),
         Port.vector3("startPosition", [0, 0, 0]),
         Port.vector("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
         Port.vector2("cameraSensibility", [0.0005, 0.0005]),
@@ -33,7 +33,7 @@ export const FreecamControllerNode: NodeDefinition = {
         } else {
             let previousValue = createOrSelectFromCache(context, node, getDefaultTransform)
             const cameraAxis = context.getInputValueVector2(node, "cameraAxis");
-            const movementAxis = context.getInputValueVector3(node, "movementAxis");
+            const movementAxis = context.getInputValueVector2(node, "movementAxis");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
             const reset = context.getInputValueBoolean(node, "reset");
@@ -49,12 +49,19 @@ export const FreecamControllerNode: NodeDefinition = {
             var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 
             //Update movement
-            var forward = new TVector3(movementAxis[0], movementAxis[1], -movementAxis[2]).applyQuaternion(newQuat)
+            var forward = createVector2(Math.sin(newEuler[0]), Math.cos(newEuler[0]));
+            var right = vector2Perpendicular(forward)
+            var sum =
+                vectorAddition(
+                    vectorScale(forward, movementAxis[1]),
+                    vectorScale(right, movementAxis[0])
+                )
+
             var newPosition = vectorAddition(
                 previousValue.position,
                 vectorScale(
-                    forward.toArray(),
-                    context.deltaTime * movementSpeed
+                    [sum[0], 0, sum[1]],
+                    -context.deltaTime * movementSpeed
                 )
 
             )
