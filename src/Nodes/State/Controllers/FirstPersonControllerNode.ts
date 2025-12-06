@@ -64,7 +64,6 @@ export const FirstPersonControllerNode: NodeDefinition = {
                 euler: newEuler
             }
             updateCache(context, node, nextValue);
-
             return {
                 rotation: toQuaternion(newQuat),
                 position: newPosition

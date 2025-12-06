@@ -4,6 +4,9 @@ import { DeltatTimeNode } from "./DeltatTimeNode";
 import { DeviceRotationNode } from "./DeviceRotationNode";
 import { DimensionNode } from "./DimensionNode";
 import { FrameNode } from "./FrameNode";
+import { GamepadAxisNode } from "./GamepadAxisNode";
+import { GamepadButtonNode } from "./GamepadButtonNode";
+import { GamepadConnectedNode } from "./GamepadConnectedNode";
 import { KeyPressedNode } from "./KeyPressedNode";
 import { MouseButtonNode } from "./MouseButtonNode";
 import { MousePositionNode } from "./MousePositionNode";
@@ -20,6 +23,9 @@ export const InputNodes = [
   DeviceRotationNode,
   DimensionNode,
   FrameNode,
+  GamepadAxisNode,
+  GamepadButtonNode,
+  GamepadConnectedNode,
   KeyPressedNode,
   MouseButtonNode,
   MousePositionNode,
