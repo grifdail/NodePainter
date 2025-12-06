@@ -7,6 +7,7 @@ import { ExponantialImpulseNode } from "./ExponantialImpulseNode";
 import { IntegrateSpringNode } from "./IntegrateSpringNode";
 import { IntegrateVelocityNode } from "./IntegrateVelocityNode";
 import { LerpNode } from "./LerpNode";
+import { MoveTowardsNode } from "./MoveTowardsNode";
 import { RemapNode } from "./RemapNode";
 import { SmoothStepNode } from "./SmoothStepNode";
 
@@ -21,6 +22,7 @@ export const MathInterpolationNodes = [
   IntegrateSpringNode,
   IntegrateVelocityNode,
   LerpNode,
+  MoveTowardsNode,
   RemapNode,
   SmoothStepNode,
 ];

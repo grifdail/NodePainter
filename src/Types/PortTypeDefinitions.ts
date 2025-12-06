@@ -470,6 +470,9 @@ export function portTypesWith(cb: (def: PortTypeDefinition) => boolean): PortTyp
 export function portTypesWithProperty(property: keyof PortTypeDefinition, exclude: PortTypeTags[] = ["hidden"]): PortType[] {
   return portTypesWith((def) => property in def && (!exclude || exclude.every((tag) => !def.tags.includes(tag))));
 }
+export function portTypesWithProperties(properties: (keyof PortTypeDefinition)[], exclude: PortTypeTags[] = ["hidden"]): PortType[] {
+  return portTypesWith((def) => properties.every(property => property in def) && (!exclude || exclude.every((tag) => !def.tags.includes(tag))));
+}
 
 export function portTypesWithTags(tags: PortTypeTags[], exclude: PortTypeTags[] = ["hidden"]): PortType[] {
   return portTypesWith((def) => tags.every((tag) => def.tags.includes(tag)) && (!exclude || exclude.every((tag) => !def.tags.includes(tag))));
