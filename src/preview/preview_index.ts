@@ -106,10 +106,7 @@ function initGame(tree: SketchSave) {
 
 
         p5.draw = () => {
-            context.frameBlackboard = {};
-
-            context.time = p5.millis();
-            context.deltaTime = p5.deltaTime;
+            context.update();
             if (tree) {
                 try {
                     var result = context.getInputValue(getNodeStart(tree), "drawing", "drawing2d");

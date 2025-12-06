@@ -4,7 +4,7 @@ import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector2 } from "../../../Types/vectorDataType";
-import { createOrSelectFromCache, getCacheKey, updateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { createOrSelectFromCache, createOrSelectFromFrameCache, updateCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
 import { vector2Perpendicular, vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
@@ -19,27 +19,21 @@ export const FirstPersonControllerNode: NodeDefinition = {
         Port.vector2("movementAxis"),
         Port.vector3("startPosition", [0, 0, 0]),
         Port.vector("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
-        Port.vector2("cameraSensibility", [0.0005, 0.0005]),
-        Port.number("movementSpeed", 0.005),
+        Port.vector2("cameraSensibility", [1, 1]),
+        Port.number("movementSpeed", 1),
         Port.bool("reset", false),
         Port.CacheId()],
     dataOutputs: [Port.vector3("position"), Port.quaternion("rotation")],
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
-        const cacheKey = getCacheKey(undefined, context, node);
-        if (context.frameBlackboard[cacheKey]) {
-            return context.frameBlackboard[cacheKey][portId];
-        } else {
-            let previousValue = createOrSelectFromCache(context, node, getDefaultTransform)
+        return createOrSelectFromFrameCache(context, node, () => {
+            const reset = context.getInputValueBoolean(node, "reset");
+            let previousValue = createOrSelectFromCache(context, node, getDefaultTransform, undefined, reset)
             const cameraAxis = context.getInputValueVector2(node, "cameraAxis");
             const movementAxis = context.getInputValueVector2(node, "movementAxis");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
-            const reset = context.getInputValueBoolean(node, "reset");
-            if (reset) {
-                previousValue = getDefaultTransform();
-            }
 
             //Update rotation
             var newEuler = [
@@ -71,19 +65,18 @@ export const FirstPersonControllerNode: NodeDefinition = {
             }
             updateCache(context, node, nextValue);
 
-            var frameData = {
+            return {
                 rotation: toQuaternion(newQuat),
                 position: newPosition
             } as Record<string, any>
-            context.frameBlackboard[cacheKey] = frameData
-            return frameData[portId];
-        }
-        function getDefaultTransform() {
-            return {
-                position: context.getInputValueVector3(node, "startPosition"),
-                euler: context.getInputValueVector2(node, "startRotation")
+
+            function getDefaultTransform() {
+                return {
+                    position: context.getInputValueVector3(node, "startPosition"),
+                    euler: context.getInputValueVector2(node, "startRotation")
+                }
             }
-        }
+        })[portId]
 
     },
 };

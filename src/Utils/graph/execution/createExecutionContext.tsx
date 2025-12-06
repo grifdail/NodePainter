@@ -28,7 +28,9 @@ export type FunctionContext = {
 };
 
 export type ExecutionContext = {
+  update(): void;
   deltaTime: number;
+  deltaTimeMs: number;
   getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
   getImageEffectShaderCode(shader: string, uniforms: PortConnection[]): string;
   getMaterialShaderCode(shader: string, uniforms: PortConnection[]): { vertex: string; frag: string };
@@ -37,6 +39,7 @@ export type ExecutionContext = {
   createFunctionContext(node: NodeData): FunctionContext;
   functionStack: Array<FunctionContext>;
   time: number;
+  timeMs: number;
   target: Graphics;
   lastVisitedNode: string;
   blackboard: { [key: string]: any };
@@ -71,7 +74,9 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
   var context: ExecutionContext = {
     p5: p5 as P5CanvasInstance,
     time: 0,
+    timeMs: 0,
     deltaTime: 0,
+    deltaTimeMs: 0,
     blackboard: {},
     target: p5 as Graphics,
     frameBlackboard: {},
@@ -79,6 +84,13 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
     callCounts: {},
     lastVisitedNode: "",
     RNG: new Rand(),
+    update() {
+      context.frameBlackboard = {};
+      context.timeMs = p5.millis();
+      context.time = context.timeMs / 1000;
+      context.deltaTimeMs = p5.deltaTime;
+      context.deltaTime = context.deltaTimeMs / 1000
+    },
     getNodeOutput(nodeId, portId) {
       return getPortValue(tree, nodeId, portId, context);
     },

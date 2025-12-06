@@ -52,7 +52,7 @@ export const RenderShader: NodeDefinition = {
       keyShader
     );
 
-    shader.setUniform("time", context.time);
+    shader.setUniform("time", context.timeMs);
     Object.values(node.dataInputs).forEach((port) => {
       if (port.type === "image") {
         const data = context.getInputValueImage(node, port.id);

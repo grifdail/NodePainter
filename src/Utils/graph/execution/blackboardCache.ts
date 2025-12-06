@@ -14,12 +14,28 @@ type CacheKeyDef =
     cacheIdInputs: string[];
   };
 
-export function createOrSelectFromCache<T>(context: ExecutionContext, nodeData: NodeData, gen: () => T, cacheId: string | undefined = undefined): T {
+export function createOrSelectFromCache<T>(context: ExecutionContext, nodeData: NodeData, gen: () => T, cacheId: string | undefined = undefined, reset: boolean = false): T {
   let cacheKey = getCacheKey(cacheId, context, nodeData);
-  const value = context.blackboard[cacheKey] !== undefined ? context.blackboard[cacheKey] : gen();
+  const value = context.blackboard[cacheKey] !== undefined && !reset ? context.blackboard[cacheKey] : gen();
   context.blackboard[cacheKey] = value;
   return value;
 }
+
+export function processAndUpdateCache<T>(context: ExecutionContext, nodeData: NodeData, gen: () => T, updater: (previous: T) => T, cacheId: string | undefined = undefined, reset: boolean = false): T {
+  let cacheKey = getCacheKey(cacheId, context, nodeData);
+  const value = context.blackboard[cacheKey] !== undefined && !reset ? context.blackboard[cacheKey] : gen();
+  const newValue = updater(value);
+  context.blackboard[cacheKey] = newValue;
+  return newValue;
+}
+
+export function createOrSelectFromFrameCache<T>(context: ExecutionContext, nodeData: NodeData, gen: () => T, cacheId: string | undefined = undefined): T {
+  let cacheKey = getCacheKey(cacheId, context, nodeData);
+  const value = cacheKey in context.frameBlackboard ? context.frameBlackboard[cacheKey] : gen();
+  context.frameBlackboard[cacheKey] = value;
+  return value;
+}
+
 
 export function updateAndReadPreviousFromCache<T>(context: ExecutionContext, nodeData: NodeData, newValue: T, cacheId: string | undefined = undefined): T {
   let cacheKey = getCacheKey(cacheId, context, nodeData);

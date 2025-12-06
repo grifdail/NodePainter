@@ -108,8 +108,10 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
       return;
     }
     const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-    context.time = time;
-    context.deltaTime = frameRate;
+    context.timeMs = time;
+    context.time = time / 1000;
+    context.deltaTimeMs = frameRate;
+    context.deltaTime = frameRate / 1000;
     var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
 
     context.frameBlackboard = {};

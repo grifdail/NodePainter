@@ -19,9 +19,9 @@ export const ProgressNode: NodeDefinition = {
     const offset = nodeData.dataInputs["offset"] ? context.getInputValueNumber(nodeData, "offset") : 0;
     const scale = nodeData.dataInputs["scale"] ? context.getInputValueNumber(nodeData, "scale") : 1;
     if (portId === "progress") {
-      return ((context.time / (value * 1000) + offset) % 1) * scale;
+      return ((context.timeMs / (value * 1000) + offset) % 1) * scale;
     } else {
-      return Math.floor(context.time / (value * 1000) + offset);
+      return Math.floor(context.timeMs / (value * 1000) + offset);
     }
   },
   getShaderCode(node, context) {

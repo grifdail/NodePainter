@@ -11,7 +11,7 @@ export const TimeNode: NodeDefinition = {
 
   settings: [],
   getData: (portId, nodeData, context) => {
-    return context.time / 1000;
+    return context.time;
   },
   getShaderCode(node, context) {
     return `float ${context.getShaderVar(node, "time", "number", true)} = time / 1000.0;`;

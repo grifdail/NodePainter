@@ -53,7 +53,7 @@ export const ShaderMaterial: NodeDefinition = {
 
 function getUniformObject(shader: any, context: ExecutionContext, node: NodeData) {
   return {
-    time: { value: context.time },
+    time: { value: context.timeMs },
     ...Object.fromEntries(
       Object.values(node.dataInputs).map((port) => {
         const converter = PortTypeDefinitions[port.type].convertToThreeType;

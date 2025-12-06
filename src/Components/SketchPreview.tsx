@@ -107,10 +107,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
   };
 
   p5.draw = () => {
-    context.frameBlackboard = {};
+    context.update();
 
-    context.time = p5.millis();
-    context.deltaTime = p5.deltaTime;
     if (tree) {
       try {
         var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
