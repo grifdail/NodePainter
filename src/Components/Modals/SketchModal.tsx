@@ -16,6 +16,7 @@ import { Routes } from "../../Types/Routes";
 import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
 import { navigate } from "wouter/use-browser-location";
 import { openLoadModal } from "../../Actions/navigationAction";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 
 const MY_SAVED_SKETCH = "My Saved Sketch";
 
@@ -91,10 +92,10 @@ const StyledButton = styled.button`
 `;
 
 const IconPerTypes: Record<string, Icon> = {
-  default: IconFile,
-  Templates: IconFile,
-  [MY_SAVED_SKETCH]: IconDeviceFloppy,
-  Examples: IconPlayerPlay,
+    default: IconFile,
+    Templates: IconFile,
+    [MY_SAVED_SKETCH]: IconDeviceFloppy,
+    Examples: IconPlayerPlay,
 };
 
 type SketchElement = { content: () => Promise<SketchSave>; name: string; category: string };
@@ -102,21 +103,21 @@ type SketchElement = { content: () => Promise<SketchSave>; name: string; categor
 const TagRegex = /tag:(\w+)/gi;
 
 type SearchTermData = {
-  tags: string[];
-  name: string;
+    tags: string[];
+    name: string;
 };
 
 const parseSearchTerm = (raw: string): SearchTermData => {
-  const base = raw.trim().toLowerCase();
-  const resultTag = Array.from(base.matchAll(TagRegex));
-  return {
-    name: base.replaceAll(TagRegex, "").trim(),
-    tags: resultTag.map((r) => r[1]),
-  };
+    const base = raw.trim().toLowerCase();
+    const resultTag = Array.from(base.matchAll(TagRegex));
+    return {
+        name: base.replaceAll(TagRegex, "").trim(),
+        tags: resultTag.map((r) => r[1]),
+    };
 };
 
 function toCategoryId(cat: string) {
-  return cat.toLowerCase().replaceAll(" ", "_");
+    return cat.toLowerCase().replaceAll(" ", "_");
 }
 
 export const DeleteButton = styled.a`
@@ -144,167 +145,171 @@ export const DeleteButton = styled.a`
 `;
 
 function SketchButton({ onClick, item, onDelete }: { onClick: MouseEventHandler<Element>; onDelete: MouseEventHandler<Element> | undefined; item: SketchElement }) {
-  var Icon = IconPerTypes[item.category] === undefined ? IconPerTypes.default : IconPerTypes[item.category];
-  return (
-    <StyledButton onClick={onClick}>
-      <Icon></Icon>
-      <div>{item.name}</div>
-      <p>{item.category}</p>
-      <span className="spacer"></span>
-      {onDelete && (
-        <DeleteButton onClick={onDelete}>
-          <IconX></IconX>
-        </DeleteButton>
-      )}
-    </StyledButton>
-  );
+    var Icon = IconPerTypes[item.category] === undefined ? IconPerTypes.default : IconPerTypes[item.category];
+    return (
+        <StyledButton onClick={onClick}>
+            <Icon></Icon>
+            <div>{item.name}</div>
+            <p>{item.category}</p>
+            <span className="spacer"></span>
+            {onDelete && (
+                <DeleteButton onClick={onDelete}>
+                    <IconX></IconX>
+                </DeleteButton>
+            )}
+        </StyledButton>
+    );
 }
 
 const sketchCategory = { Templates: 3, [MY_SAVED_SKETCH]: 2, Examples: 1 };
 
 export function SketchModal({ close }: { close: () => void }) {
-  const loadSketch = useLoadSketch(close);
-  const withConfirm = useWithConfirm();
-  const [allItem, categories, deleteSavedSketch] = useSketchCollection();
-  const [searchTermRaw, setSearchTerm] = useState("");
-  const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
-  const lastSavedSketch = getLastSavedSketch();
-  const toggleTag = useToggleTag(searchTermRaw, setSearchTerm);
-  const filteredList = useMemo(() => {
-    return allItem
-      .filter((sketch) => {
-        if (searchTerm.tags && searchTerm.tags.length > 0) {
-          if (!searchTerm.tags.includes(toCategoryId(sketch.category))) {
-            return false;
-          }
-        }
-        return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
-      })
-      .sort((a, b) => {
-        const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
-        return r;
-      });
-  }, [allItem, searchTerm]);
-
-  return (
-    <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
-      <MainDiv>
-        <ButtonGroup align="stretch" $forceStretch $responsive>
-          <Button onClick={withConfirm(() => loadSketch(new Promise<SketchSave>((r) => r(lastSavedSketch as SketchSave))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
-          <Button
-            icon={IconFilePlus}
-            label="New"
-            onClick={() => {
-              useTree.getState().reset();
-              close();
-            }}
-          ></Button>
-          <Button onClick={openLoadModal} icon={IconUpload} label="Load from JSON"></Button>
-        </ButtonGroup>
-        <div className="files">
-          <SearchForm>
-            <span>
-              <IconSearch> </IconSearch>
-              <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
-            </span>
-          </SearchForm>
-          <TagList options={Object.fromEntries(categories.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag}></TagList>
-
-          <NodeList>
-            {filteredList.map((item) => (
-              <SketchButton
-                onDelete={
-                  item.category === MY_SAVED_SKETCH
-                    ? (e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      withConfirm(() => deleteSavedSketch(item.name))();
+    const loadSketch = useLoadSketch(close);
+    const withConfirm = useWithConfirm();
+    const [allItem, categories, deleteSavedSketch] = useSketchCollection();
+    const categoriesExceptTemplate = useMemo(() => categories.filter(cat => cat !== "Templates"), [categories]);
+    const allItemInTemplate = useMemo(() => allItem.filter(item => item.category === "Templates"), [allItem])
+    const allItemExceptTemplate = useMemo(() => allItem.filter(item => item.category !== "Templates"), [allItem])
+    const [searchTermRaw, setSearchTerm] = useState("");
+    const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
+    const lastSavedSketch = getLastSavedSketch();
+    const toggleTag = useToggleTag(searchTermRaw, setSearchTerm);
+    const filteredList = useMemo(() => {
+        return allItemExceptTemplate
+            .filter((sketch) => {
+                if (searchTerm.tags && searchTerm.tags.length > 0) {
+                    if (!searchTerm.tags.includes(toCategoryId(sketch.category))) {
+                        return false;
                     }
-                    : undefined
                 }
-                key={`${item.category}/${item.name}`}
-                onClick={withConfirm(() => loadSketch(item.content()))}
-                item={item}
-              />
-            ))}
-          </NodeList>
-        </div>
-      </MainDiv>
-    </Modal>
-  );
+                return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
+            })
+            .sort((a, b) => {
+                const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
+                return r;
+            });
+    }, [allItemExceptTemplate, searchTerm]);
 
-  function useLoadSketch(close: () => void) {
-    return (promise: Promise<SketchSave>) => {
-      promise.then(
-        (sketch) => {
-          useTree.getState().loadTemplate(sketch);
-          close();
-        },
-        (err) => {
-          useDialog.getState().openError("There was an error while loading the sketch");
-        }
-      );
-    };
-  }
+    return (
+        <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
+            <MainDiv>
+                <ButtonGroup align="stretch" $forceStretch $responsive>
+                    <Button onClick={withConfirm(() => loadSketch(new Promise<SketchSave>((r) => r(lastSavedSketch as SketchSave))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
+                    <Menu menuButton={<Button icon={IconFilePlus} label="New" />}>
+                        <MenuItem onClick={() => {
+                            useTree.getState().reset();
+                            close();
+                        }}>Basic</MenuItem>
+                        {
+                            allItemInTemplate.map(sketch => <MenuItem key={sketch.name} onClick={withConfirm(() => loadSketch(sketch.content()))}>{sketch.name}</MenuItem>)
+                        }
+                    </Menu>
+                    <Button onClick={openLoadModal} icon={IconUpload} label="Load from JSON"></Button>
+                </ButtonGroup>
+                <div className="files">
+                    <SearchForm>
+                        <span>
+                            <IconSearch> </IconSearch>
+                            <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
+                        </span>
+                    </SearchForm>
+                    <TagList options={Object.fromEntries(categoriesExceptTemplate.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag}></TagList>
+
+                    <NodeList>
+                        {filteredList.map((item) => (
+                            <SketchButton
+                                onDelete={
+                                    item.category === MY_SAVED_SKETCH
+                                        ? (e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            withConfirm(() => deleteSavedSketch(item.name))();
+                                        }
+                                        : undefined
+                                }
+                                key={`${item.category}/${item.name}`}
+                                onClick={withConfirm(() => loadSketch(item.content()))}
+                                item={item}
+                            />
+                        ))}
+                    </NodeList>
+                </div>
+            </MainDiv>
+        </Modal>
+    );
+
+    function useLoadSketch(close: () => void) {
+        return (promise: Promise<SketchSave>) => {
+            promise.then(
+                (sketch) => {
+                    useTree.getState().loadTemplate(sketch);
+                    close();
+                },
+                (err) => {
+                    useDialog.getState().openError("There was an error while loading the sketch");
+                }
+            );
+        };
+    }
 }
 
 function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void) {
-  return useCallback(
-    function toggleTag(tag: string): void {
-      var key = `tag:${toCategoryId(tag)}`;
-      var regexKey = new RegExp(key, "gi");
-      if (searchTermRaw.match(regexKey)) {
-        setSearchTerm(searchTermRaw.replaceAll(regexKey, "").trim());
-      } else {
-        setSearchTerm(searchTermRaw.trim() + " " + key);
-      }
-    },
-    [searchTermRaw, setSearchTerm]
-  );
+    return useCallback(
+        function toggleTag(tag: string): void {
+            var key = `tag:${toCategoryId(tag)}`;
+            var regexKey = new RegExp(key, "gi");
+            if (searchTermRaw.match(regexKey)) {
+                setSearchTerm(searchTermRaw.replaceAll(regexKey, "").trim());
+            } else {
+                setSearchTerm(searchTermRaw.trim() + " " + key);
+            }
+        },
+        [searchTermRaw, setSearchTerm]
+    );
 }
 
 function useSketchCollection(): [SketchElement[], string[], (name: string) => void] {
-  const [sketches, saveSketch, deleteSketch] = useAllSavedSketch();
-  const tags = new Set([MY_SAVED_SKETCH]);
-  return [
-    [
-      ...Object.entries(Templates)
-        .filter(([name]) => name[0] !== "_")
-        .flatMap(([folderName, content]) => {
-          tags.add(folderName);
-          return Object.entries(content)
-            .filter(([name]) => name[0] !== "_")
-            .map(([fileName, content]) => ({
-              name: fileName,
-              category: folderName,
-              content: content,
-            }));
-        }),
-      ...(sketches || []).map((sketch) => {
-        return {
-          name: sketch.name,
-          category: MY_SAVED_SKETCH,
-          content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
-        };
-      }),
-    ],
-    Array.from(tags),
-    deleteSketch,
-  ];
+    const [sketches, saveSketch, deleteSketch] = useAllSavedSketch();
+    const tags = new Set([MY_SAVED_SKETCH]);
+    return [
+        [
+            ...Object.entries(Templates)
+                .filter(([name]) => name[0] !== "_")
+                .flatMap(([folderName, content]) => {
+                    tags.add(folderName);
+                    return Object.entries(content)
+                        .filter(([name]) => name[0] !== "_")
+                        .map(([fileName, content]) => ({
+                            name: fileName,
+                            category: folderName,
+                            content: content,
+                        }));
+                }),
+            ...(sketches || []).map((sketch) => {
+                return {
+                    name: sketch.name,
+                    category: MY_SAVED_SKETCH,
+                    content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
+                };
+            }),
+        ],
+        Array.from(tags),
+        deleteSketch,
+    ];
 }
 
 function useWithConfirm() {
-  return (cb: Function) => {
-    return (...args: any[]) => {
-      useDialog.getState().openConfirm(
-        (isConfirmed) => {
-          if (isConfirmed) {
-            cb(...args);
-          }
-        },
-        "Are you sure ?",
-        "You will lose all your data for this sketch."
-      );
+    return (cb: Function) => {
+        return (...args: any[]) => {
+            useDialog.getState().openConfirm(
+                (isConfirmed) => {
+                    if (isConfirmed) {
+                        cb(...args);
+                    }
+                },
+                "Are you sure ?",
+                "You will lose all your data for this sketch."
+            );
+        };
     };
-  };
 }
