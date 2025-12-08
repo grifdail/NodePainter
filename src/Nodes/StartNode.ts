@@ -21,7 +21,6 @@ export const StartNode: NodeDefinition = {
   preventSnippet: true,
   settings: [
     { id: "name", type: "string", defaultValue: SKETCH_DEFAULT_NAME },
-    { id: "author", type: "string", defaultValue: SKETCH_DEFAULT_AUTHOR },
     { id: "width", type: "number", defaultValue: 400 },
     { id: "height", type: "number", defaultValue: 400 },
   ],

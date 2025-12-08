@@ -82,9 +82,7 @@ export const MinimapContent = memo(() => {
   const [nodes, editedGraph] = useTree((state) => [state.nodes, state.editedGraph]);
   var debouncedNodes = useDebounce(nodes, 3000);
   const nodesOnThisGraph = useMemo(() => Object.values(debouncedNodes).filter((node) => node.graph === editedGraph), [editedGraph, debouncedNodes]);
-  if (nodesOnThisGraph.length === 0) {
-    return <></>;
-  }
+
   const [viewboxX, viewboxY, viewBoxScale, set] = useViewbox((state) => [state.x, state.y, state.scale, state.set]);
   const { width: screenX, height: screenY } = useWindowSize();
   const nodesBB = useMemo(() => nodesOnThisGraph.map((node) => [buildApproximateBoundingBox(node), Object.values(node.dataOutputs)[0]?.type || "drawing2d", node.id] as const), [nodesOnThisGraph]);
@@ -100,6 +98,25 @@ export const MinimapContent = memo(() => {
     },
     [viewBoxScale, screenX, screenY, boundingBox]
   );
+
+  const boxes = useMemo(
+    () =>
+      nodesBB.map(([bb, type, id]) => (
+        <rect
+          key={id}
+          className="node"
+          x={bb.left}
+          y={bb.top}
+          width={bb.width()}
+          height={bb.height()}
+          fill={PortTypeDefinitions[type].color}
+        />
+      )),
+    [nodesBB]
+  )
+  if (nodesOnThisGraph.length === 0) {
+    return <></>;
+  }
   return (
     <svg
       viewBox={`${boundingBox.left} ${boundingBox.top} ${boundingBox.width()} ${boundingBox.height()}`}
@@ -112,21 +129,7 @@ export const MinimapContent = memo(() => {
         height={boundingBox.height()}
         fill="rgba(0,0,255,0.1)"
       />
-      {useMemo(
-        () =>
-          nodesBB.map(([bb, type, id]) => (
-            <rect
-              key={id}
-              className="node"
-              x={bb.left}
-              y={bb.top}
-              width={bb.width()}
-              height={bb.height()}
-              fill={PortTypeDefinitions[type].color}
-            />
-          )),
-        [nodesBB]
-      )}
+      {boxes}
       <rect
         className="viewbox"
         x={viewboxX}

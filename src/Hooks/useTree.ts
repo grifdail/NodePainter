@@ -9,6 +9,8 @@ import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { ShaderMaterialEnd } from "../Nodes/Technical/MaterialShader/ShaderMaterialEnd";
+import { ShaderMaterialStart } from "../Nodes/Technical/MaterialShader/ShaderMaterialStart";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { CustomSimulationEnd } from "../Nodes/Technical/Simulation/CustomSimulationEnd";
 import { CustomSimulationStart } from "../Nodes/Technical/Simulation/CustomSimulationStart";
@@ -24,7 +26,7 @@ import { TreeStore } from "../Types/TreeStore";
 import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
-import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort, getSketchAuthor } from "../Utils/graph/execution/getNode";
+import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort } from "../Utils/graph/execution/getNode";
 import { getPortValue } from "../Utils/graph/execution/getPortValue";
 import { createDefaultNodeConnection } from "../Utils/graph/modification/createDefaultNodeConnection";
 import { createNodeData } from "../Utils/graph/modification/createNodeData";
@@ -44,7 +46,6 @@ import { copyNodePosition } from "./copyNodePosition";
 import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
 import { createStructType } from "./createStructType";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
-import { usePlayerPref } from "./usePlayerPref";
 import { usePortSelection } from "./usePortSelection";
 import { toastSuccess } from "./useToast";
 
@@ -238,10 +239,6 @@ export const useTree = create<TreeStore>()((set, get) => {
     },
     loadTemplate(temp) {
       temp = upgradeTemplate(temp);
-      if (getSketchAuthor(temp) === "unknown") {
-        temp.nodes[START_NODE].settings.author === usePlayerPref.getState().authorName;
-      }
-
       set({ nodes: structuredClone(temp.nodes), customNodes: structuredClone(temp.customNodes), editedGraph: temp.editedGraph, globalSettings: temp.globalSettings || {}, key: Math.random() });
       resetCamera();
       toastSuccess("Sketch loaded !");
@@ -359,7 +356,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             dataOutputs: [...structuredClone(def.dataInputs)],
 
             settings: [],
-            executeAs: "ShaderMaterial-start",
+            executeAs: ShaderMaterialStart.id,
           };
           const endNodeDef: NodeDefinition = {
             IsUnique: true,
@@ -377,7 +374,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             dataOutputs: [],
 
             settings: [],
-            executeAs: "ShaderMaterial-end",
+            executeAs: ShaderMaterialEnd.id,
           };
           state.customNodes[start] = startNodeDef;
           state.customNodes[end] = endNodeDef;

@@ -2,7 +2,7 @@
 import Rand from "rand-seed";
 import { SketchSave } from "../Types/SketchTemplate";
 import { createExecutionContext, ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
-import { getNodeStart, getSketchAuthor, getSketchName } from "../Utils/graph/execution/getNode";
+import { getNodeStart, getSketchAuthor, getSketchComment, getSketchName } from "../Utils/graph/execution/getNode";
 import { upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
 
 import "./preview.css";
@@ -65,13 +65,14 @@ function setError() {
     (document.querySelector("#error") as HTMLElement).hidden = false;
 }
 
-function updateHeader(name: string, author: string | undefined) {
+function updateHeader(name: string, author: string | undefined, comment: string | undefined) {
     var header = document.querySelector("header") as HTMLElement;
     (header.querySelector("h1") as HTMLElement).textContent = name;
     (header.querySelector("span") as HTMLElement).textContent = author || "unknown";
     (header.querySelector("p") as HTMLElement).hidden = author === undefined || author?.trim() === "unknown" || author?.trim() === "";
     var search = new URLSearchParams(window.location.search);
     (document.querySelector("a#link-app") as HTMLLinkElement).href = "/?load=" + search.get("load");
+    (document.querySelector("p#comment") as HTMLParagraphElement).textContent = comment as string;
     setTitle(name)
 }
 
@@ -90,7 +91,7 @@ async function loadFromUrl(encodedUrl: string | null) {
     if (request.ok) {
         var data = (await request.json()) as SketchSave;
         const upgradedData = upgradeTemplate(data);
-        updateHeader(getSketchName(upgradedData), getSketchAuthor(data))
+        updateHeader(getSketchName(upgradedData), getSketchAuthor(data), getSketchComment(data))
         initGame(upgradedData);
     } else {
         throw new Error("No sketch to load")

@@ -1,4 +1,5 @@
-﻿import { NodeLibrary } from "../../../Nodes/Nodes";
+﻿import { MetaNode } from "../../../Nodes/Misc/MetaNode";
+import { NodeLibrary } from "../../../Nodes/Nodes";
 import { START_NODE } from "../../../Nodes/StartNode";
 import { NodeCollection } from "../../../Types/NodeCollection";
 import { NodeData } from "../../../Types/NodeData";
@@ -23,8 +24,14 @@ export function getOutputPort(tree: { nodes: NodeCollection }, id: string, portI
 export function getSketchName(tree: { nodes: NodeCollection }) {
     return tree.nodes[START_NODE]?.settings["name"] as string || "sketch";
 }
-export function getSketchAuthor(tree: { nodes: NodeCollection }) {
-    return tree.nodes[START_NODE]?.settings["author"] as string || "unknown";
+export function getSketchAuthor(tree: { nodes: NodeCollection }): string | undefined {
+    return findNodesOfTypes(tree, MetaNode.id)[0]?.settings.author;
+}
+export function getSketchComment(tree: { nodes: NodeCollection }): string | undefined {
+    return findNodesOfTypes(tree, MetaNode.id)[0]?.settings.comment;
+}
+export function findNodesOfTypes(tree: { nodes: NodeCollection }, nodeType: string) {
+    return Object.values(tree.nodes).filter(item => item.type === nodeType)
 }
 
 export function getNodeTypeDefinition(tree: { nodes: NodeCollection, customNodes: { [key: string]: NodeDefinition } }, node: string | NodeData) {

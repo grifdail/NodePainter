@@ -12,6 +12,7 @@ import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader"
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { navigate } from "wouter/use-browser-location";
 import { closeAllPopup } from "../Actions/navigationAction";
+import { NodeLibrary } from "../Nodes/Nodes";
 
 type CustomNodeCreationSetting = {
   baseNode: NodeDefinition;
@@ -197,7 +198,9 @@ export const useCustomNodeCreationContext = create<CustomFunctionCreationContext
         return false;
       }
       if (get().mode === "create") {
-        return useTree.getState().getNodeTypeDefinition(id) === undefined;
+        var nodes = useTree.getState();
+
+        return !(id in nodes.customNodes) && !(id in NodeLibrary);
       } else {
         return true;
       }
