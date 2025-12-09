@@ -13,6 +13,7 @@ import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { ColorInput } from "../Generics/Inputs/ColorInput";
 import { SliderInput } from "../Generics/Inputs/SliderInput";
+import { createDimensionPrompt } from "../../Utils/ui/createDimensionPrompt";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -62,41 +63,9 @@ export function PaintModal() {
       if (!confirmed) {
         return;
       }
-      var modal: DialogData = {
-        callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
-          if (button === "cancel" || fieldResult === undefined) {
-            return;
-          }
-          paintingState.newImage(fieldResult.width, fieldResult.height);
-        },
-        buttons: [
-          {
-            key: "cancel",
-            label: "Cancel",
-            style: "invisible",
-          },
-          {
-            key: "confirm",
-            label: "Confirm",
-            style: "normal",
-          },
-        ],
-        fields: [
-          {
-            key: "width",
-            label: "width",
-            input: NumberInput,
-            defaultValue: 400,
-          },
-          {
-            key: "height",
-            label: "height",
-            input: NumberInput,
-            defaultValue: 400,
-          },
-        ],
-      };
-      useDialog.getState().open(modal);
+      createDimensionPrompt((width, height) => {
+        paintingState.newImage(width, height);
+      })
     });
   };
 
