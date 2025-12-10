@@ -20,7 +20,7 @@ export function readFromCache<T>(context: ExecutionContext, nodeData: NodeData, 
   let [value, setValue] = useCache(context, nodeData, cacheId);
   if (value === undefined || reset) {
     value = defaultValueGenerator();
-    setValue(defaultValueGenerator);
+    setValue(value);
   }
   return value;
 }

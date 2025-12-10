@@ -32,6 +32,7 @@ export const RandomNode: NodeDefinition = {
       return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
     const r = readFromCache(context, node, () => context.RNG.next());
+
     return array[Math.floor(r * array.length)];
   },
 };
