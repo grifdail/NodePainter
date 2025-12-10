@@ -5,7 +5,7 @@ import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Vector } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromFrameCache, processAndUpdateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { processAndUpdateCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { vectorAddition, vectorLimitMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
@@ -28,7 +28,7 @@ export const SpringController: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
-        return enforceCorrectVectorTypeForNode(node, (createOrSelectFromFrameCache(context, node, () => {
+        return enforceCorrectVectorTypeForNode(node, (useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position, velocity }) => {
                 const target = context.getInputValueVector(node, "target");

@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ToggleSwitchNode: NodeDefinition = {
   id: "State/ToggleSwitch",
@@ -16,16 +16,16 @@ export const ToggleSwitchNode: NodeDefinition = {
   getData(portId, node, context) {
     const on = context.getInputValueBoolean(node, "on");
     const off = context.getInputValueBoolean(node, "off");
-    const previous = updateAndReadFromCache(context, node, (oldValue) => {
-      if (off || oldValue === undefined) {
-        oldValue = false;
-      }
-      if (on) {
-        oldValue = true;
-      }
-      return oldValue;
-    });
+    const [previous, setValue] = useCache(context, node);
+    if (off || previous === undefined) {
+      setValue(false);
+      return false;
+    }
+    if (on) {
+      setValue(true);
+      return true;
+    }
 
-    return previous;
+    return !!previous;
   },
 };

@@ -2,7 +2,7 @@ import { IconArrowsShuffle, IconSphere } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const InsideSphereNode: NodeDefinition = {
@@ -15,7 +15,7 @@ export const InsideSphereNode: NodeDefinition = {
   dataOutputs: [Port.vector3("value")],
   settings: [],
   getData: (portId, nodeData, context) => {
-    const [rx, ry, rz] = createOrSelectFromCache(context, nodeData, () => [context.RNG.next(), context.RNG.next(), context.RNG.next()]);
+    const [rx, ry, rz] = readFromCache(context, nodeData, () => [context.RNG.next(), context.RNG.next(), context.RNG.next()]);
 
     // https://karthikkaranth.me/blog/generating-random-points-in-a-sphere/
     const theta = rx * Math.PI * 2;

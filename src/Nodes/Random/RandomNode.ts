@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
@@ -18,7 +18,7 @@ export const RandomNode: NodeDefinition = {
   settings: [],
   ...changeTypeGenerator(portTypesWithProperty("vectorLength"), [], ["value"]),
   getData: (portId, nodeData, context) => {
-    const value = createOrSelectFromCache(context, nodeData, () =>
+    const value = readFromCache(context, nodeData, () =>
       enforceCorrectVectorTypeForNode(
         nodeData,
         Array.from(Array(PortTypeDefinitions[nodeData.selectedType].vectorLength).keys()).map(() => context.RNG.next())

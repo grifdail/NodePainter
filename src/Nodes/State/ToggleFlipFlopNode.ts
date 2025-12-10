@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ToggleFlipFlopNode: NodeDefinition = {
   id: "State/ToggleFlipFlopSwitch",
@@ -15,16 +15,17 @@ export const ToggleFlipFlopNode: NodeDefinition = {
   settings: [],
   getData(portId, node, context) {
     const flip = context.getInputValueBoolean(node, "flip");
-    const previous = updateAndReadFromCache(context, node, (oldValue) => {
-      if (oldValue === undefined) {
-        oldValue = false;
-      }
-      if (flip) {
-        oldValue = !oldValue;
-      }
-      return oldValue;
-    });
 
-    return previous;
+    const [previous, setValue] = useCache(context, node);
+    if (previous === undefined) {
+      setValue(false);
+    }
+    if (flip) {
+      setValue(!previous);
+      return !previous
+    }
+
+
+    return !!previous;
   },
 };

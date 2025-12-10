@@ -5,7 +5,7 @@ import { PortType } from "../../Types/PortType";
 import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const RandomNode: NodeDefinition = {
   id: "Array/Random",
@@ -31,7 +31,7 @@ export const RandomNode: NodeDefinition = {
     if (array.length < 1) {
       return PortTypeDefinitions[node.selectedType].createDefaultValue();
     }
-    const r = createOrSelectFromCache(context, node, () => context.RNG.next());
+    const r = readFromCache(context, node, () => context.RNG.next());
     return array[Math.floor(r * array.length)];
   },
 };

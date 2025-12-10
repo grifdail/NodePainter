@@ -3,7 +3,8 @@ import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { getCacheKey, updateAndReadFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { frameCacheSetting } from "../../../Utils/graph/definition/FrameCacheSetting";
+import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { ExecutionContext } from "../../../Utils/graph/execution/createExecutionContext";
 
 export const CustomSimulation: NodeDefinition = {
@@ -16,20 +17,16 @@ export const CustomSimulation: NodeDefinition = {
   preventSnippet: true,
   dataInputs: [Port.CacheId(), Port.bool("reset")],
   dataOutputs: [],
-  settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }],
+  settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }, frameCacheSetting()],
   getData: (portId, node, context) => {
-    const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
-    const reset = context.getInputValueBoolean(node, "reset");
-    const key = `${node.id}-${cacheId}-cache`;
+    var result = useFrameCache(context, node, () => {
+      let [previous, setValue] = useCache(context, node);
+      const newItem = execute(node, context, previous)
+      setValue(newItem);
+      return newItem;
+    })
 
-    const isComputedThisTime = context.frameBlackboard[key];
-    if (isComputedThisTime && node.settings.cache) {
-      return context.blackboard[getCacheKey(key, context, node)][portId];
-    }
-
-    var state = updateAndReadFromCache<{ [k: string]: any }>(context, node, (oldState) => execute(node, context, oldState, reset), key);
-    context.frameBlackboard[key] = true;
-    return state[portId];
+    return result[portId];
   },
 };
 
@@ -44,13 +41,13 @@ function createDefaultState(data: NodeData, context: ExecutionContext, dataInput
   );
 }
 
-function execute(data: NodeData, context: ExecutionContext, previousState: { [k: string]: any } | undefined, reset: boolean): { [key: string]: any } {
+function execute(data: NodeData, context: ExecutionContext, previousState: { [k: string]: any } | undefined): { [key: string]: any } {
   const stateDefinition = context.getNodeDefinition(`${data.type}-end`)?.dataInputs;
 
   if (stateDefinition == null) {
     return {};
   }
-  if (previousState === undefined || reset) {
+  if (previousState === undefined) {
     previousState = createDefaultState(data, context, stateDefinition);
   }
 

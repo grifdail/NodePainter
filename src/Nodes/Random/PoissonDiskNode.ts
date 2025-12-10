@@ -3,7 +3,8 @@ import Rand from "rand-seed";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Vector2 } from "../../Types/vectorDataType";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { cacheBehaviorSettingWithNoCache } from "../../Utils/graph/definition/cacheBehaviorSetting";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { vectorSquareDistance } from "../../Utils/math/vectorUtils";
 
 export const PoissonDiskNode: NodeDefinition = {
@@ -15,11 +16,11 @@ export const PoissonDiskNode: NodeDefinition = {
   dataOutputs: [Port["array-vector2"]("points")],
 
   codeBlockType: "expression",
-  settings: [],
+  settings: [cacheBehaviorSettingWithNoCache()],
   getData: (portId, nodeData, context) => {
     const minDist = context.getInputValueNumber(nodeData, "min-dist");
 
-    return createOrSelectFromCache(context, nodeData, () => poissonDisk(minDist, context.RNG));
+    return readFromCache(context, nodeData, () => poissonDisk(minDist, context.RNG));
   },
 };
 

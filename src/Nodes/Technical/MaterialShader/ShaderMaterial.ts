@@ -3,7 +3,7 @@ import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { createDefaultMaterial } from "../../../Utils/graph/definition/createDefaultMaterial";
-import { createOrSelectFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
 import { ExecutionContext } from "../../../Utils/graph/execution/createExecutionContext";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
@@ -38,7 +38,7 @@ export const ShaderMaterial: NodeDefinition = {
   getData(portId, node, context) {
     const callId = context.getCallId(node);
     const setting = node.settings.material;
-    const code = createOrSelectFromCache(
+    const code = readFromCache(
       context,
       node,
       () => {

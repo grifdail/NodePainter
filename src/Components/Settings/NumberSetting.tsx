@@ -7,7 +7,7 @@ import { SettingProps } from "./SettingProps";
 export const NumberSetting: SettingComponent<NumberSettingDefinition> = function ({ onChange, value, def }: SettingProps<NumberSettingDefinition>) {
   return (
     <Fieldset
-      label={def.id}
+      label={def.label || def.id}
       value={value}
       onChange={onChange}
       input={NumberInput}

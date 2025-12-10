@@ -21,6 +21,11 @@ const StyledButton = styled.button`
   padding: var(--padding-small);
   align-items: center;
 
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: right;
+
   &:focus,
   &:hover {
     outline: none;

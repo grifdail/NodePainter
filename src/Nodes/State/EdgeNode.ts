@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 const EdgeTypes = ["Both", "Rising", "Falling"] as const;
 type EdgeType = (typeof EdgeTypes)[number];
@@ -19,7 +19,9 @@ export const EdgeNode: NodeDefinition = {
   getData(portId, node, context) {
     const edge = node.settings["Edge"] as EdgeType;
     const current = context.getInputValueBoolean(node, "in");
-    const previous = updateAndReadPreviousFromCache(context, node, current);
+    const [previous, setValue] = useCache(context, node);
+    setValue(current)
+
     if (current != previous) {
       if (edge === "Both") {
         return true;

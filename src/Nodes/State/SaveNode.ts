@@ -3,7 +3,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const SaveNode: NodeDefinition = {
   id: "State/Save",
@@ -19,8 +19,12 @@ export const SaveNode: NodeDefinition = {
   getData(portId, node, context) {
     const current = context.getInputValue(node, "in", node.selectedType);
     const save = context.getInputValueBoolean(node, "save");
-    const previous = updateAndReadFromCache(context, node, (oldValue) => (oldValue === undefined || save ? current : oldValue));
 
+    const [previous, setValue] = useCache(context, node);
+    if (previous === undefined || save) {
+      setValue(current);
+      return current;
+    }
     return previous;
   },
 };

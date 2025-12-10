@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromFrameCache, processAndUpdateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { processAndUpdateCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { vectorAddition, vectorLimitMagnitude, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
@@ -24,7 +24,7 @@ export const LinearControllerNode: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
-        return (createOrSelectFromFrameCache(context, node, () => {
+        return (useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position: current }) => {
                 const target = context.getInputValueVector(node, "target");

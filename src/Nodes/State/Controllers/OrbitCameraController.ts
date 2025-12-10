@@ -5,7 +5,7 @@ import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector3, Vector2 } from "../../../Types/vectorDataType";
-import { createOrSelectFromFrameCache, processAndUpdateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { processAndUpdateCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
 import { vectorAddition } from "../../../Utils/math/vectorUtils";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
@@ -29,7 +29,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
-        return createOrSelectFromFrameCache(context, node, () => {
+        return useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const target = context.getInputValueVector3(node, "target");

@@ -4,7 +4,7 @@ import { clamp } from "three/src/math/MathUtils";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { createOrSelectFromCache, createOrSelectFromFrameCache, updateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
 import { vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
@@ -27,28 +27,31 @@ export const FreecamControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
-        return createOrSelectFromFrameCache(context, node, () => {
-            let previousValue = createOrSelectFromCache(context, node, getDefaultTransform)
+        return useFrameCache(context, node, () => {
+
+
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const movementInput = context.getInputValueVector3(node, "movementInput");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
+
+            let [previous, setValue] = useCache(context, node);
             const reset = context.getInputValueBoolean(node, "reset");
-            if (reset) {
-                previousValue = getDefaultTransform();
+            if (reset || previous === undefined) {
+                previous = getDefaultTransform();
             }
 
             //Update rotation
             var newEuler = [
-                trueMod(previousValue.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
-                clamp(previousValue.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
+                trueMod(previous.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
+                clamp(previous.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
             ]
             var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 
             //Update movement
             var forward = new TVector3(movementInput[0], movementInput[1], -movementInput[2]).applyQuaternion(newQuat)
             var newPosition = vectorAddition(
-                previousValue.position,
+                previous.position,
                 vectorScale(
                     forward.toArray(),
                     context.deltaTime * movementSpeed
@@ -59,7 +62,7 @@ export const FreecamControllerNode: NodeDefinition = {
                 position: newPosition,
                 euler: newEuler
             }
-            updateCache(context, node, nextValue);
+            setValue(nextValue);
 
             return {
                 rotation: toQuaternion(newQuat),

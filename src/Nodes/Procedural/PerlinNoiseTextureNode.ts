@@ -5,7 +5,7 @@ import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2, Vector2 } from "../../Types/vectorDataType";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 
@@ -31,7 +31,7 @@ export const PerlinNoiseTextureNode: NodeDefinition = {
 
     ],
     getData(portId, data, context) {
-        var img = createOrSelectFromCache(context, data, () => {
+        var img = readFromCache(context, data, () => {
             const str = generateNoiseTexture( //
                 data.settings.dimension,
                 context.getInputValueVector2(data, "offset"),

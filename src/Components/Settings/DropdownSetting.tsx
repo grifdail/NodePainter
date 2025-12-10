@@ -11,7 +11,7 @@ export const DropdownSetting: SettingComponent<DropdownSettingDefinition> = func
       passtrough={{ options: def.options }}
       value={value}
       onChange={onChange}
-      label={def.id}
+      label={def.label || def.id}
     />
   );
 };

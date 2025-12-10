@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const DetectThresholdNode: NodeDefinition = {
   id: "State/DetectThreshold",
@@ -23,7 +23,8 @@ export const DetectThresholdNode: NodeDefinition = {
   getData(portId, node, context) {
     const current = context.getInputValueNumber(node, "in");
     const target = context.getInputValueNumber(node, "target");
-    const previous = updateAndReadPreviousFromCache(context, node, current);
+    const [previous, setValue] = useCache(context, node);
+    setValue(current)
     const signPrevious = Math.sign(previous - target);
     const signCurrent = Math.sign(current - target);
     if (signCurrent != signPrevious) {

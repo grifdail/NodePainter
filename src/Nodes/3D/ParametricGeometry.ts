@@ -4,7 +4,7 @@ import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2 } from "../../Types/vectorDataType";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 import { applyConstraint, Constraints } from "../../Utils/ui/applyConstraints";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
@@ -55,7 +55,7 @@ export const ParametricGeometry: NodeDefinition = {
     let dimension = context.getInputValueVector2(node, "dimension");
     dimension = applyConstraint(dimension, dimension, [Constraints.VecInteger(), Constraints.VecGreaterThan(1)]);
     var id = `${node.id}_${context.getInputValueNumber(node, "cache-id")}_${dimension[0]}_${dimension[1]}`;
-    const positions = createOrSelectFromCache(context, node, () => {
+    const positions = readFromCache(context, node, () => {
       const posArray = new Float32Array((dimension[0] + 1) * (dimension[1] + 1) * 3);
       for (var x = 0; x <= dimension[0]; x++) {
         for (var y = 0; y <= dimension[1]; y++) {

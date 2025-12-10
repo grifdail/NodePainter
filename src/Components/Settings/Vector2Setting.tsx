@@ -8,7 +8,7 @@ import { SettingProps } from "./SettingProps";
 export const Vector2Setting: SettingComponent<Vector2SettingDefinition> = function ({ onChange, value, def }: SettingProps<Vector2SettingDefinition>) {
     return (
         <Fieldset
-            label={def.id}
+            label={def.label || def.id}
             value={value}
             onChange={onChange}
             input={VectorInput}

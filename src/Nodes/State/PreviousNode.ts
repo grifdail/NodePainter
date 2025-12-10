@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { updateAndReadPreviousFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const PreviousNode: NodeDefinition = {
   id: "State/Previous",
@@ -19,8 +19,8 @@ export const PreviousNode: NodeDefinition = {
   settings: [],
   getData(portId, node, context) {
     const current = context.getInputValue(node, "in", node.selectedType);
-    const previous = updateAndReadPreviousFromCache(context, node, current);
-
+    const [previous, setValue] = useCache(context, node);
+    setValue(current)
     return previous;
   },
 };

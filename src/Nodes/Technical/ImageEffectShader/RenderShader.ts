@@ -3,7 +3,7 @@ import { ImageData } from "../../../Types/ImageData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { createOrSelectFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 
 export const RenderShader: NodeDefinition = {
@@ -26,7 +26,7 @@ export const RenderShader: NodeDefinition = {
     const keyCache = `${node.id}-${cacheId}-img`;
     const keyShader = `${node.id}-${cacheId}-shader`;
 
-    let img = createOrSelectFromCache(
+    let img = readFromCache(
       context,
       node,
       () => {
@@ -38,7 +38,7 @@ export const RenderShader: NodeDefinition = {
     if (p5img === null) {
       return;
     }
-    let shader = createOrSelectFromCache(
+    let shader = readFromCache(
       context,
       node,
       () => {

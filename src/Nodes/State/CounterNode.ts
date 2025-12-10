@@ -2,7 +2,7 @@ import { IconDeviceFloppy, IconPlus } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { updateAndReadFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const CounterNode: NodeDefinition = {
   id: "State/Counter",
@@ -21,22 +21,20 @@ export const CounterNode: NodeDefinition = {
     const reset = context.getInputValueBoolean(node, "reset");
     const min = context.getInputValueNumber(node, "min");
     const max = context.getInputValueNumber(node, "max");
-    const previous = updateAndReadFromCache(context, node, (value: number | undefined) => {
-      if (value === undefined) {
-        value = 0;
-      }
-      if (reset) {
-        value = 0;
-      }
-      if (increase) {
-        value = value + step;
-      }
-      if (decrease) {
-        value = value - step;
-      }
 
-      return Math.max(Math.min(value, max), min);
-    });
-    return previous;
+    let [value, setValue] = useCache(context, node);
+    if (value === undefined || reset) {
+      value = 0;
+    }
+    if (increase) {
+      value = value + step;
+    }
+    if (decrease) {
+      value = value - step;
+    }
+
+    value = Math.max(Math.min(value, max), min);
+    setValue(value);
+    return value;
   },
 };

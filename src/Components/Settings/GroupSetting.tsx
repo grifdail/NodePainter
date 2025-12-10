@@ -24,7 +24,7 @@ const MainDiv = styled.div<{ selected?: boolean }>`
   }
 `;
 
-const RotatingIcon = styled(IconTriangle)<{ reversed?: boolean }>`
+const RotatingIcon = styled(IconTriangle) <{ reversed?: boolean }>`
   transition: transform 0.3s;
   transform: rotate(${(props) => (props.reversed ? 0 : 180)}deg);
 `;
@@ -38,7 +38,7 @@ export const GroupSetting: SettingComponent<GroupSettingDefinition> = function (
       <div
         className="header"
         onClick={() => toggle()}>
-        <span>{def.id || def.label}</span> <RotatingIcon reversed={open}></RotatingIcon>{" "}
+        <span>{def.label || def.id}</span> <RotatingIcon reversed={open}></RotatingIcon>{" "}
       </div>
       {value._open && (
         <div className="content">

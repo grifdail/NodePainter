@@ -4,7 +4,7 @@ import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector2 } from "../../../Types/vectorDataType";
-import { createOrSelectFromCache, createOrSelectFromFrameCache, updateCache } from "../../../Utils/graph/execution/blackboardCache";
+import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
 import { vector2Perpendicular, vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
@@ -27,18 +27,22 @@ export const FirstPersonControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
-        return createOrSelectFromFrameCache(context, node, () => {
-            const reset = context.getInputValueBoolean(node, "reset");
-            let previousValue = createOrSelectFromCache(context, node, getDefaultTransform, undefined, reset)
+        return useFrameCache(context, node, () => {
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const movementInput = context.getInputValueVector2(node, "movementInput");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
 
+            let [previous, setValue] = useCache(context, node);
+            const reset = context.getInputValueBoolean(node, "reset");
+            if (reset || previous === undefined) {
+                previous = getDefaultTransform();
+            }
+
             //Update rotation
             var newEuler = [
-                trueMod(previousValue.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
-                clamp(previousValue.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
+                trueMod(previous.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
+                clamp(previous.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
             ]
             var newQuat = eulerToTQuat([newEuler[1], newEuler[0], 0], "YXZ")
 
@@ -52,7 +56,7 @@ export const FirstPersonControllerNode: NodeDefinition = {
                 )
 
             var newPosition = vectorAddition(
-                previousValue.position,
+                previous.position,
                 vectorScale(
                     [sum[0], 0, sum[1]],
                     -context.deltaTime * movementSpeed
@@ -63,7 +67,7 @@ export const FirstPersonControllerNode: NodeDefinition = {
                 position: newPosition,
                 euler: newEuler
             }
-            updateCache(context, node, nextValue);
+            setValue(nextValue);
             return {
                 rotation: toQuaternion(newQuat),
                 position: newPosition

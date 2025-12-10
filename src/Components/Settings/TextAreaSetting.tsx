@@ -26,7 +26,7 @@ export const TextAreaSetting: SettingComponent<TextAreaSettingDefinition> = func
   return (
     <>
       <Fieldset
-        label={def.id}
+        label={def.label || def.id}
         input={TextAreaInput}
         value={value}
         onChange={onChange}

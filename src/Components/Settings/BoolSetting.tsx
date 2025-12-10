@@ -8,7 +8,7 @@ import { SettingProps } from "./SettingProps";
 export const BoolSetting: SettingComponent<BoolSettingDefinition> = function ({ onChange, value, def }: SettingProps<BoolSettingDefinition>) {
   return (
     <Fieldset
-      label={def.id}
+      label={def.label || def.id}
       value={value}
       onChange={onChange}
       input={BoolInput}></Fieldset>

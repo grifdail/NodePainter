@@ -5,7 +5,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { createOrSelectFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const ShuffleNode: NodeDefinition = {
   id: "Array/Shuffle",
@@ -26,7 +26,7 @@ export const ShuffleNode: NodeDefinition = {
   settings: [],
   ...changeTypeGenerator(portTypesWithTags(["array"]), ["array"], ["out"]),
   getData: (portId, node, context) => {
-    const seed = createOrSelectFromCache(context, node, () => context.RNG.next());
+    const seed = readFromCache(context, node, () => context.RNG.next());
     const array = context.getInputValue(node, "array", node.selectedType) as any[];
     const cycle = context.getInputValueBoolean(node, "cycle");
     const rand = new Rand(seed.toString())

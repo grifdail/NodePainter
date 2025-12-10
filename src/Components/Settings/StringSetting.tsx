@@ -7,7 +7,7 @@ import { StringSettingDefinition } from "../../Types/SettingDefinition";
 export const StringSetting: SettingComponent<StringSettingDefinition> = function ({ onChange, value, def }: SettingProps<StringSettingDefinition>) {
   return (
     <Fieldset
-      label={def.id}
+      label={def.label || def.id}
       input={TextInput}
       value={value}
       onChange={onChange}

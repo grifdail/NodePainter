@@ -71,7 +71,7 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
         }}
         value={value}
         onChange={onChange}
-        label={def.id}
+        label={def.label || def.id}
       />
     </Body>
   );
