@@ -35,7 +35,7 @@ export const JavascriptFunctionNode: NodeDefinition = {
                 // Therefore we need to convert it to raw {portId: any}
                 let stateRaw = Object.entries(state).reduce((old, [key, value]) => ({ ...old, [key]: value.value }))
 
-                var output = fn();
+                var output = fn(stateRaw);
                 return output;
             });
             return output
