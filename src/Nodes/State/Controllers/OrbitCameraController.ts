@@ -7,6 +7,7 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector3, Vector2 } from "../../../Types/vectorDataType";
 import { processAndUpdateCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
+import { trueMod } from "../../../Utils/math/trueMod";
 import { vectorAddition } from "../../../Utils/math/vectorUtils";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 
@@ -73,5 +74,3 @@ export const OrbitCameraControllerNode: NodeDefinition = {
 
 
 };
-
-const trueMod = (a: number, b: number) => ((a % b) + b) % b

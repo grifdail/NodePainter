@@ -24,6 +24,7 @@ import { GraphAreaSetting } from "./GraphAreaSetting";
 import { Vector2Setting } from "./Vector2Setting";
 import { ImagePreviewSetting } from "./ImagePreviewSetting";
 import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
+import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
@@ -35,6 +36,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   gradient: GradientSetting,
   "image-upload": ImageUploadSetting,
   "image-paint": ImagePaintSetting,
+  flipbook: FlipbookAnimationSetting,
   envelope: EnvelopeSetting,
   hidden: EmptySetting,
   button: ButtonsSettings,

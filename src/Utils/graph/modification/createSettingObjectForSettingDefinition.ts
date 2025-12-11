@@ -15,6 +15,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   gradient: identity,
   "image-upload": identity,
   "image-paint": identity,
+  "flipbook": identity,
   "image-preview": identity,
   envelope: identity,
   button: identity,

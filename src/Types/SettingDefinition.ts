@@ -5,6 +5,7 @@ import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock/CodeBlock";
 import { JavascriptFunction } from "./CodeBlock/JavascriptFunction";
 import { EnvelopeData } from "./EnvelopeData";
+import { Flipbook } from "./FlipBook";
 import { NodeData } from "./NodeData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
 
@@ -57,6 +58,10 @@ export type ImagePreviewSettingDefinition = BaseSettingDefinition & {
 };
 export type ImagePaintSettingDefinition = BaseSettingDefinition & {
   type: "image-paint";
+};
+export type FlipbookAnimationSettingDefinition = BaseSettingDefinition & {
+  type: "flipbook";
+  defaultValue: Flipbook
 };
 export type EnvelopeSettingDefinition = BaseSettingDefinition & {
   type: "envelope";
@@ -142,6 +147,7 @@ export type SettingDefinition =
   | GradientSettingDefinition
   | ImageUploadSettingDefinition
   | ImagePaintSettingDefinition
+  | FlipbookAnimationSettingDefinition
   | ImagePreviewSettingDefinition
   | EnvelopeSettingDefinition
   | StringSettingDefinition

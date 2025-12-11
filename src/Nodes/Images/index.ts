@@ -1,3 +1,4 @@
+import { FlipbookNode } from "./FlipbookNode";
 import { ImageDimension } from "./ImageDimension";
 import { PaintImage } from "./PaintImage";
 import { PrecomputeImage } from "./PrecomputeImage";
@@ -7,6 +8,7 @@ import { UsePatternImage } from "./UsePatternImage";
 
 export const ImageNodes = [
   //
+  FlipbookNode,
   ImageDimension,
   PaintImage,
   PrecomputeImage,

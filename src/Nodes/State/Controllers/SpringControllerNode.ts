@@ -62,5 +62,3 @@ export const SpringController: NodeDefinition = {
 
     },
 };
-
-const trueMod = (a: number, b: number) => ((a % b) + b) % b

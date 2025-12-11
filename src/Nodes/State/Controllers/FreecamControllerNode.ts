@@ -6,6 +6,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
+import { trueMod } from "../../../Utils/math/trueMod";
 import { vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
 export const FreecamControllerNode: NodeDefinition = {
@@ -82,4 +83,3 @@ export const FreecamControllerNode: NodeDefinition = {
 
 };
 
-const trueMod = (a: number, b: number) => ((a % b) + b) % b

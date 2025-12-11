@@ -13,4 +13,5 @@ export enum Routes {
   CodeBlock = "/code_block",
   SketchMenu = "/sketch_menu",
   JavascriptFunction = "/js_function",
+  PaintAnimation = "/paint-animation/:type/:id",
 }

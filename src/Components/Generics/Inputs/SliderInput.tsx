@@ -65,7 +65,7 @@ const SliderInputDiv = styled.div`
   }
 `;
 
-export function SliderInput({ onChange, value, disabled, min, max }: InputProps<number> & { max: number; min: number }) {
+export function SliderInput({ onChange, value, disabled, min, max, step = 1 }: InputProps<number> & { max: number; min: number, step: number }) {
   return (
     <SliderInputDiv>
       <input
@@ -73,6 +73,7 @@ export function SliderInput({ onChange, value, disabled, min, max }: InputProps<
         value={value}
         min={min}
         max={max}
+        step={step}
         onChange={(e) => onChange(parseFloat(e.target.value))}
         disabled={disabled}
       />

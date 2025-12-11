@@ -6,6 +6,7 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector2 } from "../../../Types/vectorDataType";
 import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
 import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
+import { trueMod } from "../../../Utils/math/trueMod";
 import { vector2Perpendicular, vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
 
 export const FirstPersonControllerNode: NodeDefinition = {
@@ -84,4 +85,3 @@ export const FirstPersonControllerNode: NodeDefinition = {
     },
 };
 
-const trueMod = (a: number, b: number) => ((a % b) + b) % b

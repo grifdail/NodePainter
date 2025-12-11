@@ -45,3 +45,7 @@ export const openSketchMenu = () => {
 export const openSaveModal = () => {
     navigate(Routes.Save);
 }
+
+export const openPaintAnimationModal = (type: string, id: string) => {
+    navigate(Routes.PaintAnimation.replace(":type", type).replace(":id", id))
+}

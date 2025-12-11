@@ -7,6 +7,7 @@ import { MouseEvent, useState } from "react";
 import { current } from "immer";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
+import { generateSVGPath } from "../../Utils/ui/generateSVGPath";
 
 export const PathSetting: SettingComponent<PathSettingDefinition> = function PathSetting({ onChange, value, def }: SettingProps<PathSettingDefinition>) {
   const list = value as PathData;
@@ -62,7 +63,7 @@ export const PathSetting: SettingComponent<PathSettingDefinition> = function Pat
           fill="none"
           stroke="black"
           strokeWidth="0.01"
-          d={drawingStart ? generatePath(onProgressPath) : generatePath(list)}></path>
+          d={drawingStart ? generateSVGPath(onProgressPath, 3) : generateSVGPath(list, 3)}></path>
       </StyledPreview>
       <Fieldset
         label={"Uniform speed"}
@@ -81,13 +82,4 @@ var StyledPreview = styled.svg`
   margin-bottom: var(--padding-small);
 `;
 
-function generatePath(path: PathData): string | undefined {
-  if (path.length < 3) {
-    return undefined;
-  }
-  const points = [`M ${path[0]} ${path[1]}`];
-  for (let i = 3; i < path.length; i += 3) {
-    points.push(`L ${path[i]} ${path[i + 1]}`);
-  }
-  return points.join("\n");
-}
+
