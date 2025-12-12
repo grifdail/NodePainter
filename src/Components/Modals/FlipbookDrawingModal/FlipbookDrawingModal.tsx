@@ -33,6 +33,8 @@ const MainDiv = styled.div`
   gap: var(--padding-medium);
   align-items: stretch;
 
+
+
   @media (max-width: 800px) {
     flex-direction: column;
   }
@@ -112,31 +114,30 @@ export function FlipbookDrawingModal() {
                 />
 
                 <ToolDiv>
-                    <div><Fieldset
+                    <Fieldset
                         label="FPS"
                         input={SliderInput as any}
                         value={fps}
                         onChange={setFPS}
                         passtrough={{ min: 0, max: 60, }}></Fieldset>
-                        <Fieldset
-                            label="Frame"
-                            input={SliderInput as any}
-                            value={frame}
-                            onChange={setFrame}
-                            passtrough={{ min: 0, max: animation.length - 1 }}></Fieldset>
+                    <Fieldset
+                        label="Frame"
+                        input={SliderInput as any}
+                        value={frame}
+                        onChange={setFrame}
+                        passtrough={{ min: 0, max: animation.length - 1 }}></Fieldset>
 
 
-                        <ButtonGroup>
-                            <Button icon={playMode === "pause" ? IconPlayerPlay : IconPlayerPause} onClick={togglePlayMode} />
-                            <Menu menuButton={<Button icon={OnionSkinIcon[onionSkinMode]} />}>
-                                {
-                                    Object.entries(OnionSkinIcon).map(([key, Icon]) => <MenuItem onClick={() => setOnionSkinMode(key as keyof typeof OnionSkinIcon)}><Icon /> {key}</MenuItem>)
-                                }
-                            </Menu>
-                            <Button icon={IconPlus} label="Add Frame" onClick={addFrame} />
-                            <Button icon={IconTrash} label="Remove current Frame" onClick={() => removeFrame()} />
-                        </ButtonGroup>
-                    </div>
+                    <ButtonGroup>
+                        <Button tooltip={playMode} icon={playMode === "pause" ? IconPlayerPlay : IconPlayerPause} onClick={togglePlayMode} />
+                        <Menu menuButton={<Button icon={OnionSkinIcon[onionSkinMode]} tooltip="Onion Skin" />}>
+                            {
+                                Object.entries(OnionSkinIcon).map(([key, Icon]) => <MenuItem onClick={() => setOnionSkinMode(key as keyof typeof OnionSkinIcon)}><Icon /> {key}</MenuItem>)
+                            }
+                        </Menu>
+                        <Button icon={IconPlus} tooltip="Add Frame" onClick={addFrame} />
+                        <Button icon={IconTrash} tooltip="Remove current Frame" onClick={() => removeFrame()} />
+                    </ButtonGroup>
                     <hr></hr>
                     <Fieldset
                         label="Color"

@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Amatic+SC&family=Concert+One&family=Josefin+Sans&family=Lobster&family=Merriweather:wght@300&family=Monomaniac+One&family=Oleo+Script&family=Open+Sans&family=Orbitron&family=Permanent+Marker&family=Pixelify+Sans&family=Titan+One&display=swap");
 @import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css);
 
+@import '@szhsin/react-menu/dist/transitions/slide.css';
+
 :root {
   --color-pairing: light-dark(#88888855, #88888855);
 
@@ -76,11 +78,15 @@ body {
   background: var(--color-background);
 }
 
+
+
 body .szh-menu {
   color: var(--color-text);
   background-color: var(--color-background-button);
   border: 1px solid light-dark(rgba(0, 0, 0, 0.1), #333);
   box-shadow: 0 2px 9px 3px rgba(0, 0, 0, 0.25);
+
+  
 
   .szh-menu__arrow {
     background-color: var(--color-text);

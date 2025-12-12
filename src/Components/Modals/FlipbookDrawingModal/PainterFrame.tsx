@@ -24,6 +24,8 @@ export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: numb
     }, [frame, addLine, color, lineWidth])
 
     const onMouseMove = useCallback((e: MouseEvent<SVGRectElement>) => {
+        e.preventDefault()
+        e.stopPropagation();
         const rect = e.currentTarget.getBoundingClientRect();
         const x = (e.clientX - rect.x) / rect.width;
         const y = (e.clientY - rect.y) / rect.height;
@@ -40,6 +42,7 @@ export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: numb
     }, [started, refItem, refLine]);
 
     const onMouseDown = useCallback((e: MouseEvent<SVGRectElement>) => {
+        e.preventDefault()
         const rect = e.currentTarget.getBoundingClientRect();
         const x = (e.clientX - rect.x) / rect.width;
         const y = (e.clientY - rect.y) / rect.height;
@@ -48,6 +51,7 @@ export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: numb
     }, []);
 
     const onMouseUp = useCallback((e: MouseEvent<SVGRectElement>) => {
+        e.preventDefault()
         finishLine();
         setStarted(false);
 
@@ -78,10 +82,14 @@ export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: numb
             x={0}
             y={0}
             fill="transparent"
-            onMouseMove={onMouseMove}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
-            onMouseLeave={onMouseLeave}
+            //onMouseMove={onMouseMove}
+            //onMouseDown={onMouseDown}
+            //onMouseUp={onMouseUp}
+            //onMouseLeave={onMouseLeave}
+            onPointerDown={onMouseDown}
+            onPointerUp={onMouseUp}
+            onPointerLeave={onMouseLeave}
+            onPointerMove={onMouseMove}
         />
         <g style={{ pointerEvents: "none" }}>
             <circle

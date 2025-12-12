@@ -44,6 +44,7 @@ export function PaletteMenu({ onLoaded, currentPalette, button, children }: { on
 
   return (
     <Menu
+      align="end"
       portal
       menuButton={button != null ? button : <Button icon={IconMenu2}></Button>}>
       <MenuItem onClick={savePalette}>Save Palette</MenuItem>

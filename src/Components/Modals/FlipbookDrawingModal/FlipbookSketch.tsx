@@ -17,6 +17,7 @@ const Preview = styled.div<{ scale: number; basis: number }>`
   flex: 1 0 ${(props) => props.basis}px;
   position: relative;
   min-height: ${(props) => props.basis}px;
+
   & > div {
     position: absolute;
     width: 100%;
@@ -27,18 +28,26 @@ const Preview = styled.div<{ scale: number; basis: number }>`
   }
 
   & svg {
+    flex: 0 0 400px;
     padding: 0;
     margin: 0;
+    width: 400px;
+    height: 400px;
+    display: block;
     background: var(--gradient-transparent);
     border: 1px solid var(--color-border);
+
+
+    touch-action: none;
+  
   }
 
   @media (max-width: 800px) {
-    flex: 1 1 10px;
-    min-height: 0;
+
 
     & > div {
       transform: scale(${(state) => state.scale});
+      aspect-ratio: 1;
     }
   }
 `;
@@ -47,11 +56,10 @@ const Preview = styled.div<{ scale: number; basis: number }>`
 export function FlipbookSketch(props: FlipbookSketchProps) {
   const [ref, { width, height }] = useMeasure();
 
+  const scale = width !== null ? (width < 400 ? width / 400 : 1) : 1
 
-
-  var smallestDim = Math.min(1, Math.min((width || 400) / 400, (height || 400) / 400));
   return (
-    <Preview scale={smallestDim} basis={400}>
+    <Preview scale={scale} basis={400}>
       <div ref={ref}>
         <svg width={400} height={400} viewBox="0 0 1 1">
           <defs>

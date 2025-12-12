@@ -36,6 +36,9 @@ const StyledButton = styled.button`
 export const DropdownInput = function DropdownInput({ onChange, value, options, template, templateRaw, useTemplateForField }: InputProps<any> & { options?: string[]; templateRaw?: (value: string, args?: any) => ReactNode; template?: (value: string, args?: any) => ReactNode; useTemplateForField?: boolean }) {
   return (
     <Menu
+      align="end"
+      gap={10}
+      transition
       portal
       overflow="auto"
       menuButton={
