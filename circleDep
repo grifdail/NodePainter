@@ -155,6 +155,17 @@
 			"src/Nodes/Misc/index.ts",
 			"src/Nodes/Nodes.ts",
 			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
+		],
+		[
+			"src/Components/Graph/GetNodeHeight.tsx",
+			"src/Components/Settings/AnimationSequenceSetting.tsx",
+			"src/Components/Settings/SettingsComponents.tsx",
+			"src/Hooks/useSelection.tsx",
+			"src/Hooks/useTree.ts",
+			"src/Nodes/Misc/AreaCommentNode.ts",
+			"src/Nodes/Misc/index.ts",
+			"src/Nodes/Nodes.ts",
+			"src/Utils/graph/modification/getNodesInBoundingBox.tsx"
 		]
 	],
 	"src/Components/Settings/GroupSetting.tsx": [

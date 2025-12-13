@@ -20,6 +20,7 @@ import { memo, useCallback, useMemo } from "react";
 import { closeAllPopup } from "../Actions/navigationAction";
 import { JavascriptFunctionModal } from "./Modals/CodeBlock/JavascriptFunctionModal";
 import { FlipbookDrawingModal } from "./Modals/FlipbookDrawingModal/FlipbookDrawingModal";
+import { AnimationSequenceModal } from "./Modals/AnimationSequenceModal/AnimationSequenceModal";
 
 const LocalRoute = ({ path, component: Component }: { path?: string, component: ReactComponentLike }) => {
   const [location, navigate] = useLocation();
@@ -67,6 +68,7 @@ const RouterSwitch = () => {
     <LocalRoute path={Routes.SketchMenu} component={SketchModal} />
     <LocalRoute path={Routes.JavascriptFunction} component={JavascriptFunctionModal} />
     <LocalRoute path={Routes.PaintAnimation} component={FlipbookDrawingModal} />
+    <LocalRoute path={Routes.AnimationSequence} component={AnimationSequenceModal} />
     <LocalRoute component={GridUi} />
 
   </Switch>

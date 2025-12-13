@@ -1,4 +1,5 @@
 ﻿import { IconCodeDots } from "@tabler/icons-react";
+import { useTree } from "../../Hooks/useTree";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { cacheBehaviorSettingWithNoCache } from "../../Utils/graph/definition/cacheBehaviorSetting";
@@ -9,11 +10,11 @@ import { createDefaultJavascriptFunction } from "../../Utils/JavascriptFunction/
 import { evalFunction } from "../../Utils/JavascriptFunction/javascriptFunctionGlobalScope";
 
 export const JavascriptFunctionNode: NodeDefinition = {
-    id: "Misc/JavascriptFunctionNode",
-    description: "Custom function",
+    id: "Misc/JavascriptFunction",
+    description: "Execute a javascript function",
     icon: IconCodeDots,
-    tags: [],
-    preventSnippet: true,
+    tags: ["Misc"],
+    preventSnippet: false,
     hideInLibrary: false,
     dataInputs: [Port.CacheId()],
     dataOutputs: [],
@@ -22,6 +23,12 @@ export const JavascriptFunctionNode: NodeDefinition = {
             id: "code",
             type: "js-function",
             defaultValue: createDefaultJavascriptFunction(),
+            onChange(node, newValue, oldValue, definitions) {
+                console.log("cccc");
+                var tree = useTree.getState();
+                tree.replaceInputs((t) => t.id === node.id, [Port.CacheId(), ...newValue.inputVariables]);
+                tree.replaceOutput((t) => t.id === node.id, newValue.outputVariables);
+            },
         },
         frameCacheSetting(), cacheBehaviorSettingWithNoCache()
     ],

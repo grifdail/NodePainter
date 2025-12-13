@@ -17,6 +17,9 @@
   --color-slider-output: light-dark(#00000088, #cad1d888);
   --color-disabled: light-dark(#aaa, #666)
 
+  --color-hightlight:  light-dark(#000000, #cad1d8);
+  --color-hightlight-light:  light-dark(#00000033, #cad1d833);
+
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 
@@ -56,6 +59,9 @@ body.theme-rose-pine-moon {
   --color-slider-output: #eb6f92;
   --color-disabled: #6e6a86;
 
+  --color-hightlight:  #eb6f92;
+  --color-hightlight-light:  #eb6f9233;
+
   --border-size: 1px;
   --card-shadow: 0 1px 4px rgba(255, 255, 255, 0);
 
@@ -92,6 +98,9 @@ body.theme-rose-pine-dawn {
   --color-slider-output: #b4637a;
   --color-disabled: #9893a5;
 
+    --color-hightlight:  #b4637a;
+    --color-hightlight-light:  #b4637a33;
+
   --border-size: 1px;
   --card-shadow: 0 1px 4px rgba(255, 255, 255, 0.1);
 
@@ -125,8 +134,10 @@ body.theme-light {
   --color-input: #888;
   --color-input-predefined: color-mix(in srgb, var(--color-input), transparent 90%);
   --color-slider-track: #eeeeee;
-  --color-slider-output: #00000088;
+  --color-slider-output: #0a090988;
   --color-disabled: #aaa;
+    --color-hightlight:  #eeeeee;
+    --color-hightlight-light:  #eeeeee33;
 
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -163,6 +174,9 @@ body.theme-dark {
   --color-slider-track: #282828;
   --color-slider-output: #cad1d888;
   --color-disabled: #666;
+
+  --color-hightlight:  #eeeeee;
+  --color-hightlight-light:  #eeeeee33;
 
   --border-size: 0.2px;
 

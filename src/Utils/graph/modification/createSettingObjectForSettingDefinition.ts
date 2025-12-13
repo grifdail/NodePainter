@@ -9,7 +9,7 @@ export const CustomInitializer: { [key in SettingType]: <T extends SettingDefini
   number: identity,
   vector2: identity,
   hidden: identity,
-
+  "animation-sequence": identity,
   dropdown: identity,
   palette: identity,
   gradient: identity,

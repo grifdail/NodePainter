@@ -31,4 +31,5 @@ var defaultPort: PortTypeGenerator = Object.fromEntries(
 export const Port = {
   ...defaultPort,
   CacheId: () => defaultPort.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()]),
+  Reset: () => defaultPort.bool("reset", 0, "When this is trigger, the node is reset to it's default value", []),
 };

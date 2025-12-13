@@ -8,7 +8,7 @@ import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { Button } from "../Generics/Button";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDrag } from "@use-gesture/react";
-import { calculatePathForFunction } from "./calculatePathForFunction";
+import { calculateSVGPathForMathFunction } from "../../Utils/ui/calculateSVGPathForMathFunction";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { NumberInput } from "../Generics/Inputs/NumberInput";
@@ -195,7 +195,7 @@ function EnvelopePreview({ value, width, height, onChange }: { onChange: (value:
   }
 
   var values = useMemo(() => Array.from({ length: 100 }).map((v: any, i: number) => interpolateEnvelope(localCopy, i / 99)), [localCopy]);
-  const path = useMemo(() => calculatePathForFunction(values, width, height, 0, 1), [height, values, width]);
+  const path = useMemo(() => calculateSVGPathForMathFunction(values, width, height, 0, 1), [height, values, width]);
 
   return (
     <StyledPreview

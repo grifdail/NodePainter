@@ -49,3 +49,6 @@ export const openSaveModal = () => {
 export const openPaintAnimationModal = (type: string, id: string) => {
     navigate(Routes.PaintAnimation.replace(":type", type).replace(":id", id))
 }
+export const openAnimationSequenceModal = (id: string) => {
+    navigate(Routes.AnimationSequence.replace(":id", id))
+}

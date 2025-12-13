@@ -25,6 +25,7 @@ import { Vector2Setting } from "./Vector2Setting";
 import { ImagePreviewSetting } from "./ImagePreviewSetting";
 import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
+import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
   dropdown: DropdownSetting,
@@ -52,4 +53,5 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
   "text-area": TextAreaSetting,
   "bezier-path": BezierPathSetting,
   "graph-area": GraphAreaSetting,
+  "animation-sequence": AnimationSequenceSetting,
 };

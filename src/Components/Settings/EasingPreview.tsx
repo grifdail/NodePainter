@@ -2,12 +2,11 @@ import { SettingComponent } from "./SettingComponent";
 import { SettingProps } from "./SettingProps";
 import styled from "styled-components";
 import { useMemo } from "react";
-import { Easing, EasingFunctionType, evaluate } from "../../libs/easing";
-import { Fieldset } from "../StyledComponents/Fieldset";
-import { EasingIcon } from "../../libs/EasingIcon";
-import { calculatePathForFunction, invertLerp } from "./calculatePathForFunction";
-import { DropdownInput } from "../Generics/Inputs/DropdownInput";
+import { EasingFunctionType, evaluate } from "../../libs/easing";
+import { calculateSVGPathForMathFunction } from "../../Utils/ui/calculateSVGPathForMathFunction";
+import { invertLerp } from "../../Utils/math/invertLerp";
 import { EasingPreviewSettingDefinition } from "../../Types/SettingDefinition";
+import { EasingDropdownFieldset } from "../Generics/EasingDropdownFieldset";
 
 export const EasingSetting: SettingComponent<EasingPreviewSettingDefinition> = function GradientSetting({ onChange, value, def, node }: SettingProps<EasingPreviewSettingDefinition>) {
   const functionName = value as EasingFunctionType;
@@ -22,19 +21,7 @@ export const EasingSetting: SettingComponent<EasingPreviewSettingDefinition> = f
         height={100}
         resolution={100}></FunctionPreview>
 
-      <Fieldset
-        label="Easing"
-        input={DropdownInput}
-        onChange={onChange}
-        passtrough={{
-          options: Object.values(Easing),
-          template: (name: EasingFunctionType) => (
-            <>
-              <EasingIcon fn={name} /> {name}
-            </>
-          ),
-        }}
-        value={value}></Fieldset>
+      <EasingDropdownFieldset onChange={onChange} value={value} />
     </div>
   );
 };
@@ -54,7 +41,7 @@ function FunctionPreview({ fn, resolution, height, width }: { fn: (value: number
   var max = useMemo(() => Math.max(...values, 1) + 0.1, [values]);
   var min = useMemo(() => Math.min(...values, 0) - 0.1, [values]);
 
-  const path = useMemo(() => calculatePathForFunction(values, width, height, min, max), [height, max, min, values, width]);
+  const path = useMemo(() => calculateSVGPathForMathFunction(values, width, height, min, max), [height, max, min, values, width]);
 
   return (
     <StyledPreview

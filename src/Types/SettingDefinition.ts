@@ -1,5 +1,6 @@
 import { Icon } from "@tabler/icons-react";
 import { EasingFunctionType } from "../libs/easing";
+import { AnimationSequenceData } from "../Utils/animationSequence/AnimationSequenceData";
 import { ConstrainDeclaration } from "../Utils/ui/applyConstraints";
 import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock/CodeBlock";
@@ -9,11 +10,13 @@ import { Flipbook } from "./FlipBook";
 import { NodeData } from "./NodeData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
 
+
 type BaseSettingDefinition = {
   id: string;
   globalKey?: string;
   label?: string;
   tooltip?: string;
+  onChange?: (node: NodeData, newValue: any, oldValue: any, definitions: SettingDefinition) => void;
 };
 
 export type NumberSettingDefinition = BaseSettingDefinition & {
@@ -82,6 +85,11 @@ export type HiddenSettingDefinition = BaseSettingDefinition & {
   type: "hidden";
   defaultValue: any;
   [key: string]: any;
+};
+
+export type AnimationSequenceSettingDefinition = BaseSettingDefinition & {
+  type: "animation-sequence";
+  defaultValue: AnimationSequenceData
 };
 
 export type ButtonSettingDefinition = BaseSettingDefinition & {
@@ -162,6 +170,7 @@ export type SettingDefinition =
   | PathSettingDefinition
   | BezierPathSettingDefinition
   | GroupSettingDefinition
-  | GraphAreaSettingDefinition;
+  | GraphAreaSettingDefinition
+  | AnimationSequenceSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];

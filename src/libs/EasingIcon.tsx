@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { AllEasing, EasingFunctionType } from "./easing";
 import { Icon, IconProps } from "@tabler/icons-react";
-import { calculatePathForFunction } from "../Components/Settings/calculatePathForFunction";
+import { calculateSVGPathForMathFunction } from "../Utils/ui/calculateSVGPathForMathFunction";
 
 const defaultAttributes = {
   xmlns: "http://www.w3.org/2000/svg",
@@ -19,7 +19,7 @@ export const EasingIcons: { [key in EasingFunctionType]: Icon } = Object.fromEnt
     var max = Math.max(...values, 1) + 0.05;
     var min = Math.min(...values, 0) - 0.05;
 
-    var path = calculatePathForFunction(values, 24, 24, min, max, false);
+    var path = calculateSVGPathForMathFunction(values, 24, 24, min, max, false);
     return [
       key as EasingFunctionType,
       forwardRef<SVGSVGElement, IconProps>(({ color = "currentColor", size = 24, stroke = 2, className, children, ...rest }: IconProps, ref) => {

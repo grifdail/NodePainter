@@ -1,4 +1,5 @@
 import { IconCodeDots } from "@tabler/icons-react";
+import { useTree } from "../../Hooks/useTree";
 import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createDefaultCodeBlock } from "../../Utils/codeblock/createDefaultCodeBlock";
@@ -18,6 +19,11 @@ export const ImperativeFunctionNode: NodeDefinition = {
       id: "code",
       type: "code-block",
       defaultValue: createDefaultCodeBlock(),
+      onChange(node, newValue, oldValue, definitions) {
+        var tree = useTree.getState();
+        tree.replaceInputs((t) => t.id === node.id, newValue.inputVariables);
+        tree.replaceOutput((t) => t.id === node.id, oldValue.outputVariables);
+      },
     },
   ],
   getData: (portId, data, context) => {

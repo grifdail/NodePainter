@@ -151,11 +151,19 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     setNodeSetting(nodeId, settingId, newValue) {
+
+      const state = get();
+      const node = state.nodes[nodeId];
+      const oldValue = node.settings[settingId]
+      const def = state.getNodeTypeDefinition(node);
+      const settingDef = def.settings.find(set => set.id === settingId);
+      if (settingDef && settingDef.onChange) {
+        settingDef.onChange(node, newValue, oldValue, settingDef)
+      }
       set(
         produce((state) => {
           const node = state.nodes[nodeId];
           node.settings[settingId] = newValue;
-          const def = get().getNodeTypeDefinition(node);
         })
       );
     },

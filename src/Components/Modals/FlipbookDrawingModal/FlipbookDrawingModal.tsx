@@ -11,16 +11,15 @@ import { SliderInput } from "../../Generics/Inputs/SliderInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { PaletteColorSelector } from "../Drawing/PaletteColorSelector";
 import { Button } from "../../Generics/Button";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { Flipbook } from "../../../Types/FlipBook";
-import { useParams } from "wouter";
-import { useTree } from "../../../Hooks/useTree";
 import { closeAllPopup } from "../../../Actions/navigationAction";
 import { FlipbookSketch } from "./FlipbookSketch";
 import { ExponantialSliderInput } from "../../Generics/Inputs/ExponantialSlider";
 import { cp } from "fs";
 import { useFlipbookDrawingState } from "./useFlipbookDrawingState";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import { useFlipbookModalSave } from "./useFlipbookModalSave";
 
 
 const MainDiv = styled.div`
@@ -75,7 +74,7 @@ const OnionSkinIcon = {
 
 export function FlipbookDrawingModal() {
 
-    const { defaultValue, save } = useModificationType();
+    const { defaultValue, save } = useFlipbookModalSave();
 
     const {
         animation, color, setColor, lineWidth, setLineWidth,
@@ -198,25 +197,4 @@ function usePlayModeControl(playMode: string, fps: number, animation: Flipbook, 
     }, [playMode, fps, animation.length]);
 }
 
-function useModificationType() {
-    const params = useParams();
-    const modificationType = params.type as string;
-    const modificationId = params.id as string;
-
-    const defaultValue = useMemo(() => {
-        if (modificationType === "node") {
-            return useTree.getState().nodes[modificationId]?.settings.flipbook || [[]];
-        }
-        return [[]]
-    }, [modificationId, modificationType])
-
-    const save = useCallback((newValue: Flipbook) => {
-        if (modificationType === "node") {
-            return useTree.getState().setNodeSetting(modificationId, "flipbook", newValue);
-        }
-
-    }, [modificationId, modificationType])
-
-    return { defaultValue, save }
-}
 

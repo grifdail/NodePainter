@@ -1,3 +1,4 @@
+import { AnimationSequenceNode } from "./AnimationSequenceNode";
 import { AreaCommentNode } from "./AreaCommentNode";
 import { BlackboardNode } from "./BlackboardNode";
 import { CacheNode } from "./CacheNode";
@@ -14,6 +15,7 @@ export const MiscNodes = [
   //
   ...MiscCombineNodes,
   ...MiscRenderNodes,
+  AnimationSequenceNode,
   AreaCommentNode,
   BlackboardNode,
   CacheNode,

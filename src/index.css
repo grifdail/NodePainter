@@ -23,7 +23,9 @@
   --color-disabled: #6e6a86;
   --color-shadow: light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 1));
   --color-box-selection: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
-  --color-warning-track: light-dark(#5c5c5c, #a8a8a8):
+  --color-warning-track: light-dark(#5c5c5c, #a8a8a8);
+  --color-hightlight:  light-dark(#000000, #cad1d8);
+  --color-hightlight-light:  light-dark(#00000033, #cad1d833);
 
   --border-size: 0.2px;
   --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
