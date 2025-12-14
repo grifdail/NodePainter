@@ -8,6 +8,8 @@ import { ParameterExpressionView } from "./ParameterExpressionView";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { StatementDiv } from "./StatementDiv";
 import { InvisibleButtonStyled } from "../../Generics/Button";
+import { useContext } from "react";
+import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
 
 export const ExpressionDiv = styled.div<{ expand?: boolean }>`
   grid-column: 1 / 3;
@@ -54,6 +56,11 @@ export const ExpressionDiv = styled.div<{ expand?: boolean }>`
   }
 `;
 export const CodeBlockParameterView = ({ expression, id, onChange }: { expression: CodeBlockParameterField; id: string; onChange: (v: CodeBlockParameterField) => void }) => {
+  var availableVariables = useContext(NodeVariableContext);
+  if (!availableVariables) {
+    return null;
+  }
+
   return (
     <ExpressionDiv>
       <label>{expression.label || id}</label>

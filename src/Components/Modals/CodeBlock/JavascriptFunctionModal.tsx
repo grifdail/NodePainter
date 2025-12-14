@@ -1,13 +1,10 @@
 ﻿import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../../Modal";
-import { useCodeBlockModal } from "../../../Hooks/useCodeBlockModal";
 import { PortEditList } from "../CustomNodes/PortEditList";
-import { CodeBlockStatementList } from "./CodeBlockStatementList";
-import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
-import { portTypesWithProperty, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
+import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { JavascriptFunctionModalStore, useJavascriptFunctionModal } from "../../../Hooks/useJavascriptFunctionModal";
-import { Editor, Monaco, useMonaco } from "@monaco-editor/react";
+import { Editor, useMonaco } from "@monaco-editor/react";
 import { useEffect, useRef } from "react";
 import { editor } from "monaco-editor";
 import { createDependencyProposals } from "../../../Utils/JavascriptFunction/javascriptFunctionGlobalScope";

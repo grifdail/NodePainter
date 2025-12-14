@@ -10,7 +10,7 @@ import { useToggle } from "@uidotdev/usehooks";
 import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
 import { PortType } from "../../../Types/PortType";
 import { useContext } from "react";
-import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
+import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
 
 type Props = {
   statement: CodeBlockStatement;
@@ -22,9 +22,8 @@ type Props = {
 export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }: Props) => {
   var def = CodeBlockBlocksTypes[statement.type];
   var [isOpen, toggleIsOpen] = useToggle(true);
-  var context = useContext(CodeBlockContext);
+  var variables = useContext(NodeVariableContext);
 
-  var variables = context ? [...context.localVariables, ...context.inputVariables, ...context.outputVariables] : [];
 
   const changeParameter = (changedParam: CodeBlockParameterField, id: string) => {
     let newParameters = { ...statement.parameters, [id]: changedParam };
@@ -44,7 +43,7 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
     }
     onChange({ ...statement, parameters: newParameters });
   };
-
+  console.log(statement);
   return (
     <StatementDiv>
       <div className="header">
@@ -76,14 +75,15 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
       </div>
       {isOpen && (
         <div className="parameters">
-          {Object.entries(statement.parameters).map(([key, expression]) => (
-            <CodeBlockParameterView
+          {Object.entries(statement.parameters).map(([key, expression]) => {
+            console.log(key);
+            return <CodeBlockParameterView
               key={key}
               id={key}
               expression={expression}
               onChange={(p) => changeParameter(p, key)}
             />
-          ))}
+          })}
         </div>
       )}
     </StatementDiv>

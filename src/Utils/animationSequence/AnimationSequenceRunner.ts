@@ -93,7 +93,7 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
         }
         do {
             const [inputs,] = yield;
-            if (!evalCondition(model.condition, properties, inputs)) {
+            if (evalCondition(model.condition, properties, inputs)) {
                 break;
             }
             yield* createRunnerForBlock(model.child, properties);
@@ -111,7 +111,8 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
     WaitUntil: function* (model: AnimationSequenceBlockWaitUntil, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
         do {
             const [inputs,] = yield;
-            if (!evalCondition(model.condition, properties, inputs)) {
+            console.log(evalCondition(model.condition, properties, inputs))
+            if (evalCondition(model.condition, properties, inputs)) {
                 break;
             }
         }

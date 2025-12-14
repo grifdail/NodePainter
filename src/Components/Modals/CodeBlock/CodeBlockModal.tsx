@@ -4,8 +4,9 @@ import { Modal } from "../../Modal";
 import { useCodeBlockModal } from "../../../Hooks/useCodeBlockModal";
 import { PortEditList } from "../CustomNodes/PortEditList";
 import { CodeBlockStatementList } from "./CodeBlockStatementList";
-import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
+import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
 import { portTypesWithProperty, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
+import { useMemo } from "react";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -34,6 +35,7 @@ const VariableSection = styled.div`
 export function CodeBlockModal() {
   const state = useCodeBlockModal();
   const codeBlock = state.current;
+  const variables = [...codeBlock.inputVariables, ...codeBlock.localVariables, ...codeBlock.outputVariables]
 
   return (
     <Modal
@@ -65,12 +67,12 @@ export function CodeBlockModal() {
             onChange={(ports) => state.setVariables(ports, "output")}
           />
         </VariableSection>
-        <CodeBlockContext.Provider value={codeBlock}>
+        <NodeVariableContext.Provider value={variables}>
           <CodeBlockStatementList
             statements={codeBlock.statements}
             onChange={state.setStatements}
           />
-        </CodeBlockContext.Provider>
+        </NodeVariableContext.Provider>
       </MainDiv>
     </Modal>
   );

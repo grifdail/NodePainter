@@ -13,6 +13,7 @@ import { ASChildrenBlock } from "./ASChildrenBlock";
 import { useAnimationSequenceBlockStateControls } from "./useAnimationSequenceBlockStateControls";
 import { ASChildBlock } from "./ASChildBlock";
 import { Fieldset, FieldsetStyled } from "../../StyledComponents/Fieldset";
+import { ASConditionField } from "./ASConditionField";
 
 export const EmptyDiv = () => <div className="empty" />
 
@@ -67,12 +68,14 @@ export function AnimationSequenceBlockUi({ block, animation, onChange, onRemove 
             <ASTargetDropdown animation={animation} block={block} onChange={onChange} />
             <ASValueField block={block} onChange={onChange} />
             <ASDurationField block={block} onChange={onChange} />
+
             <ASCountField block={block} onChange={onChange} />
             <ASEasingField block={block} onChange={onChange} />
             {
                 onRemove ? <InvisibleButton className="button" tooltip="delete" onClick={onRemove} icon={IconTrash} /> : null
             }
         </header>
+        <ASConditionField block={block} onChange={onChange} />
         <ASChildBlock animation={animation} block={block} setChild={setChild} />
         <ASChildrenBlock addChildren={addChildren} animation={animation} block={block} removeChildren={removeChildren} setChildren={setChildren} />
     </AnimationSequenceBlockUiDiv>;

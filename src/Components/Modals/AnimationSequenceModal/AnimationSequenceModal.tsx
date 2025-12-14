@@ -1,16 +1,14 @@
-﻿import { IconCodeDots, IconKeyframes } from "@tabler/icons-react";
+﻿import { IconKeyframes } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../../Modal";
-import { useCodeBlockModal } from "../../../Hooks/useCodeBlockModal";
 import { PortEditList } from "../CustomNodes/PortEditList";
-import { CodeBlockStatementList } from "../CodeBlock/CodeBlockStatementList";
-import { CodeBlockContext } from "../../../Hooks/CodeBlockContext";
 import { portTypesWithProperty, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { AnimationSequenceBlockSequence } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { closeAllPopup } from "../../../Actions/navigationAction";
-import { AnimationSequenceBlockUi, AnimationSequenceBlockUiDiv } from "./AnimationSequenceBlockUi";
+import { AnimationSequenceBlockUi } from "./AnimationSequenceBlockUi";
 import { useAnimationSequenceModalControlls } from "./useAnimationSequenceModalControlls";
 import { useAnimationSequenceModalSave } from "./useAnimationSequenceModalSave";
+import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -46,6 +44,7 @@ const VariableSection = styled.div`
 export function AnimationSequenceModal() {
     const { defaultValue, save } = useAnimationSequenceModalSave();
     const { animation, setInputVariables, setProperties, setRoot } = useAnimationSequenceModalControlls(defaultValue)
+    const variables = [...animation.inputVariables, ...animation.properties]
 
     return (
         <Modal
@@ -73,8 +72,9 @@ export function AnimationSequenceModal() {
                         onChange={setProperties}
                     />
                 </VariableSection>
-
-                <AnimationSequenceBlockUi block={animation.root} animation={animation} onChange={(block) => setRoot(block as AnimationSequenceBlockSequence)} />
+                <NodeVariableContext.Provider value={variables}>
+                    <AnimationSequenceBlockUi block={animation.root} animation={animation} onChange={(block) => setRoot(block as AnimationSequenceBlockSequence)} />
+                </NodeVariableContext.Provider>
             </MainDiv>
         </Modal>
     );
