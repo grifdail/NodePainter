@@ -66,12 +66,12 @@ export const useTree = create<TreeStore>()((set, get) => {
       return getOutputPort(get(), id, portId);
     },
     getSketchName() {
-      return get().nodes[START_NODE].settings["name"] as string;
+      return get().nodes[START_NODE].settings.name as string;
     },
     setSketchName(name) {
       set(
         produce((state) => {
-          state.nodes[START_NODE].settings["name"] = name;
+          state.nodes[START_NODE].settings.name = name;
         })
       );
     },
@@ -101,16 +101,16 @@ export const useTree = create<TreeStore>()((set, get) => {
           let node = tree.nodes[targetId] as NodeData;
           const port = node.dataInputs[targetPort];
           // eslint-disable-next-line eqeqeq
-          if (port !== undefined) {
-            // If were binding data port.
-            port.hasConnection = true;
-            port.connectedNode = sourceId;
-            port.connectedPort = sourcePort;
-          } else {
+          if (port === undefined) {
             node = tree.nodes[sourceId] as NodeData;
 
             tree.nodes[sourceId].execOutputs[sourcePort] = targetId;
+            return;
           }
+          // If were binding data port.
+          port.hasConnection = true;
+          port.connectedNode = sourceId;
+          port.connectedPort = sourcePort;
         })
       );
     },
@@ -157,7 +157,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       const oldValue = node.settings[settingId]
       const def = state.getNodeTypeDefinition(node);
       const settingDef = def.settings.find(set => set.id === settingId);
-      if (settingDef && settingDef.onChange) {
+      if (settingDef?.onChange) {
         settingDef.onChange(node, newValue, oldValue, settingDef)
       }
       set(
@@ -191,7 +191,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         produce((state) => {
           const sourceNode = state.nodes[nodeId] as NodeData;
           const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
-          if (def.availableTypes && def.availableTypes.includes(type)) {
+          if (def.availableTypes?.includes(type)) {
             if (def.onChangeType) {
               def.onChangeType(sourceNode, type);
             }
@@ -206,7 +206,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         produce((state) => {
           state.key++;
           const nodes = state.nodes as { [key: string]: NodeData };
-          var portSelection = usePortSelection.getState();
+          const portSelection = usePortSelection.getState();
 
           if (portSelection.hasSelection && portSelection.node === node) {
             portSelection.reset();
@@ -227,7 +227,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     deleteNodes(nodes) {
-      var deleteNode = get().deleteNode;
+      const deleteNode = get().deleteNode;
       nodes.forEach(deleteNode);
     },
     resetNode(node) {
@@ -253,7 +253,7 @@ export const useTree = create<TreeStore>()((set, get) => {
       return true;
     },
     exportTemplate() {
-      var t = get();
+      const t = get();
       return structuredClone({ nodes: t.nodes, customNodes: t.customNodes, globalSettings: t.globalSettings, editedGraph: undefined, version: SAVE_VERSION });
     },
     createStructType(ports: PortDefinition[], name: string) {
@@ -327,8 +327,8 @@ export const useTree = create<TreeStore>()((set, get) => {
           copyInputPortsValues(state.nodes[end], newEndNode);
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
-          for (let nodeId in original(state.nodes)) {
-            let node = state.nodes[nodeId];
+          for (const nodeId in original(state.nodes)) {
+            const node = state.nodes[nodeId];
             if (node.type === def.id) {
               def.dataInputs.forEach((port) => {
                 if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
@@ -392,8 +392,8 @@ export const useTree = create<TreeStore>()((set, get) => {
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
 
-          for (let nodeId in original(state.nodes)) {
-            let node = state.nodes[nodeId];
+          for (const nodeId in original(state.nodes)) {
+            const node = state.nodes[nodeId];
             if (node.type === def.id) {
               def.dataInputs.forEach((port) => {
                 if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
@@ -453,8 +453,8 @@ export const useTree = create<TreeStore>()((set, get) => {
           copyNodePosition(state.nodes[start], newStartNode)
           state.nodes[start] = newStartNode;
           state.nodes[end] = newEndNode;
-          for (let nodeId in original(state.nodes)) {
-            let node = state.nodes[nodeId];
+          for (const nodeId in original(state.nodes)) {
+            const node = state.nodes[nodeId];
             if (node.type === def.id) {
               def.dataInputs.forEach((port) => {
                 if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
@@ -480,11 +480,11 @@ export const useTree = create<TreeStore>()((set, get) => {
       );
     },
     getCustomNodeEditingType() {
-      var tree = get();
+      const tree = get();
       if (tree.editedGraph === undefined || tree.editedGraph === "main") {
         return "function";
       }
-      var executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
+      const executeAs = tree.getNodeTypeDefinition(tree.editedGraph).executeAs;
       switch (executeAs) {
         case RenderShader.id:
           return "shader";
@@ -539,8 +539,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             newNode.dataInputs[portId].connectedNode = port.connectedNode;
             newNode.dataInputs[portId].connectedPort = port.connectedPort;
           });
-          var endNode = state.nodes[getCustomFunctionEndId(nodeDef)];
-          var startNode = state.nodes[getCustomFunctionStartId(nodeDef)];
+          const endNode = state.nodes[getCustomFunctionEndId(nodeDef)];
           outputs.forEach(({ node, port, portId }) => {
             node.dataInputs[port.id].connectedNode = newNode.id;
             node.dataInputs[port.id].connectedPort = portId;
@@ -555,9 +554,9 @@ export const useTree = create<TreeStore>()((set, get) => {
       return true;
     },
     exportCustomeFunction(id) {
-      var state = get();
+      const state = get();
 
-      var obj = {
+      return {
         nodes: Object.fromEntries(
           Object.values(state.nodes)
             .filter((node) => node.graph === id)
@@ -565,8 +564,6 @@ export const useTree = create<TreeStore>()((set, get) => {
         ),
         definitions: [state.customNodes[id], state.customNodes[getCustomFunctionEndId(id)], state.customNodes[getCustomFunctionStartId(id)]],
       };
-
-      return obj;
     },
     loadCustomeFunction(customFunctionData) {
       set((state) => ({
@@ -634,14 +631,14 @@ export const useTree = create<TreeStore>()((set, get) => {
             }
             ports.forEach((port) => {
               if (node.dataInputs[port.id]) {
-                var oldPort = node.dataInputs[port.id];
-                var typeChange = oldPort.type !== port.type;
+                const oldPort = node.dataInputs[port.id];
+                const typeChange = oldPort.type !== port.type;
                 oldPort.label = port.label;
                 if (typeChange) {
                   oldPort.ownValue = convertTypeValue(oldPort.ownValue, oldPort.type, port.type);
 
                   if (oldPort.hasConnection) {
-                    var targetPort = state.nodes[oldPort.connectedNode as string].dataOutputs[oldPort.connectedPort as string] as PortDefinition;
+                    const targetPort = state.nodes[oldPort.connectedNode as string].dataOutputs[oldPort.connectedPort as string] as PortDefinition;
                     if (!canConvertCode(targetPort.type, port.type)) {
                       oldPort.hasConnection = false;
                       oldPort.connectedNode = null;
@@ -684,8 +681,8 @@ export const useTree = create<TreeStore>()((set, get) => {
             };
             newPorts.forEach((newPort) => {
               if (node.dataOutputs[newPort.id]) {
-                var oldPort = node.dataOutputs[newPort.id];
-                var typeChange = oldPort.type !== newPort.type;
+                const oldPort = node.dataOutputs[newPort.id];
+                const typeChange = oldPort.type !== newPort.type;
                 oldPort.label = newPort.label;
                 if (typeChange) {
                   removeAllConnections(newPort.id, (targetPort) => !canConvertCode(targetPort.type, newPort.type));
@@ -707,19 +704,19 @@ export const useTree = create<TreeStore>()((set, get) => {
         )
       );
     },
-    align: function (nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void): void {
+    align(nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void): void {
       if (nodeIds.length <= 1) {
         return;
       }
 
       set(
         produce((state) => {
-          var { bb, nodes } = buildBoundingBoxAroundTreeNodes(nodeIds, state);
+          const { bb, nodes } = buildBoundingBoxAroundTreeNodes(nodeIds, state);
           callback(bb, nodes);
         })
       );
     },
-    loadSnipets: function (snipets: Snippet, posX: number, posY: number, callback: (arg: Record<string, string>) => void): void {
+    loadSnipets(snipets: Snippet, posX: number, posY: number, callback: (arg: Record<string, string>) => void): void {
       set(
         produce((state) => {
           const newNames = loadSnippet(snipets, state, [posX, posY]);
@@ -732,7 +729,7 @@ export const useTree = create<TreeStore>()((set, get) => {
 });
 
 function preparePortForFunctions(inputs: { node: NodeData; port: PortConnection; portId: string }[]): PortDefinition[] {
-  var dic: { [key: string]: number } = {};
+  const dic: { [key: string]: number } = {};
 
   return inputs.map((element) => {
     dic[element.portId] = dic[element.portId] !== undefined ? dic[element.portId] + 1 : 0;

@@ -47,7 +47,7 @@ export const AnimationSequenceNode: NodeDefinition = {
         if (!result[portId]) {
             throw new Error(`There's no property named "${portId}" in the animation sequence.`);
         }
-        return result[portId];
+        return result[portId].value;
     },
 };
 

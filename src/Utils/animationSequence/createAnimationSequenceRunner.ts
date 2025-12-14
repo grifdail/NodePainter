@@ -5,7 +5,7 @@ import { createRunnerForBlock } from "./AnimationSequenceRunner";
 
 export const createAnimationSequenceRunner = (model: AnimationSequenceData, inputs: FunctionContext, node: NodeData) => {
 
-    const properties = model.properties.reduce((old, port) => ({ ...old, [port.id]: inputs[port.id]?.value || structuredClone(port.defaultValue) }), {} as Record<string, any>)
+    const properties = model.properties.reduce((old, port) => ({ ...old, [port.id]: structuredClone(inputs[port.id]) || { value: structuredClone(port.defaultValue), type: port.type } }), {} as FunctionContext)
 
     const loop = !!node.settings.loop
     let root = createRunnerForBlock(model.root, properties);
