@@ -1,4 +1,4 @@
-﻿import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
+﻿import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockReset, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
 
 type AnimationSequenceGeneratorT = { [TDefinition in AnimationSequenceBlock as TDefinition["type"]]: () => TDefinition }
 
@@ -6,7 +6,12 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     Delay: function (): AnimationSequenceBlockDelay {
         return {
             type: "Delay",
-            duration: 1
+            duration: {
+                type: "expression",
+                targetType: "number",
+                constantValue: 1,
+                expression: null
+            }
         };
     },
     Lerp: function (): AnimationSequenceBlockLerp {
@@ -17,8 +22,18 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
                 location: "properties",
                 id: ""
             },
-            value: undefined,
-            duration: 1,
+            value: {
+                type: "expression",
+                targetType: "number",
+                constantValue: 0,
+                expression: null
+            },
+            duration: {
+                type: "expression",
+                targetType: "number",
+                constantValue: 1,
+                expression: null
+            },
             easing: "Linear"
         };
     },
@@ -26,7 +41,12 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
         return {
             type: "Loop",
             child: null,
-            count: 5
+            count: {
+                type: "expression",
+                targetType: "number",
+                constantValue: 1,
+                expression: null
+            }
         };
     },
     Parallel: function (): AnimationSequenceBlockParallel {
@@ -49,14 +69,19 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
                 location: "properties",
                 id: ""
             },
-            value: undefined
+            value: {
+                type: "expression",
+                targetType: "number",
+                constantValue: 0,
+                expression: null
+            }
         };
     },
     LoopForever: function (): AnimationSequenceBlockLoopForever {
         return {
             type: "LoopForever",
             child: null
-        }
+        };
     },
     LoopUntil: function (): AnimationSequenceBlockLoopUntil {
         return {
@@ -68,19 +93,19 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
                 constantValue: undefined,
                 expression: null
             }
-        }
+        };
     },
     PickRandom: function (): AnimationSequenceBlockPickRandom {
         return {
             type: "PickRandom",
             children: []
-        }
+        };
     },
     Race: function (): AnimationSequenceBlockRace {
         return {
             type: "Race",
             children: []
-        }
+        };
     },
     WaitUntil: function (): AnimationSequenceBlockWaitUntil {
         return {
@@ -91,6 +116,11 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
                 constantValue: false,
                 expression: null
             }
+        };
+    },
+    Reset: function (): AnimationSequenceBlockReset {
+        return {
+            type: "Reset"
         }
     }
 }

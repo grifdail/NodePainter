@@ -3,7 +3,7 @@ import { CodeBlockParameterFieldExpression } from "../../Types/CodeBlock/CodeBlo
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { evaluateCodeBlockExpression } from "../codeblock/evaluateCodeBlockExpression";
 import { FunctionContext } from "../graph/execution/createExecutionContext";
-import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
+import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockReset, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
 
 type AnimationSequenceRunnerT = {
     [TDefinition in AnimationSequenceBlock as TDefinition["type"]]: (model: TDefinition, properties: FunctionContext) => Generator<void, void, [FunctionContext, number]>;
@@ -12,7 +12,9 @@ type AnimationSequenceRunnerT = {
 export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
     Delay: function* (model: AnimationSequenceBlockDelay, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
         let timer = 0;
-        while (timer < model.duration) {
+        const [inputs] = yield;
+        const duration = evalValue<number>(model.duration, properties, inputs)
+        while (timer < duration) {
             const [, dt] = yield;
             timer += dt;
         }
@@ -28,24 +30,29 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
         let timer = 0;
 
         const startValue = properties[model.target.id].value;
-        while (timer < model.duration) {
+        const [inputs] = yield;
+        const targetValue = evalValue<any>(model.value, properties, inputs);
+        const duration = evalValue<number>(model.duration, properties, inputs)
+        while (timer < duration) {
             const [, dt] = yield;
 
-            const t = timer / model.duration;
+            const t = timer / duration;
             const tt = AllEasing[model.easing](t);
-            properties[model.target.id].value = interpolator(startValue, model.value, tt);
+            properties[model.target.id].value = interpolator(startValue, targetValue, tt);
 
 
             timer += dt;
         }
-        properties[model.target.id].value = model.value;
+        properties[model.target.id].value = targetValue;
     },
     Loop: function* (model: AnimationSequenceBlockLoop, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
         if (model.child === null) {
 
             throw new Error(`No animation to execute inside the loop animation`);
         }
-        for (let i = 0; i < model.count; i++) {
+        const [inputs] = yield;
+        const count = evalValue<number>(model.count, properties, inputs)
+        for (let i = 0; i < count; i++) {
             yield* createRunnerForBlock(model.child, properties);
         }
     },
@@ -75,7 +82,9 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
         if (!model.target.id || !(model.target.id in properties)) {
             throw new Error(`${model.target.id} is undefined`);
         }
-        properties[model.target.id].value = model.value;
+        const [inputs] = yield;
+        const targetValue = evalValue<any>(model.value, properties, inputs);
+        properties[model.target.id].value = targetValue;
     },
     LoopForever: function* (model: AnimationSequenceBlockLoopForever, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
         if (model.child === null) {
@@ -111,7 +120,7 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
     WaitUntil: function* (model: AnimationSequenceBlockWaitUntil, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
         do {
             const [inputs,] = yield;
-            console.log(evalCondition(model.condition, properties, inputs))
+
             if (evalCondition(model.condition, properties, inputs)) {
                 break;
             }
@@ -130,6 +139,12 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
             }
         }
         while (!isDone);
+    },
+    Reset: function* (model: AnimationSequenceBlockReset, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
+        const [inputs, dt] = yield;
+        Object.keys(properties).forEach(key => {
+            properties[key].value = inputs[key].value
+        });
     }
 }
 
@@ -142,3 +157,7 @@ function evalCondition(condition: CodeBlockParameterFieldExpression, properties:
     return evaluateCodeBlockExpression(condition, { ...inputs, ...properties })
 }
 
+
+function evalValue<T>(condition: CodeBlockParameterFieldExpression, properties: FunctionContext, inputs: FunctionContext): T {
+    return evaluateCodeBlockExpression(condition, { ...inputs, ...properties }) as T;
+}

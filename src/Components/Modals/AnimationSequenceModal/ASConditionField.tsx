@@ -1,4 +1,5 @@
-﻿import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlock/CodeBlockParameterFieldExpression";
+﻿import { IconCheck } from "@tabler/icons-react";
+import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlock/CodeBlockParameterFieldExpression";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 import { NumberInput } from "../../Generics/Inputs/NumberInput";
@@ -12,7 +13,12 @@ export function ASConditionField({ block, onChange }: {
     if (!("condition" in block)) {
         return null;
     }
-    return <ParameterExpressionView parameter={block.condition} onChange={(e) => {
-        onChange({ ...block, condition: e });
-    }} />;
+    return <div className="field">
+        <span><IconCheck /> Condition</span>
+        <div>
+            <ParameterExpressionView parameter={block.condition} onChange={(e) => {
+                onChange({ ...block, condition: e });
+            }} />
+        </div>
+    </div>
 }

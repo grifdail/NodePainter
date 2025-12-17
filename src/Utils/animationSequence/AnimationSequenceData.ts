@@ -6,21 +6,21 @@ import { PortType } from "../../Types/PortType"
 
 export type AnimationSequenceBlockDelay = {
     type: "Delay",
-    duration: number
+    duration: CodeBlockParameterFieldExpression
 }
 
 export type AnimationSequenceBlockLerp = {
     type: "Lerp",
     target: AnimationTarget
-    value: any,
-    duration: number,
+    value: CodeBlockParameterFieldExpression,
+    duration: CodeBlockParameterFieldExpression,
     easing: EasingFunctionType
 }
 
 export type AnimationSequenceBlockLoop = {
     type: "Loop",
     child: null | AnimationSequenceBlock
-    count: number
+    count: CodeBlockParameterFieldExpression
 }
 
 export type AnimationSequenceBlockLoopForever = {
@@ -49,6 +49,10 @@ export type AnimationSequenceBlockRace = {
     children: AnimationSequenceBlock[]
 }
 
+export type AnimationSequenceBlockReset = {
+    type: "Reset",
+}
+
 export type AnimationSequenceBlockSequence = {
     type: "Sequence",
     children: AnimationSequenceBlock[]
@@ -57,7 +61,7 @@ export type AnimationSequenceBlockSequence = {
 export type AnimationSequenceBlockSet = {
     type: "Set",
     target: AnimationTarget
-    value: any,
+    value: CodeBlockParameterFieldExpression,
 }
 
 export type AnimationSequenceBlockWaitUntil = {
@@ -74,6 +78,7 @@ export type AnimationTarget = {
 }
 
 
+
 export type AnimationCondition = {
     target: AnimationTarget
 }
@@ -87,6 +92,7 @@ export type AnimationSequenceBlock =
     | AnimationSequenceBlockParallel
     | AnimationSequenceBlockPickRandom
     | AnimationSequenceBlockRace
+    | AnimationSequenceBlockReset
     | AnimationSequenceBlockSequence
     | AnimationSequenceBlockSet
     | AnimationSequenceBlockWaitUntil

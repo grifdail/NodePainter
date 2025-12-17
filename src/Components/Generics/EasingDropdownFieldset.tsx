@@ -5,7 +5,7 @@ import { Fieldset } from "../StyledComponents/Fieldset";
 
 export function EasingDropdownFieldset({ onChange, value }: { onChange: (key: EasingFunctionType) => void; value: EasingFunctionType; }) {
     return <Fieldset
-        label="Easing"
+        label=""
         input={DropdownInput}
         onChange={onChange}
         passtrough={{

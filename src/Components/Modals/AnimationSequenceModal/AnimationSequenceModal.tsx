@@ -14,15 +14,29 @@ const MainDiv = styled.div`
     width: 100%;
     //overflow: hidden;
     height: 100%;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 100%;
     justify-content: stretch;
     gap: var(--padding-medium);
     align-items: stretch;
+    overflow: auto;
+
+    section:has(&) {
+        overflow: hidden;
+    }
+
 
     & > div:nth-child(2) {
         flex-grow: 1;
         align-self: start;
+        overflow-y: scroll;
+        max-height: 100%;
+        grid-column: 2/3;
+
+        grid-row: 1/2;
+        scrollbar-gutter: stable;
+        padding-right: 10px;
     }
 
     @media (max-width: 800px) {
@@ -39,6 +53,9 @@ const VariableSection = styled.div`
     gap: var(--padding-medium);
     flex-direction: column;
     flex: 0 0 200px;
+
+        grid-row: 1/2;
+        grid-column: 1/2;
 `;
 
 export function AnimationSequenceModal() {
