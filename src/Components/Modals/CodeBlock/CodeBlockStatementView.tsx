@@ -43,7 +43,7 @@ export const CodeBlockStatementView = ({ statement, onDelete, onMove, onChange }
     }
     onChange({ ...statement, parameters: newParameters });
   };
-  console.log(statement);
+
   return (
     <StatementDiv>
       <div className="header">

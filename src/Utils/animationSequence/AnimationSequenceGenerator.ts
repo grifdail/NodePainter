@@ -1,10 +1,12 @@
-﻿import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockReset, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
+﻿import { nanoid } from "nanoid";
+import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockReset, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
 
 type AnimationSequenceGeneratorT = { [TDefinition in AnimationSequenceBlock as TDefinition["type"]]: () => TDefinition }
 
 export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     Delay: function (): AnimationSequenceBlockDelay {
         return {
+            id: nanoid(),
             type: "Delay",
             duration: {
                 type: "expression",
@@ -16,6 +18,7 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     Lerp: function (): AnimationSequenceBlockLerp {
         return {
+            id: nanoid(),
             type: "Lerp",
             target: {
                 type: "number",
@@ -39,6 +42,7 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     Loop: function (): AnimationSequenceBlockLoop {
         return {
+            id: nanoid(),
             type: "Loop",
             child: null,
             count: {
@@ -51,18 +55,21 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     Parallel: function (): AnimationSequenceBlockParallel {
         return {
+            id: nanoid(),
             type: "Parallel",
             children: []
         };
     },
     Sequence: function (): AnimationSequenceBlockSequence {
         return {
+            id: nanoid(),
             type: "Sequence",
             children: []
         };
     },
     Set: function (): AnimationSequenceBlockSet {
         return {
+            id: nanoid(),
             type: "Set",
             target: {
                 type: "number",
@@ -79,12 +86,14 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     LoopForever: function (): AnimationSequenceBlockLoopForever {
         return {
+            id: nanoid(),
             type: "LoopForever",
             child: null
         };
     },
     LoopUntil: function (): AnimationSequenceBlockLoopUntil {
         return {
+            id: nanoid(),
             type: "LoopUntil",
             child: null,
             condition: {
@@ -97,18 +106,21 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     PickRandom: function (): AnimationSequenceBlockPickRandom {
         return {
+            id: nanoid(),
             type: "PickRandom",
             children: []
         };
     },
     Race: function (): AnimationSequenceBlockRace {
         return {
+            id: nanoid(),
             type: "Race",
             children: []
         };
     },
     WaitUntil: function (): AnimationSequenceBlockWaitUntil {
         return {
+            id: nanoid(),
             type: "WaitUntil",
             condition: {
                 type: "expression",
@@ -120,6 +132,7 @@ export const AnimationSequenceGenerator: AnimationSequenceGeneratorT = {
     },
     Reset: function (): AnimationSequenceBlockReset {
         return {
+            id: nanoid(),
             type: "Reset"
         }
     }

@@ -4,20 +4,23 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { AnimationSequenceBlockUi, EmptyDiv } from "./AnimationSequenceBlockUi";
 import { AnimationSequenceSelectorDropdown } from "./AnimationSequenceSelectorDropdown";
 
-export function ASChildBlock({ animation, block, setChild }: {
+export function ASChildBlock({ animation, block, onChange }: {
     animation: AnimationSequenceData;
     block: AnimationSequenceBlock;
-    setChild: (child: any) => void;
+    onChange: (newBlock: AnimationSequenceBlock) => void;
 }) {
     if (!("child" in block)) {
         return null;
     }
+
+
+
     return <div className="child">
         {block.child !== null ? <AnimationSequenceBlockUi
-            onChange={setChild} block={block.child}
+            onChange={child => onChange({ ...block, child })} block={block.child}
             animation={animation}
-            onRemove={() => setChild(null)} /> : <ButtonGroup align="stretch">
-            <AnimationSequenceSelectorDropdown label="Add" onSelect={(type) => setChild(AnimationSequenceGenerator[type]())} />
+            onRemove={() => onChange({ ...block, child: null })} /> : <ButtonGroup align="stretch">
+            <AnimationSequenceSelectorDropdown label="Add" onSelect={(type) => onChange({ ...block, child: AnimationSequenceGenerator[type]() })} />
         </ButtonGroup>}
 
 

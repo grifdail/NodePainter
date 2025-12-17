@@ -1,7 +1,7 @@
 ﻿import { Menu, MenuItem } from "@szhsin/react-menu";
 import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockParallel, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockType, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { Button, InvisibleButton } from "../../Generics/Button";
-import { IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconArrowMoveDown, IconArrowMoveUp, IconPlus, IconTrash } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Black } from "../../../Utils/math/colorUtils";
 import { ASTargetDropdown } from "./ASTargetDropdown";
@@ -10,7 +10,6 @@ import { ASDurationField } from "./ASDurationField";
 import { ASCountField } from "./ASCountField";
 import { ASEasingField } from "./ASEasingField";
 import { ASChildrenBlock } from "./ASChildrenBlock";
-import { useAnimationSequenceBlockStateControls } from "./useAnimationSequenceBlockStateControls";
 import { ASChildBlock } from "./ASChildBlock";
 import { Fieldset, FieldsetStyled } from "../../StyledComponents/Fieldset";
 import { ASConditionField } from "./ASConditionField";
@@ -75,6 +74,7 @@ grid-template-columns: max-content 1fr;
 
     h2 {
         margin: 0;
+        flex-grow: 1;
     }
 
     & > ${FieldsetStyled} {
@@ -100,16 +100,33 @@ grid-template-columns: max-content 1fr;
 
 `
 
-export function AnimationSequenceBlockUi({ block, animation, onChange, onRemove }: { block: AnimationSequenceBlock; animation: AnimationSequenceData; onChange: (newBlock: AnimationSequenceBlock) => void; onRemove?: () => void }) {
-    const { setChild, setChildren, removeChildren, addChildren } = useAnimationSequenceBlockStateControls(block, onChange);
+export function AnimationSequenceBlockUi({ block, animation, onChange, onRemove, onMove }: {
+    block: AnimationSequenceBlock;
+    animation: AnimationSequenceData;
+    onChange: (newBlock: AnimationSequenceBlock) => void;
+    onRemove?: () => void,
+    onMove?: (direction: "up" | "down") => void
+}) {
+
 
     return <AnimationSequenceBlockUiDiv className="block">
         <header>
             <h2>{block.type}</h2>
-
-            {
-                onRemove ? <InvisibleButton className="button" tooltip="delete" onClick={onRemove} icon={IconTrash} /> : null
-            }
+            {onMove && (
+                <InvisibleButton
+                    icon={IconArrowMoveUp}
+                    onClick={() => onMove("up")}
+                    tooltip="Move up"></InvisibleButton>
+            )}
+            {onMove && (
+                <InvisibleButton
+                    icon={IconArrowMoveDown}
+                    onClick={() => onMove("down")}
+                    tooltip="Move down"></InvisibleButton>
+            )}
+            {onRemove && (
+                <InvisibleButton className="button" tooltip="delete" onClick={onRemove} icon={IconTrash} />
+            )}
         </header>
         <ASTargetDropdown animation={animation} block={block} onChange={onChange} />
         <ASValueField block={block} onChange={onChange} />
@@ -117,8 +134,8 @@ export function AnimationSequenceBlockUi({ block, animation, onChange, onRemove 
         <ASCountField block={block} onChange={onChange} />
         <ASConditionField block={block} onChange={onChange} />
         <ASEasingField block={block} onChange={onChange} />
-        <ASChildBlock animation={animation} block={block} setChild={setChild} />
-        <ASChildrenBlock addChildren={addChildren} animation={animation} block={block} removeChildren={removeChildren} setChildren={setChildren} />
+        <ASChildBlock animation={animation} block={block} onChange={onChange} />
+        <ASChildrenBlock onChange={onChange} animation={animation} block={block} />
     </AnimationSequenceBlockUiDiv>;
 }
 

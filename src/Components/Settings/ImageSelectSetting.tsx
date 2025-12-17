@@ -44,9 +44,8 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
   }
   return (
     <Body>
-      <img
-        src={value.url}
-        alt="loaded"></img>
+      <img src={value.url}
+        alt="loaded" />
       <Fieldset
         input={DropdownInput}
         passtrough={{
@@ -59,10 +58,9 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
                 onClick={arg.onClick}
                 key={arg.key}>
                 <ImprovedMenuItem>
-                  <img
-                    width="32"
+                  <img width="32"
                     height="32"
-                    src={item.url}></img>{" "}
+                    src={item.url} />
                   {item.label}
                 </ImprovedMenuItem>
               </MenuItem>

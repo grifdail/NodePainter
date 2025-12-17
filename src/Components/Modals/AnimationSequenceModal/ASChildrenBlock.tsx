@@ -1,29 +1,33 @@
-﻿import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
+﻿import { useListManipulator } from "../../../Hooks/useListManipulator";
+import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { AnimationSequenceBlockUi } from "./AnimationSequenceBlockUi";
 import { AnimationSequenceSelectorDropdown } from "./AnimationSequenceSelectorDropdown";
 
-export const ASChildrenBlock = ({ addChildren, animation, block, removeChildren, setChildren }: {
-    addChildren: (newChild: AnimationSequenceBlock) => void;
+export const ASChildrenBlock = ({ animation, block, onChange }: {
     animation: AnimationSequenceData;
     block: AnimationSequenceBlock;
-    removeChildren: (index: number) => void;
-    setChildren: (index: number, newBlock: AnimationSequenceBlock) => void;
+    onChange: (newBlock: AnimationSequenceBlock) => void
 }) => {
+
     if (!("children" in block)) {
         return null;
     }
+
+    var { addNew, remove, change, move } = useListManipulator(block.children, children => onChange({ ...block, children }));
+
     return <div className="children">
         {block.children.map((block, index) => <AnimationSequenceBlockUi
-            key={index}
-            onChange={newBlock => setChildren(index, newBlock)}
+            key={block.id}
+            onChange={newBlock => change(index, newBlock)}
             block={block}
             animation={animation}
-            onRemove={() => removeChildren(index)} />)}
+            onMove={direction => move(index, direction)}
+            onRemove={() => remove(index)} />)}
 
         <ButtonGroup align="stretch">
-            <AnimationSequenceSelectorDropdown label="Add" onSelect={(type) => addChildren(AnimationSequenceGenerator[type]())} />
+            <AnimationSequenceSelectorDropdown label="Add" onSelect={(type) => addNew(AnimationSequenceGenerator[type]())} />
         </ButtonGroup>
     </div>;
 };
