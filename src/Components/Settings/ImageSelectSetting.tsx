@@ -77,5 +77,8 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
     },
     getSize: function (value, def): number {
         return 32 + 180 + 5;
-    }
+    },
+    initializeValue(clonedValue, setting) {
+        return setting.options[0] as any;
+    },
 };

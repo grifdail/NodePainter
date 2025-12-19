@@ -83,5 +83,8 @@ export const GraphAreaSetting: SettingComponent<GraphAreaSettingDefinition> = {
     },
     getSize: function (value, def): number {
         return 150;
-    }
+    },
+    initializeValue(clonedValue, setting) {
+        return ({ name: "", relative: true, x: -400, y: -400, width: 400, height: 400, color: [0, 0.3, 0.9, 0.8] });
+    },
 };

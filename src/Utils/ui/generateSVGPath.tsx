@@ -1,4 +1,3 @@
-import { PathData } from "../../Types/PathData";
 
 export function generateSVGPath(path: number[], elemCount: number = 2, offset: number = 0): string | undefined {
     if (path.length < 3) {

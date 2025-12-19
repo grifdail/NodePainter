@@ -99,11 +99,10 @@ async function loadFromUrl(encodedUrl: string | null) {
 }
 
 function initGame(tree: SketchSave) {
-    var game = new p5((p5) => {
+    new p5((p5) => {
 
         var context: ExecutionContext = createExecutionContext(tree, p5 as p5);
         var seed = 0;
-        var close = () => { };
         p5.setup = () => {
             seed = Date.now();
             var start = getNodeStart(tree);

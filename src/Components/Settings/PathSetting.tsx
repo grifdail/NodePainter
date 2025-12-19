@@ -76,7 +76,11 @@ export const PathSetting: SettingComponent<PathSettingDefinition> = {
     },
     getSize: function (value, def): number {
         return 272 + 50;
-    }
+    },
+    initializeValue(clonedValue, setting) {
+        return [];
+    },
+
 };
 
 var StyledPreview = styled.svg`

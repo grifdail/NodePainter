@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { IconTriangle } from "@tabler/icons-react";
 import { GroupSettingDefinition } from "../../Types/SettingDefinition";
 import { SettingControl } from "../Graph/SettingControl";
+import { createSettingObjectForSettingDefinition } from "../../Utils/graph/modification/createSettingObjectForSettingDefinition";
 
 const MainDiv = styled.div<{ selected?: boolean }>`
   background: ${(props) => (props.selected ? `var(--color-selected);` : `none`)};
@@ -70,5 +71,8 @@ export const GroupSetting: SettingComponent<GroupSettingDefinition> = {
             return 32 + setting.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(value[def.id], def as any) + 4, 0);
         }
         return 32;
-    }
+    },
+    initializeValue(clonedValue, setting) {
+        return { ...createSettingObjectForSettingDefinition(setting.settings), _open: false };
+    },
 };

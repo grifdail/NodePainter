@@ -97,7 +97,10 @@ export const BezierPathSetting: SettingComponent<BezierPathSettingDefinition> = 
     },
     getSize: function (value, def): number {
         return 272 + 64;
-    }
+    },
+    initializeValue(clonedValue, setting) {
+        return [];
+    },
 };
 
 var StyledPreview = styled.svg`
