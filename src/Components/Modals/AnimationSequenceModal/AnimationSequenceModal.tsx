@@ -9,6 +9,8 @@ import { AnimationSequenceBlockUi } from "./AnimationSequenceBlockUi";
 import { useAnimationSequenceModalControlls } from "./useAnimationSequenceModalControlls";
 import { useAnimationSequenceModalSave } from "./useAnimationSequenceModalSave";
 import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
+import { evalASBlockDuration } from "../../../Utils/animationSequence/AnimationSequenceDuration";
+import { useMemo } from "react";
 
 const MainDiv = styled.div`
     width: 100%;
@@ -62,6 +64,7 @@ export function AnimationSequenceModal() {
     const { defaultValue, save } = useAnimationSequenceModalSave();
     const { animation, setInputVariables, setProperties, setRoot } = useAnimationSequenceModalControlls(defaultValue)
     const variables = [...animation.inputVariables, ...animation.properties]
+    const [estimatedDuration, isEstimatedDurationUnknown] = useMemo(() => evalASBlockDuration(animation.root), [animation.root])
 
     return (
         <Modal
@@ -88,6 +91,7 @@ export function AnimationSequenceModal() {
                         availableTypes={portTypesWithProperty('lerpOperator')}
                         onChange={setProperties}
                     />
+                    <p>Estimated duration: {isEstimatedDurationUnknown ? "???" : estimatedDuration} seconds</p>
                 </VariableSection>
                 <NodeVariableContext.Provider value={variables}>
                     <AnimationSequenceBlockUi block={animation.root} animation={animation} onChange={(block) => setRoot(block as AnimationSequenceBlockSequence)} />

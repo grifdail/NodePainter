@@ -174,3 +174,5 @@ export type SettingDefinition =
   | AnimationSequenceSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
+
+

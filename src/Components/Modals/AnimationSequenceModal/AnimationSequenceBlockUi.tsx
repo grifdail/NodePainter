@@ -15,6 +15,7 @@ import { Fieldset, FieldsetStyled } from "../../StyledComponents/Fieldset";
 import { ASConditionField } from "./ASConditionField";
 import { useCallback, useState } from "react";
 import { DoubleIconGen } from "../../Generics/DoubleIcon";
+import { AnimationSequenceToString } from "../../../Utils/animationSequence/AnimationSequenceToString";
 
 export const EmptyDiv = () => <div className="empty" />
 
@@ -138,7 +139,7 @@ export function AnimationSequenceBlockUi({ block, animation, onChange, onRemove,
 
     return <AnimationSequenceBlockUiDiv className="block">
         <header>
-            <h2>{block.type}</h2>
+            <h2>{foldState !== 'full' ? AnimationSequenceToString[block.type](block as any) : block.type}</h2>
             <InvisibleButton
                 icon={foldState === 'full' ? (blockHasParams ? IconFoldProperty : IconFoldUp) : IconFoldDown}
                 tooltip={foldState === 'full' ? (blockHasParams ? "Fold params" : "Fold up") : "Fold Down"}

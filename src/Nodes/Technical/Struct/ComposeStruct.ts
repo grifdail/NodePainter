@@ -11,11 +11,13 @@ export const ComposeStruct: NodeDefinition = {
   dataInputs: [],
   dataOutputs: [],
   preventSnippet: true,
-  settings: [],
+  settings: [
+    { type: "hidden", id: "structureId", "defaultValue": "none" }
+  ],
   getData: (portId, nodeData, context) => {
     var a = Object.entries(nodeData.dataInputs).reduce((old, [key, value]) => {
-      return { ...old, [key]: context.getInputValue(nodeData, key, value.type) };
-    }, {});
+      return { ...old, [key]: context.getInputValue(nodeData, key, value.type), __metaFields: { ...old.__metaFields, [key]: value.type } };
+    }, { __metaFields: {}, __metaStructType: nodeData.settings.structureId });
     return a;
   },
 };

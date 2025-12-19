@@ -10,12 +10,13 @@ export const DecomposeStruct: NodeDefinition = {
   tags: [],
   dataInputs: [],
   dataOutputs: [],
-  settings: [],
+  settings: [
+  ],
   preventSnippet: true,
   getData: (portId, nodeData, context) => {
     var input = context.getInputValue(nodeData, "struct", "struct") as any;
     var port = nodeData.dataOutputs[portId];
-    if (input[portId]) {
+    if (portId in input) {
       return input[portId];
     } else {
       console.warn(`Type ${portId} is missing in the passed struct of node ${nodeData.id}`);
