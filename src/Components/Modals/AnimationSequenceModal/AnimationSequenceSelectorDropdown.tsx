@@ -1,4 +1,4 @@
-﻿import { Menu, MenuItem } from "@szhsin/react-menu"
+import { Menu, MenuItem } from "@szhsin/react-menu"
 import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator"
 import { Button } from "../../Generics/Button"
 import { IconPlus } from "@tabler/icons-react"

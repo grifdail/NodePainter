@@ -1,4 +1,4 @@
-﻿import { IconEaseInOut } from "@tabler/icons-react";
+import { IconEaseInOut } from "@tabler/icons-react";
 import { EasingFunctionType } from "../../../libs/easing";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { EasingDropdownFieldset } from "../../Generics/EasingDropdownFieldset";

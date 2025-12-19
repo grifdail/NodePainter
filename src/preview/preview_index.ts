@@ -1,4 +1,4 @@
-﻿import p5 from "p5";
+import p5 from "p5";
 import Rand from "rand-seed";
 import { SketchSave } from "../Types/SketchTemplate";
 import { createExecutionContext, ExecutionContext } from "../Utils/graph/execution/createExecutionContext";

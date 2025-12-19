@@ -1,4 +1,4 @@
-﻿import { IconBrush } from "@tabler/icons-react";
+import { IconBrush } from "@tabler/icons-react";
 import { Graphics } from "p5";
 import { createDefaultFlipbook, Flipbook } from "../../Types/FlipBook";
 import { ImageData } from "../../Types/ImageData";

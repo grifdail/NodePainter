@@ -1,4 +1,4 @@
-﻿import { NodeCollection } from "../../../Types/NodeCollection";
+import { NodeCollection } from "../../../Types/NodeCollection";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 import { ExecutionContext } from "./createExecutionContext";

@@ -1,4 +1,4 @@
-﻿import { IconCodeDots } from "@tabler/icons-react";
+import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
 import { Modal } from "../../Modal";
 import { PortEditList } from "../CustomNodes/PortEditList";

@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Flipbook, FlipbookLine } from "../../../Types/FlipBook";
 import { createColor } from "../../../Types/vectorDataType";

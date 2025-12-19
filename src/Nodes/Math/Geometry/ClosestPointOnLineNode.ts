@@ -1,4 +1,4 @@
-﻿import { IconLine } from "@tabler/icons-react";
+import { IconLine } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";

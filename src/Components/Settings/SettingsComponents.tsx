@@ -15,7 +15,7 @@ import { CodeBlockSetting } from "./CodeBlockSetting";
 import { GroupSetting } from "./GroupSetting";
 import { BoolSetting } from "./BoolSetting";
 import { ImageSelectSetting } from "./ImageSelectSetting";
-import { SettingComponent } from "./SettingComponent";
+//import { SettingComponent } from "./SettingComponent";
 import { EmptySetting } from "./EmptySetting";
 import { PathSetting } from "./PathSetting";
 import { TextAreaSetting } from "./TextAreaSetting";
@@ -26,32 +26,38 @@ import { ImagePreviewSetting } from "./ImagePreviewSetting";
 import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
 import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
+import { NodeData } from "../../Types/NodeData";
+import { FunctionComponent } from "react";
+import { SettingProps } from "../../Types/SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+
+
 
 export const SettingComponents: { [TDefinition in SettingDefinition as TDefinition["type"]]: SettingComponent<TDefinition> } = {
-  dropdown: DropdownSetting,
-  palette: PaletteSetting,
-  number: NumberSetting,
-  vector2: Vector2Setting,
-  "image-preview": ImagePreviewSetting,
-  string: StringSetting,
-  gradient: GradientSetting,
-  "image-upload": ImageUploadSetting,
-  "image-paint": ImagePaintSetting,
-  flipbook: FlipbookAnimationSetting,
-  envelope: EnvelopeSetting,
-  hidden: EmptySetting,
-  button: ButtonsSettings,
-  "animation-track": AnimationTrackSettings,
-  "mesh-upload": ModelUploadSetting,
-  "easing-preview": EasingSetting,
-  "code-block": CodeBlockSetting,
-  "js-function": JavascriptFunctionSetting,
-  group: GroupSetting,
-  bool: BoolSetting,
-  "image-select": ImageSelectSetting,
-  path: PathSetting,
-  "text-area": TextAreaSetting,
-  "bezier-path": BezierPathSetting,
-  "graph-area": GraphAreaSetting,
-  "animation-sequence": AnimationSequenceSetting,
+    dropdown: DropdownSetting,
+    palette: PaletteSetting,
+    number: NumberSetting,
+    vector2: Vector2Setting,
+    "image-preview": ImagePreviewSetting,
+    string: StringSetting,
+    gradient: GradientSetting,
+    "image-upload": ImageUploadSetting,
+    "image-paint": ImagePaintSetting,
+    flipbook: FlipbookAnimationSetting,
+    envelope: EnvelopeSetting,
+    hidden: EmptySetting,
+    button: ButtonsSettings,
+    "animation-track": AnimationTrackSettings,
+    "mesh-upload": ModelUploadSetting,
+    "easing-preview": EasingSetting,
+    "code-block": CodeBlockSetting,
+    "js-function": JavascriptFunctionSetting,
+    group: GroupSetting,
+    bool: BoolSetting,
+    "image-select": ImageSelectSetting,
+    path: PathSetting,
+    "text-area": TextAreaSetting,
+    "bezier-path": BezierPathSetting,
+    "graph-area": GraphAreaSetting,
+    "animation-sequence": AnimationSequenceSetting,
 };

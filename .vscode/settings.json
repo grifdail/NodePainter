@@ -3,10 +3,10 @@
     "editor.formatOnSave": true,
     "[typescript]": {
         "editor.codeActionsOnSave": {
-            
-    "source.fixAll": "explicit",
+            "source.fixAll": "explicit",
             "source.organizeImports": "explicit",
-            "typescript.removeUnusedImports":"explicit",
+            "typescript.removeUnusedImports": "explicit",
         }
-    }
+    },
+    "editor.detectIndentation": false
 }

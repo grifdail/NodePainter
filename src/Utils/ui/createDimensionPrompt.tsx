@@ -1,4 +1,4 @@
-﻿import { NumberInput } from "../../Components/Generics/Inputs/NumberInput";
+import { NumberInput } from "../../Components/Generics/Inputs/NumberInput";
 import { DialogData, useDialog } from "../../Hooks/useDialog";
 
 

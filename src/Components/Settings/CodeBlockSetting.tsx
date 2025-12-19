@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconCode } from "@tabler/icons-react";
@@ -8,7 +8,7 @@ import { useCodeBlockModal } from "../../Hooks/useCodeBlockModal";
 import { useTree } from "../../Hooks/useTree";
 import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 import { CodeBlockSettingDefinition } from "../../Types/SettingDefinition";
-import { ModalSettingGenerator } from "./ModalSettingGenerator";
+import { ModalSettingGenerator } from "./Generators/ModalSettingGenerator";
 
 
 

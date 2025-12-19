@@ -1,5 +1,5 @@
-﻿import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconFileUpload, IconHelpHexagon } from "@tabler/icons-react";
@@ -32,26 +32,28 @@ const Body = styled.div`
   }
 `;
 
-export const ImagePreviewSetting: SettingComponent<ImagePreviewSettingDefinition> = function ImagePreviewSetting({ onChange, value, def }: SettingProps<ImagePreviewSettingDefinition>) {
-    
+export const ImagePreviewSetting: SettingComponent<ImagePreviewSettingDefinition> = {
+    UI: function ImagePreviewSetting({ onChange, value, def }: SettingProps<ImagePreviewSettingDefinition>) {
 
-    return (
-        <Body>
-            {value == null && (
-                <div className="file">
-                    <IconHelpHexagon></IconHelpHexagon>
-                </div>
-            )}
-            {value != null && (
-                <img
-                    src={value}
-                    alt="loaded"></img>
-            )}
 
-           
-        </Body>
-    );
-};
-ImagePreviewSetting.getSize = function (value, def): number {
-    return 200;
+        return (
+            <Body>
+                {value == null && (
+                    <div className="file">
+                        <IconHelpHexagon></IconHelpHexagon>
+                    </div>
+                )}
+                {value != null && (
+                    <img
+                        src={value}
+                        alt="loaded"></img>
+                )}
+
+
+            </Body>
+        );
+    },
+    getSize: function (value, def): number {
+        return 200;
+    }
 };

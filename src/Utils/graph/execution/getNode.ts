@@ -1,4 +1,4 @@
-﻿import { MetaNode } from "../../../Nodes/Misc/MetaNode";
+import { MetaNode } from "../../../Nodes/Misc/MetaNode";
 import { NodeLibrary } from "../../../Nodes/Nodes";
 import { START_NODE } from "../../../Nodes/StartNode";
 import { NodeCollection } from "../../../Types/NodeCollection";

@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
-import { GradientPreview } from "../../Settings/ColorPreview";
 import styled from "styled-components";
-import { Gradient } from "../../../Types/vectorDataType";
-import { NodeData } from "../../../Types/NodeData";
 import { Button } from "../../Generics/Button";
-import { GradientSetting } from "../../Settings/GradientSetting";
 import { SearchForm } from "../../Generics/SearchForm";
 import { IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
@@ -58,50 +54,48 @@ const StyledButton = styled.button`
 `;
 
 function snippetToText(snippet: Snippet): string {
-  return snippet.nodes.map((item) => item.type).join(", ");
+    return snippet.nodes.map((item) => item.type).join(", ");
 }
 
 function SketchButton({ value, onDelete }: { value: Snippet; onDelete: () => void }) {
-  return (
-    <>
-      <StyledButton>
-        <div>{value.name}</div>
-        <p>{snippetToText(value)}</p>
-        <span className="spacer"></span>
+    return (
+        <StyledButton>
+            <div>{value.name}</div>
+            <p>{snippetToText(value)}</p>
+            <span className="spacer" />
 
-        <Button onClick={onDelete} label="Delete"></Button>
-      </StyledButton>
-    </>
-  );
+            <Button onClick={onDelete} label="Delete" />
+        </StyledButton>
+    );
 }
 
 export const SavedSnippetEditor = () => {
-  const savedSnippet = usePlayerPref((pref) => pref.snippets);
-  //const setSavedGradient = usePlayerPref((pref) => pref.saveGradient);
-  const removeSnippet = usePlayerPref((pref) => pref.removeSnippet);
-  const [searchTermRaw, setSearchTerm] = useState("");
+    const savedSnippet = usePlayerPref((pref) => pref.snippets);
+    //const setSavedGradient = usePlayerPref((pref) => pref.saveGradient);
+    const removeSnippet = usePlayerPref((pref) => pref.removeSnippet);
+    const [searchTermRaw, setSearchTerm] = useState("");
 
-  return (
-    <>
-      <SearchForm>
-        <span>
-          <IconSearch> </IconSearch>
-          <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
-        </span>
-      </SearchForm>
-      <NodeList>
-        {Object.entries(savedSnippet)
-          .filter(([key]) => searchTermRaw.trim().length === 0 || key.toLowerCase().includes(searchTermRaw.trim().toLowerCase()))
-          .map(([key, value]) => (
-            <SketchButton
-              onDelete={() => {
-                removeSnippet(key);
-              }}
-              key={key}
-              value={value}
-            />
-          ))}
-      </NodeList>
-    </>
-  );
+    return (
+        <>
+            <SearchForm>
+                <span>
+                    <IconSearch> </IconSearch>
+                    <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus />
+                </span>
+            </SearchForm>
+            <NodeList>
+                {Object.entries(savedSnippet)
+                    .filter(([key]) => searchTermRaw.trim().length === 0 || key.toLowerCase().includes(searchTermRaw.trim().toLowerCase()))
+                    .map(([key, value]) => (
+                        <SketchButton
+                            onDelete={() => {
+                                removeSnippet(key);
+                            }}
+                            key={key}
+                            value={value}
+                        />
+                    ))}
+            </NodeList>
+        </>
+    );
 };

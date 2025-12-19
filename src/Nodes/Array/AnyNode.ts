@@ -1,4 +1,4 @@
-﻿import { IconList, IconPlus, IconSquareCheck } from "@tabler/icons-react";
+import { IconList, IconPlus, IconSquareCheck } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";

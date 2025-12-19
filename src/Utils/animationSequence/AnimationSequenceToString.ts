@@ -1,4 +1,4 @@
-﻿import { CodeBlockBlocksTypes, CodeBlockExpressionTypes } from "../../CodeBlocks/CodeBlockTypes";
+import { CodeBlockExpressionTypes } from "../../CodeBlocks/CodeBlockTypes";
 import { CodeBlockParameterFieldExpression } from "../../Types/CodeBlock/CodeBlockParameterFieldExpression";
 import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockLoopForever, AnimationSequenceBlockLoopUntil, AnimationSequenceBlockParallel, AnimationSequenceBlockPickRandom, AnimationSequenceBlockRace, AnimationSequenceBlockReset, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockWaitUntil } from "./AnimationSequenceData";
 
@@ -48,7 +48,6 @@ export const AnimationSequenceToString: AnimationSequenceStringifierT = {
 
 
 function ev(condition: CodeBlockParameterFieldExpression): string {
-    console.log(condition, CodeBlockBlocksTypes);
     return condition.expression ? CodeBlockExpressionTypes[condition.expression.type].toString(condition.expression) : condition.constantValue.toString();
 }
 

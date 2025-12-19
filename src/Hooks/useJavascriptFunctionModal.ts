@@ -1,4 +1,4 @@
-﻿import { current, produce } from "immer";
+import { current, produce } from "immer";
 import { create } from "zustand";
 import { closeAllPopup, openJSFunctionModal } from "../Actions/navigationAction";
 import { JavascriptFunction } from "../Types/CodeBlock/JavascriptFunction";

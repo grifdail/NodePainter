@@ -1,4 +1,4 @@
-﻿import { DropdownSettingDefinition } from "../../../Types/SettingDefinition";
+import { DropdownSettingDefinition } from "../../../Types/SettingDefinition";
 
 
 export const CACHE_BEHAVIOR = {

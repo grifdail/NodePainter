@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
@@ -32,49 +32,51 @@ const Body = styled.div`
   }
 `;
 
-export const ImageUploadSetting: SettingComponent<ImageUploadSettingDefinition> = function PaletteSetting({ onChange, value, def }: SettingProps<ImageUploadSettingDefinition>) {
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      if (acceptedFiles.length >= 1) {
-        var file = acceptedFiles[0];
-        const reader = new FileReader();
+export const ImageUploadSetting: SettingComponent<ImageUploadSettingDefinition> = {
+    UI: function PaletteSetting({ onChange, value, def }: SettingProps<ImageUploadSettingDefinition>) {
+        const { getRootProps, getInputProps } = useDropzone({
+            onDrop: (acceptedFiles) => {
+                if (acceptedFiles.length >= 1) {
+                    var file = acceptedFiles[0];
+                    const reader = new FileReader();
 
-        reader.onabort = () => console.log("file reading was aborted");
-        reader.onerror = () => console.log("file reading has failed");
-        reader.onload = () => {
-          onChange(reader.result);
-        };
-        reader.readAsDataURL(file);
-      }
+                    reader.onabort = () => console.log("file reading was aborted");
+                    reader.onerror = () => console.log("file reading has failed");
+                    reader.onload = () => {
+                        onChange(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+            accept: { "image/jpeg": [], "image/png": [] },
+            maxFiles: 1,
+        });
+
+        return (
+            <Body>
+                {value == null && (
+                    <div
+                        className="file"
+                        {...getRootProps()}>
+                        <input {...getInputProps()}></input>
+                        <IconFileUpload />
+                    </div>
+                )}
+                {value != null && (
+                    <img
+                        src={value}
+                        alt="loaded"></img>
+                )}
+
+                <ButtonGroup hidden={value !== null}>
+                    <Button
+                        label="Reset"
+                        onClick={() => onChange(null)}></Button>
+                </ButtonGroup>
+            </Body>
+        );
     },
-    accept: { "image/jpeg": [], "image/png": [] },
-    maxFiles: 1,
-  });
-
-  return (
-    <Body>
-      {value == null && (
-        <div
-          className="file"
-          {...getRootProps()}>
-          <input {...getInputProps()}></input>
-          <IconFileUpload />
-        </div>
-      )}
-      {value != null && (
-        <img
-          src={value}
-          alt="loaded"></img>
-      )}
-
-      <ButtonGroup hidden={value !== null}>
-        <Button
-          label="Reset"
-          onClick={() => onChange(null)}></Button>
-      </ButtonGroup>
-    </Body>
-  );
-};
-ImageUploadSetting.getSize = function (value, def): number {
-  return 250;
+    getSize: function (value, def): number {
+        return 250;
+    }
 };

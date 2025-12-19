@@ -1,4 +1,4 @@
-﻿import { EasingFunctionType } from "../../libs/easing"
+import { EasingFunctionType } from "../../libs/easing"
 import { CodeBlockParameterFieldExpression } from "../../Types/CodeBlock/CodeBlockParameterFieldExpression"
 import { PortDefinition } from "../../Types/PortDefinition"
 import { PortType } from "../../Types/PortType"

@@ -1,6 +1,6 @@
 import { SettingComponents } from "./SettingsComponents";
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import styled from "styled-components";
 import { IconTriangle } from "@tabler/icons-react";
 import { GroupSettingDefinition } from "../../Types/SettingDefinition";
@@ -29,44 +29,46 @@ const RotatingIcon = styled(IconTriangle) <{ reversed?: boolean }>`
   transform: rotate(${(props) => (props.reversed ? 0 : 180)}deg);
 `;
 
-export const GroupSetting: SettingComponent<GroupSettingDefinition> = function ({ onChange, value, def, node }: SettingProps<GroupSettingDefinition>) {
-  var open = value._open;
+export const GroupSetting: SettingComponent<GroupSettingDefinition> = {
+    UI: function ({ onChange, value, def, node }: SettingProps<GroupSettingDefinition>) {
+        var open = value._open;
 
-  const toggle = () => onChange({ ...value, _open: !value._open });
-  return (
-    <MainDiv selected={open}>
-      <div
-        className="header"
-        onClick={() => toggle()}>
-        <span>{def.label || def.id}</span> <RotatingIcon reversed={open}></RotatingIcon>{" "}
-      </div>
-      {value._open && (
-        <div className="content">
-          {def.settings.map((subSetting, i) => {
-            const subSettingValue = value[subSetting.id] !== undefined ? value[subSetting.id] : "defaultValue" in subSetting ? subSetting.defaultValue : undefined;
-            const changeMethod = (v: any) => onChange({ ...value, [subSetting.id]: v });
-            var n = (
-              <SettingControl
-                y={0}
-                value={subSettingValue}
-                onChange={changeMethod}
-                def={subSetting}
-                key={i}
-                nodeData={node}
-                useHTML
-              />
-            );
+        const toggle = () => onChange({ ...value, _open: !value._open });
+        return (
+            <MainDiv selected={open}>
+                <div
+                    className="header"
+                    onClick={() => toggle()}>
+                    <span>{def.label || def.id}</span> <RotatingIcon reversed={open}></RotatingIcon>{" "}
+                </div>
+                {value._open && (
+                    <div className="content">
+                        {def.settings.map((subSetting, i) => {
+                            const subSettingValue = value[subSetting.id] !== undefined ? value[subSetting.id] : "defaultValue" in subSetting ? subSetting.defaultValue : undefined;
+                            const changeMethod = (v: any) => onChange({ ...value, [subSetting.id]: v });
+                            var n = (
+                                <SettingControl
+                                    y={0}
+                                    value={subSettingValue}
+                                    onChange={changeMethod}
+                                    def={subSetting}
+                                    key={i}
+                                    nodeData={node}
+                                    useHTML
+                                />
+                            );
 
-            return n;
-          })}
-        </div>
-      )}
-    </MainDiv>
-  );
-};
-GroupSetting.getSize = function (value, setting): number {
-  if (value._open) {
-    return 32 + setting.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(value[def.id], def as any) + 4, 0);
-  }
-  return 32;
+                            return n;
+                        })}
+                    </div>
+                )}
+            </MainDiv>
+        );
+    },
+    getSize: function (value, setting): number {
+        if (value._open) {
+            return 32 + setting.settings.reduce((prev, def) => prev + SettingComponents[def.type].getSize(value[def.id], def as any) + 4, 0);
+        }
+        return 32;
+    }
 };

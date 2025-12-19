@@ -1,4 +1,4 @@
-﻿import { IconCodeDots } from "@tabler/icons-react";
+import { IconCodeDots } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";

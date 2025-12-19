@@ -1,4 +1,4 @@
-﻿import { useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { useParams } from "wouter";
 import { useTree } from "../../../Hooks/useTree";
 import { Flipbook } from "../../../Types/FlipBook";

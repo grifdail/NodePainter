@@ -1,5 +1,5 @@
-﻿import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
@@ -31,28 +31,32 @@ const Body = styled.div`
   }
 `;
 
-export const FlipbookAnimationSetting: SettingComponent<FlipbookAnimationSettingDefinition> = function FlipbookAnimationSetting({ onChange, value, def, node }: SettingProps<FlipbookAnimationSettingDefinition>) {
-  return (
-    <Body>
+export const FlipbookAnimationSetting: SettingComponent<FlipbookAnimationSettingDefinition> = {
+    UI: function FlipbookAnimationSetting({ onChange, value, def, node }: SettingProps<FlipbookAnimationSettingDefinition>) {
+        return (
+            <Body>
 
-      <div className="file" >
-        <svg width={180} height={180} viewBox="0 0 1 1">
-          <Frame frame={value[0]} />
-        </svg>
-      </div>
+                <div className="file" >
+                    <svg width={180} height={180} viewBox="0 0 1 1">
+                        <Frame frame={value[0]} />
+                    </svg>
+                </div>
 
 
 
-      <ButtonGroup hidden={value !== null}>
-        <Button
-          onClick={() => openPaintAnimationModal("node", node.id)}
-          label="Paint"
-          icon={IconBrush}
-        />
-      </ButtonGroup>
-    </Body>
-  );
+                <ButtonGroup hidden={value !== null}>
+                    <Button
+                        onClick={() => openPaintAnimationModal("node", node.id)}
+                        label="Paint"
+                        icon={IconBrush}
+                    />
+                </ButtonGroup>
+            </Body>
+        );
+
+    },
+    getSize: function (value, def) {
+        return 250;
+    }
 };
-FlipbookAnimationSetting.getSize = function (value, def): number {
-  return 250;
-};
+

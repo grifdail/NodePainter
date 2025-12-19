@@ -1,4 +1,4 @@
-﻿import { FirstPersonControllerNode } from "./FirstPersonControllerNode";
+import { FirstPersonControllerNode } from "./FirstPersonControllerNode";
 import { FreecamControllerNode } from "./FreecamControllerNode";
 import { LinearControllerNode } from "./LinearControllerNode";
 import { OrbitCameraControllerNode } from "./OrbitCameraController";

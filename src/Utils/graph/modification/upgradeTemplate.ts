@@ -17,7 +17,7 @@ const UPGRADES: UpgradeFunction[] = [
         Shuffle: "Array/Shuffle",
         ArrayReplace: "Array/Replace",
         ArrayRemoveAt: "Array/RemoveAt",
-        ["Array Map"]: "Array/Map",
+        "Array Map": "Array/Map",
         ArrayLast: "Array/Last",
         ArrayInvert: "Array/Invert",
         ArrayAppend: "Array/Append",
@@ -194,18 +194,18 @@ const UPGRADES: UpgradeFunction[] = [
         Noise: "Random/Noise",
         PoissonDisk: "Random/PoissonDisk",
         //Shader Varying
-        ["Shader/CameraDirection"]: "Shader/Varying/SampleTexture",
-        ["Shader/CameraPosition"]: "Shader/Varying/CameraPosition",
-        ["Shader/LocalNormal"]: "Shader/Varying/LocalNormal",
-        ["Shader/LocalPosition"]: "Shader/Varying/LocalPosition",
-        ["Shader/UV"]: "Shader/Varying/UV",
-        ["Shader/ViewDirection"]: "Shader/Varying/ViewDirection",
-        ["Shader/ViewNormal"]: "Shader/Varying/ViewNormal",
-        ["Shader/ViewPosition"]: "Shader/Varying/ViewPosition",
-        ["Shader/WorldNormal"]: "Shader/Varying/WorldNormal",
-        ["Shader/WorldPosition"]: "Shader/Varying/WorldPosition",
+        "Shader/CameraDirection": "Shader/Varying/SampleTexture",
+        "Shader/CameraPosition": "Shader/Varying/CameraPosition",
+        "Shader/LocalNormal": "Shader/Varying/LocalNormal",
+        "Shader/LocalPosition": "Shader/Varying/LocalPosition",
+        "Shader/UV": "Shader/Varying/UV",
+        "Shader/ViewDirection": "Shader/Varying/ViewDirection",
+        "Shader/ViewNormal": "Shader/Varying/ViewNormal",
+        "Shader/ViewPosition": "Shader/Varying/ViewPosition",
+        "Shader/WorldNormal": "Shader/Varying/WorldNormal",
+        "Shader/WorldPosition": "Shader/Varying/WorldPosition",
         //Shader
-        ["Sample Texture"]: "Shader/SampleTexture",
+        "Sample Texture": "Shader/SampleTexture",
         //state
         Save: "State/Save",
         Previous: "State/Previous",
@@ -220,20 +220,20 @@ const UPGRADES: UpgradeFunction[] = [
         DecomposeStruct: "Technical/Struct/Decompose",
         // Technical Simulation
         CustomSimulation: "Technical/Simulation/Base",
-        ["CustomSimulation-end"]: "Technical/Simulation/End",
-        ["CustomSimulation-start"]: "Technical/Simulation/Start",
+        "CustomSimulation-end": "Technical/Simulation/End",
+        "CustomSimulation-start": "Technical/Simulation/Start",
         // Technical Material Shader
         ShaderMaterial: "Technical/MaterialShader/Base",
-        ["ShaderMaterial-end"]: "Technical/MaterialShader/End",
-        ["ShaderMaterial-start"]: "Technical/MaterialShader/Start",
+        "ShaderMaterial-end": "Technical/MaterialShader/End",
+        "ShaderMaterial-start": "Technical/MaterialShader/Start",
         // Technical Image Effect Shader
         RenderShader: "Technical/ImageEffectShader/Base",
-        ["RenderShader-end"]: "Technical/ImageEffectShader/End",
-        ["RenderShader-start"]: "Technical/ImageEffectShader/Start",
+        "RenderShader-end": "Technical/ImageEffectShader/End",
+        "RenderShader-start": "Technical/ImageEffectShader/Start",
         // Technical Material Shader
         CustomFunction: "Technical/CustomFunction/Base",
-        ["CustomFunction-end"]: "Technical/CustomFunction/End",
-        ["CustomFunction-start"]: "Technical/CustomFunction/Start",
+        "CustomFunction-end": "Technical/CustomFunction/End",
+        "CustomFunction-start": "Technical/CustomFunction/Start",
         //Text
         TextLength: "Text/Length",
         TextConcat: "Text/Concat",
@@ -246,7 +246,7 @@ const UPGRADES: UpgradeFunction[] = [
   (sketch) => addMissingNodePort(["Color/HSV", "Color/HSL"], sketch),
   (sketch) => redefineNodes({ ToggleFlipFlopSwitch: "State/ToggleFlipFlopSwitch" }, sketch),
   (sketch) => {
-    sketch = redefineNodes({ ["Image/DrawImage"]: "Draw/Image" }, sketch);
+    sketch = redefineNodes({ "Image/DrawImage": "Draw/Image" }, sketch);
 
     Object.values(sketch.nodes).forEach((node) => {
       if (node.type === "Image/DrawImageWithTint") {
@@ -284,12 +284,12 @@ const UPGRADES: UpgradeFunction[] = [
     });
     return sketch;
   },
-  (sketch) => redefineNodes({ ["Procedural/Twirl"]: "Math/Transformation/Twirl" }, sketch),
+  (sketch) => redefineNodes({ "Procedural/Twirl": "Math/Transformation/Twirl" }, sketch),
   (sketch) => addMissingNodePort(["Array/Shuffle"], sketch),
-  (sketch) => redefineNodes({ ["Procedural/NoiseTexture"]: "Procedural/PerlinNoiseTexture" }, sketch),
+  (sketch) => redefineNodes({ "Procedural/NoiseTexture": "Procedural/PerlinNoiseTexture" }, sketch),
   (sketch) => addMissingNodePort(["Procedural/PerlinNoiseTexture"], sketch),
   (sketch) => addMissingNodePort(["Math/Interpolation/IntegrateVelocity"], sketch),
-  (sketch) => redefineNodes({ ["Misc/JavascriptFunctionNode"]: "Misc/JavascriptFunction" }, sketch),
+  (sketch) => redefineNodes({ "Misc/JavascriptFunctionNode": "Misc/JavascriptFunction" }, sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

@@ -21,7 +21,7 @@ export const AreaCommentNode: NodeDefinition = {
   getData(portId, node, context) {},
   contextMenu(node) {
     var options: ContextMenuData = {
-      ["Select nodes in the area"]: (node: NodeData, tree: TreeStore) => {
+      "Select nodes in the area": (node: NodeData, tree: TreeStore) => {
         var area = node.settings.grapharea as GraphArea;
         selectNodeInAreas(area, node);
       },

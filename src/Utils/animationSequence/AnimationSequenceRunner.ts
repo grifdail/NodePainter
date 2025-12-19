@@ -1,4 +1,4 @@
-﻿import { AllEasing } from "../../libs/easing";
+import { AllEasing } from "../../libs/easing";
 import { CodeBlockParameterFieldExpression } from "../../Types/CodeBlock/CodeBlockParameterFieldExpression";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { evaluateCodeBlockExpression } from "../codeblock/evaluateCodeBlockExpression";

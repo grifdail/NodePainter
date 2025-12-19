@@ -1,4 +1,4 @@
-﻿import { PortDefinition } from "../PortDefinition";
+import { PortDefinition } from "../PortDefinition";
 
 export type JavascriptFunction = {
     code: string;

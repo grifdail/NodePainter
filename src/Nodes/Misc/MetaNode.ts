@@ -1,4 +1,4 @@
-﻿import { IconMessage } from "@tabler/icons-react";
+import { IconMessage } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 
 export const MetaNode: NodeDefinition = {

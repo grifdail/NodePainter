@@ -1,4 +1,4 @@
-﻿import { IconMathFunction } from "@tabler/icons-react";
+import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { createVector2 } from "../../../Types/vectorDataType";

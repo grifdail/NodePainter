@@ -1,4 +1,4 @@
-﻿import { IconBrush, IconClearAll, IconLayersIntersect2, IconLayersOff, IconLayersSelected, IconLayersSelectedBottom, IconPlayerPause, IconPlayerPlay, IconPlus, IconTrash } from "@tabler/icons-react";
+import { IconBrush, IconClearAll, IconLayersIntersect2, IconLayersOff, IconLayersSelected, IconLayersSelectedBottom, IconPlayerPause, IconPlayerPlay, IconPlus, IconTrash } from "@tabler/icons-react";
 import styled from "styled-components";
 import { PaintingStore, PaintingTool, usePainting } from "../../../Hooks/usePainting";
 import { useDialog } from "../../../Hooks/useDialog";

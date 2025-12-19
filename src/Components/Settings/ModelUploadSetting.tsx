@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconFileUpload } from "@tabler/icons-react";
@@ -35,47 +35,49 @@ const Body = styled.div`
   }
 `;
 
-export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> = function ({ onChange, value, def }: SettingProps<MeshUploadSettingDefinition>) {
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles, fileRejection) => {
-      if (acceptedFiles.length >= 1) {
-        var file = acceptedFiles[0];
+export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> = {
+    UI: function ({ onChange, value, def }: SettingProps<MeshUploadSettingDefinition>) {
+        const { getRootProps, getInputProps } = useDropzone({
+            onDrop: (acceptedFiles, fileRejection) => {
+                if (acceptedFiles.length >= 1) {
+                    var file = acceptedFiles[0];
 
-        const reader = new FileReader();
+                    const reader = new FileReader();
 
-        reader.onabort = () => console.log("file reading was aborted");
-        reader.onerror = () => console.log("file reading has failed");
+                    reader.onabort = () => console.log("file reading was aborted");
+                    reader.onerror = () => console.log("file reading has failed");
 
-        reader.onload = () => {
-          onChange({ source: reader.result, ext: file.name.split(".").pop(), name: file.name });
-        };
-        reader.readAsArrayBuffer(file);
-      }
+                    reader.onload = () => {
+                        onChange({ source: reader.result, ext: file.name.split(".").pop(), name: file.name });
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+            },
+            accept: { "model/gltf-binary": [".glb"] },
+            maxFiles: 1,
+        });
+
+        return (
+            <Body>
+                {value == undefined && (
+                    <div
+                        className="file"
+                        {...getRootProps()}>
+                        <input {...getInputProps()}></input>
+                        <IconFileUpload />
+                    </div>
+                )}
+                {value != null && <div className="loaded">loaded {value.name}</div>}
+
+                <ButtonGroup hidden={value !== null}>
+                    <Button
+                        label="Reset"
+                        onClick={() => onChange(null)}></Button>
+                </ButtonGroup>
+            </Body>
+        );
     },
-    accept: { "model/gltf-binary": [".glb"] },
-    maxFiles: 1,
-  });
-
-  return (
-    <Body>
-      {value == undefined && (
-        <div
-          className="file"
-          {...getRootProps()}>
-          <input {...getInputProps()}></input>
-          <IconFileUpload />
-        </div>
-      )}
-      {value != null && <div className="loaded">loaded {value.name}</div>}
-
-      <ButtonGroup hidden={value !== null}>
-        <Button
-          label="Reset"
-          onClick={() => onChange(null)}></Button>
-      </ButtonGroup>
-    </Body>
-  );
-};
-ModelUploadSetting.getSize = function (value, def): number {
-  return 250;
+    getSize: function (value, def): number {
+        return 250;
+    }
 };

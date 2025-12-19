@@ -1,4 +1,4 @@
-﻿import { NodeData } from "../../Types/NodeData";
+import { NodeData } from "../../Types/NodeData";
 import { FunctionContext } from "../graph/execution/createExecutionContext";
 import { AnimationSequenceData } from "./AnimationSequenceData";
 import { createRunnerForBlock } from "./AnimationSequenceRunner";

@@ -1,4 +1,4 @@
-﻿import { FlipbookLine } from "../../../Types/FlipBook";
+import { FlipbookLine } from "../../../Types/FlipBook";
 import { Line } from "./Line";
 
 export function Frame({ frame, opacity = 1 }: { frame: FlipbookLine[]; opacity?: number; }) {

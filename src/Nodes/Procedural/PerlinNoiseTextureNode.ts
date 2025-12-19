@@ -1,4 +1,4 @@
-﻿import { IconGridDots, IconWaveSine } from "@tabler/icons-react";
+import { IconGridDots, IconWaveSine } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import Perlin from "../../libs/perlin";
 import { ImageData } from "../../Types/ImageData";

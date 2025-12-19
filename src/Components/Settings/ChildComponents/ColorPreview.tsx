@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { MenuItem } from "@szhsin/react-menu";
-import { ColorPalette, Gradient } from "../../Types/vectorDataType";
-import { toHex } from "../../Utils/math/colorUtils";
+import { ColorPalette, Gradient } from "../../../Types/vectorDataType";
+import { toHex } from "../../../Utils/math/colorUtils";
 
 export const GradientDiv = styled.div<{ gradient: string }>`
   display: block;
@@ -29,32 +29,32 @@ const MenuItemWithPreview = styled(MenuItem)`
 `;
 
 export const GradientPreview = ({ gradient }: { gradient: Gradient }) => {
-  var str = gradient.map((stop) => `${toHex(stop.color, true)} ${Math.floor(stop.pos * 100)}%`).join(",");
-  return <GradientDiv gradient={str}></GradientDiv>;
+    var str = gradient.map((stop) => `${toHex(stop.color, true)} ${Math.floor(stop.pos * 100)}%`).join(",");
+    return <GradientDiv gradient={str}></GradientDiv>;
 };
 
 export const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
-  var str = palette.map((color, i) => `${toHex(color, true)} ${Math.floor((i / palette.length) * 100)}%, ${toHex(color, true)} ${Math.floor(((i + 1) / palette.length) * 100)}%`).join(", ");
-  return <GradientDiv gradient={str}></GradientDiv>;
+    var str = palette.map((color, i) => `${toHex(color, true)} ${Math.floor((i / palette.length) * 100)}%, ${toHex(color, true)} ${Math.floor(((i + 1) / palette.length) * 100)}%`).join(", ");
+    return <GradientDiv gradient={str}></GradientDiv>;
 };
 
 export const MenuItemWithPalettePreview = ({ onClick, id, value }: { onClick?: () => void; id: string; value: ColorPalette }) => {
-  return (
-    <MenuItemWithPreview
-      key={id}
-      onClick={onClick}>
-      <span>{id}</span>
-      <PalettePreview palette={value} />
-    </MenuItemWithPreview>
-  );
+    return (
+        <MenuItemWithPreview
+            key={id}
+            onClick={onClick}>
+            <span>{id}</span>
+            <PalettePreview palette={value} />
+        </MenuItemWithPreview>
+    );
 };
 export const MenuItemWithGradientPreview = ({ onClick, id, value }: { onClick: () => void; id: string; value: Gradient }) => {
-  return (
-    <MenuItemWithPreview
-      key={id}
-      onClick={onClick}>
-      <span>{id}</span>
-      <GradientPreview gradient={value} />
-    </MenuItemWithPreview>
-  );
+    return (
+        <MenuItemWithPreview
+            key={id}
+            onClick={onClick}>
+            <span>{id}</span>
+            <GradientPreview gradient={value} />
+        </MenuItemWithPreview>
+    );
 };

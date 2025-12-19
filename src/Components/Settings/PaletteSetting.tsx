@@ -1,10 +1,10 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconAdjustments, IconArrowDown, IconArrowUp, IconTrash } from "@tabler/icons-react";
 import { createColor } from "../../Types/vectorDataType";
-import { PaletteMenu } from "./PaletteMenu";
+import { PaletteMenu } from "./ChildComponents/PaletteMenu";
 import { Button } from "../Generics/Button";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useListManipulator } from "../../Hooks/useListManipulator";
@@ -49,58 +49,60 @@ const ColorList = styled.ul`
   }
 `;
 
-export const PaletteSetting: SettingComponent<PaletteSettingDefinition> = function ({ onChange, value }: SettingProps<PaletteSettingDefinition>) {
-  var list = value as Array<any>;
+export const PaletteSetting: SettingComponent<PaletteSettingDefinition> = {
+    UI: function ({ onChange, value }: SettingProps<PaletteSettingDefinition>) {
+        var list = value as Array<any>;
 
-  const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor, false);
+        const { change: onChangeColor, remove: removeColor, move, addNew: addNewColor } = useListManipulator(list, onChange, createColor, false);
 
-  return (
-    <div>
-      <ColorList>
-        {list.map((color: any, i: number) => (
-          <li key={i}>
-            <span>{i}</span>
-            <ColorInput
-              value={color}
-              onChange={(v) => onChangeColor(i, v)}></ColorInput>
-            <Menu
-              menuButton={
-                <button className="delete">
-                  <IconAdjustments />
-                </button>
-              }>
-              <MenuItem
-                onClick={() => removeColor(i)}
-                disabled={list.length <= 1}>
-                <IconTrash></IconTrash> Delete
-              </MenuItem>
-              <MenuItem
-                onClick={() => move(i, "up")}
-                disabled={i === 0}>
-                <IconArrowUp></IconArrowUp>Move Up
-              </MenuItem>
-              <MenuItem
-                onClick={() => move(i, "down")}
-                disabled={i === list.length - 1}>
-                <IconArrowDown></IconArrowDown> Move Down
-              </MenuItem>
-            </Menu>
-          </li>
-        ))}
-      </ColorList>
+        return (
+            <div>
+                <ColorList>
+                    {list.map((color: any, i: number) => (
+                        <li key={i}>
+                            <span>{i}</span>
+                            <ColorInput
+                                value={color}
+                                onChange={(v) => onChangeColor(i, v)}></ColorInput>
+                            <Menu
+                                menuButton={
+                                    <button className="delete">
+                                        <IconAdjustments />
+                                    </button>
+                                }>
+                                <MenuItem
+                                    onClick={() => removeColor(i)}
+                                    disabled={list.length <= 1}>
+                                    <IconTrash></IconTrash> Delete
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => move(i, "up")}
+                                    disabled={i === 0}>
+                                    <IconArrowUp></IconArrowUp>Move Up
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={() => move(i, "down")}
+                                    disabled={i === list.length - 1}>
+                                    <IconArrowDown></IconArrowDown> Move Down
+                                </MenuItem>
+                            </Menu>
+                        </li>
+                    ))}
+                </ColorList>
 
-      <ButtonGroup>
-        <Button
-          label="Add"
-          onClick={() => addNewColor()}
-        />
-        <PaletteMenu
-          onLoaded={(value) => onChange(value)}
-          currentPalette={list}></PaletteMenu>
-      </ButtonGroup>
-    </div>
-  );
-};
-PaletteSetting.getSize = function (value, def): number {
-  return 32 * value.length + 70;
+                <ButtonGroup>
+                    <Button
+                        label="Add"
+                        onClick={() => addNewColor()}
+                    />
+                    <PaletteMenu
+                        onLoaded={(value) => onChange(value)}
+                        currentPalette={list}></PaletteMenu>
+                </ButtonGroup>
+            </div>
+        );
+    },
+    getSize: function (value, def): number {
+        return 32 * value.length + 70;
+    }
 };

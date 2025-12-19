@@ -1,4 +1,4 @@
-﻿import { AnimationSequenceData } from "./AnimationSequenceData";
+import { AnimationSequenceData } from "./AnimationSequenceData";
 import { AnimationSequenceGenerator } from "./AnimationSequenceGenerator";
 
 

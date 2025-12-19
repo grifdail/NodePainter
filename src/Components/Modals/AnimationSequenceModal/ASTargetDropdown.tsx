@@ -1,4 +1,4 @@
-﻿import { IconVariable } from "@tabler/icons-react";
+import { IconVariable } from "@tabler/icons-react";
 import { AnimationSequenceData, AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";

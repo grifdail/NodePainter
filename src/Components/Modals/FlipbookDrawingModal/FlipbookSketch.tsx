@@ -1,4 +1,4 @@
-﻿import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
+import { P5CanvasInstance, ReactP5Wrapper, Sketch, SketchProps } from "@p5-wrapper/react";
 import styled from "styled-components";
 import { useMeasure } from "@uidotdev/usehooks";
 import { Graphics } from "p5";

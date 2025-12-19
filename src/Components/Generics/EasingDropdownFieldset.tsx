@@ -1,4 +1,4 @@
-﻿import { EasingFunctionType, Easing } from "../../libs/easing";
+import { EasingFunctionType, Easing } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
 import { DropdownInput } from "./Inputs/DropdownInput";
 import { Fieldset } from "../StyledComponents/Fieldset";

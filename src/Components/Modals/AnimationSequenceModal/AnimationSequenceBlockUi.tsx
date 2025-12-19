@@ -1,4 +1,4 @@
-﻿import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockParallel, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockType, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { Button, InvisibleButton } from "../../Generics/Button";
 import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconPlus, IconTrash, IconVariable } from "@tabler/icons-react";

@@ -1,4 +1,4 @@
-﻿import { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { AnimationSequenceData, AnimationSequenceBlockSequence } from "../../../Utils/animationSequence/AnimationSequenceData";
 

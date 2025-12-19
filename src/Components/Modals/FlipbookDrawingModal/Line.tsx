@@ -1,4 +1,4 @@
-﻿import { forwardRef, RefObject } from "react";
+import { forwardRef, RefObject } from "react";
 import { Color } from "../../../Types/vectorDataType";
 import { toHex } from "../../../Utils/math/colorUtils";
 import { generateSVGPath } from "../../../Utils/ui/generateSVGPath";

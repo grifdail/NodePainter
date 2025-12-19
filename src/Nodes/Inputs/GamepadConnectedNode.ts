@@ -1,4 +1,4 @@
-﻿import { IconDeviceGamepad2 } from "@tabler/icons-react";
+import { IconDeviceGamepad2 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { getGamepads } from "../../Utils/graph/execution/getGamepads";

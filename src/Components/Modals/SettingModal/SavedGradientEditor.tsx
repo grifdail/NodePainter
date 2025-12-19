@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
-import { GradientPreview } from "../../Settings/ColorPreview";
+import { GradientPreview } from "../../Settings/ChildComponents/ColorPreview";
 import styled from "styled-components";
 import { createDefaultGradient, Gradient } from "../../../Types/vectorDataType";
 import { NodeData } from "../../../Types/NodeData";
@@ -58,60 +58,58 @@ const StyledButton = styled.button`
 `;
 
 function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: { value: Gradient; onClick: () => void; onDelete: () => void; onChange: (value: Gradient) => void; name: string; isSelected: boolean }) {
-  return (
-    <>
-      <StyledButton>
-        <div>{name}</div>
-        <GradientPreview gradient={value}></GradientPreview>
-        <span className="spacer"></span>
-        <Button onClick={onClick} label="Edit"></Button>
-        <Button onClick={onDelete} label="Delete"></Button>
-      </StyledButton>
-      {isSelected && <GradientSetting value={value} onChange={onChange} def={{ id: "colorPreset", defaultValue: [], type: "gradient" }} node={null as unknown as NodeData}></GradientSetting>}
-    </>
-  );
+    return (
+        <>
+            <StyledButton>
+                <div>{name}</div>
+                <GradientPreview gradient={value} />
+                <span className="spacer" />
+                <Button onClick={onClick} label="Edit" />
+                <Button onClick={onDelete} label="Delete" />
+            </StyledButton>
+            {isSelected && <GradientSetting.UI value={value} onChange={onChange} def={{ id: "colorPreset", defaultValue: [], type: "gradient" }} node={null as unknown as NodeData} />}
+        </>
+    );
 }
 
 export const SavedGradientEditor = () => {
-  const savedGradient = usePlayerPref((pref) => pref.gradient);
-  const setSavedGradient = usePlayerPref((pref) => pref.saveGradient);
-  const removeGradient = usePlayerPref((pref) => pref.removeGradient);
-  const [openedGradient, setOpenGradient] = useState<null | string>(null);
-  const [searchTermRaw, setSearchTerm] = useState("");
+    const savedGradient = usePlayerPref((pref) => pref.gradient);
+    const setSavedGradient = usePlayerPref((pref) => pref.saveGradient);
+    const removeGradient = usePlayerPref((pref) => pref.removeGradient);
+    const [openedGradient, setOpenGradient] = useState<null | string>(null);
+    const [searchTermRaw, setSearchTerm] = useState("");
 
-  return (
-    <>
-      <SearchForm onSubmit={(e) => e.preventDefault()}>
-        <span>
-          <IconSearch> </IconSearch>
-          <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
-        </span>
-        <InvisibleButton
-          icon={IconPlus}
-          onClick={() => {
-            useDialog.getState().openPrompt((data) => {
-              setSavedGradient(data, createDefaultGradient());
-            });
-          }}
-        ></InvisibleButton>
-      </SearchForm>
-      <NodeList>
-        {Object.entries(savedGradient)
-          .filter(([key]) => searchTermRaw.trim().length === 0 || key.toLowerCase().includes(searchTermRaw.trim().toLowerCase()))
-          .map(([key, value]) => (
-            <SketchButton
-              onDelete={() => {
-                removeGradient(key);
-              }}
-              key={key}
-              name={key}
-              onChange={(value) => setSavedGradient(key, value)}
-              isSelected={openedGradient === key}
-              onClick={() => setOpenGradient(openedGradient === key ? null : key)}
-              value={value}
-            />
-          ))}
-      </NodeList>
-    </>
-  );
+    return (
+        <>
+            <SearchForm onSubmit={(e) => e.preventDefault()}>
+                <span>
+                    <IconSearch> </IconSearch>
+                    <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus />
+                </span>
+                <InvisibleButton icon={IconPlus}
+                    onClick={() => {
+                        useDialog.getState().openPrompt((data) => {
+                            setSavedGradient(data, createDefaultGradient());
+                        });
+                    }} />
+            </SearchForm>
+            <NodeList>
+                {Object.entries(savedGradient)
+                    .filter(([key]) => searchTermRaw.trim().length === 0 || key.toLowerCase().includes(searchTermRaw.trim().toLowerCase()))
+                    .map(([key, value]) => (
+                        <SketchButton
+                            onDelete={() => {
+                                removeGradient(key);
+                            }}
+                            key={key}
+                            name={key}
+                            onChange={(value) => setSavedGradient(key, value)}
+                            isSelected={openedGradient === key}
+                            onClick={() => setOpenGradient(openedGradient === key ? null : key)}
+                            value={value}
+                        />
+                    ))}
+            </NodeList>
+        </>
+    );
 };

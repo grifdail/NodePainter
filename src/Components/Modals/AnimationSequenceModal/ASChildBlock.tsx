@@ -1,4 +1,4 @@
-﻿import { AnimationSequenceData, AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
+import { AnimationSequenceData, AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { AnimationSequenceBlockUi, EmptyDiv } from "./AnimationSequenceBlockUi";

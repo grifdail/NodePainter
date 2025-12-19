@@ -1,4 +1,4 @@
-﻿import { NodeData } from "../Types/NodeData";
+import { NodeData } from "../Types/NodeData";
 
 
 export function copyNodePosition(source: NodeData, target: NodeData) {

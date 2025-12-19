@@ -1,5 +1,5 @@
-import { NodeData } from "../../Types/NodeData";
-import { SettingDefinition } from "../../Types/SettingDefinition";
+import { NodeData } from "./NodeData";
+import { SettingDefinition } from "./SettingDefinition";
 
 export type SettingProps<T extends SettingDefinition> = {
   onChange: (value: any) => void;

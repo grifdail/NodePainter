@@ -1,4 +1,4 @@
-﻿import { IconArrowUpRightCircle, IconMathXy } from "@tabler/icons-react";
+import { IconArrowUpRightCircle, IconMathXy } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../../Types/PortTypeDefinitions";

@@ -1,4 +1,4 @@
-﻿import { IconProps } from "@tabler/icons-react";
+import { IconProps } from "@tabler/icons-react";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { PortType } from "../../Types/PortType";
 

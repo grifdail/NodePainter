@@ -1,4 +1,4 @@
-﻿import { useRef, useState, useCallback, MouseEvent, useEffect } from "react";
+import { useRef, useState, useCallback, MouseEvent, useEffect } from "react";
 import { FlipbookLine } from "../../../Types/FlipBook";
 import { Color, Vector, Vector2 } from "../../../Types/vectorDataType";
 import { toHex } from "../../../Utils/math/colorUtils";

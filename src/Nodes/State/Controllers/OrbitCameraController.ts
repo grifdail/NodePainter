@@ -1,4 +1,4 @@
-﻿import { IconDeviceGamepad2, IconVideo } from "@tabler/icons-react";
+import { IconDeviceGamepad2, IconVideo } from "@tabler/icons-react";
 import { Quaternion, Vector3 as TVector3 } from "three";
 import { clamp } from "three/src/math/MathUtils";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";

@@ -1,4 +1,4 @@
-﻿import { useColorScheme } from "@uiw/react-use-colorscheme";
+import { useColorScheme } from "@uiw/react-use-colorscheme";
 import { memo } from "react";
 
 export const SVGBackgroundTransparentPattern = memo(function SVGGridPattern() {

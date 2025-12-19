@@ -1,4 +1,4 @@
-﻿import { useListManipulator } from "../../../Hooks/useListManipulator";
+import { useListManipulator } from "../../../Hooks/useListManipulator";
 import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";

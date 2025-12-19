@@ -1,5 +1,5 @@
-﻿import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Icon, IconCode, IconEdit } from "@tabler/icons-react";
@@ -10,7 +10,7 @@ import { CodeBlock } from "../../Types/CodeBlock/CodeBlock";
 import { CodeBlockSettingDefinition, JavascriptFunctionSettingDefinition, SettingDefinition } from "../../Types/SettingDefinition";
 import { useJavascriptFunctionModal } from "../../Hooks/useJavascriptFunctionModal";
 import { Port } from "../../Types/PortTypeGenerator";
-import { ModalSettingGenerator } from "./ModalSettingGenerator";
+import { ModalSettingGenerator } from "./Generators/ModalSettingGenerator";
 
 
 

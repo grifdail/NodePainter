@@ -1,4 +1,4 @@
-﻿import { Color } from "./vectorDataType";
+import { Color } from "./vectorDataType";
 
 export type Flipbook = FlipbookFrame[];
 

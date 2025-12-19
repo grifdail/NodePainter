@@ -1,4 +1,4 @@
-﻿import { IconRepeat } from "@tabler/icons-react";
+import { IconRepeat } from "@tabler/icons-react";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 import { NumberInput } from "../../Generics/Inputs/NumberInput";

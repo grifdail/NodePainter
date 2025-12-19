@@ -43,11 +43,10 @@ const DefaultPaletteEdition = () => {
   const setColorPreset = usePlayerPref((state) => state.setColorPreset);
 
   return (
-    <PaletteSetting
-      value={colorPreset}
+    <PaletteSetting.UI value={colorPreset}
       onChange={setColorPreset}
       def={{ id: "colorPreset", defaultValue: [], type: "palette" }}
-      node={null as unknown as NodeData}></PaletteSetting>
+      node={null as unknown as NodeData} />
   );
 };
 

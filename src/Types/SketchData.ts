@@ -1,4 +1,4 @@
-﻿import { NodeCollection } from "./NodeCollection";
+import { NodeCollection } from "./NodeCollection";
 import { NodeDefinition } from "./NodeDefinition";
 
 

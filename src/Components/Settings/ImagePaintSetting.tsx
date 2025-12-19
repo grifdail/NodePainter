@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
@@ -33,30 +33,32 @@ const Body = styled.div`
   }
 `;
 
-export const ImagePaintSetting: SettingComponent<ImagePaintSettingDefinition> = function PaletteSetting({ onChange, value, def }: SettingProps<ImagePaintSettingDefinition>) {
-  return (
-    <Body>
-      {value === null && (
-        <div className="file">
-          <IconBrush />
-        </div>
-      )}
-      {value !== null && (
-        <img
-          src={value}
-          alt="loaded"></img>
-      )}
+export const ImagePaintSetting: SettingComponent<ImagePaintSettingDefinition> = {
+    UI: function PaletteSetting({ onChange, value, def }: SettingProps<ImagePaintSettingDefinition>) {
+        return (
+            <Body>
+                {value === null && (
+                    <div className="file">
+                        <IconBrush />
+                    </div>
+                )}
+                {value !== null && (
+                    <img
+                        src={value}
+                        alt="loaded"></img>
+                )}
 
-      <ButtonGroup hidden={value !== null}>
-        <Button
-          onClick={() => usePainting.getState().open(value, onChange)}
-          label="Paint"
-          icon={IconBrush}
-        />
-      </ButtonGroup>
-    </Body>
-  );
-};
-ImagePaintSetting.getSize = function (value, def): number {
-  return 250;
+                <ButtonGroup hidden={value !== null}>
+                    <Button
+                        onClick={() => usePainting.getState().open(value, onChange)}
+                        label="Paint"
+                        icon={IconBrush}
+                    />
+                </ButtonGroup>
+            </Body>
+        );
+    },
+    getSize: function (value, def): number {
+        return 250;
+    }
 };

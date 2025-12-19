@@ -1,4 +1,4 @@
-﻿import { Monaco } from "@monaco-editor/react";
+import { Monaco } from "@monaco-editor/react";
 import { Delaunay } from "d3-delaunay";
 import { createColor, createVector2, createVector3, createVector4 } from "../../Types/vectorDataType";
 import { hsvToRgb, invertColor } from "../math/colorUtils";

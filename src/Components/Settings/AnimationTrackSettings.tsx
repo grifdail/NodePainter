@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconX } from "@tabler/icons-react";
@@ -54,87 +54,89 @@ const ColorList = styled.ul`
   }
 `;
 
-export const AnimationTrackSettings: SettingComponent<AnimationTrackSettingDefinition> = function ({ onChange, value, def }: SettingProps<AnimationTrackSettingDefinition>) {
-  const track = value as AnimationTrack;
-  const type = track.type;
-  var portDescription = PortTypeDefinitions[type];
-  var PortSettings = portDescription.inlineInput;
+export const AnimationTrackSettings: SettingComponent<AnimationTrackSettingDefinition> = {
+    UI: function ({ onChange, value, def }: SettingProps<AnimationTrackSettingDefinition>) {
+        const track = value as AnimationTrack;
+        const type = track.type;
+        var portDescription = PortTypeDefinitions[type];
+        var PortSettings = portDescription.inlineInput;
 
-  var { change, addNew, remove } = useListManipulator(
-    track.keyframes,
-    (list) => {
-      list.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
-      onChange({ ...track, keyframes: list });
+        var { change, addNew, remove } = useListManipulator(
+            track.keyframes,
+            (list) => {
+                list.sort((a: AnimationKeyFrame, b: AnimationKeyFrame) => a.pos - b.pos);
+                onChange({ ...track, keyframes: list });
+            },
+            () => createDefaultAnimationKeyframe(type),
+            false
+        );
+
+        function onChangeValue(i: number, newValue: any): void {
+            change(i, { ...track.keyframes[i], value: newValue });
+        }
+        function onChangePosition(i: number, pos: any): void {
+            change(i, { ...track.keyframes[i], pos: pos });
+        }
+        function onChangeLerp(i: number, newLerp: any): void {
+            change(i, { ...track.keyframes[i], lerp: newLerp });
+        }
+
+        return (
+            <div>
+                <ColorList>
+                    {track.keyframes.map((stop: AnimationKeyFrame, i: number) => (
+                        <li
+                            key={i}
+                            className={type}>
+                            <NumberInput
+                                className="pos"
+                                value={stop.pos}
+                                onChange={(v) => onChangePosition(i, v)}></NumberInput>
+                            {PortSettings && (
+                                <PortSettings
+                                    value={stop.value}
+                                    onChange={(v) => onChangeValue(i, v)}
+                                />
+                            )}
+                            <Menu
+                                menuButton={
+                                    <MenuButton className={"button"}>
+                                        <EasingIcon
+                                            fn={stop.lerp}
+                                            size={20}
+                                        />
+                                    </MenuButton>
+                                }
+                                portal>
+                                {Object.keys(Easing).map((item) => (
+                                    <MenuItem
+                                        key={item}
+                                        onClick={() => onChangeLerp(i, item)}>
+                                        <EasingIcon fn={item as EasingFunctionType} />
+                                        {item}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                            <button
+                                className="delete"
+                                onClick={() => remove(i)}
+                                disabled={track.keyframes.length <= 1}>
+                                <IconX />
+                            </button>
+                        </li>
+                    ))}
+                </ColorList>
+
+                <ButtonGroup>
+                    <Button
+                        onClick={() => addNew()}
+                        label="Add"
+                    />
+                </ButtonGroup>
+            </div>
+        );
     },
-    () => createDefaultAnimationKeyframe(type),
-    false
-  );
-
-  function onChangeValue(i: number, newValue: any): void {
-    change(i, { ...track.keyframes[i], value: newValue });
-  }
-  function onChangePosition(i: number, pos: any): void {
-    change(i, { ...track.keyframes[i], pos: pos });
-  }
-  function onChangeLerp(i: number, newLerp: any): void {
-    change(i, { ...track.keyframes[i], lerp: newLerp });
-  }
-
-  return (
-    <div>
-      <ColorList>
-        {track.keyframes.map((stop: AnimationKeyFrame, i: number) => (
-          <li
-            key={i}
-            className={type}>
-            <NumberInput
-              className="pos"
-              value={stop.pos}
-              onChange={(v) => onChangePosition(i, v)}></NumberInput>
-            {PortSettings && (
-              <PortSettings
-                value={stop.value}
-                onChange={(v) => onChangeValue(i, v)}
-              />
-            )}
-            <Menu
-              menuButton={
-                <MenuButton className={"button"}>
-                  <EasingIcon
-                    fn={stop.lerp}
-                    size={20}
-                  />
-                </MenuButton>
-              }
-              portal>
-              {Object.keys(Easing).map((item) => (
-                <MenuItem
-                  key={item}
-                  onClick={() => onChangeLerp(i, item)}>
-                  <EasingIcon fn={item as EasingFunctionType} />
-                  {item}
-                </MenuItem>
-              ))}
-            </Menu>
-            <button
-              className="delete"
-              onClick={() => remove(i)}
-              disabled={track.keyframes.length <= 1}>
-              <IconX />
-            </button>
-          </li>
-        ))}
-      </ColorList>
-
-      <ButtonGroup>
-        <Button
-          onClick={() => addNew()}
-          label="Add"
-        />
-      </ButtonGroup>
-    </div>
-  );
-};
-AnimationTrackSettings.getSize = function (value, def): number {
-  return 32 * value.keyframes.length + 60 + 10;
+    getSize: function (value, def): number {
+        return 32 * value.keyframes.length + 60 + 10;
+    }
 };

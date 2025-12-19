@@ -1,4 +1,4 @@
-﻿import { IconArrowBigRightFilled, IconDeviceGamepad2 } from "@tabler/icons-react";
+import { IconArrowBigRightFilled, IconDeviceGamepad2 } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";

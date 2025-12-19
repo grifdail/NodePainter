@@ -1,4 +1,4 @@
-﻿import { JavascriptFunction } from "../../Types/CodeBlock/JavascriptFunction";
+import { JavascriptFunction } from "../../Types/CodeBlock/JavascriptFunction";
 
 
 export const createDefaultJavascriptFunction = (): JavascriptFunction => {

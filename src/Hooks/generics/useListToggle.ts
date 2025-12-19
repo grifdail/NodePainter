@@ -1,4 +1,4 @@
-﻿import { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 export function useListToggle<T>(options: T[]): [T, (v?: T) => void] {
     var [state, setState] = useState<T>(options[0])

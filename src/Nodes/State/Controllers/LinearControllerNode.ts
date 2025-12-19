@@ -1,4 +1,4 @@
-﻿import { IconDeviceGamepad2, IconVideo } from "@tabler/icons-react";
+import { IconDeviceGamepad2, IconVideo } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";

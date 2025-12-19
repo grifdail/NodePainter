@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
-import { MenuItemWithPalettePreview } from "../../Settings/ColorPreview";
+import { MenuItemWithPalettePreview } from "../../Settings/ChildComponents/ColorPreview";
 import { DefaultPalettes } from "../../../Data/Palettes";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 

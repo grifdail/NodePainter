@@ -1,4 +1,4 @@
-﻿import { IconClock, IconPencil, IconProps } from "@tabler/icons-react";
+import { IconClock, IconPencil, IconProps } from "@tabler/icons-react";
 import { PortType } from "../../../Types/PortType";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { RawValueField } from "../../Generics/RawValueField";

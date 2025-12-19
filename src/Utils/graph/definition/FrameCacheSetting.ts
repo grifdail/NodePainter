@@ -1,4 +1,4 @@
-﻿import { BoolSettingDefinition } from "../../../Types/SettingDefinition";
+import { BoolSettingDefinition } from "../../../Types/SettingDefinition";
 
 
 

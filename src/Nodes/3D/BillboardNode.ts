@@ -1,4 +1,4 @@
-﻿import { IconBadge3d } from "@tabler/icons-react";
+import { IconBadge3d } from "@tabler/icons-react";
 import { Matrix4, Quaternion, Vector3 as TVector3 } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";

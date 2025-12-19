@@ -1,4 +1,4 @@
-﻿import { IconCheck } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import { CodeBlockParameterFieldExpression } from "../../../Types/CodeBlock/CodeBlockParameterFieldExpression";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { Constraints } from "../../../Utils/ui/applyConstraints";

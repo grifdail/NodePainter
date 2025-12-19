@@ -1,4 +1,4 @@
-﻿import { IconArrowsShuffle, IconGridDots, IconWaveSine } from "@tabler/icons-react";
+import { IconArrowsShuffle, IconGridDots, IconWaveSine } from "@tabler/icons-react";
 import Rand from "rand-seed";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { ImageData } from "../../Types/ImageData";

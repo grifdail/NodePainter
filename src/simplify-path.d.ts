@@ -1,1 +1,1 @@
-﻿declare module "simplify-path";
+declare module "simplify-path";

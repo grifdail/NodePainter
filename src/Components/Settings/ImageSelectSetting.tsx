@@ -1,5 +1,5 @@
-import { SettingComponent } from "./SettingComponent";
-import { SettingProps } from "./SettingProps";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingProps } from "../../Types/SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
 import { DropdownSettingDefinition, ImageSelectSettingDefinition } from "../../Types/SettingDefinition";
@@ -38,42 +38,44 @@ const ImprovedMenuItem = styled.span`
   align-items: center;
 `;
 
-export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> = function ImageSelectSetting({ onChange, value, def }: SettingProps<ImageSelectSettingDefinition>) {
-  if (value == null) {
-    value = def.options[0];
-  }
-  return (
-    <Body>
-      <img src={value.url}
-        alt="loaded" />
-      <Fieldset
-        input={DropdownInput}
-        passtrough={{
-          options: def.options,
-          useTemplateForField: true,
-          template: (item: any) => item.label,
-          templateRaw: (item: any, arg: any) => {
-            return (
-              <MenuItem
-                onClick={arg.onClick}
-                key={arg.key}>
-                <ImprovedMenuItem>
-                  <img width="32"
-                    height="32"
-                    src={item.url} />
-                  {item.label}
-                </ImprovedMenuItem>
-              </MenuItem>
-            );
-          },
-        }}
-        value={value}
-        onChange={onChange}
-        label={def.label || def.id}
-      />
-    </Body>
-  );
-};
-ImageSelectSetting.getSize = function (value, def): number {
-  return 32 + 180 + 5;
+export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> = {
+    UI: function ImageSelectSetting({ onChange, value, def }: SettingProps<ImageSelectSettingDefinition>) {
+        if (value == null) {
+            value = def.options[0];
+        }
+        return (
+            <Body>
+                <img src={value.url}
+                    alt="loaded" />
+                <Fieldset
+                    input={DropdownInput}
+                    passtrough={{
+                        options: def.options,
+                        useTemplateForField: true,
+                        template: (item: any) => item.label,
+                        templateRaw: (item: any, arg: any) => {
+                            return (
+                                <MenuItem
+                                    onClick={arg.onClick}
+                                    key={arg.key}>
+                                    <ImprovedMenuItem>
+                                        <img width="32"
+                                            height="32"
+                                            src={item.url} />
+                                        {item.label}
+                                    </ImprovedMenuItem>
+                                </MenuItem>
+                            );
+                        },
+                    }}
+                    value={value}
+                    onChange={onChange}
+                    label={def.label || def.id}
+                />
+            </Body>
+        );
+    },
+    getSize: function (value, def): number {
+        return 32 + 180 + 5;
+    }
 };

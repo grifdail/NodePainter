@@ -1,4 +1,4 @@
-﻿import { IconMathFunction } from "@tabler/icons-react";
+import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
