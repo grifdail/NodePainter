@@ -73,19 +73,20 @@ export function ExponantialSliderInput({ onChange, value, disabled, min, max, va
 
     var base = Math.log(1 / valueAtHalfway) / Math.log(1 / 0.5);
 
-    const exp = (val: number) => {
-        return Math.pow(val, base);
-    };
 
-    const root = (val: number) => {
+    const exp = useCallback((val: number) => {
+        return Math.pow(val, base);
+    }, [base])
+
+    const root = useCallback((val: number) => {
         return Math.pow(val, 1 / base);
-    };
+    }, [base])
 
     const changeSlider = useCallback((value: number) => {
         var v = exp(value);
         const trueValue = Math.min(max, Math.max(min, lerp(min, max, v)))
         onChange(trueValue);
-    }, [onChange, exp, base])
+    }, [exp, max, min, onChange])
 
     const valueZeroOne = root(clamp01(inverseLerp(min, max, value)))
 

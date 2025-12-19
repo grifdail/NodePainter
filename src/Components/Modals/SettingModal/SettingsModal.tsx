@@ -30,56 +30,54 @@ const MainDiv = styled.div`
 `;
 
 enum Section {
-  DefaultPalette = "Default Palette",
-  SavedPalette = "SavedPalette",
-  SavedGradient = "SavedGradient",
-  SavedSnippet = "SavedSnippet",
-  Misc = "Misc",
-  ExportSetting = "ExportSetting",
+    DefaultPalette = "Default Palette",
+    SavedPalette = "SavedPalette",
+    SavedGradient = "SavedGradient",
+    SavedSnippet = "SavedSnippet",
+    Misc = "Misc",
+    ExportSetting = "ExportSetting",
 }
 
 const DefaultPaletteEdition = () => {
-  const colorPreset = usePlayerPref((state) => state.colorPreset);
-  const setColorPreset = usePlayerPref((state) => state.setColorPreset);
+    const colorPreset = usePlayerPref((state) => state.colorPreset);
+    const setColorPreset = usePlayerPref((state) => state.setColorPreset);
 
-  return (
-    <PaletteSetting.UI value={colorPreset}
-      onChange={setColorPreset}
-      def={{ id: "colorPreset", defaultValue: [], type: "palette" }}
-      node={null as unknown as NodeData} />
-  );
+    return (
+        <PaletteSetting.UI value={colorPreset}
+            onChange={setColorPreset}
+            def={{ id: "colorPreset", defaultValue: [], type: "palette" }}
+            node={null as unknown as NodeData} />
+    );
 };
 
-const EmptyDiv = () => {
-  return <div>Not implemented yet</div>;
-};
+
 
 const SectionComponent: { [key in Section]: () => JSX.Element } = {
-  [Section.DefaultPalette]: DefaultPaletteEdition,
-  [Section.SavedPalette]: SavedPaletteEditor,
-  [Section.SavedGradient]: SavedGradientEditor,
-  [Section.SavedSnippet]: SavedSnippetEditor,
-  [Section.Misc]: MiscSettingEditor,
-  [Section.ExportSetting]: ExportSettingEditor,
+    [Section.DefaultPalette]: DefaultPaletteEdition,
+    [Section.SavedPalette]: SavedPaletteEditor,
+    [Section.SavedGradient]: SavedGradientEditor,
+    [Section.SavedSnippet]: SavedSnippetEditor,
+    [Section.Misc]: MiscSettingEditor,
+    [Section.ExportSetting]: ExportSettingEditor,
 };
 
 export function SettingsModal({ close }: { close: () => void }) {
-  const [section, setSection] = useState(Section.DefaultPalette);
-  const Body = SectionComponent[section];
+    const [section, setSection] = useState(Section.DefaultPalette);
+    const Body = SectionComponent[section];
 
-  return (
-    <Modal
-      onClose={close}
-      title="Settings"
-      icon={IconSettings}>
-      <MainDiv>
-        <TagList
-          options={Object.fromEntries(Object.values(Section).map((tag) => [tag, section === tag]))}
-          onClick={(tag) => setSection(tag as Section)}></TagList>
-        <div className="content">
-          <Body />
-        </div>
-      </MainDiv>
-    </Modal>
-  );
+    return (
+        <Modal
+            onClose={close}
+            title="Settings"
+            icon={IconSettings}>
+            <MainDiv>
+                <TagList
+                    options={Object.fromEntries(Object.values(Section).map((tag) => [tag, section === tag]))}
+                    onClick={(tag) => setSection(tag as Section)}></TagList>
+                <div className="content">
+                    <Body />
+                </div>
+            </MainDiv>
+        </Modal>
+    );
 }

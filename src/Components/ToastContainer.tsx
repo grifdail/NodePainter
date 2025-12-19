@@ -51,46 +51,47 @@ const StyledDiv = styled(animated.div)`
   }
 `;
 
-export function ToastContainer({}: {}) {
-  var toast = useToast((state) => state.toasts);
-  var remove = useToast((state) => state.remove);
+export function ToastContainer() {
+    var toast = useToast((state) => state.toasts);
+    var remove = useToast((state) => state.remove);
 
-  const transitions = useTransition(toast, {
-    from: { opacity: 0, scale: 0 },
-    enter: { opacity: 1, scale: 1 },
-    leave: { opacity: 0, scale: 0 },
-    keys: (item) => item.id,
-  });
+    const transitions = useTransition(toast, {
+        from: { opacity: 0, scale: 0 },
+        enter: { opacity: 1, scale: 1 },
+        leave: { opacity: 0, scale: 0 },
+        keys: (item) => item.id,
+    });
 
-  return (
-    <StyledContainerDiv>
-      {transitions((style, toast) => (
-        <Toast
-          style={style}
-          key={toast.id}
-          toast={toast}
-          onRemove={remove}></Toast>
-      ))}
-    </StyledContainerDiv>
-  );
+    return (
+        <StyledContainerDiv>
+            {transitions((style, toast) => (
+                <Toast
+                    style={style}
+                    key={toast.id}
+                    toast={toast}
+                    onRemove={remove}></Toast>
+            ))}
+        </StyledContainerDiv>
+    );
 }
 
 function Toast({ toast, onRemove, style }: { toast: ToastData; onRemove: (toast: string) => void; style: any }) {
-  const Icon = toast.icon;
-  const type = toast.type || "normal";
+    const Icon = toast.icon;
+    const type = toast.type || "normal";
 
-  useEffect(() => {
-    setTimeout(() => {
-      onRemove(toast.id);
-    }, (toast.duration || 15) * 1000);
-  }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            onRemove(toast.id);
+        }, (toast.duration || 15) * 1000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  return (
-    <StyledDiv
-      className={type}
-      style={style}>
-      {Icon && <Icon />}
-      <p>{toast.message}</p>
-    </StyledDiv>
-  );
+    return (
+        <StyledDiv
+            className={type}
+            style={style}>
+            {Icon && <Icon />}
+            <p>{toast.message}</p>
+        </StyledDiv>
+    );
 }

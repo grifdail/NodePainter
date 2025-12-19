@@ -54,6 +54,7 @@ export function evalFunction(code: string) {
         ${code}`;
 
 
+    // eslint-disable-next-line no-new-func
     var fn = new Function("GlobalScope", fullCode);
     return fn(GlobalScope);
 }

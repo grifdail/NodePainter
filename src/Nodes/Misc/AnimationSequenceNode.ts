@@ -33,6 +33,7 @@ export const AnimationSequenceNode: NodeDefinition = {
         cacheBehaviorSetting()
     ],
     getData: (portId, node, context) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const result = useFrameCache(context, node, () => {
 
             var inputs = context.createFunctionContext(node);

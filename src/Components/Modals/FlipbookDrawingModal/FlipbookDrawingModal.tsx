@@ -1,24 +1,19 @@
-import { IconBrush, IconClearAll, IconLayersIntersect2, IconLayersOff, IconLayersSelected, IconLayersSelectedBottom, IconPlayerPause, IconPlayerPlay, IconPlus, IconTrash } from "@tabler/icons-react";
-import styled from "styled-components";
-import { PaintingStore, PaintingTool, usePainting } from "../../../Hooks/usePainting";
-import { useDialog } from "../../../Hooks/useDialog";
-import { Tools } from "../Drawing/Tools";
-import { Modal } from "../../Modal";
-import { Fieldset } from "../../StyledComponents/Fieldset";
-import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
-import { ColorInput } from "../../Generics/Inputs/ColorInput";
-import { SliderInput } from "../../Generics/Inputs/SliderInput";
-import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
-import { PaletteColorSelector } from "../Drawing/PaletteColorSelector";
-import { Button } from "../../Generics/Button";
-import { useCallback, useEffect } from "react";
-import { Flipbook } from "../../../Types/FlipBook";
-import { closeAllPopup } from "../../../Actions/navigationAction";
-import { FlipbookSketch } from "./FlipbookSketch";
-import { ExponantialSliderInput } from "../../Generics/Inputs/ExponantialSlider";
-import { cp } from "fs";
-import { useFlipbookDrawingState } from "./useFlipbookDrawingState";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import { IconBrush, IconClearAll, IconLayersIntersect2, IconLayersOff, IconLayersSelected, IconLayersSelectedBottom, IconPlayerPause, IconPlayerPlay, IconPlus, IconTrash } from "@tabler/icons-react";
+import { useCallback, useEffect } from "react";
+import styled from "styled-components";
+import { closeAllPopup } from "../../../Actions/navigationAction";
+import { Flipbook } from "../../../Types/FlipBook";
+import { Button } from "../../Generics/Button";
+import { ColorInput } from "../../Generics/Inputs/ColorInput";
+import { ExponantialSliderInput } from "../../Generics/Inputs/ExponantialSlider";
+import { SliderInput } from "../../Generics/Inputs/SliderInput";
+import { Modal } from "../../Modal";
+import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
+import { Fieldset } from "../../StyledComponents/Fieldset";
+import { PaletteColorSelector } from "../Drawing/PaletteColorSelector";
+import { FlipbookSketch } from "./FlipbookSketch";
+import { useFlipbookDrawingState } from "./useFlipbookDrawingState";
 import { useFlipbookModalSave } from "./useFlipbookModalSave";
 
 
@@ -183,7 +178,7 @@ function usePlayModeControl(playMode: string, fps: number, animation: Flipbook, 
         const update = () => {
             const time = (Date.now() - timeStart) / 1000;
             const targetFrame = Math.floor(time * fps) % animation.length;
-            if (targetFrame != currentFrame) {
+            if (targetFrame !== currentFrame) {
                 currentFrame = targetFrame;
                 setFrame(targetFrame);
             }
@@ -194,7 +189,7 @@ function usePlayModeControl(playMode: string, fps: number, animation: Flipbook, 
         return () => {
             cancelAnimationFrame(animationFrame);
         };
-    }, [playMode, fps, animation.length]);
+    }, [playMode, fps, animation.length, setFrame]);
 }
 
 

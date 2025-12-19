@@ -1,12 +1,11 @@
 import { IconCodeDots } from "@tabler/icons-react";
 import styled from "styled-components";
-import { Modal } from "../../Modal";
+import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
 import { useCodeBlockModal } from "../../../Hooks/useCodeBlockModal";
+import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
+import { Modal } from "../../Modal";
 import { PortEditList } from "../CustomNodes/PortEditList";
 import { CodeBlockStatementList } from "./CodeBlockStatementList";
-import { NodeVariableContext } from "../../../Hooks/NodeVariableContext";
-import { portTypesWithProperty, portTypesWithTags } from "../../../Types/PortTypeDefinitions";
-import { useMemo } from "react";
 
 const MainDiv = styled.div`
   width: 100%;
@@ -33,47 +32,47 @@ const VariableSection = styled.div`
 `;
 
 export function CodeBlockModal() {
-  const state = useCodeBlockModal();
-  const codeBlock = state.current;
-  const variables = [...codeBlock.inputVariables, ...codeBlock.localVariables, ...codeBlock.outputVariables]
+    const state = useCodeBlockModal();
+    const codeBlock = state.current;
+    const variables = [...codeBlock.inputVariables, ...codeBlock.localVariables, ...codeBlock.outputVariables]
 
-  return (
-    <Modal
-      onClose={state.close}
-      title="Code Block"
-      icon={IconCodeDots}
-      size="large">
-      <MainDiv>
-        <VariableSection>
-          <PortEditList
-            ports={codeBlock.localVariables}
-            label="Variables"
-            prefix="var"
-            availableTypes={portTypesWithTags(["common"])}
-            onChange={(ports) => state.setVariables(ports, "local")}
-          />
-          <PortEditList
-            ports={codeBlock.inputVariables}
-            label="Inputs"
-            prefix="in"
-            availableTypes={portTypesWithTags(["common"])}
-            onChange={(ports) => state.setVariables(ports, "input")}
-          />
-          <PortEditList
-            ports={codeBlock.outputVariables}
-            label="Outputs"
-            prefix="out"
-            availableTypes={portTypesWithTags(["common"])}
-            onChange={(ports) => state.setVariables(ports, "output")}
-          />
-        </VariableSection>
-        <NodeVariableContext.Provider value={variables}>
-          <CodeBlockStatementList
-            statements={codeBlock.statements}
-            onChange={state.setStatements}
-          />
-        </NodeVariableContext.Provider>
-      </MainDiv>
-    </Modal>
-  );
+    return (
+        <Modal
+            onClose={state.close}
+            title="Code Block"
+            icon={IconCodeDots}
+            size="large">
+            <MainDiv>
+                <VariableSection>
+                    <PortEditList
+                        ports={codeBlock.localVariables}
+                        label="Variables"
+                        prefix="var"
+                        availableTypes={portTypesWithTags(["common"])}
+                        onChange={(ports) => state.setVariables(ports, "local")}
+                    />
+                    <PortEditList
+                        ports={codeBlock.inputVariables}
+                        label="Inputs"
+                        prefix="in"
+                        availableTypes={portTypesWithTags(["common"])}
+                        onChange={(ports) => state.setVariables(ports, "input")}
+                    />
+                    <PortEditList
+                        ports={codeBlock.outputVariables}
+                        label="Outputs"
+                        prefix="out"
+                        availableTypes={portTypesWithTags(["common"])}
+                        onChange={(ports) => state.setVariables(ports, "output")}
+                    />
+                </VariableSection>
+                <NodeVariableContext.Provider value={variables}>
+                    <CodeBlockStatementList
+                        statements={codeBlock.statements}
+                        onChange={state.setStatements}
+                    />
+                </NodeVariableContext.Provider>
+            </MainDiv>
+        </Modal>
+    );
 }

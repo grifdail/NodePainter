@@ -2,8 +2,8 @@ import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { DropdownInput } from "../Generics/Inputs/DropdownInput";
-import { DropdownSettingDefinition, ImageSelectSettingDefinition } from "../../Types/SettingDefinition";
-import styled, { createGlobalStyle, css } from "styled-components";
+import { ImageSelectSettingDefinition } from "../../Types/SettingDefinition";
+import styled from "styled-components";
 import { MenuItem } from "@szhsin/react-menu";
 
 const Body = styled.div`
@@ -61,6 +61,7 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
                                     <ImprovedMenuItem>
                                         <img width="32"
                                             height="32"
+                                            alt={item.url}
                                             src={item.url} />
                                         {item.label}
                                     </ImprovedMenuItem>

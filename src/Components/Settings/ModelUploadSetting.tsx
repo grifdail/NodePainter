@@ -59,7 +59,7 @@ export const ModelUploadSetting: SettingComponent<MeshUploadSettingDefinition> =
 
         return (
             <Body>
-                {value == undefined && (
+                {value === undefined && (
                     <div
                         className="file"
                         {...getRootProps()}>

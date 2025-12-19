@@ -1,12 +1,11 @@
-import { useRef, useState, useCallback, MouseEvent, useEffect } from "react";
-import { FlipbookLine } from "../../../Types/FlipBook";
-import { Color, Vector, Vector2 } from "../../../Types/vectorDataType";
-import { toHex } from "../../../Utils/math/colorUtils";
-import { Line } from "./Line";
-import { generateSVGPath } from "../../../Utils/ui/generateSVGPath";
-import { current } from "immer";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import * as simplify from "simplify-path";
-import { array } from "prop-types";
+import { FlipbookLine } from "../../../Types/FlipBook";
+import { Color, Vector2 } from "../../../Types/vectorDataType";
+import { toHex } from "../../../Utils/math/colorUtils";
+import { generateSVGPath } from "../../../Utils/ui/generateSVGPath";
+import { Line } from "./Line";
 
 export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: number, color: Color; lineWidth: number; editMode: "draw" | "erase"; addLine: (line: FlipbookLine, frameIndex?: number) => void; }) {
 
@@ -21,6 +20,7 @@ export function PainterFrame({ color, lineWidth, addLine, frame }: { frame: numb
         let optimized = toFlatNumberArray(simplify.default(toArrayOfNumberArray(refItem.current.points), 1 / 400, true));
         console.log(`Optimized ${base.length / 2} point to ${optimized.length / 2} point. That's a ${Math.round((base.length - optimized.length) / base.length * 100)}% optimization`);
         addLine({ color, lineWidth, points: optimized });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [frame, addLine, color, lineWidth])
 
     const onMouseMove = useCallback((e: MouseEvent<SVGRectElement>) => {

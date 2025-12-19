@@ -1,11 +1,11 @@
-import { animated, FrameValue, to } from "@react-spring/web";
-import { GraphArea } from "../../Types/GraphArea";
-import { toHex } from "../../Utils/math/colorUtils";
-import { Color } from "../../Types/vectorDataType";
+import { animated, FrameValue } from "@react-spring/web";
 import { styled } from "styled-components";
-import { vectorMultiplication } from "../../Utils/math/vectorUtils";
-import { NodeData } from "../../Types/NodeData";
 import { selectNodeInAreas } from "../../Nodes/Misc/AreaCommentNode";
+import { GraphArea } from "../../Types/GraphArea";
+import { NodeData } from "../../Types/NodeData";
+import { Color } from "../../Types/vectorDataType";
+import { toHex } from "../../Utils/math/colorUtils";
+import { vectorMultiplication } from "../../Utils/math/vectorUtils";
 
 const Rect = styled.rect<{ $color: Color }>`
   stroke: ${(props) => toHex(props.$color, true)};
@@ -20,21 +20,21 @@ const Text = styled.text`
 `;
 
 export function GraphAreaRect({ base, area, node }: { base: FrameValue<number[]>; area: GraphArea; node: NodeData }) {
-  return (
-    <animated.g transform={base.to((x, y) => (area.relative ? `translate(${x + area.x}, ${y + area.y})` : `translate(${area.x}, ${area.y}) scale(1)`))}>
-      <Rect
-        as={animated.rect}
-        x="0"
-        y="0"
-        width={area.width}
-        height={area.height}
-        $color={area.color}></Rect>
-      <Text
-        onClick={() => selectNodeInAreas(area, node, true)}
-        x="10 "
-        y="35">
-        {area.name}
-      </Text>
-    </animated.g>
-  );
+    return (
+        <animated.g transform={base.to((x, y) => (area.relative ? `translate(${x + area.x}, ${y + area.y})` : `translate(${area.x}, ${area.y}) scale(1)`))}>
+            <Rect
+                as={animated.rect}
+                x="0"
+                y="0"
+                width={area.width}
+                height={area.height}
+                $color={area.color}></Rect>
+            <Text
+                onClick={() => selectNodeInAreas(area, node, true)}
+                x="10 "
+                y="35">
+                {area.name}
+            </Text>
+        </animated.g>
+    );
 }

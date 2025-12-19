@@ -1,7 +1,7 @@
-import { AnimationSequenceData, AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
+import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
-import { AnimationSequenceBlockUi, EmptyDiv } from "./AnimationSequenceBlockUi";
+import { AnimationSequenceBlockUi } from "./AnimationSequenceBlockUi";
 import { AnimationSequenceSelectorDropdown } from "./AnimationSequenceSelectorDropdown";
 
 export function ASChildBlock({ animation, block, onChange }: {

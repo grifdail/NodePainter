@@ -24,6 +24,7 @@ export const LinearControllerNode: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return (useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position: current }) => {

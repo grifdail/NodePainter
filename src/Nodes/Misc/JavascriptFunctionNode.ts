@@ -33,6 +33,7 @@ export const JavascriptFunctionNode: NodeDefinition = {
         frameCacheSetting(), cacheBehaviorSettingWithNoCache()
     ],
     getData: (portId, node, context) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const result = useFrameCache(context, node, () => {
             const fn = createFunctionFromCache(context, node.id, node.settings.code.code);
 

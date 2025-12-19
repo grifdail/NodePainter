@@ -1,21 +1,19 @@
-import { Menu, MenuItem } from "@szhsin/react-menu";
-import { AnimationSequenceBlock, AnimationSequenceBlockDelay, AnimationSequenceBlockLerp, AnimationSequenceBlockLoop, AnimationSequenceBlockParallel, AnimationSequenceBlockSequence, AnimationSequenceBlockSet, AnimationSequenceBlockType, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
-import { Button, InvisibleButton } from "../../Generics/Button";
-import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconPlus, IconTrash, IconVariable } from "@tabler/icons-react";
+import { IconArrowMoveDown, IconArrowMoveUp, IconFoldDown, IconFoldUp, IconTrash, IconVariable } from "@tabler/icons-react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Black } from "../../../Utils/math/colorUtils";
+import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
+import { AnimationSequenceToString } from "../../../Utils/animationSequence/AnimationSequenceToString";
+import { InvisibleButton } from "../../Generics/Button";
+import { DoubleIconGen } from "../../Generics/DoubleIcon";
+import { FieldsetStyled } from "../../StyledComponents/Fieldset";
+import { ASChildBlock } from "./ASChildBlock";
+import { ASChildrenBlock } from "./ASChildrenBlock";
+import { ASConditionField } from "./ASConditionField";
+import { ASCountField } from "./ASCountField";
+import { ASDurationField } from "./ASDurationField";
+import { ASEasingField } from "./ASEasingField";
 import { ASTargetDropdown } from "./ASTargetDropdown";
 import { ASValueField } from "./ASValueField";
-import { ASDurationField } from "./ASDurationField";
-import { ASCountField } from "./ASCountField";
-import { ASEasingField } from "./ASEasingField";
-import { ASChildrenBlock } from "./ASChildrenBlock";
-import { ASChildBlock } from "./ASChildBlock";
-import { Fieldset, FieldsetStyled } from "../../StyledComponents/Fieldset";
-import { ASConditionField } from "./ASConditionField";
-import { useCallback, useState } from "react";
-import { DoubleIconGen } from "../../Generics/DoubleIcon";
-import { AnimationSequenceToString } from "../../../Utils/animationSequence/AnimationSequenceToString";
 
 export const EmptyDiv = () => <div className="empty" />
 

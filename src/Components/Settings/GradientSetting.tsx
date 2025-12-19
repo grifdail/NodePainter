@@ -4,7 +4,7 @@ import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { DefaultGradient, DefaultPalettes, createGradientFromPalette } from "../../Data/Palettes";
+import { createGradientFromPalette } from "../../Data/Palettes";
 import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { MenuItemWithGradientPreview, MenuItemWithPalettePreview } from "./ChildComponents/ColorPreview";
 import { ColorPalette, Gradient, GradientStop, createColor } from "../../Types/vectorDataType";

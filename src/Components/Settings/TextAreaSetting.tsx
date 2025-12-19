@@ -1,8 +1,7 @@
 import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";
 import { Fieldset } from "../StyledComponents/Fieldset";
-import { TextInput } from "../Generics/Inputs/TextInput";
-import { StringSettingDefinition, TextAreaSettingDefinition } from "../../Types/SettingDefinition";
+import { TextAreaSettingDefinition } from "../../Types/SettingDefinition";
 import { TextAreaInput } from "../Generics/Inputs/TextAreaInput";
 import styled from "styled-components";
 import { IconAlertHexagon } from "@tabler/icons-react";
@@ -44,6 +43,6 @@ export const TextAreaSetting: SettingComponent<TextAreaSettingDefinition> = {
     },
     getSize: function (value, def, node): number {
         const error = (def.validation && node && def.validation(value, node)) || null;
-        return 134;
+        return 134 + (error ? 30 : 0);
     }
 };

@@ -1,13 +1,11 @@
-import React from "react";
-import { PortConnection } from "../../Types/PortConnection";
-import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
-import { PortForeignObject } from "../StyledComponents/PortForeignObject";
-import { usePortSelection } from "../../Hooks/usePortSelection";
-import { PortRole } from "../../Types/PortRole";
-import { Fieldset } from "../StyledComponents/Fieldset";
-import { NODE_WIDTH, PORT_HEIGHT } from "./NodeVisualConst";
 import styled from "styled-components";
+import { usePortSelection } from "../../Hooks/usePortSelection";
+import { PortConnection } from "../../Types/PortConnection";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
+import { Fieldset } from "../StyledComponents/Fieldset";
+import { PortForeignObject } from "../StyledComponents/PortForeignObject";
+import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
+import { NODE_WIDTH, PORT_HEIGHT } from "./NodeVisualConst";
 
 const ImprovedFieldSet = styled(Fieldset)`
   background: color-mix(in srgb, var(--color-property), transparent 90%);
@@ -27,51 +25,51 @@ const ImprovedFieldSet = styled(Fieldset)`
 `;
 
 export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: { y: number; nodeId: string; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
-  var portDescription = PortTypeDefinitions[portData.type];
-  var Icon = portDescription.icon;
-  var PortSettings = portDescription.inlineInput;
+    var portDescription = PortTypeDefinitions[portData.type];
+    var Icon = portDescription.icon;
+    var PortSettings = portDescription.inlineInput;
 
-  var portSelection = usePortSelection();
-  const hasSelection = portSelection.hasSelection;
-  var isSelected = hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
+    var portSelection = usePortSelection();
+    const hasSelection = portSelection.hasSelection;
+    var isSelected = hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
 
-  const canBeSelected = !isSelected && hasSelection && portSelection.location === "output" && (portData.type == portSelection.type || PortTypeDefinitions[portSelection.type].convert[portData.type]);
-  return (
-    <StyledPortGroup
-      transform={`translate(0, ${y})`}
-      width={NODE_WIDTH}
-      height="30"
-      className={`${portData.type} ${isSelected ? "selected" : ""}  ${hasSelection && !canBeSelected ? "hidden" : ""} `}>
-      <PortForeignObject
-        height={PORT_HEIGHT}
-        width={NODE_WIDTH}
-        x={0}
-        y={0}>
-        <ImprovedFieldSet
-          onClickLabel={onClick}
-          label={portData.label || portData.id}
-          input={(!portData.hasConnection && PortSettings) as any}
-          onChange={onValueChange}
-          value={portData.ownValue}
-          tooltip={portData.tooltip}
-          passtrough={{ constrains: portData.constrains }}
-        />
-      </PortForeignObject>
-      <g
-        data-tooltip-id="tooltip"
-        data-tooltip-content={portData.label || portData.id}
-        transform={`translate(0, ${PORT_HEIGHT * 0.5})`}>
-        <circle
-          cx={0}
-          cy={0}
-          r={15}
-          onClick={onClick}></circle>
-        <Icon
-          x="-12"
-          y="-12"
-          scale={10}
-          onClick={onClick}></Icon>
-      </g>
-    </StyledPortGroup>
-  );
+    const canBeSelected = !isSelected && hasSelection && portSelection.location === "output" && (portData.type === portSelection.type || PortTypeDefinitions[portSelection.type].convert[portData.type]);
+    return (
+        <StyledPortGroup
+            transform={`translate(0, ${y})`}
+            width={NODE_WIDTH}
+            height="30"
+            className={`${portData.type} ${isSelected ? "selected" : ""}  ${hasSelection && !canBeSelected ? "hidden" : ""} `}>
+            <PortForeignObject
+                height={PORT_HEIGHT}
+                width={NODE_WIDTH}
+                x={0}
+                y={0}>
+                <ImprovedFieldSet
+                    onClickLabel={onClick}
+                    label={portData.label || portData.id}
+                    input={(!portData.hasConnection && PortSettings) as any}
+                    onChange={onValueChange}
+                    value={portData.ownValue}
+                    tooltip={portData.tooltip}
+                    passtrough={{ constrains: portData.constrains }}
+                />
+            </PortForeignObject>
+            <g
+                data-tooltip-id="tooltip"
+                data-tooltip-content={portData.label || portData.id}
+                transform={`translate(0, ${PORT_HEIGHT * 0.5})`}>
+                <circle
+                    cx={0}
+                    cy={0}
+                    r={15}
+                    onClick={onClick}></circle>
+                <Icon
+                    x="-12"
+                    y="-12"
+                    scale={10}
+                    onClick={onClick}></Icon>
+            </g>
+        </StyledPortGroup>
+    );
 }

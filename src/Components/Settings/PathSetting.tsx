@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { PathSettingDefinition } from "../../Types/SettingDefinition";
 import { PathData } from "../../Types/PathData";
 import { MouseEvent, useState } from "react";
-import { current } from "immer";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
 import { generateSVGPath } from "../../Utils/ui/generateSVGPath";

@@ -1,6 +1,5 @@
 import { IconVariable } from "@tabler/icons-react";
-import { AnimationSequenceData, AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
-import { convertTypeValue } from "../../../Utils/graph/execution/convertTypeValue";
+import { AnimationSequenceBlock, AnimationSequenceData } from "../../../Utils/animationSequence/AnimationSequenceData";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 

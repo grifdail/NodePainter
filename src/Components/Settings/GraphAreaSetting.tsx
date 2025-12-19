@@ -19,19 +19,19 @@ export const GraphAreaSetting: SettingComponent<GraphAreaSettingDefinition> = {
             (value: number) => {
                 onChange({ ...area, width: value, x: -value, relative: true });
             },
-            [area]
+            [area, onChange]
         );
         const setHeight = useCallback(
             (value: number) => {
                 onChange({ ...area, height: value, y: -value, relative: true });
             },
-            [area]
+            [area, onChange]
         );
         const setColor = useCallback(
             (color: any) => {
                 onChange({ ...area, color: color });
             },
-            [area]
+            [area, onChange]
         );
         const setRelative = useCallback(
             (value: any) => {
@@ -42,13 +42,13 @@ export const GraphAreaSetting: SettingComponent<GraphAreaSettingDefinition> = {
                     onChange({ ...area, relative: value, x: n.positionX + NODE_WIDTH * 0.5 + area.x, y: n.positionY + NODE_HEADER_HEIGHT * 0.5 + area.y });
                 }
             },
-            [area]
+            [area, node.id, onChange]
         );
         const setName = useCallback(
             (value: any) => {
                 onChange({ ...area, name: value });
             },
-            [area]
+            [area, onChange]
         );
         return (
             <div>

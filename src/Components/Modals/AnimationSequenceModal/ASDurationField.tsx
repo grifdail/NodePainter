@@ -1,7 +1,5 @@
 import { IconClock } from "@tabler/icons-react";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
-import { NumberInput } from "../../Generics/Inputs/NumberInput";
-import { Fieldset } from "../../StyledComponents/Fieldset";
 import { ParameterExpressionView } from "../CodeBlock/ParameterExpressionView";
 
 export const ASDurationField = ({ block, onChange }: {

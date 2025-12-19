@@ -5,17 +5,12 @@ import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { AnimationSequenceBlockUi } from "./AnimationSequenceBlockUi";
 import { AnimationSequenceSelectorDropdown } from "./AnimationSequenceSelectorDropdown";
 
-export const ASChildrenBlock = ({ animation, block, onChange }: {
+function SubASChildrenBlock({ animation, block, onChange }: {
     animation: AnimationSequenceData;
-    block: AnimationSequenceBlock;
+    block: AnimationSequenceBlock & { children: AnimationSequenceBlock[] };
     onChange: (newBlock: AnimationSequenceBlock) => void
-}) => {
-
-    if (!("children" in block)) {
-        return null;
-    }
-
-    var { addNew, remove, change, move } = useListManipulator(block.children, children => onChange({ ...block, children }));
+}) {
+    const { addNew, remove, change, move } = useListManipulator(block.children, children => onChange({ ...block, children }));
 
     return <div className="children">
         {block.children.map((block, index) => <AnimationSequenceBlockUi
@@ -30,4 +25,17 @@ export const ASChildrenBlock = ({ animation, block, onChange }: {
             <AnimationSequenceSelectorDropdown label="Add" onSelect={(type) => addNew(AnimationSequenceGenerator[type]())} />
         </ButtonGroup>
     </div>;
+}
+
+export const ASChildrenBlock = ({ animation, block, onChange }: {
+    animation: AnimationSequenceData;
+    block: AnimationSequenceBlock;
+    onChange: (newBlock: AnimationSequenceBlock) => void
+}) => {
+
+    if (!("children" in block)) {
+        return null;
+    }
+
+    return <SubASChildrenBlock animation={animation} block={block} onChange={onChange} />;
 };

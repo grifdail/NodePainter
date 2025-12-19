@@ -1,11 +1,8 @@
 import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
-import { IconFileUpload, IconHelpHexagon } from "@tabler/icons-react";
-import { useDropzone } from "react-dropzone";
-import { Button } from "../Generics/Button";
-import { ImagePreviewSettingDefinition, ImageUploadSettingDefinition } from "../../Types/SettingDefinition";
+import { IconHelpHexagon } from "@tabler/icons-react";
+import { ImagePreviewSettingDefinition } from "../../Types/SettingDefinition";
 
 const Body = styled.div`
   width: 100%;

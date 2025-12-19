@@ -89,7 +89,8 @@ type ConstrainDefinitionType = typeof ConstrainDefinition;
 type ConstrainTypes = keyof ConstrainDefinitionType;
 type ConstrainGenerator = { [key in ConstrainTypes]: (...params: Tail<Parameters<ConstrainDefinitionType[key]>>) => ConstrainDeclaration };
 
-type Tail<T extends any[]> = T extends [infer _A, infer _B, ...infer R] ? R : never;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Tail<T extends any[]> = T extends [infer A, infer B, ...infer R] ? R : never;
 
 export const Constraints: ConstrainGenerator = Object.fromEntries(
     Object.keys(ConstrainDefinition).map((key) => {

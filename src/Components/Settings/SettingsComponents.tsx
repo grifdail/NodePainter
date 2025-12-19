@@ -1,4 +1,4 @@
-import { SettingDefinition, SettingType } from "../../Types/SettingDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { DropdownSetting } from "./DropdownSetting";
 import { NumberSetting } from "./NumberSetting";
 import { StringSetting } from "./StringSetting";
@@ -26,9 +26,6 @@ import { ImagePreviewSetting } from "./ImagePreviewSetting";
 import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
 import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
-import { NodeData } from "../../Types/NodeData";
-import { FunctionComponent } from "react";
-import { SettingProps } from "../../Types/SettingProps";
 import { SettingComponent } from "../../Types/SettingComponent";
 
 

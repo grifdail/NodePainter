@@ -5,7 +5,7 @@ import { useCopyToClipboard, useToggle } from "@uidotdev/usehooks";
 import { IconClipboard, IconDeviceFloppy, IconDownload, IconLink } from "@tabler/icons-react";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Button } from "../Generics/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { compressSketchJson } from "../../Utils/graph/load/loadJsonDecrypt";
 import { SketchSave } from "../../Types/SketchTemplate";
 import { download } from "../../Utils/ui/download";
@@ -28,64 +28,65 @@ const MainDiv = styled.div`
 `;
 
 export function SaveModal({ close }: { close: () => void }) {
-  const [shortJson, toggleShotJson] = useToggle(false);
-  var saveTemplate: SketchSave = useTree((state) => state.exportTemplate)();
-  const json = JSON.stringify(saveTemplate, null, shortJson ? undefined : 4);
-  const [lastValue, clip] = useCopyToClipboard();
-  const [{ hasUrl, url: decodeUrl, loading }, setUrlState] = useState({ hasUrl: false, loading: true, url: "" });
-  const sketchName = useTree((state) => state.getSketchName());
+    const [shortJson, toggleShotJson] = useToggle(false);
+    var saveTemplate: SketchSave = useTree((state) => state.exportTemplate)();
+    const json = useMemo(() => JSON.stringify(saveTemplate, null, shortJson ? undefined : 4), [saveTemplate, shortJson]);
+    const [lastValue, clip] = useCopyToClipboard();
+    const [{ hasUrl, url: decodeUrl, loading }, setUrlState] = useState({ hasUrl: false, loading: true, url: "" });
+    const sketchName = useTree((state) => state.getSketchName());
 
-  useEffect(() => {
-    compressSketchJson(saveTemplate).then(
-      (data) => {
-        var url = new URL(window.location.href);
-        url.searchParams.append("parse", data);
-        var result = url.toString();
-        if (result.length >= MAX_URL_LENGTH) {
-          return setUrlState({ url: "", hasUrl: false, loading: false });
-        } else {
-          return setUrlState({ url: result, hasUrl: true, loading: false });
-        }
-      },
-      (err) => {
-        return setUrlState({ url: "", hasUrl: false, loading: false });
-      }
+    useEffect(() => {
+        compressSketchJson(saveTemplate).then(
+            (data) => {
+                var url = new URL(window.location.href);
+                url.searchParams.append("parse", data);
+                var result = url.toString();
+                if (result.length >= MAX_URL_LENGTH) {
+                    return setUrlState({ url: "", hasUrl: false, loading: false });
+                } else {
+                    return setUrlState({ url: result, hasUrl: true, loading: false });
+                }
+            },
+            (err) => {
+                return setUrlState({ url: "", hasUrl: false, loading: false });
+            }
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [json]);
+
+    return (
+        <Modal
+            onClose={close}
+            title="Save"
+            icon={IconDeviceFloppy}
+            size="small">
+            <MainDiv>
+                <div className="short">
+                    <label htmlFor="short">Use short json</label>
+                    <input
+                        name="short"
+                        type="checkbox"
+                        checked={shortJson}
+                        onClick={(e) => toggleShotJson(!!(e.target as HTMLInputElement).checked)}></input>
+                </div>
+                <textarea value={json}></textarea>
+
+                <ButtonGroup $responsive>
+                    <Button
+                        label={lastValue === decodeUrl ? "Succesfully copied !" : "Copy link"}
+                        icon={IconLink}
+                        disabled={!hasUrl || loading}
+                        onClick={() => hasUrl && clip(decodeUrl)}></Button>
+                    <Button
+                        label={lastValue === json ? "Succesfully copied !" : "Copy to clipboard"}
+                        icon={IconClipboard}
+                        onClick={() => clip(json)}></Button>
+                    <Button
+                        label="Download as file"
+                        icon={IconDownload}
+                        onClick={() => download(new Blob([json], { type: "application/json" }), `${sketchName}_NodePainter.json`)}></Button>
+                </ButtonGroup>
+            </MainDiv>
+        </Modal>
     );
-  }, [json]);
-
-  return (
-    <Modal
-      onClose={close}
-      title="Save"
-      icon={IconDeviceFloppy}
-      size="small">
-      <MainDiv>
-        <div className="short">
-          <label htmlFor="short">Use short json</label>
-          <input
-            name="short"
-            type="checkbox"
-            checked={shortJson}
-            onClick={(e) => toggleShotJson(!!(e.target as HTMLInputElement).checked)}></input>
-        </div>
-        <textarea value={json}></textarea>
-
-        <ButtonGroup $responsive>
-          <Button
-            label={lastValue === decodeUrl ? "Succesfully copied !" : "Copy link"}
-            icon={IconLink}
-            disabled={!hasUrl || loading}
-            onClick={() => hasUrl && clip(decodeUrl)}></Button>
-          <Button
-            label={lastValue === json ? "Succesfully copied !" : "Copy to clipboard"}
-            icon={IconClipboard}
-            onClick={() => clip(json)}></Button>
-          <Button
-            label="Download as file"
-            icon={IconDownload}
-            onClick={() => download(new Blob([json], { type: "application/json" }), `${sketchName}_NodePainter.json`)}></Button>
-        </ButtonGroup>
-      </MainDiv>
-    </Modal>
-  );
 }

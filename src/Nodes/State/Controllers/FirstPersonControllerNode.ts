@@ -28,6 +28,7 @@ export const FirstPersonControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useFrameCache(context, node, () => {
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const movementInput = context.getInputValueVector2(node, "movementInput");

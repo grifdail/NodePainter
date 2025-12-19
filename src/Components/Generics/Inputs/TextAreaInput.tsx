@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Input, InputBackgroundColor } from "../../StyledComponents/Input";
-import { applyConstraint, ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
 import styled from "styled-components";
+import { applyConstraint, ConstrainDeclaration } from "../../../Utils/ui/applyConstraints";
+import { InputBackgroundColor } from "../../StyledComponents/Input";
 
 const StyledTextare = styled.textarea`
   color: var(--color-text);
@@ -27,19 +27,19 @@ const StyledTextare = styled.textarea`
 `;
 
 export function TextAreaInput({ onChange, value, disabled = false, constrains }: { onChange: (value: string) => void; value: string; disabled?: boolean; constrains?: ConstrainDeclaration[] }) {
-  var [rawField, setRawField] = useState(value);
+    var [rawField, setRawField] = useState(value);
 
-  useEffect(() => {
-    setRawField(value && value.toString());
-  }, [value]);
+    useEffect(() => {
+        setRawField(value && value.toString());
+    }, [value]);
 
-  const onBlur = (newValue: string) => {
-    if (constrains) {
-      onChange(applyConstraint(rawField, value, constrains));
-    } else {
-      onChange(rawField);
-    }
-  };
+    const onBlur = (newValue: string) => {
+        if (constrains) {
+            onChange(applyConstraint(rawField, value, constrains));
+        } else {
+            onChange(rawField);
+        }
+    };
 
-  return <StyledTextare disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
+    return <StyledTextare disabled={disabled} value={rawField} onChange={(e) => setRawField(e.target.value)} onBlur={(e) => onBlur(e.target.value)} />;
 }

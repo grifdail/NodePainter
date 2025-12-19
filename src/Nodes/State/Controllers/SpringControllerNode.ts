@@ -28,6 +28,7 @@ export const SpringController: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return enforceCorrectVectorTypeForNode(node, (useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position, velocity }) => {

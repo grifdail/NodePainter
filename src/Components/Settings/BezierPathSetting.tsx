@@ -1,14 +1,11 @@
-import { SettingComponent } from "../../Types/SettingComponent";
-import { SettingProps } from "../../Types/SettingProps";
-import styled from "styled-components";
-import { BezierPathSettingDefinition, PathSettingDefinition } from "../../Types/SettingDefinition";
-import { BezierPathData, PathData } from "../../Types/PathData";
 import { MouseEvent, useState } from "react";
-import { current } from "immer";
-import { Fieldset } from "../StyledComponents/Fieldset";
-import { BoolInput } from "../Generics/Inputs/BoolInput";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import styled from "styled-components";
+import { BezierPathData } from "../../Types/PathData";
+import { SettingComponent } from "../../Types/SettingComponent";
+import { BezierPathSettingDefinition } from "../../Types/SettingDefinition";
+import { SettingProps } from "../../Types/SettingProps";
 import { Button } from "../Generics/Button";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 
 export const BezierPathSetting: SettingComponent<BezierPathSettingDefinition> = {
     UI: function PathSetting({ onChange, value, def }: SettingProps<BezierPathSettingDefinition>) {

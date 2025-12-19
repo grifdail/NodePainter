@@ -1,20 +1,19 @@
-import { SettingComponent } from "../../Types/SettingComponent";
-import { SettingProps } from "../../Types/SettingProps";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import styled from "styled-components";
-import { IconPlus, IconX } from "@tabler/icons-react";
-import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeStop, interpolateEnvelope } from "../../Types/EnvelopeData";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
-import { Button } from "../Generics/Button";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { IconPlus, IconX } from "@tabler/icons-react";
 import { useDrag } from "@use-gesture/react";
-import { calculateSVGPathForMathFunction } from "../../Utils/ui/calculateSVGPathForMathFunction";
+import { useEffect, useMemo, useRef, useState } from "react";
+import styled from "styled-components";
 import { Easing, EasingFunctionType } from "../../libs/easing";
 import { EasingIcon } from "../../libs/EasingIcon";
-import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { createDefaultEnvelopeStop, EnvelopeData, EnvelopeStop, interpolateEnvelope } from "../../Types/EnvelopeData";
+import { SettingComponent } from "../../Types/SettingComponent";
 import { EnvelopeSettingDefinition } from "../../Types/SettingDefinition";
+import { SettingProps } from "../../Types/SettingProps";
 import { moveUpArray } from "../../Utils/misc/moveUpArray";
-import { NodeData } from "../../Types/NodeData";
+import { calculateSVGPathForMathFunction } from "../../Utils/ui/calculateSVGPathForMathFunction";
+import { Button } from "../Generics/Button";
+import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 
 const ColorList = styled.ul`
   display: flex;

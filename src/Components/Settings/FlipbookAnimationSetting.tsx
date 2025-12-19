@@ -3,7 +3,6 @@ import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
 import { IconBrush } from "@tabler/icons-react";
-import { usePainting } from "../../Hooks/usePainting";
 import { Button } from "../Generics/Button";
 import { openPaintAnimationModal } from "../../Actions/navigationAction";
 import { FlipbookAnimationSettingDefinition } from "../../Types/SettingDefinition";

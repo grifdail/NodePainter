@@ -1,5 +1,4 @@
-import { NumberSettingDefinition, Vector2SettingDefinition } from "../../Types/SettingDefinition";
-import { NumberInput } from "../Generics/Inputs/NumberInput";
+import { Vector2SettingDefinition } from "../../Types/SettingDefinition";
 import { VectorInput } from "../Generics/Inputs/VectorInput";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { SettingComponent } from "../../Types/SettingComponent";

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { IconArrowsShuffle, IconGridDots, IconWaveSine } from "@tabler/icons-react";
 import Rand from "rand-seed";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";

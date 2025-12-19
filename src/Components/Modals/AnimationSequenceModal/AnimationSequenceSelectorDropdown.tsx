@@ -1,8 +1,7 @@
 import { Menu, MenuItem } from "@szhsin/react-menu"
-import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator"
-import { Button } from "../../Generics/Button"
 import { IconPlus } from "@tabler/icons-react"
 import { AnimationSequenceBlockType } from "../../../Utils/animationSequence/AnimationSequenceData"
+import { AnimationSequenceGenerator } from "../../../Utils/animationSequence/AnimationSequenceGenerator"
 import { AddButtonStyled } from "../CodeBlock/CodeBlockStatementList"
 
 export const AnimationSequenceSelectorDropdown = ({ onSelect, label }: { label: string, onSelect: (type: AnimationSequenceBlockType) => void }) => {

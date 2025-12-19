@@ -1,22 +1,20 @@
-import { Icon, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPlayerPlay, IconReload, IconSearch, IconUpload, IconX } from "@tabler/icons-react";
-import styled from "styled-components";
-import { Modal } from "../Modal";
-import { Button } from "../Generics/Button";
-import { useAllSavedSketch } from "../../Hooks/db";
-import { useDialog } from "../../Hooks/useDialog";
-import { Templates } from "../../Data/templates";
-import { useTree } from "../../Hooks/useTree";
-import { ButtonGroup } from "../StyledComponents/ButtonGroup";
-import { SketchSave } from "../../Types/SketchTemplate";
-import { MouseEventHandler, useCallback, useMemo, useState } from "react";
-import { SearchForm } from "../Generics/SearchForm";
-import { Input } from "../StyledComponents/Input";
-import { CategoryButton, TagList } from "../Generics/CategoryButton";
-import { Routes } from "../../Types/Routes";
-import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
-import { navigate } from "wouter/use-browser-location";
-import { openLoadModal } from "../../Actions/navigationAction";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Icon, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPlayerPlay, IconReload, IconSearch, IconUpload, IconX } from "@tabler/icons-react";
+import { MouseEventHandler, useCallback, useMemo, useState } from "react";
+import styled from "styled-components";
+import { openLoadModal } from "../../Actions/navigationAction";
+import { Templates } from "../../Data/templates";
+import { useAllSavedSketch } from "../../Hooks/db";
+import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
+import { useDialog } from "../../Hooks/useDialog";
+import { useTree } from "../../Hooks/useTree";
+import { SketchSave } from "../../Types/SketchTemplate";
+import { Button } from "../Generics/Button";
+import { TagList } from "../Generics/CategoryButton";
+import { SearchForm } from "../Generics/SearchForm";
+import { Modal } from "../Modal";
+import { ButtonGroup } from "../StyledComponents/ButtonGroup";
+import { Input } from "../StyledComponents/Input";
 
 const MY_SAVED_SKETCH = "My Saved Sketch";
 
@@ -269,7 +267,7 @@ function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void)
 }
 
 function useSketchCollection(): [SketchElement[], string[], (name: string) => void] {
-    const [sketches, saveSketch, deleteSketch] = useAllSavedSketch();
+    const [sketches, , deleteSketch] = useAllSavedSketch();
     const tags = new Set([MY_SAVED_SKETCH]);
     return [
         [

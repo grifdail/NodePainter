@@ -2,7 +2,6 @@ import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { ColorPalette } from "../../../Types/vectorDataType";
 import { IconMenu2 } from "@tabler/icons-react";
-import { DefaultPalettes } from "../../../Data/Palettes";
 import { MenuItemWithPalettePreview } from "./ColorPreview";
 import { Button } from "../../Generics/Button";
 import { ReactElement } from "react";

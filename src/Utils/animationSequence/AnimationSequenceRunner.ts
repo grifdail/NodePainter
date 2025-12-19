@@ -141,7 +141,7 @@ export const AnimationSequenceRunner: AnimationSequenceRunnerT = {
         while (!isDone);
     },
     Reset: function* (model: AnimationSequenceBlockReset, properties: FunctionContext): Generator<void, void, [FunctionContext, number]> {
-        const [inputs, dt] = yield;
+        const [inputs,] = yield;
         Object.keys(properties).forEach(key => {
             properties[key].value = inputs[key].value
         });

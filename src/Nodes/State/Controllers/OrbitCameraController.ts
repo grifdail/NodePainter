@@ -30,6 +30,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useFrameCache(context, node, () => {
             const reset = context.getInputValueBoolean(node, "reset");
             const cameraInput = context.getInputValueVector2(node, "cameraInput");

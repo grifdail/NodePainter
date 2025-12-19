@@ -1,6 +1,5 @@
 import { BoolSettingDefinition } from "../../Types/SettingDefinition";
 import { BoolInput } from "../Generics/Inputs/BoolInput";
-import { NumberInput } from "../Generics/Inputs/NumberInput";
 import { Fieldset } from "../StyledComponents/Fieldset";
 import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";

@@ -28,6 +28,7 @@ export const FreecamControllerNode: NodeDefinition = {
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         return useFrameCache(context, node, () => {
 
 

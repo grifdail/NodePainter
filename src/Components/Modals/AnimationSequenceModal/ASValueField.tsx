@@ -1,10 +1,7 @@
-import { IconClock, IconPencil, IconProps } from "@tabler/icons-react";
 import { PortType } from "../../../Types/PortType";
 import { AnimationSequenceBlock } from "../../../Utils/animationSequence/AnimationSequenceData";
-import { RawValueField } from "../../Generics/RawValueField";
-import { ParameterExpressionView } from "../CodeBlock/ParameterExpressionView";
-import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { PortTypeIcon } from "../../Generics/PortTypeIcon";
+import { ParameterExpressionView } from "../CodeBlock/ParameterExpressionView";
 
 export const ASValueField: React.FC<{
     block: AnimationSequenceBlock;

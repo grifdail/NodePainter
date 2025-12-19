@@ -1,8 +1,7 @@
-import React, { MouseEvent } from "react";
-import { NodeDefinition } from "../Types/NodeDefinition";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
+import { MouseEvent } from "react";
 import styled from "styled-components";
-import { camelCaseToWords } from "../Utils/ui/camelCaseToWords";
+import { NodeDefinition } from "../Types/NodeDefinition";
 import { idToNodeName } from "../Utils/ui/idToNodeName";
 
 const StyledButton = styled.button`
@@ -44,26 +43,26 @@ const StyledButton = styled.button`
 `;
 
 export function NodePreview({ node, onClick, onFav, isFav }: { node: NodeDefinition; onClick: (node: NodeDefinition) => void; onFav: () => void; isFav: boolean }) {
-  const onClickFav = (e: MouseEvent<HTMLDivElement, Event>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    onFav();
-  };
+    const onClickFav = (e: MouseEvent<HTMLDivElement, Event>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onFav();
+    };
 
-  const Icon = node.icon;
-  return (
-    <StyledButton onClick={() => onClick(node)}>
-      {Icon != null ? <Icon></Icon> : null}
-      <div data-tooltip-id="tooltip" data-tooltip-content={node.id}>
-        {node.label || idToNodeName(node.id)}
-      </div>
-      <p data-tooltip-id="tooltip" data-tooltip-content={node.description}>
-        {node.description}
-      </p>
-      <span className="spacer"></span>
-      <div className="fav" onClick={onClickFav}>
-        {isFav ? <IconStarFilled /> : <IconStar />}
-      </div>
-    </StyledButton>
-  );
+    const Icon = node.icon;
+    return (
+        <StyledButton onClick={() => onClick(node)}>
+            {Icon != null ? <Icon></Icon> : null}
+            <div data-tooltip-id="tooltip" data-tooltip-content={node.id}>
+                {node.label || idToNodeName(node.id)}
+            </div>
+            <p data-tooltip-id="tooltip" data-tooltip-content={node.description}>
+                {node.description}
+            </p>
+            <span className="spacer"></span>
+            <div className="fav" onClick={onClickFav}>
+                {isFav ? <IconStarFilled /> : <IconStar />}
+            </div>
+        </StyledButton>
+    );
 }

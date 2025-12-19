@@ -1,8 +1,6 @@
-import { IconPlus } from "@tabler/icons-react";
-import { boolean } from "mathjs";
-import styled from "styled-components";
-import { ContextMenu } from "../Graph/ContextMenu";
 import { Menu, MenuItem } from "@szhsin/react-menu";
+import { IconPlus } from "@tabler/icons-react";
+import styled from "styled-components";
 
 export const CategoryButton = styled.button<{ selected?: boolean }>`
   color: var(--color-text);
@@ -56,36 +54,36 @@ export const TagListContent = styled.div<{ $shrink?: boolean }>`
 `;
 
 export const TagList = ({ options, onClick, useShrink, sort }: { options: Record<string, boolean>; onClick: (name: string) => void; useShrink?: boolean; sort?: (a: string, b: string) => number }) => {
-  var sorted = Object.entries(options);
-  if (sort) {
-    sorted = sorted.sort((a, b) => sort(a[0], b[0]));
-  }
-  return (
-    <TagListRoot>
-      <TagListContent $shrink={useShrink}>
-        {Object.entries(options).map(([name, isSelected]) => (
-          <CategoryButton key={name} selected={isSelected} onClick={() => onClick(name)} title={name}>
-            {name}
-          </CategoryButton>
-        ))}
-      </TagListContent>
-      {useShrink && (
-        <Menu
-          portal
-          overflow="auto"
-          menuButton={
-            <button>
-              <IconPlus></IconPlus>
-            </button>
-          }
-        >
-          {sorted.map(([name, isSelected]) => (
-            <MenuItem key={name} type="checkbox" checked={isSelected} onClick={() => onClick(name)} title={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Menu>
-      )}
-    </TagListRoot>
-  );
+    var sorted = Object.entries(options);
+    if (sort) {
+        sorted = sorted.sort((a, b) => sort(a[0], b[0]));
+    }
+    return (
+        <TagListRoot>
+            <TagListContent $shrink={useShrink}>
+                {Object.entries(options).map(([name, isSelected]) => (
+                    <CategoryButton key={name} selected={isSelected} onClick={() => onClick(name)} title={name}>
+                        {name}
+                    </CategoryButton>
+                ))}
+            </TagListContent>
+            {useShrink && (
+                <Menu
+                    portal
+                    overflow="auto"
+                    menuButton={
+                        <button>
+                            <IconPlus></IconPlus>
+                        </button>
+                    }
+                >
+                    {sorted.map(([name, isSelected]) => (
+                        <MenuItem key={name} type="checkbox" checked={isSelected} onClick={() => onClick(name)} title={name}>
+                            {name}
+                        </MenuItem>
+                    ))}
+                </Menu>
+            )}
+        </TagListRoot>
+    );
 };

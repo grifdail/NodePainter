@@ -6,24 +6,25 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { useCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const DetectChangeNode: NodeDefinition = {
-  id: "State/DetectChange",
-  label: "Detect Change",
-  icon: IconStatusChange,
-  description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
+    id: "State/DetectChange",
+    label: "Detect Change",
+    icon: IconStatusChange,
+    description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
 
-  dataInputs: [Port.bool("in"), Port.CacheId()],
-  dataOutputs: [Port.bool("out")],
-  tags: ["State"],
-  ...changeTypeGenerator(portTypesWithProperty("equalityOperator"), ["in"], []),
-  settings: [],
-  getData(portId, node, context) {
-    const current = context.getInputValue(node, "in", node.selectedType);
-    const [previous, setValue] = useCache(context, node);
-    setValue(current)
-    const comparator = PortTypeDefinitions[node.selectedType].equalityOperator;
-    if (comparator && !comparator(current, previous)) {
-      return true;
-    }
-    return false;
-  },
+    dataInputs: [Port.bool("in"), Port.CacheId()],
+    dataOutputs: [Port.bool("out")],
+    tags: ["State"],
+    ...changeTypeGenerator(portTypesWithProperty("equalityOperator"), ["in"], []),
+    settings: [],
+    getData(portId, node, context) {
+        const current = context.getInputValue(node, "in", node.selectedType);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [previous, setValue] = useCache(context, node);
+        setValue(current)
+        const comparator = PortTypeDefinitions[node.selectedType].equalityOperator;
+        if (comparator && !comparator(current, previous)) {
+            return true;
+        }
+        return false;
+    },
 };
