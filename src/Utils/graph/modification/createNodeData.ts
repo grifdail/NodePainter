@@ -6,19 +6,19 @@ import { createPortConnectionsForInputsDefinition } from "./createPortConnection
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
-  var node = {
-    type: def.id,
-    id: id || "node" + nanoid().replaceAll("_", "y"),
-    dataInputs: createPortConnectionsForInputsDefinition(def),
-    settings: createSettingObjectForSettingDefinition(def.settings),
-    dataOutputs: createObjectFromOutputPortDefinition(def),
-    positionX: x,
-    positionY: y,
-    selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",
-    graph: graph,
-  };
-  if (def.onChangeType && def.availableTypes !== undefined) {
-    def.onChangeType(node, def.availableTypes[0]);
-  }
-  return node;
+    var node = {
+        type: def.id,
+        id: id || `${def.id}/${nanoid().replaceAll("_", "y")}`,
+        dataInputs: createPortConnectionsForInputsDefinition(def),
+        settings: createSettingObjectForSettingDefinition(def.settings),
+        dataOutputs: createObjectFromOutputPortDefinition(def),
+        positionX: x,
+        positionY: y,
+        selectedType: def.availableTypes ? def.availableTypes[0] : "unknown",
+        graph: graph,
+    };
+    if (def.onChangeType && def.availableTypes !== undefined) {
+        def.onChangeType(node, def.availableTypes[0]);
+    }
+    return node;
 }

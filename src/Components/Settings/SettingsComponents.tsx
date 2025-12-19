@@ -15,7 +15,6 @@ import { CodeBlockSetting } from "./CodeBlockSetting";
 import { GroupSetting } from "./GroupSetting";
 import { BoolSetting } from "./BoolSetting";
 import { ImageSelectSetting } from "./ImageSelectSetting";
-//import { SettingComponent } from "./SettingComponent";
 import { EmptySetting } from "./EmptySetting";
 import { PathSetting } from "./PathSetting";
 import { TextAreaSetting } from "./TextAreaSetting";
@@ -58,3 +57,5 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "graph-area": GraphAreaSetting,
     "animation-sequence": AnimationSequenceSetting,
 };
+
+
