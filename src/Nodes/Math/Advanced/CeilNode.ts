@@ -6,35 +6,35 @@ import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const CeilNode: NodeDefinition = {
-  id: "Math/Advanced/Ceil",
-  description: "Round up a number to the smallest interger larger or equal to itself.",
-  icon: IconMathFunction,
-  tags: ["Math", "Vector"],
-  dataInputs: [
-    {
-      id: "input",
-      type: "number",
-      defaultValue: 0,
+    id: "Math/Advanced/Ceil",
+    description: "Round up a number to the smallest interger larger or equal to itself.",
+    icon: IconMathFunction,
+    tags: ["Math", "Vector"],
+    dataInputs: [
+        {
+            id: "input",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector(node, "input");
+        return enforceCorrectVectorTypeForNode(
+            node,
+            a.map((value) => Math.ceil(value))
+        );
     },
-  ],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "number",
-      defaultValue: 0,
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
     },
-  ],
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["input"], ["out"]),
-  getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "input");
-    return enforceCorrectVectorTypeForNode(
-      nodeData,
-      a.map((value) => Math.ceil(value))
-    );
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["input"], ({ input }) => `ceil(${input})`);
-  },
-  codeBlockType: "expression",
+    codeBlockType: "expression",
 };

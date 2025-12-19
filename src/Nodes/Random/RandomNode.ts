@@ -8,23 +8,23 @@ import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enf
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RandomNode: NodeDefinition = {
-  id: "Random/Value",
-  label: "Random Value",
-  description: "A random value, consistant across frames",
-  icon: IconArrowsShuffle,
-  tags: ["Input"],
-  dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
-  dataOutputs: [Port.number("value")],
-  settings: [],
-  ...changeTypeGenerator(portTypesWithProperty("vectorLength"), [], ["value"]),
-  getData: (portId, nodeData, context) => {
-    const value = readFromCache(context, nodeData, () =>
-      enforceCorrectVectorTypeForNode(
-        nodeData,
-        Array.from(Array(PortTypeDefinitions[nodeData.selectedType].vectorLength).keys()).map(() => context.RNG.next())
-      )
-    );
+    id: "Random/Value",
+    label: "Random Value",
+    description: "A random value, consistant across frames",
+    icon: IconArrowsShuffle,
+    tags: ["Input"],
+    dataInputs: [Port.number("cache-id", 0, "The first time node is call it will save it result in a cache with this name. After that is will reuse the cache if one already exist instead of generating a new number", [Constraints.Integer()])],
+    dataOutputs: [Port.number("value")],
+    settings: [],
+    ...changeTypeGenerator(portTypesWithProperty("vectorLength"), [], ["value"]),
+    getData: (portId, node, context) => {
+        const value = readFromCache(context, node, () =>
+            enforceCorrectVectorTypeForNode(
+                node,
+                Array.from(Array(PortTypeDefinitions[node.selectedType].vectorLength).keys()).map(() => context.RNG.next())
+            )
+        );
 
-    return value;
-  },
+        return value;
+    },
 };

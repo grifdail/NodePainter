@@ -21,10 +21,10 @@ export const PointInRectNode: NodeDefinition = {
     ],
     settings: [],
     codeBlockType: "expression",
-    getData: (portId, nodeData, context) => {
-        const target = context.getInputValueVector2(nodeData, "target");
-        const rectangleOrigin = context.getInputValueVector2(nodeData, "rectangleOrigin");
-        const rectangleDimension = context.getInputValueVector2(nodeData, "rectangleDimension");
+    getData: (portId, node, context) => {
+        const target = context.getInputValueVector2(node, "target");
+        const rectangleOrigin = context.getInputValueVector2(node, "rectangleOrigin");
+        const rectangleDimension = context.getInputValueVector2(node, "rectangleDimension");
         return PointInRectNode.fn?.(target, rectangleOrigin, rectangleDimension);
 
     },

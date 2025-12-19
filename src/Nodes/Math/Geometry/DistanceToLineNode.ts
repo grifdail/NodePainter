@@ -26,11 +26,11 @@ export const DistanceToLineNode: NodeDefinition = {
     settings: [],
     codeBlockType: "expression",
     ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["start", "end", "target"], []),
-    getData: (portId, nodeData, context) => {
-        const start = context.getInputValueVector(nodeData, "start");
-        const end = context.getInputValueVector(nodeData, "end");
-        const target = context.getInputValueVector(nodeData, "target");
-        const bound = context.getInputValueBoolean(nodeData, "bound");
+    getData: (portId, node, context) => {
+        const start = context.getInputValueVector(node, "start");
+        const end = context.getInputValueVector(node, "end");
+        const target = context.getInputValueVector(node, "target");
+        const bound = context.getInputValueBoolean(node, "bound");
         var result = DistanceToLineNode.fn?.(start, end, target, bound) || 0;
         return result;
 

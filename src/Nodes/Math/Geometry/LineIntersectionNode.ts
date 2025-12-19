@@ -24,11 +24,11 @@ export const LineIntersectionNode: NodeDefinition = {
     ],
     settings: [],
     codeBlockType: "expression",
-    getData: (portId, nodeData, context) => {
-        const start1 = context.getInputValueVector2(nodeData, "start1");
-        const start2 = context.getInputValueVector2(nodeData, "start2");
-        const end1 = context.getInputValueVector2(nodeData, "end1");
-        const end2 = context.getInputValueVector2(nodeData, "end2");
+    getData: (portId, node, context) => {
+        const start1 = context.getInputValueVector2(node, "start1");
+        const start2 = context.getInputValueVector2(node, "start2");
+        const end1 = context.getInputValueVector2(node, "end1");
+        const end2 = context.getInputValueVector2(node, "end2");
         var result = LineIntersectionNode.fn?.(start1, end1, start2, end2) || { point: createVector2(), intersect: false };
 
         return result[portId];

@@ -26,12 +26,12 @@ export const ClosestPointOnLineNode: NodeDefinition = {
     settings: [],
     codeBlockType: "expression",
     ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["start", "end", "target"], ["point"]),
-    getData: (portId, nodeData, context) => {
-        const start = context.getInputValueVector(nodeData, "start");
-        const end = context.getInputValueVector(nodeData, "end");
-        const target = context.getInputValueVector(nodeData, "target");
-        const bound = context.getInputValueBoolean(nodeData, "bound");
-        var result = ClosestPointOnLineNode.fn?.(start, end, target, bound) || PortTypeDefinitions[nodeData.dataOutputs.distance.type].createDefaultValue();;
+    getData: (portId, node, context) => {
+        const start = context.getInputValueVector(node, "start");
+        const end = context.getInputValueVector(node, "end");
+        const target = context.getInputValueVector(node, "target");
+        const bound = context.getInputValueBoolean(node, "bound");
+        var result = ClosestPointOnLineNode.fn?.(start, end, target, bound) || PortTypeDefinitions[node.dataOutputs.distance.type].createDefaultValue();;
 
         return result;
 

@@ -12,77 +12,77 @@ import { createPortConnection } from "../../Utils/graph/modification/createPortC
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const InterpolateNode: NodeDefinition = {
-  id: "Text/Interpolate",
-  label: "Interpolate Text",
-  description: "Return the text with each $input replaced with the value of the corresponding port",
-  icon: IconFileText,
-  tags: ["Text"],
-  dataInputs: [],
-  dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
-  settings: [
-    { type: "text-area", id: "text", defaultValue: "The value is $input" },
-    {
-      type: "button",
-      id: "button",
-      button: {
-        label: "Add new input",
-        icon: IconPlus,
-        onClick: function (node: NodeData): void {
-          var nodeId = node.id;
-          useDialog.getState().open({
-            callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
-              if (button === "cancel" || fieldResult === undefined) {
-                return;
-              }
-              if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
-                return;
-              }
-              useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
-                node.dataInputs[fieldResult.name] = createPortConnection({
-                  id: fieldResult.name,
-                  type: fieldResult.type,
-                  defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
-                  tooltip: `Interpolate to $${fieldResult.name}`,
-                });
-              });
+    id: "Text/Interpolate",
+    label: "Interpolate Text",
+    description: "Return the text with each $input replaced with the value of the corresponding port",
+    icon: IconFileText,
+    tags: ["Text"],
+    dataInputs: [],
+    dataOutputs: [{ id: "result", type: "string", defaultValue: "" }],
+    settings: [
+        { type: "text-area", id: "text", defaultValue: "The value is $input" },
+        {
+            type: "button",
+            id: "button",
+            button: {
+                label: "Add new input",
+                icon: IconPlus,
+                onClick: function (node: NodeData): void {
+                    var nodeId = node.id;
+                    useDialog.getState().open({
+                        callback: function (button: any, fieldResult: { [key: string]: any } | undefined): void {
+                            if (button === "cancel" || fieldResult === undefined) {
+                                return;
+                            }
+                            if (fieldResult.name === undefined || fieldResult.name.length <= 0) {
+                                return;
+                            }
+                            useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
+                                node.dataInputs[fieldResult.name] = createPortConnection({
+                                    id: fieldResult.name,
+                                    type: fieldResult.type,
+                                    defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
+                                    tooltip: `Interpolate to $${fieldResult.name}`,
+                                });
+                            });
+                        },
+                        buttons: [
+                            {
+                                key: "cancel",
+                                label: "Cancel",
+                                style: "invisible",
+                            },
+                            {
+                                key: "confirm",
+                                label: "Confirm",
+                                style: "normal",
+                            },
+                        ],
+                        fields: [
+                            {
+                                key: "name",
+                                label: "Name",
+                                defaultValue: "input",
+                                input: TextInput,
+                                passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
+                            },
+                            {
+                                key: "type",
+                                label: "",
+                                input: PortTypeDropdown,
+                                defaultValue: "number",
+                                passTrough: { availableTypes: portTypesWith((def) => def.convert.string !== undefined) },
+                            },
+                        ],
+                        header: "Add a new input",
+                    });
+                },
             },
-            buttons: [
-              {
-                key: "cancel",
-                label: "Cancel",
-                style: "invisible",
-              },
-              {
-                key: "confirm",
-                label: "Confirm",
-                style: "normal",
-              },
-            ],
-            fields: [
-              {
-                key: "name",
-                label: "Name",
-                defaultValue: "input",
-                input: TextInput,
-                passTrough: { constraints: [Constraints.NoSpace(), Constraints.NoSpecialChar()] },
-              },
-              {
-                key: "type",
-                label: "",
-                input: PortTypeDropdown,
-                defaultValue: "number",
-                passTrough: { availableTypes: portTypesWith((def) => def.convert.string !== undefined) },
-              },
-            ],
-            header: "Add a new input",
-          });
         },
-      },
+    ],
+    getData: (portId, node, context) => {
+        const text = node.settings.text as string;
+        var inputs = Object.values(node.dataInputs);
+        return inputs.reduce((text, input) => text.replaceAll(`$${input.id}`, convertTypeValue(context.getInputValue(node, input.id, input.type), input.type, "string")), text);
     },
-  ],
-  getData: (portId, nodeData, context) => {
-    const text = nodeData.settings.text as string;
-    var inputs = Object.values(nodeData.dataInputs);
-    return inputs.reduce((text, input) => text.replaceAll(`$${input.id}`, convertTypeValue(context.getInputValue(nodeData, input.id, input.type), input.type, "string")), text);
-  },
 };

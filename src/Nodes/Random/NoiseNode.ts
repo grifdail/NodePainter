@@ -5,20 +5,20 @@ import { createVector2 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const NoiseNode: NodeDefinition = {
-  id: "Random/Noise",
-  tags: ["Math"],
-  icon: DoubleIconGen(IconGridDots, IconWaveSine),
-  alias: "Perlin",
-  description: "return a semi random continous value between 0 and 1 for points in 2d. ",
-  dataInputs: [
-    { id: "pos", type: "vector2", defaultValue: createVector2() },
-    { id: "scale", type: "vector2", defaultValue: createVector2(1, 1) },
-    { id: "time", type: "number", defaultValue: 0 },
-  ],
-  dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
+    id: "Random/Noise",
+    tags: ["Math"],
+    icon: DoubleIconGen(IconGridDots, IconWaveSine),
+    alias: "Perlin",
+    description: "return a semi random continous value between 0 and 1 for points in 2d. ",
+    dataInputs: [
+        { id: "pos", type: "vector2", defaultValue: createVector2() },
+        { id: "scale", type: "vector2", defaultValue: createVector2(1, 1) },
+        { id: "time", type: "number", defaultValue: 0 },
+    ],
+    dataOutputs: [{ id: "result", type: "number", defaultValue: 0 }],
 
-  settings: [],
-  shaderRequirement: `vec2 gradientNoise_dir(vec2 p)
+    settings: [],
+    shaderRequirement: `vec2 gradientNoise_dir(vec2 p)
 {
     p = mod(p, 289.0);
     float x = mod((34.0 * p.x + 1.0) * p.x, 289.0) + p.y;
@@ -43,15 +43,15 @@ float GradientNoise_float(vec2 UV, vec2 Scale)
 {
     return gradientNoise(UV * Scale) + 0.5;
 }`,
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "result", ["pos", "scale"], ({ pos, scale }) => `GradientNoise_float(${pos}, ${scale})`);
-  },
-  getData: (portId, nodeData, context) => {
-    if (portId === "result") {
-      var pos = context.getInputValueVector(nodeData, "pos");
-      var scale = context.getInputValueVector(nodeData, "scale");
-      var time = context.getInputValueNumber(nodeData, "time");
-      return context.p5.noise(pos[0] * scale[0], pos[1] * scale[1], time);
-    }
-  },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "result", ["pos", "scale"], ({ pos, scale }) => `GradientNoise_float(${pos}, ${scale})`);
+    },
+    getData: (portId, node, context) => {
+        if (portId === "result") {
+            var pos = context.getInputValueVector(node, "pos");
+            var scale = context.getInputValueVector(node, "scale");
+            var time = context.getInputValueNumber(node, "time");
+            return context.p5.noise(pos[0] * scale[0], pos[1] * scale[1], time);
+        }
+    },
 };

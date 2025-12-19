@@ -8,35 +8,35 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorNormalize } from "../../../Utils/math/vectorUtils";
 
 export const NormalizeNode: NodeDefinition = {
-  id: "Math/Vector/Normalize",
-  description: "Return a vector sharing the same direction but with a length of one",
-  alias: "Unit",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
-  dataInputs: [
-    {
-      id: "vec",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
+    id: "Math/Vector/Normalize",
+    description: "Return a vector sharing the same direction but with a length of one",
+    alias: "Unit",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+        {
+            id: "vec",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["vec"], ["out"]),
-  getData: (portId, nodeData, context) => {
-    const a = context.getInputValueVector(nodeData, "vec");
-    const vec = vectorNormalize(a);
-    return enforceCorrectVectorTypeForNode(nodeData, vec);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["vec"], ["out"]),
+    getData: (portId, node, context) => {
+        const a = context.getInputValueVector(node, "vec");
+        const vec = vectorNormalize(a);
+        return enforceCorrectVectorTypeForNode(node, vec);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["vec"], ({ vec }) => `normalize(${vec})`);
+    },
 };

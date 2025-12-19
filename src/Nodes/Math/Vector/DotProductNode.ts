@@ -7,39 +7,39 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorDotProduct } from "../../../Utils/math/vectorUtils";
 
 export const DotProductNode: NodeDefinition = {
-  id: "Math/Vector/DotProduct",
-  description: "Return the dot product of two vector",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
-  dataInputs: [
-    {
-      id: "a",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-    {
-      id: "b",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "dot",
-      type: "number",
-      defaultValue: 0,
-    },
-  ],
+    id: "Math/Vector/DotProduct",
+    description: "Return the dot product of two vector",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+        {
+            id: "a",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+        {
+            id: "b",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "dot",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], []),
-  getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "a");
-    var b = context.getInputValueVector(nodeData, "b");
-    return vectorDotProduct(a, b);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], []),
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector(node, "a");
+        var b = context.getInputValueVector(node, "b");
+        return vectorDotProduct(a, b);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
+    },
 };

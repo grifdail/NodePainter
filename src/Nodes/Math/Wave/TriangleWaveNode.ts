@@ -4,52 +4,52 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 export const TriangleWaveNode: NodeDefinition = {
-  id: "Math/Wave/TriangleWave",
-  tags: ["Math"],
-  icon: IconWaveSine,
-  featureLevel: 5,
-  description: "Return the value of the triangle wave with a phase, frequency and amplitude. Easier than using Cos",
-  dataInputs: [
-    {
-      id: "time",
-      type: "number",
-      defaultValue: 0,
-    },
-    {
-      id: "phase",
-      type: "number",
-      defaultValue: 0,
-      constrains: [Constraints.Clamp01()],
-    },
-    {
-      id: "frequency",
-      type: "number",
-      defaultValue: 1,
-    },
-    {
-      id: "amplitude",
-      type: "number",
-      defaultValue: 1,
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "output",
-      type: "number",
-      defaultValue: 0,
-    },
-  ],
+    id: "Math/Wave/TriangleWave",
+    tags: ["Math"],
+    icon: IconWaveSine,
+    featureLevel: 5,
+    description: "Return the value of the triangle wave with a phase, frequency and amplitude. Easier than using Cos",
+    dataInputs: [
+        {
+            id: "time",
+            type: "number",
+            defaultValue: 0,
+        },
+        {
+            id: "phase",
+            type: "number",
+            defaultValue: 0,
+            constrains: [Constraints.Clamp01()],
+        },
+        {
+            id: "frequency",
+            type: "number",
+            defaultValue: 1,
+        },
+        {
+            id: "amplitude",
+            type: "number",
+            defaultValue: 1,
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "output",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    var time = context.getInputValueNumber(nodeData, "time");
-    var phase = context.getInputValueNumber(nodeData, "phase");
-    var frequency = context.getInputValueNumber(nodeData, "frequency");
-    var amplitude = context.getInputValueNumber(nodeData, "amplitude");
-    return Math.abs(((time * frequency + phase) % 1) - 0.5) * 2 * amplitude;
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude"], ({ time, phase, frequency, amplitude }) => `abs(((${time} * ${frequency} + ${phase}) % 1.0) - 0.5) * 2.0 * ${amplitude}`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    getData: (portId, node, context) => {
+        var time = context.getInputValueNumber(node, "time");
+        var phase = context.getInputValueNumber(node, "phase");
+        var frequency = context.getInputValueNumber(node, "frequency");
+        var amplitude = context.getInputValueNumber(node, "amplitude");
+        return Math.abs(((time * frequency + phase) % 1) - 0.5) * 2 * amplitude;
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "output", ["time", "phase", "frequency", "amplitude"], ({ time, phase, frequency, amplitude }) => `abs(((${time} * ${frequency} + ${phase}) % 1.0) - 0.5) * 2.0 * ${amplitude}`);
+    },
 };

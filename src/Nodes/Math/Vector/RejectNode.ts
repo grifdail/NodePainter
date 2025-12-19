@@ -7,40 +7,40 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorReject } from "../../../Utils/math/vectorUtils";
 
 export const RejectNode: NodeDefinition = {
-  id: "Math/Vector/RejectNode",
-  label: "Reject Vector",
-  description: "Project the vector A on a vector or plane that's perpendicular to vector b",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
-  dataInputs: [
-    {
-      id: "a",
-      type: "vector3",
-      defaultValue: createVector3(),
-    },
-    {
-      id: "b",
-      type: "vector3",
-      defaultValue: createVector3(),
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "vector3",
-      defaultValue: createVector3(),
-    },
-  ],
+    id: "Math/Vector/RejectNode",
+    label: "Reject Vector",
+    description: "Project the vector A on a vector or plane that's perpendicular to vector b",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+        {
+            id: "a",
+            type: "vector3",
+            defaultValue: createVector3(),
+        },
+        {
+            id: "b",
+            type: "vector3",
+            defaultValue: createVector3(),
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "vector3",
+            defaultValue: createVector3(),
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], ["out"]),
-  getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector3(nodeData, "a");
-    var b = context.getInputValueVector3(nodeData, "b");
-    return vectorReject(a, b);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "true-vector"], ["array"]), ["a", "b"], ["out"]),
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector3(node, "a");
+        var b = context.getInputValueVector3(node, "b");
+        return vectorReject(a, b);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "dot", ["a", "b"], ({ a, b }) => `dot(${a}, ${b})`);
+    },
 };

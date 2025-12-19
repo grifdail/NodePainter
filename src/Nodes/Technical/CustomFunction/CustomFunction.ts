@@ -3,25 +3,25 @@ import { getCustomFunctionEndId } from "../../../Hooks/createFunction";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 
 export const CustomFunction: NodeDefinition = {
-  id: "Technical/CustomFunction/Base",
-  description: "",
-  IsUnique: true,
-  icon: IconArrowsMove,
-  tags: [],
-  hideInLibrary: true,
-  dataInputs: [],
-  dataOutputs: [],
-  preventSnippet: true,
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    const source = context.findNodeOfType(getCustomFunctionEndId(nodeData.type));
-    if (!source) {
-      return null;
-    }
-    context.functionStack.push(context.createFunctionContext(nodeData));
+    id: "Technical/CustomFunction/Base",
+    description: "",
+    IsUnique: true,
+    icon: IconArrowsMove,
+    tags: [],
+    hideInLibrary: true,
+    dataInputs: [],
+    dataOutputs: [],
+    preventSnippet: true,
+    settings: [],
+    getData: (portId, node, context) => {
+        const source = context.findNodeOfType(getCustomFunctionEndId(node.type));
+        if (!source) {
+            return null;
+        }
+        context.functionStack.push(context.createFunctionContext(node));
 
-    var result = context.getInputValue(source, portId, nodeData.dataOutputs[portId].type);
-    context.functionStack.pop();
-    return result;
-  },
+        var result = context.getInputValue(source, portId, node.dataOutputs[portId].type);
+        context.functionStack.pop();
+        return result;
+    },
 };

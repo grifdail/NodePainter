@@ -7,34 +7,34 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorMagnitude } from "../../../Utils/math/vectorUtils";
 
 export const MagnitudeNode: NodeDefinition = {
-  id: "Math/Vector/Magnitude",
-  description: "Return the length of a vector",
-  alias: "Length Size Norm",
-  icon: IconArrowUpRightCircle,
-  tags: ["Vector"],
-  dataInputs: [
-    {
-      id: "vec",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "length",
-      type: "number",
-      defaultValue: 0,
-    },
-  ],
+    id: "Math/Vector/Magnitude",
+    description: "Return the length of a vector",
+    alias: "Length Size Norm",
+    icon: IconArrowUpRightCircle,
+    tags: ["Vector"],
+    dataInputs: [
+        {
+            id: "vec",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "length",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], []),
-  getData: (portId, nodeData, context) => {
-    var vec = context.getInputValueVector(nodeData, "vec");
-    return vectorMagnitude(vec);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "length", ["vec"], ({ vec }) => `length(${vec})`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], []),
+    getData: (portId, node, context) => {
+        var vec = context.getInputValueVector(node, "vec");
+        return vectorMagnitude(vec);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "length", ["vec"], ({ vec }) => `length(${vec})`);
+    },
 };

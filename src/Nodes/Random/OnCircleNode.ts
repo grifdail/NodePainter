@@ -13,8 +13,8 @@ export const OnCircleNode: NodeDefinition = {
     dataInputs: [Port.CacheId()],
     dataOutputs: [Port.vector2("value")],
     settings: [],
-    getData: (portId, nodeData, context) => {
-        const value = readFromCache(context, nodeData, () => [context.RNG.next(), context.RNG.next()]);
+    getData: (portId, node, context) => {
+        const value = readFromCache(context, node, () => [context.RNG.next(), context.RNG.next()]);
         const [rx] = value;
         const c = rx * Math.PI * 2;
         return [Math.cos(c), Math.sin(c)];

@@ -40,15 +40,15 @@ export const IntegrateSpringNode: NodeDefinition = {
 
     ],
     ...changeTypeGenerator(portTypesWithTags(["common", "spatial"]), ["position", "target", "velocity"], ["next-position", "next-velocity"]),
-    getData: (portId, nodeData, context) => {
-        const position = context.getInputValueVector(nodeData, "position");
-        const velocity = context.getInputValueVector(nodeData, "velocity");
-        const target = context.getInputValueVector(nodeData, "target");
-        const deltaTime = context.getInputValueNumber(nodeData, "deltaTime");
-        const stiffness = context.getInputValueNumber(nodeData, "stiffness");
-        const damping = context.getInputValueNumber(nodeData, "damping");
-        const maxVelocity = context.getInputValueNumber(nodeData, "maxVelocity");
-        const velocityScale = context.getInputValueNumber(nodeData, "velocityScale");
+    getData: (portId, node, context) => {
+        const position = context.getInputValueVector(node, "position");
+        const velocity = context.getInputValueVector(node, "velocity");
+        const target = context.getInputValueVector(node, "target");
+        const deltaTime = context.getInputValueNumber(node, "deltaTime");
+        const stiffness = context.getInputValueNumber(node, "stiffness");
+        const damping = context.getInputValueNumber(node, "damping");
+        const maxVelocity = context.getInputValueNumber(node, "maxVelocity");
+        const velocityScale = context.getInputValueNumber(node, "velocityScale");
 
 
         var delta = vectorSubstraction(target, position);
@@ -56,9 +56,9 @@ export const IntegrateSpringNode: NodeDefinition = {
         var nextVelocity = vectorLimitMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
         var nextPosition = vectorAddition(position, vectorScale(nextVelocity, velocityScale * deltaTime))
         if (portId === "next-position") {
-            return enforceCorrectVectorTypeForNode(nodeData, nextPosition);
+            return enforceCorrectVectorTypeForNode(node, nextPosition);
         } else {
-            return enforceCorrectVectorTypeForNode(nodeData, nextVelocity);
+            return enforceCorrectVectorTypeForNode(node, nextVelocity);
         }
     },
 };

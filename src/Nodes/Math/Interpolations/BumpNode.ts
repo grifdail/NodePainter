@@ -20,8 +20,8 @@ export const BumpNode: NodeDefinition = {
 
     codeBlockType: "expression",
     settings: [],
-    getData: (portId, nodeData, context) => {
-        const x = context.getInputValueNumber(nodeData, "input");
+    getData: (portId, node, context) => {
+        const x = context.getInputValueNumber(node, "input");
         const tx = clamp01(x) * 2 - 1
         return Math.max(1 - tx * tx, 0);
     },

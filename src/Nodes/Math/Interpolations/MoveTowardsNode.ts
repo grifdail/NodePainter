@@ -41,13 +41,13 @@ export const MoveTowardsNode: NodeDefinition = {
     codeBlockType: "expression",
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["current", "target"], ["result"]),
-    getData: (portId, nodeData, context) => {
-        const speed = context.getInputValueNumber(nodeData, "speed");
-        const current = context.getInputValueVector(nodeData, "current");
-        const target = context.getInputValueVector(nodeData, "target");
+    getData: (portId, node, context) => {
+        const speed = context.getInputValueNumber(node, "speed");
+        const current = context.getInputValueVector(node, "current");
+        const target = context.getInputValueVector(node, "target");
         const delta = vectorSubstraction(target, current);
         const displacement = vectorLimitMagnitude(delta, speed);
-        return enforceCorrectVectorTypeForNode(nodeData, vectorAddition(current, displacement))
+        return enforceCorrectVectorTypeForNode(node, vectorAddition(current, displacement))
     },
     getShaderCode(node, context) {
         return generateShaderCodeFromNodeData(node, context, "result", ["from", "to", "t"], ({ from, to, t }) => `mix(${from}, ${to}, ${t})`);

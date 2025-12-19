@@ -36,11 +36,11 @@ export const ClampAroundNode: NodeDefinition = {
     ],
 
     settings: [],
-    getData: (portId, nodeData, context) => {
+    getData: (portId, node, context) => {
         if (portId === "result") {
-            var value = context.getInputValueNumber(nodeData, "value");
-            var target = context.getInputValueNumber(nodeData, "target");
-            var range = context.getInputValueNumber(nodeData, "range");
+            var value = context.getInputValueNumber(node, "value");
+            var target = context.getInputValueNumber(node, "target");
+            var range = context.getInputValueNumber(node, "range");
             return Math.max(Math.min(value, target + range), target - range)
         }
     },

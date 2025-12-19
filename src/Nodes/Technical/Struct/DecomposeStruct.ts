@@ -15,17 +15,17 @@ export const DecomposeStruct: NodeDefinition = {
         SettingGenerator.bool("disable check", false, { tooltip: "If this is true, this node will result in an error if the input struct isn't of the valid type" })
     ],
     preventSnippet: true,
-    getData: (portId, nodeData, context) => {
-        const input = context.getInputValue(nodeData, "struct", "struct") as any;
-        const port = nodeData.dataOutputs[portId];
+    getData: (portId, node, context) => {
+        const input = context.getInputValue(node, "struct", "struct") as any;
+        const port = node.dataOutputs[portId];
 
-        if (nodeData.settings.enforceCheck && input.__metaStructType !== nodeData.settings.structId) {
-            throw new Error(`Input of node ${nodeData.id} is not of the right type`)
+        if (node.settings.enforceCheck && input.__metaStructType !== node.settings.structId) {
+            throw new Error(`Input of node ${node.id} is not of the right type`)
         }
         if (portId in input) {
             return input[portId];
         } else {
-            console.warn(`Type ${portId} is missing in the passed struct of node ${nodeData.id}`);
+            console.warn(`Type ${portId} is missing in the passed struct of node ${node.id}`);
             return port.defaultValue;
         }
     },

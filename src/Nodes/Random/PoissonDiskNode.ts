@@ -17,10 +17,10 @@ export const PoissonDiskNode: NodeDefinition = {
 
     codeBlockType: "expression",
     settings: [cacheBehaviorSettingWithNoCache()],
-    getData: (portId, nodeData, context) => {
-        const minDist = context.getInputValueNumber(nodeData, "min-dist");
+    getData: (portId, node, context) => {
+        const minDist = context.getInputValueNumber(node, "min-dist");
 
-        return readFromCache(context, nodeData, () => poissonDisk(minDist, context.RNG));
+        return readFromCache(context, node, () => poissonDisk(minDist, context.RNG));
     },
 };
 

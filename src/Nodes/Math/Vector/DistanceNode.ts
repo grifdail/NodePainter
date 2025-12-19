@@ -7,40 +7,40 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorDistance } from "../../../Utils/math/vectorUtils";
 
 export const DistanceNode: NodeDefinition = {
-  id: "Math/Vector/Distance",
-  description: "Return the distance between two value",
-  icon: IconMathXPlusY,
-  featureLevel: 90,
-  tags: ["Math", "Vector"],
-  dataInputs: [
-    {
-      id: "a",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-    {
-      id: "b",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "number",
-      defaultValue: 0,
-    },
-  ],
+    id: "Math/Vector/Distance",
+    description: "Return the distance between two value",
+    icon: IconMathXPlusY,
+    featureLevel: 90,
+    tags: ["Math", "Vector"],
+    dataInputs: [
+        {
+            id: "a",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+        {
+            id: "b",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["a", "b"], []),
-  getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "a");
-    var b = context.getInputValueVector(nodeData, "b");
-    return vectorDistance(a, b);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `(${a} - ${b}).length`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["a", "b"], []),
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector(node, "a");
+        var b = context.getInputValueVector(node, "b");
+        return vectorDistance(a, b);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["a", "b"], ({ a, b }) => `(${a} - ${b}).length`);
+    },
 };

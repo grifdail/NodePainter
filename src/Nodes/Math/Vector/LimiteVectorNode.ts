@@ -36,10 +36,10 @@ export const LimitVectorNode: NodeDefinition = {
     codeBlockType: "expression",
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], ["out"]),
-    getData: (portId, nodeData, context) => {
-        var a = context.getInputValueVector(nodeData, "vec");
-        var magnitude = context.getInputValueNumber(nodeData, "magnitude");
-        return enforceCorrectVectorTypeForNode(nodeData, vectorLimitMagnitude(a, magnitude));
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector(node, "vec");
+        var magnitude = context.getInputValueNumber(node, "magnitude");
+        return enforceCorrectVectorTypeForNode(node, vectorLimitMagnitude(a, magnitude));
     },/*
   getShaderCode(node, context) {
     return generateShaderCodeFromNodeData(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);

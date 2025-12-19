@@ -8,40 +8,40 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 import { vectorScale } from "../../../Utils/math/vectorUtils";
 
 export const ScaleNode: NodeDefinition = {
-  id: "Math/Basic/Scale",
-  description: "Multiply a vector by a scalar",
-  icon: IconMathXy,
-  featureLevel: 80,
-  tags: ["Math", "Vector"],
-  dataInputs: [
-    {
-      id: "vec",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-    {
-      id: "scale",
-      type: "number",
-      defaultValue: 1,
-    },
-  ],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "vector2",
-      defaultValue: createVector2(),
-    },
-  ],
+    id: "Math/Basic/Scale",
+    description: "Multiply a vector by a scalar",
+    icon: IconMathXy,
+    featureLevel: 80,
+    tags: ["Math", "Vector"],
+    dataInputs: [
+        {
+            id: "vec",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+        {
+            id: "scale",
+            type: "number",
+            defaultValue: 1,
+        },
+    ],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "vector2",
+            defaultValue: createVector2(),
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], ["out"]),
-  getData: (portId, nodeData, context) => {
-    var a = context.getInputValueVector(nodeData, "vec");
-    var b = context.getInputValueNumber(nodeData, "scale");
-    return enforceCorrectVectorTypeForNode(nodeData, vectorScale(a, b));
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["vec"], ["out"]),
+    getData: (portId, node, context) => {
+        var a = context.getInputValueVector(node, "vec");
+        var b = context.getInputValueNumber(node, "scale");
+        return enforceCorrectVectorTypeForNode(node, vectorScale(a, b));
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["vec", "scale"], ({ vec, scale }) => `${vec} * ${scale}`);
+    },
 };

@@ -23,10 +23,10 @@ export const CircumcircleNode: NodeDefinition = {
     ],
     settings: [],
     codeBlockType: "expression",
-    getData: (portId, nodeData, context) => {
-        const a = context.getInputValueVector2(nodeData, "a");
-        const b = context.getInputValueVector2(nodeData, "b");
-        const c = context.getInputValueVector2(nodeData, "c");
+    getData: (portId, node, context) => {
+        const a = context.getInputValueVector2(node, "a");
+        const b = context.getInputValueVector2(node, "b");
+        const c = context.getInputValueVector2(node, "c");
         var result = CircumcircleNode.fn?.(a, b, c) || { center: createVector2(), radius: 0 };
 
         return result[portId];

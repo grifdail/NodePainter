@@ -4,28 +4,28 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/generateShaderCodeFromNodeData";
 
 export const ExponantialImpulseNode: NodeDefinition = {
-  id: "Math/Interpolation/ExponantialImpulse",
-  description: "Round up a number to the smallest interger larger or equal to itself.",
-  icon: IconMathFunction,
-  tags: ["Math"],
-  dataInputs: [Port.number("input"), Port.number("scale", 8, "Scale the impulse. Higher means denser. 8 approximately map 1 to 1")],
-  dataOutputs: [
-    {
-      id: "out",
-      type: "number",
-      defaultValue: 0,
-    },
-  ],
+    id: "Math/Interpolation/ExponantialImpulse",
+    description: "Round up a number to the smallest interger larger or equal to itself.",
+    icon: IconMathFunction,
+    tags: ["Math"],
+    dataInputs: [Port.number("input"), Port.number("scale", 8, "Scale the impulse. Higher means denser. 8 approximately map 1 to 1")],
+    dataOutputs: [
+        {
+            id: "out",
+            type: "number",
+            defaultValue: 0,
+        },
+    ],
 
-  codeBlockType: "expression",
-  settings: [],
-  getData: (portId, nodeData, context) => {
-    const x = context.getInputValueNumber(nodeData, "input");
-    const k = context.getInputValueNumber(nodeData, "scale");
-    const h = k * x;
-    return h * Math.exp(1.0 - h);
-  },
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["input", "scale"], ({ input, scale }) => `(${input} * ${scale}) *  exp(1.0 - (${input} * ${scale}))`);
-  },
+    codeBlockType: "expression",
+    settings: [],
+    getData: (portId, node, context) => {
+        const x = context.getInputValueNumber(node, "input");
+        const k = context.getInputValueNumber(node, "scale");
+        const h = k * x;
+        return h * Math.exp(1.0 - h);
+    },
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["input", "scale"], ({ input, scale }) => `(${input} * ${scale}) *  exp(1.0 - (${input} * ${scale}))`);
+    },
 };

@@ -55,9 +55,9 @@ export const ComposeBidirectionalNode: NodeDefinition = {
     hasOutput(output, def) {
         return def.availableTypes?.includes(output) ? output : null;
     },
-    getData: (portId, nodeData, context) => {
-        var vectorLength = PortTypeDefinitions[nodeData.selectedType].vectorLength || 2;
-        return new Array(vectorLength).fill(null).map((_, i) => context.getInputValueNumber(nodeData, `${i}-positive`) - context.getInputValueNumber(nodeData, `${i}-negative`));
+    getData: (portId, node, context) => {
+        var vectorLength = PortTypeDefinitions[node.selectedType].vectorLength || 2;
+        return new Array(vectorLength).fill(null).map((_, i) => context.getInputValueNumber(node, `${i}-positive`) - context.getInputValueNumber(node, `${i}-negative`));
     },
     getShaderCode(node, context) {
         if (node.selectedType === "vector3") {
