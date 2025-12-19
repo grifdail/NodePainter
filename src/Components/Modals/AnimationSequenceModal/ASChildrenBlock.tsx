@@ -8,7 +8,7 @@ import { AnimationSequenceSelectorDropdown } from "./AnimationSequenceSelectorDr
 function SubASChildrenBlock({ animation, block, onChange }: {
     animation: AnimationSequenceData;
     block: AnimationSequenceBlock & { children: AnimationSequenceBlock[] };
-    onChange: (newBlock: AnimationSequenceBlock) => void
+    onChange: (newBlock: AnimationSequenceBlock & { children: AnimationSequenceBlock[] }) => void
 }) {
     const { addNew, remove, change, move } = useListManipulator(block.children, children => onChange({ ...block, children }));
 
