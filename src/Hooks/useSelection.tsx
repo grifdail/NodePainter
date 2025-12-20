@@ -40,6 +40,7 @@ export const useSelection = create<SelectionStore>()(
                 set((state) => {
                     state.areaStart = start;
                     state.hasArea = true;
+                    state.isInSelectionMode = true;
                 });
             },
             toggleSetMode(value) {
@@ -66,6 +67,7 @@ export const useSelection = create<SelectionStore>()(
                 set((state) => {
                     state.nodes = nodes;
                     state.hasArea = false;
+                    state.isInSelectionMode = false;
                 });
             },
             clear: () => {

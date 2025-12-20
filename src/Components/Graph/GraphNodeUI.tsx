@@ -58,12 +58,6 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
                     if (!dragged) {
                         setDragged(true);
                     }
-                } else {
-                    if (elapsedTime > 1000) {
-                        useSelection.getState().toggleSetMode(true);
-                        useSelection.getState().toggleNode(node.id);
-                        //cancel();
-                    }
                 }
             },
             onDragEnd: ({ movement: [mx, my], shiftKey }) => {
