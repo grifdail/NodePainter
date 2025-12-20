@@ -6,9 +6,9 @@ import { createPortConnectionsForInputsDefinition } from "./createPortConnection
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
 
 export function createNodeData(def: NodeDefinition, x: number, y: number, id: string | null = null, graph: string | undefined = undefined): NodeData {
-    var node = {
+    var node: NodeData = {
         type: def.id,
-        id: id || `${def.id}/${nanoid().replaceAll("_", "y")}`,
+        id: id || `${def.id.replaceAll("/", "_")}_${nanoid()}`.replaceAll("_", "y"),
         dataInputs: createPortConnectionsForInputsDefinition(def),
         settings: createSettingObjectForSettingDefinition(def.settings),
         dataOutputs: createObjectFromOutputPortDefinition(def),
