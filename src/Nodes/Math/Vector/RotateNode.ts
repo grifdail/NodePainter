@@ -42,7 +42,7 @@ export const RotateNode: NodeDefinition = createMultiTypeNodeDefinition(
 
                 var cos = Math.cos(b);
                 var sin = Math.sin(b);
-                return createVector2(a[0] * cos + a[1] * sin, a[0] * sin + a[1] * cos);
+                return createVector2(a[0] * cos - a[1] * sin, a[0] * sin + a[1] * cos);
             },
         },
         vector3: {

@@ -35,7 +35,7 @@ export function Graph() {
     const { onClickPort, onClickNode: onClickNodeEdgeCreation } = useEdgeCreation();
     const [ref, elementSize] = useMeasure();
     const [xyz, bind, ,] = useSVGMapDrag();
-    const { nodes: selectedNode, hasArea, areaStart } = useSelection();
+    const { nodes: selectedNode, hasArea, areaStart, selectionId } = useSelection();
     const contextMenuData = useContextMenu();
     const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
     const hasNoCursor = useMediaQuery("(hover: none)");
@@ -86,7 +86,7 @@ export function Graph() {
                     };
                     return <GraphNodeUI key={node.id} {...nodeProps} />;
                 })}
-                {hasArea && <AreaSelectionRect areaSelection={areaStart as [number, number]} mousePosition={mousePosition}></AreaSelectionRect>}
+                {hasArea && <AreaSelectionRect areaSelection={areaStart as [number, number]} mousePosition={mousePosition} key={selectionId}></AreaSelectionRect>}
             </animated.svg>
             {contextMenuData.state === "open" && <ContextMenu {...contextMenuData}></ContextMenu>}
         </div>

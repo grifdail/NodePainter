@@ -2,11 +2,13 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { BoundingBox } from "../Types/BoundingBox";
 import { getNodesInBoundingBox } from "../Utils/graph/modification/getNodesInBoundingBox";
+import { nanoid } from "nanoid";
 
 export type SelectionStore = {
     toggleNode(id: string): void;
     nodes: string[];
     isInSelectionMode: boolean;
+    selectionId: string,
     areaStart: [number, number] | null;
     startSelection: ([x, y]: [number, number]) => void;
     endSelection: ([x, y]: [number, number]) => void;
@@ -23,6 +25,7 @@ export const useSelection = create<SelectionStore>()(
             isInSelectionMode: false,
             areaStart: null,
             hasArea: false,
+            selectionId: nanoid(),
             toggleNode(id) {
                 if (get().nodes.includes(id)) {
                     set((state) => {
@@ -41,6 +44,7 @@ export const useSelection = create<SelectionStore>()(
                     state.areaStart = start;
                     state.hasArea = true;
                     state.isInSelectionMode = true;
+                    state.selectionId = nanoid();
                 });
             },
             toggleSetMode(value) {

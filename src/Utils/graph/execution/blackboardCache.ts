@@ -14,7 +14,7 @@ export function readFromCache<T>(context: ExecutionContext, nodeData: NodeData, 
     return value;
 }
 
-export function processAndUpdateCache<T>(context: ExecutionContext, node: NodeData, gen: () => T, updater: (previous: T) => T, cacheId: string | undefined = undefined, reset: boolean = false): T {
+export function processAndUpdateCache<T>(context: ExecutionContext, node: NodeData, gen: () => T, updater: (previous: T) => T): T {
     let [previous, setValue] = useCache(context, node);
     let value = updater(previous === undefined ? gen() : previous);
     setValue(value);

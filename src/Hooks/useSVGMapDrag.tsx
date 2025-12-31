@@ -1,11 +1,12 @@
 
 import { useSpring, SpringValue } from "@react-spring/web";
-import { Vector2, useGesture } from "@use-gesture/react";
+import { useGesture } from "@use-gesture/react";
 import { useViewbox } from "./useViewbox";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import { useSelection } from "./useSelection";
 import { BoundingBox } from "../Types/BoundingBox";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { computeNewScale } from "./computeNewScale";
 
 export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => ReactDOMAttributes, BoundingBox, number] {
     var viewBox = useViewbox();
@@ -71,7 +72,4 @@ export function useSVGMapDrag(): [SpringValue<number[]>, (...args: any[]) => Rea
 
     return [xyz, bind, viewBoxBoundingBox, viewBox.scale];
 }
-export function computeNewScale(viewbox: { x: number; y: number; scale: number }, scale: number, origin: Vector2): number[] {
-    var scaleDiff = viewbox.scale - viewbox.scale / scale;
-    return [viewbox.x + origin[0] * scaleDiff, viewbox.y + origin[1] * scaleDiff, viewbox.scale / scale];
-}
+

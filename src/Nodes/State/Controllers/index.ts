@@ -3,6 +3,7 @@ import { FreecamControllerNode } from "./FreecamControllerNode";
 import { LinearControllerNode } from "./LinearControllerNode";
 import { OrbitCameraControllerNode } from "./OrbitCameraController";
 import { SpringController } from "./SpringControllerNode";
+import { TrailControllerNode } from "./TrailControllerNode";
 
 export const ControllerNodes = [
     FirstPersonControllerNode,
@@ -10,4 +11,5 @@ export const ControllerNodes = [
     LinearControllerNode,
     OrbitCameraControllerNode,
     SpringController,
+    TrailControllerNode
 ]

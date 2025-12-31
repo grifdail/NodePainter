@@ -32,7 +32,6 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return useFrameCache(context, node, () => {
-            const reset = context.getInputValueBoolean(node, "reset");
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const target = context.getInputValueVector3(node, "target");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
@@ -54,7 +53,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
                     rotation: toQuaternion(newQuat),
                     position: getPosition(newQuat)
                 }
-            }, undefined, reset)
+            })
 
             function getPosition(newQuat: Quaternion) {
                 return vectorAddition(target, new TVector3(0, 0, radius).applyQuaternion(newQuat).toArray())

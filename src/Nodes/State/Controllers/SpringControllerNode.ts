@@ -30,7 +30,6 @@ export const SpringController: NodeDefinition = {
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return enforceCorrectVectorTypeForNode(node, (useFrameCache(context, node, () => {
-            const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position, velocity }) => {
                 const target = context.getInputValueVector(node, "target");
                 const deltaTime = context.deltaTime;
@@ -48,7 +47,7 @@ export const SpringController: NodeDefinition = {
                     position: nextPosition as Vector,
                     velocity: nextVelocity as Vector,
                 }
-            }, undefined, reset)
+            })
 
 
 

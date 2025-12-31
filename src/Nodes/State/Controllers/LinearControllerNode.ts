@@ -26,7 +26,6 @@ export const LinearControllerNode: NodeDefinition = {
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         return (useFrameCache(context, node, () => {
-            const reset = context.getInputValueBoolean(node, "reset");
             return processAndUpdateCache(context, node, getDefaultValue, ({ position: current }) => {
                 const target = context.getInputValueVector(node, "target");
                 const deltaTime = context.deltaTime;
@@ -37,7 +36,7 @@ export const LinearControllerNode: NodeDefinition = {
                 return {
                     position: enforceCorrectVectorTypeForNode(node, vectorAddition(current, displacement))
                 }
-            }, undefined, reset)
+            })
 
 
 
