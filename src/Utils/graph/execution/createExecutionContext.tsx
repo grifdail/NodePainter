@@ -62,6 +62,11 @@ export type ExecutionContext = {
     getInputValueDrawing: (nodeData: NodeData, portId: string) => () => void;
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
     getGlobalSetting<T>(arg0: string): T;
+    /**
+     * Return a unique id for the call of this specific node for this frame. For instance if it has been called in a loop.
+     * @param node 
+     * @param args 
+     */
     getCallId(node: NodeData, ...args: any[]): string;
     endOfFrameCleanup(): void;
     endOfRunCleanup(): void;

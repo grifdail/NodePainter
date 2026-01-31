@@ -18,16 +18,18 @@ export const GeometryNodes: NodeDefinition[] = Object.values(GeometryVirtualNode
 export const CameraNodes: NodeDefinition[] = Object.values(CameraVirtualElements).map((gen) => generateNodeFromVirtualNode(gen));
 
 export const Nodes3D = [
-  ...LightNodes,
-  ...MaterialNodes,
-  ...GeometryNodes,
-  ...CameraNodes,
-  Render3D,
-  UploadModel,
-  //GenerateUVModel,
-  RenderModel,
-  Render3DLine,
-  Transform3D,
-  ParametricGeometry,
-  BillBoardNode
+    ...LightNodes,
+    ...MaterialNodes,
+    ...GeometryNodes,
+    ...CameraNodes,
+    Render3D,
+    UploadModel,
+    //GenerateUVModel,
+    RenderModel,
+    Render3DLine,
+    Transform3D,
+    ParametricGeometry,
+    BillBoardNode
 ];
+
+console.log(JSON.stringify(Nodes3D, null, 4))
