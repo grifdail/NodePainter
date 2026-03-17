@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { MenuItemWithPalettePreview } from "../../Settings/ChildComponents/ColorPreview";
-import { DefaultPalettes } from "../../../Data/Palettes";
+import { getDefaultPalette } from "../../../Data/Palettes";
 import { DropdownInput } from "../../Generics/Inputs/DropdownInput";
 
 const StyledButton = styled.button<{ color: string }>`
@@ -46,38 +46,38 @@ const PaletteColorSelectorStyled = styled.div`
 `;
 
 export function PaletteColorSelector({ onSelectColor, currentColor }: { onChangePalette: (c: ColorPalette) => void; onSelectColor: (c: Color) => void; currentPalette: ColorPalette; currentColor: Color }) {
-  const playerPrefPalette = usePlayerPref((state) => state.colorPreset);
-  const savedPalettes = usePlayerPref((state) => state.palettes);
-  const palettes: PaletteCollection = useMemo(() => ({ default: playerPrefPalette, ...savedPalettes, ...DefaultPalettes }), [playerPrefPalette, savedPalettes]);
-  const [currentPaletteId, setCurrentPalette] = useState("default");
-  const currentPalette = useMemo(() => palettes[currentPaletteId], [currentPaletteId, palettes]);
+    const playerPrefPalette = usePlayerPref((state) => state.colorPreset);
+    const savedPalettes = usePlayerPref((state) => state.palettes);
+    const palettes: PaletteCollection = useMemo(() => ({ default: playerPrefPalette, ...savedPalettes, ...getDefaultPalette() }), [playerPrefPalette, savedPalettes]);
+    const [currentPaletteId, setCurrentPalette] = useState("default");
+    const currentPalette = useMemo(() => palettes[currentPaletteId], [currentPaletteId, palettes]);
 
-  return (
-    <PaletteColorSelectorStyled>
-      <Fieldset
-        label="Palette"
-        input={DropdownInput}
-        value={currentPaletteId}
-        onChange={setCurrentPalette}
-        passtrough={{
-          options: Object.keys(palettes),
-          templateRaw: (value: string, args: any) => (
-            <MenuItemWithPalettePreview
-              {...args}
-              id={value}
-              value={palettes[value]}
-            />
-          ),
-        }}></Fieldset>
-      <ColorList>
-        {currentPalette.map((color) => (
-          <StyledButton
-            color={toHex(color)}
-            onClick={() => onSelectColor(color)}
-            key={toHex(color)}
-          />
-        ))}
-      </ColorList>
-    </PaletteColorSelectorStyled>
-  );
+    return (
+        <PaletteColorSelectorStyled>
+            <Fieldset
+                label="Palette"
+                input={DropdownInput}
+                value={currentPaletteId}
+                onChange={setCurrentPalette}
+                passtrough={{
+                    options: Object.keys(palettes),
+                    templateRaw: (value: string, args: any) => (
+                        <MenuItemWithPalettePreview
+                            {...args}
+                            id={value}
+                            value={palettes[value]}
+                        />
+                    ),
+                }}></Fieldset>
+            <ColorList>
+                {currentPalette.map((color) => (
+                    <StyledButton
+                        color={toHex(color)}
+                        onClick={() => onSelectColor(color)}
+                        key={toHex(color)}
+                    />
+                ))}
+            </ColorList>
+        </PaletteColorSelectorStyled>
+    );
 }
