@@ -1,4 +1,4 @@
-﻿import { GetNode } from "./GetFromDictionary";
+import { GetNode } from "./GetFromDictionary";
 import { KeysNode } from "./KeysNode";
 import { SetNode } from "./SetNode";
 

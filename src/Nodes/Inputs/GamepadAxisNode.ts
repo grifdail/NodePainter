@@ -60,7 +60,7 @@ export const GamepadAxisNode: NodeDefinition = {
 
         var gamepadTarget = Math.floor(context.getInputValueNumber(node, "gamepad"));
         if (gamepadTarget <= 0) {
-            return gamepads.reduce((old, v) => vectorAddition(old, evalButton(v)), [0, 0])
+            return gamepads.reduce<Vector2>((old, v) => vectorAddition(old, evalButton(v)), [0, 0])
         } else {
             if (gamepadTarget < gamepads.length) {
                 return evalButton(gamepads[gamepadTarget]);

@@ -1,4 +1,4 @@
-﻿import { SettingDefinition } from "../../Types/SettingDefinition";
+import { SettingDefinition } from "../../Types/SettingDefinition";
 import { SettingComponents } from "./SettingsComponents";
 
 type SettingGeneratorType = { [TDefinition in SettingDefinition as TDefinition["type"]]: (TDefinition extends { defaultValue: any } ? (id: string, defaultValue: TDefinition["defaultValue"], extra?: Omit<TDefinition, "id" | "type" | "defaultValue">) => TDefinition : (id: string, extra?: Omit<TDefinition, "id" | "type" | "defaultValue">) => TDefinition) }

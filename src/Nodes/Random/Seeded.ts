@@ -1,13 +1,14 @@
 import { IconMathXPlusY } from "@tabler/icons-react";
 import { fraction } from "mathjs";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { PortTypeDefinitions, portTypesWithTags } from "../../Types/PortTypeDefinitions";
-import { createVector2 } from "../../Types/vectorDataType";
+import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
+import { createVector2, Vector4 } from "../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
+import { convertTypeValue } from "../../Utils/graph/execution/convertTypeValue";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 import { vectorDotProduct } from "../../Utils/math/vectorUtils";
 
-const randomVect = [12.9898, 78.233, 56.128, 48.411];
+const randomVect: Vector4 = [12.9898, 78.233, 56.128, 48.411];
 
 export const SeededNode: NodeDefinition = {
     id: "Random/Seeded",
@@ -32,7 +33,7 @@ export const SeededNode: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithTags(["common", "vector"], ["array"]), ["seed"], []),
     getData: (portId, node, context) => {
-        return fraction(Math.sin(vectorDotProduct(context.getInputValueVector(node, "seed"), randomVect.slice(0, PortTypeDefinitions[node.selectedType].vectorLength)) * 43758.5453123));
+        return fraction(Math.sin(vectorDotProduct(context.getInputValueVector(node, "seed"), convertTypeValue(randomVect, "vector4", node.selectedType)) * 43758.5453123));
     },
     shaderRequirement: `
   float rand(float n){return fract(sin(n) * 43758.5453123);}

@@ -3,11 +3,11 @@ import convert from "color-convert";
 import { lerp } from "three/src/math/MathUtils";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { Color } from "../../Types/vectorDataType";
+import { Color, Vector3 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 import { clamp01 } from "../../Utils/math/clamp01";
 import { Black } from "../../Utils/math/colorUtils";
-import { vectorAddition, vectorLerp, vectorMultiplication, vectorScale, vectorSubstraction, zipVector } from "../../Utils/math/vectorUtils";
+import { vectorAddition, vectorLerp, vectorMap, vectorMultiplication, vectorScale, vectorSlice, vectorSubstraction, zipVector } from "../../Utils/math/vectorUtils";
 
 const to255RGB = (a: Color): [number, number, number] => [a[0] * 255, a[1] * 255, a[2] * 255];
 
@@ -15,7 +15,7 @@ const anyConvert = convert as any;
 
 const convertLerp = (converter: string) => (a: Color, b: Color, t: number) => [...vectorScale(anyConvert[converter].rgb(vectorLerp(anyConvert.rgb[converter].raw(to255RGB(a)), anyConvert.rgb[converter].raw(to255RGB(b)), t)), 1 / 255), lerp(a[3], b[3], t)];
 
-const ignoreAlphaAndEnforce = (fn: (a: number[], b: number[]) => number[]) => (a: Color, b: Color, t: number) => [...vectorLerp(a.slice(0, 3), fn(vectorScale(a.slice(0, 3), a[3]), vectorScale(b.slice(0, 3), b[3])), t), lerp(a[3], b[3], t)].map(clamp01);
+const ignoreAlphaAndEnforce = (fn: (a: Vector3, b: Vector3) => Vector3) => (a: Color, b: Color, t: number): Color => vectorMap([...vectorLerp(vectorSlice(a, 3), fn(vectorScale(vectorSlice(a, 3), a[3]), vectorScale(vectorSlice(b, 3), b[3])), t), lerp(a[3], b[3], t)], clamp01);
 
 const BLEND_MODES = {
     rgb: (a: Color, b: Color, t: number) => vectorLerp(a, b, t),
@@ -23,15 +23,15 @@ const BLEND_MODES = {
     hsl: convertLerp("hsl"),
     cmyk: convertLerp("cmyk"),
     oklch: convertLerp("oklch"),
-    additive: ignoreAlphaAndEnforce((a: number[], b: number[]) => vectorAddition(a, b)),
-    subtractive: ignoreAlphaAndEnforce((a: number[], b: number[]) => vectorSubstraction(a, b)),
-    multiplicative: ignoreAlphaAndEnforce((a: number[], b: number[]) => vectorMultiplication(a, b)),
-    darken: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => Math.min(a, b))),
-    lighten: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => Math.max(a, b))),
-    screen: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) * (1 - b))),
-    dodge: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => a / (1 - b))),
-    burn: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b)),
-    divide: ignoreAlphaAndEnforce((a: number[], b: number[]) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b)),
+    additive: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorAddition(a, b)),
+    subtractive: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorSubstraction(a, b)),
+    multiplicative: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorMultiplication(a, b)),
+    darken: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => Math.min(a, b)) as Vector3),
+    lighten: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => Math.max(a, b)) as Vector3),
+    screen: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) * (1 - b)) as Vector3),
+    dodge: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => a / (1 - b)) as Vector3),
+    burn: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b) as Vector3),
+    divide: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b) as Vector3),
 };
 
 export const MixNode: NodeDefinition = {

@@ -55,7 +55,7 @@ export const SpringController: NodeDefinition = {
             function getDefaultValue() {
                 return {
                     position: context.getInputValueVector(node, "startPosition"),
-                    velocity: context.getInputValueVector(node, "startPosition").map(a => 0)
+                    velocity: context.getInputValueVector(node, "startPosition").map(a => 0) as Vector
                 }
             }
         }) as Record<string, any>)[portId])

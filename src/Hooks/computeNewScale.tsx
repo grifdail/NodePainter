@@ -1,4 +1,4 @@
-﻿import { Vector2 } from "@use-gesture/react";
+import { Vector2 } from "@use-gesture/react";
 
 export function computeNewScale(viewbox: { x: number; y: number; scale: number; }, scale: number, origin: Vector2): number[] {
     var scaleDiff = viewbox.scale - viewbox.scale / scale;

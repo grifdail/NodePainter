@@ -1,4 +1,5 @@
 import { AnimationCurveNode } from "./AnimationCurveNode";
+import { BezierSubsetNode } from "./BezierSubsetNode";
 import { BumpNode } from "./BumpNode";
 import { EasingNode } from "./EasingNode";
 import { EnvelopeNode } from "./EnvelopeNode";
@@ -10,19 +11,22 @@ import { LerpNode } from "./LerpNode";
 import { MoveTowardsNode } from "./MoveTowardsNode";
 import { RemapNode } from "./RemapNode";
 import { SmoothStepNode } from "./SmoothStepNode";
+import { SplitBezierNode } from "./SplitBezierNode";
 
 export const MathInterpolationNodes = [
-  //
-  AnimationCurveNode,
-  BumpNode,
-  EasingNode,
-  EnvelopeNode,
-  EvaluateBezierNode,
-  ExponantialImpulseNode,
-  IntegrateSpringNode,
-  IntegrateVelocityNode,
-  LerpNode,
-  MoveTowardsNode,
-  RemapNode,
-  SmoothStepNode,
+    //
+    AnimationCurveNode,
+    BezierSubsetNode,
+    BumpNode,
+    EasingNode,
+    EnvelopeNode,
+    EvaluateBezierNode,
+    ExponantialImpulseNode,
+    IntegrateSpringNode,
+    IntegrateVelocityNode,
+    LerpNode,
+    MoveTowardsNode,
+    RemapNode,
+    SmoothStepNode,
+    SplitBezierNode,
 ];

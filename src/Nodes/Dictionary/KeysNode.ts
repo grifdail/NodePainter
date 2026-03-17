@@ -1,4 +1,4 @@
-﻿import { IconBook } from "@tabler/icons-react";
+import { IconBook } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 
