@@ -116,9 +116,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
         context.frameBlackboard = {};
         if (tree) {
-            const start = tree.getNode(START_NODE);
-            var draw = context.getInputValueDrawing(start, "drawing");
-            draw();
+            context.render();
         }
 
         if (!rendererIsLoaded && Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {

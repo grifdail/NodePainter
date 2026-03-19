@@ -110,11 +110,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
         if (tree) {
             try {
-                var result = context.getInputValue(tree.getNode(START_NODE), "drawing", "drawing2d");
-
-                if (typeof result === "function") {
-                    result();
-                }
+                context.render();
             } catch (err: any) {
 
                 console.error(err);

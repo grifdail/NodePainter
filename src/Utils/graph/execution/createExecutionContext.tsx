@@ -19,6 +19,8 @@ import { PortType } from "../../../Types/PortType";
 import { getNodeTypeDefinition, getOutputPort } from "./getNode";
 import { getPortValue } from "./getPortValue";
 import { SketchData } from "../../../Types/SketchData";
+import { relative } from "path";
+import { SCALING_OPTIONS, START_NODE } from "../../../Nodes/StartNode";
 
 export type FunctionContext = {
     [key: string]: { type: PortType; value: any };
@@ -26,6 +28,7 @@ export type FunctionContext = {
 
 export type ExecutionContext = {
     update(): void;
+    render(): void;
     deltaTime: number;
     deltaTimeMs: number;
     getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
@@ -185,6 +188,29 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
                 }
             });
         },
+        render() {
+            var start = tree.nodes[START_NODE]
+            var result = context.getInputValue(start, "drawing", "drawing2d");
+
+            if (typeof result === "function") {
+                const sizing = start.settings.scalling;
+                const scale = getCanvasScale(sizing, (start.settings.width || 400), (start.settings.height || 400));
+
+                context.p5.push()
+                context.p5.scale(...scale);
+
+                result();
+                context.p5.pop()
+
+            }
+        }
     };
     return context;
 }
+
+
+function getCanvasScale(sizing: keyof typeof SCALING_OPTIONS, width: number, height: number) {
+
+    return SCALING_OPTIONS[sizing]?.(width, height) || [1, 1] as const
+}
+

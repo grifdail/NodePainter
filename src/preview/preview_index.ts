@@ -3,7 +3,7 @@ import Rand from "rand-seed";
 import { SketchSave } from "../Types/SketchTemplate";
 import { createExecutionContext, ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import { getNodeStart, getSketchAuthor, getSketchComment, getSketchName } from "../Utils/graph/execution/getNode";
-import { upgradeTemplate } from "../Utils/graph/modification/upgradeTemplate";
+import { upgradeSaveData } from "../Utils/graph/modification/upgradeSaveData";
 
 import "./preview.css";
 
@@ -90,7 +90,7 @@ async function loadFromUrl(encodedUrl: string | null) {
     var request = await fetch(encodedUrl);
     if (request.ok) {
         var data = (await request.json()) as SketchSave;
-        const upgradedData = upgradeTemplate(data);
+        const upgradedData = upgradeSaveData(data);
         updateHeader(getSketchName(upgradedData), getSketchAuthor(data), getSketchComment(data))
         initGame(upgradedData);
     } else {
@@ -119,10 +119,7 @@ function initGame(tree: SketchSave) {
             context.update();
             if (tree) {
                 try {
-                    var result = context.getInputValue(getNodeStart(tree), "drawing", "drawing2d");
-                    if (typeof result === "function") {
-                        result();
-                    }
+                    context.render();
                 } catch (err: any) {
                     console.error(err);
                 }
