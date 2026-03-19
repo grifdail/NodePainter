@@ -60,207 +60,207 @@ const MainDiv = styled.div`
 `;
 
 type MySketchProps = SketchProps & {
-  tree: TreeStore;
-  onFinished: (blob: Blob) => void;
-  onProgress: (rendering: number, processing: number) => void;
-  duration: number;
-  fixedFrameRate: number;
-  renderer: ExporterType;
-  preloadDuration: number;
+    tree: TreeStore;
+    onFinished: (blob: Blob) => void;
+    onProgress: (rendering: number, processing: number) => void;
+    duration: number;
+    fixedFrameRate: number;
+    renderer: ExporterType;
+    preloadDuration: number;
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
-  let tree: TreeStore | null = null;
-  var context: ExecutionContext = createExecutionContext(tree as unknown as SketchData, p5 as P5CanvasInstance);
-  var ended = false;
-  var renderer: CanvasExporter | null = null;
-  var ownProps: MySketchProps | null = null;
-  let seed = Date.now();
-  let rendererIsLoaded = false;
+    let tree: TreeStore | null = null;
+    var context: ExecutionContext = createExecutionContext(tree as unknown as SketchData, p5 as P5CanvasInstance);
+    var ended = false;
+    var renderer: CanvasExporter | null = null;
+    var ownProps: MySketchProps | null = null;
+    let seed = Date.now();
+    let rendererIsLoaded = false;
 
-  p5.setup = () => { };
+    p5.setup = () => { };
 
-  p5.updateWithProps = (props: MySketchProps) => {
-    if (tree !== props.tree || ended) {
-      tree = props.tree;
-      context = createExecutionContext(tree, p5 as P5CanvasInstance);
-      ownProps = props;
-      context.RNG = new Rand(seed.toString());
-      const start = tree.getNode(START_NODE);
+    p5.updateWithProps = (props: MySketchProps) => {
+        if (tree !== props.tree || ended) {
+            tree = props.tree;
+            context = createExecutionContext(tree, p5 as P5CanvasInstance);
+            ownProps = props;
+            context.RNG = new Rand(seed.toString());
+            const start = tree.getNode(START_NODE);
 
-      if (renderer == null) {
-        p5.pixelDensity(1);
-        p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+            if (renderer == null) {
+                p5.pixelDensity(1);
+                p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+                const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
+                renderer = Exporters[props.renderer]();
+                renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
+                    rendererIsLoaded = true;
+                });
+
+                ended = false;
+            }
+        }
+    };
+
+    var time = 0;
+    p5.draw = () => {
+        if (!ownProps) {
+            return;
+        }
         const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-        renderer = Exporters[props.renderer]();
-        renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
-          rendererIsLoaded = true;
-        });
+        context.timeMs = time;
+        context.time = time / 1000;
+        context.deltaTimeMs = frameRate;
+        context.deltaTime = frameRate / 1000;
+        var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
 
-        ended = false;
-      }
-    }
-  };
+        context.frameBlackboard = {};
+        if (tree) {
+            const start = tree.getNode(START_NODE);
+            var draw = context.getInputValueDrawing(start, "drawing");
+            draw();
+        }
 
-  var time = 0;
-  p5.draw = () => {
-    if (!ownProps) {
-      return;
-    }
-    const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
-    context.timeMs = time;
-    context.time = time / 1000;
-    context.deltaTimeMs = frameRate;
-    context.deltaTime = frameRate / 1000;
-    var progress = Math.max(0, time - ownProps.preloadDuration * 1000) / (ownProps.duration * 1000);
+        if (!rendererIsLoaded && Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
+        } else if (!ended) {
+            time += frameRate;
+            if (time - ownProps.preloadDuration * 1000 >= 0) {
+                renderer?.addFrame(p5.drawingContext);
+            }
 
-    context.frameBlackboard = {};
-    if (tree) {
-      const start = tree.getNode(START_NODE);
-      var draw = context.getInputValueDrawing(start, "drawing");
-      draw();
-    }
+            ownProps.onProgress(progress, 0);
 
-    if (!rendererIsLoaded && Object.values(context.blackboard).some((blackboardItem: any) => blackboardItem !== undefined && blackboardItem.isLoaded !== undefined && !blackboardItem.isLoaded)) {
-    } else if (!ended) {
-      time += frameRate;
-      if (time - ownProps.preloadDuration * 1000 >= 0) {
-        renderer?.addFrame(p5.drawingContext);
-      }
-
-      ownProps.onProgress(progress, 0);
-
-      if (progress >= 1) {
-        ended = true;
-        renderer?.render();
-      }
-    }
-  };
+            if (progress >= 1) {
+                ended = true;
+                renderer?.render();
+            }
+        }
+    };
 };
 
 export function ExportGifModal({ close }: { close: () => void }) {
-  const tree = useTree();
-  const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
-  const hasPreload = Object.values(tree.nodes).some((node) => tree.getNodeTypeDefinition(node).executeAs === CustomSimulation.id);
-  const [fixedFrameRate, setFixedFrameRate] = useState(32);
-  const [preloadDuration, setPreloadDuration] = useState(hasPreload ? tree.globalSettings.progress || 0 : 0);
-  const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
-  const [blob, setBlob] = useState<Blob | null>(null);
-  const [progress, setProgress] = useState(0);
-  const [usePreview, setUsePreview] = useState(false);
-  const [format, setFormat] = useState("gif");
-  const name = tree.getSketchName();
-  const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
-  const isWaiting = renderState === "waiting" || renderState === "done"
+    const tree = useTree();
+    const [duration, setDuration] = useState(tree.globalSettings.progress || 1);
+    const hasPreload = Object.values(tree.nodes).some((node) => tree.getNodeTypeDefinition(node).executeAs === CustomSimulation.id);
+    const [fixedFrameRate, setFixedFrameRate] = useState(32);
+    const [preloadDuration, setPreloadDuration] = useState(hasPreload ? tree.globalSettings.progress || 0 : 0);
+    const [renderState, setRenderState] = useState<"waiting" | "rendering" | "processing" | "done">("waiting");
+    const [blob, setBlob] = useState<Blob | null>(null);
+    const [progress, setProgress] = useState(0);
+    const [usePreview, setUsePreview] = useState(false);
+    const [format, setFormat] = useState("mp4");
+    const name = tree.getSketchName();
+    const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
+    const isWaiting = renderState === "waiting" || renderState === "done"
 
-  const start = tree.getNode(START_NODE);
+    const start = tree.getNode(START_NODE);
 
-  const onProgress = (rendering: number, processing: number) => {
-    setProgress((rendering * 0.5 + processing * 0.5) * 100);
-    if (rendering >= 1 && renderState === "rendering") {
-      setRenderState("processing");
-    }
-  };
+    const onProgress = (rendering: number, processing: number) => {
+        setProgress((rendering * 0.5 + processing * 0.5) * 100);
+        if (rendering >= 1 && renderState === "rendering") {
+            setRenderState("processing");
+        }
+    };
 
-  const filenameWithExt = `${filename}.${Exporters[format as ExporterType].extension}`;
+    const filenameWithExt = `${filename}.${Exporters[format as ExporterType].extension}`;
 
-  return (
-    <Modal
-      onClose={close}
-      title="Export a gif"
-      icon={IconGif}
-      size="tiny"
-      stretch>
-      <MainDiv>
-        <ButtonGroup align="stretch">
-          {renderState === "waiting" && (
-            <Button
-              label="Render"
-              onClick={() => setRenderState("rendering")}></Button>
-          )}
-          {renderState === "rendering" && (
-            <Button
-              label="Rendering"
-              disabled></Button>
-          )}
-          {renderState === "processing" && (
-            <Button
-              label="Processing"
-              disabled></Button>
-          )}
-          {renderState === "done" && (
-            <Button
-              label="Download"
-              onClick={() => download(blob as Blob, filenameWithExt)}></Button>
-          )}
-        </ButtonGroup>
+    return (
+        <Modal
+            onClose={close}
+            title="Export a gif"
+            icon={IconGif}
+            size="tiny"
+            stretch>
+            <MainDiv>
+                <ButtonGroup align="stretch">
+                    {renderState === "waiting" && (
+                        <Button
+                            label="Render"
+                            onClick={() => setRenderState("rendering")}></Button>
+                    )}
+                    {renderState === "rendering" && (
+                        <Button
+                            label="Rendering"
+                            disabled></Button>
+                    )}
+                    {renderState === "processing" && (
+                        <Button
+                            label="Processing"
+                            disabled></Button>
+                    )}
+                    {renderState === "done" && (
+                        <Button
+                            label="Download"
+                            onClick={() => download(blob as Blob, filenameWithExt)}></Button>
+                    )}
+                </ButtonGroup>
 
-        <form onSubmit={(e) => e.preventDefault()} style={{ display: isWaiting ? "block" : "none" }}>
-          <Fieldset
-            label="Filename"
-            input={TextInput}
-            value={filename}
-            onChange={setFilename}
-          />
-          <Fieldset
-            label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`}
-            input={NumberInput}
-            value={duration}
-            onChange={setDuration}></Fieldset>
-          <Fieldset
-            label="FrameRate"
-            input={NumberInput}
-            value={fixedFrameRate}
-            onChange={setFixedFrameRate}
-          />
-          <Fieldset
-            label="Preload"
-            input={NumberInput}
-            value={preloadDuration}
-            onChange={setPreloadDuration}
-          />
-          <Fieldset
-            label="Format ?"
-            input={DropdownInput}
-            value={format}
-            onChange={setFormat}
-            passtrough={{ options: Object.keys(Exporters) }}
-          />
-          <Fieldset
-            label="Use preview ?"
-            input={BoolInput}
-            value={usePreview}
-            onChange={setUsePreview}
-            tooltip="If this is true, you get to see what's exported but the export may be much slower"
-          />
-        </form>
+                <form onSubmit={(e) => e.preventDefault()} style={{ display: isWaiting ? "block" : "none" }}>
+                    <Fieldset
+                        label="Filename"
+                        input={TextInput}
+                        value={filename}
+                        onChange={setFilename}
+                    />
+                    <Fieldset
+                        label={`Duration, in second ${fixedFrameRate > 0 ? `(${Math.floor(duration * fixedFrameRate)} frames)` : ``}`}
+                        input={NumberInput}
+                        value={duration}
+                        onChange={setDuration}></Fieldset>
+                    <Fieldset
+                        label="FrameRate"
+                        input={NumberInput}
+                        value={fixedFrameRate}
+                        onChange={setFixedFrameRate}
+                    />
+                    <Fieldset
+                        label="Preload"
+                        input={NumberInput}
+                        value={preloadDuration}
+                        onChange={setPreloadDuration}
+                    />
+                    <Fieldset
+                        label="Format ?"
+                        input={DropdownInput}
+                        value={format}
+                        onChange={setFormat}
+                        passtrough={{ options: Object.keys(Exporters) }}
+                    />
+                    <Fieldset
+                        label="Use preview ?"
+                        input={BoolInput}
+                        value={usePreview}
+                        onChange={setUsePreview}
+                        tooltip="If this is true, you get to see what's exported but the export may be much slower"
+                    />
+                </form>
 
-        <div className="rendering" style={{ display: usePreview && !isWaiting ? "block" : "none" }}>
-          {renderState === "rendering" && (
-            <ReactP5Wrapper
-              key={`${start.settings.width} / ${start.settings.height}`}
-              sketch={sketch}
-              tree={tree}
-              duration={duration}
-              fixedFrameRate={fixedFrameRate}
-              renderer={format}
-              preloadDuration={preloadDuration}
-              onFinished={(blob: Blob) => {
-                setRenderState("waiting");
-                setProgress(100);
-                setBlob(blob);
-                download(blob as Blob, filenameWithExt);
-                toastSuccess("Rendering Complete !");
-              }}
-              onProgress={onProgress}
-            />
-          )}
-        </div>
-        <progress
-          value={progress}
-          max="100"
-        />
-      </MainDiv>
-    </Modal>
-  );
+                <div className="rendering" style={{ display: usePreview && !isWaiting ? "block" : "none" }}>
+                    {renderState === "rendering" && (
+                        <ReactP5Wrapper
+                            key={`${start.settings.width} / ${start.settings.height}`}
+                            sketch={sketch}
+                            tree={tree}
+                            duration={duration}
+                            fixedFrameRate={fixedFrameRate}
+                            renderer={format}
+                            preloadDuration={preloadDuration}
+                            onFinished={(blob: Blob) => {
+                                setRenderState("waiting");
+                                setProgress(100);
+                                setBlob(blob);
+                                download(blob as Blob, filenameWithExt);
+                                toastSuccess("Rendering Complete !");
+                            }}
+                            onProgress={onProgress}
+                        />
+                    )}
+                </div>
+                <progress
+                    value={progress}
+                    max="100"
+                />
+            </MainDiv>
+        </Modal>
+    );
 }

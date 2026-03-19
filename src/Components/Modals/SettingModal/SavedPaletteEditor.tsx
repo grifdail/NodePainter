@@ -78,6 +78,7 @@ export const SavedPaletteEditor = () => {
     const removePalette = usePlayerPref((pref) => pref.removePalette);
     const [openedPalette, setOpenPalette] = useState<null | string>(null);
     const [searchTermRaw, setSearchTerm] = useState("");
+    console.log(savedPalettes)
     return (
         <>
             <SearchForm onSubmit={(e) => e.preventDefault()}>
