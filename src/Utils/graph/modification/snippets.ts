@@ -20,11 +20,11 @@ export type SnippetCollection = {
 
 export const validateSnipetJson = ajv.compile(schemaJSON as any as JSONSchemaType<Snippet>);
 
-export function loadSnippet(snippet: Snippet, tree: TreeStore, pos: Vector2) {
+export function loadSnippet(snippet: Snippet, tree: TreeStore, pos: Vector2, graph: string | undefined) {
     const nodeMapping: Record<string, string> = {};
     snippet.nodes
         .map((sourceNode) => {
-            const newNode = duplicateNode(tree, sourceNode, sourceNode.positionX - snippet.offset[0] + pos[0], sourceNode.positionY - snippet.offset[1] + pos[1], sourceNode.graph as string);
+            const newNode = duplicateNode(tree, sourceNode, sourceNode.positionX - snippet.offset[0] + pos[0], sourceNode.positionY - snippet.offset[1] + pos[1], graph as string);
             tree.nodes[newNode.id] = newNode;
             nodeMapping[sourceNode.id] = newNode.id;
             return newNode;

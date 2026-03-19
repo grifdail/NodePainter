@@ -64,7 +64,7 @@ export function SnippetSubMenu({ worldPosition }: { worldPosition: [number, numb
                     <MenuItem
                         key={snip.name}
                         onClick={() =>
-                            useTree.getState().loadSnipets(snip, ...worldPosition, (newNodes) => {
+                            useTree.getState().loadSnipets(snip, ...worldPosition, useTree.getState().editedGraph, (newNodes) => {
                                 useSelection.getState().setSelection(Object.values(newNodes));
                             })
                         }>
@@ -109,7 +109,7 @@ export const duplicateSelection = (worldPosition: [number, number] = [0, 0]) => 
         return;
     }
     var snippet = extractSnipet("test", selection, tree);
-    tree.loadSnipets(snippet, worldPosition[0], worldPosition[1], (newNodes) => {
+    tree.loadSnipets(snippet, worldPosition[0], worldPosition[1], tree.editedGraph, (newNodes) => {
         useSelection.getState().setSelection(Object.values(newNodes));
     });
 };
@@ -124,7 +124,8 @@ export function parsePastedValue(text: string, worldPosition: [number, number] =
         const parsedData = JSON.parse(text);
         const item = validateSnipetJson(parsedData);
         if (item) {
-            useTree.getState().loadSnipets(parsedData, worldPosition[0], worldPosition[1], (newNodes) => {
+            const tree = useTree.getState()
+            tree.loadSnipets(parsedData, worldPosition[0], worldPosition[1], tree.editedGraph, (newNodes) => {
                 useSelection.getState().setSelection(Object.values(newNodes));
             });
         } else {

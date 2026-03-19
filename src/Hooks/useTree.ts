@@ -717,10 +717,10 @@ export const useTree = create<TreeStore>()((set, get) => {
                 })
             );
         },
-        loadSnipets(snipets: Snippet, posX: number, posY: number, callback: (arg: Record<string, string>) => void): void {
+        loadSnipets(snipets: Snippet, posX: number, posY: number, graph: string | undefined, callback: (arg: Record<string, string>) => void): void {
             set(
                 produce((state) => {
-                    const newNames = loadSnippet(snipets, state, [posX, posY]);
+                    const newNames = loadSnippet(snipets, state, [posX, posY], graph);
                     callback(newNames);
                 })
             );

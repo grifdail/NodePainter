@@ -61,8 +61,9 @@ export const useGraphHotkey = () => {
     });
     useHotkeys("mod+d", (e) => {
         e.preventDefault();
-        const snippet = extractSnipet("copy", useSelection.getState().nodes, useTree.getState());
-        useTree.getState().loadSnipets(snippet, snippet.offset[0] + 100, snippet.offset[1] + 100, (newNodes) => {
+        const tree = useTree.getState();
+        const snippet = extractSnipet("copy", useSelection.getState().nodes, tree);
+        tree.loadSnipets(snippet, snippet.offset[0] + 100, snippet.offset[1] + 100, tree.editedGraph, (newNodes) => {
             useSelection.getState().setSelection(Object.values(newNodes));
             toastSuccess("Selection successfully duplicated");
         });
