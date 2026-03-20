@@ -6,10 +6,11 @@ import { useDialog } from "../Hooks/useDialog";
 import { useTree } from "../Hooks/useTree";
 import { listOrphanNode } from "../Utils/graph/modification/listOrphanNode";
 import { resetCamera } from "../Utils/ui/resetCamera";
-import { RemoteStorage } from "../Utils/storage/remoteStorage";
+import { useRemoteStorage } from "../Hooks/useRemoteStorage";
 
 export function MainMenu({ showPreview }: { showPreview: boolean }) {
-    const [, saveSketch] = useAllSavedSketch();
+    const [, saveLocalSketch] = useAllSavedSketch();
+    const { isConnected, saveSketch: saveOnlineSketch } = useRemoteStorage();
 
     /*
 
@@ -54,10 +55,10 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
                 <MenuItem onClick={openSaveModal}>
                     <IconDeviceDesktopDown /> Save to JSON
                 </MenuItem>
-                <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
+                <MenuItem onClick={() => saveSketchWithNamePrompt(saveLocalSketch)}>
                     <IconDeviceFloppy /> Save to browser
                 </MenuItem>
-                <MenuItem disabled={!RemoteStorage.isConnected()} onClick={() => saveSketchWithNamePrompt(RemoteStorage.saveSketch)}>
+                <MenuItem disabled={!isConnected} onClick={() => saveSketchWithNamePrompt(saveOnlineSketch)}>
                     <IconCloudUpload /> Save to remote storage
                 </MenuItem>
             </SubMenu>

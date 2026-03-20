@@ -12,9 +12,10 @@ import { loadExample } from "./Utils/graph/load/loadExample";
 import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
 import { loadJsonDecrypt } from "./Utils/graph/load/loadJsonDecrypt";
 import { resetCamera } from "./Utils/ui/resetCamera";
-import { recordPlayerPref } from "./Utils/storage/playerPrefStorage";
+import { recordPlayerPref } from "./Hooks/useRemoteStorage";
 
 initCodeBlockType();
+recordPlayerPref();
 
 function GraphCache() {
     const key = 0; //;useTree((state) => state.key);
@@ -45,6 +46,7 @@ function useAboutOnFirstLaunch() {
         setTimeout(() => {
             if (usePlayerPref.getState().hasSeenIntroPopup) {
                 recordPlayerPref();
+
                 openSketchMenu();
             } else {
                 openAboutModal();
