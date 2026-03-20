@@ -12,6 +12,7 @@ import { loadExample } from "./Utils/graph/load/loadExample";
 import { loadFromUrl } from "./Utils/graph/load/loadFromUrl";
 import { loadJsonDecrypt } from "./Utils/graph/load/loadJsonDecrypt";
 import { resetCamera } from "./Utils/ui/resetCamera";
+import { recordPlayerPref } from "./Utils/storage/playerPrefStorage";
 
 initCodeBlockType();
 
@@ -43,6 +44,7 @@ function useAboutOnFirstLaunch() {
     useEffect(() => {
         setTimeout(() => {
             if (usePlayerPref.getState().hasSeenIntroPopup) {
+                recordPlayerPref();
                 openSketchMenu();
             } else {
                 openAboutModal();

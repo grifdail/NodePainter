@@ -15,8 +15,10 @@ import { SearchForm } from "../Generics/SearchForm";
 import { Modal } from "../Modal";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Input } from "../StyledComponents/Input";
+import { useRemoteSketch } from "../../Utils/storage/useRemoteSketch";
 
 const MY_SAVED_SKETCH = "My Saved Sketch";
+const MY_ONLINE_SKETCH = "My online Sketch";
 
 const MainDiv = styled.div`
   max-width: 100%;
@@ -96,7 +98,7 @@ const IconPerTypes: Record<string, Icon> = {
     Examples: IconPlayerPlay,
 };
 
-type SketchElement = { content: () => Promise<SketchSave>; name: string; category: string };
+type SketchElement = { content: () => Promise<SketchSave | null>; name: string; category: string };
 
 const TagRegex = /tag:(\w+)/gi;
 
@@ -237,11 +239,14 @@ export function SketchModal({ close }: { close: () => void }) {
     );
 
     function useLoadSketch(close: () => void) {
-        return (promise: Promise<SketchSave>) => {
+        return (promise: Promise<SketchSave | null>) => {
             promise.then(
                 (sketch) => {
-                    useTree.getState().loadTemplate(sketch);
-                    close();
+                    if (sketch) {
+                        useTree.getState().loadTemplate(sketch);
+                        close();
+                    }
+
                 },
                 (err) => {
                     useDialog.getState().openError("There was an error while loading the sketch");
@@ -268,6 +273,7 @@ function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void)
 
 function useSketchCollection(): [SketchElement[], string[], (name: string) => void] {
     const [sketches, , deleteSketch] = useAllSavedSketch();
+    const [remoteSketch, , deleteRemoteSketch, loadSketchContent] = useRemoteSketch();
     const tags = new Set([MY_SAVED_SKETCH]);
     return [
         [
@@ -288,6 +294,13 @@ function useSketchCollection(): [SketchElement[], string[], (name: string) => vo
                     name: sketch.name,
                     category: MY_SAVED_SKETCH,
                     content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
+                };
+            }),
+            ...(remoteSketch || []).map((sketch) => {
+                return {
+                    name: sketch,
+                    category: MY_ONLINE_SKETCH,
+                    content: () => loadSketchContent(sketch),
                 };
             }),
         ],

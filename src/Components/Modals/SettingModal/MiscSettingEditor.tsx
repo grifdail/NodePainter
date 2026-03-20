@@ -7,6 +7,7 @@ import { TextInput } from "../../Generics/Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { Fieldset } from "../../StyledComponents/Fieldset";
 import { ImportPaletteField } from "./ImportPaletteField";
+import { RemoteStorageConnection } from "./RemoteStorageConnection";
 
 
 export const MiscSettingEditor = () => {
@@ -41,6 +42,7 @@ export const MiscSettingEditor = () => {
                 <Fieldset input={BoolInput} value={shortcutVisible} onChange={setShortcutVisible} label="Use shortcut preview" />
             </div>
             <ImportPaletteField />
+            <RemoteStorageConnection />
             <ButtonGroup>
                 <Button
                     label="Reset node usage information"
