@@ -1,14 +1,16 @@
 import { Menu, MenuDivider, MenuItem, SubMenu } from "@szhsin/react-menu";
-import { IconDeviceDesktopDown, IconDeviceFloppy, IconFocusCentered, IconFolderOpen, IconGif, IconInfoCircle, IconMenu2, IconSettings, IconTrashX } from "@tabler/icons-react";
+import { IconCloudUpload, IconDeviceDesktopDown, IconDeviceFloppy, IconFocusCentered, IconFolderOpen, IconGif, IconInfoCircle, IconMenu2, IconSettings, IconTrashX } from "@tabler/icons-react";
 import { openAboutModal, openGifExportModal, openSaveModal, openSettingModal, openSketchMenu } from "../Actions/navigationAction";
 import { saveSketchWithNamePrompt, useAllSavedSketch } from "../Hooks/db";
 import { useDialog } from "../Hooks/useDialog";
 import { useTree } from "../Hooks/useTree";
 import { listOrphanNode } from "../Utils/graph/modification/listOrphanNode";
 import { resetCamera } from "../Utils/ui/resetCamera";
+import { useRemoteStorage } from "../Hooks/useRemoteStorage";
 
 export function MainMenu({ showPreview }: { showPreview: boolean }) {
-    const [, saveSketch] = useAllSavedSketch();
+    const [, saveLocalSketch] = useAllSavedSketch();
+    const { isConnected, saveSketch: saveOnlineSketch } = useRemoteStorage();
 
     /*
 
@@ -53,8 +55,11 @@ export function MainMenu({ showPreview }: { showPreview: boolean }) {
                 <MenuItem onClick={openSaveModal}>
                     <IconDeviceDesktopDown /> Save to JSON
                 </MenuItem>
-                <MenuItem onClick={() => saveSketchWithNamePrompt(saveSketch)}>
+                <MenuItem onClick={() => saveSketchWithNamePrompt(saveLocalSketch)}>
                     <IconDeviceFloppy /> Save to browser
+                </MenuItem>
+                <MenuItem disabled={!isConnected} onClick={() => saveSketchWithNamePrompt(saveOnlineSketch)}>
+                    <IconCloudUpload /> Save to remote storage
                 </MenuItem>
             </SubMenu>
 

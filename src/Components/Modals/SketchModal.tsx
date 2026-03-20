@@ -3,8 +3,6 @@ import { Icon, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPla
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import { openLoadModal } from "../../Actions/navigationAction";
-import { Templates } from "../../Data/templates";
-import { useAllSavedSketch } from "../../Hooks/db";
 import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
 import { useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
@@ -15,8 +13,10 @@ import { SearchForm } from "../Generics/SearchForm";
 import { Modal } from "../Modal";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import { Input } from "../StyledComponents/Input";
+import { useSketchCollection } from "./useSketchCollection";
 
-const MY_SAVED_SKETCH = "My Saved Sketch";
+export const MY_SAVED_SKETCH = "My Saved Sketch";
+export const MY_ONLINE_SKETCH = "My online Sketch";
 
 const MainDiv = styled.div`
   max-width: 100%;
@@ -96,7 +96,7 @@ const IconPerTypes: Record<string, Icon> = {
     Examples: IconPlayerPlay,
 };
 
-type SketchElement = { content: () => Promise<SketchSave>; name: string; category: string };
+export type SketchElement = { content: () => Promise<SketchSave | null>; name: string; category: string, delete?: () => void };
 
 const TagRegex = /tag:(\w+)/gi;
 
@@ -164,7 +164,7 @@ const sketchCategory = { Templates: 3, [MY_SAVED_SKETCH]: 2, Examples: 1 };
 export function SketchModal({ close }: { close: () => void }) {
     const loadSketch = useLoadSketch(close);
     const withConfirm = useWithConfirm();
-    const [allItem, categories, deleteSavedSketch] = useSketchCollection();
+    const [allItem, categories] = useSketchCollection();
     const categoriesExceptTemplate = useMemo(() => categories.filter(cat => cat !== "Templates"), [categories]);
     const allItemInTemplate = useMemo(() => allItem.filter(item => item.category === "Templates"), [allItem])
     const allItemExceptTemplate = useMemo(() => allItem.filter(item => item.category !== "Templates"), [allItem])
@@ -217,11 +217,15 @@ export function SketchModal({ close }: { close: () => void }) {
                         {filteredList.map((item) => (
                             <SketchButton
                                 onDelete={
-                                    item.category === MY_SAVED_SKETCH
+                                    item.delete
                                         ? (e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
-                                            withConfirm(() => deleteSavedSketch(item.name))();
+                                            withConfirm(() => {
+                                                if (item.delete) {
+                                                    item.delete()
+                                                }
+                                            })();
                                         }
                                         : undefined
                                 }
@@ -237,11 +241,14 @@ export function SketchModal({ close }: { close: () => void }) {
     );
 
     function useLoadSketch(close: () => void) {
-        return (promise: Promise<SketchSave>) => {
+        return (promise: Promise<SketchSave | null>) => {
             promise.then(
                 (sketch) => {
-                    useTree.getState().loadTemplate(sketch);
-                    close();
+                    if (sketch) {
+                        useTree.getState().loadTemplate(sketch);
+                        close();
+                    }
+
                 },
                 (err) => {
                     useDialog.getState().openError("There was an error while loading the sketch");
@@ -264,36 +271,6 @@ function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void)
         },
         [searchTermRaw, setSearchTerm]
     );
-}
-
-function useSketchCollection(): [SketchElement[], string[], (name: string) => void] {
-    const [sketches, , deleteSketch] = useAllSavedSketch();
-    const tags = new Set([MY_SAVED_SKETCH]);
-    return [
-        [
-            ...Object.entries(Templates)
-                .filter(([name]) => name[0] !== "_")
-                .flatMap(([folderName, content]) => {
-                    tags.add(folderName);
-                    return Object.entries(content)
-                        .filter(([name]) => name[0] !== "_")
-                        .map(([fileName, content]) => ({
-                            name: fileName,
-                            category: folderName,
-                            content: content,
-                        }));
-                }),
-            ...(sketches || []).map((sketch) => {
-                return {
-                    name: sketch.name,
-                    category: MY_SAVED_SKETCH,
-                    content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
-                };
-            }),
-        ],
-        Array.from(tags),
-        deleteSketch,
-    ];
 }
 
 function useWithConfirm() {

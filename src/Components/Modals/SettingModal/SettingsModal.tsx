@@ -11,6 +11,7 @@ import { PaletteSetting } from "../../Settings/PaletteSetting";
 import { SavedSnippetEditor } from "./SavedSnippetEditor";
 import { ExportSettingEditor } from "./ExportSettingEditor";
 import { MiscSettingEditor } from "./MiscSettingEditor";
+import { RemoteStorageSettingEditor } from "./RemoteStorageSettingEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ enum Section {
     SavedSnippet = "SavedSnippet",
     Misc = "Misc",
     ExportSetting = "ExportSetting",
+    RemoteStorage = "RemoteStorage",
 }
 
 const DefaultPaletteEdition = () => {
@@ -58,6 +60,7 @@ const SectionComponent: { [key in Section]: () => JSX.Element } = {
     [Section.SavedGradient]: SavedGradientEditor,
     [Section.SavedSnippet]: SavedSnippetEditor,
     [Section.Misc]: MiscSettingEditor,
+    [Section.RemoteStorage]: RemoteStorageSettingEditor,
     [Section.ExportSetting]: ExportSettingEditor,
 };
 
