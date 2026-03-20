@@ -22,11 +22,11 @@ function RemoteStorageConnected({ userAdress, disconnect, savePref, loadPref }: 
                 icon={IconLogout}
                 onClick={disconnect}></Button>
             <Button
-                label="Save your preference online"
+                label="Save your settings online"
                 icon={IconUpload}
                 onClick={savePref}></Button>
             <Button
-                label="Load your prefference"
+                label="Load your settings"
                 icon={IconDownload}
                 onClick={loadPref}></Button>
         </ButtonGroup>
