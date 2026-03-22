@@ -1,4 +1,5 @@
-﻿import { useCallback, useEffect, useState } from "react";
+﻿import JSZip from "jszip";
+import { useCallback, useEffect, useState } from "react";
 import { default as RM } from "remotestoragejs";
 import { PlayerPrefExport } from "../Types/PlayerPrefStore";
 import { SketchSave } from "../Types/SketchTemplate";
@@ -37,9 +38,10 @@ export const useRemoteStorage = () => {
     }, [])
 
     useEffect(() => {
-        const cbConnected = () => {
+        const cbConnected = async () => {
             setIsConnected(true);
             setUserAdress(rmInstance.remote.userAddress);
+            console.log(await remoteFileRoot.getListing())
         };
         const cbDisconnected = () => {
             setIsConnected(true)
@@ -104,7 +106,8 @@ export const useRemoteStorage = () => {
         savePlayerPref,
         syncPlayerPref,
         userAdress,
-        disconnect
+        disconnect,
+        exportToZip
     }
 }
 
@@ -112,6 +115,35 @@ function savePlayerPref() {
     const playerPref = usePlayerPref.getState();
     const json = JSON.stringify(playerPref.getExportJson());
     remoteFileRoot.storeFile("application/json", "settings.json", json);
+}
+
+async function exportToZip() {
+    let zip: JSZip = new JSZip();
+
+    async function exploreFolder(path: string) {
+        var files = await remoteFileRoot.getListing(path) as Record<string, any>;
+        console.log(files);
+        await Promise.all(Object.entries(files).map(async ([fileName, metadata]) => {
+            const fullPath = path + fileName
+            if (metadata && metadata["Content-Type"]) {
+                const response = await remoteFileRoot.getFile(fullPath) as Record<string, any>;
+                if (response && response.data) {
+                    console.log(`adding file '${fullPath}'`)
+                    zip.file(fullPath.slice(2), response.data)
+                }
+
+            } else {
+                console.log(`adding folder '${fullPath}'`)
+                return await exploreFolder(fullPath);
+            }
+        }))
+    }
+    console.log("aaaaaaaaa")
+    await exploreFolder("./")
+
+    return await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+
+
 }
 
 

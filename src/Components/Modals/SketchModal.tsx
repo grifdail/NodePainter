@@ -159,7 +159,7 @@ function SketchButton({ onClick, item, onDelete }: { onClick: MouseEventHandler<
     );
 }
 
-const sketchCategory = { Templates: 3, [MY_SAVED_SKETCH]: 2, Examples: 1 };
+const sketchCategory = { [MY_ONLINE_SKETCH]: 4, Templates: 3, [MY_SAVED_SKETCH]: 2, Examples: 1 };
 
 export function SketchModal({ close }: { close: () => void }) {
     const loadSketch = useLoadSketch(close);

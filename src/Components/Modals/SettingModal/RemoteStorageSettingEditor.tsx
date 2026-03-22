@@ -1,34 +1,40 @@
 ﻿import { useState } from "react";
-import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { useRemoteStorage } from "../../../Hooks/useRemoteStorage";
-import { toastInfo } from "../../../Hooks/useToast";
 import { Button } from "../../Generics/Button";
 import { TextInput } from "../../Generics/Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { TextInputAndButton } from "./ImportPaletteField";
-import { IconDownload, IconLogin, IconLogout, IconUpload } from "@tabler/icons-react";
+import { IconDownload, IconLogin, IconLogout } from "@tabler/icons-react";
+import { download } from "../../../Utils/ui/download";
 
-function RemoteStorageConnected({ userAdress, disconnect, savePref, loadPref }: {
+function RemoteStorageConnected({ userAdress, disconnect, savePref, loadPref, exportToZip }: {
     userAdress: string;
     disconnect: () => void
     savePref: () => void
-    loadPref: () => void
+    loadPref: () => void,
+    exportToZip: () => Promise<Blob>
 }) {
+
+    async function downloadZip() {
+        const blob = await exportToZip()
+        download(blob, `nodepainter_${userAdress}.zip`)
+    }
     return <div>
         <p>Connected to remoteStorage as {userAdress}</p>
-        <ButtonGroup>
+        <ButtonGroup vertical>
             <Button
                 label="Disconnect"
                 icon={IconLogout}
                 onClick={disconnect}></Button>
-            <Button
-                label="Save your settings online"
-                icon={IconUpload}
-                onClick={savePref}></Button>
+
             <Button
                 label="Load your settings"
                 icon={IconDownload}
                 onClick={loadPref}></Button>
+            <Button
+                label="Export your data as zip"
+                icon={IconDownload}
+                onClick={() => downloadZip()}></Button>
         </ButtonGroup>
     </div>;
 }
@@ -54,8 +60,8 @@ function RemoteStorageDisconected({ connect }: {
 
 
 export const RemoteStorageSettingEditor = () => {
-    const { isConnected, connect, userAdress, disconnect, syncPlayerPref, savePlayerPref } = useRemoteStorage()
-    const content = isConnected ? <RemoteStorageConnected userAdress={userAdress} disconnect={disconnect} savePref={savePlayerPref} loadPref={syncPlayerPref} /> : <RemoteStorageDisconected connect={connect}></RemoteStorageDisconected>
+    const { isConnected, connect, userAdress, disconnect, syncPlayerPref, savePlayerPref, exportToZip } = useRemoteStorage()
+    const content = isConnected ? <RemoteStorageConnected userAdress={userAdress} disconnect={disconnect} savePref={savePlayerPref} loadPref={syncPlayerPref} exportToZip={exportToZip} /> : <RemoteStorageDisconected connect={connect}></RemoteStorageDisconected>
 
     return (
         <div>
