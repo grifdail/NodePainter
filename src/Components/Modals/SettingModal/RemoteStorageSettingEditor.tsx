@@ -4,7 +4,7 @@ import { Button } from "../../Generics/Button";
 import { TextInput } from "../../Generics/Inputs/TextInput";
 import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 import { TextInputAndButton } from "./ImportPaletteField";
-import { IconDownload, IconLogin, IconLogout } from "@tabler/icons-react";
+import { IconDownload, IconLogin, IconLogout, IconUpload, IconZip } from "@tabler/icons-react";
 import { download } from "../../../Utils/ui/download";
 
 function RemoteStorageConnected({ userAdress, disconnect, savePref, loadPref, exportToZip }: {
@@ -32,8 +32,12 @@ function RemoteStorageConnected({ userAdress, disconnect, savePref, loadPref, ex
                 icon={IconDownload}
                 onClick={loadPref}></Button>
             <Button
+                label="Save your settings"
+                icon={IconUpload}
+                onClick={savePref}></Button>
+            <Button
                 label="Export your data as zip"
-                icon={IconDownload}
+                icon={IconZip}
                 onClick={() => downloadZip()}></Button>
         </ButtonGroup>
     </div>;

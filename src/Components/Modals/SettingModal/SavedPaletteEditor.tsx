@@ -10,6 +10,7 @@ import { SearchForm } from "../../Generics/SearchForm";
 import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { Input } from "../../StyledComponents/Input";
 import { useDialog } from "../../../Hooks/useDialog";
+import { ButtonGroup } from "../../StyledComponents/ButtonGroup";
 
 const NodeList = styled.section`
   display: flex;
@@ -78,7 +79,11 @@ export const SavedPaletteEditor = () => {
     const removePalette = usePlayerPref((pref) => pref.removePalette);
     const [openedPalette, setOpenPalette] = useState<null | string>(null);
     const [searchTermRaw, setSearchTerm] = useState("");
-    console.log(savedPalettes)
+    const onClickAdd = () => {
+        useDialog.getState().openPrompt((data) => {
+            setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
+        });
+    };
     return (
         <>
             <SearchForm onSubmit={(e) => e.preventDefault()}>
@@ -87,11 +92,7 @@ export const SavedPaletteEditor = () => {
                     <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus />
                 </span>
                 <InvisibleButton icon={IconPlus}
-                    onClick={() => {
-                        useDialog.getState().openPrompt((data) => {
-                            setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
-                        });
-                    }} />
+                    onClick={onClickAdd} />
             </SearchForm>
             <NodeList>
                 {Object.entries(savedPalettes)
@@ -110,6 +111,9 @@ export const SavedPaletteEditor = () => {
                         />
                     ))}
             </NodeList>
+            <ButtonGroup $forceStretch vertical>
+                <Button label="Add" onClick={onClickAdd} icon={IconPlus} />
+            </ButtonGroup>
         </>
     );
 };

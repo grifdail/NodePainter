@@ -138,7 +138,6 @@ async function exportToZip() {
             }
         }))
     }
-    console.log("aaaaaaaaa")
     await exploreFolder("./")
 
     return await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
