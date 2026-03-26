@@ -6,71 +6,72 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 
+export const CUSTOM_SHADER = "Technical/ImageEffectShader/Base";
 export const RenderShader: NodeDefinition = {
-  id: "Technical/ImageEffectShader/Base",
-  hideInLibrary: true,
-  icon: IconPhoto,
-  description: "Render a shader to an image an image",
-  dataInputs: [Port.CacheId()],
-  dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
-  tags: ["Shader"],
+    id: CUSTOM_SHADER,
+    hideInLibrary: true,
+    icon: IconPhoto,
+    description: "Render a shader to an image an image",
+    dataInputs: [Port.CacheId()],
+    dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
+    tags: ["Shader"],
 
-  settings: [
-    { id: "width", type: "number", defaultValue: 400 },
-    { id: "height", type: "number", defaultValue: 400 },
-  ],
-  getData(portId, node, context) {
-    const width = node.settings.width;
-    const height = node.settings.height;
-    const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
-    const keyCache = `${node.id}-${cacheId}-img`;
-    const keyShader = `${node.id}-${cacheId}-shader`;
+    settings: [
+        { id: "width", type: "number", defaultValue: 400 },
+        { id: "height", type: "number", defaultValue: 400 },
+    ],
+    getData(portId, node, context) {
+        const width = node.settings.width;
+        const height = node.settings.height;
+        const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
+        const keyCache = `${node.id}-${cacheId}-img`;
+        const keyShader = `${node.id}-${cacheId}-shader`;
 
-    let img = readFromCache(
-      context,
-      node,
-      () => {
-        return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
-      },
-      keyCache
-    );
-    var p5img = img.p5Graphics;
-    if (p5img === null) {
-      return;
-    }
-    let shader = readFromCache(
-      context,
-      node,
-      () => {
-        try {
-          const shaderCode: string = context.getImageEffectShaderCode(node.type, Object.values(node.dataInputs));
-          return (p5img as any).createFilterShader(shaderCode);
-        } catch (error) {
-          console.error(error);
+        let img = readFromCache(
+            context,
+            node,
+            () => {
+                return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
+            },
+            keyCache
+        );
+        var p5img = img.p5Graphics;
+        if (p5img === null) {
+            return;
         }
-      },
-      keyShader
-    );
+        let shader = readFromCache(
+            context,
+            node,
+            () => {
+                try {
+                    const shaderCode: string = context.getImageEffectShaderCode(node.type, Object.values(node.dataInputs));
+                    return (p5img as any).createFilterShader(shaderCode);
+                } catch (error) {
+                    console.error(error);
+                }
+            },
+            keyShader
+        );
 
-    shader.setUniform("time", context.timeMs);
-    Object.values(node.dataInputs).forEach((port) => {
-      if (port.type === "image") {
-        const data = context.getInputValueImage(node, port.id);
-        if (!data || !data.getP5Uniform(context.p5)) {
-          return;
-        }
-        shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5Uniform(context.p5));
-      } else {
-        const data = context.getInputValue(node, port.id, port.type);
-        const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;
-        shader.setUniform(sanitizeForShader(`uniform_${port.id}`), converter ? converter(data) : data);
-      }
-    });
+        shader.setUniform("time", context.timeMs);
+        Object.values(node.dataInputs).forEach((port) => {
+            if (port.type === "image") {
+                const data = context.getInputValueImage(node, port.id);
+                if (!data || !data.getP5Uniform(context.p5)) {
+                    return;
+                }
+                shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5Uniform(context.p5));
+            } else {
+                const data = context.getInputValue(node, port.id, port.type);
+                const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;
+                shader.setUniform(sanitizeForShader(`uniform_${port.id}`), converter ? converter(data) : data);
+            }
+        });
 
-    p5img.clear(0, 0, 0, 0);
-    p5img.filter(shader);
+        p5img.clear(0, 0, 0, 0);
+        p5img.filter(shader);
 
-    return img;
-  },
+        return img;
+    },
 };
-export const CUSTOM_SHADER = "RenderShader";
+

@@ -8,6 +8,8 @@ import { NodeLibrary } from "../Nodes/Nodes";
 import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
+import { RenderShaderEnd } from "../Nodes/Technical/ImageEffectShader/RenderShaderEnd";
+import { RenderShaderStart } from "../Nodes/Technical/ImageEffectShader/RenderShaderStart";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 import { ShaderMaterialEnd } from "../Nodes/Technical/MaterialShader/ShaderMaterialEnd";
 import { ShaderMaterialStart } from "../Nodes/Technical/MaterialShader/ShaderMaterialStart";
@@ -301,7 +303,7 @@ export const useTree = create<TreeStore>()((set, get) => {
                         ],
 
                         settings: [],
-                        executeAs: "CustomShader-start",
+                        executeAs: RenderShaderStart.id,
                     };
                     const endNodeDef: NodeDefinition = {
                         IsUnique: true,
@@ -319,7 +321,7 @@ export const useTree = create<TreeStore>()((set, get) => {
                         dataOutputs: [],
 
                         settings: [],
-                        executeAs: "CustomShader-end",
+                        executeAs: RenderShaderEnd.id,
                     };
                     state.customNodes[start] = startNodeDef;
                     state.customNodes[end] = endNodeDef;

@@ -8,6 +8,7 @@ import { generateShaderCodeFromNodeData } from "../../../Utils/graph/execution/g
 
 export const DecomposeNode: NodeDefinition = {
     id: "Math/Vector/Decompose",
+    alias: "split",
     label: "Decompose Vector",
     description: "split a vector or a number into its individual components",
     icon: DoubleIconGen(IconMathXy, IconArrowUpRightCircle),
