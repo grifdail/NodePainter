@@ -49,7 +49,6 @@ export function FunctionSubMenu() {
         ],
         [rawCustomNodes]
     );
-    console.log(rawCustomNodes);
     const customShaderNode = useMemo(
         () => [
             ...Object.values(rawCustomNodes)
