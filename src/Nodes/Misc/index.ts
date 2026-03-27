@@ -9,20 +9,24 @@ import { JavascriptFunctionNode } from "./JavascriptFunctionNode";
 import { JSONArrayNode } from "./JSONArrayNode";
 import { MetaNode } from "./MetaNode";
 import { MiscRenderNodes } from "./Render";
+import { RepeatForNode } from "./RepeatForNode";
+import { RepeatUntilNode } from "./RepeatUntilNode";
 import { ValueNode } from "./ValueNode";
 
 export const MiscNodes = [
-  //
-  ...MiscCombineNodes,
-  ...MiscRenderNodes,
-  AnimationSequenceNode,
-  AreaCommentNode,
-  BlackboardNode,
-  CacheNode,
-  CommentNode,
-  ImperativeFunctionNode,
-  JavascriptFunctionNode,
-  JSONArrayNode,
-  MetaNode,
-  ValueNode,
+    //
+    ...MiscCombineNodes,
+    ...MiscRenderNodes,
+    AnimationSequenceNode,
+    AreaCommentNode,
+    BlackboardNode,
+    CacheNode,
+    CommentNode,
+    ImperativeFunctionNode,
+    JavascriptFunctionNode,
+    JSONArrayNode,
+    MetaNode,
+    RepeatForNode,
+    RepeatUntilNode,
+    ValueNode,
 ];
