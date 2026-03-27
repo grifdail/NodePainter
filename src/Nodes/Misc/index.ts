@@ -4,6 +4,7 @@ import { BlackboardNode } from "./BlackboardNode";
 import { CacheNode } from "./CacheNode";
 import { MiscCombineNodes } from "./Combine";
 import { CommentNode } from "./CommentNode";
+import { HashNode } from "./HashNode";
 import { ImperativeFunctionNode } from "./ImperativeFunctionNode";
 import { JavascriptFunctionNode } from "./JavascriptFunctionNode";
 import { JSONArrayNode } from "./JSONArrayNode";
@@ -22,6 +23,7 @@ export const MiscNodes = [
     BlackboardNode,
     CacheNode,
     CommentNode,
+    HashNode,
     ImperativeFunctionNode,
     JavascriptFunctionNode,
     JSONArrayNode,
