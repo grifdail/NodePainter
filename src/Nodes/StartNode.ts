@@ -11,7 +11,6 @@ export const SCALING_OPTIONS = {
     "height-relative": (width: number, height: number) => [height, height] as const
 }
 
-console.log(Object.keys(SCALING_OPTIONS))
 
 export const StartNode: NodeDefinition = {
     id: START_NODE,
@@ -36,5 +35,3 @@ export const StartNode: NodeDefinition = {
     ],
     IsUnique: true,
 };
-
-console.log(StartNode)

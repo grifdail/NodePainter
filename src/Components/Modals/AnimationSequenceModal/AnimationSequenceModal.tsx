@@ -29,9 +29,11 @@ const MainDiv = styled.div`
     }
 
 
+
+
     & > div:nth-child(2) {
-        flex-grow: 1;
         align-self: start;
+        flex-grow: 0;
         overflow-y: scroll;
         max-height: 100%;
         grid-column: 2/3;
@@ -41,8 +43,15 @@ const MainDiv = styled.div`
         padding-right: 10px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 500px) {
+        display: flex;
         flex-direction: column;
+        align-items: stretch;
+
+        & > div:nth-child(2) {
+            align-self: stretch;
+                    overflow-y: unset;
+        }
     }
 
    
