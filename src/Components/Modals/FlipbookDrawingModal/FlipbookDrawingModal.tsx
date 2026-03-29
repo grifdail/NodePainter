@@ -169,6 +169,7 @@ export function FlipbookDrawingModal() {
 }
 
 function usePlayModeControl(playMode: string, fps: number, animation: Flipbook, setFrame: (newFrame: number) => void) {
+
     useEffect(() => {
         if (playMode === "pause") {
             return;

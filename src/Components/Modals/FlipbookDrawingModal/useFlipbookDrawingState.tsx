@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { Flipbook, FlipbookLine } from "../../../Types/FlipBook";
 import { createColor } from "../../../Types/vectorDataType";
@@ -8,7 +8,7 @@ export const useFlipbookDrawingState = (defaultValue: Flipbook) => {
 
 
     //Line width, in percentage of the width
-    const [lineWidth, setLineWidth] = useState(0.1);
+    const [lineWidth, setLineWidth] = useState(0.05);
     const [palette, setPalette] = useState(usePlayerPref.getState().colorPreset);
     const [color, setColor] = useState(createColor(0, 0, 0, 1));
     const [frame, setFrameRaw] = useState(0);
@@ -19,48 +19,49 @@ export const useFlipbookDrawingState = (defaultValue: Flipbook) => {
 
     const [editedAnimation, setEditedAnimation] = useState<Flipbook>(defaultValue);
 
-    const setFrame = (newFrame: number) => {
+    const setFrame = useCallback((newFrame: number) => {
         setFrameRaw(Math.max(0, Math.floor(newFrame)) % editedAnimation.length);
-    };
+    }, [editedAnimation.length]);
 
-    const addFrame = () => {
+    const addFrame = useCallback(() => {
         setEditedAnimation([...editedAnimation, []]);
         setFrameRaw(editedAnimation.length);
-    };
-    const removeFrame = (frameIndex?: number) => {
+    }, [editedAnimation]);
+
+    const removeFrame = useCallback((frameIndex?: number) => {
         frameIndex = frameIndex === undefined ? frame : frameIndex;
         setEditedAnimation(editedAnimation.toSpliced(frameIndex, 1));
-    };
+    }, [editedAnimation, frame]);
 
-    const addLine = (line: FlipbookLine, frameIndex?: number) => {
+    const addLine = useCallback((line: FlipbookLine, frameIndex?: number) => {
         if (line.points.length === 0) {
             return;
         }
         frameIndex = frameIndex === undefined ? frame : frameIndex;
         setEditedAnimation(editedAnimation.toSpliced(frameIndex, 1, [...editedAnimation[frameIndex], line]));
-    };
+    }, [editedAnimation, frame]);
 
-    const removeLine = (lineIndex: number, frameIndex?: number) => {
+    const removeLine = useCallback((lineIndex: number, frameIndex?: number) => {
 
         frameIndex = frameIndex === undefined ? frame : frameIndex;
         setEditedAnimation(editedAnimation.toSpliced(frameIndex, 1, editedAnimation[frameIndex].toSpliced(lineIndex, 0)));
-    };
+    }, [editedAnimation, frame]);
 
-    const setFPS = (value: number) => {
+    const setFPS = useCallback((value: number) => {
         if (value > 0) {
             setFPSRaw(value);
         }
-    };
+    }, []);
 
-    const clear = () => {
+    const clear = useCallback(() => {
         setEditedAnimation([[]]);
         setFrame(0);
         setPlayMode("pause");
-    };
+    }, [setFrame]);
 
-    const togglePlayMode = () => {
+    const togglePlayMode = useCallback(() => {
         setPlayMode(playMode === "pause" ? "play" : "pause");
-    };
+    }, [playMode]);
 
 
     return {
