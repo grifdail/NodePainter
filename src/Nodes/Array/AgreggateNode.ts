@@ -30,6 +30,11 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
                     type: typeAccumulator,
                     id: "accumulator",
                 },
+                {
+                    key: `${id}-count`,
+                    type: "number",
+                    id: "count",
+                },
             ],
             "Array agregate index",
             positionX - 400,
@@ -78,6 +83,12 @@ export const AgreggateNode: NodeDefinition = {
                         type: output,
                         defaultValue: PortTypeDefinitions[output]?.createDefaultValue(),
                     });
+                    node.dataInputs["starting"] = createPortConnection({
+                        id: "starting",
+                        label: "StartingValue",
+                        type: output,
+                        defaultValue: PortTypeDefinitions[output]?.createDefaultValue(),
+                    });
                     node.dataOutputs["out"] = { id: "out", defaultValue: [], type: output };
                 });
             },
@@ -113,15 +124,17 @@ export const AgreggateNode: NodeDefinition = {
     },
     getData: (portId, node, context) => {
         const array = context.getInputValue(node, "in", node.dataInputs["in"].type) as any[];
+        const starting = context.getInputValue(node, "starting", node.dataOutputs["out"].type)
         if (array.length === 0) {
-            return PortTypeDefinitions[node.dataOutputs["out"].type].createDefaultValue();
+            return starting;
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         const result: any[] = array.reduce((accumulator, item, i) => {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = item;
             context.blackboard[`${node.id}-accumulator`] = accumulator;
             return context.getInputValue(node, "accumulator", node.dataInputs["accumulator"].type);
-        });
+        }, starting);
         return result;
     },
 };

@@ -285,6 +285,14 @@ const UPGRADES: UpgradeFunction[] = [
     (sketch) => addMissingNodePort(["Math/Interpolation/IntegrateVelocity"], sketch),
     (sketch) => redefineNodes({ "Misc/JavascriptFunctionNode": "Misc/JavascriptFunction" }, sketch),
     (sketch) => addMissingSettings(["Start"], sketch),
+    (sketch) => {
+        Object.values(sketch.nodes).forEach((node) => {
+            if (node.type === "Array/Agreggate") {
+                node.dataInputs["starting"] = createPortConnection(Port[node.dataInputs.accumulator.type]("starting"));
+            }
+        });
+        return sketch;
+    }
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
