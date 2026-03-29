@@ -8,10 +8,10 @@ import { useCustomNodeCreationContext } from "../Hooks/useCustomNodeCreationCont
 import { useSelection } from "../Hooks/useSelection";
 import { useTree } from "../Hooks/useTree";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
-import { CUSTOM_SHADER } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { resetCamera } from "../Utils/ui/resetCamera";
+import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 
 const openCreateModal = () => {
     useCustomNodeCreationContext.getState().openCreate("function");
@@ -52,7 +52,7 @@ export function FunctionSubMenu() {
     const customShaderNode = useMemo(
         () => [
             ...Object.values(rawCustomNodes)
-                .filter((item) => item.executeAs === CUSTOM_SHADER || item.executeAs === ShaderMaterial.id)
+                .filter((item) => item.executeAs === RenderShader.id || item.executeAs === ShaderMaterial.id)
                 .map((node) => node.id),
         ],
         [rawCustomNodes]

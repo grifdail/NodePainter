@@ -1,12 +1,12 @@
-import { SettingGenerator } from "../Components/Settings/SettingGenerator";
-import { ComposeStruct } from "../Nodes/Technical/Struct/ComposeStruct";
-import { DecomposeStruct } from "../Nodes/Technical/Struct/DecomposeStruct";
-import { NodeDefinition } from "../Types/NodeDefinition";
-import { PortDefinition } from "../Types/PortDefinition";
-import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
-import { TreeStore } from "../Types/TreeStore";
+import { SettingGenerator } from "../../../../Components/Settings/SettingGenerator";
+import { ComposeStruct } from "../../../../Nodes/Technical/Struct/ComposeStruct";
+import { DecomposeStruct } from "../../../../Nodes/Technical/Struct/DecomposeStruct";
+import { NodeDefinition } from "../../../../Types/NodeDefinition";
+import { PortDefinition } from "../../../../Types/PortDefinition";
+import { PortTypeDefinitions } from "../../../../Types/PortTypeDefinitions";
+import { TreeStore } from "../../../../Types/TreeStore";
 
-export function createStructType(ports: PortDefinition[], name: string, state: TreeStore) {
+export function createCustomStructType(ports: PortDefinition[], name: string, state: TreeStore) {
     const composeNodeDef: NodeDefinition = {
         hideInLibrary: false,
         description: `Compose a structure matching the type ${name} you've created`,

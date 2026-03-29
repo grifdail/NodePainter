@@ -6,9 +6,9 @@ import { Port } from "../../../Types/PortTypeGenerator";
 import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 
-export const CUSTOM_SHADER = "Technical/ImageEffectShader/Base";
+
 export const RenderShader: NodeDefinition = {
-    id: CUSTOM_SHADER,
+    id: "Technical/ImageEffectShader/Base",
     hideInLibrary: true,
     icon: IconPhoto,
     description: "Render a shader to an image an image",

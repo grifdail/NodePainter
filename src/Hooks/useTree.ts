@@ -1,4 +1,4 @@
-import { current, original, produce } from "immer";
+import { current, produce } from "immer";
 import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
@@ -8,14 +8,8 @@ import { NodeLibrary } from "../Nodes/Nodes";
 import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
-import { RenderShaderEnd } from "../Nodes/Technical/ImageEffectShader/RenderShaderEnd";
-import { RenderShaderStart } from "../Nodes/Technical/ImageEffectShader/RenderShaderStart";
 import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
-import { ShaderMaterialEnd } from "../Nodes/Technical/MaterialShader/ShaderMaterialEnd";
-import { ShaderMaterialStart } from "../Nodes/Technical/MaterialShader/ShaderMaterialStart";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
-import { CustomSimulationEnd } from "../Nodes/Technical/Simulation/CustomSimulationEnd";
-import { CustomSimulationStart } from "../Nodes/Technical/Simulation/CustomSimulationStart";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
 import { NodeCollection } from "../Types/NodeCollection";
@@ -23,9 +17,7 @@ import { NodeData } from "../Types/NodeData";
 import { PortConnection } from "../Types/PortConnection";
 import { PortDefinition } from "../Types/PortDefinition";
 import { PortTypeDefinitions } from "../Types/PortTypeDefinitions";
-import { Port } from "../Types/PortTypeGenerator";
 import { TreeStore } from "../Types/TreeStore";
-import { createColor, createVector2 } from "../Types/vectorDataType";
 import { canConvertCode, convertTypeValue } from "../Utils/graph/execution/convertTypeValue";
 import { ExecutionContext } from "../Utils/graph/execution/createExecutionContext";
 import { getInputPort, getNode, getNodeTypeDefinition, getOutputPort } from "../Utils/graph/execution/getNode";
@@ -36,6 +28,11 @@ import { createObjectFromOutputPortDefinition } from "../Utils/graph/modificatio
 import { createPortConnection } from "../Utils/graph/modification/createPortConnection";
 import { createPortConnectionsForInputsDefinition } from "../Utils/graph/modification/createPortConnectionsForInputsDefinition";
 import { createSettingObjectForSettingDefinition } from "../Utils/graph/modification/createSettingObjectForSettingDefinition";
+import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "../Utils/graph/modification/customs/createCustomFunction";
+import { createCustomShader } from "../Utils/graph/modification/customs/createCustomShader";
+import { createCustomShaderMaterial } from "../Utils/graph/modification/customs/createCustomShaderMaterial";
+import { createCustomSimulation } from "../Utils/graph/modification/customs/createCustomSimulation";
+import { createCustomStructType } from "../Utils/graph/modification/customs/createCustomStructType";
 import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
@@ -43,10 +40,6 @@ import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
 import { SAVE_VERSION, upgradeSaveData } from "../Utils/graph/modification/upgradeSaveData";
 import { buildBoundingBoxAroundTreeNodes } from "../Utils/ui/buildBoundingBox";
 import { resetCamera } from "../Utils/ui/resetCamera";
-import { copyInputPortsValues } from "./copyInputPortsValues";
-import { copyNodePosition } from "./copyNodePosition";
-import { createCustomFunction, getCustomFunctionEndId, getCustomFunctionStartId } from "./createFunction";
-import { createStructType } from "./createStructType";
 import { preparePortForFunctions } from "./preparePortForFunctions";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
 import { usePortSelection } from "./usePortSelection";
@@ -262,7 +255,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         createStructType(ports: PortDefinition[], name: string) {
             set(
                 produce((state) => {
-                    createStructType(ports, name, state);
+                    createCustomStructType(ports, name, state);
                 })
             );
             get().enforceValidGraph();
@@ -279,70 +272,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         createShader(def) {
             set(
                 produce((state) => {
-                    const start = `${def.id}-start`;
-                    const end = `${def.id}-end`;
-                    const callNodDef: NodeDefinition = {
-                        ...def,
-                        dataInputs: [...def.dataInputs, Port.CacheId()],
-                    };
-                    state.customNodes[def.id] = callNodDef;
-                    const startNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        hideInLibrary: true,
-                        description: "",
-                        id: start,
-                        tags: [],
-                        dataInputs: [],
-                        dataOutputs: [
-                            {
-                                id: "uv",
-                                type: "vector2",
-                                defaultValue: createVector2(),
-                            },
-                            ...structuredClone(def.dataInputs),
-                        ],
-
-                        settings: [],
-                        executeAs: RenderShaderStart.id,
-                    };
-                    const endNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        description: "",
-                        hideInLibrary: true,
-                        id: end,
-                        tags: [],
-                        dataInputs: [
-                            {
-                                id: "color",
-                                type: "color",
-                                defaultValue: createColor(),
-                            },
-                        ],
-                        dataOutputs: [],
-
-                        settings: [],
-                        executeAs: RenderShaderEnd.id,
-                    };
-                    state.customNodes[start] = startNodeDef;
-                    state.customNodes[end] = endNodeDef;
-                    const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
-                    const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
-                    copyInputPortsValues(state.nodes[end], newEndNode);
-                    state.nodes[start] = newStartNode;
-                    state.nodes[end] = newEndNode;
-                    for (const nodeId in original(state.nodes)) {
-                        const node = state.nodes[nodeId];
-                        if (node.type === def.id) {
-                            def.dataInputs.forEach((port) => {
-                                if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
-                                    node.dataInputs[port.id] = createPortConnection(port);
-                                }
-                            });
-                        }
-                    }
-                    state.editedGraph = def.id;
-
-                    resetCamera();
+                    createCustomShader(def, state);
                 })
             );
             get().enforceValidGraph();
@@ -350,64 +280,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         createShaderMaterial(def) {
             set(
                 produce((state) => {
-                    const start = `${def.id}-start`;
-                    const end = `${def.id}-end`;
-                    const callNodDef: NodeDefinition = {
-                        ...def,
-                        dataInputs: [...def.dataInputs],
-                    };
-                    state.customNodes[def.id] = callNodDef;
-                    const startNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        hideInLibrary: true,
-                        description: "",
-                        id: start,
-                        tags: [],
-                        dataInputs: [],
-                        dataOutputs: [...structuredClone(def.dataInputs)],
-
-                        settings: [],
-                        executeAs: ShaderMaterialStart.id,
-                    };
-                    const endNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        description: "",
-                        hideInLibrary: true,
-                        id: end,
-                        tags: [],
-                        dataInputs: [
-                            {
-                                id: "color",
-                                type: "color",
-                                defaultValue: createColor(),
-                            },
-                        ],
-                        dataOutputs: [],
-
-                        settings: [],
-                        executeAs: ShaderMaterialEnd.id,
-                    };
-                    state.customNodes[start] = startNodeDef;
-                    state.customNodes[end] = endNodeDef;
-                    const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
-                    const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
-                    copyInputPortsValues(state.nodes[end], newEndNode);
-                    state.nodes[start] = newStartNode;
-                    state.nodes[end] = newEndNode;
-
-                    for (const nodeId in original(state.nodes)) {
-                        const node = state.nodes[nodeId];
-                        if (node.type === def.id) {
-                            def.dataInputs.forEach((port) => {
-                                if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
-                                    node.dataInputs[port.id] = createPortConnection(port);
-                                }
-                            });
-                        }
-                    }
-                    state.editedGraph = def.id;
-
-                    resetCamera();
+                    createCustomShaderMaterial(def, state);
                 })
             );
             get().enforceValidGraph();
@@ -415,59 +288,7 @@ export const useTree = create<TreeStore>()((set, get) => {
         createSimulation(def) {
             set(
                 produce((state) => {
-                    const start = `${def.id}-start`;
-                    const end = `${def.id}-end`;
-                    const node: NodeDefinition = {
-                        ...def,
-                        dataInputs: [...structuredClone(CustomSimulation.dataInputs), ...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
-                        settings: CustomSimulation.settings,
-                    };
-                    state.customNodes[def.id] = node;
-                    const startNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        hideInLibrary: true,
-                        description: "",
-                        id: start,
-                        tags: [],
-                        dataInputs: [],
-                        dataOutputs: [...structuredClone(def.dataInputs), ...structuredClone(def.dataOutputs)],
-
-                        settings: [],
-                        executeAs: CustomSimulationStart.id,
-                    };
-                    const endNodeDef: NodeDefinition = {
-                        IsUnique: true,
-                        description: "",
-                        hideInLibrary: true,
-                        id: end,
-                        tags: [],
-                        dataInputs: [...structuredClone(def.dataOutputs)],
-                        dataOutputs: [],
-
-                        settings: [],
-                        executeAs: CustomSimulationEnd.id,
-                    };
-                    state.customNodes[start] = startNodeDef;
-                    state.customNodes[end] = endNodeDef;
-                    const newStartNode = createNodeData(startNodeDef, 0, 0, start, def.id);
-                    const newEndNode = createNodeData(endNodeDef, 600, 0, end, def.id);
-                    copyInputPortsValues(state.nodes[end], newEndNode);
-                    copyNodePosition(state.nodes[end], newEndNode)
-                    copyNodePosition(state.nodes[start], newStartNode)
-                    state.nodes[start] = newStartNode;
-                    state.nodes[end] = newEndNode;
-                    for (const nodeId in original(state.nodes)) {
-                        const node = state.nodes[nodeId];
-                        if (node.type === def.id) {
-                            def.dataInputs.forEach((port) => {
-                                if (node.dataInputs[port.id] === undefined || node.dataInputs[port.id].type !== port.type) {
-                                    node.dataInputs[port.id] = createPortConnection(port);
-                                }
-                            });
-                        }
-                    }
-                    state.editedGraph = def.id;
-                    resetCamera();
+                    createCustomSimulation(def, state);
                 })
             );
             get().enforceValidGraph();

@@ -1,6 +1,6 @@
 import { IconArrowsMove } from "@tabler/icons-react";
-import { getCustomFunctionEndId } from "../../../Hooks/createFunction";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
+import { getCustomFunctionEndId } from "../../../Utils/graph/modification/customs/createCustomFunction";
 
 export const CustomFunction: NodeDefinition = {
     id: "Technical/CustomFunction/Base",
