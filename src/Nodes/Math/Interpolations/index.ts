@@ -9,6 +9,7 @@ import { IntegrateSpringNode } from "./IntegrateSpringNode";
 import { IntegrateVelocityNode } from "./IntegrateVelocityNode";
 import { LerpNode } from "./LerpNode";
 import { MoveTowardsNode } from "./MoveTowardsNode";
+import { PointsToSplineNode } from "./PointToSpline";
 import { RemapNode } from "./RemapNode";
 import { SmoothStepNode } from "./SmoothStepNode";
 import { SplitBezierNode } from "./SplitBezierNode";
@@ -26,6 +27,7 @@ export const MathInterpolationNodes = [
     IntegrateVelocityNode,
     LerpNode,
     MoveTowardsNode,
+    PointsToSplineNode,
     RemapNode,
     SmoothStepNode,
     SplitBezierNode,

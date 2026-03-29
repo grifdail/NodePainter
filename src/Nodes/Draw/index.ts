@@ -11,24 +11,26 @@ import { PolylineNode } from "./PolylineNode";
 import { QuadNode } from "./QuadNode";
 import { RectNode } from "./RectNode";
 import { RegularPolygonNode } from "./RegularPolygonNode";
+import { SplineNode } from "./SplineNode";
 import { TextNode } from "./TextNode";
 import { TriangleNode } from "./TriangleNode";
 
 export const DrawNodes = [
-  //
-  ArcNode,
-  BezierNode,
-  CircleNode,
-  ClearNode,
-  FillBackgroundNode,
-  GradientRectNode,
-  ImageNode,
-  LineNode,
-  PolygonNode,
-  PolylineNode,
-  QuadNode,
-  RectNode,
-  RegularPolygonNode,
-  TextNode,
-  TriangleNode,
+    //
+    ArcNode,
+    BezierNode,
+    CircleNode,
+    ClearNode,
+    FillBackgroundNode,
+    GradientRectNode,
+    ImageNode,
+    LineNode,
+    PolygonNode,
+    PolylineNode,
+    QuadNode,
+    RectNode,
+    RegularPolygonNode,
+    SplineNode,
+    TextNode,
+    TriangleNode,
 ];
