@@ -1,7 +1,7 @@
 ﻿import { IconVectorBezier2 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { Vector2 } from "../../Types/vectorDataType";
+import { createColor, Vector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
 
 export const SplineNode: NodeDefinition = {
@@ -14,7 +14,7 @@ export const SplineNode: NodeDefinition = {
         {
             id: "color",
             type: "color",
-            defaultValue: [0, 0, 0, 1],
+            defaultValue: createColor(0, 0, 0),
         },
         {
             id: "lineWidth",

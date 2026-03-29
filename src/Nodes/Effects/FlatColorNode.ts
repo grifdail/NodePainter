@@ -58,53 +58,54 @@ void main() {
 `;
 
 export const FlatColorNode: NodeDefinition = {
-  id: "Effect/FlatColor",
-  description: "Apply the same color to all pixel above or below a treshold",
-  icon: IconPhoto,
-  dataInputs: [{ id: "image", type: "image", defaultValue: null }, Port.number("threshold", 0.5), Port.color("color1", White()), Port.color("color2", Black())],
-  dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
-  tags: ["Image"],
+    id: "Effect/FlatColor",
+    label: "Apply Flat Color effect",
+    description: "Apply the same color to all pixel above or below a treshold",
+    icon: IconPhoto,
+    dataInputs: [{ id: "image", type: "image", defaultValue: null }, Port.number("threshold", 0.5), Port.color("color1", White()), Port.color("color2", Black())],
+    dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
+    tags: ["Image"],
 
-  settings: [],
-  getData(portId, node, context) {
-    var imageData = context.getInputValueImage(node, "image");
-    var threshold = context.getInputValueNumber(node, "threshold");
-    var color1 = context.getInputValueColor(node, "color1");
-    var color2 = context.getInputValueColor(node, "color2");
-    if (!imageData || !imageData.getP5Uniform(context.p5)) {
-      return null;
-    }
-    const keyCache = `${node.id}-image-cache`;
-    let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
-    let shaderV = context.blackboard[keyCache + KEY_BLUR_SHADER_H] as p5.Shader;
-    if (!shaderV) {
-      shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
-      context.blackboard[keyCache + KEY_BLUR_SHADER_H] = shaderV;
-    }
+    settings: [],
+    getData(portId, node, context) {
+        var imageData = context.getInputValueImage(node, "image");
+        var threshold = context.getInputValueNumber(node, "threshold");
+        var color1 = context.getInputValueColor(node, "color1");
+        var color2 = context.getInputValueColor(node, "color2");
+        if (!imageData || !imageData.getP5Uniform(context.p5)) {
+            return null;
+        }
+        const keyCache = `${node.id}-image-cache`;
+        let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
+        let shaderV = context.blackboard[keyCache + KEY_BLUR_SHADER_H] as p5.Shader;
+        if (!shaderV) {
+            shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
+            context.blackboard[keyCache + KEY_BLUR_SHADER_H] = shaderV;
+        }
 
-    let target = getPassBuffer(context, keyCache, image);
+        let target = getPassBuffer(context, keyCache, image);
 
-    let targetPassImage = target.getP5(context.p5) as p5.Graphics;
+        let targetPassImage = target.getP5(context.p5) as p5.Graphics;
 
-    targetPassImage.clear();
-    targetPassImage.shader(shaderV);
+        targetPassImage.clear();
+        targetPassImage.shader(shaderV);
 
-    shaderV.setUniform("tex0", image);
-    shaderV.setUniform("threshold", threshold);
-    shaderV.setUniform("colorPositive", color1);
-    shaderV.setUniform("colorNegative", color2);
-    targetPassImage.fill("transparent");
-    targetPassImage.noStroke();
-    targetPassImage.rect(0, 0, image.width, image.height);
+        shaderV.setUniform("tex0", image);
+        shaderV.setUniform("threshold", threshold);
+        shaderV.setUniform("colorPositive", color1);
+        shaderV.setUniform("colorNegative", color2);
+        targetPassImage.fill("transparent");
+        targetPassImage.noStroke();
+        targetPassImage.rect(0, 0, image.width, image.height);
 
-    return target;
-  },
+        return target;
+    },
 };
 function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }): ImageData {
-  let target = context.blackboard[key];
-  if (!target) {
-    target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
-    context.blackboard[key] = target;
-  }
-  return target;
+    let target = context.blackboard[key];
+    if (!target) {
+        target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
+        context.blackboard[key] = target;
+    }
+    return target;
 }
