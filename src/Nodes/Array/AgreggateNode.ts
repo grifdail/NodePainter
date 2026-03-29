@@ -36,7 +36,7 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
                     id: "count",
                 },
             ],
-            "Array agregate index",
+            "Agregate index",
             positionX - 400,
             positionY,
             id
@@ -128,6 +128,7 @@ export const AgreggateNode: NodeDefinition = {
         if (array.length === 0) {
             return starting;
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         context.blackboard[`${node.id}-count`] = array.length;
         const result: any[] = array.reduce((accumulator, item, i) => {
             context.blackboard[`${node.id}-index`] = i;

@@ -23,6 +23,10 @@ const createIndexNode = ({ id, positionX, positionY, dataInputs }: NodeData): vo
                     key: `${id}-value`,
                     type: type,
                     id: "value",
+                }, {
+                    key: `${id}-count`,
+                    type: "number",
+                    id: "count",
                 },
             ],
             "Array Map index",
@@ -111,6 +115,7 @@ export const MapNode: NodeDefinition = {
         if (array.length === 0) {
             return PortTypeDefinitions[node.dataOutputs["out"].type].createDefaultValue();
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         const result: any[] = array.map((item, i) => {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = item;

@@ -22,14 +22,10 @@ export const ReplaceNode: NodeDefinition = {
         if (array.length === 0) {
             return [value];
         }
+        const cp = [...array]
         const position = Math.floor(context.getInputValueNumber(node, "position")) % array.length;
+        cp[position] = value;
 
-        if (position === 0) {
-            return [value, ...array.slice(1)];
-        }
-        if (position === array.length - 1) {
-            return [...array.slice(1, -1), value];
-        }
-        return [...array.slice(0, position), value, ...array.slice(position + 1)];
+        return cp;
     },
 };

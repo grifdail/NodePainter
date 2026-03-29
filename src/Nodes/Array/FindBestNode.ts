@@ -20,9 +20,13 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
                     key: `${id}-value`,
                     type: selectedType,
                     id: "value",
+                }, {
+                    key: `${id}-count`,
+                    type: "number",
+                    id: "count",
                 },
             ],
-            "Filter index",
+            "Find Best index",
             positionX - 400,
             positionY,
             id
@@ -71,6 +75,7 @@ export const FindBestNode: NodeDefinition = {
         if (array.length === 0) {
             return -1;
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         var descending = node.settings.descending
         var bestElement = -1;
         var bestScore = descending ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY

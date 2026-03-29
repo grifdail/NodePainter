@@ -20,9 +20,13 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
                     key: `${id}-value`,
                     type: selectedType,
                     id: "value",
+                }, {
+                    key: `${id}-count`,
+                    type: "number",
+                    id: "count",
                 },
             ],
-            "Filter index",
+            "FindLast index",
             positionX - 400,
             positionY,
             id
@@ -66,6 +70,7 @@ export const FindLastNode: NodeDefinition = {
         if (array.length === 0) {
             return -1;
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         for (let i = array.length - 1; i >= 0; i--) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = array[i];

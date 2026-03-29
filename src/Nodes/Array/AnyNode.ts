@@ -20,9 +20,13 @@ const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): 
                     key: `${id}-value`,
                     type: selectedType,
                     id: "value",
+                }, {
+                    key: `${id}-count`,
+                    type: "number",
+                    id: "count",
                 },
             ],
-            "Filter index",
+            "Any index",
             positionX - 400,
             positionY,
             id
@@ -67,6 +71,7 @@ export const AnyNode: NodeDefinition = {
         if (array.length === 0) {
             return false;
         }
+        context.blackboard[`${node.id}-count`] = array.length;
         for (let i = 0; i < array.length; i++) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = array[i];
