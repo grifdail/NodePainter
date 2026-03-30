@@ -57,7 +57,7 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
                             return (
                                 <MenuItem
                                     onClick={arg.onClick}
-                                    key={arg.key}>
+                                    key={item.label}>
                                     <ImprovedMenuItem>
                                         <img width="32"
                                             height="32"
