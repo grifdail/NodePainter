@@ -6,6 +6,11 @@ import { Fieldset } from "../StyledComponents/Fieldset";
 import { PortForeignObject } from "../StyledComponents/PortForeignObject";
 import { StyledPortGroup } from "../StyledComponents/StyledPortGroup";
 import { NODE_WIDTH, PORT_HEIGHT } from "./NodeVisualConst";
+import { useColorScheme } from "@uiw/react-use-colorscheme";
+import { ControlledMenu, MenuItem } from "@szhsin/react-menu";
+import { ContextMenuProps, useContextMenu } from "../../Hooks/useContextMenu";
+import { useCallback } from "react";
+import { useTree } from "../../Hooks/useTree";
 
 const ImprovedFieldSet = styled(Fieldset)`
   background: color-mix(in srgb, var(--color-property), transparent 90%);
@@ -25,17 +30,19 @@ const ImprovedFieldSet = styled(Fieldset)`
 `;
 
 export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: { y: number; nodeId: string; portData: PortConnection; onClick: () => void; onValueChange: (newValue: any) => void }) {
-    var portDescription = PortTypeDefinitions[portData.type];
-    var Icon = portDescription.icon;
-    var PortSettings = portDescription.inlineInput;
+    const portDescription = PortTypeDefinitions[portData.type];
+    const Icon = portDescription.icon;
+    const PortSettings = portDescription.inlineInput;
 
-    var portSelection = usePortSelection();
+    const portSelection = usePortSelection();
     const hasSelection = portSelection.hasSelection;
-    var isSelected = hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
+    const isSelected = hasSelection && portSelection.node === nodeId && portSelection.port === portData.id && portSelection.location === "input";
 
     const canBeSelected = !isSelected && hasSelection && portSelection.location === "output" && (portData.type === portSelection.type || PortTypeDefinitions[portSelection.type].convert[portData.type]);
+    const contextMenuProps = useContextMenu();
     return (
         <StyledPortGroup
+
             transform={`translate(0, ${y})`}
             width={NODE_WIDTH}
             height="30"
@@ -54,22 +61,44 @@ export function InputPortView({ y, portData, onClick, onValueChange, nodeId }: {
                     tooltip={portData.tooltip}
                     passtrough={{ constrains: portData.constrains }}
                 />
+
             </PortForeignObject>
             <g
+                onContextMenu={contextMenuProps.onContextMenu}
                 data-tooltip-id="tooltip"
                 data-tooltip-content={portData.label || portData.id}
                 transform={`translate(0, ${PORT_HEIGHT * 0.5})`}>
-                <circle
-                    cx={0}
+                <circle cx={0}
                     cy={0}
                     r={15}
-                    onClick={onClick}></circle>
-                <Icon
-                    x="-12"
+                    onClick={onClick} />
+                <Icon x="-12"
                     y="-12"
                     scale={10}
-                    onClick={onClick}></Icon>
+                    onClick={onClick} />
             </g>
+            {contextMenuProps.state === "open" && <PortContextMenu {...contextMenuProps} port={portData} nodeId={nodeId} />}
         </StyledPortGroup>
     );
 }
+
+
+
+function PortContextMenu({ anchorPoint, state, onClose, nodeId, port }: ContextMenuProps & { port: PortConnection, nodeId: string }) {
+    const theme = useColorScheme();
+    const onConvertToNode = useCallback(() => {
+        useTree.getState().convertPortToNode(nodeId, port.id, "input");
+    }, [nodeId, port.id]);
+    const onResetPort = useCallback(() => {
+        useTree.getState().resetPort(nodeId, port.id);
+    }, [nodeId, port.id])
+    return (
+        <ControlledMenu theming={theme} anchorPoint={anchorPoint} state={state} direction="right" onClose={onClose} overflow="auto" portal>
+            <MenuItem onClick={onConvertToNode}>Convert to Value Node</MenuItem>
+            <MenuItem onClick={onResetPort}>Reset</MenuItem>
+
+        </ControlledMenu>
+    );
+}
+
+

@@ -10,10 +10,12 @@ import { NodeData } from "./NodeData";
 import { NodeDefinition } from "./NodeDefinition";
 import { PortConnection } from "./PortConnection";
 import { PortDefinition } from "./PortDefinition";
+import { PortRole } from "./PortRole";
 import { PortType } from "./PortType";
 import { SketchSave } from "./SketchTemplate";
 
 export type TreeStore = {
+
     key: number;
     nodes: NodeCollection;
     editedGraph?: string;
@@ -35,6 +37,7 @@ export type TreeStore = {
     setNodeSetting: (node: string, settingId: string, newValue: any) => void;
     setGlobalSetting: (settingId: string, newValue: any) => void;
     resetNode: (node: string) => void;
+    resetPort: (node: string, portId: string) => void;
     deleteNode: (node: string) => void;
     deleteNodes: (node: string[]) => void;
     duplicateNode: (node: string) => void;
@@ -62,7 +65,7 @@ export type TreeStore = {
     sortAroundNode: (nodeId: string) => void;
     replaceInputs: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
     replaceOutput: (filter: (node: NodeData) => boolean, newPorts: PortDefinition[]) => void;
-
+    convertPortToNode(nodeId: string, id: string, role: PortRole): void;
     align: (nodeIds: string[], callback: (boundingBox: BoundingBox, nodes: { node: NodeData; boundingBox: BoundingBox }[]) => void) => void;
     loadSnipets: (snipets: Snippet, posX: number, posY: number, graph: string | undefined, callback: (arg: Record<string, string>) => void) => void;
 };

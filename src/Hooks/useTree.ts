@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 import { NodeDefinition } from "../Types/NodeDefinition";
 
+import { NODE_WIDTH } from "../Components/Graph/NodeVisualConst";
 import { BlackboardNode } from "../Nodes/Misc/BlackboardNode";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { START_NODE } from "../Nodes/StartNode";
@@ -35,6 +36,7 @@ import { createCustomSimulation } from "../Utils/graph/modification/customs/crea
 import { createCustomStructType } from "../Utils/graph/modification/customs/createCustomStructType";
 import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
+import { setNodeVariantType } from "../Utils/graph/modification/setNodeVariantType";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
 import { SAVE_VERSION, upgradeSaveData } from "../Utils/graph/modification/upgradeSaveData";
@@ -93,16 +95,10 @@ export const useTree = create<TreeStore>()((set, get) => {
         },
         addEdge(sourceId: string, sourcePort: string, targetId: string, targetPort: string) {
             set(
-                produce((tree) => {
+                produce((tree: TreeStore) => {
                     let node = tree.nodes[targetId] as NodeData;
                     const port = node.dataInputs[targetPort];
-                    // eslint-disable-next-line eqeqeq
-                    if (port === undefined) {
-                        node = tree.nodes[sourceId] as NodeData;
 
-                        tree.nodes[sourceId].execOutputs[sourcePort] = targetId;
-                        return;
-                    }
                     // If were binding data port.
                     port.hasConnection = true;
                     port.connectedNode = sourceId;
@@ -187,13 +183,14 @@ export const useTree = create<TreeStore>()((set, get) => {
                 produce((state) => {
                     const sourceNode = state.nodes[nodeId] as NodeData;
                     const def = (state as TreeStore).getNodeTypeDefinition(sourceNode);
-                    if (def.availableTypes?.includes(type)) {
-                        if (def.onChangeType) {
-                            def.onChangeType(sourceNode, type);
-                        }
-                        sourceNode.selectedType = type;
-                        ensureValidGraph(state);
+                    if (!def.availableTypes?.includes(type)) {
+                        return;
                     }
+                    if (def.onChangeType) {
+                        def.onChangeType(sourceNode, type);
+                    }
+                    sourceNode.selectedType = type;
+                    ensureValidGraph(state);
                 })
             );
         },
@@ -210,11 +207,12 @@ export const useTree = create<TreeStore>()((set, get) => {
 
                     Object.values(nodes).forEach((item: NodeData) => {
                         Object.values(item.dataInputs).forEach((port) => {
-                            if (port.hasConnection && port.connectedNode === node) {
-                                port.hasConnection = false;
-                                port.connectedNode = null;
-                                port.connectedPort = null;
+                            if (!(port.hasConnection && port.connectedNode === node)) {
+                                return;
                             }
+                            port.hasConnection = false;
+                            port.connectedNode = null;
+                            port.connectedPort = null;
                         });
                     });
                     state.nodeDeletionCount++;
@@ -228,12 +226,28 @@ export const useTree = create<TreeStore>()((set, get) => {
         },
         resetNode(node) {
             set(
-                produce((state) => {
+                produce((state: TreeStore) => {
                     const def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
 
-                    state.nodes[node].inputData = createPortConnectionsForInputsDefinition(def);
-                    state.nodes[node].outputData = createObjectFromOutputPortDefinition(def);
+                    state.nodes[node].dataInputs = createPortConnectionsForInputsDefinition(def);
+                    state.nodes[node].dataOutputs = createObjectFromOutputPortDefinition(def);
                     state.nodes[node].settings = createSettingObjectForSettingDefinition(def.settings);
+                })
+            );
+        },
+        resetPort(node, portId) {
+            set(
+                produce((state: TreeStore) => {
+                    const def = state.getNodeTypeDefinition(state.nodes[node]) as NodeDefinition;
+
+                    state.nodes[node].dataInputs[portId].hasConnection = false;
+                    state.nodes[node].dataInputs[portId].connectedNode = null;
+                    state.nodes[node].dataInputs[portId].connectedPort = null;
+                    const portType = def.dataInputs.find(a => a.id === portId);
+                    if (portType) {
+                        state.nodes[node].dataInputs[portId].ownValue = structuredClone(portType.defaultValue);
+                    }
+
                 })
             );
         },
@@ -471,9 +485,9 @@ export const useTree = create<TreeStore>()((set, get) => {
                                     }
                                     oldPort.type = port.type;
                                 }
-                            } else {
-                                node.dataInputs[port.id] = createPortConnection(port);
+                                return;
                             }
+                            node.dataInputs[port.id] = createPortConnection(port);
                         });
 
                         Object.keys(node.dataInputs)
@@ -496,11 +510,12 @@ export const useTree = create<TreeStore>()((set, get) => {
 
                         const removeAllConnections = (portId: string, extraFilter?: (port: PortConnection) => boolean) => {
                             allInputPorts.forEach((port) => {
-                                if (port.hasConnection && port.connectedNode === node.id && port.connectedPort === portId && (!extraFilter || extraFilter(port))) {
-                                    port.hasConnection = false;
-                                    port.connectedNode = null;
-                                    port.connectedPort = null;
+                                if (!(port.hasConnection && port.connectedNode === node.id && port.connectedPort === portId && (!extraFilter || extraFilter(port)))) {
+                                    return;
                                 }
+                                port.hasConnection = false;
+                                port.connectedNode = null;
+                                port.connectedPort = null;
                             });
                         };
                         newPorts.forEach((newPort) => {
@@ -513,9 +528,9 @@ export const useTree = create<TreeStore>()((set, get) => {
                                     oldPort.type = newPort.type;
                                     oldPort.defaultValue = newPort.defaultValue;
                                 }
-                            } else {
-                                node.dataOutputs[newPort.id] = structuredClone(newPort);
+                                return;
                             }
+                            node.dataOutputs[newPort.id] = structuredClone(newPort);
                         });
 
                         Object.keys(node.dataOutputs)
@@ -547,6 +562,58 @@ export const useTree = create<TreeStore>()((set, get) => {
                     callback(newNames);
                 })
             );
+        },
+        convertPortToNode(nodeId, id, role) {
+            const node = get().getNode(nodeId);
+            if (role === "input") {
+                let port = node.dataInputs[id];
+                if (!port) {
+                    return;
+                }
+                let newNode = get().addNode("Misc/Value", node.positionX - NODE_WIDTH - 200, node.positionY, (node, def) => {
+                    setNodeVariantType(node, def, port.type);
+                    node.dataInputs.value.ownValue = structuredClone(port.ownValue);
+                    node.dataInputs.value.connectedNode = port.connectedNode;
+                    node.dataInputs.value.connectedPort = port.connectedPort;
+                    node.dataInputs.value.hasConnection = port.hasConnection;
+
+                    node.settings.name = port.label || port.id;
+                });
+
+                get().addEdge(newNode.id, "out", nodeId, port.id);
+                return;
+            } else {
+                const port = node.dataOutputs[id];
+                if (!port) {
+                    return;
+                }
+                let newNode = get().addNode("Misc/Value", node.positionX + NODE_WIDTH + 200, node.positionY, (node, def) => {
+                    setNodeVariantType(node, def, port.type);
+                    node.settings.name = port.label || port.id;
+                    node.dataInputs.value.hasConnection = true;
+                    node.dataInputs.value.connectedNode = nodeId;
+                    node.dataInputs.value.connectedPort = id;
+                });
+                set(
+                    produce((state: TreeStore) => {
+                        Object.values(state.nodes).forEach((node) => {
+                            if (node.id === newNode.id) {
+                                return;
+                            }
+                            Object.values(node.dataInputs).forEach((targetPort) => {
+                                if (targetPort.connectedNode === nodeId && targetPort.connectedPort === port.id && targetPort.hasConnection) {
+
+                                    targetPort.connectedNode = newNode.id;
+                                    targetPort.connectedPort = "out";
+                                }
+                            });
+                        })
+                    })
+                );
+
+
+            }
+
         },
     };
     return a;

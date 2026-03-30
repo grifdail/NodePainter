@@ -13,7 +13,7 @@ import { useViewbox } from "../../Hooks/useViewbox";
 import { NodeData } from "../../Types/NodeData";
 import { PortType } from "../../Types/PortType";
 import { TreeStore } from "../../Types/TreeStore";
-import { ContextMenu, useContextMenu } from "./ContextMenu";
+import { GraphContextMenu, useGraphContextMenu } from "./GraphContextMenu";
 import { Edge } from "./Edge";
 import { GraphAreaRect } from "./GraphAreaRect";
 import { GraphNodeUI } from "./GraphNodeUI";
@@ -36,7 +36,7 @@ export function Graph() {
     const [ref, elementSize] = useMeasure();
     const [xyz, bind, ,] = useSVGMapDrag();
     const { nodes: selectedNode, hasArea, areaStart, selectionId } = useSelection();
-    const contextMenuData = useContextMenu();
+    const contextMenuData = useGraphContextMenu();
     const [{ mousePosition }, mousePositionApi] = useSpring<{ mousePosition: [number, number] }>(() => ({ mousePosition: [0, 0] }));
     const hasNoCursor = useMediaQuery("(hover: none)");
     const viewBoxStr = xyz.to((x, y, s) => `${x} ${y} ${(elementSize.width || 100) * s} ${(elementSize.height || 100) * s} `);
@@ -88,7 +88,7 @@ export function Graph() {
                 })}
                 {hasArea && <AreaSelectionRect areaSelection={areaStart as [number, number]} mousePosition={mousePosition} key={selectionId}></AreaSelectionRect>}
             </animated.svg>
-            {contextMenuData.state === "open" && <ContextMenu {...contextMenuData}></ContextMenu>}
+            {contextMenuData.state === "open" && <GraphContextMenu {...contextMenuData}></GraphContextMenu>}
         </div>
     );
 }

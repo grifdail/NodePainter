@@ -13,8 +13,9 @@ import { idToNodeName } from "../../Utils/ui/idToNodeName";
 import { resetCamera } from "../../Utils/ui/resetCamera";
 import { AlignMenu } from "./AlignMenu";
 import { SnippetSubMenu } from "./SnippetSubMenu";
+import { useContextMenu } from "../../Hooks/useContextMenu";
 
-export type ContextMenuProps = {
+export type GraphContextMenuProps = {
     onContextMenu: (e: any) => void;
     anchorPoint: { x: number; y: number };
     state: MenuState;
@@ -33,7 +34,7 @@ export function NodeMenuItem({ node, onClick }: { node: NodeDefinition; onClick:
     );
 }
 
-export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter, setFilter }: ContextMenuProps) {
+export function GraphContextMenu({ onContextMenu, anchorPoint, state, onClose, filter, setFilter }: GraphContextMenuProps) {
     const nodesLastUsedDates = usePlayerPref((state) => state.nodesLastUsedDates);
     const favNodes = usePlayerPref((state) => state.favNodes);
     const mostRecentSorting = useMemo(() => (a: NodeDefinition, b: NodeDefinition) => (nodesLastUsedDates[b.id] || 0) - (nodesLastUsedDates[a.id] || 0), [nodesLastUsedDates]);
@@ -96,18 +97,14 @@ export function ContextMenu({ onContextMenu, anchorPoint, state, onClose, filter
         </ControlledMenu>
     );
 }
-export function useContextMenu(): ContextMenuProps {
-    const [isOpen, setOpen] = useState(false);
-    const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
+export function useGraphContextMenu(): GraphContextMenuProps {
+    const oldProps = useContextMenu()
     const [filter, setFilter] = useState("");
 
     const onContextMenu = (e: any) => {
         if (typeof document.hasFocus === "function" && !document.hasFocus()) return;
-
-        e.preventDefault();
-        setAnchorPoint({ x: e.clientX, y: e.clientY });
+        oldProps.onContextMenu(e);
         setFilter("");
-        setOpen(true);
     };
-    return { onContextMenu, anchorPoint, state: isOpen ? "open" : "closed", onClose: () => setOpen(false), filter, setFilter };
+    return { ...oldProps, onContextMenu, filter, setFilter };
 }

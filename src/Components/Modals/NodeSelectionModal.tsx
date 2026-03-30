@@ -8,7 +8,6 @@ import { usePlayerPref } from "../../Hooks/usePlayerPref";
 import { usePortSelection } from "../../Hooks/usePortSelection";
 import { useTree } from "../../Hooks/useTree";
 import { useViewbox } from "../../Hooks/useViewbox";
-import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { NodeTagPriority, NodeTags } from "../../Types/NodeTags";
 import { PlayerPrefStore } from "../../Types/PlayerPrefStore";
@@ -21,6 +20,7 @@ import { Modal } from "../Modal";
 import { NodePreview } from "../NodePreview";
 import { Input } from "../StyledComponents/Input";
 import { portListIncludeType } from "./portListIncludeType";
+import { setNodeVariantType } from "../../Utils/graph/modification/setNodeVariantType";
 
 const AddModalDiv = styled.div`
   display: flex;
@@ -153,7 +153,7 @@ export function NodeSelectionModal({ close }: { close: () => void }) {
                 targetTypeChange = node.hasOutput(searchTerm.output, node);
             }
             addNode(node.id, ...target, (n, d) => {
-                setTargetType(n, d, targetTypeChange);
+                setNodeVariantType(n, d, targetTypeChange);
                 if (node.onManualCreation) {
                     node.onManualCreation(n);
                 }
@@ -309,11 +309,4 @@ function sortWithPriority<T>(...comparator: ((a: T, b: T) => number)[]) {
         return 0;
     };
 }
-function setTargetType(node: NodeData, def: NodeDefinition, typeChange: PortType | null): void {
-    if (typeChange !== null && def.availableTypes && def.availableTypes.includes(typeChange)) {
-        if (def.onChangeType) {
-            def.onChangeType(node, typeChange);
-        }
-        node.selectedType = typeChange;
-    }
-}
+
