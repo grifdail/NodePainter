@@ -8,21 +8,23 @@ import { OnCircleNode } from "./OnCircleNode";
 import { OnSphereNode } from "./OnSphereNode";
 import { PoissonDiskNode } from "./PoissonDiskNode";
 import { RandomNode } from "./RandomNode";
+import { RandomSignNode } from "./RandomSignNode";
 import { RangeNode } from "./Range";
 import { SeededNode } from "./Seeded";
 
 export const RandomNodes = [
-  //
-  GaussianNode,
-  InsideCircleNode,
-  InsideSphereNode,
-  IntNode,
-  LoopingNoiseNode,
-  NoiseNode,
-  OnCircleNode,
-  OnSphereNode,
-  PoissonDiskNode,
-  RandomNode,
-  RangeNode,
-  SeededNode,
+    //
+    GaussianNode,
+    InsideCircleNode,
+    InsideSphereNode,
+    IntNode,
+    LoopingNoiseNode,
+    NoiseNode,
+    OnCircleNode,
+    OnSphereNode,
+    PoissonDiskNode,
+    RandomNode,
+    RandomSignNode,
+    RangeNode,
+    SeededNode,
 ];

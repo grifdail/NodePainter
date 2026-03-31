@@ -3,6 +3,7 @@ import { CeilNode } from "./CeilNode";
 import { Clamp01Node } from "./Clamp01Node";
 import { ClampAroundNode } from "./ClampAroundNode";
 import { ClampNode } from "./ClampNode";
+import { DeltaAngleNode } from "./DeltaAngleNode";
 import { ExpNode } from "./ExpNode";
 import { FloorNode } from "./FloorNode";
 import { LogNode } from "./LogNode";
@@ -20,25 +21,26 @@ import { SqrtNode } from "./SqrtNode";
 import { StepNode } from "./StepNode";
 
 export const MathAdvancedNodes = [
-  //
-  AbsNode,
-  CeilNode,
-  ClampNode,
-  Clamp01Node,
-  ClampAroundNode,
-  ExpNode,
-  FloorNode,
-  LogNode,
-  MathExpressionNode,
-  MaxNode,
-  MinNode,
-  NegateNode,
-  OneMinusNode,
-  PingPongNode,
-  PowNodeNode,
-  ReciprocalNode,
-  RoundNode,
-  SignNode,
-  SqrtNode,
-  StepNode,
+    //
+    AbsNode,
+    CeilNode,
+    ClampNode,
+    Clamp01Node,
+    ClampAroundNode,
+    DeltaAngleNode,
+    ExpNode,
+    FloorNode,
+    LogNode,
+    MathExpressionNode,
+    MaxNode,
+    MinNode,
+    NegateNode,
+    OneMinusNode,
+    PingPongNode,
+    PowNodeNode,
+    ReciprocalNode,
+    RoundNode,
+    SignNode,
+    SqrtNode,
+    StepNode,
 ];

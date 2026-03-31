@@ -1,3 +1,4 @@
+import { ChebyshevDistance } from "./ChebyshevDistanceNode";
 import { ComposeNode } from "./ComposeNode";
 import { ComposeBidirectionalNode } from "./ComposeVectorBidirectional";
 import { CrossProductNode } from "./CrossProductNode";
@@ -15,25 +16,28 @@ import { RotateNode } from "./RotateNode";
 import { SphericalCoordinateNode } from "./SphericalCoordinateNode";
 import { SquareMagnitudeNode } from "./SquareMagnitudeNode";
 import { SwizzleNode } from "./SwizzleNode";
+import { TaxicabDistanceNode } from "./TaxicabDistanceNode";
 
 export const MathVectorNodes = [
-  //
-  ComposeNode,
-  ComposeBidirectionalNode,
-  CrossProductNode,
-  DecomposeNode,
-  DotProductNode,
-  LimitVectorNode,
-  MagnitudeNode,
-  NormalizeNode,
-  PolarCoordinateNode,
-  ProjectNode,
-  ProjectNode,
-  ReflectNode,
-  RejectNode,
-  RotateNode,
-  SphericalCoordinateNode,
-  SquareMagnitudeNode,
-  SwizzleNode,
-  DistanceNode,
+    //
+    ChebyshevDistance,
+    ComposeNode,
+    ComposeBidirectionalNode,
+    CrossProductNode,
+    DecomposeNode,
+    DistanceNode,
+    DotProductNode,
+    LimitVectorNode,
+    MagnitudeNode,
+    NormalizeNode,
+    PolarCoordinateNode,
+    ProjectNode,
+    ProjectNode,
+    ReflectNode,
+    RejectNode,
+    RotateNode,
+    SphericalCoordinateNode,
+    SquareMagnitudeNode,
+    SwizzleNode,
+    TaxicabDistanceNode,
 ];

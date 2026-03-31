@@ -5,8 +5,10 @@ import { EasingNode } from "./EasingNode";
 import { EnvelopeNode } from "./EnvelopeNode";
 import { EvaluateBezierNode } from "./EvaluateBezierNode";
 import { ExponantialImpulseNode } from "./ExponantialImpulseNode";
+import { IntegrateSmoothDampNode } from "./IntegrateSmoothDampNode";
 import { IntegrateSpringNode } from "./IntegrateSpringNode";
 import { IntegrateVelocityNode } from "./IntegrateVelocityNode";
+import { LerpAngleNode } from "./LerpAngleNode";
 import { LerpNode } from "./LerpNode";
 import { MoveTowardsNode } from "./MoveTowardsNode";
 import { PointsToSplineNode } from "./PointToSpline";
@@ -23,8 +25,10 @@ export const MathInterpolationNodes = [
     EnvelopeNode,
     EvaluateBezierNode,
     ExponantialImpulseNode,
+    IntegrateSmoothDampNode,
     IntegrateSpringNode,
     IntegrateVelocityNode,
+    LerpAngleNode,
     LerpNode,
     MoveTowardsNode,
     PointsToSplineNode,
