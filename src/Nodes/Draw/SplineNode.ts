@@ -21,6 +21,7 @@ export const SplineNode: NodeDefinition = {
             type: "number",
             defaultValue: 10,
         },
+        Port.bool("fill", false),
         Port["array-vector2"]("spline")
     ],
     dataOutputs: [Port.drawing2d("out")],
@@ -29,12 +30,19 @@ export const SplineNode: NodeDefinition = {
     getData(portId, node, context) {
         const color = context.getInputValueColor(node, "color");
         const size = context.getInputValueNumber(node, "lineWidth");
+        const fill = context.getInputValueBoolean(node, "fill");
 
         const points = context.getInputValue<Vector2[]>(node, "spline", "array-vector2")
         return () => {
-            context.target.noFill();
+            if (fill) {
+                context.target.fill(toP5Color(color, context.p5))
+            } else {
+                context.target.noFill();
+
+            }
             context.target.stroke(toP5Color(color, context.p5));
             context.target.strokeWeight(size);
+
             context.target.beginShape();
             for (let i = 0; i < points.length - 3; i += 4) {
                 const start = points[i + 0];

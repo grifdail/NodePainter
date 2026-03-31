@@ -292,7 +292,8 @@ const UPGRADES: UpgradeFunction[] = [
             }
         });
         return sketch;
-    }
+    },
+    (sketch) => addMissingNodePort(["Draw/Spline"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
