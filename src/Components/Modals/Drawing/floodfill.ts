@@ -1,8 +1,9 @@
 import { Graphics } from "p5";
-import { zip } from "../../../Utils/math/vectorUtils";
+import { Vector, Vector4 } from "../../../Types/vectorDataType";
+import { vectorBiReduce } from "../../../Utils/math/vectorUtils";
 
-function arrayEquals(a: number[], b: number[], sensibility: number = 10) {
-    return zip(0, a, b).map(([a, b]) => Math.abs(a - b)).reduce((o, a) => o + a, 0) < sensibility * sensibility;
+function arrayEquals<T extends Vector>(a: T, b: T, sensibility: number = 10) {
+    return vectorBiReduce(a, b, (prev, a, b) => prev + Math.abs(a - b), 0) < sensibility * sensibility;
 }
 type vec = { x: number; y: number };
 
@@ -37,7 +38,7 @@ export function floodFill(seed: vec, fillColor: number[], graphics: Graphics, se
     graphics.loadPixels();
 
     let index = 4 * (graphics.width * seed.y + seed.x) * graphics.pixelDensity();
-    let seedColor = [graphics.pixels[index], graphics.pixels[index + 1], graphics.pixels[index + 2], graphics.pixels[index + 3]];
+    let seedColor: Vector4 = [graphics.pixels[index], graphics.pixels[index + 1], graphics.pixels[index + 2], graphics.pixels[index + 3]];
 
     let queue = [];
     queue.push(seed);
@@ -51,7 +52,7 @@ export function floodFill(seed: vec, fillColor: number[], graphics: Graphics, se
         }
 
         index = 4 * (graphics.width * current.y + current.x) * graphics.pixelDensity();
-        let color = [graphics.pixels[index], graphics.pixels[index + 1], graphics.pixels[index + 2], graphics.pixels[index + 3]];
+        let color: Vector4 = [graphics.pixels[index], graphics.pixels[index + 1], graphics.pixels[index + 2], graphics.pixels[index + 3]];
 
         if (!arrayEquals(color, seedColor, sensibility)) {
             continue;

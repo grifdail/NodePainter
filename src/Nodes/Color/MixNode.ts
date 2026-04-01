@@ -7,7 +7,7 @@ import { Color, Vector3 } from "../../Types/vectorDataType";
 import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/generateShaderCodeFromNodeData";
 import { clamp01 } from "../../Utils/math/clamp01";
 import { Black } from "../../Utils/math/colorUtils";
-import { vectorAddition, vectorLerp, vectorMap, vectorMultiplication, vectorScale, vectorSlice, vectorSubstraction, zipVector } from "../../Utils/math/vectorUtils";
+import { vectorAddition, vectorBimap, vectorLerp, vectorMap, vectorMultiplication, vectorScale, vectorSlice, vectorSubstraction } from "../../Utils/math/vectorUtils";
 
 const to255RGB = (a: Color): [number, number, number] => [a[0] * 255, a[1] * 255, a[2] * 255];
 
@@ -26,12 +26,12 @@ const BLEND_MODES = {
     additive: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorAddition(a, b)),
     subtractive: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorSubstraction(a, b)),
     multiplicative: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorMultiplication(a, b)),
-    darken: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => Math.min(a, b)) as Vector3),
-    lighten: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => Math.max(a, b)) as Vector3),
-    screen: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) * (1 - b)) as Vector3),
-    dodge: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => a / (1 - b)) as Vector3),
-    burn: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b) as Vector3),
-    divide: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => zipVector(a, b).map(([a, b]) => 1 - (1 - a) / b) as Vector3),
+    darken: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => Math.min(a, b)) as Vector3),
+    lighten: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => Math.max(a, b)) as Vector3),
+    screen: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => 1 - (1 - a) * (1 - b)) as Vector3),
+    dodge: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => a / (1 - b)) as Vector3),
+    burn: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => 1 - (1 - a) / b) as Vector3),
+    divide: ignoreAlphaAndEnforce((a: Vector3, b: Vector3) => vectorBimap(a, b, (a, b) => 1 - (1 - a) / b) as Vector3),
 };
 
 export const MixNode: NodeDefinition = {
