@@ -12,6 +12,7 @@ export const EdgeNode: NodeDefinition = {
     icon: IconCircuitSwitchOpen,
     description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
 
+    hideInJs: true,
     dataInputs: [Port.bool("in"), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],

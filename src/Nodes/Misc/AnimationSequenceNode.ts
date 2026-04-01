@@ -12,6 +12,7 @@ export const AnimationSequenceNode: NodeDefinition = {
     id: "Misc/AnimationSequence",
     description: "Define an series of animation that define some properties",
     icon: IconKeyframes,
+    hideInJs: true,
     tags: ["Misc"],
     preventSnippet: false,
     hideInLibrary: false,

@@ -41,6 +41,7 @@ export const RepeatForNode: NodeDefinition = {
     icon: IconArrowIteration,
     alias: "for loop recursive",
     description: "Repeat some block of code a number of time, until 'condition' become true",
+    hideInJs: true,
     dataInputs: [
         { id: "count", type: "number", defaultValue: 10 },
         { id: "value", type: "number", defaultValue: 0 },

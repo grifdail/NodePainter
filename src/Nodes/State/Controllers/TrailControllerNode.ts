@@ -14,6 +14,7 @@ export const TrailControllerNode: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
     description: "Store a number of previous value",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("target"),
         Port.bool("reset", false),

@@ -16,6 +16,7 @@ export const JavascriptFunctionNode: NodeDefinition = {
     tags: ["Misc"],
     preventSnippet: false,
     hideInLibrary: false,
+    hideInJs: true,
     dataInputs: [Port.CacheId()],
     dataOutputs: [],
     settings: [
@@ -68,4 +69,7 @@ function createFunctionFromCache(context: ExecutionContext, id: string, code: an
     }
     return context.blackboard[key]
 }
+
+
+
 

@@ -9,6 +9,7 @@ export const ToggleFlipFlopNode: NodeDefinition = {
     icon: IconCircuitSwitchOpen,
     description: "Toggle between true and false everytime it's input is true",
 
+    hideInJs: true,
     dataInputs: [Port.bool("flip"), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],

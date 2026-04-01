@@ -41,6 +41,7 @@ export const RepeatUntilNode: NodeDefinition = {
     label: "Repeat Until",
     icon: IconArrowIteration,
     alias: "for loop recursive",
+    hideInJs: true,
     description: "Repeat some block of code a number of time, while receiving the result of the previous itteration",
     dataInputs: [
         { id: "condition", type: "bool", defaultValue: false },

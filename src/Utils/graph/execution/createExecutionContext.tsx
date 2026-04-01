@@ -115,21 +115,7 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
             }
             return convertTypeValue(item[0], item[1], outputType) as T;
         },
-        getInputValueVector: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector") as Vector,
-        getInputValueVector2: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector2") as Vector2,
-        getInputValueVector3: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector3") as Vector3,
-        getInputValueVector4: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "vector4") as Vector4,
-        getInputValueQuaternion: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "quaternion") as Quaternion,
-        getInputValueNumber: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "number") as number,
-        getInputValueColor: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "color") as Color,
-        getInputValueGradient: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "gradient") as Gradient,
-        getInputValueImage: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "image") as ImageData,
-        getInputValueString: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "string") as string,
-        getInputValueBoolean: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "bool") as boolean,
-        getInputValueMaterial: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "material"),
-        getInputValueMesh: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "mesh"),
-        getInputValueVectorArray: (nodeData: NodeData, portId: string) => context.getInputValue(nodeData, portId, "array-vector") as Vector[],
-        getInputValueDrawing: (nodeData: NodeData, portId: string) => (context.getInputValue(nodeData, portId, "drawing2d") || (() => { })) as () => void,
+        ...getInputValueGenerator((node, portId, type) => context.getInputValue(node, portId, type)),
         getShaderVar(nodeData, portId, type: PortType, isOutput = false) {
             const inputPorts = nodeData.dataInputs[portId];
             if (!inputPorts || isOutput) {
@@ -212,5 +198,25 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
 function getCanvasScale(sizing: keyof typeof SCALING_OPTIONS, width: number, height: number) {
 
     return SCALING_OPTIONS[sizing]?.(width, height) || [1, 1] as const
+}
+
+export function getInputValueGenerator(getInputValue: ExecutionContext["getInputValue"]) {
+    return {
+        getInputValueVector: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "vector") as Vector,
+        getInputValueVector2: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "vector2") as Vector2,
+        getInputValueVector3: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "vector3") as Vector3,
+        getInputValueVector4: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "vector4") as Vector4,
+        getInputValueQuaternion: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "quaternion") as Quaternion,
+        getInputValueNumber: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "number") as number,
+        getInputValueColor: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "color") as Color,
+        getInputValueGradient: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "gradient") as Gradient,
+        getInputValueImage: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "image") as ImageData,
+        getInputValueString: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "string") as string,
+        getInputValueBoolean: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "bool") as boolean,
+        getInputValueMaterial: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "material") as MaterialData,
+        getInputValueMesh: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "mesh") as MeshData,
+        getInputValueVectorArray: (nodeData: NodeData, portId: string) => getInputValue(nodeData, portId, "array-vector") as Vector[],
+        getInputValueDrawing: (nodeData: NodeData, portId: string) => (getInputValue(nodeData, portId, "drawing2d") || (() => { })) as () => void,
+    }
 }
 

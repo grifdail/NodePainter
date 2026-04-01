@@ -9,6 +9,7 @@ export const ToggleSwitchNode: NodeDefinition = {
     icon: IconCircuitSwitchOpen,
     description: "Toggle between true and false when its inputs are true",
 
+    hideInJs: true,
     dataInputs: [Port.bool("on"), Port.bool("off"), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],

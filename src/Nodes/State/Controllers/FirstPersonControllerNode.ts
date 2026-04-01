@@ -15,6 +15,7 @@ export const FirstPersonControllerNode: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
     description: "Simulate a first person camera controller",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("cameraInput"),
         Port.vector2("movementInput"),

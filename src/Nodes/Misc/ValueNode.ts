@@ -10,6 +10,7 @@ export const ValueNode: NodeDefinition = {
     icon: IconEqual,
     tags: ["Misc"],
     alias: "Constant Redirect",
+    hideInJs: true,
     dataInputs: [
         {
             id: "value",

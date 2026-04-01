@@ -15,6 +15,7 @@ export const BlackboardNode: NodeDefinition = {
     description: "Execute an instruction multiple time",
     featureLevel: 100,
     icon: IconAssembly,
+    hideInJs: true,
     tags: ["Misc"],
     dataInputs: [],
     dataOutputs: [],

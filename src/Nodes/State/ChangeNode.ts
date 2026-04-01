@@ -8,6 +8,7 @@ import { useCache } from "../../Utils/graph/execution/blackboardCache";
 export const ChangeNode: NodeDefinition = {
     id: "State/Change",
     label: "Change",
+    hideInJs: true,
     icon: IconStatusChange,
     description: "Output the difference between the input value from this frame and the previous call",
 

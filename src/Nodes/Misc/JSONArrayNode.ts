@@ -11,6 +11,7 @@ export const JSONArrayNode: NodeDefinition = {
     icon: IconEqual,
     tags: ["Misc", "Array"],
     alias: "Constant Redirect",
+    hideInJs: true,
     dataInputs: [],
     dataOutputs: [
         {

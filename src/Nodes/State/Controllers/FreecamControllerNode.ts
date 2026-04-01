@@ -15,6 +15,7 @@ export const FreecamControllerNode: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
     description: "Simulate a free movement camera",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("cameraInput"),
         Port.vector3("movementInput"),

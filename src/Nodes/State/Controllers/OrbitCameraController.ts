@@ -16,6 +16,7 @@ export const OrbitCameraControllerNode: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
     description: "Simulate the movement of a camera orbiting around a point",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("cameraInput"),
         Port.vector3("target", createVector3(0, 0, 0)),

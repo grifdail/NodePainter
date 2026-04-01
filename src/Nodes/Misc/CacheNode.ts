@@ -7,17 +7,18 @@ import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGene
 import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
 
 export const CacheNode: NodeDefinition = {
-  id: "Misc/Cache",
-  description: "Precompute and cache the input. The randomness wont change and it may help performance",
-  icon: IconDeviceFloppy,
-  tags: ["State"],
-  alias: "Precompute",
-  dataInputs: [Port.number("value"), Port.CacheId()],
-  dataOutputs: [Port.number("cached")],
-  settings: [cacheBehaviorSetting()],
-  ...changeTypeGenerator(portTypesWithTags(["common"]), ["value"], ["cached"]),
-  getData: (portId, node, context) => {
-    var target = readFromCache(context, node, () => context.getInputValue(node, "value", node.selectedType));
-    return target;
-  },
+    id: "Misc/Cache",
+    description: "Precompute and cache the input. The randomness wont change and it may help performance",
+    icon: IconDeviceFloppy,
+    tags: ["State"],
+    alias: "Precompute",
+    hideInJs: true,
+    dataInputs: [Port.number("value"), Port.CacheId()],
+    dataOutputs: [Port.number("cached")],
+    settings: [cacheBehaviorSetting()],
+    ...changeTypeGenerator(portTypesWithTags(["common"]), ["value"], ["cached"]),
+    getData: (portId, node, context) => {
+        var target = readFromCache(context, node, () => context.getInputValue(node, "value", node.selectedType));
+        return target;
+    },
 };

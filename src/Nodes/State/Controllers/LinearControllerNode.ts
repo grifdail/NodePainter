@@ -13,6 +13,7 @@ export const LinearControllerNode: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconVideo),
     description: "Simulate moving toward a target at a linear speed",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("target"),
         Port.number("speed"),

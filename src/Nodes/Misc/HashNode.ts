@@ -14,6 +14,7 @@ export const HashNode: NodeDefinition = {
     label: "Hash",
     description: "Combine the various input such that they produce a unique value",
     icon: IconHash,
+    hideInJs: true,
     tags: ["Misc"],
     dataInputs: [],
     dataOutputs: [{ id: "hash", type: "number", defaultValue: 0 }],

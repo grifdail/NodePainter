@@ -12,6 +12,7 @@ export const PreviousNode: NodeDefinition = {
     icon: DoubleIconGen(IconStatusChange, IconArrowNarrowLeft),
     description: "Output the value of the input at the previous call",
 
+    hideInJs: true,
     dataInputs: [Port.bool("in"), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],

@@ -9,6 +9,7 @@ export const DetectChangeNode: NodeDefinition = {
     id: "State/DetectChange",
     label: "Detect Change",
     icon: IconStatusChange,
+    hideInJs: true,
     description: "Output true only on when the input has just changed. Can be configured to only output when switch from false to true, the opposite or both",
 
     dataInputs: [Port.bool("in"), Port.CacheId()],

@@ -9,60 +9,61 @@ import { SettingDefinition } from "./SettingDefinition";
 import { TreeStore } from "./TreeStore";
 
 export type ContextMenuData = {
-  [key: string]: (node: NodeData, tree: TreeStore) => void;
+    [key: string]: (node: NodeData, tree: TreeStore) => void;
 };
 
 export type PortChangeFunction = (node: NodeData, type: PortType) => void;
 
 export type BaseNodeDefinition = {
-  id: string;
-  // Display
-  hideInLibrary?: boolean;
-  featureLevel?: number;
-  IsUnique?: boolean; //There can only be one of these node per sketch: Start, Custom Function Start & End, ect...
-  description?: string;
-  preventSnippet?: boolean;
+    id: string;
+    // Display
+    hideInLibrary?: boolean;
+    hideInJs?: boolean;
+    featureLevel?: number;
+    IsUnique?: boolean; //There can only be one of these node per sketch: Start, Custom Function Start & End, ect...
+    description?: string;
+    preventSnippet?: boolean;
 
-  /**
-   * @TJS-ignore
-   */
-  icon?: Icon;
-  label?: string;
-  tags: Array<NodeTags>;
-  //When looking for a node in the menu, this will also look for this field, not just the label
-  alias?: string;
+    /**
+     * @TJS-ignore
+     */
+    icon?: Icon;
+    label?: string;
+    tags: Array<NodeTags>;
+    //When looking for a node in the menu, this will also look for this field, not just the label
+    alias?: string;
 
-  //Meta
-  executeAs?: string;
-  contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
+    //Meta
+    executeAs?: string;
+    contextMenu?: ContextMenuData | ((node: NodeData) => ContextMenuData);
 
-  //Types
-  availableTypes?: PortType[];
-  onChangeType?: PortChangeFunction;
+    //Types
+    availableTypes?: PortType[];
+    onChangeType?: PortChangeFunction;
 
-  //Logic
-  settings: Array<SettingDefinition>;
+    //Logic
+    settings: Array<SettingDefinition>;
 
-  //Shader
-  shaderRequirement?: string | string[];
-  onManualCreation?: (node: NodeData) => void;
+    //Shader
+    shaderRequirement?: string | string[];
+    onManualCreation?: (node: NodeData) => void;
 
-  onlyAvailableIn?: CustomNodeEditingType[];
-  //Code Block
-  toCodeblockString?: (node: NodeData, parameterNames: Record<string, any>) => string;
-  codeBlockType?: "expression" | "statement";
+    onlyAvailableIn?: CustomNodeEditingType[];
+    //Code Block
+    toCodeblockString?: (node: NodeData, parameterNames: Record<string, any>) => string;
+    codeBlockType?: "expression" | "statement";
 };
 
 export type LogicNodeDefinition = {
-  //Data
-  dataInputs: Array<PortDefinition>;
-  dataOutputs: Array<PortDefinition>;
-  getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
-  hasInput?(input: PortType, def: NodeDefinition): PortType | null;
-  hasOutput?(output: PortType, def: NodeDefinition): PortType | null;
-  fn?: (...params: any) => any;
-  //Shader
-  getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
+    //Data
+    dataInputs: Array<PortDefinition>;
+    dataOutputs: Array<PortDefinition>;
+    getData?: (portId: string, node: NodeData, context: ExecutionContext) => any;
+    hasInput?(input: PortType, def: NodeDefinition): PortType | null;
+    hasOutput?(output: PortType, def: NodeDefinition): PortType | null;
+    fn?: (...params: any) => any;
+    //Shader
+    getShaderCode?: (node: NodeData, context: ExecutionContext) => string;
 };
 
 export type NodeDefinition = BaseNodeDefinition & LogicNodeDefinition;

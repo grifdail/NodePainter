@@ -7,6 +7,7 @@ export const DetectThresholdNode: NodeDefinition = {
     id: "State/DetectThreshold",
     label: "Detect Threshold",
     icon: IconCircuitSwitchOpen,
+    hideInJs: true,
     description: "Output true only on when the input number cross the target",
 
     dataInputs: [Port.number("in"), Port.number("target"), Port.CacheId()],

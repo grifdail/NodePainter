@@ -7,6 +7,7 @@ import { useCache } from "../../Utils/graph/execution/blackboardCache";
 export const CounterNode: NodeDefinition = {
     id: "State/Counter",
     label: "Counter",
+    hideInJs: true,
     icon: DoubleIconGen(IconDeviceFloppy, IconPlus),
     description: "Output a number that change by step for every call when the boolean input are true",
 

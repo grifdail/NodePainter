@@ -7,6 +7,7 @@ export const MetaNode: NodeDefinition = {
     description: "Provide information on your node",
     icon: IconMessage,
     tags: ["Misc"],
+    hideInJs: true,
     dataInputs: [],
     dataOutputs: [],
     settings: [

@@ -11,6 +11,7 @@ export const SaveNode: NodeDefinition = {
     icon: IconDeviceFloppy,
     description: "Save the input when the save boolean is on",
 
+    hideInJs: true,
     dataInputs: [Port.bool("in"), Port.bool("save"), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],

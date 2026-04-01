@@ -12,6 +12,7 @@ export const ImperativeFunctionNode: NodeDefinition = {
     tags: [],
     preventSnippet: true,
     hideInLibrary: false,
+    hideInJs: true,
     dataInputs: [],
     dataOutputs: [],
     settings: [

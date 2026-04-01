@@ -14,6 +14,7 @@ export const SpringController: NodeDefinition = {
     icon: DoubleIconGen(IconDeviceGamepad2, IconArrowBigRightFilled),
     description: "Simulate moving toward a target like a spring",
 
+    hideInJs: true,
     dataInputs: [//
         Port.vector2("target"),
         Port.number("velocityScale", 1),
