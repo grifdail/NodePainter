@@ -6,6 +6,7 @@ import { ClampNode } from "./ClampNode";
 import { DeltaAngleNode } from "./DeltaAngleNode";
 import { ExpNode } from "./ExpNode";
 import { FloorNode } from "./FloorNode";
+import { GreatCircleDistanceNode } from "./GreatCircleDistanceNode";
 import { LogNode } from "./LogNode";
 import { MathExpressionNode } from "./MathExpressionNode";
 import { MaxNode } from "./MaxNode";
@@ -30,6 +31,7 @@ export const MathAdvancedNodes = [
     DeltaAngleNode,
     ExpNode,
     FloorNode,
+    GreatCircleDistanceNode,
     LogNode,
     MathExpressionNode,
     MaxNode,
