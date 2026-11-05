@@ -1,4 +1,4 @@
-﻿import { IconVectorBezier2 } from "@tabler/icons-react";
+import { IconVectorBezier2 } from "@tabler/icons-react";
 import { Vector2 } from "@use-gesture/react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createVector2 } from "../../../Types/vectorDataType";

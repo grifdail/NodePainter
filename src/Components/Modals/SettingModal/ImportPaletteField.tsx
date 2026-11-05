@@ -1,4 +1,4 @@
-﻿import { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { usePlayerPref } from "../../../Hooks/usePlayerPref";
 import { toastSuccess, toastError } from "../../../Hooks/useToast";
 import { createColor } from "../../../Types/vectorDataType";

@@ -1,4 +1,4 @@
-﻿import { IconMathMax } from "@tabler/icons-react";
+import { IconMathMax } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { clamp } from "../../../Utils/math/clamp01";
 

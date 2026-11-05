@@ -1,4 +1,4 @@
-﻿import { IconArrowIteration, IconPlus } from "@tabler/icons-react";
+import { IconArrowIteration, IconPlus } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";

@@ -1,4 +1,4 @@
-﻿import JSZip from "jszip";
+import JSZip from "jszip";
 import { useCallback, useEffect, useState } from "react";
 import { default as RM } from "remotestoragejs";
 import { PlayerPrefExport } from "../Types/PlayerPrefStore";

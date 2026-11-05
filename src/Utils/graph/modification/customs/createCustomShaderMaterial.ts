@@ -1,4 +1,4 @@
-﻿import { original } from "immer";
+import { original } from "immer";
 import { copyInputPortsValues } from "../../../../Hooks/copyInputPortsValues";
 import { ShaderMaterialEnd } from "../../../../Nodes/Technical/MaterialShader/ShaderMaterialEnd";
 import { ShaderMaterialStart } from "../../../../Nodes/Technical/MaterialShader/ShaderMaterialStart";

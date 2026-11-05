@@ -1,4 +1,4 @@
-﻿import { IconMathFunction } from "@tabler/icons-react";
+import { IconMathFunction } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createVector2, createVector3, Vector2, Vector3 } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";

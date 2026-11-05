@@ -1,4 +1,4 @@
-﻿import { original } from "immer";
+import { original } from "immer";
 import { copyInputPortsValues } from "../../../../Hooks/copyInputPortsValues";
 import { RenderShaderEnd } from "../../../../Nodes/Technical/ImageEffectShader/RenderShaderEnd";
 import { RenderShaderStart } from "../../../../Nodes/Technical/ImageEffectShader/RenderShaderStart";

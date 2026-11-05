@@ -1,4 +1,4 @@
-﻿import { SettingComponent } from "../../Types/SettingComponent";
+import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";
 import { ButtonGroup } from "../StyledComponents/ButtonGroup";
 import styled from "styled-components";
@@ -172,7 +172,7 @@ export const PostProcessListSetting: SettingComponent<PostProcessListSettingDefi
         var list = value as Array<PostProcessLayer>;
         return 70 + list.reduce((size, layer) => {
 
-            return size + 35 + (Object.keys(layer).length - 1) * 32
+            return size + 35 + (Object.keys(layer).length - 1) * 35
         }, 0)
     }
 };

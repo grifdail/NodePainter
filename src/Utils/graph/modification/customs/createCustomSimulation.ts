@@ -1,4 +1,4 @@
-﻿import { original } from "immer";
+import { original } from "immer";
 import { copyInputPortsValues } from "../../../../Hooks/copyInputPortsValues";
 import { copyNodePosition } from "../../../../Hooks/copyNodePosition";
 import { CustomSimulation } from "../../../../Nodes/Technical/Simulation/CustomSimulation";

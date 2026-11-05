@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useRemoteStorage } from "../../../Hooks/useRemoteStorage";
 import { Button } from "../../Generics/Button";
 import { TextInput } from "../../Generics/Inputs/TextInput";

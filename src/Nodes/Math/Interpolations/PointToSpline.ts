@@ -1,4 +1,4 @@
-﻿import { IconTrendingDown3 } from "@tabler/icons-react";
+import { IconTrendingDown3 } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Vector2 } from "../../../Types/vectorDataType";

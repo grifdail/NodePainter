@@ -1,4 +1,4 @@
-﻿import { IconMathXPlusY } from "@tabler/icons-react";
+import { IconMathXPlusY } from "@tabler/icons-react";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { createVector2, Vector2 } from "../../../Types/vectorDataType";
 import { vectorAddition, vectorComponentSquareRoot, vectorLimitMagnitude, vectorMax, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";

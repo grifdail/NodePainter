@@ -1,4 +1,4 @@
-﻿import { IconArrowsShuffle } from "@tabler/icons-react";
+import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { readFromCache } from "../../Utils/graph/execution/blackboardCache";

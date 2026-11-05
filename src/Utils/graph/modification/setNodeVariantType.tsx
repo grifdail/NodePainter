@@ -1,4 +1,4 @@
-﻿import { NodeData } from "../../../Types/NodeData";
+import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortType } from "../../../Types/PortType";
 

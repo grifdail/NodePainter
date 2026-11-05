@@ -1,4 +1,4 @@
-﻿import { Templates } from "../../Data/templates";
+import { Templates } from "../../Data/templates";
 import { useAllSavedSketch } from "../../Hooks/db";
 import { SketchSave } from "../../Types/SketchTemplate";
 import { useRemoteStorage } from "../../Hooks/useRemoteStorage";

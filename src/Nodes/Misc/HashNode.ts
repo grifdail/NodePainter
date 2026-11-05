@@ -1,4 +1,4 @@
-﻿import { IconHash, IconPlus } from "@tabler/icons-react";
+import { IconHash, IconPlus } from "@tabler/icons-react";
 import { PortTypeDropdown } from "../../Components/Modals/CustomNodes/PortTypeDropdown";
 import { useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";

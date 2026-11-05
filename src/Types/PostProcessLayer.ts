@@ -1,6 +1,7 @@
 ﻿import { BloomEffect, BokehEffect, BrightnessContrastEffect, ChromaticAberrationEffect, ColorAverageEffect, ColorDepthEffect, DepthEffect, DepthOfFieldEffect, EffectComposer, EffectPass, HueSaturationEffect, KawaseBlurPass, LensDistortionEffect, ScanlineEffect, SepiaEffect, TiltShiftEffect, ToneMappingEffect, VignetteEffect } from "postprocessing";
-import { Camera, Vector2 as TVector2 } from "three";
-import { Vector2 } from "./vectorDataType";
+import { Camera, Vector2 as TVector2, Vector4 as TVector4 } from "three";
+import { FogEffect } from "../Utils/3d/FogEffect";
+import { Color, Vector2 } from "./vectorDataType";
 
 
 type BloomPostProcessLayer = {
@@ -122,6 +123,15 @@ type LensDistortionPostProcessLayer = {
 }
 
 
+type FogPostProcessLayer = {
+    type: "Fog",
+    minRange: number,
+    maxRange: number,
+    colorStart: Color,
+    colorEnd: Color,
+}
+
+
 
 export type PostProcessLayer =
     BloomPostProcessLayer |
@@ -140,6 +150,7 @@ export type PostProcessLayer =
     ScanlineEffectPostProcessLayer |
     ToneMappingPostProcessLayer |
     LensDistortionPostProcessLayer |
+    FogPostProcessLayer |
     HueSaturationPostProcessLayer
 export type PostProcessLayerType = PostProcessLayer["type"];
 
@@ -384,6 +395,23 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
                 principalPoint: new TVector2(...layer.principalPoint),
                 focalLength: new TVector2(...layer.focalLength),
                 skew: layer.skew,
+            })));
+        }
+    },
+    Fog: {
+        default: {
+            type: "Fog",
+            minRange: 0,
+            maxRange: 20,
+            colorStart: [1, 1, 1, 1],
+            colorEnd: [1, 1, 1, 1]
+        },
+        addEffect: function (layer: FogPostProcessLayer, composer: EffectComposer, camera: Camera): void {
+            composer.addPass(new EffectPass(camera, new FogEffect({
+                minRange: layer.minRange,
+                maxRange: layer.maxRange,
+                colorStart: new TVector4(...layer.colorStart),
+                colorEnd: new TVector4(...layer.colorEnd),
             })));
         }
     }

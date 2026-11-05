@@ -19,7 +19,6 @@ import { PortType } from "../../../Types/PortType";
 import { getNodeTypeDefinition, getOutputPort } from "./getNode";
 import { getPortValue } from "./getPortValue";
 import { SketchData } from "../../../Types/SketchData";
-import { relative } from "path";
 import { SCALING_OPTIONS, START_NODE } from "../../../Nodes/StartNode";
 
 export type FunctionContext = {
