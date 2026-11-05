@@ -26,6 +26,7 @@ import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
 import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
 import { SettingComponent } from "../../Types/SettingComponent";
+import { PostProcessListSetting } from "./PostProcessListSetting";
 
 
 
@@ -56,6 +57,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "bezier-path": BezierPathSetting,
     "graph-area": GraphAreaSetting,
     "animation-sequence": AnimationSequenceSetting,
+    "postprocess-list": PostProcessListSetting,
 };
 
 

@@ -294,6 +294,7 @@ const UPGRADES: UpgradeFunction[] = [
         return sketch;
     },
     (sketch) => addMissingNodePort(["Draw/Spline"], sketch),
+    (sketch) => addMissingSettings(["Render3D"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
