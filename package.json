@@ -50,6 +50,7 @@
         "remotestoragejs": "^2.0.0-beta.8",
         "simplify-path": "^1.1.0",
         "styled-components": "^6.1.1",
+        "tess2-ts": "^1.0.8",
         "three": "^0.176.0",
         "ts-whammy": "^1.1.5",
         "typescript": "^5.9.3",

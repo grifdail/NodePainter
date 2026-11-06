@@ -5,6 +5,7 @@ import { ParametricGeometry } from "./ParametricGeometry";
 import { Render3D } from "./Render3D";
 import { Render3DLine } from "./Render3DLine";
 import { RenderModel } from "./RenderModel";
+import { ShapeGeometry } from "./ShapeGeometry";
 import { Transform3D } from "./Transform3D";
 import { UploadModel } from "./UploadModel";
 import { CameraVirtualElements } from "./VirtualNodeTypes/CameraVirtualElements";
@@ -18,16 +19,17 @@ export const GeometryNodes: NodeDefinition[] = Object.values(GeometryVirtualNode
 export const CameraNodes: NodeDefinition[] = Object.values(CameraVirtualElements).map((gen) => generateNodeFromVirtualNode(gen));
 
 export const Nodes3D = [
-  ...LightNodes,
-  ...MaterialNodes,
-  ...GeometryNodes,
-  ...CameraNodes,
-  Render3D,
-  UploadModel,
-  //GenerateUVModel,
-  RenderModel,
-  Render3DLine,
-  Transform3D,
-  ParametricGeometry,
-  BillBoardNode
+    ...LightNodes,
+    ...MaterialNodes,
+    ...GeometryNodes,
+    ...CameraNodes,
+    Render3D,
+    UploadModel,
+    //GenerateUVModel,
+    RenderModel,
+    Render3DLine,
+    Transform3D,
+    ParametricGeometry,
+    ShapeGeometry,
+    BillBoardNode
 ];
