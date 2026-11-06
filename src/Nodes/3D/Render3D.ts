@@ -66,7 +66,6 @@ export const Render3D: NodeDefinition = {
 
         threeContext.update(virtual, threeContext.instance.scene);
 
-        const camera = threeContext.instance.camera || threeContext.instance.defaultCamera;
         threeContext.instance.postProcessComposer.render();
         return threeContext.instance.imageData;
     },

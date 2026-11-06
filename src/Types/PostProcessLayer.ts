@@ -1,4 +1,4 @@
-﻿import { BloomEffect, BokehEffect, BrightnessContrastEffect, ChromaticAberrationEffect, ColorAverageEffect, ColorDepthEffect, DepthEffect, DepthOfFieldEffect, EffectComposer, EffectPass, HueSaturationEffect, KawaseBlurPass, LensDistortionEffect, ScanlineEffect, SepiaEffect, TiltShiftEffect, ToneMappingEffect, VignetteEffect } from "postprocessing";
+import { BloomEffect, BokehEffect, BrightnessContrastEffect, ChromaticAberrationEffect, ColorAverageEffect, ColorDepthEffect, DepthEffect, DepthOfFieldEffect, EffectComposer, EffectPass, HueSaturationEffect, KawaseBlurPass, LensDistortionEffect, ScanlineEffect, SepiaEffect, TiltShiftEffect, ToneMappingEffect, VignetteEffect } from "postprocessing";
 import { Camera, Vector2 as TVector2, Vector4 as TVector4 } from "three";
 import { FogEffect } from "../Utils/3d/FogEffect";
 import { Color, Vector2 } from "./vectorDataType";

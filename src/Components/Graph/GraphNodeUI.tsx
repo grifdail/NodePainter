@@ -4,7 +4,6 @@ import "@szhsin/react-menu/dist/transitions/slide.css";
 import { useGesture } from "@use-gesture/react";
 import { memo, MouseEvent, useState } from "react";
 import styled from "styled-components";
-import { useSelection } from "../../Hooks/useSelection";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { PortRole } from "../../Types/PortRole";

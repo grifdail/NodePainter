@@ -32,7 +32,7 @@ export const PointsToSplineNode: NodeDefinition = {
         if (count < 2) {
             return []
         }
-        if (count == 2) {
+        if (count === 2) {
             return [points[0], points[0], points[1], points[1]]
         }
 

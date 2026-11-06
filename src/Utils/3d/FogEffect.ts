@@ -1,4 +1,4 @@
-﻿import { Effect, EffectAttribute } from "postprocessing";
+import { Effect, EffectAttribute } from "postprocessing";
 import { Uniform, Vector4 } from "three";
 import fragmentShader from "./fogEffect.frag?raw";
 
