@@ -104,6 +104,7 @@ export const PostProcessListSetting: SettingComponent<PostProcessListSettingDefi
                                 <span>{i}</span>
                                 <span className="title">{layer.type}</span>
                                 <Menu
+                                    portal
                                     menuButton={
                                         <button className="delete">
                                             <IconAdjustments />

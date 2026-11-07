@@ -67,7 +67,7 @@ function setupPostProcess(renderer: WebGLRenderer, scene: Scene, camera: Perspec
     composer.addPass(new RenderPass(scene, camera));
     postprocess.forEach(layer => {
         var data = PostProcessLayerUtils[layer.type];
-        data.addEffect(layer as any, composer, camera)
+        data.addEffect(layer as any, composer, camera, scene)
     })
 
     return composer;

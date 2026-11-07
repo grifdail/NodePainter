@@ -1,5 +1,5 @@
 import { BloomEffect, BokehEffect, BrightnessContrastEffect, ChromaticAberrationEffect, ColorAverageEffect, ColorDepthEffect, DepthEffect, DepthOfFieldEffect, EffectComposer, EffectPass, HueSaturationEffect, KawaseBlurPass, LensDistortionEffect, ScanlineEffect, SepiaEffect, TiltShiftEffect, ToneMappingEffect, VignetteEffect } from "postprocessing";
-import { Camera, Vector2 as TVector2, Vector4 as TVector4 } from "three";
+import { Camera, Scene, Vector2 as TVector2, Vector4 as TVector4 } from "three";
 import { FogEffect } from "../Utils/3d/FogEffect";
 import { Color, Vector2 } from "./vectorDataType";
 
@@ -86,23 +86,6 @@ type ScanlineEffectPostProcessLayer = {
     density: number,
 }
 
-type SSAOPostProcessLayer = {
-    type: "SSAO",
-    offset: number,
-    darkness: number,
-    samples: number,
-    rings: number,
-    worldDistanceThreshold: number,
-    worldDistanceFalloff: number,
-    worldProximityThreshold: number,
-    worldProximityFalloff: number,
-    minRadiusScale: number,
-    luminanceInfluence: number,
-    radius: number,
-    intensity: number,
-    bias: number,
-    fade: number,
-}
 
 type ToneMappingPostProcessLayer = {
     type: "ToneMapping",
@@ -139,7 +122,6 @@ export type PostProcessLayer =
     TiltShiftPostProcessLayer |
     VignettePostProcessLayer |
     BlurPostProcessLayer |
-    SSAOPostProcessLayer |
     DepthOfFieldPostProcessLayer |
     BokehPostProcessLayer |
     BrightnessContrastProcessLayer |
@@ -157,7 +139,7 @@ export type PostProcessLayerType = PostProcessLayer["type"];
 
 type PostProcessSetting<TPostProcessLayer extends PostProcessLayer> = {
     default: TPostProcessLayer,
-    addEffect: (layer: TPostProcessLayer, composer: EffectComposer, camera: Camera) => void;
+    addEffect: (layer: TPostProcessLayer, composer: EffectComposer, camera: Camera, scene: Scene) => void;
 }
 export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefinition["type"]]: PostProcessSetting<TDefinition> } = {
     Bloom: {
@@ -237,28 +219,6 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
                 focusRange: layer.focusRange,
                 bokehScale: layer.bokehScale,
             })));
-        }
-    },
-    SSAO: {
-        default: {
-            type: "SSAO",
-            offset: 0,
-            darkness: 0,
-            samples: 0,
-            rings: 0,
-            worldDistanceThreshold: 0,
-            worldDistanceFalloff: 0,
-            worldProximityThreshold: 0,
-            worldProximityFalloff: 0,
-            minRadiusScale: 0,
-            luminanceInfluence: 0,
-            radius: 0,
-            intensity: 0,
-            bias: 0,
-            fade: 0
-        },
-        addEffect: function (layer: SSAOPostProcessLayer, composer: EffectComposer, camera: Camera): void {
-            composer.addPass(new KawaseBlurPass({}));
         }
     },
     Bokeh: {
