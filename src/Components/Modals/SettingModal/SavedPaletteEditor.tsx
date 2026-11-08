@@ -103,7 +103,17 @@ export const SavedPaletteEditor = () => {
     const [searchTermRaw, setSearchTerm] = useState("");
     const onClickAdd = () => {
         useDialog.getState().openPrompt((data) => {
-            setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
+            if (savedPalettes[data]) {
+                useDialog.getState().openConfirm((confirmed) => {
+                    if (confirmed) {
+                        setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
+                    }
+
+                }, `A palette named '${data}' already exist.`)
+            } else {
+                setSavedPalette(data, [createColor(0, 0, 0, 1), createColor(1, 1, 1, 1)]);
+            }
+
         });
     };
     return (

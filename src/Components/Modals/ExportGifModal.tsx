@@ -67,6 +67,7 @@ type MySketchProps = SketchProps & {
     fixedFrameRate: number;
     renderer: ExporterType;
     preloadDuration: number;
+    upscale: number
 };
 
 export const sketch: Sketch<MySketchProps> = (p5) => {
@@ -90,10 +91,12 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
 
             if (renderer == null) {
                 p5.pixelDensity(1);
-                p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
+                const width = start.settings.scalling === "relative" ? (start.settings.width || 400) * props.upscale : (start.settings.width || 400);
+                const height = start.settings.scalling === "relative" ? (start.settings.height || 400) * props.upscale : (start.settings.height || 400);
+                p5.createCanvas(width, height);
                 const frameRate = Math.floor(1000 / ownProps.fixedFrameRate);
                 renderer = Exporters[props.renderer]();
-                renderer.init(start.settings.width || 400, start.settings.height || 400, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
+                renderer.init(width, height, frameRate, ownProps.onFinished, ownProps.onProgress).then(() => {
                     rendererIsLoaded = true;
                 });
 
@@ -147,6 +150,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
     const [progress, setProgress] = useState(0);
     const [usePreview, setUsePreview] = useState(false);
     const [format, setFormat] = useState("mp4");
+    const [upscale, setUpscale] = useState(1);
     const name = tree.getSketchName();
     const [filename, setFilename] = useState(`${name}-np-${Date.now()}`);
     const isWaiting = renderState === "waiting" || renderState === "done"
@@ -224,6 +228,14 @@ export function ExportGifModal({ close }: { close: () => void }) {
                         onChange={setFormat}
                         passtrough={{ options: Object.keys(Exporters) }}
                     />
+                    {
+                        start.settings.scalling === "relative" && <Fieldset
+                            label="Upscale ?"
+                            input={NumberInput}
+                            value={upscale}
+                            onChange={setUpscale}
+                        />
+                    }
                     <Fieldset
                         label="Use preview ?"
                         input={BoolInput}
@@ -243,6 +255,7 @@ export function ExportGifModal({ close }: { close: () => void }) {
                             fixedFrameRate={fixedFrameRate}
                             renderer={format}
                             preloadDuration={preloadDuration}
+                            upscale={upscale}
                             onFinished={(blob: Blob) => {
                                 setRenderState("waiting");
                                 setProgress(100);

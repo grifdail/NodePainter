@@ -208,7 +208,7 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
 
             if (typeof result === "function") {
                 const sizing = start.settings.scalling;
-                const scale = getCanvasScale(sizing, (start.settings.width || 400), (start.settings.height || 400));
+                const scale = getCanvasScale(sizing, context.p5.width, context.p5.height);
 
                 context.p5.push()
                 context.p5.scale(...scale);

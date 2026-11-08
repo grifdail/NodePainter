@@ -1,4 +1,3 @@
-import { START_NODE } from "../../../Nodes/StartNode";
 import { ResolutionSettingData } from "../../../Types/ResolutionSettingData";
 import { ExecutionContext } from "./createExecutionContext";
 
@@ -6,7 +5,7 @@ export function computeResolution(context: ExecutionContext, setting: Resolution
     if (setting.mode === "static") {
         return { width: Math.floor(setting.width), height: Math.floor(setting.height) };
     }
-    var { width, height } = context.getNodeData(START_NODE).settings
+    var { width, height } = context.p5;
     if (setting.mode === "original") {
         return { width, height }
     } else {
