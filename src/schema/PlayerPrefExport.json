@@ -191,6 +191,33 @@
             },
             "type": "object"
         },
+        "colorPairing": {
+            "additionalProperties": {
+                "items": {
+                    "items": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "number"
+                        }
+                    ],
+                    "maxItems": 4,
+                    "minItems": 4,
+                    "type": "array"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+            },
+            "type": "object"
+        },
         "snippets": {
             "additionalProperties": {
                 "properties": {
@@ -388,4 +415,3 @@
     ],
     "type": "object"
 }
-

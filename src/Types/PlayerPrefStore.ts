@@ -1,7 +1,7 @@
 import { Snippet, SnippetCollection } from "../Utils/graph/modification/snippets";
 import { ColorPairing, ColorPairingCollection, ColorPalette, Gradient, GradientCollection, PaletteCollection } from "./vectorDataType";
 
-export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsedDates" | "nodesUseCount" | "nodeSorting" | "palettes" | "gradient" | "colorPreset" | "hasSeenIntroPopup" | "snippets">;
+export type PlayerPrefExport = Pick<PlayerPrefStore, "favNodes" | "nodesLastUsedDates" | "nodesUseCount" | "nodeSorting" | "palettes" | "colorPairing" | "gradient" | "colorPreset" | "hasSeenIntroPopup" | "snippets">;
 export type UITheme = "auto" | "light" | "dark" | "rose-pine-moon" | "rose-pine-dawn" | "css";
 
 export type PlayerPrefStore = {
