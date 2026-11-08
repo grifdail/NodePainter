@@ -9,6 +9,8 @@ import { ImperativeFunctionNode } from "./ImperativeFunctionNode";
 import { JavascriptFunctionNode } from "./JavascriptFunctionNode";
 import { JSONArrayNode } from "./JSONArrayNode";
 import { MetaNode } from "./MetaNode";
+import { PortalInputNode } from "./PortalInputNode";
+import { PortalOutputNode } from "./PortalOutputNode";
 import { MiscRenderNodes } from "./Render";
 import { RepeatForNode } from "./RepeatForNode";
 import { RepeatUntilNode } from "./RepeatUntilNode";
@@ -28,6 +30,8 @@ export const MiscNodes = [
     JavascriptFunctionNode,
     JSONArrayNode,
     MetaNode,
+    PortalInputNode,
+    PortalOutputNode,
     RepeatForNode,
     RepeatUntilNode,
     ValueNode,

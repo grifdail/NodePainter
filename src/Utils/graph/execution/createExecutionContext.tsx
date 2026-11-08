@@ -47,6 +47,7 @@ export type ExecutionContext = {
     getNodeOutput: (nodeId: string, portId: string) => any;
     p5: P5CanvasInstance;
     RNG: Rand;
+    getNodeData: (nodeId: string) => NodeData;
     getInputValue: <T>(nodeData: NodeData, portId: string, outputValue: PortType) => T;
     getInputValueVector: (nodeData: NodeData, portId: string) => Vector;
     getInputValueVector2: (nodeData: NodeData, portId: string) => Vector2;
@@ -93,6 +94,9 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         },
         getNodeOutput(nodeId, portId) {
             return getPortValue(tree, nodeId, portId, context);
+        },
+        getNodeData(nodeId: string) {
+            return tree.nodes[nodeId];
         },
         getInputValue<T>(nodeData: NodeData, portId: string, outputType: PortType = "unknown") {
             const inputPorts = nodeData.dataInputs[portId];
