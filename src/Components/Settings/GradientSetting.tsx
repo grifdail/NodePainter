@@ -88,6 +88,7 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = {
         const saveGradientToStore = usePlayerPref((pref) => pref.saveGradient);
         const ownGradients = usePlayerPref((pref) => pref.gradient);
         const ownPalettes = usePlayerPref((pref) => pref.palettes);
+        const ownPairing = usePlayerPref((pref) => pref.colorPairing);
 
         function saveGradient() {
             var name = window.prompt("What to name your palette ?", "palette");
@@ -139,7 +140,18 @@ export const GradientSetting: SettingComponent<GradientSettingDefinition> = {
                         portal
                         menuButton={<Button icon={IconMenu2} />}>
                         <MenuItem onClick={saveGradient}>Save Gradient</MenuItem>
-                        <MenuDivider></MenuDivider>
+                        <MenuDivider></MenuDivider><SubMenu
+                            label="Create from a saved color pair"
+                            overflow="auto">
+                            {Object.entries(ownPairing).map(([key, value]) => (
+                                <MenuItemWithPalettePreview
+                                    id={key}
+                                    key={key}
+                                    value={value}
+                                    onClick={() => loadFromPalette(value)}
+                                />
+                            ))}
+                        </SubMenu>
                         <SubMenu
                             label="Create from a saved palette"
                             overflow="auto">

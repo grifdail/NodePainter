@@ -1,5 +1,5 @@
 import { useHotkeys } from "react-hotkeys-hook";
-import { openNodeCreationModal } from "../Actions/navigationAction";
+import { openNodeCreationModal, openSketchMenu } from "../Actions/navigationAction";
 import { GetNodeHeight } from "../Components/Graph/GetNodeHeight";
 import { NodeDefinition } from "../Types/NodeDefinition";
 import { extractSnipet } from "../Utils/graph/modification/snippets";
@@ -81,5 +81,10 @@ export const useGraphHotkey = () => {
     useHotkeys("mod+s", (e) => {
         e.preventDefault();
         saveSketchWithNamePrompt(saveSketch);
+    });
+    useHotkeys("mod+n", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openSketchMenu();
     });
 };

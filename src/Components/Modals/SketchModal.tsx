@@ -188,7 +188,6 @@ export function SketchModal({ close }: { close: () => void }) {
                 return r;
             });
     }, [allItemExceptTemplate, searchTerm]);
-    console.log(categoriesExceptTemplate)
 
     return (
         <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
@@ -269,7 +268,6 @@ function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void)
             const wasSame = searchTermRaw.match(regexKey);
             const previous = searchTermRaw.match(ALL_TAG_REGEX);
             let newSearchTerm = previous ? searchTermRaw.replaceAll(ALL_TAG_REGEX, "").trim() : "";
-            console.log(previous);
             if (!wasSame) {
                 newSearchTerm = `${newSearchTerm.trim()} ${key}`
             }

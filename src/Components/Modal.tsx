@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Icon, IconX } from "@tabler/icons-react";
 import { useSpring } from "@react-spring/web";
 import { animated } from "@react-spring/web";
 import styled, { css, RuleSet } from "styled-components";
+import { useHotkeys } from "react-hotkeys-hook";
 
 export type ModalSize = "small" | "medium" | "large" | "tiny" | "fullscreen";
 
@@ -23,23 +24,23 @@ export const FullScreenDiv = styled.div<{ $modal: boolean }>`
 `;
 
 const ModalSizeCSS: { [key in ModalSize]: RuleSet } = {
-  small: css`
+    small: css`
     width: 50%;
     min-height: 200px;
     max-height: 80%;
   `,
-  medium: css`
+    medium: css`
     width: 70%;
     min-height: 200px;
     max-height: 80%;
   `,
-  large: css`
+    large: css`
     width: 80%;
     min-height: 500px;
     height: 80%;
     max-height: 90%;
   `,
-  tiny: css`
+    tiny: css`
     width: auto;
     max-width: 33%;
     min-height: 100px;
@@ -55,7 +56,7 @@ const ModalSizeCSS: { [key in ModalSize]: RuleSet } = {
     }
   `,
 
-  fullscreen: css`
+    fullscreen: css`
     width: 100%;
     height: 100%;
     min-width: 100%;
@@ -118,7 +119,7 @@ export const ModalContent = styled.section`
   position: relative;
 `;
 
-export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: boolean }>`
+export const ModalBody = styled(animated.div) <{ size?: ModalSize; stretch?: boolean }>`
   overflow: auto;
   background: var(--color-background);
   color: var(--color-text);
@@ -149,28 +150,38 @@ export const ModalBody = styled(animated.div)<{ size?: ModalSize; stretch?: bool
 `;
 
 export function Modal({ children, title, icon: Icon, onClose, stretch, size = "medium" }: { children?: any; title?: string; size?: ModalSize; stretch?: boolean; icon?: Icon; onClose?: () => void }) {
-  const styles = useSpring({
-    from: {
-      scale: 0,
-    },
-    to: {
-      scale: 1,
-    },
-  });
-  return (
-    <FullScreenDiv $modal>
-      <ModalBody size={size} style={styles} stretch={stretch}>
-        <ModalHeader>
-          {Icon && <Icon />}
-          <h2>{title}</h2>
-          {onClose && (
-            <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
-              <IconX />
-            </CloseButton>
-          )}
-        </ModalHeader>
-        <ModalContent>{children}</ModalContent>
-      </ModalBody>
-    </FullScreenDiv>
-  );
+    const styles = useSpring({
+        from: {
+            scale: 0,
+        },
+        to: {
+            scale: 1,
+        },
+    });
+
+    useHotkeys("esc", () => {
+        console.log("hhhh")
+        if (onClose) {
+            onClose();
+        }
+    })
+    useEffect(() => {
+
+    })
+    return (
+        <FullScreenDiv $modal>
+            <ModalBody size={size} style={styles} stretch={stretch}>
+                <ModalHeader>
+                    {Icon && <Icon />}
+                    <h2>{title}</h2>
+                    {onClose && (
+                        <CloseButton onClick={onClose} data-tooltip-id="tooltip" data-tooltip-content={`Close`}>
+                            <IconX />
+                        </CloseButton>
+                    )}
+                </ModalHeader>
+                <ModalContent>{children}</ModalContent>
+            </ModalBody>
+        </FullScreenDiv>
+    );
 }
