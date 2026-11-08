@@ -1,4 +1,5 @@
 import { CMYKNode } from "./CMYKNode";
+import { ColorPairingNode } from "./ColorPairingNode";
 import { ColorGradientNodes } from "./Gradient";
 import { HSLNode } from "./HSLNode";
 import { HSVNode } from "./HSVNode";
@@ -11,16 +12,17 @@ import { ToHSLNode } from "./toHSLNode";
 import { ToHSVNode } from "./toHSVNode";
 
 export const ColorNodes = [
-  //
-  ...ColorGradientNodes,
-  CMYKNode,
-  HSLNode,
-  HSVNode,
-  MixNode,
-  OKLCHNode,
-  PaletteNode,
-  SetAlphaNode,
-  ToCMYWNode,
-  ToHSLNode,
-  ToHSVNode,
+    //
+    ...ColorGradientNodes,
+    CMYKNode,
+    ColorPairingNode,
+    HSLNode,
+    HSVNode,
+    MixNode,
+    OKLCHNode,
+    PaletteNode,
+    SetAlphaNode,
+    ToCMYWNode,
+    ToHSLNode,
+    ToHSVNode,
 ];

@@ -41,6 +41,7 @@ import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
 import { SAVE_VERSION, upgradeSaveData } from "../Utils/graph/modification/upgradeSaveData";
 import { buildBoundingBoxAroundTreeNodes } from "../Utils/ui/buildBoundingBox";
+import { idToNodeName } from "../Utils/ui/idToNodeName";
 import { resetCamera } from "../Utils/ui/resetCamera";
 import { preparePortForFunctions } from "./preparePortForFunctions";
 import { createNewFunctionDefinition } from "./useCustomNodeCreationContext";
@@ -156,6 +157,27 @@ export const useTree = create<TreeStore>()((set, get) => {
                 produce((state) => {
                     const node = state.nodes[nodeId];
                     node.settings[settingId] = newValue;
+                })
+            );
+        },
+        makeSettingGlobal(nodeId, settingId, forceExport = false) {
+
+            const state = get();
+
+            const node = state.nodes[nodeId];
+            const oldValue = node.settings[settingId]
+            const newId = `${node.type}_${settingId}`
+            set(
+                produce((state) => {
+                    const node = state.nodes[nodeId] as NodeData;
+                    node.overrideGlobalSetting = node.overrideGlobalSetting ?
+                        { ...node.overrideGlobalSetting, [settingId]: newId } :
+                        { [settingId]: newId };
+                    const def = state.getNodeTypeDefinition(node);
+                    if (forceExport) {
+                        state.globalSettings[newId] = oldValue;
+                    }
+                    node.label = `${node.label || def.label || idToNodeName(def.id)} (global)`
                 })
             );
         },

@@ -46,6 +46,11 @@ export type PaletteSettingDefinition = BaseSettingDefinition & {
     type: "palette";
     defaultValue: Color[];
 };
+
+export type ColorPairingSettingDefinition = BaseSettingDefinition & {
+    type: "color-pairing";
+    defaultValue: [Color, Color];
+};
 export type BoolSettingDefinition = BaseSettingDefinition & {
     type: "bool";
     defaultValue: boolean;
@@ -159,6 +164,7 @@ export type SettingDefinition =
     | DropdownSettingDefinition
     | ImageSelectSettingDefinition
     | PaletteSettingDefinition
+    | ColorPairingSettingDefinition
     | BoolSettingDefinition
     | GradientSettingDefinition
     | ImageUploadSettingDefinition

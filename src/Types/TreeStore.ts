@@ -35,6 +35,7 @@ export type TreeStore = {
     removeOutputConnection: (node: string, port: string) => void;
     setNodeInputValue: (node: string, portId: string, newValue: any) => void;
     setNodeSetting: (node: string, settingId: string, newValue: any) => void;
+    makeSettingGlobal: (node: string, settingId: string, forceExport?: boolean) => void;
     setGlobalSetting: (settingId: string, newValue: any) => void;
     resetNode: (node: string) => void;
     resetPort: (node: string, portId: string) => void;

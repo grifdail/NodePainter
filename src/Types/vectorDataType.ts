@@ -7,7 +7,9 @@ export type GradientStop = { pos: number; color: Color };
 export type Gradient = GradientStop[];
 export type Vector = Vector2 | Vector3 | Vector4 | Color | Quaternion;
 export type ColorPalette = Array<Color>;
+export type ColorPairing = [Color, Color];
 export type PaletteCollection = { [key: string]: ColorPalette };
+export type ColorPairingCollection = { [key: string]: ColorPairing };
 export type GradientCollection = { [key: string]: Gradient };
 
 export const createVector2 = (x: number = 0, y: number = 0): Vector2 => [x, y];
@@ -15,11 +17,11 @@ export const createVector3 = (x: number = 0, y: number = 0, z: number = 0): Vect
 export const createVector4 = (x: number = 0, y: number = 0, z: number = 0, w: number = 0): Vector4 => [x, y, z, w];
 
 export function createColor(r: number = 0, g: number = 0, b: number = 0, a: number = 1): Color {
-  return [r, g, b, a];
+    return [r, g, b, a];
 }
 export function createDefaultGradient(): Gradient {
-  return [
-    { pos: 0, color: createColor(0, 0, 0) },
-    { pos: 1, color: createColor(1, 1, 1) },
-  ];
+    return [
+        { pos: 0, color: createColor(0, 0, 0) },
+        { pos: 1, color: createColor(1, 1, 1) },
+    ];
 }

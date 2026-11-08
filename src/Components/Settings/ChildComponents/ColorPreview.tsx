@@ -5,7 +5,7 @@ import { toHex } from "../../../Utils/math/colorUtils";
 
 export const GradientDiv = styled.div<{ gradient: string }>`
   display: block;
-  width: calc(100% - 4px);
+  width: 100%;
   height: 32px;
   border: 2px solid black;
   background: linear-gradient(to right, ${(props) => props.gradient}), var(--gradient-transparent);
@@ -13,6 +13,7 @@ export const GradientDiv = styled.div<{ gradient: string }>`
   margin-bottom: 5px;
   min-width: 100px;
   position: relative;
+  padding: 0;
 `;
 const MenuItemWithPreview = styled(MenuItem)`
   display: flex;

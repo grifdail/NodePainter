@@ -18,9 +18,10 @@ const NodeList = styled.section`
   justify-content: stretch;
   overflow: auto;
   gap: var(--padding-small);
+  container-type: inline-size;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.div`
   background: var(--color-background-card);
   color: var(--color-text);
   border: none;
@@ -36,13 +37,32 @@ const StyledButton = styled.button`
   cursor: pointer;
   white-space: nowrap;
 
-  & p {
+@container (width < 500px) {
+  & {
+    flex-direction: column;
+    align-items: stretch;
+
+    & ${ButtonGroup} {
+        justify-content: stretch;
+
+        & > button {
+            flex: 1 1 auto;
+        }
+    }
+  }
+}
+
+  & .label {
     margin: 0;
     text-align: left;
     color: var(--color-text-minor);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+
+    width: 120px;
+
+
   }
 
   & .spacer {
@@ -62,11 +82,13 @@ function SketchButton({ onClick, value, onDelete, name, onChange, isSelected }: 
     return (
         <>
             <StyledButton>
-                <div>{name}</div>
+                <div className="label" data-tooltip-id="tooltip"
+                    data-tooltip-content={name}>{name}</div>
                 <PalettePreview palette={value} />
                 <span className="spacer" />
-                <Button onClick={onClick} label="Edit" />
-                <Button onClick={onDelete} label="Delete" />
+                <ButtonGroup>                <Button onClick={onClick} label="Edit" />
+                    <Button onClick={onDelete} label="Delete" /></ButtonGroup>
+
             </StyledButton>
             {isSelected && <PaletteSetting.UI value={value} onChange={onChange} def={{ id: "colorPreset", defaultValue: [], type: "palette" }} node={null as unknown as NodeData} />}
         </>

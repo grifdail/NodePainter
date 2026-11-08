@@ -64,6 +64,7 @@ export type ExecutionContext = {
     getInputValueDrawing: (nodeData: NodeData, portId: string) => () => void;
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
     getGlobalSetting<T>(arg0: string): T;
+    getSetting<T>(node: NodeData, arg0: string): T;
     getCallId(node: NodeData, ...args: any[]): string;
     endOfFrameCleanup(): void;
     endOfRunCleanup(): void;
@@ -144,6 +145,16 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         },
         getGlobalSetting<T>(arg0: string) {
             return tree.globalSettings[arg0] as T;
+        },
+        getSetting<T>(node: NodeData, arg0: string) {
+            var def = context.getNodeDefinition(node.type);
+            var settingDef = def?.settings?.find(a => a.id === arg0)
+            var globalKey = settingDef?.globalKey || node.overrideGlobalSetting?.[arg0];
+            if (globalKey) {
+                return context.getGlobalSetting<T>(globalKey);
+            } else {
+                return node.settings[arg0] as T;
+            }
         },
         createFunctionContext(node: NodeData) {
             return Object.fromEntries(

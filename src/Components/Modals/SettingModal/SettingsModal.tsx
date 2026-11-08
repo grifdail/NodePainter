@@ -12,6 +12,7 @@ import { SavedSnippetEditor } from "./SavedSnippetEditor";
 import { ExportSettingEditor } from "./ExportSettingEditor";
 import { MiscSettingEditor } from "./MiscSettingEditor";
 import { RemoteStorageSettingEditor } from "./RemoteStorageSettingEditor";
+import { SavedPairingEditor } from "./SavedPairingEditor";
 
 const MainDiv = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const MainDiv = styled.div`
 enum Section {
     DefaultPalette = "Default Palette",
     SavedPalette = "SavedPalette",
+    SavedPairing = "SavedPairing",
     SavedGradient = "SavedGradient",
     SavedSnippet = "SavedSnippet",
     Misc = "Misc",
@@ -57,6 +59,7 @@ const DefaultPaletteEdition = () => {
 const SectionComponent: { [key in Section]: () => JSX.Element } = {
     [Section.DefaultPalette]: DefaultPaletteEdition,
     [Section.SavedPalette]: SavedPaletteEditor,
+    [Section.SavedPairing]: SavedPairingEditor,
     [Section.SavedGradient]: SavedGradientEditor,
     [Section.SavedSnippet]: SavedSnippetEditor,
     [Section.Misc]: MiscSettingEditor,

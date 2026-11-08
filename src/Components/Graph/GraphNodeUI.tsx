@@ -16,6 +16,7 @@ import { NODE_HEADER_HEIGHT, NODE_WIDTH, PORT_HEIGHT_WITH_SPACING } from "./Node
 import { OutputPortView } from "./OutputPortView";
 import { getSettingHeight, SettingControl } from "./SettingControl";
 import { TypeSelectorUI } from "./TypeSelectorUI";
+import def from "ajv/dist/vocabularies/applicator/additionalItems";
 
 const AnimatedG = animated(styled.g`
   color: var(--color-text);
@@ -76,6 +77,17 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
     const portHeight = NODE_HEADER_HEIGHT + PORT_HEIGHT_WITH_SPACING * (inputCount + outputCount);
     let settingOffset = portHeight;
 
+    const settingsValue = definition.settings.reduce((old, item, i) => {
+        const isGlobal = item.globalKey !== undefined || node.overrideGlobalSetting?.[item.id];
+        const globalKey = (item.globalKey || node.overrideGlobalSetting?.[item.id]) as string;
+        const value = isGlobal ?
+            (globalSettings[globalKey] === undefined && "defaultValue" in item ? item.defaultValue : globalSettings[globalKey]) :
+            node.settings[item.id];
+
+        return { old, [item.id]: value };
+    }, {})
+
+
     const styles = useSpring({
         from: {
             opacity: 0,
@@ -90,7 +102,7 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
             filter: dragged ? `drop-shadow(0 10px 10px rgba(59, 59, 59, 0.5))` : `drop-shadow(0 0px 0px rgba(57, 57, 57, 0.5))`,
         },
     });
-    const height = GetNodeHeight(node, definition);
+    const height = GetNodeHeight(node, definition, settingsValue);
 
     return (
         <AnimatedG
@@ -180,10 +192,12 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
                     );
                 })}
                 {definition.settings.map((item, i) => {
-                    const isGlobal = item.globalKey !== undefined;
-
-                    const value = isGlobal ? (globalSettings[item.globalKey as string] === undefined && "defaultValue" in item ? item.defaultValue : globalSettings[item.globalKey as string]) : node.settings[item.id];
-                    const changeMethod = isGlobal ? (value: any) => setGlobvalSetting(item.globalKey as string, value) : (value: any) => setNodeSetting(node.id, item.id, value);
+                    const isGlobal = item.globalKey !== undefined || node.overrideGlobalSetting?.[item.id];
+                    const globalKey = (item.globalKey || node.overrideGlobalSetting?.[item.id]) as string;
+                    const value = isGlobal ?
+                        (globalSettings[globalKey] === undefined && "defaultValue" in item ? item.defaultValue : globalSettings[globalKey]) :
+                        node.settings[item.id];
+                    const changeMethod = isGlobal ? (value: any) => setGlobvalSetting(globalKey, value) : (value: any) => setNodeSetting(node.id, item.id, value);
                     var n = (
                         <SettingControl
                             y={settingOffset}
