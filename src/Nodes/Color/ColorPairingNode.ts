@@ -23,15 +23,15 @@ export const ColorPairingNode: NodeDefinition = {
         }
     },
     contextMenu(node) {
-        if (!node.overrideGlobalSetting?.["palette"]) {
+        if (!node.overrideGlobalSetting?.["pairing"]) {
             return {
                 "Convert to global (use global)": (node, tree) => {
                     const nodeId = node.id;
-                    setTimeout(() => useTree.getState().makeSettingGlobal(nodeId, "palette", false), 0)
+                    setTimeout(() => useTree.getState().makeSettingGlobal(nodeId, "pairing", false), 0)
                 },
                 "Convert to global (overwrite)": (node, tree) => {
                     const nodeId = node.id;
-                    setTimeout(() => useTree.getState().makeSettingGlobal(nodeId, "palette", true), 0)
+                    setTimeout(() => useTree.getState().makeSettingGlobal(nodeId, "pairing", true), 0)
                 }
             }
         }

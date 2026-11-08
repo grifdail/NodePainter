@@ -157,6 +157,22 @@ export type PostProcessListSettingDefinition = BaseSettingDefinition & {
     defaultValue: PostProcessLayer[];
 };
 
+type ResolutionSettingData = {
+    mode: "scaled",
+    scale: number
+} | {
+    mode: "original"
+} | {
+    mode: "static",
+    width: number,
+    height: number
+}
+export type ResolutionSettingDefinition = BaseSettingDefinition & {
+    type: "resolution";
+    defaultValue: ResolutionSettingData;
+};
+
+
 
 export type SettingDefinition =
     | NumberSettingDefinition
