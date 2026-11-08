@@ -9,6 +9,7 @@ import { EnvelopeData } from "./EnvelopeData";
 import { Flipbook } from "./FlipBook";
 import { NodeData } from "./NodeData";
 import { PostProcessLayer } from "./PostProcessLayer";
+import { ResolutionSettingData } from "./ResolutionSettingData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
 
 
@@ -157,16 +158,6 @@ export type PostProcessListSettingDefinition = BaseSettingDefinition & {
     defaultValue: PostProcessLayer[];
 };
 
-type ResolutionSettingData = {
-    mode: "scaled",
-    scale: number
-} | {
-    mode: "original"
-} | {
-    mode: "static",
-    width: number,
-    height: number
-}
 export type ResolutionSettingDefinition = BaseSettingDefinition & {
     type: "resolution";
     defaultValue: ResolutionSettingData;
@@ -203,6 +194,7 @@ export type SettingDefinition =
     | GraphAreaSettingDefinition
     | AnimationSequenceSettingDefinition
     | PostProcessListSettingDefinition
+    | ResolutionSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
 

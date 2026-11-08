@@ -12,6 +12,7 @@ import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation
 import { navigate } from "wouter/use-browser-location";
 import { closeAllPopup } from "../Actions/navigationAction";
 import { NodeLibrary } from "../Nodes/Nodes";
+import { SettingGenerator } from "../Components/Settings/SettingGenerator";
 
 type CustomNodeCreationSetting = {
     baseNode: NodeDefinition;
@@ -47,8 +48,8 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
             dataInputs: [],
             dataOutputs: [{ id: "image", type: "image", defaultValue: null }],
             settings: [
-                { id: "width", type: "number", defaultValue: 400 },
-                { id: "height", type: "number", defaultValue: 400 },
+
+                SettingGenerator.resolution("resolution", { mode: "original" }),
             ],
             executeAs: RenderShader.id,
         },

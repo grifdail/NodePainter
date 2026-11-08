@@ -82,9 +82,6 @@ const ColorList = styled.ul`
 export const PostProcessListSetting: SettingComponent<PostProcessListSettingDefinition> = {
     UI: function ({ onChange, value }: SettingProps<PostProcessListSettingDefinition>) {
         var list = value as Array<PostProcessLayer>;
-        console.log(list);
-
-
         const { change: onChangeLayer, remove: removeLayer, move, addNew: addNewColor } = useListManipulator(list, onChange, createPostProcessLayer);
 
         const changeProperty = (i: number, layer: PostProcessLayer, property: string) => {
@@ -166,7 +163,7 @@ export const PostProcessListSetting: SettingComponent<PostProcessListSettingDefi
             </div >
         );
     },
-    getSize: function (value, def): number {
+    getSize: function (value, def, node): number {
         var list = value as Array<PostProcessLayer>;
         return 70 + list.reduce((size, layer) => {
 

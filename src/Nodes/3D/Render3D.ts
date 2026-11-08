@@ -3,6 +3,7 @@ import { SettingGenerator } from "../../Components/Settings/SettingGenerator";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor } from "../../Types/vectorDataType";
+import { computeResolution } from "../../Utils/graph/execution/computeResolution";
 import { DEFAULT_CAMERA_TRANSFORM, Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
 import { StatefullInstance } from "./VirtualNodeTypes/StatefullInstance";
 import { StatefullVirtualElement } from "./VirtualNodeTypes/StatefullVirtualElement";
@@ -38,13 +39,12 @@ export const Render3D: NodeDefinition = {
     ],
     tags: ["3D"],
     settings: [
-        { id: "width", type: "number", defaultValue: 400 },
-        { id: "height", type: "number", defaultValue: 400 },
-        SettingGenerator["postprocess-list"]("postprocess", [])
+        SettingGenerator["postprocess-list"]("postprocess", []),
+        SettingGenerator.resolution("resolution", { mode: "original" })
     ],
     getData(portId, node, context) {
-        const width = Math.floor(node.settings.width);
-        const height = Math.floor(node.settings.height);
+        const { width, height } = computeResolution(context, node.settings.resolution)
+
         //Inputs
         const clearColor = context.getInputValueColor(node, "clearColor");
         const cameraVirtualElement = context.getInputValue(node, "camera", "object3d") as StatefullVirtualElement<any, any>;

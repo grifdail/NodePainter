@@ -160,7 +160,6 @@ export function Modal({ children, title, icon: Icon, onClose, stretch, size = "m
     });
 
     useHotkeys("esc", () => {
-        console.log("hhhh")
         if (onClose) {
             onClose();
         }

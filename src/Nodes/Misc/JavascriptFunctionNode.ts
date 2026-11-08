@@ -24,7 +24,6 @@ export const JavascriptFunctionNode: NodeDefinition = {
             type: "js-function",
             defaultValue: createDefaultJavascriptFunction(),
             onChange(node, newValue, oldValue, definitions) {
-                console.log("cccc");
                 var tree = useTree.getState();
                 tree.replaceInputs((t) => t.id === node.id, [Port.CacheId(), ...newValue.inputVariables]);
                 tree.replaceOutput((t) => t.id === node.id, newValue.outputVariables);

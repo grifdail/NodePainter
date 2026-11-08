@@ -84,7 +84,7 @@ export const GraphNodeUI = memo(function GraphNode({ node, onClickPort, xy, onMo
             (globalSettings[globalKey] === undefined && "defaultValue" in item ? item.defaultValue : globalSettings[globalKey]) :
             node.settings[item.id];
 
-        return { old, [item.id]: value };
+        return { ...old, [item.id]: value };
     }, {})
 
 

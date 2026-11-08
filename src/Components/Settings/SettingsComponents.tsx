@@ -30,6 +30,8 @@ import { PostProcessListSetting } from "./PostProcessListSetting";
 import { NodeData } from "../../Types/NodeData";
 import { Color } from "../../Types/vectorDataType";
 import { ColorPairingSetting } from "./ColorPairingSetting";
+import { ResolutionSettingData } from "../../Types/ResolutionSettingData";
+import { ResolutionSetting } from "./ResolutionSetting";
 
 
 
@@ -61,7 +63,8 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "graph-area": GraphAreaSetting,
     "animation-sequence": AnimationSequenceSetting,
     "postprocess-list": PostProcessListSetting,
-    "color-pairing": ColorPairingSetting
+    "color-pairing": ColorPairingSetting,
+    resolution: ResolutionSetting,
 };
 
 

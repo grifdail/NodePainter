@@ -1,4 +1,5 @@
 import { NodeLibrary } from "../../../Nodes/Nodes";
+import { NodeData } from "../../../Types/NodeData";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { SketchSave } from "../../../Types/SketchTemplate";
 import { White } from "../../math/colorUtils";
@@ -295,6 +296,7 @@ const UPGRADES: UpgradeFunction[] = [
     },
     (sketch) => addMissingNodePort(["Draw/Spline"], sketch),
     (sketch) => addMissingSettings(["Render3D"], sketch),
+    (sketch) => addMissingSettings(["Render3D", "Image/Precompute", "Image/Flipbook", "Technical/ImageEffectShader/Base"], sketch, (s, node, v) => s === "resolution" ? { mode: "static", width: node.settings.width, height: node.settings.height, } : v),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
@@ -335,18 +337,22 @@ function addMissingNodePort(list: string[], sketch: SketchSave): SketchSave {
     });
     return sketch;
 }
-function addMissingSettings(list: string[], sketch: SketchSave): SketchSave {
+function addMissingSettings(list: string[], sketch: SketchSave, getNewValue?: (s: string, node: NodeData, v: any) => any): SketchSave {
     Object.values(sketch.nodes).forEach((node) => {
-        if (!list.includes(node.type)) {
+        const def = NodeLibrary[node.type];
+        if (!(list.includes(node.type) || list.includes(def.executeAs || ""))) {
             return;
         }
-        const def = NodeLibrary[node.type];
-        const defaultsValues = createSettingObjectForSettingDefinition(def.settings);
-        def.settings.forEach((setting) => {
-            if (!node.settings[setting.id]) {
-                node.settings[setting.id] = defaultsValues[setting.id]
-            }
-        });
+        const values = createSettingObjectForSettingDefinition(def.settings);
+
+        if (values !== undefined) {
+            def.settings.forEach((setting) => {
+                if (!node.settings[setting.id]) {
+                    node.settings[setting.id] = getNewValue ? getNewValue(setting.id, node, values[setting.id]) : values[setting.id]
+                }
+            });
+        }
+
     });
     return sketch;
 }

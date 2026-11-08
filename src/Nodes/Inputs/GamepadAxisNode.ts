@@ -72,7 +72,7 @@ export const GamepadAxisNode: NodeDefinition = {
         function evalButton(gamepad: Gamepad): Vector2 {
             var mapping = MAPPING[gamepad.id] || MAPPING["standard"]
             var mappingStick = mapping[key as keyof GamepadMapping]
-            console.log(mapping)
+
             if (!mappingStick) {
                 return [0, 0];
             }

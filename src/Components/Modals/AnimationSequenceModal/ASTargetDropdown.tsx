@@ -45,7 +45,6 @@ export const ASTargetDropdown: React.FC<{
                                     constantValue: structuredClone(portDef.defaultValue)
                                 }
                             };
-                            console.log("aaaaaaaaaaaaa", newBlock, oldParam)
 
                         }
                         onChange(newBlock)

@@ -1,9 +1,11 @@
 import { IconPhoto } from "@tabler/icons-react";
+import { SettingGenerator } from "../../../Components/Settings/SettingGenerator";
 import { ImageData } from "../../../Types/ImageData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { computeResolution } from "../../../Utils/graph/execution/computeResolution";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 
 
@@ -17,12 +19,12 @@ export const RenderShader: NodeDefinition = {
     tags: ["Shader"],
 
     settings: [
-        { id: "width", type: "number", defaultValue: 400 },
-        { id: "height", type: "number", defaultValue: 400 },
+
+        SettingGenerator.resolution("resolution", { mode: "original" })
     ],
     getData(portId, node, context) {
-        const width = node.settings.width;
-        const height = node.settings.height;
+
+        const { width, height } = computeResolution(context, node.settings.resolution)
         const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
         const keyCache = `${node.id}-${cacheId}-img`;
         const keyShader = `${node.id}-${cacheId}-shader`;

@@ -1,9 +1,11 @@
 import { IconBrush } from "@tabler/icons-react";
 import { Graphics } from "p5";
+import { SettingGenerator } from "../../Components/Settings/SettingGenerator";
 import { createDefaultFlipbook, Flipbook } from "../../Types/FlipBook";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
+import { computeResolution } from "../../Utils/graph/execution/computeResolution";
 import { toP5Color } from "../../Utils/math/colorUtils";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
@@ -17,13 +19,15 @@ export const FlipbookNode: NodeDefinition = {
 
     settings: [
         { id: "flipbook", type: "flipbook", defaultValue: createDefaultFlipbook() },
-        { id: "width", type: "number", defaultValue: 400 },
-        { id: "height", type: "number", defaultValue: 400 },],
+        SettingGenerator.resolution("resolution", { mode: "original" })
+    ],
     getData(portId, data, context) {
         const keyImg = `${data.id}-image-cache`;
         let img = context.blackboard[keyImg];
         if (!img) {
-            img = new ImageData({ p5Graphics: context.p5.createGraphics(data.settings.width, data.settings.height) });
+
+            const { width, height } = computeResolution(context, data.settings.resolution)
+            img = new ImageData({ p5Graphics: context.p5.createGraphics(width, height) });
             context.blackboard[keyImg] = img;
         }
         const keyid = `${data.id}-imageId`;
