@@ -7,7 +7,7 @@ import { SketchElement, MY_SAVED_SKETCH, MY_ONLINE_SKETCH } from "./SketchModal"
 export function useSketchCollection(): [SketchElement[], string[]] {
     const [localSketches, , deleteLocalSketch] = useAllSavedSketch();
     const { sketchs: remotesSketches, deleteSketch: deleteRemoteSketch, getSketchContent } = useRemoteStorage();
-    const tags = new Set([MY_SAVED_SKETCH]);
+    const tags = new Set([MY_SAVED_SKETCH, MY_ONLINE_SKETCH]);
     return [
         [
             ...Object.entries(Templates)

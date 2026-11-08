@@ -143,16 +143,16 @@ export const DeleteButton = styled.a`
 `;
 
 function SketchButton({ onClick, item, onDelete }: { onClick: MouseEventHandler<Element>; onDelete: MouseEventHandler<Element> | undefined; item: SketchElement }) {
-    var Icon = IconPerTypes[item.category] === undefined ? IconPerTypes.default : IconPerTypes[item.category];
+    const Icon = IconPerTypes[item.category] === undefined ? IconPerTypes.default : IconPerTypes[item.category];
     return (
         <StyledButton onClick={onClick}>
-            <Icon></Icon>
+            <Icon />
             <div>{item.name}</div>
             <p>{item.category}</p>
-            <span className="spacer"></span>
+            <span className="spacer" />
             {onDelete && (
                 <DeleteButton onClick={onDelete}>
-                    <IconX></IconX>
+                    <IconX />
                 </DeleteButton>
             )}
         </StyledButton>
@@ -175,24 +175,26 @@ export function SketchModal({ close }: { close: () => void }) {
     const filteredList = useMemo(() => {
         return allItemExceptTemplate
             .filter((sketch) => {
-                if (searchTerm.tags && searchTerm.tags.length > 0) {
-                    if (!searchTerm.tags.includes(toCategoryId(sketch.category))) {
-                        return false;
-                    }
+                if (searchTerm.tags && searchTerm.tags.length > 0 && !searchTerm.tags.includes(toCategoryId(sketch.category))) {
+                    return false;
                 }
                 return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
             })
             .sort((a, b) => {
                 const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
+                if (r === 0) {
+                    return a.name.localeCompare(b.name);
+                }
                 return r;
             });
     }, [allItemExceptTemplate, searchTerm]);
+    console.log(categoriesExceptTemplate)
 
     return (
         <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
             <MainDiv>
                 <ButtonGroup align="stretch" $forceStretch $responsive>
-                    <Button onClick={withConfirm(() => loadSketch(new Promise<SketchSave>((r) => r(lastSavedSketch as SketchSave))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch"></Button>
+                    <Button onClick={withConfirm(() => loadSketch(new Promise<SketchSave>((r) => r(lastSavedSketch as SketchSave))))} disabled={lastSavedSketch === null} icon={IconReload} label="Last opened sketch" />
                     <Menu menuButton={<Button icon={IconFilePlus} label="New" />}>
                         <MenuItem onClick={() => {
                             useTree.getState().reset();
@@ -202,16 +204,16 @@ export function SketchModal({ close }: { close: () => void }) {
                             allItemInTemplate.map(sketch => <MenuItem key={sketch.name} onClick={withConfirm(() => loadSketch(sketch.content()))}>{sketch.name}</MenuItem>)
                         }
                     </Menu>
-                    <Button onClick={openLoadModal} icon={IconUpload} label="Load from JSON"></Button>
+                    <Button onClick={openLoadModal} icon={IconUpload} label="Load from JSON" />
                 </ButtonGroup>
                 <div className="files">
                     <SearchForm>
                         <span>
                             <IconSearch> </IconSearch>
-                            <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus></Input>
+                            <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus />
                         </span>
                     </SearchForm>
-                    <TagList options={Object.fromEntries(categoriesExceptTemplate.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag}></TagList>
+                    <TagList options={Object.fromEntries(categoriesExceptTemplate.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag} />
 
                     <NodeList>
                         {filteredList.map((item) => (
@@ -258,16 +260,20 @@ export function SketchModal({ close }: { close: () => void }) {
     }
 }
 
+const ALL_TAG_REGEX = /tag:(\w+)/gm
 function useToggleTag(searchTermRaw: string, setSearchTerm: (t: string) => void) {
     return useCallback(
         function toggleTag(tag: string): void {
-            var key = `tag:${toCategoryId(tag)}`;
-            var regexKey = new RegExp(key, "gi");
-            if (searchTermRaw.match(regexKey)) {
-                setSearchTerm(searchTermRaw.replaceAll(regexKey, "").trim());
-            } else {
-                setSearchTerm(searchTermRaw.trim() + " " + key);
+            const key = `tag:${toCategoryId(tag)}`;
+            const regexKey = new RegExp(key, "gi");
+            const wasSame = searchTermRaw.match(regexKey);
+            const previous = searchTermRaw.match(ALL_TAG_REGEX);
+            let newSearchTerm = previous ? searchTermRaw.replaceAll(ALL_TAG_REGEX, "").trim() : "";
+            console.log(previous);
+            if (!wasSame) {
+                newSearchTerm = `${newSearchTerm.trim()} ${key}`
             }
+            setSearchTerm(newSearchTerm);
         },
         [searchTermRaw, setSearchTerm]
     );
