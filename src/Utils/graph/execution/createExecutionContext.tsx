@@ -217,6 +217,7 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
                 context.p5.pop()
 
             }
+            context.endOfFrameCleanup();
         }
     };
     return context;

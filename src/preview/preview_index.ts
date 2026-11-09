@@ -124,7 +124,7 @@ function initGame(tree: SketchSave) {
                     console.error(err);
                 }
 
-                context.endOfFrameCleanup();
+
             };
         }
     }, document.querySelector("#canvas-parent") as HTMLElement)
