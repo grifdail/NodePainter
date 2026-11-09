@@ -297,6 +297,7 @@ const UPGRADES: UpgradeFunction[] = [
     (sketch) => addMissingNodePort(["Draw/Spline"], sketch),
     (sketch) => addMissingSettings(["Render3D"], sketch),
     (sketch) => addMissingSettings(["Render3D", "Image/Precompute", "Image/Flipbook", "Technical/ImageEffectShader/Base"], sketch, (s, node, v) => s === "resolution" ? { mode: "static", width: node.settings.width, height: node.settings.height, } : v),
+    (sketch) => addMissingNodePort(["Render3D"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

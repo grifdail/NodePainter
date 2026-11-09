@@ -5,7 +5,7 @@ import { Color, Vector2 } from "./vectorDataType";
 
 
 type BloomPostProcessLayer = {
-    type: "Bloom",
+    effectType: "Bloom",
     luminanceThreshold: number,
     luminanceSmoothing: number,
     intensity: number,
@@ -13,25 +13,25 @@ type BloomPostProcessLayer = {
 };
 
 type BlurPostProcessLayer = {
-    type: "Blur"
+    effectType: "Blur"
 };
 
 type VignettePostProcessLayer = {
-    type: "Vignette",
+    effectType: "Vignette",
     offset: number,
     darkness: number,
 }
 
 type SepiaPostProcessLayer = {
-    type: "Sepia",
+    effectType: "Sepia",
     intensity: number,
 }
 type ColorAverageProcessLayer = {
-    type: "ColorAverage",
+    effectType: "ColorAverage",
 }
 
 type TiltShiftPostProcessLayer = {
-    type: "TiltShift",
+    effectType: "TiltShift",
     offset: number,
     rotation: number,
     focusArea: number,
@@ -39,21 +39,21 @@ type TiltShiftPostProcessLayer = {
 }
 
 type DepthOfFieldPostProcessLayer = {
-    type: "DepthOfField",
+    effectType: "DepthOfField",
     focusDistance: number,
     focusRange: number,
     bokehScale: number,
 }
 
 type ChromaticAberrationPostProcessLayer = {
-    type: "ChromaticAberration",
+    effectType: "ChromaticAberration",
     offset: Vector2,
     radialModulation: boolean,
     modulationOffset: number,
 }
 
 type BokehPostProcessLayer = {
-    type: "Bokeh",
+    effectType: "Bokeh",
     focus: number,
     dof: number,
     aperture: number,
@@ -61,34 +61,34 @@ type BokehPostProcessLayer = {
 }
 
 type BrightnessContrastProcessLayer = {
-    type: "BrightnessContrast",
+    effectType: "BrightnessContrast",
     brightness: number,
     contrast: number,
 }
 
 type DepthProcessLayer = {
-    type: "Depth",
+    effectType: "Depth",
     inverted: boolean,
 }
 
 type ColorDepthProcessLayer = {
-    type: "ColorDepth",
+    effectType: "ColorDepth",
     bits: number,
 }
 
 type HueSaturationPostProcessLayer = {
-    type: "HueSaturation",
+    effectType: "HueSaturation",
     hue: number,
     saturation: number,
 }
 type ScanlineEffectPostProcessLayer = {
-    type: "ScanlineEffect",
+    effectType: "ScanlineEffect",
     density: number,
 }
 
 
 type ToneMappingPostProcessLayer = {
-    type: "ToneMapping",
+    effectType: "ToneMapping",
     resolution: number,
     whitePoint: number,
     middleGrey: number,
@@ -98,7 +98,7 @@ type ToneMappingPostProcessLayer = {
 }
 
 type LensDistortionPostProcessLayer = {
-    type: "LensDistortion",
+    effectType: "LensDistortion",
     distortion: Vector2,
     principalPoint: Vector2,
     focalLength: Vector2,
@@ -106,8 +106,8 @@ type LensDistortionPostProcessLayer = {
 }
 
 
-type FogPostProcessLayer = {
-    type: "Fog",
+export type FogPostProcessLayer = {
+    effectType: "Fog",
     minRange: number,
     maxRange: number,
     colorStart: Color,
@@ -134,17 +134,23 @@ export type PostProcessLayer =
     LensDistortionPostProcessLayer |
     FogPostProcessLayer |
     HueSaturationPostProcessLayer
-export type PostProcessLayerType = PostProcessLayer["type"];
+export type PostProcessLayerType = PostProcessLayer["effectType"];
 
+export function validateEffectLayer(struct: any) {
+    return struct && typeof struct === "object" && (typeof struct.effectType === "string" && PostProcessLayerUtils[struct.effectType as PostProcessLayerType] !== undefined)
+}
+export function validateEffectLayers(list: any) {
+    return list.filter(validateEffectLayer) as PostProcessLayer[]
+}
 
 type PostProcessSetting<TPostProcessLayer extends PostProcessLayer> = {
     default: TPostProcessLayer,
     addEffect: (layer: TPostProcessLayer, composer: EffectComposer, camera: Camera, scene: Scene) => void;
 }
-export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefinition["type"]]: PostProcessSetting<TDefinition> } = {
+export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefinition["effectType"]]: PostProcessSetting<TDefinition> } = {
     Bloom: {
         default: {
-            type: "Bloom",
+            effectType: "Bloom",
             luminanceThreshold: 0.8,
             luminanceSmoothing: 0.5,
             intensity: 2,
@@ -161,7 +167,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Blur: {
         default: {
-            type: "Blur"
+            effectType: "Blur"
         },
         addEffect: function (layer: BlurPostProcessLayer, composer: EffectComposer, camera: Camera): void {
             composer.addPass(new KawaseBlurPass({}));
@@ -169,7 +175,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Vignette: {
         default: {
-            type: "Vignette",
+            effectType: "Vignette",
             offset: 0,
             darkness: 0.5
         },
@@ -182,7 +188,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Sepia: {
         default: {
-            type: "Sepia",
+            effectType: "Sepia",
             intensity: 1
         },
         addEffect: function (layer: SepiaPostProcessLayer, composer: EffectComposer, camera: Camera): void {
@@ -191,7 +197,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     TiltShift: {
         default: {
-            type: "TiltShift",
+            effectType: "TiltShift",
             offset: 0,
             rotation: 0,
             focusArea: 0.4,
@@ -208,7 +214,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     DepthOfField: {
         default: {
-            type: "DepthOfField",
+            effectType: "DepthOfField",
             focusDistance: 3,
             focusRange: 2,
             bokehScale: 1
@@ -223,7 +229,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Bokeh: {
         default: {
-            type: "Bokeh",
+            effectType: "Bokeh",
             focus: 0.5,
             dof: 0.02,
             aperture: 0.015,
@@ -240,7 +246,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     BrightnessContrast: {
         default: {
-            type: "BrightnessContrast",
+            effectType: "BrightnessContrast",
             brightness: 0,
             contrast: 0
         },
@@ -253,7 +259,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     ChromaticAberration: {
         default: {
-            type: "ChromaticAberration",
+            effectType: "ChromaticAberration",
             offset: [0.01, 0.01],
             radialModulation: true,
             modulationOffset: 0.15
@@ -268,7 +274,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     ColorAverage: {
         default: {
-            type: "ColorAverage",
+            effectType: "ColorAverage",
         },
         addEffect: function (layer: ColorAverageProcessLayer, composer: EffectComposer, camera: Camera): void {
             composer.addPass(new EffectPass(camera, new ColorAverageEffect()));
@@ -276,7 +282,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Depth: {
         default: {
-            type: "Depth",
+            effectType: "Depth",
             inverted: false
         },
         addEffect: function (layer: DepthProcessLayer, composer: EffectComposer, camera: Camera): void {
@@ -287,7 +293,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     ColorDepth: {
         default: {
-            type: "ColorDepth",
+            effectType: "ColorDepth",
             bits: 16
         },
         addEffect: function (layer: ColorDepthProcessLayer, composer: EffectComposer, camera: Camera): void {
@@ -298,7 +304,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     HueSaturation: {
         default: {
-            type: "HueSaturation",
+            effectType: "HueSaturation",
             hue: 0,
             saturation: 0
         },
@@ -311,7 +317,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     ScanlineEffect: {
         default: {
-            type: "ScanlineEffect",
+            effectType: "ScanlineEffect",
             density: 1.25
         },
         addEffect: function (layer: ScanlineEffectPostProcessLayer, composer: EffectComposer, camera: Camera): void {
@@ -322,7 +328,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     ToneMapping: {
         default: {
-            type: "ToneMapping",
+            effectType: "ToneMapping",
             resolution: 256,
             whitePoint: 4,
             middleGrey: 0.6,
@@ -343,7 +349,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     LensDistortion: {
         default: {
-            type: "LensDistortion",
+            effectType: "LensDistortion",
             distortion: [0.1, 0.1],
             principalPoint: [0, 0],
             focalLength: [1, 1],
@@ -360,7 +366,7 @@ export const PostProcessLayerUtils: { [TDefinition in PostProcessLayer as TDefin
     },
     Fog: {
         default: {
-            type: "Fog",
+            effectType: "Fog",
             minRange: 0,
             maxRange: 20,
             colorStart: [1, 1, 1, 1],

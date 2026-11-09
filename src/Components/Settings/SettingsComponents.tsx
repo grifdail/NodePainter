@@ -26,11 +26,7 @@ import { JavascriptFunctionSetting } from "./JavascriptFunctionSetting";
 import { FlipbookAnimationSetting } from "./FlipbookAnimationSetting";
 import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
 import { SettingComponent } from "../../Types/SettingComponent";
-import { PostProcessListSetting } from "./PostProcessListSetting";
-import { NodeData } from "../../Types/NodeData";
-import { Color } from "../../Types/vectorDataType";
 import { ColorPairingSetting } from "./ColorPairingSetting";
-import { ResolutionSettingData } from "../../Types/ResolutionSettingData";
 import { ResolutionSetting } from "./ResolutionSetting";
 
 
@@ -62,7 +58,6 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "bezier-path": BezierPathSetting,
     "graph-area": GraphAreaSetting,
     "animation-sequence": AnimationSequenceSetting,
-    "postprocess-list": PostProcessListSetting,
     "color-pairing": ColorPairingSetting,
     resolution: ResolutionSetting,
 };

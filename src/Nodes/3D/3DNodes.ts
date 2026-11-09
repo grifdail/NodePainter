@@ -2,6 +2,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { BillBoardNode } from "./BillboardNode";
 import { generateMaterialNodeFromVirtualNode, generateNodeFromVirtualNode } from "./generateNodeFromVirtualNode";
 import { ParametricGeometry } from "./ParametricGeometry";
+import { PostProcess3DNodes } from "./PostProcess";
 import { Render3D } from "./Render3D";
 import { Render3DLine } from "./Render3DLine";
 import { RenderModel } from "./RenderModel";
@@ -23,6 +24,7 @@ export const Nodes3D = [
     ...MaterialNodes,
     ...GeometryNodes,
     ...CameraNodes,
+    ...PostProcess3DNodes,
     Render3D,
     UploadModel,
     //GenerateUVModel,

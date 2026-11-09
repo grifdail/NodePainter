@@ -2,6 +2,7 @@ import { IconBadge3d } from "@tabler/icons-react";
 import { SettingGenerator } from "../../Components/Settings/SettingGenerator";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
+import { validateEffectLayers } from "../../Types/PostProcessLayer";
 import { createColor } from "../../Types/vectorDataType";
 import { computeResolution } from "../../Utils/graph/execution/computeResolution";
 import { DEFAULT_CAMERA_TRANSFORM, Render3DProps, ThreeJSContext } from "./VirtualNodeTypes/Render3DType";
@@ -29,6 +30,7 @@ export const Render3D: NodeDefinition = {
             type: "object3d",
             defaultValue: null,
         },
+        Port["array-struct"]("effects", [])
     ],
     dataOutputs: [
         {
@@ -39,7 +41,6 @@ export const Render3D: NodeDefinition = {
     ],
     tags: ["3D"],
     settings: [
-        SettingGenerator["postprocess-list"]("postprocess", []),
         SettingGenerator.resolution("resolution", { mode: "original" })
     ],
     getData(portId, node, context) {
@@ -54,7 +55,10 @@ export const Render3D: NodeDefinition = {
 
         const id = context.getCallId(node, width, height);
 
-        const virtual = VirtualNodes.Render3DType.generate(id, [cameraVirtualElement, child], width, height, clearColor, node.settings.postprocess);
+        const postProcessRaw = context.getInputValue(node, "effects", "array-struct") as any[];
+        const postProcess = validateEffectLayers(postProcessRaw)
+
+        const virtual = VirtualNodes.Render3DType.generate(id, [cameraVirtualElement, child], width, height, clearColor, postProcess);
 
         const keyCache = `${node.id}-cache`;
         let threeContext = context.blackboard[keyCache] as StatefullInstance<ThreeJSContext, Render3DProps> | undefined;

@@ -8,7 +8,6 @@ import { JavascriptFunction } from "./CodeBlock/JavascriptFunction";
 import { EnvelopeData } from "./EnvelopeData";
 import { Flipbook } from "./FlipBook";
 import { NodeData } from "./NodeData";
-import { PostProcessLayer } from "./PostProcessLayer";
 import { ResolutionSettingData } from "./ResolutionSettingData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
 
@@ -153,10 +152,6 @@ export type GraphAreaSettingDefinition = BaseSettingDefinition & {
     type: "graph-area";
 };
 
-export type PostProcessListSettingDefinition = BaseSettingDefinition & {
-    type: "postprocess-list";
-    defaultValue: PostProcessLayer[];
-};
 
 export type ResolutionSettingDefinition = BaseSettingDefinition & {
     type: "resolution";
@@ -193,7 +188,6 @@ export type SettingDefinition =
     | GroupSettingDefinition
     | GraphAreaSettingDefinition
     | AnimationSequenceSettingDefinition
-    | PostProcessListSettingDefinition
     | ResolutionSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];

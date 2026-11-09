@@ -17,7 +17,8 @@ export type NodeTags = "Math"
     | "Custom"
     | "Random"
     | "Noise"
-    | "Dictionary";
+    | "Dictionary"
+    | "PostProcess";
 
 export const NodeTagPriority: { [key in NodeTags]?: number } = {
     Misc: 100,
