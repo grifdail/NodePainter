@@ -18,6 +18,7 @@ export function useSketchCollection(): [SketchElement[], string[]] {
                         .filter(([name]) => name[0] !== "_")
                         .map(([fileName, content]) => ({
                             name: fileName,
+                            time: 0,
                             category: folderName,
                             content: content,
                         }));
@@ -25,6 +26,7 @@ export function useSketchCollection(): [SketchElement[], string[]] {
             ...(localSketches || []).map((sketch) => {
                 return {
                     name: sketch.name,
+                    time: 0,
                     category: MY_SAVED_SKETCH,
                     delete: deleteLocalSketch,
                     content: () => new Promise<SketchSave>((r) => r(JSON.parse(sketch.content))),
@@ -32,10 +34,11 @@ export function useSketchCollection(): [SketchElement[], string[]] {
             }),
             ...(remotesSketches || []).map((sketch) => {
                 return {
-                    name: sketch,
+                    name: sketch.name,
+                    time: sketch.time,
                     category: MY_ONLINE_SKETCH,
-                    delete: () => deleteRemoteSketch(sketch),
-                    content: () => getSketchContent(sketch),
+                    delete: () => deleteRemoteSketch(sketch.name),
+                    content: () => getSketchContent(sketch.name),
                 };
             }),
         ],

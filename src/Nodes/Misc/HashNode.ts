@@ -33,8 +33,10 @@ export const HashNode: NodeDefinition = {
                             }
 
                             useTree.getState().dangerouselyUpdateNode(nodeId, (node) => {
-                                node.dataInputs[fieldResult.name] = createPortConnection({
-                                    id: `input-${Object.keys(node.dataInputs).length + 1}`,
+                                console.log(Object.keys(node.dataInputs).length)
+                                var key = `input-${Object.keys(node.dataInputs).length + 1}`
+                                node.dataInputs[key] = createPortConnection({
+                                    id: key,
                                     type: fieldResult.type,
                                     defaultValue: PortTypeDefinitions[fieldResult.type as PortType].createDefaultValue(),
                                 });

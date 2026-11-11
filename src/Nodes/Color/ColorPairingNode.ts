@@ -16,10 +16,11 @@ export const ColorPairingNode: NodeDefinition = {
 
     settings: [{ id: "pairing", type: "color-pairing", defaultValue: [Black(), White()] }],
     getData: (portId, node, context) => {
+        const pairing = context.getSetting<ColorPairing>(node, "pairing") || [[Black(), White()]]
         if (portId === "A") {
-            return context.getSetting<ColorPairing>(node, "pairing")[0]
+            return pairing[0]
         } else {
-            return context.getSetting<ColorPairing>(node, "pairing")[1]
+            return pairing[1]
         }
     },
     contextMenu(node) {

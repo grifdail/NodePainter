@@ -13,7 +13,10 @@ const rmInstance = new RM({
 rmInstance.access.claim("node-painter", "rw");
 const remoteFileRoot = rmInstance.scope("/node-painter/")
 
-
+type RemoteSketchData = {
+    name: string,
+    time: number,
+}
 
 
 function getSketchRemotePath(name: string): string {
@@ -23,7 +26,7 @@ function getSketchRemotePath(name: string): string {
 
 export const useRemoteStorage = () => {
     const [isConnected, setIsConnected] = useState(rmInstance.connected)
-    const [sketches, setSketches] = useState<string[]>([])
+    const [sketches, setSketches] = useState<RemoteSketchData[]>([])
     const [userAdress, setUserAdress] = useState(rmInstance?.remote?.userAddress)
 
 
@@ -31,9 +34,8 @@ export const useRemoteStorage = () => {
         if (!rmInstance.connected) {
             return;
         }
-        const items = await remoteFileRoot.getListing("sketches/") as Record<string, boolean>;
-
-        const result = Object.keys(items).map(item => item.replace(/\.json$/gi, ""))
+        const items = await remoteFileRoot.getListing("sketches/") as Record<string, any>;
+        const result = Object.entries(items).map(([item, value]) => ({ name: item.replace(/\.json$/gi, ""), time: new Date(value["Last-Modified"]).getTime() }))
         setSketches(result);
     }, [])
 

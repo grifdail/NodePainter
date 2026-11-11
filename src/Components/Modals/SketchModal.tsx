@@ -1,5 +1,5 @@
-import { Menu, MenuItem } from "@szhsin/react-menu";
-import { Icon, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPlayerPlay, IconReload, IconSearch, IconUpload, IconX } from "@tabler/icons-react";
+import { Menu, MenuItem, MenuRadioGroup } from "@szhsin/react-menu";
+import { Icon, IconDeviceFloppy, IconFile, IconFilePlus, IconInfoCircle, IconPlayerPlay, IconReload, IconSearch, IconSortDescending, IconUpload, IconX } from "@tabler/icons-react";
 import { MouseEventHandler, useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import { openLoadModal } from "../../Actions/navigationAction";
@@ -7,7 +7,7 @@ import { getLastSavedSketch } from "../../Hooks/lastSavedSketch";
 import { useDialog } from "../../Hooks/useDialog";
 import { useTree } from "../../Hooks/useTree";
 import { SketchSave } from "../../Types/SketchTemplate";
-import { Button } from "../Generics/Button";
+import { Button, InvisibleButton } from "../Generics/Button";
 import { TagList } from "../Generics/CategoryButton";
 import { SearchForm } from "../Generics/SearchForm";
 import { Modal } from "../Modal";
@@ -96,7 +96,13 @@ const IconPerTypes: Record<string, Icon> = {
     Examples: IconPlayerPlay,
 };
 
-export type SketchElement = { content: () => Promise<SketchSave | null>; name: string; category: string, delete?: () => void };
+export type SketchElement = {
+    content: () => Promise<SketchSave | null>;
+    time: number,
+    name: string;
+    category: string,
+    delete?: () => void
+};
 
 const TagRegex = /tag:(\w+)/gi;
 
@@ -172,6 +178,7 @@ export function SketchModal({ close }: { close: () => void }) {
     const searchTerm = useMemo(() => parseSearchTerm(searchTermRaw), [searchTermRaw]);
     const lastSavedSketch = getLastSavedSketch();
     const toggleTag = useToggleTag(searchTermRaw, setSearchTerm);
+    const [sortBy, setSortBy] = useState<"name" | "time" | "category">("time")
     const filteredList = useMemo(() => {
         return allItemExceptTemplate
             .filter((sketch) => {
@@ -181,13 +188,20 @@ export function SketchModal({ close }: { close: () => void }) {
                 return searchTerm.name.length === 0 || sketch.name.toLowerCase().includes(searchTerm.name);
             })
             .sort((a, b) => {
-                const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
-                if (r === 0) {
-                    return a.name.localeCompare(b.name);
+                if (sortBy === "category") {
+                    const r = sketchCategory[b.category as keyof typeof sketchCategory] - sketchCategory[a.category as keyof typeof sketchCategory];
+                    if (r === 0) {
+                        return a.name.localeCompare(b.name);
+                    }
+                    return r;
                 }
-                return r;
+                if (sortBy === "time") {
+                    return b.time - a.time;
+                }
+                return a.name.localeCompare(b.name);
+
             });
-    }, [allItemExceptTemplate, searchTerm]);
+    }, [allItemExceptTemplate, searchTerm, sortBy]);
 
     return (
         <Modal onClose={close} title="Open or create a new sketch" icon={IconInfoCircle}>
@@ -211,6 +225,36 @@ export function SketchModal({ close }: { close: () => void }) {
                             <IconSearch> </IconSearch>
                             <Input onChange={(e) => setSearchTerm(e.target.value)} value={searchTermRaw} placeholder="filter..." autoFocus />
                         </span>
+                        <Menu
+                            menuButton={
+                                <InvisibleButton
+                                    icon={IconSortDescending}
+                                    type="button"
+                                />
+                            }
+                            portal>
+                            <MenuRadioGroup value={sortBy}>
+                                <MenuItem
+                                    type="radio"
+                                    value="time"
+                                    onClick={() => setSortBy("time")}>
+                                    Featured
+                                </MenuItem>
+                                <MenuItem
+                                    type="radio"
+                                    value="name"
+                                    onClick={() => setSortBy("name")}>
+                                    Name
+                                </MenuItem>
+                                <MenuItem
+                                    type="radio"
+                                    value="category"
+                                    onClick={() => setSortBy("category")}>
+                                    Last used
+                                </MenuItem>
+
+                            </MenuRadioGroup>
+                        </Menu>
                     </SearchForm>
                     <TagList options={Object.fromEntries(categoriesExceptTemplate.map((tag) => [tag, searchTerm.tags.includes(tag.toLowerCase())]))} onClick={toggleTag} />
 

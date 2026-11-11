@@ -55,7 +55,7 @@ export const Render3D: NodeDefinition = {
 
         const id = context.getCallId(node, width, height);
 
-        const postProcessRaw = context.getInputValue(node, "effects", "array-struct") as any[];
+        const postProcessRaw = context.getInputValue(node, "effects", "array-struct") as any[] || [];
         const postProcess = validateEffectLayers(postProcessRaw)
 
         const virtual = VirtualNodes.Render3DType.generate(id, [cameraVirtualElement, child], width, height, clearColor, postProcess);
