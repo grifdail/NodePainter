@@ -22,7 +22,8 @@ export const SplineNode: NodeDefinition = {
             defaultValue: 10,
         },
         Port.bool("fill", false),
-        Port["array-vector2"]("spline")
+        Port["array-vector2"]("spline"),
+        Port.bool("close", true)
     ],
     dataOutputs: [Port.drawing2d("out")],
 
@@ -31,6 +32,7 @@ export const SplineNode: NodeDefinition = {
         const color = context.getInputValueColor(node, "color");
         const size = context.getInputValueNumber(node, "lineWidth");
         const fill = context.getInputValueBoolean(node, "fill");
+        const close = context.getInputValueBoolean(node, "close");
 
         const points = context.getInputValue<Vector2[]>(node, "spline", "array-vector2")
         return () => {
@@ -52,7 +54,7 @@ export const SplineNode: NodeDefinition = {
                 context.target.vertex(...start)
                 context.target.bezierVertex(...p1, ...p2, ...end);
             }
-            context.target.endShape()
+            context.target.endShape(close ? context.target.CLOSE : undefined)
         };
     },
 };

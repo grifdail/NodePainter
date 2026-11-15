@@ -55,10 +55,10 @@ export const PathSetting: SettingComponent<PathSettingDefinition> = {
                     height={272}
                     onChange={onChange}
                     viewBox="0 0 1 1"
-                    onMouseDown={onMouseDown}
-                    onMouseUp={onMouseUp}
-                    onMouseLeave={onMouseLeave}
-                    onMouseMove={onMouseMouve}>
+                    onPointerDown={onMouseDown}
+                    onPointerUp={onMouseUp}
+                    onPointerLeave={onMouseLeave}
+                    onPointerMove={onMouseMouve}>
                     <path
                         fill="none"
                         stroke="black"

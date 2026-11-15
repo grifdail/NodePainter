@@ -15,6 +15,7 @@ import { PointsToSplineNode } from "./PointToSpline";
 import { RemapNode } from "./RemapNode";
 import { SLerpNode } from "./SlerpNode";
 import { SmoothStepNode } from "./SmoothStepNode";
+import { SplineNode } from "./SplineNode";
 import { SplitBezierNode } from "./SplitBezierNode";
 import { SquareToDiskNode } from "./SquareToDiskNode";
 
@@ -37,6 +38,7 @@ export const MathInterpolationNodes = [
     RemapNode,
     SLerpNode,
     SmoothStepNode,
+    SplineNode,
     SplitBezierNode,
     SquareToDiskNode,
 ];

@@ -43,7 +43,12 @@ export function interpolateBezierPath(path: BezierPathData, pos: number): Vector
     var stopCount = Math.floor(path.length / 4) - 1;
     var tPrev = Math.floor(pos * stopCount);
     var dt = (pos * stopCount) % 1;
-    return [p5.prototype.bezierPoint(path[tPrev * 4 + 0], path[tPrev * 4 + 0] + path[tPrev * 4 + 2], path[tPrev * 4 + 4] - path[tPrev * 4 + 6], path[tPrev * 4 + 4], dt), p5.prototype.bezierPoint(path[tPrev * 4 + 1], path[tPrev * 4 + 1] + path[tPrev * 4 + 3], path[tPrev * 4 + 5] - path[tPrev * 4 + 7], path[tPrev * 4 + 5], dt)];
+    return [p5.prototype.bezierPoint(
+        path[tPrev * 4 + 0],
+        path[tPrev * 4 + 0] + path[tPrev * 4 + 2],
+        path[tPrev * 4 + 4] - path[tPrev * 4 + 6],
+        path[tPrev * 4 + 4], dt),
+    p5.prototype.bezierPoint(path[tPrev * 4 + 1], path[tPrev * 4 + 1] + path[tPrev * 4 + 3], path[tPrev * 4 + 5] - path[tPrev * 4 + 7], path[tPrev * 4 + 5], dt)];
 }
 
 export function interpolateBezierPathDir(path: BezierPathData, pos: number): Vector2 {
@@ -58,4 +63,64 @@ export function interpolateBezierPathDir(path: BezierPathData, pos: number): Vec
     var tPrev = Math.floor(pos * stopCount);
     var dt = (pos * stopCount) % 1;
     return [p5.prototype.bezierTangent(path[tPrev * 4 + 0], path[tPrev * 4 + 0] + path[tPrev * 4 + 2], path[tPrev * 4 + 4] - path[tPrev * 4 + 6], path[tPrev * 4 + 4], dt), p5.prototype.bezierTangent(path[tPrev * 4 + 1], path[tPrev * 4 + 1] + path[tPrev * 4 + 3], path[tPrev * 4 + 5] - path[tPrev * 4 + 7], path[tPrev * 4 + 5], dt)];
+}
+
+
+//Spline is [p1, cp1, cp2, p2, ...]
+export function interpolateSpline(path: Vector2[], pos: number): Vector2 {
+    if (path.length < 1) {
+        return [0, 0];
+    }
+    if (path.length < 4) {
+        return path[0];
+    }
+
+    if (pos >= 1) {
+        return path[path.length - 1];
+    }
+    pos = pos % 1;
+    var stopCount = Math.floor(path.length / 4);
+    var tPrev = Math.floor(pos * stopCount);
+    var dt = (pos * stopCount) % 1;
+    return [
+        p5.prototype.bezierPoint(
+            path[tPrev * 4 + 0][0],
+            path[tPrev * 4 + 1][0],
+            path[tPrev * 4 + 2][0],
+            path[tPrev * 4 + 3][0], dt),
+        p5.prototype.bezierPoint(
+            path[tPrev * 4 + 0][1],
+            path[tPrev * 4 + 1][1],
+            path[tPrev * 4 + 2][1],
+            path[tPrev * 4 + 3][1], dt)
+    ];
+}
+
+export function interpolateSplineDir(path: Vector2[], pos: number): Vector2 {
+    if (path.length < 1) {
+        return [0, 0];
+    }
+    if (path.length < 4) {
+        return path[0];
+    }
+
+    if (pos >= 1) {
+        return path[path.length - 1];
+    }
+    pos = pos % 1;
+    var stopCount = Math.floor(path.length / 4) - 1;
+    var tPrev = Math.floor(pos * stopCount);
+    var dt = (pos * stopCount) % 1;
+    return [
+        p5.prototype.bezierTangent(
+            path[tPrev * 4 + 0][0],
+            path[tPrev * 4 + 1][0],
+            path[tPrev * 4 + 2][0],
+            path[tPrev * 4 + 3][0], dt),
+        p5.prototype.bezierTangent(
+            path[tPrev * 4 + 0][1],
+            path[tPrev * 4 + 1][1],
+            path[tPrev * 4 + 2][1],
+            path[tPrev * 4 + 3][1], dt)
+    ];
 }
