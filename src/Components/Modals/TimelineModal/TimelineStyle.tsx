@@ -39,7 +39,7 @@ export const TimelineStyle = styled.div`
          @media (max-width: 500px) {
                 flex-direction: column;
                 padding-left: var(--padding-small);
-                align-items:start;
+                align-items:stretch;
             }
 
         .track-info {
@@ -48,6 +48,11 @@ export const TimelineStyle = styled.div`
             flex-direction: column;
             justify-content: end;
             align-items: stretch;
+            align-self: stretch;
+
+            @media (max-width: 500px) {
+                width: auto;
+            }
 
             & .title svg {
                 color: var(--color-property);
@@ -56,6 +61,7 @@ export const TimelineStyle = styled.div`
             & div {
                 display: flex;
                 gap: var(--padding-small);
+                align-items:center;
             }
         }
 
