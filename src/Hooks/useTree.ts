@@ -36,6 +36,7 @@ import { createCustomSimulation } from "../Utils/graph/modification/customs/crea
 import { createCustomStructType } from "../Utils/graph/modification/customs/createCustomStructType";
 import { duplicateNode } from "../Utils/graph/modification/duplicateNode";
 import { ensureValidGraph } from "../Utils/graph/modification/ensureValidGraph";
+import { removeAllConnectionToNode } from "../Utils/graph/modification/removeAllConnectionToNode";
 import { setNodeVariantType } from "../Utils/graph/modification/setNodeVariantType";
 import { loadSnippet, Snippet } from "../Utils/graph/modification/snippets";
 import { sortAroundNode } from "../Utils/graph/modification/sortAroundNode";
@@ -227,16 +228,7 @@ export const useTree = create<TreeStore>()((set, get) => {
                         portSelection.reset();
                     }
 
-                    Object.values(nodes).forEach((item: NodeData) => {
-                        Object.values(item.dataInputs).forEach((port) => {
-                            if (!(port.hasConnection && port.connectedNode === node)) {
-                                return;
-                            }
-                            port.hasConnection = false;
-                            port.connectedNode = null;
-                            port.connectedPort = null;
-                        });
-                    });
+                    removeAllConnectionToNode(nodes, node);
                     state.nodeDeletionCount++;
                     delete state.nodes[node];
                 })
@@ -640,4 +632,6 @@ export const useTree = create<TreeStore>()((set, get) => {
     };
     return a;
 });
+
+
 

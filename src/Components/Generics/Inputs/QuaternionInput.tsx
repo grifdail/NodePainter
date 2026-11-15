@@ -2,7 +2,7 @@ import { Euler, Quaternion as TQuaternion } from "three";
 import { Vector3 } from "../../../Types/vectorDataType";
 import { VectorInput } from "./VectorInput";
 
-export function QuaternionInput({ onChange, value }: { onChange: (value: any) => void; value: any }) {
+export function QuaternionInput({ onChange, value, disabled }: { onChange: (value: any) => void; value: any, disabled?: boolean }) {
     var q = new TQuaternion(...value);
     var euler = new Euler().setFromQuaternion(q);
     var eulerVec = [euler.x, euler.y, euler.z];
@@ -15,6 +15,7 @@ export function QuaternionInput({ onChange, value }: { onChange: (value: any) =>
     return (
         <VectorInput
             value={eulerVec as Vector3}
+            disabled={disabled}
             onChange={onInputChange}></VectorInput>
     );
 }

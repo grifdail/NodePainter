@@ -63,52 +63,52 @@ export const ColorInputDiv = styled.div<{ $color: string; $opposite: string }>`
 `;
 
 function ColorPicker({ disabled, value, onChange, constrains }: { disabled?: boolean; value: Color; toHexFull: (c: Color) => string; onChange: (c: Color) => void; constrains?: ConstrainDeclaration[] }) {
-  const palette = usePlayerPref((state) => state.colorPreset);
-  var paletteHex = useMemo(() => palette.map((item) => toHex(item)), [palette]);
+    const palette = usePlayerPref((state) => state.colorPreset);
+    var paletteHex = useMemo(() => palette.map((item) => toHex(item)), [palette]);
 
-  return (
-    <Menu
-      portal
-      aria-disabled={disabled}
-      menuButton={<ColorButton $color={toHex(value, true)} />}>
-      <Sketch
-        color={toHex(value, true)}
-        presetColors={paletteHex}
-        onChange={(color) => {
-          onChange(applyConstraint(fromHex(color.hexa), value, constrains));
-        }}
-      />
-    </Menu>
-  );
+    return (
+        <Menu
+            portal
+            aria-disabled={disabled}
+            menuButton={<ColorButton $color={toHex(value, true)} />}>
+            <Sketch
+                color={toHex(value, true)}
+                presetColors={paletteHex}
+                onChange={(color) => {
+                    onChange(applyConstraint(fromHex(color.hexa), value, constrains));
+                }}
+            />
+        </Menu>
+    );
 }
 
 export function ColorInput({ onChange, value, disabled }: InputProps<Color> & { children?: ReactNode; disabled?: boolean }) {
-  var toHexFull = (a: Color) => toHex(a, true);
-  var hex = toHexFull(value);
+    var toHexFull = (a: Color) => toHex(a, true);
+    var hex = toHexFull(value);
 
-  var { rawField, setRawField, onBlur } = useSubmitOnBlur(value || 0, toHexFull, onChange, (newValue: string): undefined | Color => {
-    if (validateHex(newValue)) {
-      return fromHex(newValue);
-    } else {
-      return undefined;
-    }
-  });
+    var { rawField, setRawField, onBlur } = useSubmitOnBlur(value || 0, toHexFull, onChange, (newValue: string): undefined | Color => {
+        if (validateHex(newValue)) {
+            return fromHex(newValue);
+        } else {
+            return undefined;
+        }
+    });
 
-  return (
-    <ColorInputDiv
-      $color={hex}
-      $opposite={invertColor(hex, true)}>
-      <Input
-        value={rawField}
-        onBlur={(e) => onBlur(e.target.value)}
-        onChange={(e) => setRawField(e.target.value)}
-        disabled={disabled}
-      />
-      <ColorPicker
-        onChange={onChange}
-        value={value}
-        disabled={disabled}
-        toHexFull={toHexFull}></ColorPicker>
-    </ColorInputDiv>
-  );
+    return (
+        <ColorInputDiv
+            $color={hex}
+            $opposite={invertColor(hex, true)}>
+            <Input
+                value={rawField}
+                onBlur={(e) => onBlur(e.target.value)}
+                onChange={(e) => setRawField(e.target.value)}
+                disabled={disabled}
+            />
+            <ColorPicker
+                onChange={onChange}
+                value={value}
+                disabled={disabled}
+                toHexFull={toHexFull}></ColorPicker>
+        </ColorInputDiv>
+    );
 }

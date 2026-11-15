@@ -14,6 +14,7 @@ import { PortalOutputNode } from "./PortalOutputNode";
 import { MiscRenderNodes } from "./Render";
 import { RepeatForNode } from "./RepeatForNode";
 import { RepeatUntilNode } from "./RepeatUntilNode";
+import { TimelineNode } from "./TimelineNode";
 import { ValueNode } from "./ValueNode";
 
 export const MiscNodes = [
@@ -34,5 +35,6 @@ export const MiscNodes = [
     PortalOutputNode,
     RepeatForNode,
     RepeatUntilNode,
+    TimelineNode,
     ValueNode,
 ];

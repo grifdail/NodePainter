@@ -34,7 +34,7 @@ math.import(
     { override: true }
 );
 
-export function NumberInput({ onChange, value, className, constrains = [] }: InputProps<number> & { className?: string }) {
+export function NumberInput({ onChange, value, className, constrains = [], disabled }: InputProps<number> & { className?: string }) {
     var { rawField, setRawField, onBlur } = useSubmitOnBlur(
         value || 0,
         (a) => a.toString(),
@@ -61,6 +61,7 @@ export function NumberInput({ onChange, value, className, constrains = [] }: Inp
             onFocus={(e) => e.target.select()}
             onChange={(e) => setRawField(e.target.value)}
             onBlur={(e) => onBlur(e.target.value)}
+            disabled={disabled}
         />
     );
 }

@@ -23,8 +23,13 @@ export const Input = styled.input`
   padding-right: 10px;
 
   &:focus,
-  &:hover {
+  &:hover:not(:disabled) {
     outline: none;
     background: var(--color-selected);
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
 `;

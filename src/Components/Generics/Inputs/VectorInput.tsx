@@ -15,7 +15,7 @@ const StyledDiv = styled.div`
   }
 `;
 
-export function VectorInput({ onChange, value, constrains }: { onChange: (value: any) => void; value: Vector; constrains?: ConstrainDeclaration[] }) {
+export function VectorInput({ onChange, value, constrains, disabled }: { onChange: (value: any) => void; value: Vector; constrains?: ConstrainDeclaration[], disabled?: boolean }) {
     const onInputChange = (newValue: number, property: number) => {
         var newVector = value.slice();
         newVector[property] = newValue;
@@ -28,6 +28,7 @@ export function VectorInput({ onChange, value, constrains }: { onChange: (value:
         <StyledDiv>
             {value.map((comp, i) => (
                 <NumberInput
+                    disabled={disabled}
                     key={i}
                     value={comp}
                     onChange={(e: number) => onInputChange(e as number, i)}></NumberInput>

@@ -1,8 +1,8 @@
 import { Icon } from "@tabler/icons-react";
 import { EasingFunctionType } from "../libs/easing";
 import { AnimationSequenceData } from "../Utils/animationSequence/AnimationSequenceData";
+import { TimelineData } from "../Utils/timeline/TimelineData";
 import { ConstrainDeclaration } from "../Utils/ui/applyConstraints";
-import { AnimationTrack } from "./AnimationTrack";
 import { CodeBlock } from "./CodeBlock/CodeBlock";
 import { JavascriptFunction } from "./CodeBlock/JavascriptFunction";
 import { EnvelopeData } from "./EnvelopeData";
@@ -116,10 +116,7 @@ export type ButtonSettingDefinition = BaseSettingDefinition & {
         hide?: (node: NodeData) => boolean;
     };
 };
-export type AnimationTrackSettingDefinition = BaseSettingDefinition & {
-    type: "animation-track";
-    defaultValue: AnimationTrack;
-};
+
 export type MeshUploadSettingDefinition = BaseSettingDefinition & {
     type: "mesh-upload";
 };
@@ -157,7 +154,10 @@ export type ResolutionSettingDefinition = BaseSettingDefinition & {
     type: "resolution";
     defaultValue: ResolutionSettingData;
 };
-
+export type TimelineSettingDefinition = BaseSettingDefinition & {
+    type: "timeline";
+    defaultValue: TimelineData;
+};
 
 
 export type SettingDefinition =
@@ -178,7 +178,7 @@ export type SettingDefinition =
     | TextAreaSettingDefinition
     | HiddenSettingDefinition
     | ButtonSettingDefinition
-    | AnimationTrackSettingDefinition
+    | TimelineSettingDefinition
     | MeshUploadSettingDefinition
     | EasingPreviewSettingDefinition
     | CodeBlockSettingDefinition

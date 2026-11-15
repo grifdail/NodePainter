@@ -1,4 +1,3 @@
-import { AnimationCurveNode } from "./AnimationCurveNode";
 import { BezierSubsetNode } from "./BezierSubsetNode";
 import { BumpNode } from "./BumpNode";
 import { DiskToSquareNode } from "./DiskToSquareNode";
@@ -21,7 +20,6 @@ import { SquareToDiskNode } from "./SquareToDiskNode";
 
 export const MathInterpolationNodes = [
     //
-    AnimationCurveNode,
     BezierSubsetNode,
     BumpNode,
     DiskToSquareNode,

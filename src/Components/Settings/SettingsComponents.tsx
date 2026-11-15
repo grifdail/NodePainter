@@ -8,7 +8,6 @@ import { ImageUploadSetting } from "./ImageUploadSetting";
 import { EnvelopeSetting } from "./EnvelopeSetting";
 import { ImagePaintSetting } from "./ImagePaintSetting";
 import { ButtonsSettings } from "./ButtonsSettings";
-import { AnimationTrackSettings } from "./AnimationTrackSettings";
 import { ModelUploadSetting } from "./ModelUploadSetting";
 import { EasingSetting } from "./EasingPreview";
 import { CodeBlockSetting } from "./CodeBlockSetting";
@@ -28,6 +27,7 @@ import { AnimationSequenceSetting } from "./AnimationSequenceSetting";
 import { SettingComponent } from "../../Types/SettingComponent";
 import { ColorPairingSetting } from "./ColorPairingSetting";
 import { ResolutionSetting } from "./ResolutionSetting";
+import { TimelineSetting } from "./TimelineSetting";
 
 
 
@@ -45,7 +45,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     envelope: EnvelopeSetting,
     hidden: EmptySetting,
     button: ButtonsSettings,
-    "animation-track": AnimationTrackSettings,
+    "timeline": TimelineSetting,
     "mesh-upload": ModelUploadSetting,
     "easing-preview": EasingSetting,
     "code-block": CodeBlockSetting,

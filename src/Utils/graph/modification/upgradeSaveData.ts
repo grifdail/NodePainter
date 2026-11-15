@@ -5,6 +5,7 @@ import { SketchSave } from "../../../Types/SketchTemplate";
 import { White } from "../../math/colorUtils";
 import { createPortConnection } from "./createPortConnection";
 import { createSettingObjectForSettingDefinition } from "./createSettingObjectForSettingDefinition";
+import { removeAllConnectionToNode } from "./removeAllConnectionToNode";
 
 type UpgradeFunction = (sketch: SketchSave) => SketchSave;
 
@@ -298,6 +299,7 @@ const UPGRADES: UpgradeFunction[] = [
     (sketch) => addMissingSettings(["Render3D"], sketch),
     (sketch) => addMissingSettings(["Render3D", "Image/Precompute", "Image/Flipbook", "Technical/ImageEffectShader/Base"], sketch, (s, node, v) => s === "resolution" ? { mode: "static", width: node.settings.width, height: node.settings.height, } : v),
     (sketch) => addMissingNodePort(["Render3D"], sketch),
+    (sketch) => removeNodeOfType(["Math/Interpolation/AnimationCurve"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
@@ -322,6 +324,21 @@ function redefineNodes(newIds: { [key: string]: string }, sketch: SketchSave): S
             node.type = newIds[node.type];
         }
     });
+    return sketch;
+}
+
+function removeNodeOfType(newIds: string[], sketch: SketchSave): SketchSave {
+    const nodeToDelete: string[] = []
+    Object.values(sketch.nodes).forEach((node) => {
+        if (newIds.includes(node.type)) {
+            nodeToDelete.push(node.id);
+        }
+    });
+    nodeToDelete.forEach(n => {
+        removeAllConnectionToNode(sketch.nodes, n)
+        delete sketch.nodes[n];
+    })
+
     return sketch;
 }
 

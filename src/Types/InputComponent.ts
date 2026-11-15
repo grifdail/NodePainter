@@ -1,1 +1,1 @@
-export type InputComponent = ({ onChange, value }: { onChange: (value: any) => void; value: any }) => any;
+export type InputComponent = ({ onChange, value, disabled }: { onChange: (value: any) => void; value: any, disabled?: boolean }) => any;

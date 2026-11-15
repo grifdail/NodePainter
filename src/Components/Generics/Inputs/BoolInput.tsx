@@ -22,14 +22,15 @@ const BoolDiv = styled.div`
   }
 `;
 
-export function BoolInput({ onChange, value }: InputProps<boolean>) {
-  return (
-    <BoolDiv onClick={() => onChange(!value)}>
-      <input
-        type="checkbox"
-        checked={value}
-        onChange={(e) => onChange(!value)}
-      />
-    </BoolDiv>
-  );
+export function BoolInput({ onChange, value, disabled }: InputProps<boolean>) {
+    return (
+        <BoolDiv onClick={() => onChange(!value)}>
+            <input
+                disabled={disabled}
+                type="checkbox"
+                checked={value}
+                onChange={(e) => onChange(!value)}
+            />
+        </BoolDiv>
+    );
 }

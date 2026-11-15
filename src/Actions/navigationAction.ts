@@ -52,3 +52,6 @@ export const openPaintAnimationModal = (type: string, id: string) => {
 export const openAnimationSequenceModal = (id: string) => {
     navigate(Routes.AnimationSequence.replace(":id", id))
 }
+export const openTimelineModal = (id: string) => {
+    navigate(Routes.Timeline.replace(":id", id))
+}

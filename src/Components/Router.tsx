@@ -21,6 +21,7 @@ import { PaintModal } from "./Modals/PaintModal";
 import { SaveModal } from "./Modals/SaveModal";
 import { SettingsModal } from "./Modals/SettingModal/SettingsModal";
 import { SketchModal } from "./Modals/SketchModal";
+import { TimelineModal } from "./Modals/TimelineModal/TimelineModal";
 
 const LocalRoute = ({ path, component: Component }: { path?: string, component: ReactComponentLike }) => {
     return <Route path={path} component={() => <Component close={closeAllPopup} />} />;
@@ -68,6 +69,7 @@ const RouterSwitch = () => {
         <LocalRoute path={Routes.JavascriptFunction} component={JavascriptFunctionModal} />
         <LocalRoute path={Routes.PaintAnimation} component={FlipbookDrawingModal} />
         <LocalRoute path={Routes.AnimationSequence} component={AnimationSequenceModal} />
+        <LocalRoute path={Routes.Timeline} component={TimelineModal} />
         <LocalRoute component={GridUi} />
 
     </Switch>
