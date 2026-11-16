@@ -14,6 +14,7 @@ import { RegularPolygonNode } from "./RegularPolygonNode";
 import { SplineNode } from "./SplineNode";
 import { TextNode } from "./TextNode";
 import { TriangleNode } from "./TriangleNode";
+import { VariableWidthPolylineNode } from "./VariableWidthPolyline";
 
 export const DrawNodes = [
     //
@@ -33,4 +34,5 @@ export const DrawNodes = [
     SplineNode,
     TextNode,
     TriangleNode,
+    VariableWidthPolylineNode
 ];
