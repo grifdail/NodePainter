@@ -31,7 +31,8 @@ export const StartNode: NodeDefinition = {
         { id: "name", type: "string", defaultValue: SKETCH_DEFAULT_NAME },
         { id: "width", type: "number", defaultValue: 400 },
         { id: "height", type: "number", defaultValue: 400 },
-        { id: "scalling", tooltip: "Scale the canvas so that position and dimension are relative to the size of the canvas.", type: "dropdown", defaultValue: "absolute", options: Object.keys(SCALING_OPTIONS) }
+        { id: "scalling", tooltip: "Scale the canvas so that position and dimension are relative to the size of the canvas.", type: "dropdown", defaultValue: "absolute", options: Object.keys(SCALING_OPTIONS) },
+        { id: "seed", type: "seed", defaultValue: { mode: "auto" } }
     ],
     IsUnique: true,
 };

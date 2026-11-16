@@ -8,3 +8,6 @@ export type ResolutionSettingData = {
     width: number;
     height: number;
 };
+
+
+

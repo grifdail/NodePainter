@@ -100,7 +100,7 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
         seed = Date.now();
         var start = tree.getNode(START_NODE);
         p5.createCanvas(start.settings.width || 400, start.settings.height || 400);
-        context.RNG = new Rand(seed.toString());
+        context.initializeSeed(start);
         props.setCleanup(context.endOfRunCleanup);
         close = props.close;
     };

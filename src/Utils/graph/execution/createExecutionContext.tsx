@@ -28,6 +28,7 @@ export type FunctionContext = {
 export type ExecutionContext = {
     update(): void;
     render(): void;
+    initializeSeed(start: NodeData): unknown;
     deltaTime: number;
     deltaTimeMs: number;
     getShaderVar(nodeData: NodeData, portId: string, type: PortType, isOutput?: boolean): string;
@@ -201,6 +202,11 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
                     context.blackboard[key].dispose();
                 }
             });
+        },
+        initializeSeed(start) {
+            var s = start.settings.seed?.mode === "static" ? start.settings.seed.seed : Date.now();
+            console.log(s);
+            context.RNG = new Rand(s.toString());
         },
         render() {
             var start = tree.nodes[START_NODE]

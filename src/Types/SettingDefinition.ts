@@ -9,6 +9,7 @@ import { EnvelopeData } from "./EnvelopeData";
 import { Flipbook } from "./FlipBook";
 import { NodeData } from "./NodeData";
 import { ResolutionSettingData } from "./ResolutionSettingData";
+import { SeedSettingData } from "./SeedSettingData";
 import { Color, Gradient, Vector2 } from "./vectorDataType";
 
 
@@ -154,6 +155,12 @@ export type ResolutionSettingDefinition = BaseSettingDefinition & {
     type: "resolution";
     defaultValue: ResolutionSettingData;
 };
+
+export type SeedSettingDefinition = BaseSettingDefinition & {
+    type: "seed";
+    defaultValue: SeedSettingData;
+};
+
 export type TimelineSettingDefinition = BaseSettingDefinition & {
     type: "timeline";
     defaultValue: TimelineData;
@@ -188,7 +195,8 @@ export type SettingDefinition =
     | GroupSettingDefinition
     | GraphAreaSettingDefinition
     | AnimationSequenceSettingDefinition
-    | ResolutionSettingDefinition;
+    | ResolutionSettingDefinition
+    | SeedSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
 

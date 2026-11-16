@@ -86,8 +86,8 @@ export const sketch: Sketch<MySketchProps> = (p5) => {
             tree = props.tree;
             context = createExecutionContext(tree, p5 as P5CanvasInstance);
             ownProps = props;
-            context.RNG = new Rand(seed.toString());
             const start = tree.getNode(START_NODE);
+            context.initializeSeed(start);
 
             if (renderer == null) {
                 p5.pixelDensity(1);

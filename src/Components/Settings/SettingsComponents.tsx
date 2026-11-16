@@ -28,6 +28,7 @@ import { SettingComponent } from "../../Types/SettingComponent";
 import { ColorPairingSetting } from "./ColorPairingSetting";
 import { ResolutionSetting } from "./ResolutionSetting";
 import { TimelineSetting } from "./TimelineSetting";
+import { SeedSetting } from "./SeedSetting";
 
 
 
@@ -60,6 +61,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "animation-sequence": AnimationSequenceSetting,
     "color-pairing": ColorPairingSetting,
     resolution: ResolutionSetting,
+    "seed": SeedSetting
 };
 
 
