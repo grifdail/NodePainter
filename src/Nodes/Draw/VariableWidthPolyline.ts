@@ -3,7 +3,9 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2, Vector2 } from "../../Types/vectorDataType";
 import { toP5Color } from "../../Utils/math/colorUtils";
-import { vector2Perpendicular, vectorAddition, vectorNormalize, vectorSubstraction } from "../../Utils/math/vectorUtils";
+import { vector2Perpendicular, vectorAddition, vectorLerp, vectorNormalize, vectorSubstraction } from "../../Utils/math/vectorUtils";
+
+const ROUND_RES = 21;
 
 export const VariableWidthPolylineNode: NodeDefinition = {
     id: "Draw/VariableWidthPolyline",
@@ -30,9 +32,17 @@ export const VariableWidthPolylineNode: NodeDefinition = {
     ],
     dataOutputs: [Port.drawing2d("out")],
 
-    settings: [],
+    settings: [
+        {
+            id: "cap",
+            type: "dropdown",
+            defaultValue: "flat",
+            options: ["flat", "round", "triangle"],
+        }
+    ],
     getData(portId, node, context) {
         const color = context.getInputValueColor(node, "color");
+        const cap = (context.getSetting(node, "cap") || 'flat') as "flat" | "round" | "triangle";
         const points = context.getInputValueVectorArray(node, "points") as Vector2[];
         let weight = context.getInputValue(node, "weight", "array-number") as number[];
         if (weight.length < 2) {
@@ -59,8 +69,44 @@ export const VariableWidthPolylineNode: NodeDefinition = {
             context.target.noStroke()
             context.target.beginShape();
 
+            if (cap === "round") {
+                const tan = vector2Perpendicular(vectorNormalize(vectorSubstraction(addFirst[0], addNext[0])));
+                const w = weight[0]
+                for (var i = 0; i < ROUND_RES; i++) {
+                    const tt = i / (ROUND_RES - 1)
+                    const u = vectorLerp(addNext[0], addFirst[0], tt)
+                    const c = Math.sin(Math.acos(tt * 2 - 1));
+
+                    context.target.vertex(u[0] + tan[0] * w * c, u[1] + tan[1] * w * c)
+                }
+
+            }
+            if (cap === "triangle") {
+                const tan = vector2Perpendicular(vectorNormalize(vectorSubstraction(addNext[0], addFirst[0])));
+                const w = weight[0]
+                context.target.vertex(points[0][0] - tan[0] * w, points[0][1] - tan[1] * w)
+            }
             addFirst.forEach(a => context.target.vertex(a[0], a[1]))
+            if (cap === "round") {
+                const tan = vector2Perpendicular(vectorNormalize(vectorSubstraction(addNext[points.length - 1], addFirst[points.length - 1])));
+                const w = weight[(points.length - 1) % weight.length]
+                for (var i = 0; i < ROUND_RES; i++) {
+                    const tt = i / (ROUND_RES - 1)
+                    const u = vectorLerp(addFirst[points.length - 1], addNext[points.length - 1], tt)
+                    const c = Math.sin(Math.acos(tt * 2 - 1));
+
+                    context.target.vertex(u[0] + tan[0] * w * c, u[1] + tan[1] * w * c)
+                }
+
+            }
+            if (cap === "triangle") {
+                const tan = vector2Perpendicular(vectorNormalize(vectorSubstraction(addNext[points.length - 1], addFirst[points.length - 1])));
+                const w = weight[(points.length - 1) % weight.length]
+                context.target.vertex(points[points.length - 1][0] + tan[0] * w, points[points.length - 1][1] + tan[1] * w)
+            }
             addNext.toReversed().forEach(a => context.target.vertex(a[0], a[1]))
+
+
 
             context.target.endShape();
             context.target.noFill();
