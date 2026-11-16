@@ -1,4 +1,5 @@
 import { IconAssembly } from "@tabler/icons-react";
+import { SettingGenerator } from "../../Components/Settings/SettingGenerator";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
@@ -17,10 +18,16 @@ export const SwitchNode: NodeDefinition = {
     ],
     dataOutputs: [{ id: "result", type: "color", defaultValue: Black() }],
 
-    settings: [],
+    settings: [SettingGenerator.bool("evalall", false, { label: "Evaluate anyway", tooltip: "When this is true, both option will be evaluated" })],
     ...changeTypeGenerator(portTypesWithTags(["common"]), ["true", "false"], ["result"]),
     getData: (portId, node, context) => {
         var input = context.getInputValueBoolean(node, "condition");
+        const evalAnyway = context.getSetting(node, "evalall");
+        if (evalAnyway) {
+            var t = context.getInputValue(node, "true", node.selectedType);
+            var f = context.getInputValue(node, "false", node.selectedType);
+            return input ? t : f;
+        }
         if (input) {
             return context.getInputValue(node, "true", node.selectedType);
         } else {
