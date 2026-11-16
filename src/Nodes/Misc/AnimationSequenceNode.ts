@@ -3,10 +3,9 @@ import { useTree } from "../../Hooks/useTree";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { AnimationSequenceData } from "../../Utils/animationSequence/AnimationSequenceData";
-import { createAnimationSequenceRunner } from "../../Utils/animationSequence/createAnimationSequenceRunner";
+import { AnimationSequenceRunner, createAnimationSequenceRunner } from "../../Utils/animationSequence/createAnimationSequenceRunner";
 import { createDefaultAnimationSequence } from "../../Utils/animationSequence/createDefaultAnimationSequence";
-import { cacheBehaviorSetting } from "../../Utils/graph/definition/cacheBehaviorSetting";
-import { readFromCache, useFrameCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const AnimationSequenceNode: NodeDefinition = {
     id: "Misc/AnimationSequence",
@@ -15,7 +14,7 @@ export const AnimationSequenceNode: NodeDefinition = {
     tags: ["Misc"],
     preventSnippet: false,
     hideInLibrary: false,
-    dataInputs: [Port.CacheId(), Port.Reset()],
+    dataInputs: [Port.Tick(), Port.CacheId(), Port.Reset()],
     dataOutputs: [],
     settings: [
         {
@@ -30,19 +29,17 @@ export const AnimationSequenceNode: NodeDefinition = {
             },
         },
         { id: "loop", type: "bool", tooltip: "Should the animation play again once it's finished ?", defaultValue: true },
-        cacheBehaviorSetting()
     ],
     getData: (portId, node, context) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const result = useFrameCache(context, node, () => {
-
+        const [result] = readFromCacheWithVersion<[Record<string, any>, AnimationSequenceRunner]>(context, node, (previous) => {
             var inputs = context.createFunctionContext(node);
-            const animationSequenceRunner = readFromCache(context, node, () => {
-                return createAnimationSequenceRunner(node.settings.animation as AnimationSequenceData, inputs, node);
-            });
+            const runner = previous ? previous[1] : createAnimationSequenceRunner(node.settings.animation as AnimationSequenceData, inputs, node);
+            const result = runner(inputs, context.deltaTime);
+            return [result, runner];
 
-            return animationSequenceRunner(inputs, context.deltaTime);
         })
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+
 
 
         if (!result[portId]) {

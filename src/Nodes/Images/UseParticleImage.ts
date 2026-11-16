@@ -2,7 +2,7 @@ import { IconPhoto } from "@tabler/icons-react";
 import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheStatic } from "../../Utils/graph/execution/blackboardCache";
 
 import gallery from "../../Data/patterns.json";
 
@@ -28,14 +28,14 @@ export const UseParticleImage: NodeDefinition = {
     ],
     getData(portId, node, context) {
         const imgSetting = node.settings["image"];
-        const cachedImage = readFromCache(
+        const cachedImage = readFromCacheStatic(
             context,
             node,
+            "image",
             () => {
                 const img = new ImageData({ url: imgSetting.url });
                 return img;
             },
-            imgSetting.url
         );
         return cachedImage;
     },

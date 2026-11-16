@@ -2,10 +2,7 @@ import { IconCodeDots } from "@tabler/icons-react";
 import { useTree } from "../../Hooks/useTree";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { cacheBehaviorSettingWithNoCache } from "../../Utils/graph/definition/cacheBehaviorSetting";
-import { frameCacheSetting } from "../../Utils/graph/definition/FrameCacheSetting";
-import { readFromCache, useFrameCache } from "../../Utils/graph/execution/blackboardCache";
-import { ExecutionContext } from "../../Utils/graph/execution/createExecutionContext";
+import { readFromCacheStatic, readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { createDefaultJavascriptFunction } from "../../Utils/JavascriptFunction/createDefaultJavascriptFunction";
 import { evalFunction } from "../../Utils/JavascriptFunction/javascriptFunctionGlobalScope";
 
@@ -16,7 +13,7 @@ export const JavascriptFunctionNode: NodeDefinition = {
     tags: ["Misc"],
     preventSnippet: false,
     hideInLibrary: false,
-    dataInputs: [Port.CacheId()],
+    dataInputs: [Port.CacheId(), Port.Version()],
     dataOutputs: [],
     settings: [
         {
@@ -25,27 +22,29 @@ export const JavascriptFunctionNode: NodeDefinition = {
             defaultValue: createDefaultJavascriptFunction(),
             onChange(node, newValue, oldValue, definitions) {
                 var tree = useTree.getState();
-                tree.replaceInputs((t) => t.id === node.id, [Port.CacheId(), ...newValue.inputVariables]);
+                tree.replaceInputs((t) => t.id === node.id, [Port.CacheId(), Port.Version(), ...newValue.inputVariables]);
                 tree.replaceOutput((t) => t.id === node.id, newValue.outputVariables);
             },
         },
-        frameCacheSetting(), cacheBehaviorSettingWithNoCache()
     ],
     getData: (portId, node, context) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const result = useFrameCache(context, node, () => {
-            const fn = createFunctionFromCache(context, node.id, node.settings.code.code);
+        const result = readFromCacheWithVersion(context, node, () => {
+            const fn = readFromCacheStatic(context, node, "func", () => {
+                var baseFn = evalFunction(node.settings.code.code);
+                if (typeof (baseFn) !== "function") {
+                    throw new Error(`Function in node id did not return a function`)
+                }
+                return baseFn;
+            })
 
-            const output = readFromCache(context, node, () => {
-                let state = context.createFunctionContext(node);
-                //State is an object {portId: {value: any, type: PortType}}
-                // Therefore we need to convert it to raw {portId: any}
-                let stateRaw = Object.entries(state).reduce((old, [key, value]) => ({ ...old, [key]: value.value }))
+            let state = context.createFunctionContext(node);
+            //State is an object {portId: {value: any, type: PortType}}
+            // Therefore we need to convert it to raw {portId: any}
+            let stateRaw = Object.entries(state).reduce((old, [key, value]) => ({ ...old, [key]: value.value }))
 
-                var output = fn(stateRaw);
-                return output;
-            });
-            return output
+            var output = fn(stateRaw);
+            return output;
         })
 
 
@@ -55,16 +54,3 @@ export const JavascriptFunctionNode: NodeDefinition = {
         return result[portId];
     },
 };
-function createFunctionFromCache(context: ExecutionContext, id: string, code: any) {
-    const key = `code-${id}-val`;
-    if (!context.blackboard[key]) {
-
-        var baseFn = evalFunction(code);
-        if (typeof (baseFn) !== "function") {
-            throw new Error(`Function in node id did not return a function`)
-        }
-        context.blackboard[key] = baseFn;
-    }
-    return context.blackboard[key]
-}
-

@@ -3,8 +3,7 @@ import Rand from "rand-seed";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Vector2 } from "../../Types/vectorDataType";
-import { cacheBehaviorSettingWithNoCache } from "../../Utils/graph/definition/cacheBehaviorSetting";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { vectorSquareDistance } from "../../Utils/math/vectorUtils";
 
 export const PoissonDiskNode: NodeDefinition = {
@@ -12,15 +11,15 @@ export const PoissonDiskNode: NodeDefinition = {
     tags: ["Math", "Vector", "Array"],
     icon: IconMathFunction,
     description: "Generate an number of 2d points uniformely distributed on the unit square.",
-    dataInputs: [Port.number("min-dist", 0.01), Port.CacheId()],
+    dataInputs: [Port.number("min-dist", 0.01), Port.CacheId(), Port.Version()],
     dataOutputs: [Port["array-vector2"]("points")],
 
     codeBlockType: "expression",
-    settings: [cacheBehaviorSettingWithNoCache()],
+    settings: [],
     getData: (portId, node, context) => {
         const minDist = context.getInputValueNumber(node, "min-dist");
 
-        return readFromCache(context, node, () => poissonDisk(minDist, context.RNG));
+        return readFromCacheWithVersion(context, node, () => poissonDisk(minDist, context.RNG));
     },
 };
 

@@ -1,7 +1,8 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { addAdvancedCacheOptionContextMenu } from "../../Utils/graph/execution/addAdvancedCacheOptionContextMenu";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const GaussianNode: NodeDefinition = {
     id: "Random/Gaussian",
@@ -21,7 +22,7 @@ export const GaussianNode: NodeDefinition = {
     getData: (portId, node, context) => {
         var mean = context.getInputValueNumber(node, "mean");
         var stdev = context.getInputValueNumber(node, "stdev");
-        const z = readFromCache(context, node, () => {
+        const z = readFromCacheWithVersion(context, node, () => {
             const u = 1 - context.RNG.next(); // Converting [0,1) to (0,1]
             const v = context.RNG.next();
             const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
@@ -31,4 +32,5 @@ export const GaussianNode: NodeDefinition = {
         // Transform to the desired mean and standard deviation:
         return z * stdev + mean;
     },
+    contextMenu: addAdvancedCacheOptionContextMenu()
 };

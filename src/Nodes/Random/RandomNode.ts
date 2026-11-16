@@ -3,7 +3,8 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions, portTypesWithProperty } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { addAdvancedCacheOptionContextMenu } from "../../Utils/graph/execution/addAdvancedCacheOptionContextMenu";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
@@ -18,7 +19,7 @@ export const RandomNode: NodeDefinition = {
     settings: [],
     ...changeTypeGenerator(portTypesWithProperty("vectorLength"), [], ["value"]),
     getData: (portId, node, context) => {
-        const value = readFromCache(context, node, () =>
+        const value = readFromCacheWithVersion(context, node, () =>
             enforceCorrectVectorTypeForNode(
                 node,
                 Array.from(Array(PortTypeDefinitions[node.selectedType].vectorLength).keys()).map(() => context.RNG.next())
@@ -27,4 +28,5 @@ export const RandomNode: NodeDefinition = {
 
         return value;
     },
+    contextMenu: addAdvancedCacheOptionContextMenu()
 };

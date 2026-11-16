@@ -2,7 +2,7 @@ import { IconEqual } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../Types/PortTypeDefinitions";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheStatic } from "../../Utils/graph/execution/blackboardCache";
 
 export const JSONArrayNode: NodeDefinition = {
     id: "Misc/JSONArray",
@@ -65,9 +65,10 @@ export const JSONArrayNode: NodeDefinition = {
     ],
     ...changeTypeGenerator(["number", "vector2", "vector3", "color", "quaternion"], [], [], [], ["out"]),
     getData: (portId, node, context) => {
-        const content = readFromCache(
+        const content = readFromCacheStatic(
             context,
             node,
+            "data",
             () => {
                 try {
                     const parsed = JSON.parse(node.settings.json);
@@ -114,8 +115,7 @@ export const JSONArrayNode: NodeDefinition = {
                 } catch {
                     return [];
                 }
-            },
-            "json"
+            }
         );
         return content;
     },

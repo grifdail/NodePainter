@@ -3,8 +3,7 @@ import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortDefinition } from "../../../Types/PortDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { frameCacheSetting } from "../../../Utils/graph/definition/FrameCacheSetting";
-import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../../Utils/graph/execution/blackboardCache";
 import { ExecutionContext } from "../../../Utils/graph/execution/createExecutionContext";
 
 export const CustomSimulation: NodeDefinition = {
@@ -15,17 +14,18 @@ export const CustomSimulation: NodeDefinition = {
     tags: [],
     hideInLibrary: true,
     preventSnippet: true,
-    dataInputs: [Port.CacheId(), Port.bool("reset")],
+    dataInputs: [Port.Tick(), Port.CacheId(), Port.Reset()],
     dataOutputs: [],
-    settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }, frameCacheSetting()],
+    settings: [{ id: "cache", label: "cache per frame", type: "bool", defaultValue: true }],
     getData: (portId, node, context) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        var result = useFrameCache(context, node, () => {
-            let [previous, setValue] = useCache(context, node);
+        const result = readFromCacheWithVersion<Record<string, any>>(context, node, (previous) => {
             const newItem = execute(node, context, previous)
-            setValue(newItem);
+
             return newItem;
-        })
+
+        });
+
 
         return result[portId];
     },

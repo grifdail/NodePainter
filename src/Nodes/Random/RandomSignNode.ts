@@ -1,7 +1,8 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { addAdvancedCacheOptionContextMenu } from "../../Utils/graph/execution/addAdvancedCacheOptionContextMenu";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 export const RandomSignNode: NodeDefinition = {
@@ -17,7 +18,11 @@ export const RandomSignNode: NodeDefinition = {
 
     settings: [],
     getData: (portId, node, context) => {
-        const r = readFromCache(context, node, () => context.RNG.next() >= 0.5 ? -1 : 1);
+        const r = readFromCacheWithVersion(context, node, () => context.RNG.next() >= 0.5 ? -1 : 1);
         return r;
     },
+    contextMenu: addAdvancedCacheOptionContextMenu()
 };
+
+
+

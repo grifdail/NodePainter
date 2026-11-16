@@ -5,7 +5,7 @@ import { portTypesWithTags } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { Vector } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
-import { processAndUpdateCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../../Utils/graph/execution/blackboardCache";
 import { enforceCorrectVectorTypeForNode } from "../../../Utils/graph/execution/enforceCorrectVectorTypeForNode";
 import { vectorAddition, vectorLimitMagnitude, vectorScale, vectorSubstraction } from "../../../Utils/math/vectorUtils";
 
@@ -21,7 +21,8 @@ export const SpringController: NodeDefinition = {
         Port.number("damping", 0.5),
         Port.number("maxVelocity", 99999999999),
         Port.vector2("startPosition"),
-        Port.bool("reset", false),
+        Port.Tick(),
+        Port.Reset(),
         Port.CacheId()],
     dataOutputs: [Port.vector3("position")],
     tags: ["State"],
@@ -29,36 +30,31 @@ export const SpringController: NodeDefinition = {
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        return enforceCorrectVectorTypeForNode(node, (useFrameCache(context, node, () => {
-            return processAndUpdateCache(context, node, getDefaultValue, ({ position, velocity }) => {
-                const target = context.getInputValueVector(node, "target");
-                const deltaTime = context.deltaTime;
-                const velocityScale = context.getInputValueNumber(node, "velocityScale");
-                const stiffness = context.getInputValueNumber(node, "stiffness");
-                const damping = context.getInputValueNumber(node, "damping");
-                const maxVelocity = context.getInputValueNumber(node, "maxVelocity");
-
-                const delta = vectorSubstraction(target, position);
-                const acceleration = vectorScale(delta, stiffness * deltaTime);
-                const nextVelocity = vectorLimitMagnitude(vectorScale(vectorAddition(velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
-                const nextPosition = vectorAddition(position, vectorScale(nextVelocity, velocityScale * deltaTime))
-
-                return {
-                    position: nextPosition as Vector,
-                    velocity: nextVelocity as Vector,
-                }
-            })
-
-
-
-
-            function getDefaultValue() {
-                return {
+        var result = readFromCacheWithVersion<Record<string, any>>(context, node, (previous) => {
+            if (!previous) {
+                previous = {
                     position: context.getInputValueVector(node, "startPosition"),
                     velocity: context.getInputValueVector(node, "startPosition").map(a => 0) as Vector
                 }
             }
-        }) as Record<string, any>)[portId])
+            const target = context.getInputValueVector(node, "target");
+            const deltaTime = context.deltaTime;
+            const velocityScale = context.getInputValueNumber(node, "velocityScale");
+            const stiffness = context.getInputValueNumber(node, "stiffness");
+            const damping = context.getInputValueNumber(node, "damping");
+            const maxVelocity = context.getInputValueNumber(node, "maxVelocity");
 
+            const delta = vectorSubstraction(target, previous.position);
+            const acceleration = vectorScale(delta, stiffness * deltaTime);
+            const nextVelocity = vectorLimitMagnitude(vectorScale(vectorAddition(previous.velocity, vectorScale(acceleration, deltaTime)), Math.pow(damping, deltaTime)), maxVelocity)
+            const nextPosition = vectorAddition(previous.position, vectorScale(nextVelocity, velocityScale * deltaTime))
+
+            return {
+                position: nextPosition as Vector,
+                velocity: nextVelocity as Vector,
+            }
+        })
+
+        return enforceCorrectVectorTypeForNode(node, result[portId])
     },
 };

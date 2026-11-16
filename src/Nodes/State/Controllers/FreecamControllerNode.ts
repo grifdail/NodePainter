@@ -4,10 +4,12 @@ import { clamp } from "three/src/math/MathUtils";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { useCache, useFrameCache } from "../../../Utils/graph/execution/blackboardCache";
-import { eulerToTQuat, toQuaternion } from "../../../Utils/math/quaternionUtils";
+import { Vector2 } from "../../../Types/vectorDataType";
+import { readFromCacheWithVersion } from "../../../Utils/graph/execution/blackboardCache";
+import { eulerToTQuat } from "../../../Utils/math/quaternionUtils";
 import { trueMod } from "../../../Utils/math/trueMod";
 import { vectorAddition, vectorScale } from "../../../Utils/math/vectorUtils";
+import { CameraControllerState, cameraControllerStateToPort } from "../../../Utils/misc/CameraControllerState";
 
 export const FreecamControllerNode: NodeDefinition = {
     id: "State/Controller/FreecamController",
@@ -22,29 +24,31 @@ export const FreecamControllerNode: NodeDefinition = {
         Port.vector2("startRotation", [0, 0], "Euler angle around vertical and horizontal axis"),
         Port.vector2("cameraSensibility", [1, 1]),
         Port.number("movementSpeed", 1),
-        Port.bool("reset", false),
+        Port.Tick(),
+        Port.Reset(),
         Port.CacheId()],
     dataOutputs: [Port.vector3("position"), Port.quaternion("rotation")],
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        return useFrameCache(context, node, () => {
-
+        const result = readFromCacheWithVersion<CameraControllerState>(context, node, (previous) => {
 
             const cameraInput = context.getInputValueVector2(node, "cameraInput");
             const movementInput = context.getInputValueVector3(node, "movementInput");
             const cameraSensibility = context.getInputValueVector2(node, "cameraSensibility");
             const movementSpeed = context.getInputValueNumber(node, "movementSpeed");
 
-            let [previous, setValue] = useCache(context, node);
-            const reset = context.getInputValueBoolean(node, "reset");
-            if (reset || previous === undefined) {
-                previous = getDefaultTransform();
+
+            if (previous === undefined) {
+                previous = {
+                    position: context.getInputValueVector3(node, "startPosition"),
+                    euler: context.getInputValueVector2(node, "startRotation")
+                };
             }
 
             //Update rotation
-            var newEuler = [
+            var newEuler: Vector2 = [
                 trueMod(previous.euler[0] - cameraInput[0] * cameraSensibility[0] * context.deltaTime, Math.PI * 2),
                 clamp(previous.euler[1] - cameraInput[1] * cameraSensibility[1] * context.deltaTime, -Math.PI / 2, Math.PI / 2),
             ]
@@ -58,26 +62,15 @@ export const FreecamControllerNode: NodeDefinition = {
                     forward.toArray(),
                     context.deltaTime * movementSpeed
                 )
-
             )
-            var nextValue = {
+
+            return {
                 position: newPosition,
                 euler: newEuler
             }
-            setValue(nextValue);
 
-            return {
-                rotation: toQuaternion(newQuat),
-                position: newPosition
-            } as Record<string, any>
-
-            function getDefaultTransform() {
-                return {
-                    position: context.getInputValueVector3(node, "startPosition"),
-                    euler: context.getInputValueVector2(node, "startRotation")
-                }
-            }
-        })[portId]
+        })
+        return cameraControllerStateToPort(result, portId)
 
     }
 

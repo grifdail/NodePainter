@@ -300,6 +300,7 @@ const UPGRADES: UpgradeFunction[] = [
     (sketch) => addMissingSettings(["Render3D", "Image/Precompute", "Image/Flipbook", "Technical/ImageEffectShader/Base"], sketch, (s, node, v) => s === "resolution" ? { mode: "static", width: node.settings.width, height: node.settings.height, } : v),
     (sketch) => addMissingNodePort(["Render3D"], sketch),
     (sketch) => removeNodeOfType(["Math/Interpolation/AnimationCurve"], sketch),
+    (sketch) => addMissingNodePort(["Misc/Cache", "Misc/JavascriptFunction"], sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

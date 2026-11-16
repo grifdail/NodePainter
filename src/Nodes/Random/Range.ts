@@ -1,7 +1,8 @@
 import { IconArrowsShuffle } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { addAdvancedCacheOptionContextMenu } from "../../Utils/graph/execution/addAdvancedCacheOptionContextMenu";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const RangeNode: NodeDefinition = {
     id: "Random/Range",
@@ -28,7 +29,8 @@ export const RangeNode: NodeDefinition = {
     getData: (portId, node, context) => {
         var min = context.getInputValueNumber(node, "min");
         var max = context.getInputValueNumber(node, "max");
-        const r = readFromCache(context, node, () => context.RNG.next());
+        const r = readFromCacheWithVersion(context, node, () => context.RNG.next());
         return r * (max - min) + min;
     },
+    contextMenu: addAdvancedCacheOptionContextMenu()
 };

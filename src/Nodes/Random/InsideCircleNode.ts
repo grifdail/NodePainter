@@ -2,7 +2,8 @@ import { IconArrowsShuffle, IconSphere } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { addAdvancedCacheOptionContextMenu } from "../../Utils/graph/execution/addAdvancedCacheOptionContextMenu";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const InsideCircleNode: NodeDefinition = {
     id: "Random/InsideCircle",
@@ -14,10 +15,11 @@ export const InsideCircleNode: NodeDefinition = {
     dataOutputs: [Port.vector2("value")],
     settings: [],
     getData: (portId, node, context) => {
-        const value = readFromCache(context, node, () => [context.RNG.next(), context.RNG.next()]);
+        const value = readFromCacheWithVersion(context, node, () => [context.RNG.next(), context.RNG.next()]);
         const [rx, ry] = value;
         const r = Math.sqrt(ry);
         const c = rx * Math.PI * 2;
         return [Math.cos(c) * r, Math.sin(c) * r];
     },
+    contextMenu: addAdvancedCacheOptionContextMenu()
 };

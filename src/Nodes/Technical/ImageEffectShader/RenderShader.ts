@@ -4,7 +4,7 @@ import { ImageData } from "../../../Types/ImageData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { readFromCache } from "../../../Utils/graph/execution/blackboardCache";
+import { readFromCacheStatic, readFromCacheWithVersion } from "../../../Utils/graph/execution/blackboardCache";
 import { computeResolution } from "../../../Utils/graph/execution/computeResolution";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
 
@@ -24,36 +24,22 @@ export const RenderShader: NodeDefinition = {
     ],
     getData(portId, node, context) {
 
-        const { width, height } = computeResolution(context, node.settings.resolution)
-        const cacheId = Math.floor(context.getInputValueNumber(node, "cache-id"));
-        const keyCache = `${node.id}-${cacheId}-img`;
-        const keyShader = `${node.id}-${cacheId}-shader`;
-
-        let img = readFromCache(
-            context,
-            node,
-            () => {
-                return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
-            },
-            keyCache
-        );
-        var p5img = img.p5Graphics;
+        const img = readFromCacheWithVersion(context, node, () => {
+            const { width, height } = computeResolution(context, node.settings.resolution)
+            return new ImageData({ p5Graphics: context.p5.createGraphics(width, height, context.p5.WEBGL) });
+        });
+        const p5img = img.p5Graphics;
         if (p5img === null) {
             return;
         }
-        let shader = readFromCache(
-            context,
-            node,
-            () => {
-                try {
-                    const shaderCode: string = context.getImageEffectShaderCode(node.type, Object.values(node.dataInputs));
-                    return (p5img as any).createFilterShader(shaderCode);
-                } catch (error) {
-                    console.error(error);
-                }
-            },
-            keyShader
-        );
+        const shader = readFromCacheStatic(context, node, "shader", () => {
+            try {
+                const shaderCode: string = context.getImageEffectShaderCode(node.type, Object.values(node.dataInputs));
+                return (p5img as any).createFilterShader(shaderCode);
+            } catch (error) {
+                console.error(error);
+            }
+        });
 
         shader.setUniform("time", context.timeMs);
         Object.values(node.dataInputs).forEach((port) => {
@@ -63,11 +49,11 @@ export const RenderShader: NodeDefinition = {
                     return;
                 }
                 shader.setUniform(sanitizeForShader(`uniform_${port.id}`), data.getP5Uniform(context.p5));
-            } else {
-                const data = context.getInputValue(node, port.id, port.type);
-                const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;
-                shader.setUniform(sanitizeForShader(`uniform_${port.id}`), converter ? converter(data) : data);
+                return;
             }
+            const data = context.getInputValue(node, port.id, port.type);
+            const converter = PortTypeDefinitions[port.type].convertToShaderP5Uniform;
+            shader.setUniform(sanitizeForShader(`uniform_${port.id}`), converter ? converter(data) : data);
         });
 
         p5img.clear(0, 0, 0, 0);

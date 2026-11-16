@@ -1,7 +1,7 @@
 import { IconCircuitSwitchOpen } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
-import { useCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const ToggleFlipFlopNode: NodeDefinition = {
     id: "State/ToggleFlipFlopSwitch",
@@ -9,24 +9,22 @@ export const ToggleFlipFlopNode: NodeDefinition = {
     icon: IconCircuitSwitchOpen,
     description: "Toggle between true and false everytime it's input is true",
 
-    dataInputs: [Port.bool("flip"), Port.CacheId()],
+    dataInputs: [Port.bool("flip"), Port.Tick(), Port.Reset(), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],
     settings: [],
     getData(portId, node, context) {
-        const flip = context.getInputValueBoolean(node, "flip");
-
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [previous, setValue] = useCache(context, node);
-        if (previous === undefined) {
-            setValue(false);
-        }
-        if (flip) {
-            setValue(!previous);
-            return !previous
-        }
+        return readFromCacheWithVersion<boolean>(context, node, (previous) => {
+            const flip = context.getInputValueBoolean(node, "flip");
 
 
-        return !!previous;
+            if (previous === undefined) {
+                previous = false;
+            }
+            if (flip) {
+                return !previous
+            }
+            return previous;
+        })
     },
 };

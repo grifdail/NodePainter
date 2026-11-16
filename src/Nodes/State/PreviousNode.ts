@@ -4,7 +4,7 @@ import { NodeDefinition } from "../../Types/NodeDefinition";
 import { portTypesWithTags } from "../../Types/PortTypeDefinitions";
 import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
-import { useCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 
 export const PreviousNode: NodeDefinition = {
     id: "State/Previous",
@@ -12,16 +12,20 @@ export const PreviousNode: NodeDefinition = {
     icon: DoubleIconGen(IconStatusChange, IconArrowNarrowLeft),
     description: "Output the value of the input at the previous call",
 
-    dataInputs: [Port.bool("in"), Port.CacheId()],
+    dataInputs: [Port.bool("in"), Port.Tick(), Port.Reset(), Port.CacheId()],
     dataOutputs: [Port.bool("out")],
     tags: ["State"],
     ...changeTypeGenerator(portTypesWithTags(["common"]), ["in"], ["out"]),
     settings: [],
     getData(portId, node, context) {
-        const current = context.getInputValue(node, "in", node.selectedType);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [previous, setValue] = useCache(context, node);
-        setValue(current)
-        return previous;
+        return readFromCacheWithVersion<[any, any]>(context, node, (previous) => {
+            const current = context.getInputValue(node, "in", node.selectedType);
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            if (previous === undefined) {
+                previous = [current, current]
+            }
+
+            return [previous[1], current];
+        })[0]
     },
 };

@@ -2,7 +2,7 @@ import { IconCube } from "@tabler/icons-react";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { Vector2 } from "../../Types/vectorDataType";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { VirtualNodes } from "../3D/VirtualNodeTypes/VirtualNodeTypes";
 
 
@@ -18,13 +18,15 @@ export const ShapeGeometry: NodeDefinition = {
         Port.bool("top", true),
         Port.bool("side", true),
         Port.bool("bottom", true),
-        Port.CacheId()],
+        Port.CacheId(),
+        Port.Version()],
     dataOutputs: [Port.mesh("output")],
     tags: ["3D", "Mesh"],
     settings: [],
     getData(portId, node, context) {
 
-        const positions = readFromCache(context, node, () => {
+        //TODO: THAT'S VERY WRONG. We're caching the input shape and not the mesh. I need to fix this.
+        const positions = readFromCacheWithVersion(context, node, () => {
             const result = context.getInputValue(node, "points", "array-vector2") as Vector2[];
             return result;
         });

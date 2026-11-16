@@ -5,7 +5,7 @@ import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { createVector2, Vector2 } from "../../Types/vectorDataType";
-import { readFromCache } from "../../Utils/graph/execution/blackboardCache";
+import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { Constraints } from "../../Utils/ui/applyConstraints";
 
 
@@ -20,7 +20,8 @@ export const PerlinNoiseTextureNode: NodeDefinition = {
         Port.number("octave", 1, "How many layer of noise to add", [Constraints.Integer(), Constraints.GreaterThan(1)]),
         Port.number("influence", 2),
         Port.bool("useAlpha", true, "If this is enabled, a transparent texture will be used, otherwise a black and white texture will be generated"),
-        Port.CacheId()
+        Port.CacheId(),
+        Port.Version()
     ],
     dataOutputs: [
         { id: "image", type: "image", defaultValue: null }],
@@ -31,7 +32,7 @@ export const PerlinNoiseTextureNode: NodeDefinition = {
 
     ],
     getData(portId, data, context) {
-        var img = readFromCache(context, data, () => {
+        var img = readFromCacheWithVersion(context, data, () => {
             const str = generateNoiseTexture( //
                 data.settings.dimension,
                 context.getInputValueVector2(data, "offset"),

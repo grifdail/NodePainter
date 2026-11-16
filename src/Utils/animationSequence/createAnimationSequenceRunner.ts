@@ -3,11 +3,13 @@ import { FunctionContext } from "../graph/execution/createExecutionContext";
 import { AnimationSequenceData } from "./AnimationSequenceData";
 import { createRunnerForBlock } from "./AnimationSequenceRunner";
 
-export const createAnimationSequenceRunner = (model: AnimationSequenceData, inputs: FunctionContext, node: NodeData) => {
+export type AnimationSequenceRunner = (inputs: FunctionContext, deltaTime: number) => FunctionContext;
 
-    const properties = model.properties.reduce((old, port) => ({ ...old, [port.id]: structuredClone(inputs[port.id]) || { value: structuredClone(port.defaultValue), type: port.type } }), {} as FunctionContext)
+export function createAnimationSequenceRunner(model: AnimationSequenceData, inputs: FunctionContext, node: NodeData): AnimationSequenceRunner {
 
-    const loop = !!node.settings.loop
+    const properties = model.properties.reduce((old, port) => ({ ...old, [port.id]: structuredClone(inputs[port.id]) || { value: structuredClone(port.defaultValue), type: port.type } }), {} as FunctionContext);
+
+    const loop = !!node.settings.loop;
     let root = createRunnerForBlock(model.root, properties);
     let isDone = false;
 
@@ -15,8 +17,8 @@ export const createAnimationSequenceRunner = (model: AnimationSequenceData, inpu
         if (!isDone) {
             var result = root.next([inputs, deltaTime]);
             if (result.done) {
-                console.log("animation done")
-                isDone = true
+                console.log("animation done");
+                isDone = true;
                 if (loop) {
                     root = createRunnerForBlock(model.root, properties);
                     isDone = false;
@@ -25,6 +27,6 @@ export const createAnimationSequenceRunner = (model: AnimationSequenceData, inpu
         }
         return properties;
 
-    }
+    };
 
-};
+}
