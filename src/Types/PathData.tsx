@@ -124,3 +124,21 @@ export function interpolateSplineDir(path: Vector2[], pos: number): Vector2 {
             path[tPrev * 4 + 3][1], dt)
     ];
 }
+
+
+export function interpolateArray<T>(operator: (a: T, b: T, t: number) => T, path: T[], pos: number, defaultValue: T) {
+    if (path.length < 1) {
+        return defaultValue;
+    }
+    if (path.length === 1) {
+        return path[0];
+    }
+
+
+    pos = pos % 1;
+    var stopCount = Math.floor(path.length - 1);
+    var tPrev = Math.floor(pos * stopCount);
+    var dt = (pos * stopCount) % 1;
+    return operator(path[tPrev], path[tPrev + 1], dt);
+    ;
+}
