@@ -29,6 +29,7 @@ import { ColorPairingSetting } from "./ColorPairingSetting";
 import { ResolutionSetting } from "./ResolutionSetting";
 import { TimelineSetting } from "./TimelineSetting";
 import { SeedSetting } from "./SeedSetting";
+import { CurvePreviewSetting } from "./CurvePreview";
 
 
 
@@ -61,7 +62,8 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     "animation-sequence": AnimationSequenceSetting,
     "color-pairing": ColorPairingSetting,
     resolution: ResolutionSetting,
-    "seed": SeedSetting
+    "seed": SeedSetting,
+    "curve-preview": CurvePreviewSetting,
 };
 
 

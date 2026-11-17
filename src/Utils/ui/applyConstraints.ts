@@ -83,6 +83,9 @@ const ConstrainDefinition = {
     NonDigitStart: (text: string, _previousValue: string) => {
         return text.replaceAll(/^\d+/gm, "");
     },
+    VectorComponentConstrain: (value: Vector, _previousValue: Vector, constrains: ConstrainDeclaration[][]) => {
+        return value.map((c, i) => constrains.length > i ? applyConstraint(c, _previousValue[i], constrains[i]) : c);
+    }
 };
 
 type ConstrainDefinitionType = typeof ConstrainDefinition;

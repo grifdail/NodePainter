@@ -12,6 +12,7 @@ const randomVect: Vector4 = [12.9898, 78.233, 56.128, 48.411];
 
 export const SeededNode: NodeDefinition = {
     id: "Random/Seeded",
+    label: "Seeded Random",
     description: "Generate a random value from a seed",
     icon: IconMathXPlusY,
     tags: ["Math", "Vector"],

@@ -18,7 +18,13 @@ export const ExponantialImpulseNode: NodeDefinition = {
     ],
 
     codeBlockType: "expression",
-    settings: [],
+    settings: [{
+        type: "curve-preview", id: "preview", requirePort: ["scale"], height: 100, getValue(x, node) {
+            var k = node.dataInputs.scale.ownValue as number;
+            const h = k * x;
+            return h * Math.exp(1.0 - h);
+        }
+    }],
     getData: (portId, node, context) => {
         const x = context.getInputValueNumber(node, "input");
         const k = context.getInputValueNumber(node, "scale");

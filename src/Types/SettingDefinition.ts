@@ -118,6 +118,13 @@ export type ButtonSettingDefinition = BaseSettingDefinition & {
     };
 };
 
+export type CurvePreviewSettingDefinition = BaseSettingDefinition & {
+    type: "curve-preview";
+    height: number;
+    requirePort?: string[]
+    getValue: (t: number, node: NodeData) => number
+};
+
 export type MeshUploadSettingDefinition = BaseSettingDefinition & {
     type: "mesh-upload";
 };
@@ -196,7 +203,8 @@ export type SettingDefinition =
     | GraphAreaSettingDefinition
     | AnimationSequenceSettingDefinition
     | ResolutionSettingDefinition
-    | SeedSettingDefinition;
+    | SeedSettingDefinition
+    | CurvePreviewSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
 

@@ -301,6 +301,12 @@ const UPGRADES: UpgradeFunction[] = [
     (sketch) => addMissingNodePort(["Render3D"], sketch),
     (sketch) => removeNodeOfType(["Math/Interpolation/AnimationCurve"], sketch),
     (sketch) => addMissingNodePort(["Misc/Cache", "Misc/JavascriptFunction"], sketch),
+    (sketch) => redefineNodes({
+        "Pi": "Math/Constant/Pi",
+        "Tau": "Math/Constant/Tau",
+        "E": "Math/Constant/E",
+        "Sqrt2": "Math/Constant/Sqrt2",
+    }, sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

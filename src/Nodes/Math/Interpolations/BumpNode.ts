@@ -19,7 +19,12 @@ export const BumpNode: NodeDefinition = {
     ],
 
     codeBlockType: "expression",
-    settings: [],
+    settings: [{
+        type: "curve-preview", id: "preview", height: 100, getValue(t, node) {
+            const tx = clamp01(t) * 2 - 1
+            return Math.max(1 - tx * tx, 0);
+        }
+    }],
     getData: (portId, node, context) => {
         const x = context.getInputValueNumber(node, "input");
         const tx = clamp01(x) * 2 - 1

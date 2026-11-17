@@ -1,3 +1,4 @@
+import { BezierEasingNode } from "./BezierEasing";
 import { BezierSubsetNode } from "./BezierSubsetNode";
 import { BumpNode } from "./BumpNode";
 import { DiskToSquareNode } from "./DiskToSquareNode";
@@ -21,6 +22,7 @@ import { SquareToDiskNode } from "./SquareToDiskNode";
 
 export const MathInterpolationNodes = [
     //
+    BezierEasingNode,
     BezierSubsetNode,
     BumpNode,
     DiskToSquareNode,

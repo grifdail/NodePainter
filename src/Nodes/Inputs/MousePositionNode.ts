@@ -11,8 +11,15 @@ export const MousePositionNode: NodeDefinition = {
     dataInputs: [],
     dataOutputs: [{ id: "pos", type: "vector2", defaultValue: createVector2() }],
 
-    settings: [],
+    settings: [
+        { id: "mode", type: "dropdown", defaultValue: "absolute", options: ["absolute", "relative"] }
+    ],
     getData: (portId, node, context) => {
+        const mod = (context.getSetting(node, "mode") || "absolute") as "absolute" | "relative";
+        if (mod === "relative") {
+            return createVector2(context.p5.mouseX / context.p5.width, context.p5.mouseY / context.p5.width);
+        }
+
         return createVector2(context.p5.mouseX, context.p5.mouseY);
     },
 };

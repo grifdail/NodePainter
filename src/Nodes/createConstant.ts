@@ -4,7 +4,7 @@ import { convertToShaderNumber } from "../Utils/graph/execution/convertToShaderN
 
 export function createConstant(id: string, value: number): NodeDefinition {
     return {
-        id: id,
+        id: `Math/Constant/${id}`,
         icon: IconCalculator,
         description: `Mathematical constant. Approximately ${value.toPrecision(4)}.`,
         tags: ["Math"],
