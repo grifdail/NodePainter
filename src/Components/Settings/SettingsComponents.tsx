@@ -30,6 +30,7 @@ import { ResolutionSetting } from "./ResolutionSetting";
 import { TimelineSetting } from "./TimelineSetting";
 import { SeedSetting } from "./SeedSetting";
 import { CurvePreviewSetting } from "./CurvePreview";
+import { PointsSetting } from "./PointsSetting";
 
 
 
@@ -64,6 +65,7 @@ export const SettingComponents: { [TDefinition in SettingDefinition as TDefiniti
     resolution: ResolutionSetting,
     "seed": SeedSetting,
     "curve-preview": CurvePreviewSetting,
+    "points": PointsSetting,
 };
 
 

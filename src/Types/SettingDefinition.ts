@@ -153,6 +153,10 @@ export type PathSettingDefinition = BaseSettingDefinition & {
 export type BezierPathSettingDefinition = BaseSettingDefinition & {
     type: "bezier-path";
 };
+export type PointsSettingDefinition = BaseSettingDefinition & {
+    type: "points";
+};
+
 export type GraphAreaSettingDefinition = BaseSettingDefinition & {
     type: "graph-area";
 };
@@ -204,7 +208,8 @@ export type SettingDefinition =
     | AnimationSequenceSettingDefinition
     | ResolutionSettingDefinition
     | SeedSettingDefinition
-    | CurvePreviewSettingDefinition;
+    | CurvePreviewSettingDefinition
+    | PointsSettingDefinition;
 
 export type SettingType = SettingDefinition["type"];
 
