@@ -113,65 +113,65 @@ void main() {
 `;
 
 export const BlurNode: NodeDefinition = {
-  id: "Effect/Blur",
-  label: "Apply Blur Effect",
-  icon: IconPhoto,
-  description: "Blur an image",
-  dataInputs: [
-    { id: "image", type: "image", defaultValue: null },
-    { id: "amount", type: "number", defaultValue: 1 },
-  ],
-  dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
-  tags: ["Image"],
+    id: "Effect/Blur",
+    label: "Apply Blur Effect",
+    icon: IconPhoto,
+    description: "Blur an image",
+    dataInputs: [
+        { id: "image", type: "image", defaultValue: null },
+        { id: "amount", type: "number", defaultValue: 1 },
+    ],
+    dataOutputs: [{ id: "output", type: "image", defaultValue: null }],
+    tags: ["Image"],
 
-  settings: [],
-  getData(portId, node, context) {
-    var imageData = context.getInputValueImage(node, "image");
-    var blurAmount = context.getInputValueNumber(node, "amount");
-    if (!imageData || !imageData.getP5Uniform(context.p5)) {
-      return null;
-    }
-    let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
-    let shaderH = context.blackboard[KEY_BLUR_SHADER_H] as p5.Shader;
-    if (!shaderH) {
-      shaderH = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
-      context.blackboard[KEY_BLUR_SHADER_H] = shaderH;
-    }
-    let shaderV = context.blackboard[KEY_BLUR_SHADER_V] as p5.Shader;
-    if (!shaderV) {
-      shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
-      context.blackboard[KEY_BLUR_SHADER_V] = shaderV;
-    }
-    const keyCache = `${node.id}-image-cache`;
-    let firstPass = getPassBuffer(context, KEY_FIRST_PASS, image);
-    let target = getPassBuffer(context, keyCache, image);
+    settings: [],
+    getData(portId, node, context) {
+        var imageData = context.getInputValueImage(node, "image");
+        var blurAmount = context.getInputValueNumber(node, "amount");
+        if (!imageData || !imageData.getP5Uniform(context.p5)) {
+            return null;
+        }
+        let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
+        let shaderH = context.blackboard[KEY_BLUR_SHADER_H] as p5.Shader;
+        if (!shaderH) {
+            shaderH = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
+            context.blackboard[KEY_BLUR_SHADER_H] = shaderH;
+        }
+        let shaderV = context.blackboard[KEY_BLUR_SHADER_V] as p5.Shader;
+        if (!shaderV) {
+            shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
+            context.blackboard[KEY_BLUR_SHADER_V] = shaderV;
+        }
+        const keyCache = `${node.id}-image-cache`;
+        let firstPass = getPassBuffer(context, KEY_FIRST_PASS, image);
+        let target = getPassBuffer(context, keyCache, image);
 
-    let firstPassImage = firstPass.getP5(context.p5) as p5.Graphics;
-    let targetPassImage = target.getP5(context.p5) as p5.Graphics;
+        let firstPassImage = firstPass.getP5CompatibleSource(context.p5) as p5.Graphics;
+        let targetPassImage = target.getP5CompatibleSource(context.p5) as p5.Graphics;
 
-    shaderH.setUniform("tex0", image);
-    shaderH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
-    shaderH.setUniform("direction", [1.0, 0.0]);
+        shaderH.setUniform("tex0", image);
+        shaderH.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
+        shaderH.setUniform("direction", [1.0, 0.0]);
 
-    firstPassImage.shader(shaderH);
-    firstPassImage.rect(0, 0, image.width, image.height);
+        firstPassImage.shader(shaderH);
+        firstPassImage.rect(0, 0, image.width, image.height);
 
-    targetPassImage.shader(shaderV);
+        targetPassImage.shader(shaderV);
 
-    shaderV.setUniform("tex0", firstPassImage);
-    shaderV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
-    shaderV.setUniform("direction", [0.0, 1.0]);
+        shaderV.setUniform("tex0", firstPassImage);
+        shaderV.setUniform("texelSize", [blurAmount / image.width, blurAmount / image.height]);
+        shaderV.setUniform("direction", [0.0, 1.0]);
 
-    targetPassImage.rect(0, 0, image.width, image.height);
+        targetPassImage.rect(0, 0, image.width, image.height);
 
-    return target;
-  },
+        return target;
+    },
 };
 function getPassBuffer(context: ExecutionContext, key: string, image: { width: number; height: number }): ImageData {
-  let target = context.blackboard[key];
-  if (!target) {
-    target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
-    context.blackboard[key] = target;
-  }
-  return target;
+    let target = context.blackboard[key];
+    if (!target) {
+        target = new ImageData({ p5Graphics: context.p5.createGraphics(image.width, image.height, context.p5.WEBGL) });
+        context.blackboard[key] = target;
+    }
+    return target;
 }

@@ -85,7 +85,7 @@ export const FlatColorNode: NodeDefinition = {
 
         let target = getPassBuffer(context, keyCache, image);
 
-        let targetPassImage = target.getP5(context.p5) as p5.Graphics;
+        let targetPassImage = target.getP5CompatibleSource(context.p5) as p5.Graphics;
 
         targetPassImage.clear();
         targetPassImage.shader(shaderV);

@@ -5,20 +5,20 @@ import { generateShaderCodeFromNodeData } from "../../Utils/graph/execution/gene
 import { sanitizeForShader } from "../../Utils/graph/execution/sanitizeForShader";
 
 export const SampleTextureNode: NodeDefinition = {
-  id: "Shader/SampleTexture",
-  hideInLibrary: false,
-  icon: IconGizmo,
-  description: "Sample a pixel from a UV",
-  dataInputs: [
-    { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
-    { id: "sampler", type: "image", defaultValue: null },
-  ],
+    id: "Shader/SampleTexture",
+    hideInLibrary: false,
+    icon: IconGizmo,
+    description: "Sample a pixel from a UV",
+    dataInputs: [
+        { id: "uv", type: "vector2", defaultValue: createVector2(0, 0) },
+        { id: "sampler", type: "image", defaultValue: null },
+    ],
 
-  dataOutputs: [{ id: "out", type: "color", defaultValue: createColor() }],
-  tags: ["Shader", "Image"],
+    dataOutputs: [{ id: "out", type: "color", defaultValue: createColor() }],
+    tags: ["Shader", "Image"],
 
-  settings: [],
-  getShaderCode(node, context) {
-    return generateShaderCodeFromNodeData(node, context, "out", ["uv"], ({ uv }) => `texture2D(${sanitizeForShader(`uniform_${node.dataInputs["sampler"].connectedPort}`)}, ${uv})`);
-  },
+    settings: [],
+    getShaderCode(node, context) {
+        return generateShaderCodeFromNodeData(node, context, "out", ["uv"], ({ uv }) => `texture2D(${sanitizeForShader(`uniform_${node.dataInputs["sampler"].connectedPort}`)}, ${uv})`);
+    },
 };

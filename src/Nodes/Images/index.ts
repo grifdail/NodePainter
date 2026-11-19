@@ -2,17 +2,19 @@ import { FlipbookNode } from "./FlipbookNode";
 import { ImageDimension } from "./ImageDimension";
 import { PaintImage } from "./PaintImage";
 import { PrecomputeImage } from "./PrecomputeImage";
+import { SampleImageNode } from "./SampleImageNode";
 import { UploadImage } from "./UploadImage";
 import { UseParticleImage } from "./UseParticleImage";
 import { UsePatternImage } from "./UsePatternImage";
 
 export const ImageNodes = [
-  //
-  FlipbookNode,
-  ImageDimension,
-  PaintImage,
-  PrecomputeImage,
-  UploadImage,
-  UseParticleImage,
-  UsePatternImage,
+    //
+    FlipbookNode,
+    ImageDimension,
+    PaintImage,
+    PrecomputeImage,
+    SampleImageNode,
+    UploadImage,
+    UseParticleImage,
+    UsePatternImage,
 ];

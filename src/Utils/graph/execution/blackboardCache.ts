@@ -26,12 +26,13 @@ export function readFromCacheWithVersion<T>(context: ExecutionContext, nodeData:
     const storedVersion = context.blackboard[cacheKeyVersion];
     const reset = rawReset || storedVersion !== version;
     let value = context.blackboard[cacheKey] as T | undefined;
-    //console.log(version, storedVersion, storedVersion !== version);
     if (reset || value === undefined) {
         //If raw reseting, we pass undefined so that the value get initialized
         value = get(rawReset ? undefined : value);
         context.blackboard[cacheKey] = value;
-        context.blackboard[cacheKeyVersion] = version;
+        if (value !== undefined) {
+            context.blackboard[cacheKeyVersion] = version;
+        }
     }
     return value;
 }

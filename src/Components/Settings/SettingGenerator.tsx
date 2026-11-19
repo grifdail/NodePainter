@@ -7,7 +7,7 @@ export const SettingGenerator: SettingGeneratorType = Object.entries(SettingComp
     return {
         ...old, [key]: (id: string, defaultValue?: any, extra?: Omit<SettingDefinition, "id" | "type" | "defaultValue">) => {
 
-            extra = SettingComponents[key as SettingDefinition["type"]]?.generate?.() || {};
+            extra ||= SettingComponents[key as SettingDefinition["type"]]?.generate?.() || {};
             return {
                 ...extra,
                 id,

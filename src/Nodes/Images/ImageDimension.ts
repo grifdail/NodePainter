@@ -1,41 +1,48 @@
 import { IconPhoto, IconRuler } from "@tabler/icons-react";
 import { DoubleIconGen } from "../../Components/Generics/DoubleIcon";
+import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { createVector2 } from "../../Types/vectorDataType";
 
 export const ImageDimension: NodeDefinition = {
-  id: "Image/Dimension",
-  label: "Image dimension",
-  icon: DoubleIconGen(IconPhoto, IconRuler),
-  description: "Return the dimension of an image",
+    id: "Image/Dimension",
+    label: "Image dimension",
+    icon: DoubleIconGen(IconPhoto, IconRuler),
+    description: "Return the dimension of an image",
 
-  dataInputs: [{ id: "image", type: "image", defaultValue: null }],
-  dataOutputs: [
-    {
-      id: "dim",
-      type: "vector2",
-      defaultValue: createVector2(100, 100),
+    dataInputs: [{ id: "image", type: "image", defaultValue: null }],
+    dataOutputs: [
+        {
+            id: "dim",
+            type: "vector2",
+            defaultValue: createVector2(100, 100),
+        },
+    ],
+    tags: ["Image"],
+
+    settings: [],
+    getData(portId, node, context) {
+        var image = context.getInputValueImage(node, "image");
+        return getImageDimension(image);
     },
-  ],
-  tags: ["Image"],
+};
 
-  settings: [],
-  getData(portId, node, context) {
-    var image = context.getInputValueImage(node, "image");
+
+export function getImageDimension(image: ImageData | null) {
     if (!image) {
-      return createVector2();
+        return createVector2();
     }
     if (image.p5Graphics) {
-      return createVector2(image.p5Graphics.width, image.p5Graphics.height);
+        return createVector2(image.p5Graphics.width, image.p5Graphics.height);
     }
     if (image.p5Images) {
-      return createVector2(image.p5Images.width, image.p5Images.height);
+        return createVector2(image.p5Images.width, image.p5Images.height);
     }
     if (image.canvas) {
-      return createVector2(image.canvas.width, image.canvas.height);
+        return createVector2(image.canvas.width, image.canvas.height);
     }
     if (image.threeTexture) {
-      return createVector2(image.threeTexture.image.width, image.threeTexture.image.height);
+        return createVector2(image.threeTexture.image.width, image.threeTexture.image.height);
     }
-  },
-};
+    return createVector2();
+}
