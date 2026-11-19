@@ -1,7 +1,6 @@
 import { PointsSettingDefinition } from "../../Types/SettingDefinition";
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 import styled from "styled-components";
-import { BezierPathData } from "../../Types/PathData";
 import { SettingComponent } from "../../Types/SettingComponent";
 import { SettingProps } from "../../Types/SettingProps";
 import { Button } from "../Generics/Button";
