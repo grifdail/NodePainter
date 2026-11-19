@@ -205,7 +205,6 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         },
         initializeSeed(start) {
             var s = start.settings.seed?.mode === "static" ? start.settings.seed.seed : Date.now();
-            console.log(s);
             context.RNG = new Rand(s.toString());
         },
         render() {

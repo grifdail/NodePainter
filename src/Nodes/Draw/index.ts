@@ -2,6 +2,7 @@ import { ArcNode } from "./ArcNode";
 import { BezierNode } from "./BezierNode";
 import { CircleNode } from "./CircleNode";
 import { ClearNode } from "./ClearNode";
+import { ConicGradientCircleNode } from "./ConicGradientCircleNode";
 import { FillBackgroundNode } from "./FillBackgroundNode";
 import { GradientRectNode } from "./GradientRectNode";
 import { ImageNode } from "./ImageNode";
@@ -9,6 +10,7 @@ import { LineNode } from "./LineNode";
 import { PolygonNode } from "./PolygonNode";
 import { PolylineNode } from "./PolylineNode";
 import { QuadNode } from "./QuadNode";
+import { RadialGradientCircleNode } from "./RadialGradientCircle";
 import { RectNode } from "./RectNode";
 import { RegularPolygonNode } from "./RegularPolygonNode";
 import { SplineNode } from "./SplineNode";
@@ -22,6 +24,7 @@ export const DrawNodes = [
     BezierNode,
     CircleNode,
     ClearNode,
+    ConicGradientCircleNode,
     FillBackgroundNode,
     GradientRectNode,
     ImageNode,
@@ -29,6 +32,7 @@ export const DrawNodes = [
     PolygonNode,
     PolylineNode,
     QuadNode,
+    RadialGradientCircleNode,
     RectNode,
     RegularPolygonNode,
     SplineNode,

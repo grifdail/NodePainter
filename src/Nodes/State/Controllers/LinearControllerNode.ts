@@ -26,7 +26,7 @@ export const LinearControllerNode: NodeDefinition = {
     ...changeTypeGenerator(portTypesWithTags(["vector", "common"], ["array"]), ["startPosition", "target"], ["position"]),
     getData(portId, node, context) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        return readFromCacheWithVersion<{ position: any }>(context, node, (previous) => {
+        return enforceCorrectVectorTypeForNode(node, readFromCacheWithVersion<{ position: any }>(context, node, (previous) => {
             if (!previous) {
                 previous = {
                     position: context.getInputValueVector(node, "startPosition")
@@ -39,9 +39,9 @@ export const LinearControllerNode: NodeDefinition = {
             const delta = vectorSubstraction(target, previous.position);
             const displacement = vectorLimitMagnitude(delta, speed * deltaTime);
             return {
-                position: enforceCorrectVectorTypeForNode(node, vectorAddition(previous.position, displacement))
+                position: (vectorAddition(previous.position, displacement))
             }
-        }).position
+        }).position)
 
 
 
