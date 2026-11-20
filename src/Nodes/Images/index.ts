@@ -4,6 +4,7 @@ import { PaintImage } from "./PaintImage";
 import { PrecomputeImage } from "./PrecomputeImage";
 import { SampleImageNode } from "./SampleImageNode";
 import { UploadImage } from "./UploadImage";
+import { UseNoiseImage } from "./UseNoiseImage";
 import { UseParticleImage } from "./UseParticleImage";
 import { UsePatternImage } from "./UsePatternImage";
 
@@ -16,5 +17,6 @@ export const ImageNodes = [
     SampleImageNode,
     UploadImage,
     UseParticleImage,
+    UseNoiseImage,
     UsePatternImage,
 ];

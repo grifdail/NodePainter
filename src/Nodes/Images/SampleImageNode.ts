@@ -5,6 +5,7 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { createColor, createVector2 } from "../../Types/vectorDataType";
 import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { clamp01 } from "../../Utils/math/clamp01";
+import { trueMod } from "../../Utils/math/trueMod";
 import { vectorLerp, vectorScale } from "../../Utils/math/vectorUtils";
 
 export const SampleImageNode: NodeDefinition = {
@@ -24,6 +25,7 @@ export const SampleImageNode: NodeDefinition = {
 
     settings: [
         SettingGenerator.dropdown("coordinate", "relative", { options: ["absolute", "relative"] }),
+        SettingGenerator.dropdown("loop", "loop", { options: ["loop", "clamp"] }),
         SettingGenerator.dropdown("interpolation", "points", { options: ["points", "bilinear"] })
     ],
     getData(portId, node, context) {
@@ -46,7 +48,7 @@ export const SampleImageNode: NodeDefinition = {
         if (pixels) {
             const pt = context.getInputValueVector2(node, "source");
             let coor = node.settings.coordinate === "absolute" ? createVector2(pt[0] / pixels.width, pt[1] / pixels.height) : pt;
-            coor = [clamp01(coor[0]), clamp01(coor[1])]
+            coor = node.settings.coordinate === "clamp" ? [clamp01(coor[0]), clamp01(coor[1])] : [trueMod(coor[0], 1), trueMod(coor[1], 1)];
             if (node.settings.interpolation === "bilinear") {
                 const coorX = Math.floor(coor[0] * pixels.width);
                 const coorY = Math.floor(coor[1] * pixels.height);
