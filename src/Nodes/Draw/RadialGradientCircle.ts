@@ -47,7 +47,7 @@ export const RadialGradientCircleNode: NodeDefinition = {
 
             var ctxGrad = ctx.createRadialGradient(center[0], center[1], start * radius, center[0], center[1], radius);
             gradient.forEach((stop) => {
-                ctxGrad.addColorStop(stop.pos, toHex(stop.color));
+                ctxGrad.addColorStop(stop.pos, toHex(stop.color, true));
             });
 
             ctx.fillStyle = ctxGrad;
