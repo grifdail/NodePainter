@@ -16,7 +16,11 @@
             "settings": {
                 "name": "sketch",
                 "width": 400,
-                "height": 400
+                "height": 400,
+                "scalling": "relative",
+                "seed": {
+                    "mode": "auto"
+                }
             },
             "dataOutputs": {},
             "positionX": 0,
@@ -24,7 +28,7 @@
             "selectedType": "unknown"
         },
         "nodefZ4NW8v8BJrGBmfM893tj": {
-            "type": "DrawImage",
+            "type": "Draw/Image",
             "id": "nodefZ4NW8v8BJrGBmfM893tj",
             "dataInputs": {
                 "image": {
@@ -50,8 +54,21 @@
                     "id": "dim",
                     "type": "vector2",
                     "ownValue": [
-                        400,
-                        400
+                        1,
+                        1
+                    ],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
+                },
+                "tint": {
+                    "id": "tint",
+                    "type": "color",
+                    "ownValue": [
+                        1,
+                        1,
+                        1,
+                        1
                     ],
                     "hasConnection": false,
                     "connectedNode": null,
@@ -87,7 +104,7 @@
             "selectedType": "unknown"
         },
         "nodeQJeyzyHDcnwtd9AyvtPSF": {
-            "type": "Combine",
+            "type": "Misc/Combine/Static",
             "id": "nodeQJeyzyHDcnwtd9AyvtPSF",
             "dataInputs": {
                 "object-1": {
@@ -210,7 +227,7 @@
             "selectedType": "unknown"
         },
         "node18BfP45r96MOY4RRNiWkV": {
-            "type": "AxisAngle",
+            "type": "Math/Quaternion/AxisAngle",
             "id": "node18BfP45r96MOY4RRNiWkV",
             "dataInputs": {
                 "axis": {
@@ -252,7 +269,7 @@
             "selectedType": "unknown"
         },
         "nodel7MNxbQjvWwmNkHBwyxQ5": {
-            "type": "Time",
+            "type": "Input/Time",
             "id": "nodel7MNxbQjvWwmNkHBwyxQ5",
             "dataInputs": {},
             "settings": {},
@@ -299,11 +316,22 @@
                     "hasConnection": true,
                     "connectedNode": "nodeQJeyzyHDcnwtd9AyvtPSF",
                     "connectedPort": "out"
+                },
+                "effects": {
+                    "id": "effects",
+                    "type": "array-struct",
+                    "ownValue": [],
+                    "hasConnection": false,
+                    "connectedNode": null,
+                    "connectedPort": null
                 }
             },
             "settings": {
                 "width": 400,
-                "height": 400
+                "height": 400,
+                "resolution": {
+                    "mode": "original"
+                }
             },
             "dataOutputs": {
                 "image": {
@@ -318,5 +346,6 @@
         }
     },
     "customNodes": {},
-    "globalSettings": {}
+    "globalSettings": {},
+    "version": 22
 }
