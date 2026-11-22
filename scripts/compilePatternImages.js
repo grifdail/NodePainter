@@ -8,6 +8,7 @@ async function run() {
     await extractImageToJson('particles');
     await extractImageToJson('patterns');
     await extractImageToJson('noises');
+    await extractImageToJson('matcap');
 }
 
 run()

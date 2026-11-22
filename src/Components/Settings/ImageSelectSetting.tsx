@@ -62,7 +62,7 @@ export const ImageSelectSetting: SettingComponent<ImageSelectSettingDefinition> 
                                         <img width="32"
                                             height="32"
                                             alt={item.url}
-                                            src={item.url} />
+                                            src={item.url} loading="lazy" />
                                         {item.label}
                                     </ImprovedMenuItem>
                                 </MenuItem>

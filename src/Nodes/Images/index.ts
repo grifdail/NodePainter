@@ -1,12 +1,15 @@
+import { CreateImageLibraryNode } from "./CreateImageLibrary";
 import { FlipbookNode } from "./FlipbookNode";
 import { ImageDimension } from "./ImageDimension";
 import { PaintImage } from "./PaintImage";
 import { PrecomputeImage } from "./PrecomputeImage";
 import { SampleImageNode } from "./SampleImageNode";
 import { UploadImage } from "./UploadImage";
-import { UseNoiseImage } from "./UseNoiseImage";
-import { UseParticleImage } from "./UseParticleImage";
-import { UsePatternImage } from "./UsePatternImage";
+
+import galleryMatcap from "../../Data/matcap.json";
+import galleryNoise from "../../Data/noises.json";
+import galleryParticle from "../../Data/particles.json";
+import galleryPattern from "../../Data/patterns.json";
 
 export const ImageNodes = [
     //
@@ -16,7 +19,9 @@ export const ImageNodes = [
     PrecomputeImage,
     SampleImageNode,
     UploadImage,
-    UseParticleImage,
-    UseNoiseImage,
-    UsePatternImage,
+
+    CreateImageLibraryNode("Particle", galleryParticle),
+    CreateImageLibraryNode("Noise", galleryNoise),
+    CreateImageLibraryNode("Pattern", galleryPattern),
+    CreateImageLibraryNode("Matcap", galleryMatcap),
 ];

@@ -307,6 +307,11 @@ const UPGRADES: UpgradeFunction[] = [
         "E": "Math/Constant/E",
         "Sqrt2": "Math/Constant/Sqrt2",
     }, sketch),
+    (sketch) => redefineNodes({
+        "Image/UseNoiseImage": "Image/Library/Noise",
+        "Image/UsePatternImage": "Image/Library/Pattern",
+        "Image/UseParticleImage": "Image/Library/Particle",
+    }, sketch),
 ];
 
 export const SAVE_VERSION = UPGRADES.length;

@@ -58,7 +58,7 @@ export const PaletteNode: NodeDefinition = {
     },
 };
 function refreshPort(newValue: any, node: NodeData) {
-    console.log(newValue)
+
     const data = newValue as ColorPalette;
     var tree = useTree.getState();
     const newPort = data.map((color, index) => {

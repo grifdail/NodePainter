@@ -13,7 +13,7 @@ export const ColorPairingNode: NodeDefinition = {
     tags: ["Color", "Array"],
     dataInputs: [],
     dataOutputs: [Port.color("A"), Port.color("B")],
-
+    hideInLibrary: true,
     settings: [{ id: "pairing", type: "color-pairing", defaultValue: [Black(), White()] }],
     getData: (portId, node, context) => {
         const pairing = context.getSetting<ColorPairing>(node, "pairing") || [[Black(), White()]]
