@@ -1,4 +1,5 @@
 import { IconPlane, IconPlus } from "@tabler/icons-react";
+import { SettingGenerator } from "../../Components/Settings/SettingGenerator";
 import { useTree } from "../../Hooks/useTree";
 import { NodeData } from "../../Types/NodeData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
@@ -7,10 +8,12 @@ import { Port } from "../../Types/PortTypeGenerator";
 import { changeTypeGenerator } from "../../Utils/graph/definition/changeTypeGenerator";
 
 
-const createIndexNode = ({ id, positionX, positionY, selectedType }: NodeData): void => {
+const createIndexNode = ({ id, positionX, positionY, selectedType, settings }: NodeData): void => {
+    const name = settings.name;
     setTimeout(() => {
         useTree.getState().addNode(
             "Misc/PortalOutput", positionX + 400, positionY, (node, def) => {
+                node.label = `Portal Output (${name})`
                 node.pairedNode = id;
                 node.dataOutputs.value.type = selectedType
             }
@@ -27,6 +30,7 @@ export const PortalInputNode: NodeDefinition = {
     dataInputs: [Port.number("value")],
     dataOutputs: [],
     settings: [
+        SettingGenerator.string("name", "???"),
         {
             id: "buttons",
             type: "button",
