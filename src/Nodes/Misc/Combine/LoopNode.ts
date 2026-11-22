@@ -85,8 +85,5 @@ export const LoopNode: NodeDefinition = {
             id,
             array.filter((item: any) => item)
         );
-    },
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
+    }
 };

@@ -39,6 +39,5 @@ export const ShapeGeometry: NodeDefinition = {
         const callId = context.getCallId(node);
         return VirtualNodes.ShapeGeometryNodeType.generate(callId, [], positions, extrude, side, top, bottom);
     },
-    contextMenu: {
-    },
+
 };

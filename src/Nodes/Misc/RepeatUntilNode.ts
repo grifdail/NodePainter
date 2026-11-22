@@ -91,7 +91,5 @@ export const RepeatUntilNode: NodeDefinition = {
         return lastValue;
 
     },
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
+
 };

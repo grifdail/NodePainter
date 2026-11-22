@@ -53,9 +53,7 @@ export const GenerateNode: NodeDefinition = {
         },
     ],
     ...changeTypeGenerator(portTypesWithTags(["common"], ["array"]), ["value"], [], [], ["array"]),
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
+
     getData: (portId, node, context) => {
         var count = context.getInputValueNumber(node, "count");
         context.blackboard[`${node.id}-count`] = count;

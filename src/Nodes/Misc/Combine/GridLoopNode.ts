@@ -82,7 +82,5 @@ export const GridLoopNode: NodeDefinition = {
             );
         }
     },
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
+
 };

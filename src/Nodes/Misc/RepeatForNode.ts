@@ -80,7 +80,4 @@ export const RepeatForNode: NodeDefinition = {
         return lastValue;
 
     },
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
 };

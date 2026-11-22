@@ -1,3 +1,4 @@
+import { BoolNode } from "./Bool";
 import { GaussianNode } from "./GaussianNode";
 import { InsideCircleNode } from "./InsideCircleNode";
 import { InsideSphereNode } from "./InsideSphereNode";
@@ -14,6 +15,7 @@ import { SeededNode } from "./Seeded";
 
 export const RandomNodes = [
     //
+    BoolNode,
     GaussianNode,
     InsideCircleNode,
     InsideSphereNode,

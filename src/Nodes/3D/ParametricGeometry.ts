@@ -76,8 +76,5 @@ export const ParametricGeometry: NodeDefinition = {
 
         const callId = context.getCallId(node, id);
         return VirtualNodes.ParametricGeometryNodeType.generate(callId, [], dimension, positions);
-    },
-    contextMenu: {
-        "Create the index node": createIndexNode,
-    },
+    }
 };
