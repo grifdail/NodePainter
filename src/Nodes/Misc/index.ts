@@ -11,6 +11,7 @@ import { JSONArrayNode } from "./JSONArrayNode";
 import { MetaNode } from "./MetaNode";
 import { PortalInputNode } from "./PortalInputNode";
 import { PortalOutputNode } from "./PortalOutputNode";
+import { PrintNode } from "./PrintNode";
 import { MiscRenderNodes } from "./Render";
 import { RepeatForNode } from "./RepeatForNode";
 import { RepeatUntilNode } from "./RepeatUntilNode";
@@ -33,6 +34,7 @@ export const MiscNodes = [
     MetaNode,
     PortalInputNode,
     PortalOutputNode,
+    PrintNode,
     RepeatForNode,
     RepeatUntilNode,
     TimelineNode,
