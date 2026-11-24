@@ -37,6 +37,7 @@ const BLEND_MODES = {
 export const MixNode: NodeDefinition = {
     id: "Color/Mix",
     label: "Mix Color",
+    alias: "Blend",
     description: "Mix two color according to the specified blend mode",
     icon: IconColorFilter,
     tags: ["Color"],

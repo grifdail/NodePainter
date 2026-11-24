@@ -68,35 +68,35 @@ export const FlatColorNode: NodeDefinition = {
 
     settings: [],
     getData(portId, node, context) {
-        var imageData = context.getInputValueImage(node, "image");
+        var sourceImage = context.getInputValueImage(node, "image");
         var threshold = context.getInputValueNumber(node, "threshold");
         var color1 = context.getInputValueColor(node, "color1");
         var color2 = context.getInputValueColor(node, "color2");
-        if (!imageData || !imageData.getP5Uniform(context.p5)) {
+        if (!sourceImage || !sourceImage.getP5Uniform(context.p5)) {
             return null;
         }
         const keyCache = `${node.id}-image-cache`;
-        let image = imageData.getP5Uniform(context.p5) as p5.Graphics;
+        let sourceImageAsP5Uniform = sourceImage.getP5Uniform(context.p5) as p5.Graphics;
         let shaderV = context.blackboard[keyCache + KEY_BLUR_SHADER_H] as p5.Shader;
         if (!shaderV) {
             shaderV = context.p5.createShader(EFFECT_VERTEX_SHADER, BLUR_FRAGMENT_SHADER);
             context.blackboard[keyCache + KEY_BLUR_SHADER_H] = shaderV;
         }
 
-        let target = getPassBuffer(context, keyCache, image);
+        let target = getPassBuffer(context, keyCache, sourceImageAsP5Uniform);
 
         let targetPassImage = target.getP5CompatibleSource(context.p5) as p5.Graphics;
 
         targetPassImage.clear();
         targetPassImage.shader(shaderV);
 
-        shaderV.setUniform("tex0", image);
+        shaderV.setUniform("tex0", sourceImageAsP5Uniform);
         shaderV.setUniform("threshold", threshold);
         shaderV.setUniform("colorPositive", color1);
         shaderV.setUniform("colorNegative", color2);
         targetPassImage.fill("transparent");
         targetPassImage.noStroke();
-        targetPassImage.rect(0, 0, image.width, image.height);
+        targetPassImage.rect(0, 0, sourceImageAsP5Uniform.width, sourceImageAsP5Uniform.height);
 
         return target;
     },

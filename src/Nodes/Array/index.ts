@@ -14,6 +14,7 @@ import { InvertNode } from "./InvertNode";
 import { LastNode } from "./LastNode";
 import { MapNode } from "./MapNode";
 import { RandomNode } from "./RandomNode";
+import { ReadNode } from "./ReadNode";
 import { RemoveAtNode } from "./RemoveAtNode";
 import { ReplaceNode } from "./ReplaceNode";
 import { SelectNode } from "./SelectNode";
@@ -24,29 +25,30 @@ import { StaticNode } from "./StaticNode";
 import { SumNode } from "./SumNode";
 
 export const ArrayNodes = [
-  //
-  AgreggateNode,
-  AllNode,
-  AnyNode,
-  AppendNode,
-  ConcatNode,
-  CountNode,
-  FilterNode,
-  FindBestNode,
-  FindFirstNode,
-  FindLastNode,
-  FirstNode,
-  GenerateNode,
-  InvertNode,
-  LastNode,
-  MapNode,
-  RandomNode,
-  RemoveAtNode,
-  ReplaceNode,
-  SelectNode,
-  ShuffleNode,
-  SliceNode,
-  SortByNode,
-  StaticNode,
-  SumNode,
+    //
+    AgreggateNode,
+    AllNode,
+    AnyNode,
+    AppendNode,
+    ConcatNode,
+    CountNode,
+    FilterNode,
+    FindBestNode,
+    FindFirstNode,
+    FindLastNode,
+    FirstNode,
+    GenerateNode,
+    InvertNode,
+    LastNode,
+    MapNode,
+    RandomNode,
+    ReadNode,
+    RemoveAtNode,
+    ReplaceNode,
+    SelectNode,
+    ShuffleNode,
+    SliceNode,
+    SortByNode,
+    StaticNode,
+    SumNode,
 ];

@@ -1,8 +1,10 @@
 import { CMYKNode } from "./CMYKNode";
 import { ColorPairingNode } from "./ColorPairingNode";
 import { ColorGradientNodes } from "./Gradient";
+import { Grayscale } from "./GrayscaleNode";
 import { HSLNode } from "./HSLNode";
 import { HSVNode } from "./HSVNode";
+import { Luminance } from "./LuminanceNode";
 import { MixNode } from "./MixNode";
 import { OKLCHNode } from "./OKLCHNode";
 import { PaletteNode } from "./PaletteNode";
@@ -16,8 +18,10 @@ export const ColorNodes = [
     ...ColorGradientNodes,
     CMYKNode,
     ColorPairingNode,
+    Grayscale,
     HSLNode,
     HSVNode,
+    Luminance,
     MixNode,
     OKLCHNode,
     PaletteNode,

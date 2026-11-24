@@ -71,12 +71,13 @@ export const ImageNode: NodeDefinition = {
         const offset = node.settings.centered ? [-dim[0] * 0.5, -dim[1] * 0.5] : [0, 0];
         return () => {
             if (image && image.getP5CompatibleSource(context.p5)) {
+
                 if (!node.settings.smooth) {
                     context.target.noSmooth();
                 }
-                if (tint !== White()) {
-                    context.target.tint(toP5Color(tint, context.p5));
-                }
+
+                context.target.tint(toP5Color(tint, context.p5));
+
                 if (source.has) {
                     context.target.image(
                         //

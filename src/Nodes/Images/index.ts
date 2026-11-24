@@ -10,6 +10,7 @@ import galleryMatcap from "../../Data/matcap.json";
 import galleryNoise from "../../Data/noises.json";
 import galleryParticle from "../../Data/particles.json";
 import galleryPattern from "../../Data/patterns.json";
+import { GenerateImageNodes } from "./Generator";
 
 export const ImageNodes = [
     //
@@ -24,4 +25,6 @@ export const ImageNodes = [
     CreateImageLibraryNode("Noise", galleryNoise),
     CreateImageLibraryNode("Pattern", galleryPattern),
     CreateImageLibraryNode("Matcap", galleryMatcap),
+
+    ...GenerateImageNodes,
 ];
