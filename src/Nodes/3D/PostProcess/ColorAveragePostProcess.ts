@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { ColorAverageEffect, EffectPass } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { ColorAverageProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const ColorAverageProcessNode: NodeDefinition = {
+export const ColorAverageProcessNode: PostProcessNodeDefinition<ColorAverageProcessLayer, ColorAverageEffect> = {
     id: "PostProcess3D/ColorAverage",
     description: "Add a post process effect where bright item appear to glow",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -20,10 +21,15 @@ export const ColorAverageProcessNode: NodeDefinition = {
     settings: [],
     getData: (portId, node, context) => {
         const effect: PostProcessLayer = {
-            effectType: "ColorAverage",
+            effectType: "PostProcess3D/ColorAverage",
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const colorAverageEffect = new ColorAverageEffect();
+        composer.addPass(new EffectPass(camera, colorAverageEffect));
+        return colorAverageEffect;
+    },
 };
 
 

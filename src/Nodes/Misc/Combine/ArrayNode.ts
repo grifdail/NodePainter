@@ -1,9 +1,9 @@
 import { IconArrowMerge, IconList } from "@tabler/icons-react";
+import { Object3D } from "three";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
-import { StatefullElementType } from "../../3D/VirtualNodeTypes/statefullContext";
-import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { update3DGroupChildren } from "./LoopNode";
 
 
 export const ArrayNode: NodeDefinition = {
@@ -34,9 +34,12 @@ export const ArrayNode: NodeDefinition = {
                     }
                 });
             };
+        } else {
+            const array = context.getInputValue(node, "array", `array-object3d`) as Object3D[];
+            const newChildren = Object.fromEntries(array.filter(a => a).map(a => [a.id, a]));
+            return update3DGroupChildren(context, node, newChildren)
         }
-        const array = context.getInputValue(node, "array", `array-object3d`) as (StatefullElementType<any, any> | null)[];
-        const id = context.getCallId(node);
-        return VirtualNodes.ComposeVirtualNodeType.generate(id, array.filter((item: any) => item) as any);
+
+
     },
 };

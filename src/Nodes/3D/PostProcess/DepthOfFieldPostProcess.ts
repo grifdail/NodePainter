@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { DepthOfFieldEffect, EffectPass } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { DepthOfFieldPostProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const DepthOfFieldPostProcessNode: NodeDefinition = {
+export const DepthOfFieldPostProcessNode: PostProcessNodeDefinition<DepthOfFieldPostProcessLayer, DepthOfFieldEffect> = {
     id: "PostProcess3D/DepthOfField",
     description: "Add a post process effect where bright item appear to glow",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -25,13 +26,22 @@ export const DepthOfFieldPostProcessNode: NodeDefinition = {
         const focusRange = context.getInputValueNumber(node, "focusRange");
         const bokehScale = context.getInputValueNumber(node, "bokehScale");
         const effect: PostProcessLayer = {
-            effectType: "DepthOfField",
+            effectType: "PostProcess3D/DepthOfField",
             focusDistance,
             focusRange,
             bokehScale,
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const depthOfFieldEffect = new DepthOfFieldEffect(camera, {
+            focusDistance: layer.focusDistance,
+            focusRange: layer.focusRange,
+            bokehScale: layer.bokehScale,
+        });
+        composer.addPass(new EffectPass(camera, depthOfFieldEffect));
+        return depthOfFieldEffect;
+    },
 };
 
 

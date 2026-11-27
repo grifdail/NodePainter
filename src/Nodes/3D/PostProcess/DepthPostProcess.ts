@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { DepthEffect, EffectPass } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { DepthProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const DepthPostProcessNode: NodeDefinition = {
+export const DepthPostProcessNode: PostProcessNodeDefinition<DepthProcessLayer, DepthEffect> = {
     id: "PostProcess3D/Depth",
     description: "Add a post process effect that render the depth of scene",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -22,11 +23,18 @@ export const DepthPostProcessNode: NodeDefinition = {
         const inverted = context.getInputValueBoolean(node, "inverted");
 
         const effect: PostProcessLayer = {
-            effectType: "Depth",
+            effectType: "PostProcess3D/Depth",
             inverted
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const depthEffect = new DepthEffect({
+            inverted: layer.inverted
+        });
+        composer.addPass(new EffectPass(camera, depthEffect));
+        return depthEffect;
+    },
 };
 
 

@@ -1,4 +1,5 @@
 import { IconPhoto } from "@tabler/icons-react";
+import { ShaderMaterial } from "three";
 import { NodeData } from "../../../Types/NodeData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { PortTypeDefinitions } from "../../../Types/PortTypeDefinitions";
@@ -6,11 +7,9 @@ import { createDefaultMaterial } from "../../../Utils/graph/definition/createDef
 import { readFromCacheStatic } from "../../../Utils/graph/execution/blackboardCache";
 import { ExecutionContext } from "../../../Utils/graph/execution/createExecutionContext";
 import { sanitizeForShader } from "../../../Utils/graph/execution/sanitizeForShader";
-import { Constraints } from "../../../Utils/ui/applyConstraints";
-import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
-import { createDefaultMaterialGenericData } from "../../3D/VirtualNodeTypes/createDefaultMaterialGenericData";
+import { createMaterialSetting, toThreeSetting, updateTreeMaterial } from "../../3D/Materials/createMaterialSetting";
 
-export const ShaderMaterial: NodeDefinition = {
+export const ShaderMaterialNode: NodeDefinition = {
     id: "Technical/MaterialShader/Base",
     hideInLibrary: true,
     icon: IconPhoto,
@@ -20,29 +19,22 @@ export const ShaderMaterial: NodeDefinition = {
     tags: ["Shader", "Material"],
 
     settings: [
-        {
-            type: "group",
-            id: "material",
-            defaultValue: createDefaultMaterialGenericData(),
-            settings: [
-                { id: "blendingMode", type: "dropdown", defaultValue: "NormalBlending", options: ["NoBlending", "NormalBlending", "AdditiveBlending", "SubtractiveBlending", "MultiplyBlending"] },
-                { id: "alphaTest", type: "number", defaultValue: 0, constrains: [Constraints.Clamp01()] },
-                { id: "transparent", type: "bool", defaultValue: false },
-                { id: "flatShading", type: "bool", defaultValue: false },
-                { id: "wireframe", type: "bool", defaultValue: false },
-                { id: "side", type: "dropdown", defaultValue: "FrontSide", options: ["FrontSide", "BackSide", "DoubleSide"] },
-            ],
-        },
+        createMaterialSetting(),
     ],
 
     getData(portId, node, context) {
-        const callId = context.getCallId(node);
         const setting = node.settings.material;
-        const code = readFromCacheStatic(context, node, "shader", () => {
-            return context.getMaterialShaderCode(node.type, Object.values(node.dataInputs));
-        });
         const uniforms = getUniformObject(node.type, context, node);
-        return VirtualNodes.ShaderMaterialType.generate(callId, [], code.frag, code.vertex, uniforms, setting);
+        const mat = readFromCacheStatic(context, node, "shader", () => {
+            const code = context.getMaterialShaderCode(node.type, Object.values(node.dataInputs));
+            return new ShaderMaterial({ fragmentShader: code.frag, vertexShader: code.vertex, uniforms: uniforms, ...toThreeSetting(setting) });
+
+        });
+        Object.entries(uniforms).forEach(([id, obj]) => {
+            mat.uniforms[id].value = (obj as any).value;
+        });
+        updateTreeMaterial(mat, setting);
+        return mat;
     },
 };
 

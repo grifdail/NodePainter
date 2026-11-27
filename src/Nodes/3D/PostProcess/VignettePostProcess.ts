@@ -1,10 +1,11 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass, VignetteEffect } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessLayer, VignettePostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
-export const VignettePostProcessNode: NodeDefinition = {
+export const VignettePostProcessNode: PostProcessNodeDefinition<VignettePostProcessLayer, VignetteEffect> = {
     id: "PostProcess3D/Vignette",
     description: "Add a post process effect that darkend conner of the image",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -22,12 +23,21 @@ export const VignettePostProcessNode: NodeDefinition = {
         const offset = context.getInputValueNumber(node, "offset");
         const darkness = context.getInputValueNumber(node, "darkness");
         const effect: PostProcessLayer = {
-            effectType: "Vignette",
+            effectType: "PostProcess3D/Vignette",
             offset,
             darkness,
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const effect = new VignetteEffect({
+            offset: layer.offset,
+            darkness: layer.darkness,
+        })
+        composer.addPass(new EffectPass(camera, effect));
+        return effect;
+    },
+
 };
 
 

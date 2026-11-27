@@ -1,11 +1,13 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { ChromaticAberrationEffect, EffectPass } from "postprocessing";
+import { Vector2 } from "three";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { ChromaticAberrationPostProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const ChromaticAberrationPostProcessNode: NodeDefinition = {
+export const ChromaticAberrationPostProcessNode: PostProcessNodeDefinition<ChromaticAberrationPostProcessLayer, ChromaticAberrationEffect> = {
     id: "PostProcess3D/ChromaticAberration",
     description: "Add a post process effect where bright item appear to glow",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -25,13 +27,22 @@ export const ChromaticAberrationPostProcessNode: NodeDefinition = {
         const radialModulation = context.getInputValueBoolean(node, "radialModulation");
         const modulationOffset = context.getInputValueNumber(node, "modulationOffset");
         const effect: PostProcessLayer = {
-            effectType: "ChromaticAberration",
+            effectType: "PostProcess3D/ChromaticAberration",
             offset,
             radialModulation,
             modulationOffset
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const effect = new ChromaticAberrationEffect({
+            offset: new Vector2(...layer.offset),
+            radialModulation: layer.radialModulation,
+            modulationOffset: layer.modulationOffset,
+        });
+        composer.addPass(new EffectPass(camera, effect));
+        return effect;
+    },
 };
 
 

@@ -1,10 +1,11 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass, SepiaEffect } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessLayer, SepiaPostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
-export const SepiaPostProcessNode: NodeDefinition = {
+export const SepiaPostProcessNode: PostProcessNodeDefinition<SepiaPostProcessLayer, SepiaEffect> = {
     id: "PostProcess3D/Sepia",
     description: "Add a post process effect that mimic old brownish black and white photo",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -20,9 +21,14 @@ export const SepiaPostProcessNode: NodeDefinition = {
     getData: (portId, node, context) => {
         const intensity = context.getInputValueNumber(node, "intensity");
         const effect: PostProcessLayer = {
-            effectType: "Sepia",
+            effectType: "PostProcess3D/Sepia",
             intensity,
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const sepiaEffect = new SepiaEffect({ intensity: layer.intensity });
+        composer.addPass(new EffectPass(camera, sepiaEffect));
+        return sepiaEffect;
+    },
 };

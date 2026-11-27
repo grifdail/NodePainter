@@ -1,6 +1,6 @@
-import { BufferGeometry, Material } from "three";
-import { StatefullVirtualElement } from "../Nodes/3D/VirtualNodeTypes/StatefullVirtualElement";
+import { Color } from "./vectorDataType";
 
-export type MaterialDataAny<TProps extends any[]> = StatefullVirtualElement<Material, TProps>;
-export type MaterialData = MaterialDataAny<any[]>;
-export type MeshData = StatefullVirtualElement<BufferGeometry, any[]>;
+
+export type FakeMaterialData = {
+    color: Color;
+}

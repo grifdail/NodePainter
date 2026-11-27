@@ -1,12 +1,13 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { ColorDepthEffect, EffectPass } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { ColorDepthProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 import { Constraints } from "../../../Utils/ui/applyConstraints";
 
 
-export const ColorDepthPostProcessNode: NodeDefinition = {
+export const ColorDepthPostProcessNode: PostProcessNodeDefinition<ColorDepthProcessLayer, ColorDepthEffect> = {
     id: "PostProcess3D/ColorDepth",
     description: "Add a post process effect that reduce the bits of a color to smaller value",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -23,11 +24,18 @@ export const ColorDepthPostProcessNode: NodeDefinition = {
     getData: (portId, node, context) => {
         const bits = context.getInputValueNumber(node, "bits");
         const effect: PostProcessLayer = {
-            effectType: "ColorDepth",
+            effectType: "PostProcess3D/ColorDepth",
             bits
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const colorDepthEffect = new ColorDepthEffect({
+            bits: layer.bits
+        });
+        composer.addPass(new EffectPass(camera, colorDepthEffect));
+        return colorDepthEffect;
+    },
 };
 
 

@@ -66,3 +66,4 @@ export type LogicNodeDefinition = {
 };
 
 export type NodeDefinition = BaseNodeDefinition & LogicNodeDefinition;
+

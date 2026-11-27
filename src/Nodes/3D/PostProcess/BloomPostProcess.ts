@@ -1,11 +1,13 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { BloomEffect, EffectComposer, EffectPass } from "postprocessing";
+import { Camera } from "three";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { BloomPostProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const BloomPostProcessNode: NodeDefinition = {
+export const BloomPostProcessNode: PostProcessNodeDefinition<BloomPostProcessLayer, BloomEffect> = {
     id: "PostProcess3D/Bloom",
     description: "Add a post process effect where bright item appear to glow",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -27,14 +29,25 @@ export const BloomPostProcessNode: NodeDefinition = {
         const radius = context.getInputValueNumber(node, "radius");
         const intensity = context.getInputValueNumber(node, "intensity");
         const effect: PostProcessLayer = {
-            effectType: "Bloom",
+            effectType: "PostProcess3D/Bloom",
             luminanceThreshold,
             luminanceSmoothing,
             radius,
             intensity
         }
         return effect;
-    }
+    },
+    add3dPostProcess: function (layer: BloomPostProcessLayer, composer: EffectComposer, camera: Camera) {
+        const e = new BloomEffect({
+            intensity: layer.intensity,
+            luminanceThreshold: layer.luminanceThreshold,
+            luminanceSmoothing: layer.luminanceSmoothing,
+            radius: layer.radius,
+        });
+        composer.addPass(new EffectPass(camera, e));
+        return e;
+    },
+
 };
 
 

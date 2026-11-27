@@ -5,7 +5,6 @@ import { useTree } from "./useTree";
 import { CustomFunctionCreationContextStore } from "../Types/CustomFunctionCreationContextStore";
 import { CustomNodeEditingType as CustomNodeType } from "../Types/CustomFunctionCreationContextStore";
 import { createDefaultMaterial } from "../Utils/graph/definition/createDefaultMaterial";
-import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
@@ -13,6 +12,7 @@ import { navigate } from "wouter/use-browser-location";
 import { closeAllPopup } from "../Actions/navigationAction";
 import { NodeLibrary } from "../Nodes/Nodes";
 import { SettingGenerator } from "../Components/Settings/SettingGenerator";
+import { ShaderMaterialNode } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 
 type CustomNodeCreationSetting = {
     baseNode: NodeDefinition;
@@ -72,8 +72,8 @@ const BaseNodeForModel: { [key in CustomNodeType]: CustomNodeCreationSetting } =
             dataInputs: [],
             dataOutputs: [{ id: "mat", type: "material", defaultValue: createDefaultMaterial() }],
 
-            settings: ShaderMaterial.settings,
-            executeAs: ShaderMaterial.id,
+            settings: ShaderMaterialNode.settings,
+            executeAs: ShaderMaterialNode.id,
         },
         create: function (node: NodeDefinition): void {
             useTree.getState().createShaderMaterial(node);

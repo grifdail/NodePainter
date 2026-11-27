@@ -9,7 +9,7 @@ import { NodeLibrary } from "../Nodes/Nodes";
 import { START_NODE } from "../Nodes/StartNode";
 import { CustomFunction } from "../Nodes/Technical/CustomFunction/CustomFunction";
 import { RenderShader } from "../Nodes/Technical/ImageEffectShader/RenderShader";
-import { ShaderMaterial } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
+import { ShaderMaterialNode } from "../Nodes/Technical/MaterialShader/ShaderMaterial";
 import { CustomSimulation } from "../Nodes/Technical/Simulation/CustomSimulation";
 import { BoundingBox } from "../Types/BoundingBox";
 import { EDirection } from "../Types/EDirection";
@@ -340,7 +340,7 @@ export const useTree = create<TreeStore>()((set, get) => {
             switch (executeAs) {
                 case RenderShader.id:
                     return "shader";
-                case ShaderMaterial.id:
+                case ShaderMaterialNode.id:
                     return "shaderMaterial";
                 case CustomSimulation.id:
                     return "simulation";
