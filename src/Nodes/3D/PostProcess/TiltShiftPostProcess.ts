@@ -29,6 +29,7 @@ export const TiltShiftPostProcessNode: PostProcessNodeDefinition<TiltShiftPostPr
         const feather = context.getInputValueNumber(node, "feather");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/TiltShift",
+            id: node.id,
             offset,
             rotation,
             focusArea,
@@ -44,7 +45,12 @@ export const TiltShiftPostProcessNode: PostProcessNodeDefinition<TiltShiftPostPr
             feather: layer.feather,
         });
         composer.addPass(new EffectPass(camera, tiltShiftEffect));
-        return tiltShiftEffect;
+        return (layer) => {
+            tiltShiftEffect.offset = layer.offset;
+            tiltShiftEffect.rotation = layer.rotation;
+            tiltShiftEffect.focusArea = layer.focusArea;
+            tiltShiftEffect.feather = layer.feather;
+        };
     },
 };
 

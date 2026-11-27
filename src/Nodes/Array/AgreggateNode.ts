@@ -130,12 +130,15 @@ export const AgreggateNode: NodeDefinition = {
         }
         context.blackboard[`${node.id}-count`] = array.length;
         context.blackboard[`${node.id}-count`] = array.length;
+        context.pushIterationLevel()
         const result: any[] = array.reduce((accumulator, item, i) => {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = item;
             context.blackboard[`${node.id}-accumulator`] = accumulator;
+            context.setIterationIndex(i);
             return context.getInputValue(node, "accumulator", node.dataInputs["accumulator"].type);
         }, starting);
+        context.popIterationLevel();
         return result;
     },
 };

@@ -25,6 +25,7 @@ export const BrightnessContrastPostProcessNode: PostProcessNodeDefinition<Bright
         const contrast = context.getInputValueNumber(node, "contrast");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/BrightnessContrast",
+            id: node.id,
             brightness,
             contrast
         }
@@ -36,7 +37,10 @@ export const BrightnessContrastPostProcessNode: PostProcessNodeDefinition<Bright
             contrast: layer.contrast,
         });
         composer.addPass(new EffectPass(camera, brightnessContrastEffect));
-        return brightnessContrastEffect;
+        return (layer) => {
+            brightnessContrastEffect.brightness = layer.brightness;
+            brightnessContrastEffect.contrast = layer.contrast;
+        };
     },
 };
 

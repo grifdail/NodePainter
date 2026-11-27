@@ -22,6 +22,7 @@ export const SepiaPostProcessNode: PostProcessNodeDefinition<SepiaPostProcessLay
         const intensity = context.getInputValueNumber(node, "intensity");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/Sepia",
+            id: node.id,
             intensity,
         }
         return effect;
@@ -29,6 +30,8 @@ export const SepiaPostProcessNode: PostProcessNodeDefinition<SepiaPostProcessLay
     add3dPostProcess(layer, composer, camera, scene) {
         const sepiaEffect = new SepiaEffect({ intensity: layer.intensity });
         composer.addPass(new EffectPass(camera, sepiaEffect));
-        return sepiaEffect;
+        return (layer) => {
+            sepiaEffect.intensity = layer.intensity;
+        };
     },
 };

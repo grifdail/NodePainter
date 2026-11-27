@@ -28,6 +28,7 @@ export const ChromaticAberrationPostProcessNode: PostProcessNodeDefinition<Chrom
         const modulationOffset = context.getInputValueNumber(node, "modulationOffset");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/ChromaticAberration",
+            id: node.id,
             offset,
             radialModulation,
             modulationOffset
@@ -41,7 +42,11 @@ export const ChromaticAberrationPostProcessNode: PostProcessNodeDefinition<Chrom
             modulationOffset: layer.modulationOffset,
         });
         composer.addPass(new EffectPass(camera, effect));
-        return effect;
+        return (layer) => {
+            effect.offset = new Vector2(...layer.offset);
+            effect.radialModulation = layer.radialModulation;
+            effect.modulationOffset = layer.modulationOffset;
+        };
     },
 };
 

@@ -78,6 +78,7 @@ export type ExecutionContext = {
     setIterationIndex: (n: number) => void;
     incrementIterationIndex: () => void;
     popIterationLevel: () => void;
+    getIterationId: () => string;
 };
 
 export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): ExecutionContext {
@@ -244,6 +245,9 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         },
         popIterationLevel: function (): void {
             context.iterationStack.pop();
+        },
+        getIterationId: function (): string {
+            return context.iterationStack.join("/")
         }
     };
     return context;

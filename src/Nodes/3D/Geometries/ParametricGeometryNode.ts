@@ -61,15 +61,18 @@ export const ParametricGeometryNode: NodeDefinition = {
         dimension = applyConstraint(dimension, dimension, [Constraints.VecInteger(), Constraints.VecGreaterThan(1)]);
         const geo = readFromCacheWithVersion(context, node, () => {
             const posArray = new Float32Array((dimension[0] + 1) * (dimension[1] + 1) * 3);
+            context.pushIterationLevel()
             for (var x = 0; x <= dimension[0]; x++) {
                 for (var y = 0; y <= dimension[1]; y++) {
                     var index = x * (dimension[1] + 1) + y;
                     context.blackboard[`${node.id}-uv`] = createVector2(x / dimension[0], y / dimension[1]);
                     context.blackboard[`${node.id}-index`] = index;
+                    context.setIterationIndex(index);
                     const result = context.getInputValueVector3(node, "value");
                     posArray.set(result, index * 3);
                 }
             }
+            context.popIterationLevel();
 
 
             const self = new BufferGeometry();

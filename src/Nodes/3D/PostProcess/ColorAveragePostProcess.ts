@@ -22,13 +22,14 @@ export const ColorAverageProcessNode: PostProcessNodeDefinition<ColorAverageProc
     getData: (portId, node, context) => {
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/ColorAverage",
+            id: node.id,
         }
         return effect;
     },
     add3dPostProcess(layer, composer, camera, scene) {
         const colorAverageEffect = new ColorAverageEffect();
         composer.addPass(new EffectPass(camera, colorAverageEffect));
-        return colorAverageEffect;
+        return (layer) => { };
     },
 };
 

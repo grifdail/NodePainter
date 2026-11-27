@@ -71,15 +71,19 @@ export const FindLastNode: NodeDefinition = {
             return -1;
         }
         context.blackboard[`${node.id}-count`] = array.length;
+        context.pushIterationLevel()
         for (let i = array.length - 1; i >= 0; i--) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = array[i];
+            context.setIterationIndex(i);
             var result = context.getInputValueBoolean(node, "evaluate");
             if (result) {
+                context.popIterationLevel();
                 return i;
             }
 
         }
+        context.popIterationLevel();
 
         return -1;
     },

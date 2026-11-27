@@ -79,9 +79,11 @@ export const FindBestNode: NodeDefinition = {
         var descending = node.settings.descending
         var bestElement = -1;
         var bestScore = descending ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY
+        context.pushIterationLevel()
         for (let i = 0; i < array.length; i++) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = array[i];
+            context.setIterationIndex(i);
             var result = context.getInputValueNumber(node, "score");
             if (descending) {
                 if (result <= bestScore) {
@@ -97,6 +99,7 @@ export const FindBestNode: NodeDefinition = {
 
         }
 
+        context.popIterationLevel();
         return bestElement;
     },
 };

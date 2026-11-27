@@ -87,17 +87,21 @@ export const CellularAutomataNode: NodeDefinition = {
             if (!previous) {
                 previous = []
 
+                context.pushIterationLevel()
                 for (let y = 0; y < size.height; y++) {
                     for (let x = 0; x < size.width; x++) {
                         context.blackboard[`${node.id}-index`] = y * size.height + x;
+                        context.setIterationIndex(y * size.height + x);
                         context.blackboard[`${node.id}-pos`] = createVector2(x, y);
                         previous[y * size.height + x] = context.getInputValue(node, "defaultValue", node.selectedType);
                     }
                 }
+                context.popIterationLevel();
                 return previous;
             }
             const next = []
             //context.blackboard[`${node.id}-count`] = [size.width, size.height];
+            context.pushIterationLevel()
             for (let y = 0; y < size.height; y++) {
                 for (let x = 0; x < size.width; x++) {
 
@@ -120,10 +124,12 @@ export const CellularAutomataNode: NodeDefinition = {
                         get(x - 0, y + 1, previous, defaultValue),
                         get(x + 1, y + 1, previous, defaultValue),
                     ];
+                    context.setIterationIndex(i);
                     var t = context.getInputValue(node, "nextValue", node.selectedType);
                     next[i] = t;
                 }
             }
+            context.popIterationLevel();
 
             return next;
 

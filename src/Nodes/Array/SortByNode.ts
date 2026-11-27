@@ -74,12 +74,15 @@ export const SortByNode: NodeDefinition = {
         var descending = node.settings.descending;
         var sortingArray = []
         context.blackboard[`${node.id}-count`] = array.length;
+        context.pushIterationLevel()
         for (let i = 0; i < array.length; i++) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = array[i];
+            context.setIterationIndex(i);
             sortingArray[i] = [array[i], context.getInputValueNumber(node, "evaluate")];
         }
         sortingArray.sort((a, b) => descending ? b[1] - a[1] : a[1] - b[1])
+        context.popIterationLevel();
 
         return sortingArray.map(a => a[0]);
     },

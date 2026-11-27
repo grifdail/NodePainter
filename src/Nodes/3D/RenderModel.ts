@@ -1,7 +1,6 @@
 import { IconBadge3d } from "@tabler/icons-react";
 import { BufferGeometry, Mesh } from "three";
 import { NodeDefinition } from "../../Types/NodeDefinition";
-import { Port } from "../../Types/PortTypeGenerator";
 import { createVector3 } from "../../Types/vectorDataType";
 import { createDefaultMaterial } from "../../Utils/graph/definition/createDefaultMaterial";
 import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
@@ -39,7 +38,6 @@ export const RenderModel: NodeDefinition = {
             type: "quaternion",
             defaultValue: [0, 0, 0, 1],
         },
-        Port.CacheId(),
 
     ],
     dataOutputs: [
@@ -60,7 +58,7 @@ export const RenderModel: NodeDefinition = {
         const element = readFromCacheWithVersion(context, node, () => {
             const self = new Mesh(undefined, undefined);
             return self;
-        })
+        }, undefined, undefined, true)
         if (material !== element.material && material) {
             element.material = material || undefined;
         }

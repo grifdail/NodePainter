@@ -30,6 +30,7 @@ export const LensDistortionPostProcessNode: PostProcessNodeDefinition<LensDistor
         const skew = context.getInputValueNumber(node, "skew");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/LensDistortion",
+            id: node.id,
             distortion,
             principalPoint,
             focalLength,
@@ -45,7 +46,12 @@ export const LensDistortionPostProcessNode: PostProcessNodeDefinition<LensDistor
             skew: layer.skew,
         });
         composer.addPass(new EffectPass(camera, lensDistortionEffect));
-        return lensDistortionEffect;
+        return (layer) => {
+            lensDistortionEffect.distortion = new Vector2(...layer.distortion);
+            lensDistortionEffect.principalPoint = new Vector2(...layer.principalPoint);
+            lensDistortionEffect.focalLength = new Vector2(...layer.focalLength);
+            lensDistortionEffect.skew = layer.skew;
+        };
     },
 };
 

@@ -22,7 +22,6 @@ export const Render3DLine: NodeDefinition = {
             type: "material",
             defaultValue: createDefaultMaterial(),
         },
-        Port.CacheId(),
     ],
     dataOutputs: [
         {
@@ -41,14 +40,13 @@ export const Render3DLine: NodeDefinition = {
         const element = readFromCacheWithVersion(context, node, () => {
             const self = new Mesh(new CylinderGeometry(1, 1, 1, 32, 1, false), material as Material);
             return self;
-        })
+        }, undefined, undefined, true)
         var dt = vectorSubstraction(end, start);
         element.position.set((start[0] + end[0]) * 0.5, (start[1] + end[1]) * 0.5, (start[2] + end[2]) * 0.5);
         element.quaternion.setFromUnitVectors(new Vector3(0, 1, 0), new Vector3(...vectorNormalize(dt)));
         element.scale.set(size * 0.5, vectorMagnitude(dt), size * 0.5);
         if (material !== element.material) {
             element.material = material as Material;
-            console.log("If you see a lot of this, something's wrong with the caching!");
         }
         return element;
     },

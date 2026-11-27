@@ -25,4 +25,29 @@ export class FogEffect extends Effect {
 
     }
 
+    public set minRange(v: number) {
+        var u = this.uniforms.get("minRange");
+        if (u) {
+            u.value = v;
+        }
+    }
+    public set maxRange(v: number) {
+        var u = this.uniforms.get("maxRange");
+        if (u) {
+            u.value = v;
+        }
+    }
+    public set colorStart(v: Vector4) {
+        var u = this.uniforms.get("colorStart");
+        if (u) {
+            u.value = v;
+        }
+    }
+    public set colorEnd(v: Vector4) {
+        var u = this.uniforms.get("colorEnd");
+        if (u) {
+            u.value = v;
+        }
+    }
+
 }

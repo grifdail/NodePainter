@@ -25,6 +25,7 @@ export const ColorDepthPostProcessNode: PostProcessNodeDefinition<ColorDepthProc
         const bits = context.getInputValueNumber(node, "bits");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/ColorDepth",
+            id: node.id,
             bits
         }
         return effect;
@@ -34,7 +35,9 @@ export const ColorDepthPostProcessNode: PostProcessNodeDefinition<ColorDepthProc
             bits: layer.bits
         });
         composer.addPass(new EffectPass(camera, colorDepthEffect));
-        return colorDepthEffect;
+        return (layer) => {
+            colorDepthEffect.bitDepth = layer.bits;
+        };
     },
 };
 

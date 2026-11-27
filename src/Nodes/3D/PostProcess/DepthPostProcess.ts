@@ -24,6 +24,7 @@ export const DepthPostProcessNode: PostProcessNodeDefinition<DepthProcessLayer, 
 
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/Depth",
+            id: node.id,
             inverted
         }
         return effect;
@@ -33,7 +34,9 @@ export const DepthPostProcessNode: PostProcessNodeDefinition<DepthProcessLayer, 
             inverted: layer.inverted
         });
         composer.addPass(new EffectPass(camera, depthEffect));
-        return depthEffect;
+        return (layer) => {
+            depthEffect.inverted = layer.inverted;
+        };
     },
 };
 

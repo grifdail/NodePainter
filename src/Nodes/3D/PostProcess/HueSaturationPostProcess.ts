@@ -25,6 +25,7 @@ export const HueSaturationPostProcessNode: PostProcessNodeDefinition<HueSaturati
         const saturation = context.getInputValueNumber(node, "saturation");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/HueSaturation",
+            id: node.id,
             hue,
             saturation,
         }
@@ -36,7 +37,10 @@ export const HueSaturationPostProcessNode: PostProcessNodeDefinition<HueSaturati
             saturation: layer.saturation
         });
         composer.addPass(new EffectPass(camera, hueSaturationEffect));
-        return hueSaturationEffect;
+        return (layer) => {
+            hueSaturationEffect.hue = layer.hue;
+            hueSaturationEffect.saturation = layer.saturation;
+        };
     },
 };
 

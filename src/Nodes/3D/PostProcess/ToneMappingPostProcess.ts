@@ -33,6 +33,7 @@ export const ToneMappingPostProcessNode: PostProcessNodeDefinition<ToneMappingPo
         const adaptationRate = context.getInputValueNumber(node, "adaptationRate");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/ToneMapping",
+            id: node.id,
             resolution,
             whitePoint,
             middleGrey,
@@ -52,7 +53,10 @@ export const ToneMappingPostProcessNode: PostProcessNodeDefinition<ToneMappingPo
             adaptationRate: layer.adaptationRate,
         });
         composer.addPass(new EffectPass(camera, toneMappingEffect));
-        return toneMappingEffect;
+        return (layer) => {
+            toneMappingEffect.resolution = layer.resolution;
+            toneMappingEffect.adaptationRate = layer.adaptationRate;
+        };
     },
 };
 

@@ -30,6 +30,7 @@ export const FogPostProcessNode: PostProcessNodeDefinition<FogPostProcessLayer, 
         const max = context.getInputValueNumber(node, "max");
         const effect: FogPostProcessLayer = {
             effectType: "PostProcess3D/Fog",
+            id: node.id,
             minRange: min,
             maxRange: max,
             colorStart: c,
@@ -45,6 +46,11 @@ export const FogPostProcessNode: PostProcessNodeDefinition<FogPostProcessLayer, 
             colorEnd: new Vector4(...layer.colorEnd),
         });
         composer.addPass(new EffectPass(camera, fogEffect));
-        return fogEffect;
+        return (layer) => {
+            fogEffect.minRange = layer.minRange;
+            fogEffect.maxRange = layer.maxRange;
+            fogEffect.colorStart = new Vector4(...layer.colorStart);
+            fogEffect.colorEnd = new Vector4(...layer.colorEnd);
+        };
     },
 };

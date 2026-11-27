@@ -30,6 +30,7 @@ export const BloomPostProcessNode: PostProcessNodeDefinition<BloomPostProcessLay
         const intensity = context.getInputValueNumber(node, "intensity");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/Bloom",
+            id: node.id,
             luminanceThreshold,
             luminanceSmoothing,
             radius,
@@ -45,7 +46,9 @@ export const BloomPostProcessNode: PostProcessNodeDefinition<BloomPostProcessLay
             radius: layer.radius,
         });
         composer.addPass(new EffectPass(camera, e));
-        return e;
+        return (layer) => {
+            e.intensity = layer.intensity;
+        };
     },
 
 };

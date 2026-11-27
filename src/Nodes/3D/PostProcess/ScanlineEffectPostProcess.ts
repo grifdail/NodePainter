@@ -23,6 +23,7 @@ export const ScanlineEffectPostProcessNode: PostProcessNodeDefinition<ScanlineEf
         const density = context.getInputValueNumber(node, "density");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/ScanlineEffect",
+            id: node.id,
             density
         }
         return effect;
@@ -32,7 +33,9 @@ export const ScanlineEffectPostProcessNode: PostProcessNodeDefinition<ScanlineEf
             density: layer.density,
         });
         composer.addPass(new EffectPass(camera, scanlineEffect));
-        return scanlineEffect;
+        return (layer) => {
+            scanlineEffect.density = layer.density;
+        };
     },
 };
 

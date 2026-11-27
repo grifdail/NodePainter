@@ -63,10 +63,15 @@ export const StaticNode: NodeDefinition = {
             };
         } else {
             const entries = Object.keys(node.dataInputs);
+            context.pushIterationLevel()
             const newChildren = Object.fromEntries(entries
-                .map((key) => context.getInputValue(node, key, "object3d") as Object3D)
+                .map((key) => {
+                    context.incrementIterationIndex();
+                    return context.getInputValue(node, key, "object3d") as Object3D
+                })
                 .filter((item: any) => item)
                 .map(a => [a.id, a]));
+            context.popIterationLevel();
             return update3DGroupChildren(context, node, newChildren);
         }
     },

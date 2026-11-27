@@ -6,6 +6,7 @@ import { ImageData } from "../../Types/ImageData";
 import { NodeDefinition } from "../../Types/NodeDefinition";
 import { Port } from "../../Types/PortTypeGenerator";
 import { PostProcessLayer } from "../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../Types/PostProcessNodeDefinition";
 import { createColor } from "../../Types/vectorDataType";
 import { readFromCacheWithVersion } from "../../Utils/graph/execution/blackboardCache";
 import { computeResolution } from "../../Utils/graph/execution/computeResolution";
@@ -17,7 +18,7 @@ export const DEFAULT_CAMERA_TRANSFORM = {
     position: [0, 0, 10] as const,
     rotation: [0, 0, 0, 1] as const
 }
-
+type EffectCollection = Record<string, (layer: PostProcessLayer) => void>;
 
 export const CAMERA_3D_TRANSFORM = "camera_3d_transform"
 
@@ -28,7 +29,8 @@ export type ThreeJSContext = {
     camera: Camera | null;
     imageData: ImageData;
     parent: Object3D;
-    postProcessComposer: EffectComposer
+    postProcessComposer: EffectComposer,
+    effects: EffectCollection
 };
 
 export const Render3D: NodeDefinition = {
@@ -85,13 +87,14 @@ export const Render3D: NodeDefinition = {
                 powerPreference: "high-performance",
                 antialias: false,
                 stencil: false,
-                depth: false
+                depth: true
             });
             renderer.outputColorSpace = LinearSRGBColorSpace;
             const imageData = new ImageData({ canvas: { width: width, height: height, elt: renderer.domElement } });
             renderer.setSize(width, height);
-            const composer = setupPostProcess(renderer, scene, camera, postProcess);
-            return { renderer, scene, defaultCamera: camera, camera: camera as Camera, imageData, parent: scene, postProcessComposer: composer };
+            const [composer, effects] = setupPostProcess(renderer, scene, camera, postProcess, context);
+
+            return { renderer, scene, defaultCamera: camera, camera: camera as Camera, imageData, parent: scene, postProcessComposer: composer, effects };
         })
         if (threeContext.scene.children[0] !== child) {
             if (child) {
@@ -111,6 +114,7 @@ export const Render3D: NodeDefinition = {
 
         }
         threeContext.renderer.setClearColor(...toThreeColorWithAlpha(clearColor));
+        updatePostProcess(threeContext.effects, postProcess, context);
         threeContext.postProcessComposer.render();
         return threeContext.imageData;
     },
@@ -133,13 +137,27 @@ function validateEffectLayers(list: any, context: ExecutionContext) {
     return list.filter((a: any) => validateEffectLayer(a, context)) as PostProcessLayer[]
 }
 
-function setupPostProcess(renderer: WebGLRenderer, scene: Scene, camera: PerspectiveCamera, postprocess: PostProcessLayer[]) {
+function setupPostProcess(renderer: WebGLRenderer, scene: Scene, camera: PerspectiveCamera, postprocess: PostProcessLayer[], context: ExecutionContext): [EffectComposer, EffectCollection] {
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    postprocess.forEach(layer => {
-        //var data = PostProcessLayerUtils[layer.effectType];
-        //data.addEffect(layer as any, composer, camera, scene)
-    })
+    const effects = Object.fromEntries(postprocess.map(layer => {
+        const def = context.getNodeDefinition(layer.effectType) as PostProcessNodeDefinition<any, any>;
+        if (def) {
+            return [layer.id, def.add3dPostProcess(layer as any, composer, camera, scene)]
+        }
+        return [undefined, undefined]
 
-    return composer;
+    })) as EffectCollection;
+
+    return [composer, effects];
+}
+
+
+
+function updatePostProcess(effects: EffectCollection, postprocess: PostProcessLayer[], context: ExecutionContext) {
+    postprocess.forEach(layer => {
+        if (effects[layer.id]) {
+            effects[layer.id](layer)
+        }
+    });
 }

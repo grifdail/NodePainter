@@ -97,7 +97,7 @@ export const LoopNode: NodeDefinition = {
 export function update3DGroupChildren(context: ExecutionContext, node: NodeData, newChildren: Record<string, Object3D<Object3DEventMap>>) {
     const model = readFromCacheWithVersion(context, node, () => {
         return new Group();
-    });
+    }, undefined, undefined, true);
     const oldChildren = Object.fromEntries(model.children.map(a => [a.id, a]));
     for (let key in newChildren) {
         if (!oldChildren[key]) {

@@ -24,6 +24,7 @@ export const VignettePostProcessNode: PostProcessNodeDefinition<VignettePostProc
         const darkness = context.getInputValueNumber(node, "darkness");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/Vignette",
+            id: node.id,
             offset,
             darkness,
         }
@@ -35,7 +36,10 @@ export const VignettePostProcessNode: PostProcessNodeDefinition<VignettePostProc
             darkness: layer.darkness,
         })
         composer.addPass(new EffectPass(camera, effect));
-        return effect;
+        return (layer) => {
+            effect.offset = layer.offset;
+            effect.darkness = layer.darkness;
+        };
     },
 
 };

@@ -72,16 +72,19 @@ export const FilterNode: NodeDefinition = {
         const result: any[] = [];
 
         context.blackboard[`${node.id}-count`] = array.length;
+        context.pushIterationLevel()
         array.forEach((item, i) => {
             //set the blackboard
 
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = item;
+            context.setIterationIndex(i);
             var isFiltered = context.getInputValueBoolean(node, "evaluate");
             if (isFiltered) {
                 result.push(item);
             }
         });
+        context.popIterationLevel();
         return result;
     },
 };

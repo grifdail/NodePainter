@@ -24,6 +24,7 @@ export const BlurPostProcessNode: PostProcessNodeDefinition<BlurPostProcessLayer
         //const intensity = context.getInputValueNumber(node, "intensity");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/Blur",
+            id: node.id,
 
         }
         return effect;
@@ -32,7 +33,7 @@ export const BlurPostProcessNode: PostProcessNodeDefinition<BlurPostProcessLayer
     add3dPostProcess(layer, composer, camera, scene) {
         const a = new KawaseBlurPass({})
         composer.addPass(a);
-        return a;
+        return (layer) => { };
     },
 };
 

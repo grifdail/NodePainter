@@ -27,6 +27,7 @@ export const DepthOfFieldPostProcessNode: PostProcessNodeDefinition<DepthOfField
         const bokehScale = context.getInputValueNumber(node, "bokehScale");
         const effect: PostProcessLayer = {
             effectType: "PostProcess3D/DepthOfField",
+            id: node.id,
             focusDistance,
             focusRange,
             bokehScale,
@@ -40,7 +41,9 @@ export const DepthOfFieldPostProcessNode: PostProcessNodeDefinition<DepthOfField
             bokehScale: layer.bokehScale,
         });
         composer.addPass(new EffectPass(camera, depthOfFieldEffect));
-        return depthOfFieldEffect;
+        return (layer) => {
+            depthOfFieldEffect.bokehScale = layer.bokehScale;
+        };
     },
 };
 

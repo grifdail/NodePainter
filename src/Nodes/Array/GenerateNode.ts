@@ -57,11 +57,14 @@ export const GenerateNode: NodeDefinition = {
     getData: (portId, node, context) => {
         var count = context.getInputValueNumber(node, "count");
         context.blackboard[`${node.id}-count`] = count;
+        context.pushIterationLevel()
         const array = [];
         for (var i = 0; i < count; i++) {
             context.blackboard[`${node.id}-index`] = i;
+            context.setIterationIndex(i);
             array[i] = context.getInputValue(node, "value", node.selectedType);
         }
+        context.popIterationLevel();
         return array;
     },
 };

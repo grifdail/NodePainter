@@ -66,22 +66,27 @@ export const GridLoopNode: NodeDefinition = {
 
         if (node.selectedType === "drawing2d") {
             const array: any[] = [];
+            context.pushIterationLevel()
             for (let y = 0; y < size[1]; y++) {
                 for (let x = 0; x < size[0]; x++) {
                     context.blackboard[`${node.id}-index`] = y * size[1] + x;
                     context.blackboard[`${node.id}-pos`] = createVector2(x, y);
+                    context.setIterationIndex(y * size[1] + x);
                     array[x * size[0] + y] = context.getInputValue(node, "value", node.selectedType);
                 }
             }
+            context.popIterationLevel();
             return () => {
                 array.forEach((item) => item());
             };
         } else {
             const newChildren: Record<string, Object3D> = {};
+            context.pushIterationLevel()
             for (let y = 0; y < size[1]; y++) {
                 for (let x = 0; x < size[0]; x++) {
                     context.blackboard[`${node.id}-index`] = y * size[1] + x;
                     context.blackboard[`${node.id}-pos`] = createVector2(x, y);
+                    context.setIterationIndex(y * size[1] + x);
                     const t = context.getInputValue(node, "value", "object3d") as Object3D;
                     if (t) {
                         newChildren[t.id] = t;
@@ -89,6 +94,7 @@ export const GridLoopNode: NodeDefinition = {
                 }
             }
 
+            context.popIterationLevel();
             return update3DGroupChildren(context, node, newChildren)
         }
     },
