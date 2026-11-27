@@ -78,16 +78,20 @@ export const RepeatUntilNode: NodeDefinition = {
 
 
         let lastValue = context.getInputValue<any>(node, "startingValue", node.selectedType)
+        context.pushIterationLevel()
         for (let i = 0; i < maxIteration; i++) {
             context.blackboard[`${node.id}-index`] = i;
+            context.setIterationIndex(i);
             context.blackboard[`${node.id}-value`] = lastValue;
 
             lastValue = context.getInputValue<any>(node, "value", node.selectedType)
             const condition = context.getInputValueBoolean(node, "condition")
             if (condition) {
+                context.popIterationLevel();
                 return lastValue;
             }
         }
+        context.popIterationLevel();
         return lastValue;
 
     },

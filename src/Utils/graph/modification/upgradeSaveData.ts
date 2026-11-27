@@ -312,6 +312,84 @@ const UPGRADES: UpgradeFunction[] = [
         "Image/UsePatternImage": "Image/Library/Pattern",
         "Image/UseParticleImage": "Image/Library/Particle",
     }, sketch),
+    (sketch) => redefineNodes({
+        "BoxGeometry": "3D/Geometry/BoxGeometry",
+        "ConeGeometry": "3D/Geometry/ConeGeometry",
+        "CylinderGeometry": "3D/Geometry/CylinderGeometry",
+        "DiskGeometry": "3D/Geometry/DiskGeometry",
+        "DodecahedronGeometry": "3D/Geometry/DodecahedronGeometry",
+        "IcosahedronGeometry": "3D/Geometry/IcosahedronGeometry",
+        "ParametricGeometry": "3D/Geometry/ParametricGeometry",
+        "PlaneGeometry": "3D/Geometry/PlaneGeometry",
+        "QuadGeometry": "3D/Geometry/QuadGeometry",
+        "ShapeGeometry": "3D/Geometry/ShapeGeometry",
+        "SphereGeometry": "3D/Geometry/SphereGeometry",
+        "TorusGeometry": "3D/Geometry/TorusGeometry",
+        "OrthographicCamera": "3D/Camera/OrthographicCamera",
+        "PerspectiveCamera": "3D/Camera/PerspectiveCamera",
+        "AmbientLight": "3D/Light/AmbientLight",
+        "DirectionalLight": "3D/Light/DirectionalLight",
+        "PointLight": "3D/Light/PointLight",
+        "DepthMaterial": "3D/Material/DepthMaterial",
+        "FlatMaterial": "3D/Material/FlatMaterial",
+        "FlatTextureMaterial": "3D/Material/FlatTextureMaterial",
+        "LambertMaterial": "3D/Material/LambertMaterial",
+        "MatcapMaterial": "3D/Material/MatcapMaterial",
+        "NormalMaterial": "3D/Material/NormalMaterial",
+        "PhongMaterial": "3D/Material/PhongMaterial",
+        "StandardTextureMaterial": "3D/Material/StandardTextureMaterial",
+        "StandardMaterial": "3D/Material/StandardMaterial",
+        "Render3DLine": "3D/Model/Line",
+        "RenderModel": "3D/Model/Mesh",
+        "UploadModel": "3D/Model/Upload",
+        "Render3D": "3D/Render",
+        "Billboard": "3D/Billboard",
+        "Transform3D": "3D/Transform",
+    }, sketch),
+    (sketch) => addMissingNodePort([
+        "3D/Geometry/BoxGeometry",
+        "3D/Geometry/ConeGeometry",
+        "3D/Geometry/CylinderGeometry",
+        "3D/Geometry/DiskGeometry",
+        "3D/Geometry/DodecahedronGeometry",
+        "3D/Geometry/IcosahedronGeometry",
+        "3D/Geometry/ParametricGeometry",
+        "3D/Geometry/PlaneGeometry",
+        "3D/Geometry/QuadGeometry",
+        "3D/Geometry/ShapeGeometry",
+        "3D/Geometry/SphereGeometry",
+        "3D/Geometry/TorusGeometry",
+        "3D/Camera/OrthographicCamera",
+        "3D/Camera/PerspectiveCamera",
+        "3D/Light/AmbientLight",
+        "3D/Light/DirectionalLight",
+        "3D/Light/PointLight",
+        "3D/Material/DepthMaterial",
+        "3D/Material/FlatMaterial",
+        "3D/Material/FlatTextureMaterial",
+        "3D/Material/LambertMaterial",
+        "3D/Material/MatcapMaterial",
+        "3D/Material/NormalMaterial",
+        "3D/Material/PhongMaterial",
+        "3D/Material/StandardTextureMaterial",
+        "3D/Material/StandardMaterial",
+        "3D/Model/Line",
+        "3D/Model/Mesh",
+        "3D/Model/Upload",
+        "3D/Transform",
+    ], sketch),
+    (sketch) => {
+        Object.values(sketch.nodes).forEach((node) => {
+            Object.values(node.dataInputs).forEach(port => {
+                if (port.type === "material") {
+                    port.ownValue = {
+                        color: port.ownValue.props[0]
+                    }
+                }
+            })
+        });
+        return sketch;
+    },
 ];
 
 export const SAVE_VERSION = UPGRADES.length;
@@ -358,6 +436,7 @@ function addMissingNodePort(list: string[], sketch: SketchSave): SketchSave {
     Object.values(sketch.nodes).forEach((node) => {
         if (list.includes(node.type)) {
             const def = NodeLibrary[node.type];
+            console.log(node.type)
             def.dataInputs.forEach((port) => {
                 if (!node.dataInputs[port.id]) {
                     node.dataInputs[port.id] = createPortConnection(port);

@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass, ToneMappingEffect } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessLayer, ToneMappingPostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const ToneMappingPostProcessNode: NodeDefinition = {
+export const ToneMappingPostProcessNode: PostProcessNodeDefinition<ToneMappingPostProcessLayer, ToneMappingEffect> = {
     id: "PostProcess3D/ToneMapping",
     description: "Add a post process effect that adjust the image according to specific preset",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -31,7 +32,8 @@ export const ToneMappingPostProcessNode: NodeDefinition = {
         const averageLuminance = context.getInputValueNumber(node, "averageLuminance");
         const adaptationRate = context.getInputValueNumber(node, "adaptationRate");
         const effect: PostProcessLayer = {
-            effectType: "ToneMapping",
+            effectType: "PostProcess3D/ToneMapping",
+            id: node.id,
             resolution,
             whitePoint,
             middleGrey,
@@ -40,7 +42,22 @@ export const ToneMappingPostProcessNode: NodeDefinition = {
             adaptationRate
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const toneMappingEffect = new ToneMappingEffect({
+            resolution: layer.resolution,
+            whitePoint: layer.whitePoint,
+            middleGrey: layer.middleGrey,
+            minLuminance: layer.minLuminance,
+            averageLuminance: layer.averageLuminance,
+            adaptationRate: layer.adaptationRate,
+        });
+        composer.addPass(new EffectPass(camera, toneMappingEffect));
+        return (layer) => {
+            toneMappingEffect.resolution = layer.resolution;
+            toneMappingEffect.adaptationRate = layer.adaptationRate;
+        };
+    },
 };
 
 

@@ -12,7 +12,6 @@ import { ImageData } from "../../../Types/ImageData";
 import { Color, Gradient, Quaternion, Vector, Vector3, Vector4 } from "../../../Types/vectorDataType";
 import { convertShaderType } from "./convertTypeValue";
 import { sanitizeForShader } from "./sanitizeForShader";
-import { MaterialData, MeshData } from "../../../Types/MaterialData";
 import { NodeDefinition } from "../../../Types/NodeDefinition";
 import Rand from "rand-seed";
 import { PortType } from "../../../Types/PortType";
@@ -20,6 +19,8 @@ import { getNodeTypeDefinition, getOutputPort } from "./getNode";
 import { getPortValue } from "./getPortValue";
 import { SketchData } from "../../../Types/SketchData";
 import { SCALING_OPTIONS, START_NODE } from "../../../Nodes/StartNode";
+import { BufferGeometry, Material, Object3D } from "three";
+import { FakeMaterialData } from "../../../Types/MaterialData";
 
 export type FunctionContext = {
     [key: string]: { type: PortType; value: any };
@@ -42,6 +43,7 @@ export type ExecutionContext = {
     timeMs: number;
     target: Graphics;
     lastVisitedNode: string;
+
     blackboard: { [key: string]: any };
     callCounts: { [key: string]: number };
     frameBlackboard: { [key: string]: any };
@@ -61,8 +63,8 @@ export type ExecutionContext = {
     getInputValueImage: (nodeData: NodeData, portId: string) => null | ImageData;
     getInputValueString: (nodeData: NodeData, portId: string) => string;
     getInputValueBoolean: (nodeData: NodeData, portId: string) => boolean;
-    getInputValueMaterial: (nodeData: NodeData, portId: string) => MaterialData;
-    getInputValueMesh: (nodeData: NodeData, portId: string) => MeshData;
+    getInputValueMaterial: (nodeData: NodeData, portId: string) => null | Material | FakeMaterialData;
+    getInputValueMesh: (nodeData: NodeData, portId: string) => null | BufferGeometry;
     getInputValueDrawing: (nodeData: NodeData, portId: string) => () => void;
     getInputValueVectorArray: (nodeData: NodeData, portId: string) => Vector[];
     getGlobalSetting<T>(arg0: string): T;
@@ -70,6 +72,13 @@ export type ExecutionContext = {
     getCallId(node: NodeData, ...args: any[]): string;
     endOfFrameCleanup(): void;
     endOfRunCleanup(): void;
+
+    iterationStack: number[];
+    pushIterationLevel: () => void;
+    setIterationIndex: (n: number) => void;
+    incrementIterationIndex: () => void;
+    popIterationLevel: () => void;
+    getIterationId: () => string;
 };
 
 export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): ExecutionContext {
@@ -85,13 +94,14 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         functionStack: [],
         callCounts: {},
         lastVisitedNode: "",
+        iterationStack: [],
         RNG: new Rand(),
         update() {
             context.frameBlackboard = {};
             context.timeMs = p5.millis();
             context.time = context.timeMs / 1000;
             context.deltaTimeMs = p5.deltaTime;
-            context.deltaTime = context.deltaTimeMs / 1000
+            context.deltaTime = context.deltaTimeMs / 1000;
         },
         getNodeOutput(nodeId, portId) {
             return getPortValue(tree, nodeId, portId, context);
@@ -153,7 +163,7 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
         },
         getSetting<T>(node: NodeData, arg0: string) {
             var def = context.getNodeDefinition(node.type);
-            var settingDef = def?.settings?.find(a => a.id === arg0)
+            var settingDef = def?.settings?.find(a => a.id === arg0);
             var globalKey = settingDef?.globalKey || node.overrideGlobalSetting?.[arg0];
             if (globalKey) {
                 return context.getGlobalSetting<T>(globalKey);
@@ -208,21 +218,36 @@ export function createExecutionContext(tree: SketchData, p5: P5CanvasInstance): 
             context.RNG = new Rand(s.toString());
         },
         render() {
-            var start = tree.nodes[START_NODE]
+            var start = tree.nodes[START_NODE];
             var result = context.getInputValue(start, "drawing", "drawing2d");
 
             if (typeof result === "function") {
                 const sizing = start.settings.scalling;
                 const scale = getCanvasScale(sizing, context.p5.width, context.p5.height);
 
-                context.p5.push()
+                context.p5.push();
                 context.p5.scale(...scale);
 
                 result();
-                context.p5.pop()
+                context.p5.pop();
 
             }
             context.endOfFrameCleanup();
+        },
+        pushIterationLevel: function (): void {
+            context.iterationStack.push(0);
+        },
+        setIterationIndex: function (n: number): void {
+            context.iterationStack[context.iterationStack.length - 1] = n;
+        },
+        incrementIterationIndex: function (): void {
+            context.iterationStack[context.iterationStack.length - 1]++;
+        },
+        popIterationLevel: function (): void {
+            context.iterationStack.pop();
+        },
+        getIterationId: function (): string {
+            return context.iterationStack.join("/")
         }
     };
     return context;

@@ -15,11 +15,11 @@ export function readFromCacheStatic<T>(context: ExecutionContext, nodeData: Node
 }
 
 
-export function readFromCacheWithVersion<T>(context: ExecutionContext, nodeData: NodeData, get: (previous: T | undefined) => T, overrideVersion?: string, storageId: string = ""): T {
+export function readFromCacheWithVersion<T>(context: ExecutionContext, nodeData: NodeData, get: (previous: T | undefined) => T, overrideVersion?: string, storageId: string = "", useAutoCacheId = false): T {
     const rawReset = "reset" in nodeData.dataInputs ? context.getInputValueBoolean(nodeData, "reset") : false;
     let version = "version" in nodeData.dataInputs ? context.getInputValueString(nodeData, "version") : "";
     version = overrideVersion || version
-    const cacheId = Math.floor(context.getInputValueNumber(nodeData, "cache-id")).toString();
+    const cacheId = useAutoCacheId ? context.getIterationId() : Math.floor(context.getInputValueNumber(nodeData, "cache-id")).toString();
     const cacheKey = `cache-${nodeData.id}-${cacheId}-${storageId}`;
     const cacheKeyVersion = `cache-version-${nodeData.id}-${cacheId}-${storageId}`;
 
@@ -28,6 +28,9 @@ export function readFromCacheWithVersion<T>(context: ExecutionContext, nodeData:
     let value = context.blackboard[cacheKey] as T | undefined;
     if (reset || value === undefined) {
         //If raw reseting, we pass undefined so that the value get initialized
+        if (value && typeof value === "object" && "dispose" in value && typeof value.dispose === "function") {
+            value.dispose();
+        }
         value = get(rawReset ? undefined : value);
         context.blackboard[cacheKey] = value;
         if (value !== undefined) {

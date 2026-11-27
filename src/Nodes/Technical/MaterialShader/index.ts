@@ -1,10 +1,10 @@
-import { ShaderMaterial } from "./ShaderMaterial";
+import { ShaderMaterialNode } from "./ShaderMaterial";
 import { ShaderMaterialEnd } from "./ShaderMaterialEnd";
 import { ShaderMaterialStart } from "./ShaderMaterialStart";
 
 export const TechnicalMaterialShaderNodes = [
-  //
-  ShaderMaterial,
-  ShaderMaterialEnd,
-  ShaderMaterialStart,
+    //
+    ShaderMaterialNode,
+    ShaderMaterialEnd,
+    ShaderMaterialStart,
 ];

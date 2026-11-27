@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { BrightnessContrastEffect, EffectPass } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { BrightnessContrastProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const BrightnessContrastPostProcessNode: NodeDefinition = {
+export const BrightnessContrastPostProcessNode: PostProcessNodeDefinition<BrightnessContrastProcessLayer, BrightnessContrastEffect> = {
     id: "PostProcess3D/BrightnessContrast",
     description: "Add a post process effect that let you change the brightness and contrast of the image",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -23,12 +24,24 @@ export const BrightnessContrastPostProcessNode: NodeDefinition = {
         const brightness = context.getInputValueNumber(node, "brightness");
         const contrast = context.getInputValueNumber(node, "contrast");
         const effect: PostProcessLayer = {
-            effectType: "BrightnessContrast",
+            effectType: "PostProcess3D/BrightnessContrast",
+            id: node.id,
             brightness,
             contrast
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const brightnessContrastEffect = new BrightnessContrastEffect({
+            brightness: layer.brightness,
+            contrast: layer.contrast,
+        });
+        composer.addPass(new EffectPass(camera, brightnessContrastEffect));
+        return (layer) => {
+            brightnessContrastEffect.brightness = layer.brightness;
+            brightnessContrastEffect.contrast = layer.contrast;
+        };
+    },
 };
 
 

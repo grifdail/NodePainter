@@ -1,12 +1,15 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass } from "postprocessing";
+import { Vector4 } from "three/src/math/Vector4";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { FogPostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
+import { FogEffect } from "../../../Utils/3d/FogEffect";
 import { White } from "../../../Utils/math/colorUtils";
 
 
-export const FogPostProcessNode: NodeDefinition = {
+export const FogPostProcessNode: PostProcessNodeDefinition<FogPostProcessLayer, FogEffect> = {
     id: "PostProcess3D/Fog",
     description: "Add a post process effect where item in the back get mixed with a color",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -26,12 +29,28 @@ export const FogPostProcessNode: NodeDefinition = {
         const min = context.getInputValueNumber(node, "min");
         const max = context.getInputValueNumber(node, "max");
         const effect: FogPostProcessLayer = {
-            effectType: "Fog",
+            effectType: "PostProcess3D/Fog",
+            id: node.id,
             minRange: min,
             maxRange: max,
             colorStart: c,
             colorEnd: c
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const fogEffect = new FogEffect({
+            minRange: layer.minRange,
+            maxRange: layer.maxRange,
+            colorStart: new Vector4(...layer.colorStart),
+            colorEnd: new Vector4(...layer.colorEnd),
+        });
+        composer.addPass(new EffectPass(camera, fogEffect));
+        return (layer) => {
+            fogEffect.minRange = layer.minRange;
+            fogEffect.maxRange = layer.maxRange;
+            fogEffect.colorStart = new Vector4(...layer.colorStart);
+            fogEffect.colorEnd = new Vector4(...layer.colorEnd);
+        };
+    },
 };

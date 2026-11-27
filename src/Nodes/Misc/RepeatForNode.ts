@@ -71,12 +71,15 @@ export const RepeatForNode: NodeDefinition = {
         context.blackboard[`${node.id}-count`] = count;
 
         let lastValue = context.getInputValue<any>(node, "startingValue", node.selectedType)
+        context.pushIterationLevel()
         for (let i = 0; i < count; i++) {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = lastValue;
+            context.setIterationIndex(i);
 
             lastValue = context.getInputValue<any>(node, "value", node.selectedType)
         }
+        context.popIterationLevel();
         return lastValue;
 
     },

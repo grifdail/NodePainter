@@ -1,11 +1,13 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass, LensDistortionEffect } from "postprocessing";
+import { Vector2 } from "three";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { LensDistortionPostProcessLayer, PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const LensDistortionPostProcessNode: NodeDefinition = {
+export const LensDistortionPostProcessNode: PostProcessNodeDefinition<LensDistortionPostProcessLayer, LensDistortionEffect> = {
     id: "PostProcess3D/LensDistortion",
     description: "Add a post process effect that mimic the distortion of a lens in a old camera.",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -27,14 +29,30 @@ export const LensDistortionPostProcessNode: NodeDefinition = {
         const focalLength = context.getInputValueVector2(node, "focalLength");
         const skew = context.getInputValueNumber(node, "skew");
         const effect: PostProcessLayer = {
-            effectType: "LensDistortion",
+            effectType: "PostProcess3D/LensDistortion",
+            id: node.id,
             distortion,
             principalPoint,
             focalLength,
             skew
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const lensDistortionEffect = new LensDistortionEffect({
+            distortion: new Vector2(...layer.distortion),
+            principalPoint: new Vector2(...layer.principalPoint),
+            focalLength: new Vector2(...layer.focalLength),
+            skew: layer.skew,
+        });
+        composer.addPass(new EffectPass(camera, lensDistortionEffect));
+        return (layer) => {
+            lensDistortionEffect.distortion = new Vector2(...layer.distortion);
+            lensDistortionEffect.principalPoint = new Vector2(...layer.principalPoint);
+            lensDistortionEffect.focalLength = new Vector2(...layer.focalLength);
+            lensDistortionEffect.skew = layer.skew;
+        };
+    },
 };
 
 

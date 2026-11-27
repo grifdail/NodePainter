@@ -1,11 +1,12 @@
 import { IconBadge3d, IconPhoto } from "@tabler/icons-react";
+import { EffectPass, TiltShiftEffect } from "postprocessing";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
-import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
-import { PostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessLayer, TiltShiftPostProcessLayer } from "../../../Types/PostProcessLayer";
+import { PostProcessNodeDefinition } from "../../../Types/PostProcessNodeDefinition";
 
 
-export const TiltShiftPostProcessNode: NodeDefinition = {
+export const TiltShiftPostProcessNode: PostProcessNodeDefinition<TiltShiftPostProcessLayer, TiltShiftEffect> = {
     id: "PostProcess3D/TiltShift",
     description: "Add a post process effect that focus a specific area to mimic camera tilt shift",
     icon: DoubleIconGen(IconPhoto, IconBadge3d),
@@ -27,14 +28,30 @@ export const TiltShiftPostProcessNode: NodeDefinition = {
         const focusArea = context.getInputValueNumber(node, "focusArea");
         const feather = context.getInputValueNumber(node, "feather");
         const effect: PostProcessLayer = {
-            effectType: "TiltShift",
+            effectType: "PostProcess3D/TiltShift",
+            id: node.id,
             offset,
             rotation,
             focusArea,
             feather
         }
         return effect;
-    }
+    },
+    add3dPostProcess(layer, composer, camera, scene) {
+        const tiltShiftEffect = new TiltShiftEffect({
+            offset: layer.offset,
+            rotation: layer.rotation,
+            focusArea: layer.focusArea,
+            feather: layer.feather,
+        });
+        composer.addPass(new EffectPass(camera, tiltShiftEffect));
+        return (layer) => {
+            tiltShiftEffect.offset = layer.offset;
+            tiltShiftEffect.rotation = layer.rotation;
+            tiltShiftEffect.focusArea = layer.focusArea;
+            tiltShiftEffect.feather = layer.feather;
+        };
+    },
 };
 
 

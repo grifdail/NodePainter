@@ -116,11 +116,14 @@ export const MapNode: NodeDefinition = {
             return PortTypeDefinitions[node.dataOutputs["out"].type].createDefaultValue();
         }
         context.blackboard[`${node.id}-count`] = array.length;
+        context.pushIterationLevel()
         const result: any[] = array.map((item, i) => {
             context.blackboard[`${node.id}-index`] = i;
             context.blackboard[`${node.id}-value`] = item;
+            context.setIterationIndex(i);
             return context.getInputValue(node, "evaluate", node.dataInputs["evaluate"].type);
         });
+        context.popIterationLevel();
         return result;
     },
 };

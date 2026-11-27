@@ -9,7 +9,7 @@ import { CAMERA_3D_TRANSFORM } from "./Render3D";
 const m = new Matrix4();
 
 export const BillBoardNode: NodeDefinition = {
-    id: "Billboard",
+    id: "3D/Billboard",
     description: "Return a 3d rotation that always face the camera",
     icon: IconBadge3d,
     tags: ["3D"],

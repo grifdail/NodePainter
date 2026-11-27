@@ -1,4 +1,5 @@
 import { IconArrowMerge, IconGridDots, IconPlus } from "@tabler/icons-react";
+import { Object3D } from "three";
 import { DoubleIconGen } from "../../../Components/Generics/DoubleIcon";
 import { useTree } from "../../../Hooks/useTree";
 import { NodeData } from "../../../Types/NodeData";
@@ -6,7 +7,7 @@ import { NodeDefinition } from "../../../Types/NodeDefinition";
 import { Port } from "../../../Types/PortTypeGenerator";
 import { createVector2 } from "../../../Types/vectorDataType";
 import { changeTypeGenerator } from "../../../Utils/graph/definition/changeTypeGenerator";
-import { VirtualNodes } from "../../3D/VirtualNodeTypes/VirtualNodeTypes";
+import { update3DGroupChildren } from "./LoopNode";
 
 const createIndexNode = ({ id, positionX, positionY }: NodeData): void => {
     setTimeout(() => {
@@ -62,24 +63,39 @@ export const GridLoopNode: NodeDefinition = {
         const size = context.getInputValueVector2(node, "size");
 
         context.blackboard[`${node.id}-count`] = size;
-        const array: any[] = [];
-        for (var y = 0; y < size[1]; y++) {
-            for (var x = 0; x < size[0]; x++) {
-                context.blackboard[`${node.id}-index`] = y * size[1] + x;
-                context.blackboard[`${node.id}-pos`] = createVector2(x, y);
-                array[x * size[0] + y] = context.getInputValue(node, "value", node.selectedType);
-            }
-        }
+
         if (node.selectedType === "drawing2d") {
+            const array: any[] = [];
+            context.pushIterationLevel()
+            for (let y = 0; y < size[1]; y++) {
+                for (let x = 0; x < size[0]; x++) {
+                    context.blackboard[`${node.id}-index`] = y * size[1] + x;
+                    context.blackboard[`${node.id}-pos`] = createVector2(x, y);
+                    context.setIterationIndex(y * size[1] + x);
+                    array[x * size[0] + y] = context.getInputValue(node, "value", node.selectedType);
+                }
+            }
+            context.popIterationLevel();
             return () => {
                 array.forEach((item) => item());
             };
         } else {
-            const id = context.getCallId(node);
-            return VirtualNodes.ComposeVirtualNodeType.generate(
-                id,
-                array.filter((item: any) => item)
-            );
+            const newChildren: Record<string, Object3D> = {};
+            context.pushIterationLevel()
+            for (let y = 0; y < size[1]; y++) {
+                for (let x = 0; x < size[0]; x++) {
+                    context.blackboard[`${node.id}-index`] = y * size[1] + x;
+                    context.blackboard[`${node.id}-pos`] = createVector2(x, y);
+                    context.setIterationIndex(y * size[1] + x);
+                    const t = context.getInputValue(node, "value", "object3d") as Object3D;
+                    if (t) {
+                        newChildren[t.id] = t;
+                    }
+                }
+            }
+
+            context.popIterationLevel();
+            return update3DGroupChildren(context, node, newChildren)
         }
     },
 
